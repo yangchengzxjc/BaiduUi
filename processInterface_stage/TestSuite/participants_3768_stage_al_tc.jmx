@@ -14,12 +14,12 @@
           </elementProp>
           <elementProp name="serviceUrl" elementType="Argument">
             <stringProp name="Argument.name">serviceUrl</stringProp>
-            <stringProp name="Argument.value">${__P(serverUrl,console-tc.huilianyi.com)}</stringProp>
+            <stringProp name="Argument.value">${__P(serverUrl,stage.huilianyi.com)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,17709280742)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,13700000000)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
@@ -21019,11 +21019,7 @@ if(newManyValueForm.equals(&quot;&quot;)&amp;&amp;newValueForm.equals(&quot;&quo
 	Failure = false;
 }else{
 	Failure = true;
-}
-
-
-
- </stringProp>
+}</stringProp>
             <stringProp name="BeanShellAssertion.filename"></stringProp>
             <stringProp name="BeanShellAssertion.parameters"></stringProp>
             <boolProp name="BeanShellAssertion.resetInterpreter">false</boolProp>
@@ -24911,7 +24907,7 @@ vars.put(&quot;AllDetalNew2&quot;,str);</stringProp>
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="5398-5报销单(关联多申请)的值列表可以从申请单带入" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="5398-5报销单(关联多申请)的自定义值列表可以从申请单带入(多行值列表不可以带入)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -25286,6 +25282,21 @@ vars.put(&quot;AllDetalNew2&quot;,str);</stringProp>
             <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
           <hashTree/>
+          <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="BeanShell断言" enabled="true">
+            <stringProp name="BeanShellAssertion.query">
+String ManyValueForm =vars.get(&quot;ManyValueForm&quot;);
+
+if(ManyValueForm.equals(&quot;NOTFOUND&quot;)){
+	Failure = false;
+}else{
+	Failure = true;
+}
+</stringProp>
+            <stringProp name="BeanShellAssertion.filename"></stringProp>
+            <stringProp name="BeanShellAssertion.parameters"></stringProp>
+            <boolProp name="BeanShellAssertion.resetInterpreter">false</boolProp>
+          </BeanShellAssertion>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单创建" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -25389,7 +25400,14 @@ String newManyValueForm;
 String json = vars.get(&quot;customFormFields&quot;);
 
 String ValueForm = vars.get(&quot;ValueForm&quot;);
+
 String ManyValueForm =vars.get(&quot;ManyValueForm&quot;);
+
+if(ManyValueForm.equals(&quot;NOTFOUND&quot;)){
+            
+	       newManyValueForm= &quot;&quot;;
+}
+
 
 log.info(&quot;customFormFields:&quot;+json);
 
@@ -25412,7 +25430,7 @@ for (int i = 0; i &lt; size; i++){
              	     jj.put(&quot;value&quot;,ValueForm);
              }
             if (jj.get(&quot;fieldName&quot;).equals(&quot;多选值列表&quot;)){
-             	     jj.put(&quot;value&quot;,ManyValueForm);
+             	     jj.put(&quot;value&quot;,newManyValueForm);
              } 			
 }
 
@@ -25442,7 +25460,6 @@ vars.put(&quot;NcustomFormFields&quot;,str);
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="包含值列表" enabled="true">
             <collectionProp name="Asserion.test_strings">
               <stringProp name="1669632136">&quot;value&quot;:&quot;${ValueForm}&quot;</stringProp>
-              <stringProp name="1306773929">&quot;value&quot;:&quot;${ManyValueForm}&quot;</stringProp>
             </collectionProp>
             <stringProp name="TestPlan.comments">不包含下面的参与人</stringProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
@@ -25450,6 +25467,21 @@ vars.put(&quot;NcustomFormFields&quot;,str);
             <intProp name="Assertion.test_type">2</intProp>
             <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
+          <hashTree/>
+          <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="BeanShell断言" enabled="true">
+            <stringProp name="BeanShellAssertion.query">
+String newManyValueForm = vars.get(&quot;newManyValueForm&quot;);
+
+if(newManyValueForm.equals(&quot;&quot;)){
+
+	Failure = false;
+}else{
+	Failure = true;
+}</stringProp>
+            <stringProp name="BeanShellAssertion.filename"></stringProp>
+            <stringProp name="BeanShellAssertion.parameters"></stringProp>
+            <boolProp name="BeanShellAssertion.resetInterpreter">false</boolProp>
+          </BeanShellAssertion>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取单据可见费用类型（取餐补）" enabled="true">

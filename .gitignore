@@ -3,4 +3,5 @@
 *.pdf
 *.png
 *.log
-log
+*.jtl
+*.html

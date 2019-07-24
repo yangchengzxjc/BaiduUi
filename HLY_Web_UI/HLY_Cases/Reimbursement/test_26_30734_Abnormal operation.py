@@ -89,3 +89,4 @@ def test_26_Abnormal_operation(enter):
     driver.click(submit_expense, timeout=3)
     assert not driver.is_exist(reimbursement.get_xpath("存在借款未还清！"), timeout=3)
     driver.closes()
+    driver.switch_to_window(handlers[0])

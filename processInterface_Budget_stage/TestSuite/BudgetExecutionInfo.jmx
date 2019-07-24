@@ -6171,11 +6171,11 @@ vars.get(cc);</stringProp>
         </kg.apc.jmeter.control.ParameterizedController>
         <hashTree>
           <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
-            <stringProp name="IncludeController.includepath">../../common\BudgetConfigurationQuery.jmx</stringProp>
+            <stringProp name="IncludeController.includepath">../../common/BudgetConfigurationQuery.jmx</stringProp>
           </IncludeController>
           <hashTree/>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询预算余额_工预算管理员预算" enabled="true">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询预算余额_工预算管理员预算" enabled="false">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>

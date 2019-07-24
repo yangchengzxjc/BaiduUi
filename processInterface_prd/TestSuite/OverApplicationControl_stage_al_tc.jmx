@@ -498,7 +498,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="获得基础信息" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取登录信息" enabled="true">
@@ -659,7 +659,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="集团模式获取表单信息(差旅申请)" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取已有的表单" enabled="true">
@@ -819,7 +819,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="获得基础信息" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取登录信息" enabled="true">
@@ -980,7 +980,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="集团模式获取表单信息(差旅申请)" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取已有的表单" enabled="true">
@@ -1140,7 +1140,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="获得基础信息" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取登录信息" enabled="true">
@@ -1301,7 +1301,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="集团模式获取表单信息(差旅申请)" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取已有的表单" enabled="true">
@@ -1461,7 +1461,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="获得基础信息" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取登录信息" enabled="true">
@@ -1622,7 +1622,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="集团模式获取表单信息(差旅申请)" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取已有的表单" enabled="true">
@@ -1782,7 +1782,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="获得基础信息" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取登录信息" enabled="true">
@@ -1943,7 +1943,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="集团模式获取表单信息(差旅申请)" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取已有的表单" enabled="true">
@@ -2103,7 +2103,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="获得基础信息" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取登录信息" enabled="true">
@@ -2264,7 +2264,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="集团模式获取表单信息(差旅申请)" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取已有的表单" enabled="true">
@@ -2410,7 +2410,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="获得基础信息" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取登录信息" enabled="true">
@@ -2571,7 +2571,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="集团模式获取表单信息(差旅申请)" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取已有的表单" enabled="true">
@@ -2731,7 +2731,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="获得基础信息" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取登录信息" enabled="true">
@@ -2892,7 +2892,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="集团模式获取表单信息(差旅申请)" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取已有的表单" enabled="true">
@@ -3052,7 +3052,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="获得基础信息" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取登录信息" enabled="true">
@@ -3213,7 +3213,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="集团模式获取表单信息(差旅申请)" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取已有的表单" enabled="true">
@@ -3373,7 +3373,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="获得基础信息" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取登录信息" enabled="true">
@@ -3534,7 +3534,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="集团模式获取表单信息(差旅申请)" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取已有的表单" enabled="true">
@@ -3694,7 +3694,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="获得基础信息" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取登录信息" enabled="true">
@@ -3855,7 +3855,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="集团模式获取表单信息(差旅申请)" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取已有的表单" enabled="true">
@@ -4015,7 +4015,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="获得基础信息" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取登录信息" enabled="true">
@@ -4176,7 +4176,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         <hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="集团模式获取表单信息(差旅申请)" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取已有的表单" enabled="true">
@@ -4378,7 +4378,7 @@ log.info(&quot;报销单提费用金额为:&quot;+String.valueOf(amount));</stri
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询申请表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询申请单表单" enabled="true">
@@ -4629,7 +4629,7 @@ vars.put(&quot;participant&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存差旅申请单_未添加行程" enabled="true">
@@ -4987,7 +4987,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询报销表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
@@ -5109,7 +5109,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅报销单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建差旅报销单" enabled="true">
@@ -5239,7 +5239,7 @@ vars.put(&quot;NcustomFormFields&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -5761,7 +5761,7 @@ log.info(&quot;报销单提费用金额为:&quot;+String.valueOf(amount));</stri
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询申请表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询申请单表单" enabled="true">
@@ -6012,7 +6012,7 @@ vars.put(&quot;participant&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存差旅申请单_未添加行程" enabled="true">
@@ -6370,7 +6370,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询报销表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
@@ -6492,7 +6492,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅报销单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建差旅报销单" enabled="true">
@@ -6622,7 +6622,7 @@ vars.put(&quot;NcustomFormFields&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -7167,7 +7167,7 @@ vars.put(&quot;bxamount3&quot;,&quot;100&quot;);</stringProp>
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询申请表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询申请单表单" enabled="true">
@@ -7432,7 +7432,7 @@ vars.put(&quot;participant&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存差旅申请单_未添加行程" enabled="true">
@@ -7790,7 +7790,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询报销表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
@@ -7912,7 +7912,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅报销单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建差旅报销单" enabled="true">
@@ -8042,7 +8042,7 @@ vars.put(&quot;NcustomFormFields&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用2" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -8223,7 +8223,7 @@ vars.put(&quot;data&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用3" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -8748,7 +8748,7 @@ vars.put(&quot;bxamount3&quot;,&quot;100&quot;);</stringProp>
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询申请表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询申请单表单" enabled="true">
@@ -9013,7 +9013,7 @@ vars.put(&quot;participant&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存差旅申请单_未添加行程" enabled="true">
@@ -9371,7 +9371,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询报销表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
@@ -9493,7 +9493,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅报销单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建差旅报销单" enabled="true">
@@ -9623,7 +9623,7 @@ vars.put(&quot;NcustomFormFields&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用2" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -9804,7 +9804,7 @@ vars.put(&quot;data&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用3" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -10329,7 +10329,7 @@ vars.put(&quot;bxamount3&quot;,&quot;96&quot;);</stringProp>
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询申请表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询申请单表单" enabled="true">
@@ -10594,7 +10594,7 @@ vars.put(&quot;participant&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存差旅申请单_未添加行程" enabled="true">
@@ -10952,7 +10952,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询报销表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
@@ -11074,7 +11074,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅报销单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建差旅报销单" enabled="true">
@@ -11204,7 +11204,7 @@ vars.put(&quot;NcustomFormFields&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用2" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -11385,7 +11385,7 @@ vars.put(&quot;data&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用3" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -11911,7 +11911,7 @@ vars.put(&quot;bxamount3&quot;,&quot;96&quot;);</stringProp>
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询申请表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询申请单表单" enabled="true">
@@ -12176,7 +12176,7 @@ vars.put(&quot;participant&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存差旅申请单_未添加行程" enabled="true">
@@ -12534,7 +12534,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询报销表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
@@ -12656,7 +12656,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅报销单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建差旅报销单" enabled="true">
@@ -12786,7 +12786,7 @@ vars.put(&quot;NcustomFormFields&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用2" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -12967,7 +12967,7 @@ vars.put(&quot;data&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用3" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -13501,7 +13501,7 @@ vars.put(&quot;bxamount6&quot;,&quot;2&quot;);
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询申请表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询申请单表单" enabled="true">
@@ -13766,7 +13766,7 @@ vars.put(&quot;participant&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存差旅申请单_未添加行程" enabled="true">
@@ -14124,7 +14124,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询报销表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
@@ -14246,7 +14246,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅报销单1" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建差旅报销单" enabled="true">
@@ -14376,7 +14376,7 @@ vars.put(&quot;NcustomFormFields&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用2" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -14557,7 +14557,7 @@ vars.put(&quot;data&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用3" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -15150,7 +15150,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅报销单2" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建差旅报销单" enabled="true">
@@ -15280,7 +15280,7 @@ vars.put(&quot;NcustomFormFields&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用1" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -15461,7 +15461,7 @@ vars.put(&quot;data&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用2" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -15642,7 +15642,7 @@ vars.put(&quot;data&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用3" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -16156,7 +16156,7 @@ log.info(&quot;报销单提费用金额为:&quot;+String.valueOf(amount));</stri
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询申请表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询申请单表单" enabled="true">
@@ -16407,7 +16407,7 @@ vars.put(&quot;participant&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="费用申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存费用申请单" enabled="true">
@@ -16773,7 +16773,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询报销表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
@@ -16895,7 +16895,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="费用报销单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建费用报销单" enabled="true">
@@ -17049,7 +17049,7 @@ vars.put(&quot;bxCustomform&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -17561,7 +17561,7 @@ log.info(&quot;报销单提费用金额为:&quot;+String.valueOf(amount));</stri
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询申请表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询申请单表单" enabled="true">
@@ -17812,7 +17812,7 @@ vars.put(&quot;participant&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="费用申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存费用申请单" enabled="true">
@@ -18178,7 +18178,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询报销表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
@@ -18300,7 +18300,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="费用报销单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建费用报销单" enabled="true">
@@ -18454,7 +18454,7 @@ vars.put(&quot;bxCustomform&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -18991,7 +18991,7 @@ log.info(&quot;报销单提费用金额为:&quot;+String.valueOf(amount));</stri
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询申请表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询申请单表单" enabled="true">
@@ -19300,7 +19300,7 @@ vars.put(&quot;participant&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="费用申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存费用申请单" enabled="true">
@@ -19666,7 +19666,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询报销表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
@@ -19788,7 +19788,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="费用报销单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建费用报销单" enabled="true">
@@ -19942,7 +19942,7 @@ vars.put(&quot;bxCustomform&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用2" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -20123,7 +20123,7 @@ vars.put(&quot;data&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用3" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -20660,7 +20660,7 @@ log.info(&quot;报销单提费用金额为:&quot;+String.valueOf(amount));</stri
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询申请表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询申请单表单" enabled="true">
@@ -20969,7 +20969,7 @@ vars.put(&quot;participant&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="费用申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存费用申请单" enabled="true">
@@ -21335,7 +21335,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询报销表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
@@ -21457,7 +21457,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="费用报销单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建费用报销单" enabled="true">
@@ -21611,7 +21611,7 @@ vars.put(&quot;bxCustomform&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用2" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -21792,7 +21792,7 @@ vars.put(&quot;data&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用3" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -22395,7 +22395,7 @@ vars.put(&quot;bxamount3&quot;,&quot;96&quot;);</stringProp>
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询申请表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询申请单表单" enabled="true">
@@ -22704,7 +22704,7 @@ vars.put(&quot;participant&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="费用申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存费用申请单" enabled="true">
@@ -23070,7 +23070,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询报销表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
@@ -23192,7 +23192,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="费用报销单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建费用报销单" enabled="true">
@@ -23346,7 +23346,7 @@ vars.put(&quot;bxCustomform&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用2" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -23527,7 +23527,7 @@ vars.put(&quot;data&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用3" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -24094,7 +24094,7 @@ log.info(f3+&quot;&quot;);
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询申请表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询申请单表单" enabled="true">
@@ -24359,7 +24359,7 @@ vars.put(&quot;participant&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存差旅申请单_未添加行程" enabled="true">
@@ -24717,7 +24717,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询报销表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
@@ -24839,7 +24839,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅报销单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建差旅报销单" enabled="true">
@@ -24969,7 +24969,7 @@ vars.put(&quot;NcustomFormFields&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用2" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -25150,7 +25150,7 @@ vars.put(&quot;data&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用3" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -25824,7 +25824,7 @@ log.info(f3+&quot;&quot;);
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询申请表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询申请单表单" enabled="true">
@@ -26089,7 +26089,7 @@ vars.put(&quot;participant&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存差旅申请单_未添加行程" enabled="true">
@@ -26447,7 +26447,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询报销表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
@@ -26569,7 +26569,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差旅报销单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建差旅报销单" enabled="true">
@@ -26699,7 +26699,7 @@ vars.put(&quot;NcustomFormFields&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用2" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -26880,7 +26880,7 @@ vars.put(&quot;data&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用3" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -27436,7 +27436,7 @@ log.info(&quot;报销单提费用金额为:&quot;+String.valueOf(amount));</stri
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询申请表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询申请单表单" enabled="true">
@@ -27745,7 +27745,7 @@ vars.put(&quot;participant&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="费用申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存费用申请单" enabled="true">
@@ -28111,7 +28111,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询报销表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
@@ -28233,7 +28233,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="费用报销单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建费用报销单" enabled="true">
@@ -28387,7 +28387,7 @@ vars.put(&quot;bxCustomform&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用2" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -28568,7 +28568,7 @@ vars.put(&quot;data&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用3" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -29013,7 +29013,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="费用批量驳回" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="驳回费用" enabled="true">
@@ -29173,7 +29173,7 @@ vars.put(&quot;bxamount3&quot;,&quot;96&quot;);</stringProp>
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询申请表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询申请单表单" enabled="true">
@@ -29482,7 +29482,7 @@ vars.put(&quot;participant&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="费用申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存费用申请单" enabled="true">
@@ -29848,7 +29848,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询报销表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
@@ -29970,7 +29970,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="费用报销单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建费用报销单" enabled="true">
@@ -30124,7 +30124,7 @@ vars.put(&quot;bxCustomform&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用2" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -30305,7 +30305,7 @@ vars.put(&quot;data&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用3" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -30839,7 +30839,7 @@ vars.put(&quot;bxamount6&quot;,&quot;2&quot;);
         <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询申请表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询申请单表单" enabled="true">
@@ -31148,7 +31148,7 @@ vars.put(&quot;participant&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="费用申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存费用申请单" enabled="true">
@@ -31514,7 +31514,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询报销表单数据" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
@@ -31636,7 +31636,7 @@ vars.put(&quot;NewcustFormValues&quot;,str);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="费用报销单1" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建费用报销单" enabled="true">
@@ -31790,7 +31790,7 @@ vars.put(&quot;bxCustomform&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用2" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -31971,7 +31971,7 @@ vars.put(&quot;data&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用3" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -32417,7 +32417,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="费用报销单2" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建费用报销单" enabled="true">
@@ -32571,7 +32571,7 @@ vars.put(&quot;bxCustomform&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用1" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -32752,7 +32752,7 @@ vars.put(&quot;data&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用2" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">
@@ -32933,7 +32933,7 @@ vars.put(&quot;data&quot;,str);
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="添加费用3" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用列表" enabled="true">

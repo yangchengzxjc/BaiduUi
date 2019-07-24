@@ -72,37 +72,27 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="applicationForm001" elementType="Argument">
             <stringProp name="Argument.name">applicationForm001</stringProp>
-            <stringProp name="Argument.value">预算费用申请单</stringProp>
+            <stringProp name="Argument.value">预算执行情况-费用申请单</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="applicationForm002" elementType="Argument">
             <stringProp name="Argument.name">applicationForm002</stringProp>
-            <stringProp name="Argument.value">预算差旅申请单</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="applicationForm003" elementType="Argument">
-            <stringProp name="Argument.name">applicationForm003</stringProp>
-            <stringProp name="Argument.value">预算费用申请单_成本中心分摊</stringProp>
+            <stringProp name="Argument.value">预算执行情况-差旅申请单</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="expenseForm001" elementType="Argument">
             <stringProp name="Argument.name">expenseForm001</stringProp>
-            <stringProp name="Argument.value">预算日常报销单</stringProp>
+            <stringProp name="Argument.value">预算执行情况-日常报销单</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="expenseForm002" elementType="Argument">
             <stringProp name="Argument.name">expenseForm002</stringProp>
-            <stringProp name="Argument.value">预算费用报销单</stringProp>
+            <stringProp name="Argument.value">预算执行情况-费用报销单</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="expenseForm003" elementType="Argument">
             <stringProp name="Argument.name">expenseForm003</stringProp>
-            <stringProp name="Argument.value">预算差旅报销单</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="expenseForm004" elementType="Argument">
-            <stringProp name="Argument.name">expenseForm004</stringProp>
-            <stringProp name="Argument.value">预算费用报销单_成本中心分摊</stringProp>
+            <stringProp name="Argument.value">预算执行情况-差旅报销单</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -132,7 +122,7 @@
           </elementProp>
           <elementProp name="company" elementType="Argument">
             <stringProp name="Argument.name">company</stringProp>
-            <stringProp name="Argument.value">部门组预算公司</stringProp>
+            <stringProp name="Argument.value">预算项目公司部门成本中心公司</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="employee1" elementType="Argument">
@@ -155,12 +145,12 @@
           </elementProp>
           <elementProp name="department1" elementType="Argument">
             <stringProp name="Argument.name">department1</stringProp>
-            <stringProp name="Argument.value">部门组预算1</stringProp>
+            <stringProp name="Argument.value">预算项目公司部门成本中心部门1</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="department2" elementType="Argument">
             <stringProp name="Argument.name">department2</stringProp>
-            <stringProp name="Argument.value">部门组预算2</stringProp>
+            <stringProp name="Argument.value">预算项目公司部门成本中心部门2</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="department3" elementType="Argument">
@@ -183,11 +173,6 @@
             <stringProp name="Argument.value">成本中心项002</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="DepartmentGroup" elementType="Argument">
-            <stringProp name="Argument.name">DepartmentGroup</stringProp>
-            <stringProp name="Argument.value">部门预算组</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -195,7 +180,7 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="expenseType001" elementType="Argument">
             <stringProp name="Argument.name">expenseType001</stringProp>
-            <stringProp name="Argument.value">YS出租车</stringProp>
+            <stringProp name="Argument.value">YS大巴</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="expenseType002" elementType="Argument">
@@ -6168,665 +6153,33 @@ vars.get(cc);</stringProp>
           </collectionProp>
         </ModuleController>
         <hashTree/>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询基础数据" enabled="true">
-          <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">false</boolProp>
-        </TransactionController>
+        <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="预算查询基础信息" enabled="true">
+          <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </kg.apc.jmeter.control.ParameterizedController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询登录账号" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/account?roleType=TENANT</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="tenantId" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">tenantId</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$.tenantId</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found</stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询账套" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/setOfBooks/query/dto?setOfBooksCode=&amp;setOfBooksName=&amp;page=0&amp;size=10&amp;roleType=TENANT</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="booksId" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">setOfBooksId</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.setOfBooksName==&quot;${setOfBooksName}&quot;)].setOfBooksId</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found</stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询公司" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/company/by/term?page=0&amp;size=10&amp;roleType=TENANT</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="companyId;companyCode;companyOID" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">companyId;companyCode;companyOID</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${companyName}&quot;)].id;$..[?(@.name==&quot;${companyName}&quot;)].companyCode;$..[?(@.name==&quot;${companyName}&quot;)].companyOID</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found</stringProp>
-              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询部门" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/department/tenant/all?roleType=TENANT</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="department1" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">departmentId1;departmentOID1</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${departmentName1}&quot;)].id;$..[?(@.name==&quot;${departmentName1}&quot;)].departmentOID</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found</stringProp>
-              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="department2" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">departmentId2;departmentOID2</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${departmentName2}&quot;)].id;$..[?(@.name==&quot;${departmentName2}&quot;)].departmentOID</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found</stringProp>
-              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="department3" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">departmentId3;departmentOID3</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${departmentName3}&quot;)].id;$..[?(@.name==&quot;${departmentName3}&quot;)].departmentOID</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found</stringProp>
-              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询员工" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/users/v3/search?sort=status&amp;page=0&amp;size=10&amp;keyword=&amp;status=all&amp;roleType=TENANT</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="employeeId;userOID" enabled="false">
-              <stringProp name="JSONPostProcessor.referenceNames">employeeId;userOID;mobile</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.fullName==&quot;${employeeName0}&quot;)].id;$..[?(@.fullName==&quot;${employeeName0}&quot;)].userOID;$..[?(@.fullName==&quot;${employeeName0}&quot;)].mobile</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found</stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="employeeId1;userOID1" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">employeeId1;userOID1;mobile1</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.fullName==&quot;${employeeName1}&quot;)].id;$..[?(@.fullName==&quot;${employeeName1}&quot;)].userOID;$..[?(@.fullName==&quot;${employeeName1}&quot;)].mobile</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found</stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="employeeId2;userOID2" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">employeeId2;userOID2;mobile2</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.fullName==&quot;${employeeName2}&quot;)].id;$..[?(@.fullName==&quot;${employeeName2}&quot;)].userOID;$..[?(@.fullName==&quot;${employeeName2}&quot;)].mobile</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found</stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="employeeId3;userOID3" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">employeeId3;userOID3;employeeID3;mobile3</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.fullName==&quot;${employeeName3}&quot;)].id;$..[?(@.fullName==&quot;${employeeName3}&quot;)].userOID;$..[?(@.fullName==&quot;${employeeName3}&quot;)].employeeID;$..[?(@.fullName==&quot;${employeeName3}&quot;)].mobile</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found;Not found</stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="employeeId4;userOID4" enabled="false">
-              <stringProp name="JSONPostProcessor.referenceNames">employeeId4;userOID4;employeeID4;mobile4</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.fullName==&quot;${employeeName4}&quot;)].id;$..[?(@.fullName==&quot;${employeeName4}&quot;)].userOID;$..[?(@.fullName==&quot;${employeeName4}&quot;)].employeeID;$..[?(@.fullName==&quot;${employeeName4}&quot;)].mobile</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found;Not found</stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询部门组" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="page" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">0</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                  <stringProp name="Argument.name">page</stringProp>
-                </elementProp>
-                <elementProp name="size" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">10</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                  <stringProp name="Argument.name">size</stringProp>
-                </elementProp>
-                <elementProp name="deptGroupCode" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value"></stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                  <stringProp name="Argument.name">deptGroupCode</stringProp>
-                </elementProp>
-                <elementProp name="name" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">${DepartmentGroup}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                  <stringProp name="Argument.name">name</stringProp>
-                </elementProp>
-                <elementProp name="nameLable" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">${DepartmentGroup}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                  <stringProp name="Argument.name">nameLable</stringProp>
-                </elementProp>
-                <elementProp name="expand" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">false</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                  <stringProp name="Argument.name">expand</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/DepartmentGroup/selectDepartmentGroupByInput</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="DepartmentGroupId;DepartmentGroupCode" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">DepartmentGroupId;DepartmentGroupCode</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${DepartmentGroup}&quot;)].id;$..[?(@.name==&quot;${DepartmentGroup}&quot;)].deptGroupCode</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Notfound;Notfound</stringProp>
-              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询费用类型" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/invoice/api/expense/types/groupby/category?setOfBooksId=${setOfBooksId}&amp;createdManually=&amp;enabled=&amp;roleType=TENANT</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="bxExpenseId;bxExpenseTypeOID;bxExpenseTypeIconName;iconURL;bxExpenseTypeKey" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">bxExpenseId;bxExpenseTypeOID;bxExpenseTypeIconName;iconURL;bxExpenseTypeKey</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${expenseTypeName}&quot;)].id;$..[?(@.name==&quot;${expenseTypeName}&quot;)].expenseTypeOID;$..[?(@.name==&quot;${expenseTypeName}&quot;)].iconName;$..[?(@.name==&quot;${expenseTypeName}&quot;)].iconURL;$..[?(@.name==&quot;${expenseTypeName}&quot;)].messageKey;</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found;Not found;Not found</stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
+          <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+            <stringProp name="IncludeController.includepath">../../common/01budget_BasicInformationGet.jmx</stringProp>
+          </IncludeController>
+          <hashTree/>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询预算配置参数" enabled="true">
-          <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">false</boolProp>
-        </TransactionController>
+        <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="预算配置查询" enabled="true">
+          <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </kg.apc.jmeter.control.ParameterizedController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询预算组织" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/budget-service/api/budget/organizations/query?page=0&amp;pageSize=10&amp;roleType=TENANT</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="organizationId" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">organizationId</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.organizationName==&quot;${organizationName}&quot;)].id</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found</stringProp>
-              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询预算场景" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/budget-service/api/budget/scenarios/query?page=0&amp;size=10&amp;organizationId=${organizationId}&amp;roleType=TENANT</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="scenarioId" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">scenarioId</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.scenarioName==&quot;${scenarioName}&quot;)].id</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found</stringProp>
-              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询预算版本" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/budget-service/api/budget/versions/query?organizationId=${organizationId}&amp;page=0&amp;size=10&amp;roleType=TENANT</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="versionId" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">versionId</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.versionName==&quot;${versionName}&quot;)].id</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found</stringProp>
-              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询预算表" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/budget-service/api/budget/structures/query?organizationId=${organizationId}&amp;page=0&amp;size=10&amp;roleType=TENANT</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="structureId" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">structureId</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.structureName==&quot;${structureName}&quot;)].id</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found</stringProp>
-              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询项目类型" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/budget-service/api/budget/itemType/query?organizationId=${organizationId}&amp;page=0&amp;size=10&amp;roleType=TENANT</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
+          <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+            <stringProp name="IncludeController.includepath">../../common\BudgetConfigurationQuery.jmx</stringProp>
+          </IncludeController>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询项目" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/budget-service/api/budget/items/query?organizationId=${organizationId}&amp;page=0&amp;size=10&amp;roleType=TENANT</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="itemId" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">itemId</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.itemName==&quot;${itemName}&quot;)].id</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found</stringProp>
-              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询项目组" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/budget-service/api/budget/groups/query?page=0&amp;pageSize=10&amp;organizationId=${organizationId}&amp;roleType=TENANT</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询控制策略" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/budget-service/api/budget/control/strategies/query?page=0&amp;size=10&amp;organizationId=${organizationId}&amp;roleType=TENANT</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询控制规则" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/budget-service/api/budget/control/rules/query?organizationId=${organizationId}&amp;page=0&amp;size=10&amp;roleType=TENANT</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询项目映射" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/budget-service/api/mapping/match/group?orgId=${organizationId}&amp;groupCode=&amp;groupName=&amp;page=0&amp;size=10&amp;roleType=TENANT</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询日记账类型" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/budget-service/api/budget/journal/types/query?&amp;page=0&amp;size=10&amp;organizationId=${organizationId}&amp;roleType=TENANT</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="journalTypeId" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">journalTypeId</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.journalTypeName==&quot;${journalTypeName}&quot;)].id</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found</stringProp>
-              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询预算半年度" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/custom/enumerations/template/by/type?type=2031</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="periodSemiannual" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">periodSemiannual</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.messageKey==&quot;${Semiannual}&quot;)].value</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Notfound</stringProp>
-              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询预算余额_工预算管理员预算" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="提交查询参数" enabled="false">
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&#xd;
-	&quot;versionId&quot;: &quot;${versionId}&quot;,&#xd;
-	&quot;structureId&quot;: &quot;${structureId}&quot;,&#xd;
-	&quot;scenarioId&quot;: &quot;${scenarioId}&quot;,&#xd;
-	&quot;yearLimit&quot;: &quot;${periodYear}&quot;,&#xd;
-	&quot;periodLowerLimit&quot;: &quot;${periodName}&quot;,&#xd;
-	&quot;periodUpperLimit&quot;: &quot;${periodName}&quot;,&#xd;
-	&quot;quarterLowerLimit&quot;: null,&#xd;
-	&quot;quarterUpperLimit&quot;: null,&#xd;
-	&quot;periodSummaryFlag&quot;: false,&#xd;
-	&quot;amountQuarterFlag&quot;: &quot;AMOUNT&quot;,&#xd;
-	&quot;queryLineList&quot;: [{&#xd;
-		&quot;isAll&quot;: false,&#xd;
-		&quot;parameterType&quot;: &quot;BGT_RULE_PARAMETER_ORG&quot;,&#xd;
-		&quot;parameterCode&quot;: &quot;UNIT_GROUP&quot;,&#xd;
-		&quot;queryParameterList&quot;: [{&#xd;
-		&quot;parameterValueId&quot;: ${DepartmentGroupId},&#xd;
-		&quot;parameterValueCode&quot;: ${DepartmentGroupCode},&#xd;
-		&quot;parameterValueName&quot;: &quot;${DepartmentGroup}&quot;&#xd;
-		}]&#xd;
-	}, {&#xd;
-		&quot;isAll&quot;: false,&#xd;
-		&quot;parameterType&quot;: &quot;BGT_RULE_PARAMETER_ORG&quot;,&#xd;
-		&quot;parameterCode&quot;: &quot;COMPANY&quot;,&#xd;
-		&quot;queryParameterList&quot;: [{&#xd;
-			&quot;parameterValueId&quot;: ${companyId},&#xd;
-			&quot;parameterValueCode&quot;: &quot;${companyCode}&quot;,&#xd;
-			&quot;parameterValueName&quot;: &quot;${companyName}&quot;&#xd;
-		}]&#xd;
-	}],&#xd;
-	&quot;organizationId&quot;: &quot;${organizationId}&quot;,&#xd;
-	&quot;companyId&quot;: ${companyId},&#xd;
-	&quot;versionName&quot;: &quot;${versionName}&quot;,&#xd;
-	&quot;structureName&quot;: &quot;${structureName}&quot;,&#xd;
-	&quot;scenarioName&quot;: &quot;${scenarioName}&quot;,&#xd;
-	&quot;amountQuarterFlagName&quot;: &quot;金额&quot;&#xd;
-}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/budget-service/api/budget/balance/query/header/user</stringProp>
-            <stringProp name="HTTPSampler.method">POST</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
-              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-              <stringProp name="RegexExtractor.refname">queryID</stringProp>
-              <stringProp name="RegexExtractor.regex">&quot;(.*)&quot;</stringProp>
-              <stringProp name="RegexExtractor.template">$1$</stringProp>
-              <stringProp name="RegexExtractor.default">Not found</stringProp>
-              <stringProp name="RegexExtractor.match_number">1</stringProp>
-            </RegexExtractor>
-            <hashTree/>
-          </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="提交查询参数" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -6986,7 +6339,7 @@ vars.put(&quot;flag&quot;,flag);
             <hashTree/>
           </hashTree>
         </hashTree>
-        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="新建日记账" enabled="true">
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="新建日记账" enabled="false">
           <stringProp name="IfController.condition">&quot;${Balance}&quot; == &quot;Y&quot;</stringProp>
           <boolProp name="IfController.evaluateAll">false</boolProp>
         </IfController>
@@ -7161,7 +6514,7 @@ vars.put(&quot;flag&quot;,flag);
             <hashTree/>
           </hashTree>
         </hashTree>
-        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="如果可以提100不需要再次更新" enabled="true">
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="如果可以提100不需要再次更新" enabled="false">
           <stringProp name="IfController.condition">&quot;${flag}&quot; !=&quot;N&quot; &amp;&amp;   &quot;${Balance}&quot; !=&quot;Y&quot;</stringProp>
           <boolProp name="IfController.evaluateAll">false</boolProp>
         </IfController>
@@ -7336,7 +6689,7 @@ vars.put(&quot;flag&quot;,flag);
             <hashTree/>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询预算余额_工预算管理员预算" enabled="true">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="查询预算余额_工预算管理员预算" enabled="false">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
@@ -7465,7 +6818,7 @@ vars.put(&quot;baseAmount1&quot;,baseAmount1);
             <hashTree/>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="被控制员工登录创建日常报销单" enabled="true">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="被控制员工登录创建日常报销单" enabled="false">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
@@ -8945,7 +8298,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="2部门组预算_日常报销单_管控部门2" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="2部门组预算_日常报销单_管控部门2" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -11791,7 +11144,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="3部门组预算_日常报销单_未管控部门3" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="3部门组预算_日常报销单_未管控部门3" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -12919,7 +12272,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="4部门组预算_费用报销单_有日记账部门1(需要调试预算查询)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="4部门组预算_费用报销单_有日记账部门1(需要调试预算查询)" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -17279,7 +16632,7 @@ if(bgtAmount.equals(bgtAmount1)&amp;&amp;expUsedAmount.equals(expUsedAmount1)&am
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="5部门组预算_费用报销单_没有日记账部门2(需要调试预算查询)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="5部门组预算_费用报销单_没有日记账部门2(需要调试预算查询)" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -21639,7 +20992,7 @@ if(bgtAmount.equals(bgtAmount1)&amp;&amp;expUsedAmount.equals(expUsedAmount1)&am
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="6部门组预算_费用报销单_未管控部门" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="6部门组预算_费用报销单_未管控部门" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -23751,7 +23104,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="7部门组预算_差旅报销单_有日记账部门1(需要调试预算查询)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="7部门组预算_差旅报销单_有日记账部门1(需要调试预算查询)" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -28679,7 +28032,7 @@ if(bgtAmount.equals(bgtAmount1)&amp;&amp;expUsedAmount.equals(expUsedAmount1)&am
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="8部门组预算_差旅报销单_有日记账部门2(需要调试预算查询)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="8部门组预算_差旅报销单_有日记账部门2(需要调试预算查询)" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -33607,7 +32960,7 @@ if(bgtAmount.equals(bgtAmount1)&amp;&amp;expUsedAmount.equals(expUsedAmount1)&am
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="9部门组预算_差旅报销单_有日记账部门2(需要调试预算查询)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="9部门组预算_差旅报销单_有日记账部门2(需要调试预算查询)" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>

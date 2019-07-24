@@ -6,7 +6,7 @@
     </tstamp>
     <!-- 需要改成自己本地的 Jmeter 目录-->
     <!-- property name="jmeter.home" value="${env.JMETER_HOME}" /-->
-	<condition property="jmeter.home" value="${JMETER_HOME}" else="/opt/apache-jmeter-3.3">
+	<condition property="jmeter.home" value="${JMETER_HOME}" else="/opt/apache-jmeter-5.1.1">
 		<isset property="JMETER_HOME" />
 	</condition>
 	<property name="lib.dir" value="${jmeter.home}\lib" />

@@ -120,9 +120,31 @@
             <stringProp name="Argument.value">账套002</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="company" elementType="Argument">
-            <stringProp name="Argument.name">company</stringProp>
-            <stringProp name="Argument.value">预算项目公司部门成本中心公司</stringProp>
+          <elementProp name="CompanyGroup1" elementType="Argument">
+            <stringProp name="Argument.name">CompanyGroup1</stringProp>
+            <stringProp name="Argument.value">公司组01</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">1,2在组1</stringProp>
+          </elementProp>
+          <elementProp name="CompanyGroup2" elementType="Argument">
+            <stringProp name="Argument.name">CompanyGroup2</stringProp>
+            <stringProp name="Argument.value">公司组02</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">3在组2</stringProp>
+          </elementProp>
+          <elementProp name="company1" elementType="Argument">
+            <stringProp name="Argument.name">company1</stringProp>
+            <stringProp name="Argument.value">预算执行进度公司1</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="company2" elementType="Argument">
+            <stringProp name="Argument.name">company2</stringProp>
+            <stringProp name="Argument.value">预算执行进度公司2</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="company3" elementType="Argument">
+            <stringProp name="Argument.name">company3</stringProp>
+            <stringProp name="Argument.value">预算执行进度公司3</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="employee1" elementType="Argument">
@@ -143,14 +165,26 @@
             <stringProp name="Argument.desc">部门组预算用户</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="DepartmentGroup1" elementType="Argument">
+            <stringProp name="Argument.name">DepartmentGroup1</stringProp>
+            <stringProp name="Argument.value">部门预算组</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">部门1、2在组1</stringProp>
+          </elementProp>
+          <elementProp name="DepartmentGroup2" elementType="Argument">
+            <stringProp name="Argument.name">DepartmentGroup2</stringProp>
+            <stringProp name="Argument.value">预算执行信息组</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">预算项目1、2在组2</stringProp>
+          </elementProp>
           <elementProp name="department1" elementType="Argument">
             <stringProp name="Argument.name">department1</stringProp>
-            <stringProp name="Argument.value">预算项目公司部门成本中心部门1</stringProp>
+            <stringProp name="Argument.value">部门组预算1</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="department2" elementType="Argument">
             <stringProp name="Argument.name">department2</stringProp>
-            <stringProp name="Argument.value">预算项目公司部门成本中心部门2</stringProp>
+            <stringProp name="Argument.value">部门组预算2</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="department3" elementType="Argument">
@@ -158,20 +192,59 @@
             <stringProp name="Argument.value">部门组预算3</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="department4" elementType="Argument">
+            <stringProp name="Argument.name">department4</stringProp>
+            <stringProp name="Argument.value">预算项目公司部门成本中心部门1</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="department5" elementType="Argument">
+            <stringProp name="Argument.name">department5</stringProp>
+            <stringProp name="Argument.value">预算项目公司部门成本中心部门2</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="department6" elementType="Argument">
+            <stringProp name="Argument.name">department6</stringProp>
+            <stringProp name="Argument.value">预算项目公司部门成本中心部门3</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
           <elementProp name="costCenter" elementType="Argument">
             <stringProp name="Argument.name">costCenter</stringProp>
-            <stringProp name="Argument.value">项目</stringProp>
+            <stringProp name="Argument.value">成本中心1</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="costCenterGroup1" elementType="Argument">
+            <stringProp name="Argument.name">costCenterGroup1</stringProp>
+            <stringProp name="Argument.value">成本中心组1</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="costCenterGroup2" elementType="Argument">
+            <stringProp name="Argument.name">costCenterGroup2</stringProp>
+            <stringProp name="Argument.value">成本中心组2</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="costCenterItem1" elementType="Argument">
             <stringProp name="Argument.name">costCenterItem1</stringProp>
             <stringProp name="Argument.value">成本中心项001</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">1,2在组1</stringProp>
           </elementProp>
           <elementProp name="costCenterItem2" elementType="Argument">
             <stringProp name="Argument.name">costCenterItem2</stringProp>
             <stringProp name="Argument.value">成本中心项002</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">1,2在组1</stringProp>
+          </elementProp>
+          <elementProp name="costCenterItem3" elementType="Argument">
+            <stringProp name="Argument.name">costCenterItem3</stringProp>
+            <stringProp name="Argument.value">成本中心项003</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">3,4在组2</stringProp>
+          </elementProp>
+          <elementProp name="costCenterItem4" elementType="Argument">
+            <stringProp name="Argument.name">costCenterItem4</stringProp>
+            <stringProp name="Argument.value">成本中心项004</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">3,4在组2</stringProp>
           </elementProp>
         </collectionProp>
       </Arguments>
@@ -220,12 +293,12 @@
           </elementProp>
           <elementProp name="YSstructure" elementType="Argument">
             <stringProp name="Argument.name">YSstructure</stringProp>
-            <stringProp name="Argument.value">部门组预算表</stringProp>
+            <stringProp name="Argument.value">预算执行信息项目表</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="YSProduct" elementType="Argument">
             <stringProp name="Argument.name">YSProduct</stringProp>
-            <stringProp name="Argument.value">部门组预算项目</stringProp>
+            <stringProp name="Argument.value">预算执行信息项目</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="YSJNType" elementType="Argument">

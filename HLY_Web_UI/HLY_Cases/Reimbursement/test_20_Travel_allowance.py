@@ -6,6 +6,7 @@ from HLY_Elements.expense.elTravel_allowance import Travel_allowance, add_Travel
 from HLY_PageObject.API.apis import open_auto_route_Calculation, close_auto_route_Calculation
 from HLY_PageObject.UI.Reimbursement import Reimbursement
 from HLY_PageObject.UI.my_expense.my_expense import My_Expense
+from config.api_urls import expense_standard
 
 
 def test_4460_Travel_allowance01(enter):
@@ -19,10 +20,11 @@ def test_4460_Travel_allowance01(enter):
     reimbursement = Reimbursement(driver)
     # 选择报销单类型(日常报销单)
     my_expense = My_Expense(driver)
-    my_expense.Newexpense("日常报销单-UI自动化")
-    sleep(2)
     # 打开自动行程计算
     open_auto_route_Calculation()
+    reimbursement.get_url(expense_standard)
+    my_expense.Newexpense("日常报销单-UI自动化")
+    sleep(2)
     reimbursement.get_elements_sendKey(1, cause, "自动行程计算打开对差补的影响")
     driver.click(reimbursement.get_parent_xpath("新 建"), timeout=1)
     sleep(5)

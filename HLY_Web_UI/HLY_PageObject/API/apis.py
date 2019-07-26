@@ -331,12 +331,13 @@ def open_auto_route_Calculation():
     差补界面打开自动计算行程
     :return:
     """
-    body ={"allowanceReduplicateTreatment": 1001,
+    body = {"allowanceReduplicateTreatment": 1001,
            "allowanceAmountModify": 1002,
-           "allowanceAttachExpenseReportDisable": False,
+           "allowanceAttachExpenseReportDisable": "False",
            "travelAutoCalculateEnable": True
            }
     code, json = api.response_json(api_urls.travel_setting, "post", header=hly.apilogin_agin(), rjson=body)
+    time.sleep(2)
     logger.info("差补规则基础设置:%s" % json)
 
 def close_auto_route_Calculation():
@@ -344,12 +345,13 @@ def close_auto_route_Calculation():
     差补界面关闭自动计算行程
     :return:
     """
-    body ={"allowanceReduplicateTreatment":1001,
+    body ={"allowanceReduplicateTreatment": 1001,
            "allowanceAmountModify": 1002,
-           "allowanceAttachExpenseReportDisable":False,
-           "travelAutoCalculateEnable":False
+           "allowanceAttachExpenseReportDisable": "False",
+           "travelAutoCalculateEnable": False
            }
     code, json = api.response_json(api_urls.travel_setting, "post", header=hly.apilogin_agin(), rjson=body)
+    time.sleep(2)
     logger.info("差补规则基础设置:%s"%json)
 
 

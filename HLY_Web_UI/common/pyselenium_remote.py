@@ -34,7 +34,7 @@ class Pyapp_Remote(webdriver.Remote):
         logger.info("返回浏览器的对象1")
 
         super(Pyapp_Remote, self).__init__(command_executor, firefox_capabilities, browser_profile, proxy, keep_alive)
-    def get_element(self, css, s=False, secs=10, poll_frequency=1, timeout=0, display=True, method=None, **kwargs):
+    def get_element(self, css, s=False, secs=7, poll_frequency=1, timeout=0, display=True, method=None, **kwargs):
         """
         获取并返回元素
         :param css: “id=>username”

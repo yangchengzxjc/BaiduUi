@@ -22,7 +22,7 @@ def enter(request, prepare):
     if driver.is_exist(company_page):
         pass
     else:
-        a=driver.get_element(elPublic.mode)
+        a = driver.get_element(elPublic.mode)
         ActionChains(driver).move_to_element(a).perform()
         driver.click(elPublic.SwitchingCompany,timeout=2)
         driver.click(elPublic.SwitchingCompanyOK, 1)

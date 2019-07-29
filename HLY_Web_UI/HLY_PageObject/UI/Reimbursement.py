@@ -36,7 +36,7 @@ class Reimbursement():
         els = self.driver.find_elements_by_xpath(element)
         return els[number].text
 
-    def get_elements_sendKey(self, number, element, text, timeout=3):
+    def get_elements_sendKey(self, number, element, text, timeout=2):
 
         sleep(timeout)
         els = self.driver.find_elements_by_xpath(element)
@@ -44,11 +44,13 @@ class Reimbursement():
         logger.info("%s的元素的个数是：%s"% (text, len(els)))
         els[number].send_keys(text)
 
-    def get_element_clear(self, number, element):
+    def get_element_clear(self, number, element, timeout=3):
+        sleep(timeout)
         els = self.driver.find_elements_by_xpath(element)
         els[number].clear()
 
-    def Pagescroll(self, xpath, timeout):
+    def Pagescroll(self, xpath, timeout=1):
+        sleep(timeout)
         el = self.driver.get_element(xpath)
         self.driver.execute_script("arguments[0].scrollIntoView();", el)
         pass

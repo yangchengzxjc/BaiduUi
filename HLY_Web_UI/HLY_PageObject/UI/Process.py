@@ -7,7 +7,7 @@ from HLY_Elements.expense.elFinanciaCheck import search_approve, passed, new_amo
     get_businessCode, cancel, confirm, continue_submit_text, continue_submit, input_expenses
 from HLY_Elements.expense.elExpense import Financial_search, save, input_expense, scroll_locate, departure_prod, \
     Destination_prod, destinations_prod
-from HLY_Elements.expense.elReimbursement import new_expense, new_other_expense, no_card_user
+from HLY_Elements.expense.elReimbursement import new_expense, new_other_expense, no_card_user, withdraw_confirm
 from HLY_Elements.expense.expense_type import amount_input, new_apportion, apportion_department2, \
     apportion_department1
 from HLY_PageObject.UI.Reimbursement import Reimbursement
@@ -140,7 +140,7 @@ class Process(Reimbursement):
         self.driver.click(approve, timeout=2)
         logger.info("审批通过")
 
-    def enter_approve(self,businessCode, timeout=4):
+    def enter_approve(self,businessCode):
         """
         进入审批的页面并且滑动到查看出现
         :return:
@@ -160,7 +160,7 @@ class Process(Reimbursement):
         sleep(1)
         self.my_expense.Pagescroll(businesscodes, timeout=2)
         sleep(1)
-        self.get_elements_click(0,businesscode)
+        self.get_elements_click(0, businesscode)
         sleep(3)
         self.my_expense.Pagescroll(self.get_xpath("查看"),timeout=1)
 
@@ -205,7 +205,6 @@ class Process(Reimbursement):
         进入单据审核的页面
         :return:
         """
-
         sleep(4)
         self.get_url(invoice_verify)
         businesscode = business_code.replace("ER", businessCode)
@@ -267,7 +266,7 @@ class Process(Reimbursement):
         self.driver.click(refuse, timeout=3)
         logger.info("财务驳回报销单")
 
-    def approve_refuse(self, businessCode):
+    def approve_refuse(self, businessCode, flag =True):
         """
         审批驳回
         :param businessCode:
@@ -287,11 +286,15 @@ class Process(Reimbursement):
         sleep(1)
         self.my_expense.Pagescroll(businesscodes, timeout=2)
         sleep(1)
-        self.get_elements_click(0, businesscode)
-        self.driver.sendkeys(reason, "金额不符")
-        self.driver.click(refuse, timeout=3)
-        sleep(4)
-        logger.info("审批驳回")
+        if flag == True:
+            self.get_elements_click(0, businesscode)
+            self.driver.sendkeys(reason, "金额不符")
+            self.driver.click(refuse, timeout=3)
+            sleep(4)
+            logger.info("审批驳回")
+        else:
+            self.get_elements_click(0, businesscode)
+
 
     def open_reimbursement(self, businessCode):
         """
@@ -299,10 +302,10 @@ class Process(Reimbursement):
         :param businessCode:
         :return:
         """
-        sleep(3)
+        sleep(4)
         self.get_url(reimbursement_look)
         businesscode = self.replace_element(business_code, "ER", businessCode)
-        sleep(5)
+        sleep(2)
         self.driver.find_element_by_xpath(businesscode).click()
         sleep(3)
 
@@ -329,12 +332,12 @@ class Process(Reimbursement):
         self.driver.click(cancel, timeout=timeout)
         self.driver.click(confirm)
 
-    def continue_submit(self):
+    def continue_submit(self, timeout=5):
         """
         判断是否有借款，继续提交
         :return:
         """
-        sleep(5)
+        sleep(timeout)
         if self.driver.is_exist(continue_submit_text):
             els = self.driver.find_elements_by_xpath(continue_submit)
             logger.info(len(els))
@@ -343,6 +346,17 @@ class Process(Reimbursement):
         else:
             pass
 
+    def withdraw(self, bussinessCode, timeout=5):
+        """
+        报销单撤回
+        :return:
+        """
+        sleep(timeout)
+        self.open_reimbursement(bussinessCode)
+        self.driver.click(self.get_parent_xpath("撤 回"))
+        self.driver.click(self.get_parent_xpath("确 定"))
+        logger.info("点击撤回，并确定")
+
     def new_apporation_expense(self, amount, approation_amount, department, currency="HKD", rate ="0.8", expense_name="分摊费用类型", flag =False):
         """
         新建分摊费用类型,按照部门分摊自己的部门和测试部门分摊
@@ -350,6 +364,7 @@ class Process(Reimbursement):
         :param amount:金额
         :param approation_amount:第一个公司的分摊金额
         :param expense_name:费用类型
+        :param apportion_line: 分滩行
         :return:
         """
         # 创建本位币分摊费用50.23元

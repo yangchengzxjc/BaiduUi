@@ -333,7 +333,7 @@ def open_auto_route_Calculation():
     """
     body = {"allowanceReduplicateTreatment": 1001,
            "allowanceAmountModify": 1002,
-           "allowanceAttachExpenseReportDisable": "False",
+           "allowanceAttachExpenseReportDisable": "true",
            "travelAutoCalculateEnable": True
            }
     code, json = api.response_json(api_urls.travel_setting, "post", header=hly.apilogin_agin(), rjson=body)
@@ -347,7 +347,7 @@ def close_auto_route_Calculation():
     """
     body ={"allowanceReduplicateTreatment": 1001,
            "allowanceAmountModify": 1002,
-           "allowanceAttachExpenseReportDisable": "False",
+           "allowanceAttachExpenseReportDisable": "true",
            "travelAutoCalculateEnable": False
            }
     code, json = api.response_json(api_urls.travel_setting, "post", header=hly.apilogin_agin(), rjson=body)

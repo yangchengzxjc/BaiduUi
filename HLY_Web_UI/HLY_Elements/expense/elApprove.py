@@ -22,3 +22,5 @@ reason = 'xpath=>//*[@id="reason"]'
 approve_process ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[1]/div/div[1]/div/div/div/div/div[3]'
 # 审批的进程
 wait_approve = '//*[@id="app"]/div/div[2]/div[2]/div/div[1]/div/div[2]/div[2]/div/ul/li[1]/div[3]/div/div[2]'
+# 审批界面费用分摊的分摊比例 第三个分滩行
+apportion_line3 = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[6]/div[2]/div/div/div/div/div/div/div/table/tbody/tr[3]/td[3]'

@@ -61,3 +61,12 @@ new_amount = 'xpath=>//*[@id="amount"]'
 save_amount = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[1]/div[2]/div/div[5]/button[1]'
 # 审批搜索报销单
 search_approve = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[3]/div[2]/span/input'
+# 财务审核录入专用发票后的分摊金额
+financial_apportion1 = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div[2]/div/div[6]/div[2]/div/div/div/div/div/div/div/table/tbody/tr[1]/td[2]'
+financial_apportion2 = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div[2]/div/div[6]/div[2]/div/div/div/div/div/div/div/table/tbody/tr[2]/td[2]'
+financial_apportion3 = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[6]/div[2]/div/div/div/div/div/div/div/table/tbody/tr[1]/td[2]'
+financial_apportion4 = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[6]/div[2]/div/div/div/div/div/div/div/table/tbody/tr[2]/td[2]'
+# 原币金额
+origin_amout = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div[2]/div/div[1]/div[2]/div/div[3]/span/span[1]'
+# 删除发票
+delete_invoice = 'xpath=>//*[@class="ant-btn button-delete ant-btn-primary ant-btn-sm"]'

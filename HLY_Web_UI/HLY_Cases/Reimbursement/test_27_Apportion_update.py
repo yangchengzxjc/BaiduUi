@@ -47,8 +47,8 @@ def test_apportion_line(creat_expense):
     my_expense.SelectExpense("分摊费用类型")
     logger.info("新建分摊费用")
     # 输入分摊的金额
-    driver.sendkeys(travel_input_expenses, "30")
-    reimbursement.Pagescroll(reimbursement.get_xpath("费用分摊"), timeout=1)
+    driver.sendkeys(travel_input_expenses, "30", timeout=2)
+    reimbursement.Pagescroll(reimbursement.get_xpath("费用分摊"), timeout=2)
     logger.info("滑动到分摊行")
     reimbursement.get_element_clear(1, amount_input)
     reimbursement.get_elements_sendKey(1, amount_input, "10")
@@ -106,7 +106,7 @@ def test_apportion_line(creat_expense):
     process.continue_submit()
     # 审批界面查看分摊比例以及金额
     # 报销单驳回
-    process.enter_approve("ER02208326")
+    process.enter_approve(business_Code)
     driver.click(reimbursement.get_xpath("查看"))
     sleep(3)
     reimbursement.Pagescroll(reimbursement.get_xpath("费用分摊"), timeout=1)
@@ -115,7 +115,7 @@ def test_apportion_line(creat_expense):
     reimbursement.get_elements_click(1, reimbursement.get_origin_parent_xpath("返 回"))
     driver.sendkeys(reason, "金额不符")
     driver.click(refuse, timeout=2)
-    process.open_reimbursement("ER02208326")
+    process.open_reimbursement(business_Code)
     logger.info("审批驳回后，进入报销单查看分摊")
     reimbursement.Pagescroll(reimbursement.get_xpath("复制"), timeout=2)
     driver.click(reimbursement.get_xpath("分摊费用类型"))
@@ -125,8 +125,9 @@ def test_apportion_line(creat_expense):
     driver.click(submit_expense, timeout=2)
     process.continue_submit()
     # 报销单审批通过
-    process.approve("ER02208326")
-    process.enter_Financial_audit("ER02208326")
+    process.approve(business_Code)
+    process.enter_Financial_audit(business_Code)
+    logger.info("进入财务管理查看分摊的比例")
     driver.click(reimbursement.get_xpath("查看"))
     sleep(3)
     reimbursement.Pagescroll(reimbursement.get_xpath("费用分摊"), timeout=1)

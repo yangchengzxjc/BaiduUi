@@ -120,8 +120,32 @@
           </HTTPSamplerProxy>
           <hashTree>
             <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="companyId;companyCode;companyOID" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">companyId;companyCode;companyOID</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${companyName}&quot;)].id;$..[?(@.name==&quot;${companyName}&quot;)].companyCode;$..[?(@.name==&quot;${companyName}&quot;)].companyOID</stringProp>
+              <stringProp name="JSONPostProcessor.referenceNames">companyId1;companyCode1;companyOID1</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${companyName1}&quot;)].id;$..[?(@.name==&quot;${companyName1}&quot;)].companyCode;$..[?(@.name==&quot;${companyName1}&quot;)].companyOID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found</stringProp>
+              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="companyId;companyCode;companyOID" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">companyId2;companyCode2;companyOID2</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${companyName2}&quot;)].id;$..[?(@.name==&quot;${companyName2}&quot;)].companyCode;$..[?(@.name==&quot;${companyName2}&quot;)].companyOID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found</stringProp>
+              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="companyId;companyCode;companyOID" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">companyId3;companyCode3;companyOID3</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${companyName3}&quot;)].id;$..[?(@.name==&quot;${companyName3}&quot;)].companyCode;$..[?(@.name==&quot;${companyName3}&quot;)].companyOID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found</stringProp>
+              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="companyId;companyCode;companyOID" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">companyId4;companyCode4;companyOID4</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${companyName4}&quot;)].id;$..[?(@.name==&quot;${companyName4}&quot;)].companyCode;$..[?(@.name==&quot;${companyName4}&quot;)].companyOID</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
               <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found</stringProp>
               <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
@@ -148,26 +172,26 @@
           </HTTPSamplerProxy>
           <hashTree>
             <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="department1" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">departmentId1;departmentOID1</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${departmentName1}&quot;)].id;$..[?(@.name==&quot;${departmentName1}&quot;)].departmentOID</stringProp>
+              <stringProp name="JSONPostProcessor.referenceNames">departmentId1;departmentOID1;DeptNumber1</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${departmentName1}&quot;)].id;$..[?(@.name==&quot;${departmentName1}&quot;)].departmentOID;$..[?(@.name==&quot;${departmentName1}&quot;)].departmentOID</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found</stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found</stringProp>
               <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
             </JSONPostProcessor>
             <hashTree/>
             <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="department2" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">departmentId2;departmentOID2</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${departmentName2}&quot;)].id;$..[?(@.name==&quot;${departmentName2}&quot;)].departmentOID</stringProp>
+              <stringProp name="JSONPostProcessor.referenceNames">departmentId2;departmentOID2;DeptNumber2</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${departmentName2}&quot;)].id;$..[?(@.name==&quot;${departmentName2}&quot;)].departmentOID;$..[?(@.name==&quot;${departmentName2}&quot;)].departmentOID</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found</stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found</stringProp>
               <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
             </JSONPostProcessor>
             <hashTree/>
             <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="department3" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">departmentId3;departmentOID3</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${departmentName3}&quot;)].id;$..[?(@.name==&quot;${departmentName3}&quot;)].departmentOID</stringProp>
+              <stringProp name="JSONPostProcessor.referenceNames">departmentId3;departmentOID3;DeptNumber3</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${departmentName3}&quot;)].id;$..[?(@.name==&quot;${departmentName3}&quot;)].departmentOID;$..[?(@.name==&quot;${departmentName3}&quot;)].departmentOID</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found</stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found</stringProp>
               <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
             </JSONPostProcessor>
             <hashTree/>
@@ -312,6 +336,86 @@
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
           </HTTPSamplerProxy>
           <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询成本中心" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/cost/center/company?page=0&amp;size=25&amp;setOfBooksId=${setOfBooksId}&amp;roleType=TENANT</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="costCenterid;costCenterOID" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">costCenterid;costCenterOID</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${costCenterName}&quot;)].id;$..[?(@.name==&quot;${costCenterName}&quot;)].costCenterOID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found</stringProp>
+              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询成本中心项" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/cost/center/items/${costCenterOID}/all?page=0&amp;size=10&amp;keyword=&amp;sort=&amp;roleType=TENANT</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="CenterItemid1;CenterItemcode1;CenterItemOID1" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">CenterItemid1;CenterItemcode1;CenterItemOID1</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${costCenterItemName1}&quot;)].id;$..[?(@.name==&quot;${costCenterItemName1}&quot;)].code;$..[?(@.name==&quot;${costCenterItemName1}&quot;)].costCenterItemOID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found</stringProp>
+              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="CenterItemid1;CenterItemcode1;CenterItemOID1" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">CenterItemid2;CenterItemcode2;CenterItemOID2</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${costCenterItemName2}&quot;)].id;$..[?(@.name==&quot;${costCenterItemName2}&quot;)].code;$..[?(@.name==&quot;${costCenterItemName2}&quot;)].costCenterItemOID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found</stringProp>
+              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="CenterItemid1;CenterItemcode1;CenterItemOID1" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">CenterItemid3;CenterItemcode3;CenterItemOID3</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${costCenterItemName3}&quot;)].id;$..[?(@.name==&quot;${costCenterItemName3}&quot;)].code;$..[?(@.name==&quot;${costCenterItemName3}&quot;)].costCenterItemOID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found</stringProp>
+              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="CenterItemid1;CenterItemcode1;CenterItemOID1" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">CenterItemid4;CenterItemcode4;CenterItemOID4</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${costCenterItemName4}&quot;)].id;$..[?(@.name==&quot;${costCenterItemName4}&quot;)].code;$..[?(@.name==&quot;${costCenterItemName4}&quot;)].costCenterItemOID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found</stringProp>
+              <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询费用类型" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
               <collectionProp name="Arguments.arguments"/>

@@ -14,12 +14,12 @@
           </elementProp>
           <elementProp name="serverUrl" elementType="Argument">
             <stringProp name="Argument.name">serverUrl</stringProp>
-            <stringProp name="Argument.value">${__P(serverUrl,console.huilianyi.com)}</stringProp>
+            <stringProp name="Argument.value">${__P(serverUrl,stage.huilianyi.com)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,13609265517)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,13700000000)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
@@ -6873,11 +6873,11 @@ int size = customFormFields.size();
 for (int i = 0; i &lt; size; i++){
 		   jj = customFormFields.getJSONObject(i);
              if (jj.get(&quot;fieldName&quot;).equals(&quot;事由&quot;))
-           		jj.put(&quot;value&quot;,&quot;bug26831&quot;);
+           		jj.put(&quot;value&quot;,&quot;这个是事由-bug26831&quot;);
              if (jj.get(&quot;fieldName&quot;).equals(&quot;部门&quot;))
            		jj.put(&quot;value&quot;,vars.get(&quot;departmentOid&quot;));
              if (jj.get(&quot;fieldName&quot;).equals(&quot;备注&quot;))
-           		jj.put(&quot;value&quot;,&quot;bug26831&quot;);
+           		jj.put(&quot;value&quot;,&quot;这个是备注&quot;);
 }
 String str =customFormFields.toString();
 log.info(&quot;NcustomFormFields:&quot;+str);

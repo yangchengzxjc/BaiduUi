@@ -1062,7 +1062,7 @@ vars.put(&quot;NcustomFormFields&quot;,str);
                 <stringProp name="Argument.value">{&#xd;
     &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
     &quot;allowanceAmountModify&quot;:1001,&#xd;
-    &quot;allowanceAttachExpenseReportDisable&quot;:false,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
     &quot;travelAutoCalculateEnable&quot;:true&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -1574,11 +1574,11 @@ vars.put(&quot;newfield&quot;,newfield);</stringProp>
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="1783440026">{&quot;expenseReportSubsidyViewList&quot;:[],&quot;subsidyTips&quot;:null,&quot;withCity&quot;:true,&quot;subsidySelection&quot;:true,&quot;isAutoCalculateEnabled&quot;:true}</stringProp>
+              <stringProp name="973974113">{&quot;expenseReportSubsidyViewList&quot;:[],&quot;subsidyTips&quot;:null,&quot;withCity&quot;:true,&quot;subsidySelection&quot;:true,&quot;isAutoCalculateEnabled&quot;:true,&quot;reportStartDate&quot;:null,&quot;reportEndDate&quot;:null}</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">8</intProp>
+            <intProp name="Assertion.test_type">16</intProp>
             <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
           <hashTree/>
@@ -1592,7 +1592,7 @@ vars.put(&quot;newfield&quot;,newfield);</stringProp>
                 <stringProp name="Argument.value">{&#xd;
     &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
     &quot;allowanceAmountModify&quot;:1001,&#xd;
-    &quot;allowanceAttachExpenseReportDisable&quot;:false,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
     &quot;travelAutoCalculateEnable&quot;:false&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -1878,7 +1878,7 @@ vars.put(&quot;newfield&quot;,newfield);</stringProp>
                 <stringProp name="Argument.value">{&#xd;
     &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
     &quot;allowanceAmountModify&quot;:1001,&#xd;
-    &quot;allowanceAttachExpenseReportDisable&quot;:false,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
     &quot;travelAutoCalculateEnable&quot;:true&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -2443,7 +2443,7 @@ vars.put(&quot;newData&quot;,newData);
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="-1067440401">{&quot;expenseReportSubsidyViewList&quot;:[{&quot;expenseReportSubsidyDTOS&quot;:[],&quot;subsidyTips&quot;:null,&quot;subsidyStartDate&quot;:null,&quot;subsidyEndDate&quot;:null,&quot;userDTOList&quot;:[],&quot;subsidyExtendID&quot;:null,&quot;tenantID&quot;:null}],&quot;subsidyTips&quot;:null,&quot;withCity&quot;:true,&quot;subsidySelection&quot;:true,&quot;isAutoCalculateEnabled&quot;:true}</stringProp>
+              <stringProp name="-636796106">{&quot;expenseReportSubsidyViewList&quot;:[{&quot;expenseReportSubsidyDTOS&quot;:[],&quot;subsidyTips&quot;:null,&quot;subsidyStartDate&quot;:null,&quot;subsidyEndDate&quot;:null,&quot;userDTOList&quot;:[],&quot;subsidyExtendID&quot;:null,&quot;tenantID&quot;:null}],&quot;subsidyTips&quot;:null,&quot;withCity&quot;:true,&quot;subsidySelection&quot;:true,&quot;isAutoCalculateEnabled&quot;:true,&quot;reportStartDate&quot;:null,&quot;reportEndDate&quot;:null}</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
@@ -2791,7 +2791,7 @@ vars.put(&quot;AllDetalNew&quot;,str);</stringProp>
                 <stringProp name="Argument.value">{&#xd;
     &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
     &quot;allowanceAmountModify&quot;:1001,&#xd;
-    &quot;allowanceAttachExpenseReportDisable&quot;:false,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
     &quot;travelAutoCalculateEnable&quot;:false&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -3124,7 +3124,7 @@ vars.put(&quot;AllDetalNew&quot;,str);</stringProp>
                 <stringProp name="Argument.value">{&#xd;
     &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
     &quot;allowanceAmountModify&quot;:1001,&#xd;
-    &quot;allowanceAttachExpenseReportDisable&quot;:false,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
     &quot;travelAutoCalculateEnable&quot;:true&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -3729,7 +3729,7 @@ vars.put(&quot;newfield&quot;,newfield);</stringProp>
                 <stringProp name="Argument.value">{&#xd;
     &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
     &quot;allowanceAmountModify&quot;:1001,&#xd;
-    &quot;allowanceAttachExpenseReportDisable&quot;:false,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
     &quot;travelAutoCalculateEnable&quot;:false&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -3963,7 +3963,7 @@ vars.put(&quot;newfield&quot;,newfield);</stringProp>
                 <stringProp name="Argument.value">{&#xd;
     &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
     &quot;allowanceAmountModify&quot;:1001,&#xd;
-    &quot;allowanceAttachExpenseReportDisable&quot;:false,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
     &quot;travelAutoCalculateEnable&quot;:true&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -4812,7 +4812,7 @@ vars.put(&quot;AllDetalNew&quot;,str);</stringProp>
                 <stringProp name="Argument.value">{&#xd;
     &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
     &quot;allowanceAmountModify&quot;:1001,&#xd;
-    &quot;allowanceAttachExpenseReportDisable&quot;:false,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
     &quot;travelAutoCalculateEnable&quot;:false&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -5093,7 +5093,7 @@ vars.put(&quot;AllDetalNew&quot;,str);</stringProp>
                 <stringProp name="Argument.value">{&#xd;
     &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
     &quot;allowanceAmountModify&quot;:1001,&#xd;
-    &quot;allowanceAttachExpenseReportDisable&quot;:false,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
     &quot;travelAutoCalculateEnable&quot;:true&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -5658,7 +5658,7 @@ vars.put(&quot;newData&quot;,newData);
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="-1067440401">{&quot;expenseReportSubsidyViewList&quot;:[{&quot;expenseReportSubsidyDTOS&quot;:[],&quot;subsidyTips&quot;:null,&quot;subsidyStartDate&quot;:null,&quot;subsidyEndDate&quot;:null,&quot;userDTOList&quot;:[],&quot;subsidyExtendID&quot;:null,&quot;tenantID&quot;:null}],&quot;subsidyTips&quot;:null,&quot;withCity&quot;:true,&quot;subsidySelection&quot;:true,&quot;isAutoCalculateEnabled&quot;:true}</stringProp>
+              <stringProp name="-636796106">{&quot;expenseReportSubsidyViewList&quot;:[{&quot;expenseReportSubsidyDTOS&quot;:[],&quot;subsidyTips&quot;:null,&quot;subsidyStartDate&quot;:null,&quot;subsidyEndDate&quot;:null,&quot;userDTOList&quot;:[],&quot;subsidyExtendID&quot;:null,&quot;tenantID&quot;:null}],&quot;subsidyTips&quot;:null,&quot;withCity&quot;:true,&quot;subsidySelection&quot;:true,&quot;isAutoCalculateEnabled&quot;:true,&quot;reportStartDate&quot;:null,&quot;reportEndDate&quot;:null}</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
@@ -5748,42 +5748,6 @@ vars.put(&quot;newData&quot;,newData);
             <intProp name="Assertion.test_type">8</intProp>
             <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
-          <hashTree/>
-        </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取报销单详情" enabled="false">
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-            <collectionProp name="Arguments.arguments"/>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain"></stringProp>
-          <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/v3/expense/reports/${expenseReportOID}</stringProp>
-          <stringProp name="HTTPSampler.method">GET</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">8</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">AllDetal</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-          </JSONPostProcessor>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取报销单详情" enabled="true">
@@ -6015,7 +5979,7 @@ vars.put(&quot;AllDetalNew&quot;,str);</stringProp>
                 <stringProp name="Argument.value">{&#xd;
     &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
     &quot;allowanceAmountModify&quot;:1001,&#xd;
-    &quot;allowanceAttachExpenseReportDisable&quot;:false,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
     &quot;travelAutoCalculateEnable&quot;:false&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -6296,7 +6260,7 @@ vars.put(&quot;AllDetalNew&quot;,str);</stringProp>
                 <stringProp name="Argument.value">{&#xd;
     &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
     &quot;allowanceAmountModify&quot;:1001,&#xd;
-    &quot;allowanceAttachExpenseReportDisable&quot;:false,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
     &quot;travelAutoCalculateEnable&quot;:true&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -7023,11 +6987,11 @@ vars.put(&quot;newData2&quot;,newData);
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="-1067440401">{&quot;expenseReportSubsidyViewList&quot;:[{&quot;expenseReportSubsidyDTOS&quot;:[],&quot;subsidyTips&quot;:null,&quot;subsidyStartDate&quot;:null,&quot;subsidyEndDate&quot;:null,&quot;userDTOList&quot;:[],&quot;subsidyExtendID&quot;:null,&quot;tenantID&quot;:null}],&quot;subsidyTips&quot;:null,&quot;withCity&quot;:true,&quot;subsidySelection&quot;:true,&quot;isAutoCalculateEnabled&quot;:true}</stringProp>
+              <stringProp name="-636796106">{&quot;expenseReportSubsidyViewList&quot;:[{&quot;expenseReportSubsidyDTOS&quot;:[],&quot;subsidyTips&quot;:null,&quot;subsidyStartDate&quot;:null,&quot;subsidyEndDate&quot;:null,&quot;userDTOList&quot;:[],&quot;subsidyExtendID&quot;:null,&quot;tenantID&quot;:null}],&quot;subsidyTips&quot;:null,&quot;withCity&quot;:true,&quot;subsidySelection&quot;:true,&quot;isAutoCalculateEnabled&quot;:true,&quot;reportStartDate&quot;:null,&quot;reportEndDate&quot;:null}</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">8</intProp>
+            <intProp name="Assertion.test_type">16</intProp>
             <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
           <hashTree/>
@@ -7382,7 +7346,7 @@ vars.put(&quot;AllDetalNew&quot;,str);</stringProp>
                 <stringProp name="Argument.value">{&#xd;
     &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
     &quot;allowanceAmountModify&quot;:1001,&#xd;
-    &quot;allowanceAttachExpenseReportDisable&quot;:false,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
     &quot;travelAutoCalculateEnable&quot;:false&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -7663,7 +7627,7 @@ vars.put(&quot;AllDetalNew&quot;,str);</stringProp>
                 <stringProp name="Argument.value">{&#xd;
     &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
     &quot;allowanceAmountModify&quot;:1002,&#xd;
-    &quot;allowanceAttachExpenseReportDisable&quot;:false,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
     &quot;travelAutoCalculateEnable&quot;:true&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -8229,11 +8193,11 @@ vars.put(&quot;newData&quot;,newData);
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="-1067440401">{&quot;expenseReportSubsidyViewList&quot;:[{&quot;expenseReportSubsidyDTOS&quot;:[],&quot;subsidyTips&quot;:null,&quot;subsidyStartDate&quot;:null,&quot;subsidyEndDate&quot;:null,&quot;userDTOList&quot;:[],&quot;subsidyExtendID&quot;:null,&quot;tenantID&quot;:null}],&quot;subsidyTips&quot;:null,&quot;withCity&quot;:true,&quot;subsidySelection&quot;:true,&quot;isAutoCalculateEnabled&quot;:true}</stringProp>
+              <stringProp name="-636796106">{&quot;expenseReportSubsidyViewList&quot;:[{&quot;expenseReportSubsidyDTOS&quot;:[],&quot;subsidyTips&quot;:null,&quot;subsidyStartDate&quot;:null,&quot;subsidyEndDate&quot;:null,&quot;userDTOList&quot;:[],&quot;subsidyExtendID&quot;:null,&quot;tenantID&quot;:null}],&quot;subsidyTips&quot;:null,&quot;withCity&quot;:true,&quot;subsidySelection&quot;:true,&quot;isAutoCalculateEnabled&quot;:true,&quot;reportStartDate&quot;:null,&quot;reportEndDate&quot;:null}</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">8</intProp>
+            <intProp name="Assertion.test_type">16</intProp>
             <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
           <hashTree/>
@@ -8828,7 +8792,7 @@ vars.put(&quot;AllDetalNew&quot;,str);</stringProp>
                 <stringProp name="Argument.value">{&#xd;
     &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
     &quot;allowanceAmountModify&quot;:1001,&#xd;
-    &quot;allowanceAttachExpenseReportDisable&quot;:false,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
     &quot;travelAutoCalculateEnable&quot;:false&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -9109,7 +9073,7 @@ vars.put(&quot;AllDetalNew&quot;,str);</stringProp>
                 <stringProp name="Argument.value">{&#xd;
     &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
     &quot;allowanceAmountModify&quot;:1001,&#xd;
-    &quot;allowanceAttachExpenseReportDisable&quot;:false,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
     &quot;travelAutoCalculateEnable&quot;:true&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -9700,7 +9664,7 @@ vars.put(&quot;newData&quot;,newData);
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="-1067440401">{&quot;expenseReportSubsidyViewList&quot;:[{&quot;expenseReportSubsidyDTOS&quot;:[],&quot;subsidyTips&quot;:null,&quot;subsidyStartDate&quot;:null,&quot;subsidyEndDate&quot;:null,&quot;userDTOList&quot;:[],&quot;subsidyExtendID&quot;:null,&quot;tenantID&quot;:null}],&quot;subsidyTips&quot;:null,&quot;withCity&quot;:true,&quot;subsidySelection&quot;:true,&quot;isAutoCalculateEnabled&quot;:true}</stringProp>
+              <stringProp name="-636796106">{&quot;expenseReportSubsidyViewList&quot;:[{&quot;expenseReportSubsidyDTOS&quot;:[],&quot;subsidyTips&quot;:null,&quot;subsidyStartDate&quot;:null,&quot;subsidyEndDate&quot;:null,&quot;userDTOList&quot;:[],&quot;subsidyExtendID&quot;:null,&quot;tenantID&quot;:null}],&quot;subsidyTips&quot;:null,&quot;withCity&quot;:true,&quot;subsidySelection&quot;:true,&quot;isAutoCalculateEnabled&quot;:true,&quot;reportStartDate&quot;:null,&quot;reportEndDate&quot;:null}</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
@@ -10188,7 +10152,7 @@ vars.put(&quot;AllDetalNew&quot;,str);</stringProp>
                 <stringProp name="Argument.value">{&#xd;
     &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
     &quot;allowanceAmountModify&quot;:1001,&#xd;
-    &quot;allowanceAttachExpenseReportDisable&quot;:false,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
     &quot;travelAutoCalculateEnable&quot;:false&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>

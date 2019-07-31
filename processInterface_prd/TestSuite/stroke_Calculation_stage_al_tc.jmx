@@ -14,12 +14,12 @@
           </elementProp>
           <elementProp name="serverUrl" elementType="Argument">
             <stringProp name="Argument.name">serverUrl</stringProp>
-            <stringProp name="Argument.value">${__P(serverUrl,console.huilianyi.com)}</stringProp>
+            <stringProp name="Argument.value">${__P(serverUrl,console-tc.huilianyi.com)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,13609265517)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,17709280742)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
@@ -15716,7 +15716,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
             <hashTree/>
           </hashTree>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单撤回" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单撤回" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -15759,7 +15759,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="删除报销单" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="删除报销单" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -15796,7 +15796,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="删除费用标准" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="删除费用标准" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -15833,7 +15833,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="删除报销单内费用" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="删除报销单内费用" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -15870,7 +15870,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取配置中心报销单提交的所有规则" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取配置中心报销单提交的所有规则" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -15909,7 +15909,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="删除配置规则" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="删除配置规则" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -21018,7 +21018,7 @@ vars.put(&quot;AllDetal&quot;,AllDetal);
             <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="114104415">&quot;title&quot;:&quot;补贴重复&quot;</stringProp>
-                <stringProp name="-282296079">${now} 餐饮补贴 重复。</stringProp>
+                <stringProp name="132848953">${now} 测试重复补贴2 重复。</stringProp>
               </collectionProp>
               <stringProp name="Assertion.custom_message"></stringProp>
               <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
@@ -23056,9 +23056,9 @@ vars.put(&quot;AllDetal&quot;,AllDetal);
             <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="114104415">&quot;title&quot;:&quot;补贴重复&quot;</stringProp>
-                <stringProp name="-282296079">${now} 餐饮补贴 重复。</stringProp>
-                <stringProp name="1279928375">${TWODAYLATER} 餐饮补贴 重复。</stringProp>
-                <stringProp name="-189487370">{${ONEDAYLATER} 餐饮补贴 重复。</stringProp>
+                <stringProp name="132848953">${now} 测试重复补贴2 重复。</stringProp>
+                <stringProp name="95938611">${TWODAYLATER} 测试重复补贴2 重复。</stringProp>
+                <stringProp name="1018720345">${ONEDAYLATER} 测试重复补贴2 重复。</stringProp>
               </collectionProp>
               <stringProp name="Assertion.custom_message"></stringProp>
               <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
@@ -24772,10 +24772,10 @@ vars.put(&quot;NcustomFormFields&quot;,str);
             </ResponseAssertion>
             <hashTree/>
             <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取补贴详情" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">expenseReportSubsidyDTO1</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$</stringProp>
+              <stringProp name="JSONPostProcessor.referenceNames">expenseReportSubsidyDTO1;expenseTypeOID1</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$;$.expenseTypes[0].expenseTypeOID</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">notfound</stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">notfound;notfound;</stringProp>
             </JSONPostProcessor>
             <hashTree/>
           </hashTree>
@@ -24824,8 +24824,8 @@ vars.put(&quot;NcustomFormFields&quot;,str);
             </ResponseAssertion>
             <hashTree/>
             <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取补贴详情" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">expenseReportSubsidyDTO2;expenseTypeOID</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$;$.expenseTypes[0].expenseTypeOID</stringProp>
+              <stringProp name="JSONPostProcessor.referenceNames">expenseReportSubsidyDTO2;expenseTypeOID2</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$;$.expenseTypes[1].expenseTypeOID</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
               <stringProp name="JSONPostProcessor.defaultValues">notfound;notfound</stringProp>
             </JSONPostProcessor>
@@ -24882,8 +24882,9 @@ String expenseReportSubsidyViewList =vars.get(&quot;expenseReportSubsidyViewList
 log.info(&quot;expenseReportSubsidyViewList:&quot;+expenseReportSubsidyViewList);
 
 //获取费用类型
-String expenseTypeOIDs = &quot;[&quot;+vars.get(&quot;expenseTypeOID&quot;)+&quot;]&quot;;
+String expenseTypeOIDs1 = &quot;[&quot;+vars.get(&quot;expenseTypeOID1&quot;)+&quot;]&quot;;
 
+String expenseTypeOIDs2 = &quot;[&quot;+vars.get(&quot;expenseTypeOID2&quot;)+&quot;]&quot;;
 log.info(&quot;expenseTypeOIDs:&quot;+expenseTypeOIDs);
 
 //获取小行程的DTOS
@@ -24898,7 +24899,10 @@ String expenseReportSubsidyDTO2 = vars.get(&quot;expenseReportSubsidyDTO2&quot;)
 
 JsonArray valueArray= new JsonParser().parse(expenseReportSubsidyDTOS).getAsJsonArray();
 
-JsonElement element3 =new JsonParser().parse(expenseTypeOIDs);
+JsonElement element_expenseTypeOIDs1 =new JsonParser().parse(expenseTypeOIDs1);
+
+JsonElement element_expenseTypeOIDs2 =new JsonParser().parse(expenseTypeOIDs2);
+
 
 //对第一个小行城进行操作
 JsonObject valueObject1= new JsonParser().parse(expenseReportSubsidyDTO1).getAsJsonObject();
@@ -24908,7 +24912,7 @@ valueObject1.addProperty(&quot;startDate&quot;,vars.get(&quot;ONEDAYAGO&quot;)+&
 valueObject1.addProperty(&quot;endDate&quot;,vars.get(&quot;now&quot;)+&quot;T16:00:00.000Z&quot;);
 log.info(&quot;element3:&quot;+element3);
 
-valueObject1.add(&quot;expenseTypeOIDs&quot;,element3);
+valueObject1.add(&quot;expenseTypeOIDs&quot;,element_expenseTypeOIDs1);
 
 valueObject1.addProperty(&quot;error&quot;,new Boolean(false));
 
@@ -24920,7 +24924,7 @@ valueObject2.addProperty(&quot;startDate&quot;,vars.get(&quot;TWODAYLATER&quot;)
 
 valueObject2.addProperty(&quot;endDate&quot;,vars.get(&quot;TWODAYLATER&quot;)+&quot;T15:59:00.000Z&quot;);
 
-valueObject2.add(&quot;expenseTypeOIDs&quot;,element3);
+valueObject2.add(&quot;expenseTypeOIDs&quot;,element_expenseTypeOIDs2);
 
 valueObject2.addProperty(&quot;error&quot;,new Boolean(false));
 
@@ -25099,9 +25103,9 @@ vars.put(&quot;AllDetal&quot;,AllDetal);
             <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="114104415">&quot;title&quot;:&quot;补贴重复&quot;</stringProp>
-                <stringProp name="-282296079">${now} 餐饮补贴 重复。</stringProp>
-                <stringProp name="1279928375">${TWODAYLATER} 餐饮补贴 重复。</stringProp>
-                <stringProp name="-189487370">{${ONEDAYLATER} 餐饮补贴 重复。</stringProp>
+                <stringProp name="132848953">${now} 测试重复补贴2 重复。</stringProp>
+                <stringProp name="95938611">${TWODAYLATER} 测试重复补贴2 重复。</stringProp>
+                <stringProp name="-962763373">{${ONEDAYLATER} 测试重复补贴1 重复。</stringProp>
               </collectionProp>
               <stringProp name="Assertion.custom_message"></stringProp>
               <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
@@ -28936,9 +28940,9 @@ vars.put(&quot;AllDetal&quot;,AllDetal);
             <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="114104415">&quot;title&quot;:&quot;补贴重复&quot;</stringProp>
-                <stringProp name="-537591343">${ONEDAYLATER} 餐饮补贴 重复。</stringProp>
-                <stringProp name="-282296079">${now} 餐饮补贴 重复。</stringProp>
-                <stringProp name="1279928375">${TWODAYLATER} 餐饮补贴 重复。</stringProp>
+                <stringProp name="1018720345">${ONEDAYLATER} 测试重复补贴2 重复。</stringProp>
+                <stringProp name="132848953">${now} 测试重复补贴2 重复。</stringProp>
+                <stringProp name="95938611">${TWODAYLATER} 测试重复补贴2 重复。</stringProp>
               </collectionProp>
               <stringProp name="Assertion.custom_message"></stringProp>
               <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>

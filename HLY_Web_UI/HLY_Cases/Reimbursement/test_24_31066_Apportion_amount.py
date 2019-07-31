@@ -1,11 +1,11 @@
 from time import sleep
 from HLY_Elements.expense import elTravel_approval_can_be_printed
+from HLY_Elements.expense.elApprove import reason
 from HLY_Elements.expense.elExpense import invoice_type, invoice_code, invoice_number, invoice_date, page_turning, date, \
     invoice_money, month, submit_expense
 from HLY_Elements.expense.elFinanciaCheck import financial_apportion1, financial_apportion2, origin_amout, \
     delete_invoice, financial_apportion3, financial_apportion4, new_amount
 from HLY_Elements.expense.elReimbursement import invoice_amount, pay_amount, cause
-from HLY_Elements.expense.elTravel_approval_can_be_printed import rate_save
 from HLY_Elements.expense.expense_type import approation_amount1, approation_amount2
 from HLY_PageObject.UI.Process import Process
 from HLY_PageObject.UI.Reimbursement import Reimbursement
@@ -71,7 +71,7 @@ def test_apportion_line(enter):
     assert round(float(driver.get_text(approation_amount1))+float(driver.get_text(approation_amount2)), 2) == 43.45
     logger.info("驳回后的分摊行的费用:%s %s" % (driver.get_text(approation_amount1), driver.get_text(approation_amount2)))
     # 审批通过
-    process.approve("ER02208786")
+    process.approve(businessCode)
     # 进入单据审核
     process.enter_Financial_audit(businessCode)
     # 选择第二笔费用进行录入发票
@@ -118,6 +118,14 @@ def test_apportion_line(enter):
     reimbursement.Pagescroll(reimbursement.get_xpath("费用分摊"), timeout=4)
     assert driver.get_text(financial_apportion3, timeout=1) == "22.07"
     assert driver.get_text(financial_apportion4, timeout=1) == "21.26"
+    reimbursement.get_elements_click(1, reimbursement.get_origin_parent_xpath("返 回"))
+    driver.sendkeys(reason, "审核驳回", timeout=2)
+    driver.click(reimbursement.get_parent_xpath("驳 回"))
+
+
+
+
+
 
 
 

@@ -173,11 +173,6 @@
         <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
-      <GaussianRandomTimer guiclass="GaussianRandomTimerGui" testclass="GaussianRandomTimer" testname="高斯随机定时器" enabled="false">
-        <stringProp name="ConstantTimer.delay">500</stringProp>
-        <stringProp name="RandomTimer.range">100.0</stringProp>
-      </GaussianRandomTimer>
-      <hashTree/>
       <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="true">
         <stringProp name="ConstantTimer.delay">1000</stringProp>
       </ConstantTimer>

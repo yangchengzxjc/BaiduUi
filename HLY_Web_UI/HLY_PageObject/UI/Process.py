@@ -234,7 +234,7 @@ class Process(Reimbursement):
         logger.info("点击核定金额")
         sleep(2)
         self.driver.clear(new_amount)
-        self.driver.sendkeys(new_amount,10,timeout=2)
+        self.driver.sendkeys(new_amount, 10, timeout=2)
         self.driver.click(save_amount)
         logger.info("财务修改费用完成")
 

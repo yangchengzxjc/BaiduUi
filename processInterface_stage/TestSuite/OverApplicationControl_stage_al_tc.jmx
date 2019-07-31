@@ -4864,7 +4864,7 @@ vars.put(&quot;participant&quot;,str);
           </kg.apc.jmeter.control.ParameterizedController>
           <hashTree>
             <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
-              <stringProp name="IncludeController.includepath">F:\helios-cn\common\ExpenseReport_Submit.jmx</stringProp>
+              <stringProp name="IncludeController.includepath">../../common/ExpenseReport_Submit.jmx</stringProp>
             </IncludeController>
             <hashTree/>
           </hashTree>

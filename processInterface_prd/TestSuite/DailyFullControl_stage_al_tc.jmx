@@ -25574,6 +25574,622 @@ for (int i = 0; i &lt; size; i++){
           </hashTree>
         </hashTree>
       </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="里程补贴" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1522201515000</longProp>
+        <longProp name="ThreadGroup.end_time">1522201515000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="如果（If）控制器" enabled="true">
+          <stringProp name="IfController.condition">&quot;${serverUrl}&quot; == &quot;console.huilianyi.com&quot;</stringProp>
+          <boolProp name="IfController.evaluateAll">false</boolProp>
+        </IfController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="APP登录" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">appVersion=1.0.25&amp;deviceBrand=Apple&amp;deviceModel=iPhone%206s&amp;deviceName=iPhone%206s&amp;grant_type=password&amp;loginType=huilianyi_ios&amp;needIV=0&amp;osVersion=12.2&amp;password=Q%2B/VsjqdllEAtxx6nfl14w%3D%3D&amp;pixelRatio=750x1334&amp;scope=write&amp;username=${username}&amp;x-helios-client=native</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">account.huilianyi.com</stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/proxy/oauth/token</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="accessToken" enabled="true">
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <stringProp name="RegexExtractor.refname">accessToken</stringProp>
+              <stringProp name="RegexExtractor.regex">&quot;access_token&quot;:&quot;(.+?)&quot;</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
+              <stringProp name="RegexExtractor.default"></stringProp>
+              <stringProp name="RegexExtractor.match_number">0</stringProp>
+            </RegexExtractor>
+            <hashTree/>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Authorization</stringProp>
+                  <stringProp name="Header.value">Basic QXJ0ZW1pc0FwcDpuTENud2RJaGl6V2J5a0h5dVpNNlRwUURkN0t3SzlJWERLOExHc2E3U09X</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="false">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Authorization</stringProp>
+                  <stringProp name="Header.value">${Authorization}</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <stringProp name="RegexExtractor.refname">realm_base_service_url</stringProp>
+              <stringProp name="RegexExtractor.regex">&quot;realm_base_service_url&quot;:&quot;https://(.+?)&quot;</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
+              <stringProp name="RegexExtractor.default">null</stringProp>
+              <stringProp name="RegexExtractor.match_number">0</stringProp>
+            </RegexExtractor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="创建里程补贴的费用" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+	&quot;amount&quot;: &quot;0.30&quot;,&#xd;
+	&quot;createdDate&quot;: &quot;2019-07-31T07:30:20Z&quot;,&#xd;
+	&quot;expenseTypeKey&quot;: &quot;private.car.for.public&quot;,&#xd;
+	&quot;currencyCode&quot;: &quot;CNY&quot;,&#xd;
+	&quot;invoiceStatus&quot;: &quot;INIT&quot;,&#xd;
+	&quot;invoiceCurrencyCode&quot;: &quot;CNY&quot;,&#xd;
+	&quot;createLocation&quot;: &quot;{\&quot;latitude\&quot;:34.21089328342014,\&quot;longitude\&quot;:108.8406800672743,\&quot;address\&quot;:\&quot;陕西省西安市雁塔区鱼化寨街道环普科技产业园2期\&quot;,\&quot;errorPosition\&quot;:false,\&quot;timeDsp\&quot;:\&quot;2019-07-31 15:29:58\&quot;,\&quot;time\&quot;:\&quot;2019-07-31T15:29:58Z\&quot;}&quot;,&#xd;
+	&quot;attachments&quot;: [],&#xd;
+	&quot;data&quot;: [{&#xd;
+		&quot;name&quot;: &quot;出发原定位&quot;,&#xd;
+		&quot;value&quot;: &quot;{\&quot;latitude\&quot;:0,\&quot;longitude\&quot;:0,\&quot;address\&quot;:\&quot;未启用手动定位\&quot;,\&quot;time\&quot;:\&quot;\&quot;,\&quot;errorPosition\&quot;:false,\&quot;gpsLocationFlag\&quot;:true}&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;depart.place.original&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;到达原定位&quot;,&#xd;
+		&quot;value&quot;: &quot;{\&quot;latitude\&quot;:0,\&quot;longitude\&quot;:0,\&quot;address\&quot;:\&quot;未启用手动定位\&quot;,\&quot;time\&quot;:\&quot;\&quot;,\&quot;errorPosition\&quot;:false,\&quot;gpsLocationFlag\&quot;:true}&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;destination.original&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;出发时间&quot;,&#xd;
+		&quot;value&quot;: &quot;2019-07-31T15:29:51Z&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;start.time&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;出发地&quot;,&#xd;
+		&quot;value&quot;: &quot;{\&quot;latitude\&quot;:34.21089328342014,\&quot;longitude\&quot;:108.8406800672743,\&quot;address\&quot;:\&quot;陕西省西安市雁塔区鱼化寨街道环普科技产业园2期\&quot;,\&quot;errorPosition\&quot;:false,\&quot;timeDsp\&quot;:\&quot;2019-07-31 15:29:51\&quot;,\&quot;time\&quot;:\&quot;2019-07-31T15:29:51Z\&quot;}&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;departure.location&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;目的地&quot;,&#xd;
+		&quot;value&quot;: &quot;{\&quot;latitude\&quot;:34.21089328342014,\&quot;longitude\&quot;:108.8406800672743,\&quot;address\&quot;:\&quot;陕西省西安市雁塔区鱼化寨街道环普科技产业园2期\&quot;,\&quot;errorPosition\&quot;:false,\&quot;timeDsp\&quot;:\&quot;2019-07-31 15:29:58\&quot;,\&quot;time\&quot;:\&quot;2019-07-31T15:29:58Z\&quot;}&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;destination.location&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;到达时间&quot;,&#xd;
+		&quot;value&quot;: &quot;2019-07-31T15:29:58Z&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;end.time&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;单价&quot;,&#xd;
+		&quot;value&quot;: 3,&#xd;
+		&quot;messageKey&quot;: &quot;unit.price&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;参考单价&quot;,&#xd;
+		&quot;value&quot;: 3,&#xd;
+		&quot;messageKey&quot;: &quot;reference.price&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;里程&quot;,&#xd;
+		&quot;value&quot;: &quot;0.1&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;ER_KM&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;参考里程&quot;,&#xd;
+		&quot;value&quot;: 0.10000000000000001,&#xd;
+		&quot;messageKey&quot;: &quot;reference.mileage&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;参考币种&quot;,&#xd;
+		&quot;value&quot;: &quot;CNY&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;reference.currency&quot;&#xd;
+	}],&#xd;
+	&quot;withReceipt&quot;: false,&#xd;
+	&quot;comment&quot;: &quot;&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${realm_base_service_url}</stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/invoice/api/v4/invoices</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">8</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Authorization</stringProp>
+                  <stringProp name="Header.value">Bearer ${accessToken}</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="1081688027">{&quot;success&quot;:true,&quot;code&quot;:&quot;0000&quot;,&quot;rows&quot;:{&quot;invoiceOID&quot;:&quot;${invoiceOID}&quot;}}</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON提取器" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">invoiceOID</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.rows.invoiceOID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">null</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="如果（If）控制器" enabled="true">
+          <stringProp name="IfController.condition">&quot;${serverUrl}&quot; == &quot;stage.huilianyi.com&quot;</stringProp>
+          <boolProp name="IfController.evaluateAll">false</boolProp>
+        </IfController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="APP登录" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">appVersion=1.0.25&amp;deviceBrand=Apple&amp;deviceModel=iPhone%206s&amp;deviceName=iPhone%206s&amp;grant_type=password&amp;loginType=huilianyi_ios&amp;needIV=0&amp;osVersion=12.2&amp;password=Q%2B/VsjqdllEAtxx6nfl14w%3D%3D&amp;pixelRatio=750x1334&amp;scope=write&amp;username=${username}&amp;x-helios-client=native</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">accountstage.huilianyi.com</stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/proxy/oauth/token</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="accessToken" enabled="true">
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <stringProp name="RegexExtractor.refname">accessToken</stringProp>
+              <stringProp name="RegexExtractor.regex">&quot;access_token&quot;:&quot;(.+?)&quot;</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
+              <stringProp name="RegexExtractor.default"></stringProp>
+              <stringProp name="RegexExtractor.match_number">0</stringProp>
+            </RegexExtractor>
+            <hashTree/>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Authorization</stringProp>
+                  <stringProp name="Header.value">Basic QXJ0ZW1pc0FwcDpuTENud2RJaGl6V2J5a0h5dVpNNlRwUURkN0t3SzlJWERLOExHc2E3U09X</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="false">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Authorization</stringProp>
+                  <stringProp name="Header.value">${Authorization}</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <stringProp name="RegexExtractor.refname">realm_base_service_url</stringProp>
+              <stringProp name="RegexExtractor.regex">&quot;realm_base_service_url&quot;:&quot;https://(.+?)&quot;</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
+              <stringProp name="RegexExtractor.default">null</stringProp>
+              <stringProp name="RegexExtractor.match_number">0</stringProp>
+            </RegexExtractor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="创建里程补贴的费用" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+	&quot;amount&quot;: &quot;0.30&quot;,&#xd;
+	&quot;createdDate&quot;: &quot;2019-07-31T07:30:20Z&quot;,&#xd;
+	&quot;expenseTypeKey&quot;: &quot;private.car.for.public&quot;,&#xd;
+	&quot;currencyCode&quot;: &quot;CNY&quot;,&#xd;
+	&quot;invoiceStatus&quot;: &quot;INIT&quot;,&#xd;
+	&quot;invoiceCurrencyCode&quot;: &quot;CNY&quot;,&#xd;
+	&quot;createLocation&quot;: &quot;{\&quot;latitude\&quot;:34.21089328342014,\&quot;longitude\&quot;:108.8406800672743,\&quot;address\&quot;:\&quot;陕西省西安市雁塔区鱼化寨街道环普科技产业园2期\&quot;,\&quot;errorPosition\&quot;:false,\&quot;timeDsp\&quot;:\&quot;2019-07-31 15:29:58\&quot;,\&quot;time\&quot;:\&quot;2019-07-31T15:29:58Z\&quot;}&quot;,&#xd;
+	&quot;attachments&quot;: [],&#xd;
+	&quot;data&quot;: [{&#xd;
+		&quot;name&quot;: &quot;出发原定位&quot;,&#xd;
+		&quot;value&quot;: &quot;{\&quot;latitude\&quot;:0,\&quot;longitude\&quot;:0,\&quot;address\&quot;:\&quot;未启用手动定位\&quot;,\&quot;time\&quot;:\&quot;\&quot;,\&quot;errorPosition\&quot;:false,\&quot;gpsLocationFlag\&quot;:true}&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;depart.place.original&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;到达原定位&quot;,&#xd;
+		&quot;value&quot;: &quot;{\&quot;latitude\&quot;:0,\&quot;longitude\&quot;:0,\&quot;address\&quot;:\&quot;未启用手动定位\&quot;,\&quot;time\&quot;:\&quot;\&quot;,\&quot;errorPosition\&quot;:false,\&quot;gpsLocationFlag\&quot;:true}&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;destination.original&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;出发时间&quot;,&#xd;
+		&quot;value&quot;: &quot;2019-07-31T15:29:51Z&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;start.time&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;出发地&quot;,&#xd;
+		&quot;value&quot;: &quot;{\&quot;latitude\&quot;:34.21089328342014,\&quot;longitude\&quot;:108.8406800672743,\&quot;address\&quot;:\&quot;陕西省西安市雁塔区鱼化寨街道环普科技产业园2期\&quot;,\&quot;errorPosition\&quot;:false,\&quot;timeDsp\&quot;:\&quot;2019-07-31 15:29:51\&quot;,\&quot;time\&quot;:\&quot;2019-07-31T15:29:51Z\&quot;}&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;departure.location&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;目的地&quot;,&#xd;
+		&quot;value&quot;: &quot;{\&quot;latitude\&quot;:34.21089328342014,\&quot;longitude\&quot;:108.8406800672743,\&quot;address\&quot;:\&quot;陕西省西安市雁塔区鱼化寨街道环普科技产业园2期\&quot;,\&quot;errorPosition\&quot;:false,\&quot;timeDsp\&quot;:\&quot;2019-07-31 15:29:58\&quot;,\&quot;time\&quot;:\&quot;2019-07-31T15:29:58Z\&quot;}&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;destination.location&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;到达时间&quot;,&#xd;
+		&quot;value&quot;: &quot;2019-07-31T15:29:58Z&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;end.time&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;单价&quot;,&#xd;
+		&quot;value&quot;: 3,&#xd;
+		&quot;messageKey&quot;: &quot;unit.price&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;参考单价&quot;,&#xd;
+		&quot;value&quot;: 3,&#xd;
+		&quot;messageKey&quot;: &quot;reference.price&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;里程&quot;,&#xd;
+		&quot;value&quot;: &quot;0.1&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;ER_KM&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;参考里程&quot;,&#xd;
+		&quot;value&quot;: 0.10000000000000001,&#xd;
+		&quot;messageKey&quot;: &quot;reference.mileage&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;参考币种&quot;,&#xd;
+		&quot;value&quot;: &quot;CNY&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;reference.currency&quot;&#xd;
+	}],&#xd;
+	&quot;withReceipt&quot;: false,&#xd;
+	&quot;comment&quot;: &quot;&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${realm_base_service_url}</stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/invoice/api/v4/invoices</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">8</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Authorization</stringProp>
+                  <stringProp name="Header.value">Bearer ${accessToken}</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="1081688027">{&quot;success&quot;:true,&quot;code&quot;:&quot;0000&quot;,&quot;rows&quot;:{&quot;invoiceOID&quot;:&quot;${invoiceOID}&quot;}}</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON提取器" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">invoiceOID</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.rows.invoiceOID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">null</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="如果（If）控制器" enabled="true">
+          <stringProp name="IfController.condition">&quot;${serverUrl}&quot; == &quot;console-tc.huilianyi.com&quot;</stringProp>
+          <boolProp name="IfController.evaluateAll">false</boolProp>
+        </IfController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="APP登录" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">appVersion=1.0.25&amp;deviceBrand=Apple&amp;deviceModel=iPhone%206s&amp;deviceName=iPhone%206s&amp;grant_type=password&amp;loginType=huilianyi_ios&amp;needIV=0&amp;osVersion=12.2&amp;password=Q%2B/VsjqdllEAtxx6nfl14w%3D%3D&amp;pixelRatio=750x1334&amp;scope=write&amp;username=${username}&amp;x-helios-client=native</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">account.huilianyi.com</stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol">https</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/proxy/oauth/token</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="accessToken" enabled="true">
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <stringProp name="RegexExtractor.refname">accessToken</stringProp>
+              <stringProp name="RegexExtractor.regex">&quot;access_token&quot;:&quot;(.+?)&quot;</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
+              <stringProp name="RegexExtractor.default"></stringProp>
+              <stringProp name="RegexExtractor.match_number">0</stringProp>
+            </RegexExtractor>
+            <hashTree/>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Authorization</stringProp>
+                  <stringProp name="Header.value">Basic QXJ0ZW1pc0FwcDpuTENud2RJaGl6V2J5a0h5dVpNNlRwUURkN0t3SzlJWERLOExHc2E3U09X</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="false">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Authorization</stringProp>
+                  <stringProp name="Header.value">${Authorization}</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <stringProp name="RegexExtractor.refname">realm_base_service_url</stringProp>
+              <stringProp name="RegexExtractor.regex">&quot;realm_base_service_url&quot;:&quot;https://(.+?)&quot;</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
+              <stringProp name="RegexExtractor.default">null</stringProp>
+              <stringProp name="RegexExtractor.match_number">0</stringProp>
+            </RegexExtractor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="创建里程补贴的费用" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+	&quot;amount&quot;: &quot;0.30&quot;,&#xd;
+	&quot;createdDate&quot;: &quot;2019-07-31T07:30:20Z&quot;,&#xd;
+	&quot;expenseTypeKey&quot;: &quot;private.car.for.public&quot;,&#xd;
+	&quot;currencyCode&quot;: &quot;CNY&quot;,&#xd;
+	&quot;invoiceStatus&quot;: &quot;INIT&quot;,&#xd;
+	&quot;invoiceCurrencyCode&quot;: &quot;CNY&quot;,&#xd;
+	&quot;createLocation&quot;: &quot;{\&quot;latitude\&quot;:34.21089328342014,\&quot;longitude\&quot;:108.8406800672743,\&quot;address\&quot;:\&quot;陕西省西安市雁塔区鱼化寨街道环普科技产业园2期\&quot;,\&quot;errorPosition\&quot;:false,\&quot;timeDsp\&quot;:\&quot;2019-07-31 15:29:58\&quot;,\&quot;time\&quot;:\&quot;2019-07-31T15:29:58Z\&quot;}&quot;,&#xd;
+	&quot;attachments&quot;: [],&#xd;
+	&quot;data&quot;: [{&#xd;
+		&quot;name&quot;: &quot;出发原定位&quot;,&#xd;
+		&quot;value&quot;: &quot;{\&quot;latitude\&quot;:0,\&quot;longitude\&quot;:0,\&quot;address\&quot;:\&quot;未启用手动定位\&quot;,\&quot;time\&quot;:\&quot;\&quot;,\&quot;errorPosition\&quot;:false,\&quot;gpsLocationFlag\&quot;:true}&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;depart.place.original&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;到达原定位&quot;,&#xd;
+		&quot;value&quot;: &quot;{\&quot;latitude\&quot;:0,\&quot;longitude\&quot;:0,\&quot;address\&quot;:\&quot;未启用手动定位\&quot;,\&quot;time\&quot;:\&quot;\&quot;,\&quot;errorPosition\&quot;:false,\&quot;gpsLocationFlag\&quot;:true}&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;destination.original&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;出发时间&quot;,&#xd;
+		&quot;value&quot;: &quot;2019-07-31T15:29:51Z&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;start.time&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;出发地&quot;,&#xd;
+		&quot;value&quot;: &quot;{\&quot;latitude\&quot;:34.21089328342014,\&quot;longitude\&quot;:108.8406800672743,\&quot;address\&quot;:\&quot;陕西省西安市雁塔区鱼化寨街道环普科技产业园2期\&quot;,\&quot;errorPosition\&quot;:false,\&quot;timeDsp\&quot;:\&quot;2019-07-31 15:29:51\&quot;,\&quot;time\&quot;:\&quot;2019-07-31T15:29:51Z\&quot;}&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;departure.location&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;目的地&quot;,&#xd;
+		&quot;value&quot;: &quot;{\&quot;latitude\&quot;:34.21089328342014,\&quot;longitude\&quot;:108.8406800672743,\&quot;address\&quot;:\&quot;陕西省西安市雁塔区鱼化寨街道环普科技产业园2期\&quot;,\&quot;errorPosition\&quot;:false,\&quot;timeDsp\&quot;:\&quot;2019-07-31 15:29:58\&quot;,\&quot;time\&quot;:\&quot;2019-07-31T15:29:58Z\&quot;}&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;destination.location&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;到达时间&quot;,&#xd;
+		&quot;value&quot;: &quot;2019-07-31T15:29:58Z&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;end.time&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;单价&quot;,&#xd;
+		&quot;value&quot;: 3,&#xd;
+		&quot;messageKey&quot;: &quot;unit.price&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;参考单价&quot;,&#xd;
+		&quot;value&quot;: 3,&#xd;
+		&quot;messageKey&quot;: &quot;reference.price&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;里程&quot;,&#xd;
+		&quot;value&quot;: &quot;0.1&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;ER_KM&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;参考里程&quot;,&#xd;
+		&quot;value&quot;: 0.10000000000000001,&#xd;
+		&quot;messageKey&quot;: &quot;reference.mileage&quot;&#xd;
+	}, {&#xd;
+		&quot;name&quot;: &quot;参考币种&quot;,&#xd;
+		&quot;value&quot;: &quot;CNY&quot;,&#xd;
+		&quot;messageKey&quot;: &quot;reference.currency&quot;&#xd;
+	}],&#xd;
+	&quot;withReceipt&quot;: false,&#xd;
+	&quot;comment&quot;: &quot;&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${realm_base_service_url}</stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/invoice/api/v4/invoices</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">8</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Authorization</stringProp>
+                  <stringProp name="Header.value">Bearer ${accessToken}</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="1081688027">{&quot;success&quot;:true,&quot;code&quot;:&quot;0000&quot;,&quot;rows&quot;:{&quot;invoiceOID&quot;:&quot;${invoiceOID}&quot;}}</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON提取器" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">invoiceOID</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.rows.invoiceOID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">null</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+      </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="费用标准设置费用类型，设置各种类型的规则" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">

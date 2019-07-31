@@ -121,6 +121,7 @@ def test_apportion_line(enter):
     reimbursement.get_elements_click(1, reimbursement.get_origin_parent_xpath("返 回"))
     driver.sendkeys(reason, "审核驳回", timeout=2)
     driver.click(reimbursement.get_parent_xpath("驳 回"))
+    process.open_reimbursement()
 
 
 

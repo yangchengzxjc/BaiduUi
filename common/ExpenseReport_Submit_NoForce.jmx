@@ -169,6 +169,7 @@ vars.put(&quot;AllDetal&quot;,AllDetal);
             <collectionProp name="Asserion.test_strings">
               <stringProp name="1235267225">${SuccessSubmit}</stringProp>
               <stringProp name="173592734">&quot;needConfirm&quot;:${__groovy(${__isVarDefined(needConfirm)}?&apos;${needConfirm}&apos;:&apos;false&apos;)}</stringProp>
+              <stringProp name="-42478851">${__groovy(${__isVarDefined(OtherSubmit1)}?&apos;${OtherSubmit1}&apos;:&apos;&apos;)}</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>

@@ -388,7 +388,7 @@ String today = formatter.format(date);
 vars.put(&quot;nextday&quot;, today);</stringProp>
       </BeanShellPreProcessor>
       <hashTree/>
-      <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="false">
+      <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="true">
         <stringProp name="ConstantTimer.delay">500</stringProp>
       </ConstantTimer>
       <hashTree/>

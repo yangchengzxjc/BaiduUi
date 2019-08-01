@@ -271,7 +271,9 @@ for (int i = 0; i &lt; size; i++){
              if (jj.get(&quot;fieldName&quot;).equals(&quot;事由&quot;))
            		jj.put(&quot;value&quot;,&quot;出去吃饭&quot;);
              if (jj.get(&quot;fieldName&quot;).equals(&quot;部门&quot;))
-           		jj.put(&quot;value&quot;,null);
+           		jj.put(&quot;value&quot;,vars.get(&quot;departmentOID&quot;));
+             if (jsonObject.get(&quot;fieldName&quot;).getAsString().equals(&quot;公司&quot;))
+           		jsonObject.addProperty(&quot;value&quot;,vars.get(&quot;companyOID&quot;));
 }
 
 String str =customFormFields.toString();

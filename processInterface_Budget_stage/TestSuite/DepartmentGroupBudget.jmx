@@ -14,7 +14,7 @@
           </elementProp>
           <elementProp name="serviceURL" elementType="Argument">
             <stringProp name="Argument.name">serviceURL</stringProp>
-            <stringProp name="Argument.value">${__P(serviceURL,stage.huilianyi.com)}</stringProp>
+            <stringProp name="Argument.value">${__P(serviceURL,console.huilianyi.com)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="username" elementType="Argument">
@@ -261,7 +261,7 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="periodName" elementType="Argument">
             <stringProp name="Argument.name">periodName</stringProp>
-            <stringProp name="Argument.value">2019-YS_7</stringProp>
+            <stringProp name="Argument.value">2019-YS_8</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">期间</stringProp>
           </elementProp>

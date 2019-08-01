@@ -173,10 +173,6 @@
         <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
-      <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="false">
-        <stringProp name="ConstantTimer.delay">1000</stringProp>
-      </ConstantTimer>
-      <hashTree/>
       <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="表单名称" enabled="true">
         <collectionProp name="Arguments.arguments">
           <elementProp name="apForm001" elementType="Argument">
@@ -4305,7 +4301,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(费用类型管控,警告)-1个报销单对应1个申请单" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(费用类型管控,警告)-1个报销单对应1个申请单" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -4853,14 +4849,14 @@ vars.put(&quot;participant&quot;,str);
           <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="差旅报销单提交" enabled="true">
             <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
               <collectionProp name="Arguments.arguments">
-                <elementProp name="SuccessSubmit" elementType="Argument">
-                  <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">酒店 可报销CNY${bxamount0}，实际报销CNY${bxamount}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
                   <stringProp name="Argument.name">expenseReportOID</stringProp>
                   <stringProp name="Argument.value">${bxExpenseReportOID}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="SuccessSubmit" elementType="Argument">
+                  <stringProp name="Argument.name">SuccessSubmit</stringProp>
+                  <stringProp name="Argument.value">${SuccessSubmit}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -4868,7 +4864,7 @@ vars.put(&quot;participant&quot;,str);
           </kg.apc.jmeter.control.ParameterizedController>
           <hashTree>
             <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
-              <stringProp name="IncludeController.includepath">../../common/ExpenseReport_Submit_NoForce.jmx</stringProp>
+              <stringProp name="IncludeController.includepath">../../common/ExpenseReport_Submit.jmx</stringProp>
             </IncludeController>
             <hashTree/>
           </hashTree>
@@ -4932,7 +4928,7 @@ vars.put(&quot;participant&quot;,str);
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">酒店 可报销CNY${bxamount0}，实际报销CNY${bxamount}</stringProp>
+                  <stringProp name="Argument.value">酒店 可报销CNY40，实际报销CNY41</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -4951,7 +4947,511 @@ vars.put(&quot;participant&quot;,str);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(费用类型管控,禁止)" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(费用类型管控,警告)-1个报销单对应2个申请单" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1527846065000</longProp>
+        <longProp name="ThreadGroup.end_time">1527846065000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Authorization</stringProp>
+              <stringProp name="Header.value">Bearer ${accessToken}</stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
+        <hashTree/>
+        <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="用户参数" enabled="true">
+          <collectionProp name="UserParameters.names">
+            <stringProp name="-1979881826">apformName</stringProp>
+            <stringProp name="543838149">bxformName</stringProp>
+            <stringProp name="798623348">expenseTypeName1</stringProp>
+            <stringProp name="1812032458">apamount1</stringProp>
+            <stringProp name="1812032459">apamount2</stringProp>
+          </collectionProp>
+          <collectionProp name="UserParameters.thread_values">
+            <collectionProp name="1671006608">
+              <stringProp name="749112470">${apForm001}</stringProp>
+              <stringProp name="-1022134851">${bxForm001}</stringProp>
+              <stringProp name="-2136664729">${expenseType001}</stringProp>
+              <stringProp name="48625">100</stringProp>
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+          </collectionProp>
+          <boolProp name="UserParameters.per_iteration">false</boolProp>
+        </UserParameters>
+        <hashTree/>
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="费用处理" enabled="true">
+          <stringProp name="BeanShellSampler.query">//String am=vars.get(&quot;apamount1&quot;);
+//String am=vars.get(&quot;apamount2&quot;);
+//int amount0=Integer.parseInt(am)*1.2;
+//int amount=1+Integer.parseInt(am)*1.2;
+
+
+
+vars.put(&quot;bxamount&quot;,&quot;362&quot;);
+vars.put(&quot;bxamount1&quot;,&quot;181&quot;);
+vars.put(&quot;bxamount2&quot;,&quot;181&quot;);
+
+vars.put(&quot;proportion1&quot;,&quot;0.5&quot;);
+vars.put(&quot;proportion2&quot;,&quot;0.5&quot;);
+</stringProp>
+          <stringProp name="BeanShellSampler.filename"></stringProp>
+          <stringProp name="BeanShellSampler.parameters"></stringProp>
+          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+        </BeanShellSampler>
+        <hashTree/>
+        <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="费用申请单修改" enabled="true">
+          <collectionProp name="ModuleController.node_path">
+            <stringProp name="869052411">测试计划</stringProp>
+            <stringProp name="1936554987">测试计划最新</stringProp>
+            <stringProp name="1129802162">001差旅申请单修改(费用类型管控,警告)</stringProp>
+          </collectionProp>
+        </ModuleController>
+        <hashTree/>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="创建第1个申请单" enabled="true">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
+        </TransactionController>
+        <hashTree>
+          <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="差旅申请单预算处理" enabled="true">
+            <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="apformName" elementType="Argument">
+                  <stringProp name="Argument.name">apformName</stringProp>
+                  <stringProp name="Argument.value">${apformName}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="expenseTypeName" elementType="Argument">
+                  <stringProp name="Argument.name">expenseTypeName</stringProp>
+                  <stringProp name="Argument.value">${expenseTypeName1}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="apamount" elementType="Argument">
+                  <stringProp name="Argument.name">apamount</stringProp>
+                  <stringProp name="Argument.value">${apamount1}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </kg.apc.jmeter.control.ParameterizedController>
+          <hashTree>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+              <stringProp name="IncludeController.includepath">../../common/TravelBudgetProcessing.jmx</stringProp>
+            </IncludeController>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="参与人列表查看" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+            <stringProp name="HTTPSampler.path">/api/application/participantsList?proposerOID=${userOID}&amp;page=0&amp;size=10&amp;formOID=${apFormOID}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态返回" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">2</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">select_participant_data</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="true">
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="script">import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
+String json = vars.get(&quot;select_participant_data&quot;);
+json = json.replaceAll(&quot;null&quot;,&quot;\&quot;null\&quot;&quot;);
+JSONArray MYjsonArray = JSON.parseArray(json);
+JSONArray ja0 = new JSONArray();
+int size = MYjsonArray.size();
+for (int i = 0; i &lt;size; i++){
+            jsonObject = MYjsonArray.getJSONObject(i);
+            JSONObject myobj = new  JSONObject();
+		  myobj.put(&quot;userOID&quot;,jsonObject.get(&quot;userOID&quot;));
+		  myobj.put(&quot;fullName&quot;,jsonObject.get(&quot;fullName&quot;));
+		  myobj.put(&quot;participantOID&quot;,jsonObject.get(&quot;userOID&quot;));
+            ja0.add(myobj);
+        }
+String str =ja0.toString();
+str  = str.replaceAll(&quot;\&quot;null\&quot;&quot;,&quot;null&quot;);
+str  = str.replaceAll(&quot;\&quot;&quot;,&quot;\\\&quot;&quot;);
+vars.put(&quot;participant&quot;,str);
+
+</stringProp>
+            </BeanShellPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="差旅申请单创建" enabled="true">
+            <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+          </kg.apc.jmeter.control.ParameterizedController>
+          <hashTree>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+              <stringProp name="IncludeController.includepath">../../common/TravelApplicationCreate.jmx</stringProp>
+            </IncludeController>
+            <hashTree/>
+          </hashTree>
+          <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="差旅申请单提交" enabled="true">
+            <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="ApplicationCreateData" elementType="Argument">
+                  <stringProp name="Argument.name">ApplicationCreateData</stringProp>
+                  <stringProp name="Argument.value">${data}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </kg.apc.jmeter.control.ParameterizedController>
+          <hashTree>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+              <stringProp name="IncludeController.includepath">../../common/TravelApplicationSubmit.jmx</stringProp>
+            </IncludeController>
+            <hashTree/>
+          </hashTree>
+          <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="差旅申请审批通过" enabled="true">
+            <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="approvalTxt" elementType="Argument">
+                  <stringProp name="Argument.name">approvalTxt</stringProp>
+                  <stringProp name="Argument.value">审批通过</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="approverOID" elementType="Argument">
+                  <stringProp name="Argument.name">approverOID</stringProp>
+                  <stringProp name="Argument.value">${userOID}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="entityOID" elementType="Argument">
+                  <stringProp name="Argument.name">entityOID</stringProp>
+                  <stringProp name="Argument.value">${applicationOID}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </kg.apc.jmeter.control.ParameterizedController>
+          <hashTree>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+              <stringProp name="IncludeController.includepath">../../common/ApplicationApproval.jmx</stringProp>
+            </IncludeController>
+            <hashTree/>
+            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="script">vars.put(&quot;applicationOID1&quot;,vars.get(&quot;applicationOID&quot;));</stringProp>
+            </BeanShellPostProcessor>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="创建第2个申请单" enabled="true">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
+        </TransactionController>
+        <hashTree>
+          <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="差旅申请单预算处理" enabled="true">
+            <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="apformName" elementType="Argument">
+                  <stringProp name="Argument.name">apformName</stringProp>
+                  <stringProp name="Argument.value">${apformName}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="expenseTypeName" elementType="Argument">
+                  <stringProp name="Argument.name">expenseTypeName</stringProp>
+                  <stringProp name="Argument.value">${expenseTypeName1}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="apamount" elementType="Argument">
+                  <stringProp name="Argument.name">apamount</stringProp>
+                  <stringProp name="Argument.value">${apamount2}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </kg.apc.jmeter.control.ParameterizedController>
+          <hashTree>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+              <stringProp name="IncludeController.includepath">../../common/TravelBudgetProcessing.jmx</stringProp>
+            </IncludeController>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="参与人列表查看" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+            <stringProp name="HTTPSampler.path">/api/application/participantsList?proposerOID=${userOID}&amp;page=0&amp;size=10&amp;formOID=${apFormOID}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态返回" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">2</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">select_participant_data</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="true">
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="script">import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
+String json = vars.get(&quot;select_participant_data&quot;);
+json = json.replaceAll(&quot;null&quot;,&quot;\&quot;null\&quot;&quot;);
+JSONArray MYjsonArray = JSON.parseArray(json);
+JSONArray ja0 = new JSONArray();
+int size = MYjsonArray.size();
+for (int i = 0; i &lt;size; i++){
+            jsonObject = MYjsonArray.getJSONObject(i);
+            JSONObject myobj = new  JSONObject();
+		  myobj.put(&quot;userOID&quot;,jsonObject.get(&quot;userOID&quot;));
+		  myobj.put(&quot;fullName&quot;,jsonObject.get(&quot;fullName&quot;));
+		  myobj.put(&quot;participantOID&quot;,jsonObject.get(&quot;userOID&quot;));
+            ja0.add(myobj);
+        }
+String str =ja0.toString();
+str  = str.replaceAll(&quot;\&quot;null\&quot;&quot;,&quot;null&quot;);
+str  = str.replaceAll(&quot;\&quot;&quot;,&quot;\\\&quot;&quot;);
+vars.put(&quot;participant&quot;,str);
+
+</stringProp>
+            </BeanShellPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="差旅申请单创建" enabled="true">
+            <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+          </kg.apc.jmeter.control.ParameterizedController>
+          <hashTree>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+              <stringProp name="IncludeController.includepath">../../common/TravelApplicationCreate.jmx</stringProp>
+            </IncludeController>
+            <hashTree/>
+          </hashTree>
+          <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="差旅申请单提交" enabled="true">
+            <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="ApplicationCreateData" elementType="Argument">
+                  <stringProp name="Argument.name">ApplicationCreateData</stringProp>
+                  <stringProp name="Argument.value">${data}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </kg.apc.jmeter.control.ParameterizedController>
+          <hashTree>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+              <stringProp name="IncludeController.includepath">../../common/TravelApplicationSubmit.jmx</stringProp>
+            </IncludeController>
+            <hashTree/>
+          </hashTree>
+          <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="差旅申请审批通过" enabled="true">
+            <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="approvalTxt" elementType="Argument">
+                  <stringProp name="Argument.name">approvalTxt</stringProp>
+                  <stringProp name="Argument.value">审批通过</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="approverOID" elementType="Argument">
+                  <stringProp name="Argument.name">approverOID</stringProp>
+                  <stringProp name="Argument.value">${userOID}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="entityOID" elementType="Argument">
+                  <stringProp name="Argument.name">entityOID</stringProp>
+                  <stringProp name="Argument.value">${applicationOID}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </kg.apc.jmeter.control.ParameterizedController>
+          <hashTree>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+              <stringProp name="IncludeController.includepath">../../common/ApplicationApproval.jmx</stringProp>
+            </IncludeController>
+            <hashTree/>
+            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="script">vars.put(&quot;applicationOID2&quot;,vars.get(&quot;applicationOID&quot;));</stringProp>
+            </BeanShellPostProcessor>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="报销单2关联申请单" enabled="true">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
+        </TransactionController>
+        <hashTree>
+          <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="差旅报销单创建关联一个申请单" enabled="true">
+            <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="bxformName" elementType="Argument">
+                  <stringProp name="Argument.name">bxformName</stringProp>
+                  <stringProp name="Argument.value">${bxformName}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="applicationOID1" elementType="Argument">
+                  <stringProp name="Argument.name">applicationOID1</stringProp>
+                  <stringProp name="Argument.value">${applicationOID1}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="applicationOID2" elementType="Argument">
+                  <stringProp name="Argument.name">applicationOID2</stringProp>
+                  <stringProp name="Argument.value">${applicationOID2}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="tenantId" elementType="Argument">
+                  <stringProp name="Argument.name">tenantId</stringProp>
+                  <stringProp name="Argument.value">${tenantId}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </kg.apc.jmeter.control.ParameterizedController>
+          <hashTree>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+              <stringProp name="IncludeController.includepath">../../common/TraveExpenseReportCreate_2Application.jmx</stringProp>
+            </IncludeController>
+            <hashTree/>
+          </hashTree>
+          <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="差旅报销单创建费用" enabled="true">
+            <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="bxamount" elementType="Argument">
+                  <stringProp name="Argument.name">bxamount</stringProp>
+                  <stringProp name="Argument.value">${bxamount}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="expenseTypeName" elementType="Argument">
+                  <stringProp name="Argument.name">expenseTypeName</stringProp>
+                  <stringProp name="Argument.value">${expenseTypeName1}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="expenseReportOID" elementType="Argument">
+                  <stringProp name="Argument.name">expenseReportOID</stringProp>
+                  <stringProp name="Argument.value">${bxExpenseReportOID}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="bxamount1" elementType="Argument">
+                  <stringProp name="Argument.name">bxamount1</stringProp>
+                  <stringProp name="Argument.value">${bxamount1}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="bxamount2" elementType="Argument">
+                  <stringProp name="Argument.name">bxamount2</stringProp>
+                  <stringProp name="Argument.value">${bxamount2}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="proportion1" elementType="Argument">
+                  <stringProp name="Argument.name">proportion1</stringProp>
+                  <stringProp name="Argument.value">${proportion1}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="proportion2" elementType="Argument">
+                  <stringProp name="Argument.name">proportion2</stringProp>
+                  <stringProp name="Argument.value">${proportion2}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </kg.apc.jmeter.control.ParameterizedController>
+          <hashTree>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+              <stringProp name="IncludeController.includepath">../../common/ExpenseReportCreateInvoicesApportionOnly_2Department.jmx</stringProp>
+            </IncludeController>
+            <hashTree/>
+          </hashTree>
+          <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="差旅报销单提交" enabled="true">
+            <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="expenseReportOID" elementType="Argument">
+                  <stringProp name="Argument.name">expenseReportOID</stringProp>
+                  <stringProp name="Argument.value">${bxExpenseReportOID}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="SuccessSubmit" elementType="Argument">
+                  <stringProp name="Argument.name">SuccessSubmit</stringProp>
+                  <stringProp name="Argument.value">酒店 可报销CNY360，实际报销CNY362，超出CNY2</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </kg.apc.jmeter.control.ParameterizedController>
+          <hashTree>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+              <stringProp name="IncludeController.includepath">../../common/ExpenseReport_Submit_NoForce.jmx</stringProp>
+            </IncludeController>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(费用类型管控,禁止)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -6344,7 +6844,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(总金额管控,警告)" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(总金额管控,警告)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -7925,7 +8425,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(总金额管控,禁止)" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(总金额管控,禁止)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -9506,7 +10006,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(总金额管控+费用类型管控,警告)" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(总金额管控+费用类型管控,警告)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -11088,7 +11588,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(总金额管控+费用类型管控,禁止)" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(总金额管控+费用类型管控,禁止)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -12670,7 +13170,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(总金额管控+费用类型管控,警告)--单申请+多报销" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(总金额管控+费用类型管控,警告)--单申请+多报销" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -15346,7 +15846,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="费用申请报销单费用行(费用类型管控,警告)" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="费用申请报销单费用行(费用类型管控,警告)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -16751,7 +17251,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="费用申请报销单费用行(费用类型管控,禁止)" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="费用申请报销单费用行(费用类型管控,禁止)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -18156,7 +18656,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="费用申请报销单费用行(总金额管控,警告)" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="费用申请报销单费用行(总金额管控,警告)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -19825,7 +20325,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="费用申请报销单费用行(总金额管控,禁止)" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="费用申请报销单费用行(总金额管控,禁止)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -21572,7 +22072,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="费用申请报销单费用行(总金额管控+费用类型管控,禁止)" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="费用申请报销单费用行(总金额管控+费用类型管控,禁止)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -23230,7 +23730,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(总金额管控,警告)--金额含有外币" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(总金额管控,警告)--金额含有外币" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -24939,7 +25439,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(总金额管控,禁止)金额含有外币" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅申请报销单费用行(总金额管控,禁止)金额含有外币" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -26601,7 +27101,7 @@ vars.put(&quot;draft&quot;,str);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Bug 30006费用申请报销单费用行(总金额管控,警告)-费用单笔驳回" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Bug 30006费用申请报销单费用行(总金额管控,警告)-费用单笔驳回" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -28350,7 +28850,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="费用申请报销单费用行(总金额管控+费用类型管控,警告)" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="费用申请报销单费用行(总金额管控+费用类型管控,警告)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -30008,7 +30508,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="费用申请报销单费用行(总金额管控+费用类型管控,警告)" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="费用申请报销单费用行(总金额管控+费用类型管控,警告)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>

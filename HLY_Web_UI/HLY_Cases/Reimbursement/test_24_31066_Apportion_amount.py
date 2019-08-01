@@ -5,8 +5,8 @@ from HLY_Elements.expense.elExpense import invoice_type, invoice_code, invoice_n
     invoice_money, month, submit_expense
 from HLY_Elements.expense.elFinanciaCheck import financial_apportion1, financial_apportion2, origin_amout, \
     delete_invoice, financial_apportion3, financial_apportion4, new_amount
-from HLY_Elements.expense.elReimbursement import invoice_amount, pay_amount, cause
-from HLY_Elements.expense.expense_type import approation_amount1, approation_amount2
+from HLY_Elements.expense.elReimbursement import invoice_amount, pay_amount, cause, second_apportion
+from HLY_Elements.expense.expense_type import approation_amount1, approation_amount2, amount_input
 from HLY_PageObject.UI.Process import Process
 from HLY_PageObject.UI.Reimbursement import Reimbursement
 from HLY_PageObject.UI.my_expense.my_expense import My_Expense
@@ -121,26 +121,13 @@ def test_apportion_line(enter):
     reimbursement.get_elements_click(1, reimbursement.get_origin_parent_xpath("返 回"))
     driver.sendkeys(reason, "审核驳回", timeout=2)
     driver.click(reimbursement.get_parent_xpath("驳 回"))
-    process.open_reimbursement()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    process.open_reimbursement(businessCode)
+    process.Pagescroll(reimbursement.get_xpath("全部费用"), timeout=2)
+    logger.info("滑动到费用信息")
+    driver.click(second_apportion, timeout=1)
+    logger.info("进入费用并查看")
+    sleep(1)
+    process.Pagescroll(reimbursement.get_xpath("费用分摊"), timeout=1)
+    assert reimbursement.get_elements_attribute(1, amount_input, "value") == "22.13"
+    assert reimbursement.get_elements_attribute(3, amount_input, "value") == "21.32"
 

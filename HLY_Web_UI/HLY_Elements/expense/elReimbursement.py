@@ -44,4 +44,7 @@ department = '//*[text()="部门"]'
 submit_expense ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[4]/div/button[1]'
 # 报销单撤回确定按钮
 withdraw_confirm = 'xpath=>/html/body/div[7]/div/div[2]/div/div[1]/div/div/div[2]/button[2]'
+# 分摊驳回后的第二笔费用
+second_apportion = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[1]/span/div/span/div/div/div[1]/div[2]/div/div/div/div[2]/div/table/tbody/tr[2]/td[3]'
+
 

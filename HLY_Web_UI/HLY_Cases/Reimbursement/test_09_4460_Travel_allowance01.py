@@ -65,11 +65,11 @@ def test_4460_Travel_allowance01(enter):
     reimbursement.get_elements_click(4, reimbursement.get_origin_xpath("CNY"))
     logger.info("查看第二个差补费用")
     sleep(3)
-    driver.sendkeys(travel_input_expenses, "70", timeout=3)
-    logger.info("修改差补费用70元")
-    driver.click(save,timeout=2)
+    driver.sendkeys(travel_input_expenses, "19", timeout=3)
+    logger.info("修改差补费用19元")
+    driver.click(save, timeout=2)
     sleep(5)
-    assert driver.get_text(first_amout) == "70.00"
+    assert driver.get_text(first_amout) == "19.00"
     reimbursement.get_elements_click(0, Travel_allowance)
     assert reimbursement.get_elements_text(1, city_travel2) == "西安"
     # driver.click(submit_expense)

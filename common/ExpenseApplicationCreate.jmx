@@ -159,7 +159,7 @@
             <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
           <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="false">
             <stringProp name="RegexExtractor.useHeaders">false</stringProp>
             <stringProp name="RegexExtractor.refname">apportionmentOID</stringProp>
             <stringProp name="RegexExtractor.regex">apportionmentOID\\&quot;:\\&quot;([a-zA-Z\d-]+)</stringProp>
@@ -168,7 +168,7 @@
             <stringProp name="RegexExtractor.match_number">1</stringProp>
           </RegexExtractor>
           <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="false">
             <stringProp name="RegexExtractor.useHeaders">false</stringProp>
             <stringProp name="RegexExtractor.refname">budgetOID</stringProp>
             <stringProp name="RegexExtractor.regex">budgetOID\\&quot;:\\&quot;([a-zA-Z\d-]+)</stringProp>
@@ -177,7 +177,7 @@
             <stringProp name="RegexExtractor.match_number">1</stringProp>
           </RegexExtractor>
           <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="subCompanyOID" enabled="true">
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="subCompanyOID" enabled="false">
             <stringProp name="JSONPostProcessor.referenceNames">subCompanyOID</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$.subCompanyOID</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
@@ -221,6 +221,12 @@ vars.put(&quot;NcustomFormFields&quot;,str);
 
 </stringProp>
           </BeanShellPreProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON提取器" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">data</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
           <hashTree/>
         </hashTree>
       </hashTree>

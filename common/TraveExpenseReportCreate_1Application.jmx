@@ -97,37 +97,12 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="select_box" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">bxSelect_box</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;fieldContent&quot;:&quot;(.+?),{</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">Not found</stringProp>
-            <stringProp name="RegexExtractor.match_number">1</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="customFormFields" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">customFormFields1</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$.customFormFields</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            <stringProp name="JSONPostProcessor.defaultValues">Not found</stringProp>
-          </JSONPostProcessor>
-          <hashTree/>
           <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="customFormProperties;customFormPropertyMap" enabled="true">
             <stringProp name="JSONPostProcessor.referenceNames">bxCustomFormProperties;bxCustomFormPropertyMap</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$.customFormProperties;$.customFormPropertyMap</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
             <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found</stringProp>
           </JSONPostProcessor>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="fieldName" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">bxFieldName</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;fieldName&quot;:&quot;(.+?)&quot;,</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">Not found</stringProp>
-            <stringProp name="RegexExtractor.match_number">-1</stringProp>
-          </RegexExtractor>
           <hashTree/>
           <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="referenceOID" enabled="true">
             <stringProp name="RegexExtractor.useHeaders">false</stringProp>
@@ -149,12 +124,19 @@
           </ResponseAssertion>
           <hashTree/>
           <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取表单fieldOID" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">id;customFormFields;referenceOID;customFormProperties;tenantId;setOfBooksId</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$.id; $.customFormFields; $.referenceOID; $.customFormProperties; $.tenantId; $.setOfBooksId</stringProp>
+            <stringProp name="JSONPostProcessor.referenceNames">id;bxcustomFormFields</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.id; $.customFormFields</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            <stringProp name="JSONPostProcessor.defaultValues">null;null</stringProp>
             <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
-            <stringProp name="JSONPostProcessor.defaultValues">null;null;null;null;null;null</stringProp>
           </JSONPostProcessor>
+          <hashTree/>
+          <DebugPostProcessor guiclass="TestBeanGUI" testclass="DebugPostProcessor" testname="调试后置处理程序" enabled="true">
+            <boolProp name="displayJMeterProperties">false</boolProp>
+            <boolProp name="displayJMeterVariables">true</boolProp>
+            <boolProp name="displaySamplerProperties">true</boolProp>
+            <boolProp name="displaySystemProperties">false</boolProp>
+          </DebugPostProcessor>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="差旅报销单创建关联一个申请单" enabled="true">
@@ -177,7 +159,7 @@
 	&quot;lastModifiedDate&quot;: &quot;${NewUTCstartDate}&quot;,&#xd;
 	&quot;parentOID&quot;: null,&#xd;
 	&quot;associateExpenseReport&quot;: true,&#xd;
-	&quot;customFormFields&quot;: ${customFormFields1},&#xd;
+	&quot;customFormFields&quot;: ${bxcustomFormFields},&#xd;
 	&quot;remark&quot;: null,&#xd;
 	&quot;referenceOID&quot;: &quot;${bxReferenceOID}&quot;,&#xd;
 	&quot;groupOIDs&quot;: [],&#xd;
@@ -262,22 +244,23 @@
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-String json = vars.get(&quot;customFormFields&quot;);
-JSONArray customFormFields = JSON.parseArray(json);
+String basecustomFormFields = vars.get(&quot;bxcustomFormFields&quot;);
+log.info(&quot;准备噻的报销单表单数据是：&quot;+basecustomFormFields);
+JSONArray customFormFields = JSON.parseArray(basecustomFormFields);
 int size = customFormFields.size();
-
+log.info(&quot;报销单开始噻数据&quot;+size);
 for (int i = 0; i &lt; size; i++){
-		   jj = customFormFields.getJSONObject(i);
+		   	jj = customFormFields.getJSONObject(i);
              if (jj.get(&quot;fieldName&quot;).equals(&quot;事由&quot;))
            		jj.put(&quot;value&quot;,&quot;出去吃饭&quot;);
              if (jj.get(&quot;fieldName&quot;).equals(&quot;部门&quot;))
            		jj.put(&quot;value&quot;,vars.get(&quot;departmentOID&quot;));
-             if (jsonObject.get(&quot;fieldName&quot;).getAsString().equals(&quot;公司&quot;))
-           		jsonObject.addProperty(&quot;value&quot;,vars.get(&quot;companyOID&quot;));
+          	if (jj.get(&quot;fieldName&quot;).equals(&quot;公司&quot;))
+           		jj.put(&quot;value&quot;,vars.get(&quot;companyOID&quot;));
 }
 
 String str =customFormFields.toString();
-log.info(&quot;NcustomFormFields:&quot;+str);
+log.info(&quot;最终的bx是:&quot;+str);
 vars.put(&quot;NcustomFormFields&quot;,str);
 </stringProp>
           </BeanShellPreProcessor>

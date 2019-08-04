@@ -61,19 +61,19 @@
         </HTTPSamplerProxy>
         <hashTree>
           <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取${expenseTypeName}expenseTypeName" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">expenseTypeName</stringProp>
+            <stringProp name="JSONPostProcessor.referenceNames">Daba_expenseTypeName</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${expenseTypeName}&quot;)].expenseTypeName</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
           </JSONPostProcessor>
           <hashTree/>
           <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取${expenseTypeName}Daba_FormOID" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">expenseId</stringProp>
+            <stringProp name="JSONPostProcessor.referenceNames">Daba_filedID</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${expenseTypeName}&quot;)].id</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
           </JSONPostProcessor>
           <hashTree/>
           <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取${expenseTypeName}Daba_expenseTypeOID" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">expenseTypeOID</stringProp>
+            <stringProp name="JSONPostProcessor.referenceNames">Daba_expenseTypeOID</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${expenseTypeName}&quot;)].expenseTypeOID</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
           </JSONPostProcessor>
@@ -143,9 +143,9 @@
 	&quot;readonly&quot;: false,&#xd;
 	&quot;recognized&quot;: false,&#xd;
 	&quot;currencyCode&quot;: &quot;CNY&quot;,&#xd;
-	&quot;expenseTypeName&quot;: &quot;${expenseTypeName}&quot;,&#xd;
-	&quot;expenseTypeOID&quot;: &quot;${expenseTypeOID}&quot;,&#xd;
-	&quot;expenseTypeId&quot;: &quot;${expenseId}&quot;,&#xd;
+	&quot;expenseTypeName&quot;: &quot;${Daba_expenseTypeName}&quot;,&#xd;
+	&quot;expenseTypeOID&quot;: &quot;${Daba_expenseTypeOID}&quot;,&#xd;
+	&quot;expenseTypeId&quot;: &quot;${Daba_filedID}&quot;,&#xd;
 	&quot;expenseTypeIconName&quot;: &quot;hotel&quot;,&#xd;
 	&quot;expenseTypeKey&quot;: &quot;expense.type.hotel&quot;,&#xd;
 	&quot;receiptList&quot;: [],&#xd;

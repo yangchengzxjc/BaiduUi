@@ -12255,7 +12255,7 @@ vars.put(&quot;proportion2&quot;,&quot;0.5&quot;);</stringProp>
           <collectionProp name="ModuleController.node_path">
             <stringProp name="869052411">测试计划</stringProp>
             <stringProp name="1936554987">测试计划最新</stringProp>
-            <stringProp name="1739820724">008费用申请单修改(费用类型管控,禁止)</stringProp>
+            <stringProp name="-1706455632">007费用申请单修改(费用类型管控,警告)</stringProp>
           </collectionProp>
         </ModuleController>
         <hashTree/>

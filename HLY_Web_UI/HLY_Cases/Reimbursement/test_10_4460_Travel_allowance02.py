@@ -46,7 +46,7 @@ def test_4460_Travel_allowance01(enter):
     # 选择全部类型
     sleep(5)
     assert not driver.is_exist(defult_type_status)
-    reimbursement.get_elements_click(0,travel_type)
+    reimbursement.get_elements_click(0, travel_type)
     # 保存差补
     driver.click(save_travel_allowance)
     sleep(6)

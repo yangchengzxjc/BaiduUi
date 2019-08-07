@@ -21,7 +21,7 @@ def test_bug_24399_bill_refuse(enter):
     # 选择报销单类型(日常报销单-UI自动化)
     my_expense = My_Expense(driver)
     my_expense.Newexpense("差旅报销单-bug23062")
-    driver.click(elTravel_approval_can_be_printed.form1)
+    driver.click(elTravel_approval_can_be_printed.form1, timeout=3)
     reimbursement.get_elements_click(2, elTravel_approval_can_be_printed.apply_number)
     reimbursement.get_elements_click(1, elTravel_approval_can_be_printed.confirm)
     # 新建报销单
@@ -46,7 +46,7 @@ def test_bug_24399_bill_refuse(enter):
     process.open_reimbursement(business_Code)
     # 撤回报销单后再次进入可见提交按钮
     assert driver.is_exist(submit_expense)
-    driver.click(submit_expense,timeout=2)
+    driver.click(submit_expense, timeout=2)
     process.continue_submit()
     # 审批驳回
     process.approve_refuse(business_Code)
@@ -54,7 +54,7 @@ def test_bug_24399_bill_refuse(enter):
     sleep(2)
     reimbursement.get_url(reimbursement_look)
     bill_status2 = reimbursement.get_bill_status()
-    assert bill_status2 =="已驳回"
+    assert bill_status2 == "已驳回"
     # 再次提交报销单
     process.open_reimbursement(business_Code)
     sleep(3)
@@ -75,15 +75,3 @@ def test_bug_24399_bill_refuse(enter):
     assert Printing == "打 印"
     # 财务审核通过
     process.Financial_audit(business_Code)
-
-
-
-
-
-
-
-
-
-
-
-

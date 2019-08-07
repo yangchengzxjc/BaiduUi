@@ -1,6 +1,5 @@
 from time import sleep
 from selenium.webdriver.common.keys import Keys
-
 from HLY_Elements.expense.elApprove import know_prod, business_code, business_codes, approve, reason, refuse, \
     approve_process
 from HLY_Elements.expense.elFinanciaCheck import search_approve, passed, new_amount, save_amount, \
@@ -61,7 +60,7 @@ class Process(Reimbursement):
         # 保存新建的费用
         sleep(2)
         self.driver.click(save)
-        sleep(10)
+        sleep(5)
         logger.info("新建费用完成")
 
     def create_other_expense(self, money, expense_name):

@@ -1,7 +1,7 @@
 # 表单类型：差旅报销单-新建他人费用
 form_type = 'xpath=>//li[@class="ant-dropdown-menu-item"and text()="差旅报销单-新建他人费用"]'
 # 控件选择
-form1 = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/form/div[2]/div[2]/div/div/div[1]/div/div/div'
+form1 = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/form/div[2]/div[2]/div/div/div[1]/div/div/div/..'
 department_form = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/form/div[2]/div/div[1]/div[2]/div/div/div[1]/div/div/div'
 # 选择一个部门
 my_department='//*[@class="ant-radio-inner"]/..'

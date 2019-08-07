@@ -326,6 +326,15 @@ def Consumer_expense(amount, expenseNmae):
     else:
         logger.info("费用推送失败：%s,%s" % (code, json))
 
+def get_jobID():
+    """
+    获取员工的jobId
+    :return:
+    """
+    code, json = api.response_json(api_urls.account, "get", header=hly.apilogin_agin(), rdata=None)
+    if code == 200:
+        return json["companyWithUserJobsDTOList"][0]["userJobsDTOList"][0]["id"]
+
 def open_auto_route_Calculation():
     """
     差补界面打开自动计算行程

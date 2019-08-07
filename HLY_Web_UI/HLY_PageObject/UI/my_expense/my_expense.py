@@ -11,6 +11,8 @@ from HLY_Elements.expense.elExpense import New, Expense_bus, Currency, HKD
 from HLY_Elements.expense.elReimbursement import new_expense, NewExpenseBut
 from HLY_PageObject.API import apis
 from selenium.webdriver import ActionChains
+
+from HLY_PageObject.API.apis import get_jobID
 from common.globalMap import GlobalMap
 from common.parameter import GetConfigp
 from common.log import logger
@@ -50,8 +52,9 @@ class My_Expense(object):
                 fromId=x["formOID"]
                 logger.info(fromId)
                 break
-        #
-        url="%s://%s/main/expense-parent-report/expense-report/new-expense-report/%s/:userOID/:applicationOID"%(self.glo.get("Webprotocol"),self.glo.get("Webhost"),fromId)
+        jobID=get_jobID()
+        logger.info("jobID是：%s" % jobID)
+        url = "%s://%s/main/expense-parent-report/expense-report/new-expense-report/%s/:userOID/:applicationOID/%s" % (self.glo.get("Webprotocol"), self.glo.get("Webhost"), fromId, jobID)
         self.driver.get(url)
 
     def InputCause(self,expenseName,Cause):

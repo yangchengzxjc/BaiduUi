@@ -9,17 +9,17 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="protocol" elementType="Argument">
             <stringProp name="Argument.name">protocol</stringProp>
-            <stringProp name="Argument.value">${__P(protocol,https)}</stringProp>
+            <stringProp name="Argument.value">${__P(protocol,http)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="serverUrl" elementType="Argument">
             <stringProp name="Argument.name">serverUrl</stringProp>
-            <stringProp name="Argument.value">${__P(serverUrl,console.huilianyi.com)}</stringProp>
+            <stringProp name="Argument.value">${__P(serverUrl,stage.huilianyi.com)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,13609265517)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,13700000000)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
@@ -6243,16 +6243,6 @@ vars.put(&quot;AllDetalNew2&quot;,json);
             <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
           <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="false">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="-680666564">&quot;reimbursementBatchOID&quot;</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">16</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-          </ResponseAssertion>
-          <hashTree/>
           <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取付款批次" enabled="true">
             <stringProp name="JSONPostProcessor.referenceNames">reimbursementBatchOID;reimbursementBatchName</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$.reimbursementBatchOID;$.reimbursementBatchName</stringProp>
@@ -6310,16 +6300,6 @@ vars.put(&quot;AllDetalNew2&quot;,json);
             <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
           <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="-749828013">&quot;status&quot;:1008</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">16</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-          </ResponseAssertion>
-          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="00差旅报销单-确认已付款" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -6338,7 +6318,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
     &quot;modelEnum&quot;:&quot;CURRENT_PAGE&quot;,&#xd;
     &quot;submittedDateStart&quot;:&quot;${today}T00:00:00.000Z&quot;,&#xd;
     &quot;submittedDateEnd&quot;:&quot;${today}T23:59:59.000Z&quot;,&#xd;
-    &quot;businessCode&quot;:null,&#xd;
+    &quot;businessCode&quot;:${travelbusinessCode},&#xd;
     &quot;comment&quot;:null,&#xd;
     &quot;corporationOids&quot;:[&#xd;
 &#xd;
@@ -6379,6 +6359,10 @@ vars.put(&quot;AllDetalNew2&quot;,json);
             <intProp name="Assertion.test_type">8</intProp>
             <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
+          <hashTree/>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="true">
+            <stringProp name="ConstantTimer.delay">5000</stringProp>
+          </ConstantTimer>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="00查询确认已付款的差旅报销单" enabled="true">

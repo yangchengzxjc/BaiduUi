@@ -9,17 +9,17 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="protocol" elementType="Argument">
             <stringProp name="Argument.name">protocol</stringProp>
-            <stringProp name="Argument.value">${__P(protocol,https)}</stringProp>
+            <stringProp name="Argument.value">${__P(protocol,http)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="serverUrl" elementType="Argument">
             <stringProp name="Argument.name">serverUrl</stringProp>
-            <stringProp name="Argument.value">${__P(serverUrl,console.huilianyi.com)}</stringProp>
+            <stringProp name="Argument.value">${__P(serverUrl,stage.huilianyi.com)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,13609265517)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,13700000000)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
@@ -3855,68 +3855,36 @@ vars.put(&quot;NewcustFormValues&quot;,str);
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用控件" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
+          <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="费用类型查询" enabled="true">
+            <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="userOID" elementType="Argument">
+                  <stringProp name="Argument.name">userOID</stringProp>
+                  <stringProp name="Argument.value">${userOID}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="type" elementType="Argument">
+                  <stringProp name="Argument.name">type</stringProp>
+                  <stringProp name="Argument.value">2</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="expenseReportOID" elementType="Argument">
+                  <stringProp name="Argument.name">expenseReportOID</stringProp>
+                  <stringProp name="Argument.value">${travelExpenseReportOID}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="ExpenseTypeName" elementType="Argument">
+                  <stringProp name="Argument.name">ExpenseTypeName</stringProp>
+                  <stringProp name="Argument.value">大巴</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
             </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/custom/forms/${TravelReimbursement_formOID}/selected/expense/types?setOfBooksId=${setOfBooksId}&amp;userOID=${userOID}&amp;createManually=true</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
+          </kg.apc.jmeter.control.ParameterizedController>
           <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取大巴expenseTypeName" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">Daba_expenseTypeName</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;大巴&quot;)].expenseTypeName</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取大巴Daba_FormOID" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">Daba_filedID</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;大巴&quot;)].id</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取大巴Daba_expenseTypeOID" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">Daba_expenseTypeOID</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;大巴&quot;)].expenseTypeOID</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用控件--详情查询" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/expense/types/select/${Daba_filedID}</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">OtherPeopleFields</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$.fields</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+              <stringProp name="IncludeController.includepath">../../BasicRequest/ExpenseTypeGet.jmx</stringProp>
+            </IncludeController>
             <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单费用创建" enabled="true">
@@ -3931,9 +3899,9 @@ vars.put(&quot;NewcustFormValues&quot;,str);
 	&quot;readonly&quot;: false,&#xd;
 	&quot;recognized&quot;: false,&#xd;
 	&quot;currencyCode&quot;: &quot;CNY&quot;,&#xd;
-	&quot;expenseTypeName&quot;: &quot;${Daba_expenseTypeName}&quot;,&#xd;
-	&quot;expenseTypeOID&quot;: &quot;${Daba_expenseTypeOID}&quot;,&#xd;
-	&quot;expenseTypeId&quot;: &quot;${Daba_filedID}&quot;,&#xd;
+	&quot;expenseTypeName&quot;: &quot;${expenseTypeName}&quot;,&#xd;
+	&quot;expenseTypeOID&quot;: &quot;${expenseTypeOID}&quot;,&#xd;
+	&quot;expenseTypeId&quot;: &quot;${expenseTypeID}&quot;,&#xd;
 	&quot;expenseTypeIconName&quot;: &quot;coach&quot;,&#xd;
 	&quot;expenseTypeKey&quot;: &quot;expense.type.coach&quot;,&#xd;
 	&quot;receiptList&quot;: [],&#xd;
@@ -3976,68 +3944,36 @@ vars.put(&quot;NewcustFormValues&quot;,str);
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用控件" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
+          <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="费用类型查询" enabled="true">
+            <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="userOID" elementType="Argument">
+                  <stringProp name="Argument.name">userOID</stringProp>
+                  <stringProp name="Argument.value">${userOID}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="type" elementType="Argument">
+                  <stringProp name="Argument.name">type</stringProp>
+                  <stringProp name="Argument.value">2</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="expenseReportOID" elementType="Argument">
+                  <stringProp name="Argument.name">expenseReportOID</stringProp>
+                  <stringProp name="Argument.value">${travelExpenseReportOID}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="ExpenseTypeName" elementType="Argument">
+                  <stringProp name="Argument.name">ExpenseTypeName</stringProp>
+                  <stringProp name="Argument.value">机票</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
             </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/custom/forms/${TravelReimbursement_formOID}/selected/expense/types?setOfBooksId=${setOfBooksId}&amp;userOID=${userOID}&amp;createManually=true</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
+          </kg.apc.jmeter.control.ParameterizedController>
           <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取大巴expenseTypeName" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">Daba_expenseTypeName</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;机票&quot;)].expenseTypeName</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取大巴Daba_FormOID" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">Daba_filedID</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;机票&quot;)].id</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取大巴Daba_expenseTypeOID" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">Daba_expenseTypeOID</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;机票&quot;)].expenseTypeOID</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用控件--详情查询" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/expense/types/select/${Daba_filedID}</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">OtherPeopleFields</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$.fields</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+              <stringProp name="IncludeController.includepath">../../BasicRequest/ExpenseTypeGet.jmx</stringProp>
+            </IncludeController>
             <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单费用创建" enabled="true">
@@ -4052,9 +3988,9 @@ vars.put(&quot;NewcustFormValues&quot;,str);
 	&quot;readonly&quot;: false,&#xd;
 	&quot;recognized&quot;: false,&#xd;
 	&quot;currencyCode&quot;: &quot;CNY&quot;,&#xd;
-	&quot;expenseTypeName&quot;: &quot;${Daba_expenseTypeName}&quot;,&#xd;
-	&quot;expenseTypeOID&quot;: &quot;${Daba_expenseTypeOID}&quot;,&#xd;
-	&quot;expenseTypeId&quot;: &quot;${Daba_filedID}&quot;,&#xd;
+	&quot;expenseTypeName&quot;: &quot;${expenseTypeName}&quot;,&#xd;
+	&quot;expenseTypeOID&quot;: &quot;${expenseTypeOID}&quot;,&#xd;
+	&quot;expenseTypeId&quot;: &quot;${expenseTypeID}&quot;,&#xd;
 	&quot;expenseTypeIconName&quot;: &quot;coach&quot;,&#xd;
 	&quot;expenseTypeKey&quot;: &quot;expense.type.coach&quot;,&#xd;
 	&quot;receiptList&quot;: [],&#xd;
@@ -4097,68 +4033,36 @@ vars.put(&quot;NewcustFormValues&quot;,str);
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用控件" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
+          <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="费用类型查询" enabled="true">
+            <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="userOID" elementType="Argument">
+                  <stringProp name="Argument.name">userOID</stringProp>
+                  <stringProp name="Argument.value">${userOID}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="type" elementType="Argument">
+                  <stringProp name="Argument.name">type</stringProp>
+                  <stringProp name="Argument.value">2</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="expenseReportOID" elementType="Argument">
+                  <stringProp name="Argument.name">expenseReportOID</stringProp>
+                  <stringProp name="Argument.value">${travelExpenseReportOID}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="ExpenseTypeName" elementType="Argument">
+                  <stringProp name="Argument.name">ExpenseTypeName</stringProp>
+                  <stringProp name="Argument.value">火车</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
             </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/custom/forms/${TravelReimbursement_formOID}/selected/expense/types?setOfBooksId=${setOfBooksId}&amp;userOID=${userOID}&amp;createManually=true</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
+          </kg.apc.jmeter.control.ParameterizedController>
           <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取大巴expenseTypeName" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">Daba_expenseTypeName</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;火车&quot;)].expenseTypeName</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取大巴Daba_FormOID" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">Daba_filedID</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;火车&quot;)].id</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取大巴Daba_expenseTypeOID" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">Daba_expenseTypeOID</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;火车&quot;)].expenseTypeOID</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用控件--详情查询" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/expense/types/select/${Daba_filedID}</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">OtherPeopleFields</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$.fields</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+              <stringProp name="IncludeController.includepath">../../BasicRequest/ExpenseTypeGet.jmx</stringProp>
+            </IncludeController>
             <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单费用创建" enabled="true">
@@ -4173,9 +4077,9 @@ vars.put(&quot;NewcustFormValues&quot;,str);
 	&quot;readonly&quot;: false,&#xd;
 	&quot;recognized&quot;: false,&#xd;
 	&quot;currencyCode&quot;: &quot;CNY&quot;,&#xd;
-	&quot;expenseTypeName&quot;: &quot;${Daba_expenseTypeName}&quot;,&#xd;
-	&quot;expenseTypeOID&quot;: &quot;${Daba_expenseTypeOID}&quot;,&#xd;
-	&quot;expenseTypeId&quot;: &quot;${Daba_filedID}&quot;,&#xd;
+	&quot;expenseTypeName&quot;: &quot;${expenseTypeName}&quot;,&#xd;
+	&quot;expenseTypeOID&quot;: &quot;${expenseTypeOID}&quot;,&#xd;
+	&quot;expenseTypeId&quot;: &quot;${expenseTypeID}&quot;,&#xd;
 	&quot;expenseTypeIconName&quot;: &quot;coach&quot;,&#xd;
 	&quot;expenseTypeKey&quot;: &quot;expense.type.coach&quot;,&#xd;
 	&quot;receiptList&quot;: [],&#xd;
@@ -4218,68 +4122,36 @@ vars.put(&quot;NewcustFormValues&quot;,str);
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用控件" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
+          <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="费用类型查询" enabled="true">
+            <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="userOID" elementType="Argument">
+                  <stringProp name="Argument.name">userOID</stringProp>
+                  <stringProp name="Argument.value">${userOID}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="type" elementType="Argument">
+                  <stringProp name="Argument.name">type</stringProp>
+                  <stringProp name="Argument.value">2</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="expenseReportOID" elementType="Argument">
+                  <stringProp name="Argument.name">expenseReportOID</stringProp>
+                  <stringProp name="Argument.value">${travelExpenseReportOID}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="ExpenseTypeName" elementType="Argument">
+                  <stringProp name="Argument.name">ExpenseTypeName</stringProp>
+                  <stringProp name="Argument.value">酒店</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
             </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/custom/forms/${TravelReimbursement_formOID}/selected/expense/types?setOfBooksId=${setOfBooksId}&amp;userOID=${userOID}&amp;createManually=true</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
+          </kg.apc.jmeter.control.ParameterizedController>
           <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取大巴expenseTypeName" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">Daba_expenseTypeName</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;酒店&quot;)].expenseTypeName</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取大巴Daba_FormOID" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">Daba_filedID</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;酒店&quot;)].id</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取大巴Daba_expenseTypeOID" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">Daba_expenseTypeOID</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;酒店&quot;)].expenseTypeOID</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用控件--详情查询" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/expense/types/select/${Daba_filedID}</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">OtherPeopleFields</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$.fields</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+              <stringProp name="IncludeController.includepath">../../BasicRequest/ExpenseTypeGet.jmx</stringProp>
+            </IncludeController>
             <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单费用创建" enabled="true">
@@ -4294,9 +4166,9 @@ vars.put(&quot;NewcustFormValues&quot;,str);
 	&quot;readonly&quot;: false,&#xd;
 	&quot;recognized&quot;: false,&#xd;
 	&quot;currencyCode&quot;: &quot;CNY&quot;,&#xd;
-	&quot;expenseTypeName&quot;: &quot;${Daba_expenseTypeName}&quot;,&#xd;
-	&quot;expenseTypeOID&quot;: &quot;${Daba_expenseTypeOID}&quot;,&#xd;
-	&quot;expenseTypeId&quot;: &quot;${Daba_filedID}&quot;,&#xd;
+	&quot;expenseTypeName&quot;: &quot;${expenseTypeName}&quot;,&#xd;
+	&quot;expenseTypeOID&quot;: &quot;${expenseTypeOID}&quot;,&#xd;
+	&quot;expenseTypeId&quot;: &quot;${expenseTypeID}&quot;,&#xd;
 	&quot;expenseTypeIconName&quot;: &quot;coach&quot;,&#xd;
 	&quot;expenseTypeKey&quot;: &quot;expense.type.coach&quot;,&#xd;
 	&quot;receiptList&quot;: [],&#xd;
@@ -4339,68 +4211,36 @@ vars.put(&quot;NewcustFormValues&quot;,str);
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用控件" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
+          <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="费用类型查询" enabled="true">
+            <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="userOID" elementType="Argument">
+                  <stringProp name="Argument.name">userOID</stringProp>
+                  <stringProp name="Argument.value">${userOID}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="type" elementType="Argument">
+                  <stringProp name="Argument.name">type</stringProp>
+                  <stringProp name="Argument.value">2</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="expenseReportOID" elementType="Argument">
+                  <stringProp name="Argument.name">expenseReportOID</stringProp>
+                  <stringProp name="Argument.value">${travelExpenseReportOID}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="ExpenseTypeName" elementType="Argument">
+                  <stringProp name="Argument.name">ExpenseTypeName</stringProp>
+                  <stringProp name="Argument.value">餐补</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
             </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/custom/forms/${TravelReimbursement_formOID}/selected/expense/types?setOfBooksId=${setOfBooksId}&amp;userOID=${userOID}&amp;createManually=true</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
+          </kg.apc.jmeter.control.ParameterizedController>
           <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取大巴expenseTypeName" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">Daba_expenseTypeName</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;餐补&quot;)].expenseTypeName</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取大巴Daba_FormOID" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">Daba_filedID</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;餐补&quot;)].id</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取大巴Daba_expenseTypeOID" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">Daba_expenseTypeOID</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;餐补&quot;)].expenseTypeOID</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取表单的费用控件--详情查询" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/expense/types/select/${Daba_filedID}</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">OtherPeopleFields</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$.fields</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+              <stringProp name="IncludeController.includepath">../../BasicRequest/ExpenseTypeGet.jmx</stringProp>
+            </IncludeController>
             <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单费用创建" enabled="true">
@@ -4415,9 +4255,9 @@ vars.put(&quot;NewcustFormValues&quot;,str);
 	&quot;readonly&quot;: false,&#xd;
 	&quot;recognized&quot;: false,&#xd;
 	&quot;currencyCode&quot;: &quot;CNY&quot;,&#xd;
-	&quot;expenseTypeName&quot;: &quot;${Daba_expenseTypeName}&quot;,&#xd;
-	&quot;expenseTypeOID&quot;: &quot;${Daba_expenseTypeOID}&quot;,&#xd;
-	&quot;expenseTypeId&quot;: &quot;${Daba_filedID}&quot;,&#xd;
+	&quot;expenseTypeName&quot;: &quot;${expenseTypeName}&quot;,&#xd;
+	&quot;expenseTypeOID&quot;: &quot;${expenseTypeOID}&quot;,&#xd;
+	&quot;expenseTypeId&quot;: &quot;${expenseTypeID}&quot;,&#xd;
 	&quot;expenseTypeIconName&quot;: &quot;coach&quot;,&#xd;
 	&quot;expenseTypeKey&quot;: &quot;expense.type.coach&quot;,&#xd;
 	&quot;receiptList&quot;: [],&#xd;
@@ -6110,275 +5950,21 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="00差旅报销单-先查询单据" enabled="true">
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+        <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="报销单确认付款" enabled="true">
+          <elementProp name="ParameterizedController" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
             <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&quot;businessCode&quot;:&quot;${travelbusinessCode}&quot;,&quot;submittedDateEnd&quot;:&quot;${today}T23:59:59.000Z&quot;,&quot;submittedDateStart&quot;:&quot;${yestday}T00:00:00.000Z&quot;,&quot;page&quot;:0,&quot;size&quot;:10}</stringProp>
+              <elementProp name="bxBusinessCode" elementType="Argument">
+                <stringProp name="Argument.name">bxBusinessCode</stringProp>
+                <stringProp name="Argument.value">${travelbusinessCode}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain"></stringProp>
-          <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/payment/schedule/query/pending/confirm</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
+        </kg.apc.jmeter.control.ParameterizedController>
         <hashTree>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">8</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="198152773">&quot;success&quot;:true,</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">16</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取付款批次" enabled="false">
-            <stringProp name="JSONPostProcessor.referenceNames">reimbursementBatchOID;reimbursementBatchName</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$.reimbursementBatchOID;$.reimbursementBatchName</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            <stringProp name="JSONPostProcessor.defaultValues">null;null</stringProp>
-          </JSONPostProcessor>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取付款批次" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">id</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$.rows[0].id</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            <stringProp name="JSONPostProcessor.defaultValues">null</stringProp>
-          </JSONPostProcessor>
-          <hashTree/>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
-            <collectionProp name="HeaderManager.headers">
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Authorization</stringProp>
-                <stringProp name="Header.value">Bearer ${accessToken}</stringProp>
-              </elementProp>
-            </collectionProp>
-          </HeaderManager>
-          <hashTree/>
-        </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="00差旅报销单-确认付款" enabled="true">
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-    &quot;currentPageIds&quot;:[&#xd;
-        &quot;${id}&quot;&#xd;
-    ],&#xd;
-    &quot;entityType&quot;:1002,&#xd;
-    &quot;excludeIds&quot;:[&#xd;
-&#xd;
-    ],&#xd;
-    &quot;modelEnum&quot;:&quot;CURRENT_PAGE&quot;,&#xd;
-    &quot;submittedDateStart&quot;:&quot;${today}T00:00:00.000Z&quot;,&#xd;
-    &quot;submittedDateEnd&quot;:&quot;${today}T23:59:59.000Z&quot;,&#xd;
-    &quot;businessCode&quot;:null,&#xd;
-    &quot;comment&quot;:null,&#xd;
-    &quot;corporationOids&quot;:[&#xd;
-&#xd;
-    ],&#xd;
-    &quot;formOids&quot;:[&#xd;
-&#xd;
-    ],&#xd;
-    &quot;applicantOid&quot;:null,&#xd;
-    &quot;companyIds&quot;:[&#xd;
-&#xd;
-    ]&#xd;
-}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain"></stringProp>
-          <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/reimbursement/batch/pending/pay/confirm</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">8</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="false">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="-680666564">&quot;reimbursementBatchOID&quot;</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">16</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取付款批次" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">reimbursementBatchOID;reimbursementBatchName</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$.reimbursementBatchOID;$.reimbursementBatchName</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            <stringProp name="JSONPostProcessor.defaultValues">null;null</stringProp>
-          </JSONPostProcessor>
-          <hashTree/>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
-            <collectionProp name="HeaderManager.headers">
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Authorization</stringProp>
-                <stringProp name="Header.value">Bearer ${accessToken}</stringProp>
-              </elementProp>
-            </collectionProp>
-          </HeaderManager>
-          <hashTree/>
-        </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="00查询待付款完成的差旅报销单" enabled="true">
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&quot;businessCode&quot;:&quot;${travelbusinessCode}&quot;,&quot;status&quot;:&quot;pay_in_process&quot;,&quot;formOIDs&quot;:[]}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain"></stringProp>
-          <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/v2/expense/reports/finance/admin/search?page=0&amp;size=10&amp;sort=</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">8</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="-749828013">&quot;status&quot;:1008</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">16</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-          </ResponseAssertion>
-          <hashTree/>
-        </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="00差旅报销单-确认已付款" enabled="true">
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-    &quot;currentPageIds&quot;:[&#xd;
-        &quot;${id}&quot;&#xd;
-    ],&#xd;
-    &quot;entityType&quot;:1002,&#xd;
-    &quot;excludeIds&quot;:[&#xd;
-&#xd;
-    ],&#xd;
-    &quot;modelEnum&quot;:&quot;CURRENT_PAGE&quot;,&#xd;
-    &quot;submittedDateStart&quot;:&quot;${today}T00:00:00.000Z&quot;,&#xd;
-    &quot;submittedDateEnd&quot;:&quot;${today}T23:59:59.000Z&quot;,&#xd;
-    &quot;businessCode&quot;:null,&#xd;
-    &quot;comment&quot;:null,&#xd;
-    &quot;corporationOids&quot;:[&#xd;
-&#xd;
-    ],&#xd;
-    &quot;formOids&quot;:[&#xd;
-&#xd;
-    ],&#xd;
-    &quot;applicantOid&quot;:null,&#xd;
-    &quot;companyIds&quot;:[&#xd;
-&#xd;
-    ]&#xd;
-}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain"></stringProp>
-          <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/reimbursement/batch/paid/confirm</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">8</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-          </ResponseAssertion>
+          <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include控制器" enabled="true">
+            <stringProp name="IncludeController.includepath">../../common/ExpenseReportConfirmpayment.jmx</stringProp>
+          </IncludeController>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="00查询确认已付款的差旅报销单" enabled="true">
@@ -8922,19 +8508,19 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
           </HTTPSamplerProxy>
           <hashTree>
             <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取费用expenseTypeName" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">Daba_expenseTypeName</stringProp>
+              <stringProp name="JSONPostProcessor.referenceNames">expenseTypeName</stringProp>
               <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;关联申请单费用&quot;)].expenseTypeName</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
             </JSONPostProcessor>
             <hashTree/>
             <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取费用Daba_FormOID" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">Daba_filedID</stringProp>
+              <stringProp name="JSONPostProcessor.referenceNames">expenseTypeID</stringProp>
               <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;关联申请单费用&quot;)].id</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
             </JSONPostProcessor>
             <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取费用Daba_expenseTypeOID" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">Daba_expenseTypeOID</stringProp>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="提取费用expenseTypeOID" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">expenseTypeOID</stringProp>
               <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;关联申请单费用&quot;)].expenseTypeOID</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
             </JSONPostProcessor>
@@ -8948,7 +8534,7 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/expense/types/select/${Daba_filedID}</stringProp>
+            <stringProp name="HTTPSampler.path">/api/expense/types/select/${expenseTypeID}</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -8978,9 +8564,9 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
 	&quot;readonly&quot;: false,&#xd;
 	&quot;recognized&quot;: false,&#xd;
 	&quot;currencyCode&quot;: &quot;CNY&quot;,&#xd;
-	&quot;expenseTypeName&quot;: &quot;${Daba_expenseTypeName}&quot;,&#xd;
-	&quot;expenseTypeOID&quot;: &quot;${Daba_expenseTypeOID}&quot;,&#xd;
-	&quot;expenseTypeId&quot;: &quot;${Daba_filedID}&quot;,&#xd;
+	&quot;expenseTypeName&quot;: &quot;${expenseTypeName}&quot;,&#xd;
+	&quot;expenseTypeOID&quot;: &quot;${expenseTypeOID}&quot;,&#xd;
+	&quot;expenseTypeId&quot;: &quot;${expenseTypeID}&quot;,&#xd;
 	&quot;expenseTypeIconName&quot;: &quot;clothing&quot;,&#xd;
 	&quot;expenseTypeKey&quot;: null,&#xd;
 	&quot;receiptList&quot;: [],&#xd;

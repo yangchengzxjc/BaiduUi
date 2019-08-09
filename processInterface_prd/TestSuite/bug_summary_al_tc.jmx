@@ -9,17 +9,17 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="protocol" elementType="Argument">
             <stringProp name="Argument.name">protocol</stringProp>
-            <stringProp name="Argument.value">${__P(protocol,https)}</stringProp>
+            <stringProp name="Argument.value">${__P(protocol,http)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="serverUrl" elementType="Argument">
             <stringProp name="Argument.name">serverUrl</stringProp>
-            <stringProp name="Argument.value">${__P(serverUrl,console.huilianyi.com)}</stringProp>
+            <stringProp name="Argument.value">${__P(serverUrl,stage9084.huilianyi.com)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,13609265517)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,13700000000)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
@@ -5144,7 +5144,6 @@ vars.put(&quot;NcustomFormFields1&quot;,str);</stringProp>
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-    &quot;formOID&quot;:&quot;${FormOID1}&quot;,&#xd;
     &quot;setOfBooksId&quot;:&quot;${setOfBooksId}&quot;,&#xd;
     &quot;expenseReportOID&quot;:&quot;${expenseReportOID2}&quot;,&#xd;
     &quot;userOID&quot;:&quot;${userOID2}&quot;,&#xd;
@@ -5260,7 +5259,7 @@ vars.put(&quot;NcustomFormFields1&quot;,str);</stringProp>
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="724177263">{&quot;message&quot;:&quot;无修改该费用类型的权限（类型禁用/权限修改）&quot;,&quot;errorCode&quot;:&quot;124006&quot;,&quot;exceptionCategory&quot;:&quot;BIZ_ERR&quot;,&quot;exceptionType&quot;:&quot;BizException&quot;}</stringProp>
+              <stringProp name="-1399993127">{&quot;message&quot;:&quot;No expense type permission!&quot;,&quot;errorCode&quot;:&quot;permission&quot;,&quot;exceptionCategory&quot;:&quot;BIZ_ERR&quot;,&quot;exceptionType&quot;:&quot;BizException&quot;}</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">true</boolProp>
@@ -6248,7 +6247,7 @@ vars.put(&quot;NcustomFormFields2&quot;,str);</stringProp>
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="-482614084">{&quot;message&quot;:&quot;代理制单校验:申请人无报销单日常报销单-代理制单人的创建权限&quot;,&quot;errorCode&quot;:&quot;EXPENSE_REPORT_PROXY_SUBMIT_5001&quot;,&quot;exceptionCategory&quot;:&quot;BIZ_ERR&quot;,&quot;exceptionType&quot;:&quot;BizException&quot;}</stringProp>
+              <stringProp name="1719780789">{&quot;message&quot;:&quot;申请人无报销单日常报销单-代理制单人的创建权限&quot;,&quot;errorCode&quot;:&quot;EXPENSE_REPORT_PROXY_SUBMIT_5001&quot;,&quot;exceptionCategory&quot;:&quot;BIZ_ERR&quot;,&quot;exceptionType&quot;:&quot;BizException&quot;}</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">true</boolProp>
@@ -6288,68 +6287,6 @@ vars.put(&quot;NcustomFormFields&quot;,str);
 
 </stringProp>
           </BeanShellPreProcessor>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="false">
-            <stringProp name="JSONPostProcessor.referenceNames">expenseReportOID;businessCode</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$.expenseReportOID;$.businessCode</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            <stringProp name="JSONPostProcessor.defaultValues">null;null</stringProp>
-          </JSONPostProcessor>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="false">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">8</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="获取新建的单据号" enabled="false">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">businessCode</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;businessCode&quot;:&quot;(.+?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default"></stringProp>
-            <stringProp name="RegexExtractor.match_number">0</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="获取报销单OID" enabled="false">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">expenseReportOID</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;expenseReportOID&quot;:&quot;(.+?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default"></stringProp>
-            <stringProp name="RegexExtractor.match_number">0</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="获取applicantOID" enabled="false">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">applicantOID</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;applicantOID&quot;:&quot;(.+?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default"></stringProp>
-            <stringProp name="RegexExtractor.match_number">0</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="获取approverOIDs" enabled="false">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">approverOIDs</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;approverOIDs&quot;:&quot;(.+?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default"></stringProp>
-            <stringProp name="RegexExtractor.match_number">0</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="获取bizOID" enabled="false">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">bizOID</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;bizOID&quot;:&quot;(.+?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default"></stringProp>
-            <stringProp name="RegexExtractor.match_number">0</stringProp>
-          </RegexExtractor>
           <hashTree/>
         </hashTree>
       </hashTree>

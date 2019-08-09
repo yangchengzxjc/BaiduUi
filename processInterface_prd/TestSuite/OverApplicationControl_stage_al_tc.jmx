@@ -730,7 +730,13 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;from.travel.relevance.application&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
-}, {&#xd;
+}, &#xd;
+{&#xd;
+        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
+        &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
+},&#xd;
+{&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;application.property.related.mutil.applications&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;N&quot;&#xd;
@@ -749,7 +755,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:1002}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1002]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -1051,7 +1057,13 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;from.travel.relevance.application&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
-}, {&#xd;
+}, &#xd;
+{&#xd;
+        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
+        &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
+},&#xd;
+{&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;application.property.related.mutil.applications&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;N&quot;&#xd;
@@ -1070,7 +1082,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:1002}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1002]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -1372,7 +1384,13 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;from.travel.relevance.application&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
-}, {&#xd;
+},&#xd;
+{&#xd;
+        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
+        &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
+},&#xd;
+{&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;application.property.related.mutil.applications&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;N&quot;&#xd;
@@ -1391,7 +1409,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:1001}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -1693,7 +1711,13 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;from.travel.relevance.application&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
-}, {&#xd;
+}, &#xd;
+{&#xd;
+        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
+        &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
+},&#xd;
+{&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;application.property.related.mutil.applications&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;N&quot;&#xd;
@@ -1712,7 +1736,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:1001}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -2014,7 +2038,13 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;from.travel.relevance.application&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
-}, {&#xd;
+},&#xd;
+{&#xd;
+        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
+        &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
+},&#xd;
+{&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;application.property.related.mutil.applications&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;N&quot;&#xd;
@@ -2033,7 +2063,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:1003}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001,1002]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -2335,7 +2365,13 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;from.travel.relevance.application&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
-}, {&#xd;
+}, &#xd;
+{&#xd;
+        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
+        &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
+},&#xd;
+{&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;application.property.related.mutil.applications&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;N&quot;&#xd;
@@ -2354,7 +2390,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:1003}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001,1002]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -2642,7 +2678,13 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;from.travel.relevance.application&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
-}, {&#xd;
+},&#xd;
+{&#xd;
+        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
+        &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
+},&#xd;
+{&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;application.property.related.mutil.applications&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;N&quot;&#xd;
@@ -2661,7 +2703,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:1002}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1002]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -2963,7 +3005,13 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;from.travel.relevance.application&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
-}, {&#xd;
+}, &#xd;
+{&#xd;
+        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
+        &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
+},&#xd;
+{&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;application.property.related.mutil.applications&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;N&quot;&#xd;
@@ -2982,7 +3030,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:1002}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1002]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -3284,7 +3332,13 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;from.travel.relevance.application&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
-}, {&#xd;
+},&#xd;
+{&#xd;
+        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
+        &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
+},&#xd;
+{&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;application.property.related.mutil.applications&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;N&quot;&#xd;
@@ -3303,7 +3357,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:1001}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -3605,7 +3659,13 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;from.travel.relevance.application&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
-}, {&#xd;
+}, &#xd;
+{&#xd;
+        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
+        &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
+},&#xd;
+{&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;application.property.related.mutil.applications&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;N&quot;&#xd;
@@ -3624,7 +3684,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:1001}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -3926,7 +3986,13 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;from.travel.relevance.application&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
-}, {&#xd;
+}, &#xd;
+{&#xd;
+        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
+        &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
+},&#xd;
+{&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;application.property.related.mutil.applications&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;N&quot;&#xd;
@@ -3945,7 +4011,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:1003}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001,1002]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -4247,7 +4313,13 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;from.travel.relevance.application&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
-}, {&#xd;
+}, &#xd;
+{&#xd;
+        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
+        &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
+},&#xd;
+{&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;application.property.related.mutil.applications&quot;,&#xd;
 	&quot;propertyValue&quot;: &quot;N&quot;&#xd;
@@ -4266,7 +4338,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:1003}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001,1002]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>

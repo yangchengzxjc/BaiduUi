@@ -77,7 +77,7 @@ Financial_search = 'xpath=>//*[text()="搜 索"]/..'
 coin_varity = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[1]/span/div/span/div/div/div[1]/div[2]/div/div/div/div[2]/div/table/thead/tr/th[5]'
 
 # 报销单界面的第一笔费用的金额
-first_amout = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[1]/span/div/span/div/div/div[1]/div[2]/div/div/div/div[2]/div/table/tbody/tr[2]/td[8]/span'
+first_amout = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[1]/span/div/span/div/div/div[1]/div[2]/div/div/div/div[2]/div/table/tbody/tr[2]/td[9]/span'
 # 录入发票点击请选择
 invoice_type = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div/div/div[1]/div/div/div/div/form/div[1]/div[2]/div/div/div/div/div'
 # 发票代码

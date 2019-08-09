@@ -10,7 +10,8 @@ Line_ReimbursementPrint = '//*[@id="app"]/div/div[2]/div[2]/div/div[1]/div[2]/di
 # 报销单详情打印按钮
 Print_But = '//button[@type="button" and  @class="ant-btn back-btn ant-btn-primary"]'
 # 报销单界面申请人frame
-reimbursement_applicant_frame = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[1]/form/div[2]/div[1]/div[3]/div/div[2]/div/div/div[1]/div/div/div'
+reimbursement_applicant_frame = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[1]/form/div[2]/div[1]/div[3]/div/div[2]/div/div/span/div/div/div/div'
+
 # 申请单界面的申请人frame
 apply_applicant_frame = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[1]/form/div[2]/div[1]/div[2]/div/div[2]/div/div/div[1]/div/div/div'
 # 搜索界面的展示条数

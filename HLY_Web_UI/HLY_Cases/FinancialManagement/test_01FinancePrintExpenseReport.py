@@ -33,10 +33,10 @@ def test_FinancePrintExpenseReport(enter):
     my_expense.SelectExpense("大巴")
     my_expense.SelectExpense_Currency("HKD")
     # 生产的汇率是0.8,这块先改成3.9   影响的case有：test01 和test02
-    my_expense.InputRate("0.8")
+    my_expense.InputRate("3.9")
     my_expense.InputExpense_Amount("100.12")
     my_expense.ClickExpenseSave(3)
-    time.sleep(3)
+    time.sleep(5)
     business_Code = process.get_businessCode()
     logger.info("单号:"+business_Code)
     my_expense.summit_expense()

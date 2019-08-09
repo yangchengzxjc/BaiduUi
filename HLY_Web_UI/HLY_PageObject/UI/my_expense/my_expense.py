@@ -130,7 +130,7 @@ class My_Expense(object):
         """
         time.sleep(2)
         logger.info("输入汇率:%s" % ( rate ))
-        self.driver.sendkeys(elExpense.Expense_Amount_input,text=rate,clear=True,timeout=2)
+        self.driver.sendkeys(elExpense.Expense_Amount_input,text=rate,clear=True, timeout=2)
         pass
     def InputExpense_Amount(self,amount):
         """
@@ -138,7 +138,7 @@ class My_Expense(object):
         :return:
         """
         logger.info("报销单里新建费用，并输入大巴类型的金额")
-        self.driver.sendkeys(css=elExpense.Expense_Amount,text=amount,clear=True,timeout=2)
+        self.driver.sendkeys(css=elExpense.Expense_Amount,text=amount,clear=True, timeout=2)
         pass
     def ClickExpenseSave(self,timeout):
         """
@@ -146,16 +146,9 @@ class My_Expense(object):
         :return:
         """
         logger.info("报销单里，新建费用保存按钮")
-
-        # els = self.driver.find_elements_by_xpath(elExpense.Save_Expense)
-        # for x in els:
-        #     # logger.info(x)
-        #     els[x].click()
-        # [el.click() for el in els if el.text == "保 存"]
-        # self.driver.click(elExpense.Save_Expense, timeout=2)
-
-        self.driver.click(elExpense.Save_Expense,timeout=timeout)
+        self.driver.click(elExpense.Save_Expense, timeout=timeout)
         pass
+
     def Pagescroll(self,xpath,timeout):
         """
         报销单详情页面，滚动页面

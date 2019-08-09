@@ -61,7 +61,6 @@ def test_apportion_line(enter):
     reimbursement.get_elements_sendKey(1, amount_input, "10.45")
     # 点击新增分摊
     reimbursement.get_elements_click(0, new_apportion)
-    # reimbursement.get_element_clear(1, amount_input)
     # 判断第三个分滩行金额
     value3 = reimbursement.get_elements_attribute(5, amount_input, "value")
     assert value3 == "19.88"

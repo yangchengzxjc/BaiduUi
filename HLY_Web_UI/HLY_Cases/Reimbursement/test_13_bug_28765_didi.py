@@ -24,11 +24,13 @@ def test_bug_28765_didi(enter):
     reimbursement.get_elements_sendKey(1, cause, "test必填字段已填保存报销单")
     driver.click(reimbursement.get_parent_xpath("新 建"), timeout=1)
     # 产生扬招费用
-    expense_yangzhao()
+    yangzhao_code = expense_yangzhao()
+    # 判断杨招费用是否新建成功
+    assert yangzhao_code == 200
     sleep(2)
     driver.click(book_enter)
-    reimbursement.get_elements_click(0,yangzhao_expensetype)
-    reimbursement.get_elements_click(3,select_button_confirm)
+    reimbursement.get_elements_click(0, yangzhao_expensetype)
+    reimbursement.get_elements_click(3, select_button_confirm)
     sleep(3)
     assert not driver.is_exist(reimbursement.get_xpath("必输未填：费用必填字段为空"))
     driver.click(submit_expense, timeout=3)

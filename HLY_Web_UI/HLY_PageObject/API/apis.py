@@ -165,8 +165,9 @@ def expense_yangzhao():
 	}]
 }
     logger.info("date:%s"%data)
-    code,json =api.response_json(api_urls.yangzhao_url,"post", header=hly.apilogin_agin(),rjson=data)
-    logger.info("扬招费用:%s,%s"%(code,json))
+    code, json = api.response_json(api_urls.yangzhao_url,"post", header=hly.apilogin_agin(), rjson=data)
+    logger.info("扬招费用:%s,%s"%(code, json))
+    return code
 
 
 def query_loan(loan_code):
@@ -179,7 +180,7 @@ def query_loan(loan_code):
     body ={
     "businessCode":"%s"%loan_code,
     "submittedDateEnd":"%sT15:59:59.000Z"%date,
-    "submittedDateStart":"2019-01-07T16:00:00.000Z",
+    "submittedDateStart":"2019-08-01T16:00:00.000Z",
     "departmentOids":[
     ],
     "payeeType":None,
@@ -205,7 +206,7 @@ def confirm(id,loan_number):
     date = time.strftime("%Y-%m-%d", time.localtime())
     body={
     "currentPageIds":[
-        "%s"%id
+        "%s" % id
     ],
     "entityType":3001,
     "excludeIds":[
@@ -213,9 +214,9 @@ def confirm(id,loan_number):
     ],
     "modelEnum":"CURRENT_PAGE",
     "submittedDateStart":"2019-01-07T16:00:00.000Z",
-    "submittedDateEnd":"%sT15:59:59.000Z"%date,
-    "businessCode":"%s"%loan_number,
-    "comment":None,
+    "submittedDateEnd":"%sT15:59:59.000Z" % date,
+    "businessCode":"%s" % loan_number,
+    "comment": None,
     "corporationOids":[
 
     ],

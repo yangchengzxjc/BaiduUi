@@ -28,8 +28,8 @@ def test_FinanceViewExpenseReport(enter):
     driver = enter.driver
     driver.get('%s://%s%s' % (glo.get("Webprotocol"),glo.get('Webhost'), pp.getoption("BASIC", "ReimbursementView")))
     logger.info("查看默认界面查找出的数据条数")
-    time.sleep(3)
-    co = driver.get_element(ReimbursementView_element.Search_result,s=True)
+    time.sleep(5)
+    co = driver.get_element(ReimbursementView_element.Search_result, s=True, timeout=2)
     num0 = re.findall('\d+', co[0].text)[0]
     logger.info(str(num0))
     time.sleep(3)

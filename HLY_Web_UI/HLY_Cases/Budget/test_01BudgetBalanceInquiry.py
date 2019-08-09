@@ -21,7 +21,7 @@ def test_BudgetBalanceInquiry(enter):
     pp = pa('./config/hly.config')
     driver=enter.driver
     reimbursement = Reimbursement(driver)
-    budget=Budget(driver)
+    budget = Budget(driver)
     budget.Click_Budget()
 
     budget.Click_BudgetBalanceInquiry()

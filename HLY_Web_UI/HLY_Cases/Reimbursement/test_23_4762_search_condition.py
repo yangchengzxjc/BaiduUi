@@ -17,7 +17,6 @@ def test_search_condition(enter):
     reimbursement.get_url(reimbursement_look)
     driver.click(reimbursement_applicant_frame)
     assert len(driver.find_elements_by_xpath(info_number)) == 10
-
     # case1 报销单的界面
     # 搜索工号
     reimbursement.get_elements_sendKey(0, apply_search, "10086")

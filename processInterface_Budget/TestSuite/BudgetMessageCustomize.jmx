@@ -14,7 +14,7 @@
           </elementProp>
           <elementProp name="serviceURL" elementType="Argument">
             <stringProp name="Argument.name">serviceURL</stringProp>
-            <stringProp name="Argument.value">${__P(serviceURL,console.huilianyi.com)}</stringProp>
+            <stringProp name="Argument.value">${__P(serviceURL,stage.huilianyi.com)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="username" elementType="Argument">

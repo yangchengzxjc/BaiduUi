@@ -60,7 +60,6 @@ project_name = 'xpath=>//*[@id="itemName"]'
 #选择来源类别
 source_type ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/form/div/div/div/div/div/div/table/tbody/tr[3]/td[1]/div/div/span'
 #项目映射下的项目名称搜索框
-search_result = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[1]/div/div/div/div/ul/li'
-
+search_result = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[1]/div/div/div/div/div/ul/li'
 search_frame ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[1]/div/form/div/div[1]/div[3]/div/div[2]/div/div/div/div/ul/li/div/input'
 

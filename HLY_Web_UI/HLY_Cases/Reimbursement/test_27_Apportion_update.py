@@ -7,7 +7,7 @@ from HLY_Elements.expense.elApprove import apportion_line3, refuse, reason
 from HLY_Elements.expense.elExpense import save, submit_expense
 from HLY_Elements.expense.elFinanciaCheck import travel_input_expenses
 from HLY_Elements.expense.elReimbursement import cause, new_expense
-from HLY_Elements.expense.expense_type import amount_input, new_apportion, apportion_department1, apportion_department3
+from HLY_Elements.expense.expense_type import amount_input, new_apportion
 from HLY_PageObject.UI.Process import Process
 from HLY_PageObject.UI.Reimbursement import Reimbursement
 from HLY_PageObject.UI.my_expense.my_expense import My_Expense
@@ -57,12 +57,12 @@ def test_apportion_line(creat_expense):
     process.get_elements_click(0, new_apportion)
     logger.info("新增分摊")
     # 选择公司
-    driver.click(apportion_department1, timeout=2)
+    reimbursement.get_elements_click(9, reimbursement.get_origin_xpath("请选择"))
     logger.info("点击选择部门")
     driver.click(reimbursement.get_parent_xpath("测试部门"), timeout=2)
     logger.info("选择部门测试部门")
     # 点击确定
-    reimbursement.get_elements_click(0, reimbursement.get_origin_parent_xpath("确 定"))
+    reimbursement.get_elements_click(1, reimbursement.get_origin_parent_xpath("确 定"))
     sleep(3)
     logger.info("点击确定")
     # 修改分滩行
@@ -71,11 +71,11 @@ def test_apportion_line(creat_expense):
     logger.info("修改完成第二个分摊金额")
     # 点击新增分摊
     process.get_elements_click(0, new_apportion)
-    driver.click(apportion_department3, timeout=2)
+    reimbursement.get_elements_click(11, reimbursement.get_origin_xpath("请选择"))
     logger.info("点击选择部门")
     reimbursement.get_elements_click(1, reimbursement.get_origin_parent_xpath("YS部门1"), timeout=2)
     logger.info("选择YS部门1")
-    reimbursement.get_elements_click(1, reimbursement.get_origin_parent_xpath("确 定"))
+    reimbursement.get_elements_click(2, reimbursement.get_origin_parent_xpath("确 定"))
     # 修改分滩行
     reimbursement.get_element_clear(5, amount_input)
     reimbursement.get_elements_sendKey(5, amount_input, "10")

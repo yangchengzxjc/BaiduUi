@@ -28,8 +28,8 @@ def test_FinanceViewExpenseReport(enter):
     process = Process(driver)
     my_expense = My_Expense(driver)
     reimbursementView = ReimbursementView(driver)
-    my_expense.Newexpense("日常报销单-UI自动化") #打开固定的新建报销单页面
-    my_expense.InputCause("日常报销单-UI自动化","日常报销单-UI自动化测试外币金额")
+    my_expense.Newexpense("日常报销单-UI自动化") # 打开固定的新建报销单页面
+    my_expense.InputCause("日常报销单-UI自动化", "日常报销单-UI自动化测试外币金额")
     my_expense.ClickNew()
     time.sleep(2)
     my_expense.ClickNewExpenseButton()

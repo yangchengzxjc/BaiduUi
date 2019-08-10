@@ -99,7 +99,6 @@ def test_apportion_line(enter):
     logger.info("点击1月5号")
     driver.sendkeys(invoice_money, "146.03")
     driver.click(process.get_parent_xpath("确 定"))
-    # assert driver.get_text(origin_amout, timeout=4) == "37.46"
     reimbursement.Pagescroll(reimbursement.get_xpath("费用分摊"), timeout=4)
     assert driver.get_text(financial_apportion1, timeout=1) == "19.08"
     assert driver.get_text(financial_apportion2, timeout=1) == "18.38"

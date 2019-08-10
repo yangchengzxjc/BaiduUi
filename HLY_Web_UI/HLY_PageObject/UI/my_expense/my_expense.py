@@ -115,11 +115,11 @@ class My_Expense(object):
         :return:
         """
         logger.info("选择对应的币种")
-        self.driver.click(Currency,2)
+        self.driver.click(Currency, 2)
         if kind =="HKD":
-            self.driver.click(HKD,2)
+            self.driver.click(HKD, 2)
         if kind =="USD":
-            self.driver.click(elExpense.USD,2)
+            self.driver.click(elExpense.USD, 2)
         pass
 
     def InputRate(self, rate):

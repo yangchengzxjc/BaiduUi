@@ -23,7 +23,7 @@ def test_ExpenseReportMultiLinePayment_Open(enter):
     process = Process(driver)
     my_expense = My_Expense(driver)
     my_expense.Newexpense("多付款行报销单已开启") # 打开固定的新建报销单页面
-    my_expense.InputCause("多付款行报销单已开启","多付款行报销单已开启测试")
+    my_expense.InputCause("多付款行报销单已开启", "多付款行报销单已开启测试")
     my_expense.ClickNew()
     my_expense.ClickNewExpenseButton()
     my_expense.SelectExpense("大巴")

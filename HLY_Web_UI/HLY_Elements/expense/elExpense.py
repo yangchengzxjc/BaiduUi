@@ -17,9 +17,9 @@ Expense_Edit='xpant=>//*[@class="edit"]'
 Currency = 'xpath=>//div[@title="CNY, 人民币"]'
 
 # 港币币种
-HKD = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/div/div/div/div/ul/li[2]'
+HKD = 'xpath=>//li[text()="HKD"]'
 # 美元汇率
-USD = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/div/div/div/div/ul/li[3]'
+USD = 'xpath=>//LI[text()="USD"]'
 # 新建费用金额输入框
 Expense_Amount = 'xpath=>//input[@class="ant-input-number-input" and @placeholder="请输入"]'
 
@@ -30,8 +30,8 @@ Expense_Amount_input='xpath=>//input[@id="actualCurrencyRate"]'
 Save_Expense='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[2]/button[1]'
 
 # 核销按钮
-SalesAccount='xpath=>//a[text()="冲借款"]'
-SalesAccount_prod='xpath=>//a[text()="核销"]'
+SalesAccount = 'xpath=>//a[text()="冲借款"]'
+SalesAccount_prod = 'xpath=>//a[text()="核销"]'
 # 提交报销单
 submit_expense = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[4]/div/button[1]'
 

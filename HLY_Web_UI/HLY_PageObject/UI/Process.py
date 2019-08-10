@@ -7,8 +7,7 @@ from HLY_Elements.expense.elFinanciaCheck import search_approve, passed, new_amo
 from HLY_Elements.expense.elExpense import Financial_search, save, input_expense, scroll_locate, departure_prod, \
     Destination_prod, destinations_prod
 from HLY_Elements.expense.elReimbursement import new_expense, new_other_expense, no_card_user, withdraw_confirm
-from HLY_Elements.expense.expense_type import amount_input, new_apportion, apportion_department2, \
-    apportion_department1
+from HLY_Elements.expense.expense_type import amount_input, new_apportion
 from HLY_PageObject.UI.Reimbursement import Reimbursement
 from HLY_PageObject.UI.my_expense.my_expense import My_Expense
 from common.globalMap import GlobalMap
@@ -391,13 +390,13 @@ class Process(Reimbursement):
             self.get_elements_click(0, new_apportion)
             logger.info("新增分摊")
             # 选择公司
-            self.driver.click(apportion_department1, timeout=2)
+            self.get_elements_click(9, self.get_origin_xpath("请选择"))
             logger.info("点击选择部门")
             self.driver.click(self.get_parent_xpath(department), timeout=2)
             logger.info("选择部门-%s" % department)
             # 点击确定
             sleep(2)
-            self.get_elements_click(0, self.get_origin_parent_xpath("确 定"))
+            self.get_elements_click(1, self.get_origin_parent_xpath("确 定"))
             sleep(3)
             logger.info("点击确定")
             logger.info("分摊金额是：%s %s" % (self.get_elements_attribute(1, amount_input, "value"),
@@ -421,14 +420,14 @@ class Process(Reimbursement):
             # 点击新增分摊
             self.get_elements_click(0, new_apportion)
             logger.info("新增分摊")
-            # 选择公司
-            self.driver.click(apportion_department2, timeout=2)
-            logger.info("点击选择公司")
+            # 选择部门
+            self.get_elements_click(9, self.get_origin_xpath("请选择"))
+            logger.info("点击选择部门")
             self.driver.click(self.get_parent_xpath(department), timeout=2)
             logger.info("选择部门-%s" % department)
             # 点击确定
             sleep(2)
-            self.get_elements_click(0, self.get_origin_parent_xpath("确 定"))
+            self.get_elements_click(1, self.get_origin_parent_xpath("确 定"))
             logger.info("点击确定")
             logger.info("分摊金额是：%s %s" % (self.get_elements_attribute(2, amount_input, "value"),
                                          self.get_elements_attribute(4, amount_input, "value")))

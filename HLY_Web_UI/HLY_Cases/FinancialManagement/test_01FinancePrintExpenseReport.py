@@ -48,7 +48,7 @@ def test_FinancePrintExpenseReport(enter):
     time.sleep(2)
     ReimbursementID = reimbursementView.get_ReimbursementID(1)
     logger.info("页面的单号：%s"%ReimbursementID)
-    assert  ReimbursementID==business_Code
+    assert ReimbursementID==business_Code
     original_window = driver.current_window_handle
     all_handles_old = driver.window_handles
     reimbursementView.ClickPrintBut(1)

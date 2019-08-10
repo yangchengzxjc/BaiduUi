@@ -47,6 +47,11 @@
             <stringProp name="Argument.value">${__P(expense_FormName,差旅报销单-新建他人费用)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="Delay" elementType="Argument">
+            <stringProp name="Argument.name">Delay</stringProp>
+            <stringProp name="Argument.value">${__P(Delay,300)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </elementProp>
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
@@ -176,6 +181,10 @@
         </objProp>
         <stringProp name="filename"></stringProp>
       </ResultCollector>
+      <hashTree/>
+      <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="true">
+        <stringProp name="ConstantTimer.delay">${Delay}</stringProp>
+      </ConstantTimer>
       <hashTree/>
       <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
         <collectionProp name="HeaderManager.headers">

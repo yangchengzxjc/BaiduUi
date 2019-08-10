@@ -42,6 +42,11 @@
             <stringProp name="Argument.value">${__P(ruleExpenseType,城市控件费用类型)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="Delay" elementType="Argument">
+            <stringProp name="Argument.name">Delay</stringProp>
+            <stringProp name="Argument.value">${__P(Delay,300)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </elementProp>
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
@@ -165,7 +170,7 @@
       </HeaderManager>
       <hashTree/>
       <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="true">
-        <stringProp name="ConstantTimer.delay">500</stringProp>
+        <stringProp name="ConstantTimer.delay">${Delay}</stringProp>
       </ConstantTimer>
       <hashTree/>
       <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="登录" enabled="true"/>

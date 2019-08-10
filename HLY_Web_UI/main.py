@@ -18,9 +18,9 @@ def parse_command_params():
     command_argv = sys.argv
     logger.info('执行脚本的参数： %s' % command_argv)
     glo.set("value", command_argv[1])
-    glo.set('ip',command_argv[2])
-    glo.set("port",command_argv[3])
-    glo.set("flag",command_argv[4])
+    glo.set('ip', command_argv[2])
+    glo.set("port", command_argv[3])
+    glo.set("flag", command_argv[4])
 
 # def set_env(ip='127.0.0.1', port=4444, env='stage'):
 #
@@ -33,7 +33,7 @@ def set_env2():
     env=glo.get("value")
     logger.info("env=="+env)
     pp = pa('./config/hly.config')
-    glo.set("env",env)
+    glo.set("env", env)
     if env == "stage":
         glo.set("Webprotocol","http")
         glo.set("Webhost","stage.huilianyi.com")
@@ -79,8 +79,8 @@ if __name__ == '__main__':
     set_env2()
     # init_global_param(udid="3af53e7")
     # 运行指定mark用例
-    pytest.main(['--capture=no', '-v',
-                 '--html=' + get_report_name(), '--self-contained-html'])
+    # pytest.main(['--capture=no', '-v',
+    #              '--html=' + get_report_name(), '--self-contained-html'])
     # print(glo.get('desired_capabilities'))
     # 运行指定mark用例
     # pytest.main(['--capture=sys', '-v', '--html=' + get_report_name(), '--self-contained-html'])
@@ -89,9 +89,12 @@ if __name__ == '__main__':
     # pytest.main(['-s', '-q', '--capture=sys', '-v', '-m', 'not normal and not low',
     #              '--html=report.html', '--self-contained-html'])
     # 指定文件夹+mark
-    # pytest.main(["HLY_Cases/Reimbursement/test_26_30734_Abnormal operation.py", '-s', '-q', '--capture=sys', '-v','--html=' + get_report_name(), '--self-contained-html'])
+    pytest.main(["HLY_Cases/Reimbursement/test_24_31066_Apportion_amount.py", '-s', '-q', '--capture=sys', '-v','--html=' + get_report_name(), '--self-contained-html'])
     # E:/git-zhishinet/APPUI/zhishinet-stuAPPUI/HLY_cases/userinfoModify/test_modify_gender.py
     # E:/git-zhishinet/APPUI/zhishinet-stuAPPUI/HLY_cases/register/test_register_05_invalidphonenum.py
     # E:/git-zhishinet/APPUI/zhishinet-stuAPPUI/HLY_cases/register/test_register_01_codeshort.py
     # E:/git-zhishinet/APPUI/zhishinet-stuAPPUI/HLY_cases/register/test_register_00_codelong.py
     # E:/git-zhishinet/APPUI/zhishinet-stuAPPUI/HLY_cases/register/test_register_07_classwrong.py
+
+
+

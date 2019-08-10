@@ -33,7 +33,7 @@ def test_search_condition(enter):
     assert driver.get_text(reimbursement.get_xpath("10086")) == "10086"
     # case2申请单的界面
     reimbursement.get_url(apply_url)
-    driver.click(apply_applicant_frame)
+    driver.click(apply_applicant_frame, timeout=3)
     assert len(driver.find_elements_by_xpath(info_number)) == 10
     # 搜索工号
     reimbursement.get_elements_sendKey(0, apply_search, "10086")

@@ -43,10 +43,10 @@ def test_5483_card_must(enter):
     driver.click(Receipt, timeout=2)
     sleep(2)
     reimbursement.get_elements_click(3, reimbursement.get_origin_xpath("我没有银行卡"))
-    reimbursement.get_elements_click(1, reimbursement.get_origin_parent_xpath("确 定"))
+    reimbursement.get_elements_click(2, reimbursement.get_origin_parent_xpath("确 定"))
     # 选择员工报销
     driver.click(PaymentUse)
-    reimbursement.get_elements_click(1, reimbursement.get_origin_xpath("员工报销"))
+    reimbursement.get_elements_click(1, reimbursement.get_origin_xpath("员工报销"), timeout=2)
     # 点击保存
     sleep(2)
     reimbursement.get_elements_click(1, reimbursement.get_origin_parent_xpath("保 存"))

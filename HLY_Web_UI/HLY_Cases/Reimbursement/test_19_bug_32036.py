@@ -1,4 +1,6 @@
 from time import sleep
+
+from HLY_Elements.expense import elTravel_approval_can_be_printed
 from HLY_Elements.expense.elExpense import enter_button, rate_description, submit_expense
 from HLY_Elements.expense.elReimbursement import select_department, cause
 from HLY_Elements.expense.elTravel_approval_can_be_printed import my_department, rate_input, rate_save
@@ -20,7 +22,7 @@ def test_bug_32036(enter):
     # 选择报销单类型(日常报销单)
     my_expense = My_Expense(driver)
     my_expense.Newexpense("日常报销单-UI自动化")
-    driver.click(select_department)
+    driver.click(elTravel_approval_can_be_printed.department_form)
     reimbursement.get_elements_click(0, my_department)
     # 选择部门后点击确定
     reimbursement.get_elements_click(0, enter_button)

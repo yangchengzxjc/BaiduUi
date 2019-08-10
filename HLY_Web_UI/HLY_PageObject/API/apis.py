@@ -282,7 +282,7 @@ def get_expenseTypeOID():
     setOfBooksId = get_company()["setOfBooksId"]
     requestUrl = expenseTypeOID%setOfBooksId
     code, r_json = api.response_json(requestUrl, 'get', header=hly.apilogin_agin())
-    logger.info("费用类型的OID:%s" % r_json)
+    # logger.info("费用类型的OID:%s" % r_json)
     if code == 200:
         return r_json
     else:
@@ -299,7 +299,7 @@ def Consumer_expense(amount, expenseNmae):
         expenseTypeOID = get_expenseTypeOID()["rows"][0]["expenseTypes"]
     else:
         expenseTypeOID = get_expenseTypeOID()["rows"][1]["expenseTypes"]
-    logger.info("xixiixiixiix:%s"%expenseTypeOID)
+    # logger.info("xixiixiixiix:%s"%expenseTypeOID)
     time.sleep(2)
     for i in expenseTypeOID:
         if i["name"] == "%s"%expenseNmae:
@@ -308,13 +308,13 @@ def Consumer_expense(amount, expenseNmae):
     logger.info("hahahahahah:%s" % OID)
     userOID =get_account()["userOID"]
     body ={
-  "expenseTypeOID": "%s"%OID,
-  "createdDate": "%s"%utctime,
+  "expenseTypeOID": "%s" % OID,
+  "createdDate": "%s" % utctime,
   "currencyCode": "CNY",
   "invoiceStatus": "INIT",
   "withReceipt": True,
   "applicationNumber":None,
-  "userOID": "%s"%userOID,
+  "userOID": "%s" % userOID,
   "amount": amount,
   "paymentType": 1001,
   "readonly": True,

@@ -22,13 +22,13 @@ class Reimbursement():
     def get_elements_click(self, number, element, timeout =4):
         sleep(timeout)
         els = self.driver.find_elements_by_xpath(element)
-        logger.info(len(els))
+        logger.info("%s:%s" % (element, len(els)))
         els[number].click()
 
     def get_elements_attribute(self,number,element,value,timeout=2):
         sleep(timeout)
         els=self.driver.find_elements_by_xpath(element)
-        logger.info("元素个数：%s"%len(els))
+        logger.info("元素个数：%s" % len(els))
         return els[number].get_attribute(value)
 
     def get_elements_text(self,number,element):

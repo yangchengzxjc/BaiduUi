@@ -36,21 +36,17 @@ def test_4460_Travel_allowance01(enter):
     sleep(2)
     driver.click(reimbursement.get_parent_xpath("新 建"))
     logger.info("新建报销单")
-    sleep(5)
     # 进入差补计算
     reimbursement.get_elements_click(0, Travel_allowance)
-    # 点击添加按钮
-    driver.click(add_Travel_allowance)
     # 判断出差城市的元素是否存在
-    assert not driver.is_exist(city_travel)
+    assert not driver.is_exist(city_travel, timeout=4)
     # 选择全部类型
-    sleep(5)
     assert not driver.is_exist(defult_type_status)
-    reimbursement.get_elements_click(0, travel_type)
+    # reimbursement.get_elements_click(1, travel_type, timeout=1)
+    driver.click(reimbursement.get_xpath("全选"), timeout=2)
     # 保存差补
     driver.click(save_travel_allowance)
-    sleep(6)
-    reimbursement.Pagescroll(amount, timeout=1)
+    reimbursement.Pagescroll(amount, timeout=5)
     business_Code = process.get_businessCode()
     # 报销单页面的城市控件信息
     place1 = driver.get_text(allowance_city2)

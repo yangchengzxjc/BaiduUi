@@ -4,7 +4,7 @@ form_type = 'xpath=>//li[@class="ant-dropdown-menu-item"and text()="差旅报销
 form1 = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/form/div[2]/div[2]/div/div/span/div/div/div/div'
 department_form = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/form/div[2]/div/div[1]/div[2]/div/div/span/div/div/div/div'
 # 选择一个部门
-my_department='//*[@class="ant-radio-inner"]/..'
+my_department = '//*[@class="ant-radio-inner"]/..'
 # 选择关联的申请单（第一个）
 apply_number = '//td[@class="ant-table-selection-column"]'
 # 选择了申请单后的确定按钮
@@ -19,6 +19,7 @@ rate_save = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/sp
 approve_rate = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[1]/span/div/span/div/div/div[1]/div[2]/div/div/div/div[2]/div/table/tbody/tr/td[8]'
 
 # 审核界面的汇率
-Finance_rate = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[1]/span/div/span/div/div/div[1]/div[2]/div/div/div/div[2]/div/table/tbody/tr/td[7]'
+Finance_rate = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[1]/span/div/div[2]/div[1]/div/span/div/div/div[1]/div[2]/div/div/div/div[2]/div/table/tbody/tr/td[7]'
+
 # 汇率警告提醒
 warning_remind = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[1]/div[2]/div/div[3]/div[2]/div'

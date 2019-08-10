@@ -77,7 +77,8 @@ class Process(Reimbursement):
         logger.info("选择员工")
         self.driver.click(no_card_user, timeout=3)
         # 确定
-        self.driver.click(self.get_parent_xpath("确 定"), timeout=2)
+        # self.driver.click(self.get_parent_xpath("确 定"), timeout=2)
+        self.get_elements_click(1, self.get_origin_parent_xpath("确 定"))
         my_expense.SelectExpense(expense_name)
         sleep(3)
         logger.info("money:%s" % money)

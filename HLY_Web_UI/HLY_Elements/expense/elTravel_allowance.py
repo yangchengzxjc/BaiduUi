@@ -9,10 +9,10 @@ city_travel ='xpath=>//*[text()="出差城市"]'
 city_travel_input ='xpath=>//*[@id="cityName"]'
 # 出发城市输入框
 setoff_input = 'xpath=>//*[@id="dpCityName"]'
-select_place= 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[6]/div/div[2]/div[2]/div/div[1]/div/div/div/div[2]/span/div/form/div[1]/span/div/div/div[2]/div/div/div/div[2]/div/div/div/ul/li[1]/span/span'
+select_place = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[6]/div/div[2]/div[2]/div/div[1]/div/div/div/div[2]/span/div/form/div[1]/span/div/div/div[2]/div/div/div/div[2]/div/div/div/ul/li[1]/span/span'
 dalian_place = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[6]/div/div[2]/div[2]/div/div[1]/div/div/div/div[2]/span/div/form/div[1]/span/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/ul/li[1]/span/span'
 # 差补类型
-travel_type = '//*[@class="ant-checkbox-input"]'
+travel_type = '//*[@class="ant-checkbox-inner"]'
 save_travel_allowance='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[6]/div/div[2]/div[2]/div/div[2]/button[1]'
 # 报销单界面的补贴城市
 allowance_city = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[1]/div[4]'

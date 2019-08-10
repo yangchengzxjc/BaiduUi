@@ -63,7 +63,7 @@ def test_credit_reimbursement2(enter):
     process.approve(business_Code)
     # 财务修改金额，付款行消失，借款单消失
     process.change_amount(business_Code)
-    reimbursement.Pagescroll(reimbursement.get_xpath("收款账号"),timeout=1)
+    reimbursement.Pagescroll(reimbursement.get_xpath("收款账号"), timeout=1)
     assert not driver.is_exist(check_lable2)
 
 

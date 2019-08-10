@@ -16,7 +16,6 @@ input_expenses = '//*[@id="amount"]'
 travel_input_expenses = 'xpath=>//*[@id="amount"]'
 destinations ='//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[9]/div[2]/div/div/div/div/div/ul/li/div/input'
 # 报销单详情页获取单号
-
 get_businessCode = '//*[@id="app"]/div/div[2]/div[2]/div/div[1]/div/div[2]/div/div/div/div[2]/span[1]'
 # 撤回报销单
 cancel = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[4]/div/button[1]'

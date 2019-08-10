@@ -33,7 +33,8 @@ submit ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/form/div[4]/div/div/button[
 # 我没有银行卡用户
 no_card_user = 'xpath=>//*[contains(text(),"我没有银行卡")]'
 # 收款方
-Receipt = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[2]/div/div[4]/div[2]/div[2]/div/form/div[2]/div[2]/div/div/div[1]/div/div/div'
+Receipt = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[2]/div/div[4]/div[2]/div[2]/div/form/div[2]/div[2]/div/div/span/div/div/div/div'
+
 # 付款用途
 PaymentUse = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[2]/div/div[4]/div[2]/div[2]/div/form/div[6]/div[2]/div/div/div/div/div'
 # 未输入收款银行卡的账号保存提示后显示红色的提示请选择

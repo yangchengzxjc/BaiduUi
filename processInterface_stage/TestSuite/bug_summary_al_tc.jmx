@@ -5544,7 +5544,7 @@ vars.put(&quot;NcustomFormFields1&quot;,str);</stringProp>
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="-484267076">{&quot;message&quot;:&quot;代理制单校验:申请人无报销单日常报销单-权限检查的创建权限&quot;,&quot;errorCode&quot;:&quot;EXPENSE_REPORT_PROXY_SUBMIT_5001&quot;,&quot;exceptionCategory&quot;:&quot;BIZ_ERR&quot;,&quot;exceptionType&quot;:&quot;BizException&quot;}</stringProp>
+              <stringProp name="-1383053405">{&quot;message&quot;:&quot;申请人无报销单日常报销单-权限检查的创建权限&quot;,&quot;errorCode&quot;:&quot;EXPENSE_REPORT_PROXY_SUBMIT_5001&quot;,&quot;exceptionCategory&quot;:&quot;BIZ_ERR&quot;,&quot;exceptionType&quot;:&quot;BizException&quot;}</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">true</boolProp>

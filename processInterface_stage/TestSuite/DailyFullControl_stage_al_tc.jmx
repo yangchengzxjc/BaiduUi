@@ -14,17 +14,22 @@
           </elementProp>
           <elementProp name="serverUrl" elementType="Argument">
             <stringProp name="Argument.name">serverUrl</stringProp>
-            <stringProp name="Argument.value">${__P(serverUrl,stage.huilianyi.com)}</stringProp>
+            <stringProp name="Argument.value">${__P(serverUrl,console.huilianyi.com)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,13700000000)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,13609265517)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
             <stringProp name="Argument.name">password</stringProp>
             <stringProp name="Argument.value">${__P(password,hly123456)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="Delay" elementType="Argument">
+            <stringProp name="Argument.name">Delay</stringProp>
+            <stringProp name="Argument.value">${__P(Delay,0)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -131,6 +136,10 @@
         <stringProp name="HTTPSampler.connect_timeout">15000000</stringProp>
         <stringProp name="HTTPSampler.response_timeout">15000000</stringProp>
       </ConfigTestElement>
+      <hashTree/>
+      <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="true">
+        <stringProp name="ConstantTimer.delay">${Delay}</stringProp>
+      </ConstantTimer>
       <hashTree/>
       <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="察看结果树" enabled="true">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
@@ -14534,7 +14543,7 @@ vars.put(&quot;AllDetalNew&quot;,json);
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;approvalTxt&quot;: &quot;谁让你吃、谁让你住酒店？&quot;,&#xd;
+	&quot;approvalTxt&quot;: &quot;单笔驳回&quot;,&#xd;
 	&quot;expenseOID&quot;: &quot;${expenseReportOID}&quot;,&#xd;
 	&quot;invoiceOIDs&quot;: [&quot;${invoiceOID_1}&quot;,&quot;${invoiceOID_2}&quot;]&#xd;
 }&#xd;
@@ -14619,7 +14628,7 @@ vars.put(&quot;AllDetalNew&quot;,json);
             <stringProp name="JSONPostProcessor.defaultValues">null</stringProp>
           </JSONPostProcessor>
           <hashTree/>
-          <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="检查差补费用详情" enabled="true">
+          <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="检查差补费用详情" enabled="false">
             <stringProp name="BeanShellAssertion.query">
 
 String invoiceOID_1rejectReason= vars.get(&quot;invoiceOID_1rejectReason&quot;);
@@ -14656,7 +14665,7 @@ if(!invoiceOID_1toast.contains(vars.get(&quot;businessCode&quot;))) {
 
     
 
-if(!invoiceOID_1rejectReason.equals(&quot;谁让你吃、谁让你住酒店？&quot;)) {
+if(!invoiceOID_1rejectReason.equals(&quot;单笔驳回&quot;)) {
     Failure = true; 
     FailureMessage = &quot;检查费用驳回原因失败&quot;;
 }else{
@@ -14682,6 +14691,41 @@ if(!invoiceOID_1rejectReason.equals(&quot;谁让你吃、谁让你住酒店？&q
             <boolProp name="displaySamplerProperties">true</boolProp>
             <boolProp name="displaySystemProperties">false</boolProp>
           </DebugPostProcessor>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 断言" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">String invoiceOID_1rejectReason= vars.get(&quot;invoiceOID_1rejectReason&quot;);
+String invoiceOID_1toast= vars.get(&quot;invoiceOID_1toast&quot;);
+
+
+
+if(!invoiceOID_1toast.contains(vars.get(&quot;businessCode&quot;))) {
+    Failure = true; 
+    FailureMessage = &quot;检查费用驳回标签失败&quot;;
+}
+else{
+    FailureMessage = &quot;检查费用驳回标签成功&quot;;
+    }
+
+
+
+ 
+
+if(!invoiceOID_1rejectReason.equals(&quot;单笔驳回&quot;)) {
+    Failure = true; 
+    FailureMessage = &quot;检查费用驳回原因失败&quot;;
+}
+else{
+    FailureMessage = &quot;检查费用驳回原因成功&quot;;
+    }
+
+
+
+</stringProp>
+          </JSR223Assertion>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${ThreadName}获取发票2信息" enabled="true">
@@ -14760,7 +14804,7 @@ if(!invoiceOID_1toast.contains(vars.get(&quot;businessCode&quot;))) {
 
     
 
-if(!invoiceOID_1rejectReason.equals(&quot;谁让你吃、谁让你住酒店？&quot;)) {
+if(!invoiceOID_1rejectReason.equals(&quot;单笔驳回&quot;)) {
     Failure = true; 
     FailureMessage = &quot;检查费用驳回原因失败&quot;;
 }else{
@@ -17832,7 +17876,7 @@ vars.put(&quot;AllDetalNew&quot;,json);
             <stringProp name="JSONPostProcessor.defaultValues">null</stringProp>
           </JSONPostProcessor>
           <hashTree/>
-          <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="检查差补费用详情" enabled="true">
+          <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="检查差补费用详情" enabled="false">
             <stringProp name="BeanShellAssertion.query">
 
 String invoiceOID_1rejectReason= vars.get(&quot;invoiceOID_1rejectReason&quot;);
@@ -17895,6 +17939,64 @@ if(!invoiceOID_1rejectReason.equals(&quot;谁让你吃、谁让你住酒店？&q
             <boolProp name="displaySamplerProperties">true</boolProp>
             <boolProp name="displaySystemProperties">false</boolProp>
           </DebugPostProcessor>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 断言" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">
+
+String invoiceOID_1rejectReason= vars.get(&quot;invoiceOID_1rejectReason&quot;);
+String invoiceOID_1toast= vars.get(&quot;invoiceOID_1toast&quot;);
+
+//String invoiceOID_2toast= vars.get(&quot;invoiceOID_1toast&quot;);
+//String invoiceOID_2rejectReason= vars.get(&quot;invoiceOID_2rejectReason&quot;);
+
+//log.info(&quot;invoiceOID_1rejectReason==&quot;+invoiceOID_1rejectReason);
+//log.info(&quot;invoiceOID_2rejectReason==&quot;+invoiceOID_2rejectReason);
+//log.info(&quot;invoiceOID_1toast==&quot;+invoiceOID_1toast);
+//log.info(&quot;invoiceOID_2toast==&quot;+invoiceOID_2toast);
+//log.info(vars.get(&quot;invoiceOID_1&quot;));
+//log.info(vars.get(&quot;invoiceOID_2&quot;));
+
+
+
+
+
+if(!invoiceOID_1toast.contains(vars.get(&quot;businessCode&quot;))) {
+    Failure = true; 
+    FailureMessage = &quot;检查费用驳回标签失败&quot;;
+}else{
+    FailureMessage = &quot;检查费用驳回标签成功&quot;;
+    }
+
+
+//if(!invoiceOID_2toast.contains(vars.get(&quot;businessCode&quot;))) {
+//    Failure = true; 
+//    FailureMessage = &quot;检查费用驳回标签失败&quot;;
+//}else{
+//    FailureMessage = &quot;检查费用驳回标签成功&quot;;
+//    }
+
+    
+
+if(!invoiceOID_1rejectReason.equals(&quot;谁让你吃、谁让你住酒店？&quot;)) {
+    Failure = true; 
+    FailureMessage = &quot;检查费用驳回原因失败&quot;;
+}else{
+    FailureMessage = &quot;检查费用驳回原因成功&quot;;
+    }
+
+//if(!invoiceOID_2rejectReason.equals(&quot;谁让你吃、谁让你住酒店？&quot;)) {
+//    Failure = true; 
+//    FailureMessage = &quot;检查费用驳回原因失败&quot;;
+//}else{
+//    FailureMessage = &quot;检查费用驳回原因成功&quot;;
+//    }
+
+</stringProp>
+          </JSR223Assertion>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${ThreadName}获取发票2信息" enabled="true">
@@ -17936,7 +18038,7 @@ if(!invoiceOID_1rejectReason.equals(&quot;谁让你吃、谁让你住酒店？&q
             <stringProp name="JSONPostProcessor.defaultValues">null</stringProp>
           </JSONPostProcessor>
           <hashTree/>
-          <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="检查差补费用详情" enabled="true">
+          <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="检查差补费用详情" enabled="false">
             <stringProp name="BeanShellAssertion.query">
 
 String invoiceOID_1rejectReason= vars.get(&quot;invoiceOID_1rejectReason&quot;);
@@ -17999,6 +18101,64 @@ if(!invoiceOID_1rejectReason.equals(&quot;谁让你吃、谁让你住酒店？&q
             <boolProp name="displaySamplerProperties">true</boolProp>
             <boolProp name="displaySystemProperties">false</boolProp>
           </DebugPostProcessor>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 断言" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">
+
+String invoiceOID_1rejectReason= vars.get(&quot;invoiceOID_1rejectReason&quot;);
+String invoiceOID_1toast= vars.get(&quot;invoiceOID_1toast&quot;);
+
+//String invoiceOID_2toast= vars.get(&quot;invoiceOID_1toast&quot;);
+//String invoiceOID_2rejectReason= vars.get(&quot;invoiceOID_2rejectReason&quot;);
+
+//log.info(&quot;invoiceOID_1rejectReason==&quot;+invoiceOID_1rejectReason);
+//log.info(&quot;invoiceOID_2rejectReason==&quot;+invoiceOID_2rejectReason);
+//log.info(&quot;invoiceOID_1toast==&quot;+invoiceOID_1toast);
+//log.info(&quot;invoiceOID_2toast==&quot;+invoiceOID_2toast);
+//log.info(vars.get(&quot;invoiceOID_1&quot;));
+//log.info(vars.get(&quot;invoiceOID_2&quot;));
+
+
+
+
+
+if(!invoiceOID_1toast.contains(vars.get(&quot;businessCode&quot;))) {
+    Failure = true; 
+    FailureMessage = &quot;检查费用驳回标签失败&quot;;
+}else{
+    FailureMessage = &quot;检查费用驳回标签成功&quot;;
+    }
+
+
+//if(!invoiceOID_2toast.contains(vars.get(&quot;businessCode&quot;))) {
+//    Failure = true; 
+//    FailureMessage = &quot;检查费用驳回标签失败&quot;;
+//}else{
+//    FailureMessage = &quot;检查费用驳回标签成功&quot;;
+//    }
+
+    
+
+if(!invoiceOID_1rejectReason.equals(&quot;谁让你吃、谁让你住酒店？&quot;)) {
+    Failure = true; 
+    FailureMessage = &quot;检查费用驳回原因失败&quot;;
+}else{
+    FailureMessage = &quot;检查费用驳回原因成功&quot;;
+    }
+
+//if(!invoiceOID_2rejectReason.equals(&quot;谁让你吃、谁让你住酒店？&quot;)) {
+//    Failure = true; 
+//    FailureMessage = &quot;检查费用驳回原因失败&quot;;
+//}else{
+//    FailureMessage = &quot;检查费用驳回原因成功&quot;;
+//    }
+
+</stringProp>
+          </JSR223Assertion>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${ThreadName}审批通过（单笔驳回）" enabled="true">
@@ -20136,59 +20296,6 @@ vars.put(&quot;zh_cneName31&quot;,&quot;刘德华骑着小毛驴买菜刘德华�
           </HTTPSamplerProxy>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="00获取报销单详情" enabled="false">
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-            <collectionProp name="Arguments.arguments"/>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain"></stringProp>
-          <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/v3/expense/reports/${expenseReportOID}</stringProp>
-          <stringProp name="HTTPSampler.method">GET</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">8</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="文本响应断言" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="-1947514396">&quot;businessCode&quot;:&quot;${businessCode}&quot;</stringProp>
-              <stringProp name="402202526">&quot;currencyCode&quot;:&quot;CNY&quot;</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">16</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">AllDetal</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-          </JSONPostProcessor>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">AllDetal3</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-          </JSONPostProcessor>
-          <hashTree/>
-        </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取报销单详情" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
             <collectionProp name="Arguments.arguments"/>
@@ -20553,36 +20660,6 @@ vars.put(&quot;AllDetalNew3&quot;,str);
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">true</boolProp>
             <intProp name="Assertion.test_type">16</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-          </ResponseAssertion>
-          <hashTree/>
-        </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="00通过审批链查询单据" enabled="false">
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-            <collectionProp name="Arguments.arguments"/>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain"></stringProp>
-          <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/approvals/batchfilters?entityType=1002&amp;finished=false</stringProp>
-          <stringProp name="HTTPSampler.method">GET</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">8</intProp>
             <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
           <hashTree/>

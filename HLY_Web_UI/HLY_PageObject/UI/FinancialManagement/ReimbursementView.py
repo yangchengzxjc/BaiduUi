@@ -68,7 +68,7 @@ class ReimbursementView(object):
         """
         logger.info("获取财务管理-报销单点击第%s行的报销单打印按钮。" % str(Line))
         time.sleep(timeout)
-        xpath = ReimbursementView_element.Line_ReimbursementPrint.replace('aaaaaaa',str(Line))
+        xpath = ReimbursementView_element.Line_ReimbursementPrint.replace('aaaaaaa', str(Line))
         self.driver.find_element_by_xpath(xpath).click()
     def Click_View_ReimbursementDetal(self,line,timeout=2):
         """

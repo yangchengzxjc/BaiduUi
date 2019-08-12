@@ -161,7 +161,7 @@ class Process(Reimbursement):
         sleep(1)
         self.get_elements_click(0, businesscode)
         sleep(3)
-        self.my_expense.Pagescroll(self.get_xpath("查看"),timeout=1)
+        self.my_expense.Pagescroll(self.get_xpath("查看"), timeout=1)
 
     def find_approve_bill(self,businessCode):
         """

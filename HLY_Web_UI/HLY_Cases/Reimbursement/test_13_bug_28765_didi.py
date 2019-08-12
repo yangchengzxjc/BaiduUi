@@ -30,7 +30,7 @@ def test_bug_28765_didi(enter):
     sleep(2)
     driver.click(book_enter)
     reimbursement.get_elements_click(0, yangzhao_expensetype)
-    reimbursement.get_elements_click(3, select_button_confirm)
+    reimbursement.get_elements_click(4, select_button_confirm)
     sleep(3)
     assert not driver.is_exist(reimbursement.get_xpath("必输未填：费用必填字段为空"))
     driver.click(submit_expense, timeout=3)

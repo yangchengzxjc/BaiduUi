@@ -87,7 +87,7 @@ def test_apportion_line(creat_expense):
     business_Code = process.get_businessCode()
     reimbursement.Pagescroll(reimbursement.get_xpath("复制"), timeout=2)
     assert driver.get_text(reimbursement.get_xpath("分摊费用类型")) == "分摊费用类型"
-    driver.click(reimbursement.get_xpath("分摊费用类型"))
+    driver.click(reimbursement.get_parent_xpath("分摊费用类型"))
     reimbursement.Pagescroll(reimbursement.get_xpath("费用分摊"), timeout=1)
     assert process.get_elements_attribute(6, amount_input, "value") == "33.34"
     driver.click(save)
@@ -98,7 +98,7 @@ def test_apportion_line(creat_expense):
     process.withdraw(business_Code)
     driver.click(reimbursement.get_xpath(business_Code), timeout=1)
     reimbursement.Pagescroll(reimbursement.get_xpath("复制"), timeout=3)
-    driver.click(reimbursement.get_xpath("分摊费用类型"))
+    driver.click(reimbursement.get_parent_xpath("分摊费用类型"))
     reimbursement.Pagescroll(reimbursement.get_xpath("费用分摊"), timeout=1)
     assert process.get_elements_attribute(6, amount_input, "value") == "33.34"
     driver.click(save)
@@ -118,7 +118,7 @@ def test_apportion_line(creat_expense):
     process.open_reimbursement(business_Code)
     logger.info("审批驳回后，进入报销单查看分摊")
     reimbursement.Pagescroll(reimbursement.get_xpath("复制"), timeout=2)
-    driver.click(reimbursement.get_xpath("分摊费用类型"))
+    driver.click(reimbursement.get_parent_xpath("分摊费用类型"))
     reimbursement.Pagescroll(reimbursement.get_xpath("费用分摊"), timeout=1)
     assert process.get_elements_attribute(6, amount_input, "value") == "33.34"
     driver.click(save)

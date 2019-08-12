@@ -19,7 +19,7 @@ class Reimbursement():
         self.glo = GlobalMap()
         pass
 
-    def get_elements_click(self, number, element, timeout =4):
+    def get_elements_click(self, number, element, timeout=4):
         sleep(timeout)
         els = self.driver.find_elements_by_xpath(element)
         logger.info("%s:%s" % (element, len(els)))

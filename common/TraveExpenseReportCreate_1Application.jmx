@@ -39,6 +39,16 @@
         </collectionProp>
       </HeaderManager>
       <hashTree/>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="cause" elementType="Argument">
+            <stringProp name="Argument.name">cause</stringProp>
+            <stringProp name="Argument.value">{__groovy(${__isVarDefined(cause)}?&apos;${cause}&apos;:&apos;去北京&apos;)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
       <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="差旅报销单创建关联一个申请单" enabled="true"/>
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
@@ -188,7 +198,7 @@
 	&quot;visibleUserScope&quot;: 1004,&#xd;
 	&quot;submit&quot;: false,&#xd;
 	&quot;currencySame&quot;: false,&#xd;
-	&quot;applicationOID&quot;: &quot;${applicationOID}&quot;,&#xd;
+	&quot;applicationOID&quot;: &quot;${apapplicationOID}&quot;,&#xd;
 	&quot;custFormValues&quot;: ${NcustomFormFields}&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -236,15 +246,16 @@
             <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
           <hashTree/>
-          <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="BeanShell PreProcessor" enabled="true">
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 预处理程序" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
             <stringProp name="filename"></stringProp>
             <stringProp name="parameters"></stringProp>
-            <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="script">import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-String basecustomFormFields = vars.get(&quot;bxcustomFormFields&quot;);
+
+String basecustomFormFields =vars.get(&quot;bxcustomFormFields&quot;);
 log.info(&quot;准备噻的报销单表单数据是：&quot;+basecustomFormFields);
 JSONArray customFormFields = JSON.parseArray(basecustomFormFields);
 int size = customFormFields.size();
@@ -252,7 +263,7 @@ log.info(&quot;报销单开始噻数据&quot;+size);
 for (int i = 0; i &lt; size; i++){
 		   	jj = customFormFields.getJSONObject(i);
              if (jj.get(&quot;fieldName&quot;).equals(&quot;事由&quot;))
-           		jj.put(&quot;value&quot;,&quot;出去吃饭&quot;);
+           		jj.put(&quot;value&quot;,vars.get(&quot;cause&quot;));
              if (jj.get(&quot;fieldName&quot;).equals(&quot;部门&quot;))
            		jj.put(&quot;value&quot;,vars.get(&quot;departmentOID&quot;));
           	if (jj.get(&quot;fieldName&quot;).equals(&quot;公司&quot;))
@@ -263,7 +274,8 @@ String str =customFormFields.toString();
 log.info(&quot;最终的bx是:&quot;+str);
 vars.put(&quot;NcustomFormFields&quot;,str);
 </stringProp>
-          </BeanShellPreProcessor>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
       </hashTree>

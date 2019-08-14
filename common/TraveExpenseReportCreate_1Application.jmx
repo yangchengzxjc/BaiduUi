@@ -39,18 +39,18 @@
         </collectionProp>
       </HeaderManager>
       <hashTree/>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-        <collectionProp name="Arguments.arguments">
-          <elementProp name="cause" elementType="Argument">
-            <stringProp name="Argument.name">cause</stringProp>
-            <stringProp name="Argument.value">{__groovy(${__isVarDefined(cause)}?&apos;${cause}&apos;:&apos;去北京&apos;)}</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-        </collectionProp>
-      </Arguments>
-      <hashTree/>
       <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="差旅报销单创建关联一个申请单" enabled="true"/>
       <hashTree>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="cause" elementType="Argument">
+              <stringProp name="Argument.name">cause</stringProp>
+              <stringProp name="Argument.value">${__groovy(${__isVarDefined(cause)}?&apos;${cause}&apos;:&apos;去北京出差&apos;)}</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询报销单表单" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
             <collectionProp name="Arguments.arguments"/>
@@ -198,7 +198,7 @@
 	&quot;visibleUserScope&quot;: 1004,&#xd;
 	&quot;submit&quot;: false,&#xd;
 	&quot;currencySame&quot;: false,&#xd;
-	&quot;applicationOID&quot;: &quot;${apapplicationOID}&quot;,&#xd;
+	&quot;applicationOID&quot;: &quot;${applicationOID}&quot;,&#xd;
 	&quot;custFormValues&quot;: ${NcustomFormFields}&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>

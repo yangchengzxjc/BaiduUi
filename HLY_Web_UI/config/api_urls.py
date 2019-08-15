@@ -43,3 +43,5 @@ third_expense = '/api/invoices/third/party'
 travel_setting = '/api/travel/subsidies/rule/base/setting/?setOfBooksId='
 # 申请单界面的url
 apply_url = '/main/request'
+# 报销单查看界面的url
+reimbursement_find = '/main/financial-management/finance-view-expense'

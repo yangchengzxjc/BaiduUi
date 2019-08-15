@@ -71,14 +71,14 @@ class Reimbursement():
         sleep(3)
         return self.driver.find_element_by_xpath(bill_status).text
 
-    def get_url(self,acturl):
+    def get_url(self, acturl):
         """
         请求的url
         :param acturl:
         :return:
         """
         sleep(4)
-        url = '%s://%s%s'%(self.glo.get("Webprotocol"), self.glo.get("Webhost"),acturl)
+        url = '%s://%s%s' % (self.glo.get("Webprotocol"), self.glo.get("Webhost"), acturl)
         self.driver.get(url)
 
     def get_department(self):

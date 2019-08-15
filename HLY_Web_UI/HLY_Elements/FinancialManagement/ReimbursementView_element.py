@@ -11,13 +11,23 @@ Line_ReimbursementPrint = '//*[@id="app"]/div/div[2]/div[2]/div/div[1]/div[2]/di
 Print_But = '//button[@type="button" and  @class="ant-btn back-btn ant-btn-primary"]'
 # 报销单界面申请人frame
 reimbursement_applicant_frame = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[1]/form/div[2]/div[1]/div[3]/div/div[2]/div/div/span/div/div/div/div'
-
 # 申请单界面的申请人frame
 apply_applicant_frame = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[1]/form/div[2]/div[1]/div[2]/div/div[2]/div/div/span/div/div/div/div'
 # 搜索界面的展示条数
 info_number = '//tr[@class="ant-table-row chooser-table-row ant-table-row-level-0"]'
 # 审批界面的申请人的frame
 approve_applicant_frame = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/form/div[2]/div[1]/div[2]/div/div[2]/div/div/span/div/div/div/div'
+# 共搜索到数据条数显示
+Search_result = 'xpath=>//div[contains(text(),"共搜索到")]'
+# 报销单界面的删除时间的按钮
+delete_time = '//span[@class="ant-calendar-picker-icon"]'
+# 点击更多
+more = '//i[@class="anticon anticon-down"]'
+# 底部页码翻页
+second_page = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[1]/div[2]/div[1]/div[4]/div/div/ul/li[3]'
+trird_apge = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[1]/div[2]/div[1]/div[4]/div/div/ul/li[4]'
+# 上面页面的排序编号
+order_number = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[1]/div[2]/div[1]/div[4]/div/div/div/div/div/div/table/tbody/tr[1]/td[2]'
+# 切换每个页面的显示条数
+display_number = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[1]/div[2]/div[1]/div[4]/div/div/ul/li[10]/div[1]/div/span'
 
-#共搜索到数据条数显示
-Search_result='xpath=>//div[contains(text(),"共搜索到")]'

@@ -14,12 +14,12 @@
           </elementProp>
           <elementProp name="serverUrl" elementType="Argument">
             <stringProp name="Argument.name">serverUrl</stringProp>
-            <stringProp name="Argument.value">${__P(serverUrl,stage.huilianyi.com)}</stringProp>
+            <stringProp name="Argument.value">${__P(serverUrl,console.huilianyi.com)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,13700000000)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,13609265517)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
@@ -741,7 +741,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 }, &#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -1068,7 +1068,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 }, &#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -1395,7 +1395,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 },&#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -1722,7 +1722,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 }, &#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -2049,7 +2049,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 },&#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -2376,7 +2376,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 }, &#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -2689,7 +2689,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 },&#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -3016,7 +3016,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 }, &#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -3343,7 +3343,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 },&#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -3670,7 +3670,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 }, &#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -3997,7 +3997,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 }, &#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -4324,7 +4324,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 }, &#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -4637,7 +4637,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 }, &#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -4950,7 +4950,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 }, &#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -5263,7 +5263,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 }, &#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -5565,6 +5565,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
               <hashTree/>
             </hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="修改表单的详细配置-(全部未管控)" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
               <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
                 <collectionProp name="Arguments.arguments">
                   <elementProp name="" elementType="HTTPArgument">
@@ -5575,7 +5576,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 },&#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -5604,7 +5605,6 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                   </elementProp>
                 </collectionProp>
               </elementProp>
-              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
               <stringProp name="HTTPSampler.domain"></stringProp>
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -5889,7 +5889,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 },&#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -6202,7 +6202,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 },&#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -6515,7 +6515,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 }, &#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;
@@ -6828,7 +6828,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;propertyValue&quot;: &quot;Y&quot;&#xd;
 },&#xd;
 {&#xd;
-        &quot;formOID&quot;:&quot;db064eae-1070-4a73-807f-8cd565e5be18&quot;,&#xd;
+        &quot;formOID&quot;:&quot;${apformOID}&quot;,&#xd;
         &quot;propertyName&quot;:&quot;from.application.relevance.loan&quot;,&#xd;
         &quot;propertyValue&quot;:&quot;Y&quot;&#xd;
 },&#xd;

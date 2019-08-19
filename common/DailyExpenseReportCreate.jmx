@@ -66,6 +66,96 @@
           </collectionProp>
         </Arguments>
         <hashTree/>
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BeanShell Sampler" enabled="true">
+          <stringProp name="BeanShellSampler.query">import java.text.SimpleDateFormat;
+import java.util.Date;
+
+Date date = new Date();
+Calendar calendar = new GregorianCalendar();
+calendar.setTime(date);
+calendar.add(calendar.DATE, 0);
+date = calendar.getTime();
+SimpleDateFormat formatter = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);
+String today = formatter.format(date);
+vars.put(&quot;now&quot;, today);
+
+Date date = new Date();
+Calendar calendar = new GregorianCalendar();
+calendar.setTime(date);
+calendar.add(calendar.DATE, 1);
+date = calendar.getTime();
+SimpleDateFormat formatter = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);
+String today = formatter.format(date);
+vars.put(&quot;ONEDAYLATER&quot;, today);
+
+Date date = new Date();
+Calendar calendar = new GregorianCalendar();
+calendar.setTime(date);
+calendar.add(calendar.DATE, -22);
+date = calendar.getTime();
+SimpleDateFormat formatter = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);
+String today = formatter.format(date);
+vars.put(&quot;TWENTYTWODAYLATER&quot;, today);
+
+Date date = new Date();
+Calendar calendar = new GregorianCalendar();
+calendar.setTime(date);
+calendar.add(calendar.DATE, -1);
+date = calendar.getTime();
+SimpleDateFormat formatter = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);
+String today = formatter.format(date);
+vars.put(&quot;ONEDAYAGO&quot;, today);
+
+Date date = new Date();
+Calendar calendar = new GregorianCalendar();
+calendar.setTime(date);
+calendar.add(calendar.DATE, -6);
+date = calendar.getTime();
+SimpleDateFormat formatter = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);
+String today = formatter.format(date);
+vars.put(&quot;SIXDAYAGO&quot;, today);
+
+Date date = new Date();
+Calendar calendar = new GregorianCalendar();
+calendar.setTime(date);
+calendar.add(calendar.DATE, -5);
+date = calendar.getTime();
+SimpleDateFormat formatter = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);
+String today = formatter.format(date);
+vars.put(&quot;FIVEDAYAGO&quot;, today);
+
+Date date = new Date();
+Calendar calendar = new GregorianCalendar();
+calendar.setTime(date);
+calendar.add(calendar.DATE, 2);
+date = calendar.getTime();
+SimpleDateFormat formatter = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);
+String today = formatter.format(date);
+vars.put(&quot;TWODAYLATER&quot;, today);
+
+Date date = new Date();
+Calendar calendar = new GregorianCalendar();
+calendar.setTime(date);
+calendar.add(calendar.MINUTE,0);
+date = calendar.getTime();
+SimpleDateFormat formatter = new SimpleDateFormat(&quot;HH:mm:ss&quot;);
+String today = formatter.format(date);
+vars.put(&quot;time&quot;, today);
+
+
+Date date = new Date();
+Calendar calendar = new GregorianCalendar();
+calendar.setTime(date);
+calendar.add(calendar.MINUTE,10);
+date = calendar.getTime();
+SimpleDateFormat formatter = new SimpleDateFormat(&quot;HH:mm:ss&quot;);
+String today = formatter.format(date);
+vars.put(&quot;nexttime&quot;, today);</stringProp>
+          <stringProp name="BeanShellSampler.filename"></stringProp>
+          <stringProp name="BeanShellSampler.parameters"></stringProp>
+          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+        </BeanShellSampler>
+        <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取所有类型的单据（报销单）" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
             <collectionProp name="Arguments.arguments"/>
@@ -233,7 +323,9 @@
 	&quot;submit&quot;: false,&#xd;
 	&quot;currencySame&quot;: false,&#xd;
 	&quot;countersignApproverOIDs&quot;:null,&#xd;
-	&quot;custFormValues&quot;: ${NcustomFormFields}&#xd;
+	&quot;custFormValues&quot;: ${NcustomFormFields},&#xd;
+	&quot;recalculateSubsidy&quot;:true&#xd;
+	&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -295,9 +387,15 @@
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+
+String start_date = vars.get(&quot;now&quot;)+&quot;T16:00:00Z&quot;;
+
+String end_date = vars.get(&quot;TWODAYLATER&quot;)+&quot;T15:59:59Z&quot;;
+
 String json = vars.get(&quot;customFormFields&quot;);
 //log.info(&quot;companyid===========&quot;+vars.get(&quot;companyid&quot;));
 JSONArray customFormFields = JSON.parseArray(json);
+
 int size = customFormFields.size();
 
 for (int i = 0; i &lt; size; i++){
@@ -312,6 +410,10 @@ for (int i = 0; i &lt; size; i++){
            		jj.put(&quot;value&quot;,vars.get(&quot;payee&quot;));
              if (jj.get(&quot;messageKey&quot;).equals(&quot;contact_bank_account&quot;))
            		jj.put(&quot;value&quot;,vars.get(&quot;contact_bank_account&quot;));
+             if (jj.get(&quot;messageKey&quot;).equals(&quot;start_date&quot;))
+           		jj.put(&quot;value&quot;,start_date);
+             if (jj.get(&quot;messageKey&quot;).equals(&quot;end_date&quot;))
+           		jj.put(&quot;value&quot;,end_date);
             
              
 }

@@ -41,3 +41,5 @@ delete_frame = 'xpath=>//*[text()="确定要删除吗？"]'
 confirm_button1 = 'xpath=>//*[@class="ant-btn ant-btn-primary ant-btn-sm"]'
 # 删除成功的弹窗
 success_delete = 'xpath=>//*[text()="删除成功"]'
+# 自动生成的差补后的差补计算的编辑
+edit = 'xpath=>//div[@class="header-operate"]'

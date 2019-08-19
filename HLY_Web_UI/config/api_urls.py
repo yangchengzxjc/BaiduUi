@@ -45,3 +45,7 @@ travel_setting = '/api/travel/subsidies/rule/base/setting/?setOfBooksId='
 apply_url = '/main/request'
 # 报销单查看界面的url
 reimbursement_find = '/main/financial-management/finance-view-expense'
+# 获取表单的所有类型
+formType = '/api/custom/forms/my/available?formType=101&userOID=%s'
+# 修改差补规则的url
+subsidy_rule = '/api/travel/subsidies/rule/dimension'

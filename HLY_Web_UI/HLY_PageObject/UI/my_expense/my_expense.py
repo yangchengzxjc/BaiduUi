@@ -45,7 +45,7 @@ class My_Expense(object):
         :return:
         """
         logger.info("打开报销单:%s页面" % expenseName)
-        fromList=apis.get_form(self.pa.getoption("BASIC","ExpenseForm"))
+        fromList=apis.get_form(self.pa.getoption("BASIC", "ExpenseForm"))
         for x in fromList:
             logger.info(x["formName"])
             if str(x["formName"]).find(expenseName) != -1:

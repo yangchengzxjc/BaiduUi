@@ -7,7 +7,7 @@ from common.parameter import  GetConfigp
 from common.log import logger
 import time
 from common.globalMap import GlobalMap
-from config.api_urls import query_loan_url, expenseTypeOID
+from config.api_urls import query_loan_url, expenseTypeOID, formType, subsidy_rule
 
 api = ApiRequest()
 glo = GlobalMap()
@@ -50,13 +50,15 @@ def get_form(formType):
     else:
         logger.info("接口登录失败的信息：%s" %r_json)
         print("获取登录信息失败")
+
+
 def get_ControlId(formid):
     """
     根据formid获取控件id
     :param formType:
     :return:
     """
-    code, r_json = api.response_json(api_urls.get_ControlId+formid, 'get',header=hly.apilogin_agin())
+    code, r_json = api.response_json(api_urls.get_ControlId+formid, 'get', header=hly.apilogin_agin())
     if code == 200:
         return r_json
     else:
@@ -350,19 +352,150 @@ def open_auto_route_Calculation():
     time.sleep(2)
     logger.info("差补规则基础设置:%s" % json)
 
-def close_auto_route_Calculation():
+def close_auto_route_Calculation(allowanceAttachExpenseReportDisable ="true", travelAutoCalculateEnable =False):
     """
     差补界面关闭自动计算行程
     :return:
     """
     body ={"allowanceReduplicateTreatment": 1001,
            "allowanceAmountModify": 1002,
-           "allowanceAttachExpenseReportDisable": "true",
-           "travelAutoCalculateEnable": False
+           "allowanceAttachExpenseReportDisable": allowanceAttachExpenseReportDisable,
+           "travelAutoCalculateEnable": travelAutoCalculateEnable
            }
     code, json = api.response_json(api_urls.travel_setting, "post", header=hly.apilogin_agin(), rjson=body)
     time.sleep(2)
-    logger.info("差补规则基础设置:%s"%json)
+    logger.info("差补规则基础设置:%s"% json)
+
+
+def get_userOID():
+    """
+    获取用户的userOID
+    :return:
+    """
+    return get_account()["userOID"]
+
+
+def get_formType(formName):
+    """
+    :param formName:  表单的名称
+    :return:
+    """
+    userOID = get_userOID()
+    code, json = api.response_json(formType % userOID, "get", header=hly.apilogin_agin(), rdata=None)
+    if code == 200:
+        for i in json:
+            if i["formName"] == formName:
+                return i["formOID"]
+            pass
+
+def change_subsidy_rule(formName, ALLOWANCE_CITY = True):
+    """
+    修改差补规则
+    :param ALLOWANCE_CITY: 为True时表示差补选择城市,为false表示城市为空
+    :return:
+    """
+    body = {
+    "formOID":"%s" % get_formType(formName),
+    "formName":"%s"% formName,
+    "dimensionTypes":[
+        {
+            "name":"DEFAULT_RULES",
+            "code":1001,
+            "selectable":False,
+            "dimensionDetails":[
+                {
+                    "name":"EXPENSE_LEVEL",
+                    "code":"EXPENSE_LEVEL",
+                    "selected":True
+                },
+                {
+                    "name":"USER_GROUPS",
+                    "code":"USER_GROUPS",
+                    "selected":True
+                },
+                {
+                    "name":"CURRENCY_CODE",
+                    "code":"CURRENCY_CODE",
+                    "selected":True
+                },
+                {
+                    "name":"ALLOWANCE_AMOUNT",
+                    "code":"ALLOWANCE_AMOUNT",
+                    "selected":True
+                },
+                {
+                    "name":"ALLOWANCE_CITY",
+                    "code":"ALLOWANCE_CITY",
+                    "selected":ALLOWANCE_CITY
+                }
+            ],
+            "formFieldDetails":None,
+            "itineraryFieldList":None
+        },
+        {
+            "name":"TRAVEL_FIELDS",
+            "code":1002,
+            "selectable":True,
+            "dimensionDetails":[
+                {
+                    "name":"TRAVEL_HOURS",
+                    "code":"TRAVEL_HOURS",
+                    "selected":False
+                },
+                {
+                    "name":"TRAVEL_DAYS",
+                    "code":"TRAVEL_DAYS",
+                    "selected":False
+                }
+            ],
+            "formFieldDetails":[
+
+            ],
+            "itineraryFieldList":None
+        },
+        {
+            "name":"SPECIAL_RULES",
+            "code":1003,
+            "selectable":True,
+            "dimensionDetails":[
+                {
+                    "name":"HOLIDAY_WEEKEND",
+                    "code":"HOLIDAY_WEEKEND",
+                    "selected":False
+                },
+                {
+                    "name":"DEPARTURE_DAY",
+                    "code":"DEPARTURE_DAY",
+                    "selected":False
+                },
+                {
+                    "name":"RETURN_DAY",
+                    "code":"RETURN_DAY",
+                    "selected":False
+                }
+            ],
+            "formFieldDetails":None,
+            "itineraryFieldList":None
+        },
+        {
+            "name":"ITINERARY_FIELDS",
+            "code":1004,
+            "selectable":True,
+            "dimensionDetails":[
+            ],
+            "formFieldDetails":None,
+            "itineraryFieldList":None
+        }
+    ],
+    "tips":"",
+    "withTips":False,
+    "subsidySelection":True,
+    "applicationAutoSubsidy":False
+}
+    code, json = api.response_json(subsidy_rule, "post", header=hly.apilogin_agin(), rjson=body)
+    logger.info("修改的差补规则：%s"%json)
+
+
 
 
 

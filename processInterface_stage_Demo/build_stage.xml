@@ -61,15 +61,15 @@
 	<target name="test">
 		<parallel threadCount="10">
 		 <antcall target="run_jmeter">
-			<param name="param2" value="Expense"/>
+			<param name="param2" value="T1T"/>
 		 </antcall>
 		 
 		 <antcall target="run_jmeter">
-			<param name="param2" value="Trave"/>
+			<param name="param2" value="T2T"/>
 		 </antcall>
 		 
 		 <antcall target="run_jmeter">
-			<param name="param2" value="Daily"/>
+			<param name="param2" value="T3T"/>
 		 </antcall>
 			
 			

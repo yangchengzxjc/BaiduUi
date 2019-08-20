@@ -65,17 +65,17 @@
 		</tstamp>
 		 <antcall target="run_jmeter">
 			<param name="param2" value="Expense"/>
-			<param name="tst" value="Ditetime"/>
+			<param name="tst" value="${Ditetime}"/>
 		 </antcall>
 		 
 		 <antcall target="run_jmeter">
 			<param name="param2" value="Trave"/>
-			<param name="tst" value="Ditetime"/>
+			<param name="tst" value="${Ditetime}"/>
 		 </antcall>
 		 
 		 <antcall target="run_jmeter">
 			<param name="param2" value="Daily"/>
-			<param name="tst" value="Ditetime"/>
+			<param name="tst" value="${Ditetime}"/>
 		 </antcall>
 			
 			

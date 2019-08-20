@@ -60,22 +60,34 @@
 	
 	<target name="test">
 		<parallel threadCount="3">
-			<antcall target="run_jmeter1" />
-			<antcall target="run_jmeter2" />
-			<antcall target="run_jmeter3" />
+		
+		 <anticall target="run_jmeter">
+			<param name="param2" value="Expense"/>
+		 </anticall>
+		 
+		 <anticall target="run_jmeter">
+			<param name="param2" value="Trave"/>
+		 </anticall>
+		 
+		 <anticall target="run_jmeter">
+			<param name="param2" value="Daily"/>
+		 </anticall>
+			
+			
+			
 		</parallel>
     </target>
 	
 	
 	
 	
-    <target name="run_jmeter1">
+    <target name="run_jmeter">
         <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
 
 	
         <jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}" jmeterlogfile="${jmeter.result.log}">
             <!-- 声明要运行的脚本。"*.jmx"指包含此目录下的所有jmeter脚本 -->
-            <testplans dir="${basedir}\TestSuite" includes="ExpenseFullControl_stage_al_tc.jmx" />
+            <testplans dir="${basedir}\TestSuite" includes="*${param2}*" />
 
 	    <property name="protocol" value="${protocolV}"/>
 		<property name="serverUrl" value="${hostname}"/>
@@ -85,38 +97,9 @@
         </jmeter>
     </target>
 	
-	    <target name="run_jmeter2">
-        <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
-
+	  
 	
-        <jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}" jmeterlogfile="${jmeter.result.log}">
-            <!-- 声明要运行的脚本。"*.jmx"指包含此目录下的所有jmeter脚本 -->
-            <testplans dir="${basedir}\TestSuite" includes="TravelFullControl_stage_al_tc.jmx" />
 
-	    <property name="protocol" value="${protocolV}"/>
-		<property name="serverUrl" value="${hostname}"/>
-	    <property name="username" value="${username}"/>
-		<property name="username2" value="${username2}"/>
-	    <property name="password" value="${password}"/>
-        </jmeter>
-    </target>
-	
-	    <target name="run_jmeter3">
-        <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
-
-	
-        <jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}" jmeterlogfile="${jmeter.result.log}">
-            <!-- 声明要运行的脚本。"*.jmx"指包含此目录下的所有jmeter脚本 -->
-            <testplans dir="${basedir}\TestSuite" includes="DailyFullControl_stage_al_tc.jmx" />
-
-	    <property name="protocol" value="${protocolV}"/>
-		<property name="serverUrl" value="${hostname}"/>
-	    <property name="username" value="${username}"/>
-		<property name="username2" value="${username2}"/>
-	    <property name="password" value="${password}"/>
-        </jmeter>
-    </target>
-	
 	
     <target name="report">
         <path id="xslt.classpath">

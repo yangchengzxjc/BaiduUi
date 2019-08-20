@@ -81,7 +81,7 @@
 	
 	
     <target name="run_jmeter">
-		<tstamp><format property="Ditetime" pattern="yyyyMMddHHmm" /></tstamp>
+		<tstamp><format property="Ditetime" pattern="yyyyMMddHHmmss" /></tstamp>
         <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
 
 		

@@ -60,22 +60,16 @@
 	
 	<target name="test">
 		<parallel threadCount="10">
-		<tstamp>
-			<format property="Ditetime" pattern="yyyyMMddHHmm" />
-		</tstamp>
 		 <antcall target="run_jmeter">
 			<param name="param2" value="Expense"/>
-			<param name="tst" value="${Ditetime}"/>
 		 </antcall>
 		 
 		 <antcall target="run_jmeter">
 			<param name="param2" value="Trave"/>
-			<param name="tst" value="${Ditetime}"/>
 		 </antcall>
 		 
 		 <antcall target="run_jmeter">
 			<param name="param2" value="Daily"/>
-			<param name="tst" value="${Ditetime}"/>
 		 </antcall>
 			
 			
@@ -87,10 +81,11 @@
 	
 	
     <target name="run_jmeter">
+		<tstamp><format property="Ditetime" pattern="yyyyMMddHHmm" /></tstamp>
         <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
 
-	
-        <jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtl.dir}/${ReportName}${param2}_${tst}.jtl" jmeterlogfile="${basedir}/TestLog/${tst}.log">
+		
+        <jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtl.dir}/${ReportName}${param2}_${Ditetime}.jtl" jmeterlogfile="${basedir}/TestLog/${Ditetime}.log">
             <!-- 声明要运行的脚本。"*.jmx"指包含此目录下的所有jmeter脚本 -->
         <testplans dir="${basedir}\TestSuite" includes="*${param2}*" />
 	    <property name="protocol" value="${protocolV}"/>

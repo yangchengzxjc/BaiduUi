@@ -52,7 +52,8 @@
      <anticall target="run_jmeter"></anticall> 
 
 	
-
+	
+	
 
     <target name="run" depends="show-test-properties">
         <antcall target="delete" />
@@ -62,27 +63,20 @@
     </target>
 
     <target name="run_jmeter">
-        <!-- <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" /> -->
-		<!-- <jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}" jmeterlogfile="${jmeter.result.log}"> -->
-		<property name="protocol" value="${protocolV}"/>
+        <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
+		<parallel threadCount="3">
+			<anticall target="run_jmeter"></anticall>
+		</parallel>
+
+        <jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}" jmeterlogfile="${jmeter.result.log}">
+           <!-- 声明要运行的脚本。"*.jmx"指包含此目录下的所有jmeter脚本 -->
+          <testplans dir="${basedir}\TestSuite" includes="*.jmx" />
+
+	    <property name="protocol" value="${protocolV}"/>
 		<property name="serverUrl" value="${hostname}"/>
 	    <property name="username" value="${username}"/>
 		<property name="username2" value="${username2}"/>
 	    <property name="password" value="${password}"/>
-		<parallel threadCount="3">
-			<taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
-			<jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}" jmeterlogfile="${jmeter.result.log}">
-			<testplans dir="${basedir}\TestSuite" includes="*.jmx" />
-			<taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
-			<jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}" jmeterlogfile="${jmeter.result.log}">
-			<testplans dir="${basedir}\TestSuite" includes="*.jmx" />
-			<taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
-			<jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}" jmeterlogfile="${jmeter.result.log}">
-			<testplans dir="${basedir}\TestSuite" includes="*.jmx" />
-		</parallel>
-
-
-
         </jmeter>
     </target>
     <target name="report">

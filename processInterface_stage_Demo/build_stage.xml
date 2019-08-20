@@ -47,6 +47,11 @@
         <echo>THREADGROUP_DURATION		: ${threadgroup.duration}</echo>
     </target>
 
+	
+	<parallel failonany="true" threadCount="3">
+     <anticall target="run_jmeter"></anticall>
+	</parallel>
+
     <target name="run" depends="show-test-properties">
         <antcall target="delete" />
         <antcall target="run_jmeter" />

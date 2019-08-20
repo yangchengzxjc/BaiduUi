@@ -51,19 +51,25 @@
 
     <target name="run" depends="show-test-properties">
         <antcall target="delete" />
-        <antcall target="run_jmeter" />
+        <antcall target="test" />
         <antcall target="report" />
         <!--antcall target="sendEmail" /-->
     </target>
+	
+	
+	
+	<target name="test">
+		<parallel threadCount="3">
+			<antcall target="run_jmeter" />
+		</parallel>
+    </target>
+	
+	
+	
 
     <target name="run_jmeter">
         <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
-		<parallel threadCount="3">
-			<echo>test1</echo>
-			<echo>test2</echo>
-			<echo>test3</echo>
-			<echo>test4</echo>
-		</parallel>
+
 	
         <jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}" jmeterlogfile="${jmeter.result.log}">
             <!-- 声明要运行的脚本。"*.jmx"指包含此目录下的所有jmeter脚本 -->

@@ -49,7 +49,8 @@
 
 	
 	<parallel failonany="true" threadCount="3">
-     <antcall target="run_jmeter" />
+     <anticall target="run_jmeter"></anticall>
+	 <anticall target="run_jmeter"></anticall>
 	</parallel>
 
     <target name="run" depends="show-test-properties">

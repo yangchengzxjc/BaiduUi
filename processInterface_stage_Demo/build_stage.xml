@@ -65,7 +65,8 @@
     <target name="run_jmeter">
         <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
 		<parallel threadCount="3">
-			<anticall target="run_jmeter"></anticall>
+			<!-- <anticall target="run_jmeter"></anticall> -->
+			<antcall target="run_jmeter" />
 		</parallel>
 
         <jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}" jmeterlogfile="${jmeter.result.log}">

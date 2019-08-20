@@ -48,10 +48,21 @@
     </target>
 
 	
-	<parallel failonany="true" threadCount="3">
-     <anticall target="run_jmeter"></anticall>
-	 <anticall target="run_jmeter"></anticall>
+	<!-- <parallel failonany="true" threadCount="3"> -->
+     <!-- <anticall target="run_jmeter"></anticall> -->
+	 <!-- <anticall target="run_jmeter"></anticall> -->
+	<!-- </parallel> -->
+	
+	
+	<parallel threadCount="2">
+		<echo>test1</echo>
+		<echo>test2</echo>
+		<echo>test3</echo>
+		<echo>test4</echo>
 	</parallel>
+	
+	
+	
 
     <target name="run" depends="show-test-properties">
         <antcall target="delete" />

@@ -61,6 +61,8 @@
 	<target name="test">
 		<parallel threadCount="3">
 			<antcall target="run_jmeter" />
+			<antcall target="run_jmeter" />
+			<antcall target="run_jmeter" />
 		</parallel>
     </target>
 	

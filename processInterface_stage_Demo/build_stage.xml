@@ -49,12 +49,6 @@
 
 	
 
-     <anticall target="run_jmeter"></anticall> 
-
-	
-	
-	
-
     <target name="run" depends="show-test-properties">
         <antcall target="delete" />
         <antcall target="run_jmeter" />
@@ -66,11 +60,14 @@
         <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
 		<parallel threadCount="3">
 			<echo>test1</echo>
-	    </parallel>
-
+			<echo>test2</echo>
+			<echo>test3</echo>
+			<echo>test4</echo>
+		</parallel>
+	
         <jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}" jmeterlogfile="${jmeter.result.log}">
-           <!-- 声明要运行的脚本。"*.jmx"指包含此目录下的所有jmeter脚本 -->
-          <testplans dir="${basedir}\TestSuite" includes="*.jmx" />
+            <!-- 声明要运行的脚本。"*.jmx"指包含此目录下的所有jmeter脚本 -->
+            <testplans dir="${basedir}\TestSuite" includes="*.jmx" />
 
 	    <property name="protocol" value="${protocolV}"/>
 		<property name="serverUrl" value="${hostname}"/>

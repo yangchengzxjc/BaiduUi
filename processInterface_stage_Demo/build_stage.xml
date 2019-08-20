@@ -61,7 +61,7 @@
 	<target name="test">
 		<parallel threadCount="10">
 		<tstamp>
-			<format property="Ditetime" pattern="yyyyMMddHHmmss" />
+			<format property="Ditetime" pattern="yyyyMMddHHmm" />
 		</tstamp>
 		 <antcall target="run_jmeter">
 			<param name="param2" value="Expense"/>

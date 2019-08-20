@@ -62,16 +62,22 @@
     </target>
 
     <target name="run_jmeter">
-        <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
-		<jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}" jmeterlogfile="${jmeter.result.log}">
+        <!-- <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" /> -->
+		<!-- <jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}" jmeterlogfile="${jmeter.result.log}"> -->
 		<property name="protocol" value="${protocolV}"/>
 		<property name="serverUrl" value="${hostname}"/>
 	    <property name="username" value="${username}"/>
 		<property name="username2" value="${username2}"/>
 	    <property name="password" value="${password}"/>
 		<parallel threadCount="3">
+			<taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
+			<jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}" jmeterlogfile="${jmeter.result.log}">
 			<testplans dir="${basedir}\TestSuite" includes="*.jmx" />
+			<taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
+			<jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}" jmeterlogfile="${jmeter.result.log}">
 			<testplans dir="${basedir}\TestSuite" includes="*.jmx" />
+			<taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
+			<jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}" jmeterlogfile="${jmeter.result.log}">
 			<testplans dir="${basedir}\TestSuite" includes="*.jmx" />
 		</parallel>
 

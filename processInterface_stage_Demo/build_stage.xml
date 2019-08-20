@@ -63,11 +63,10 @@
     </target>
 
     <target name="run_jmeter">
-	<parallel threadCount="3">
         <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
-		
-			
-
+		<parallel threadCount="3">
+			<echo>test1</echo>
+	    </parallel>
 
         <jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}" jmeterlogfile="${jmeter.result.log}">
            <!-- 声明要运行的脚本。"*.jmx"指包含此目录下的所有jmeter脚本 -->
@@ -79,7 +78,6 @@
 		<property name="username2" value="${username2}"/>
 	    <property name="password" value="${password}"/>
         </jmeter>
-	</parallel>
     </target>
     <target name="report">
         <path id="xslt.classpath">

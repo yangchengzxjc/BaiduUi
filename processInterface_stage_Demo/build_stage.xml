@@ -79,6 +79,9 @@
     </target>
 	
 	<target name="JtlMerge">
+		<exec executable="/bin/sh">
+            <arg line="ls -a"/>
+        </exec>
 		<echo>deploy clean axis service</echo>
 		<exec executable="${jmeter.Script.ShellName}/JtlMerge.sh" failonerror="true">
             <arg line=" ${jmeter.result.jtl.dirNew}"/>

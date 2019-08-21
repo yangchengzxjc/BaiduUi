@@ -1,7 +1,7 @@
 #!/bin/bash
 # get all filename in specified path
 JtlName=$2
-path=*.jtl
+path=*Script*.jtl
 cd $1
 files=$(ls $path)
 echo $(ls)

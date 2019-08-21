@@ -79,8 +79,7 @@
 	<target name="JtlMerge">
 		<echo>deploy clean axis service</echo>
 		<exec executable="/opt/jenkins-slave/workspace/workspace/HLY-CN-StageApiTest-Demo/processInterface_stage_Demo/TestResult/jtl/JtlMerge.sh" failonerror="true">
-            <arg value="MyName" />
-            <arg value="Age" />
+            <arg value="${ReportName}${time}.jtl" />
         </exec>
     </target>
 	

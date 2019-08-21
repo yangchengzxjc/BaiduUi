@@ -95,6 +95,10 @@
     </target>
 	
     <target name="report">
+		<exec executable="/opt/jenkins-slave/workspace/workspace/HLY-CN-StageApiTest-Demo/processInterface_stage_Demo/TestResult/jtl/JtlMerge.sh" failonerror="true">
+            <arg value="MyName" />
+            <arg value="Age" />
+        </exec>
         <path id="xslt.classpath">
             <fileset dir="${lib.dir}" includes="xalan*.jar"/>
             <fileset dir="${lib.dir}" includes="serializer*.jar"/>
@@ -105,10 +109,7 @@
 		<!-- </exec> -->
 		
 		
-		<exec executable="/opt/jenkins-slave/workspace/workspace/HLY-CN-StageApiTest-Demo/processInterface_stage_Demo/TestResult/jtl/JtlMerge.sh" failonerror="true">
-            <arg value="MyName" />
-            <arg value="Age" />
-        </exec>
+
 		
 		
         <tstamp><format property="show-data" pattern="'n'"/></tstamp>

@@ -55,6 +55,7 @@
         <antcall target="test" />
         <antcall target="JtlMerge" />
 		<antcall target="report" /> 
+		<antcall target="AfterMergeDelete" /> 
         <!--antcall target="sendEmail" /-->
     </target>
 	
@@ -137,6 +138,9 @@
         <delete includeEmptyDirs="true">
             <fileset dir="${jmeter.result.html.dir}" includes="**/*"/>
         </delete>
+    </target>
+	
+	 <target name ="AfterMergeDelete">
 		<delete includeEmptyDirs="true">
             <fileset dir="${jmeter.result.jtl.dir}" includes="*Script*"/>
         </delete>

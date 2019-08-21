@@ -12,6 +12,7 @@
     <property name="lib.dir" value="${jmeter.home}\lib" />
     <!-- jmeter生成jtl格式的结果报告的路径-->
     <property name="jmeter.result.jtl.dir" value="${basedir}\TestResult\jtl" />
+	<property name="jmeter.result.jtl.dirNew" value="${basedir}/TestResult/jtl" />
     <!-- jmeter生成html格式的结果报告的路径-->
     <property name="jmeter.result.html.dir" value="${basedir}\TestReport\html" />
     <property name="jmeter.history.dir" value="${basedir}\TestHistory" />
@@ -79,7 +80,7 @@
 	<target name="JtlMerge">
 		<echo>deploy clean axis service</echo>
 		<exec executable="cd">
-            <arg line=" ${jmeter.result.jtl.dir}"/>
+            <arg line=" ${jmeter.result.jtl.dirNew}"/>
         </exec>
 		<exec executable="/opt/jenkins-slave/workspace/workspace/HLY-CN-StageApiTest-Demo/processInterface_stage_Demo/TestResult/jtl/JtlMerge.sh" failonerror="true">
             <arg value="${ReportName}${time}.jtl" />

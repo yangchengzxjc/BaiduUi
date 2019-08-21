@@ -118,7 +118,7 @@
       </Arguments>
       <hashTree/>
       <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="察看结果树" enabled="true">
-        <boolProp name="ResultCollector.error_logging">true</boolProp>
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
           <value class="SampleSaveConfiguration">
@@ -150,7 +150,7 @@
             <connectTime>true</connectTime>
           </value>
         </objProp>
-        <stringProp name="filename">loadTest.txt</stringProp>
+        <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
       <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="删除已有文件" enabled="true">
@@ -227,8 +227,8 @@ if(file.exists()&amp;&amp;file.isFile())
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">2</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">2</stringProp>
         <longProp name="ThreadGroup.start_time">1546505677000</longProp>
         <longProp name="ThreadGroup.end_time">1546505677000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
@@ -438,14 +438,14 @@ execParam();</stringProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取费用类型OID" enabled="true">
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取费用类型OID" enabled="false">
             <stringProp name="JSONPostProcessor.referenceNames">expenseTypeOID;expenseTypeid</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${expenseTypeName}&quot;)].expenseTypeOID;$..[?(@.name==&quot;${expenseTypeName}&quot;)].id</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
             <stringProp name="JSONPostProcessor.defaultValues">null;null</stringProp>
           </JSONPostProcessor>
           <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="写参数化文件" enabled="true">
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="写参数化文件" enabled="false">
             <stringProp name="filename"></stringProp>
             <stringProp name="parameters"></stringProp>
             <boolProp name="resetInterpreter">false</boolProp>
@@ -1011,7 +1011,7 @@ for (int i = 0; i &lt; size; i++){
            		jj.put(&quot;value&quot;,&quot;新建申请单&quot;);
              }
              if (jj.get(&quot;fieldName&quot;).equals(&quot;部门&quot;)){
-             	jj.put(&quot;value&quot;,vars.get(&quot;departmentOID&quot;));
+             	jj.put(&quot;value&quot;,&quot;306d8760-7b3c-45ca-89d8-32924b6d1ea8&quot;);
              }
              if (jj.get(&quot;fieldName&quot;).equals(&quot;公司&quot;)){
              	jj.put(&quot;value&quot;,vars.get(&quot;default_department&quot;));
@@ -1902,7 +1902,7 @@ for (int i = 0; i &lt; size; i++){
            		jj.put(&quot;value&quot;,&quot;新建报销单&quot;);
              }
              if (jj.get(&quot;fieldName&quot;).equals(&quot;部门&quot;)){
-             	jj.put(&quot;value&quot;,vars.get(&quot;departmentOID&quot;));
+             	jj.put(&quot;value&quot;,&quot;306d8760-7b3c-45ca-89d8-32924b6d1ea8&quot;);
              }
              if (jj.get(&quot;fieldName&quot;).equals(&quot;公司&quot;)){
              	jj.put(&quot;value&quot;,vars.get(&quot;default_department&quot;));
@@ -2527,7 +2527,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
       </hashTree>
       <kg.apc.jmeter.threads.SteppingThreadGroup guiclass="kg.apc.jmeter.threads.SteppingThreadGroupGui" testclass="kg.apc.jmeter.threads.SteppingThreadGroup" testname="jp@gc - Stepping Thread Group (deprecated)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">2</stringProp>
         <stringProp name="Threads initial delay">0</stringProp>
         <stringProp name="Start users count">1</stringProp>
         <stringProp name="Start users count burst">0</stringProp>
@@ -2579,7 +2579,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
           <boolProp name="recycle">true</boolProp>
           <stringProp name="shareMode">shareMode.all</stringProp>
           <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">user,fullName,accessToken,appaccessToken,userOID,companyOID,setOfBooksId,tenantId,companyId,departmentOID</stringProp>
+          <stringProp name="variableNames">user,fullName,accessToken,appaccessToken,userOID</stringProp>
         </CSVDataSet>
         <hashTree/>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="费用类别获取" enabled="true">
@@ -2644,7 +2644,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/api/department/tenant/all?companyOID=${companyOID}&amp;status=101</stringProp>
+              <stringProp name="HTTPSampler.path">/api/department/tenant/all?companyOID=a8fbe783-edeb-4ef8-8c86-a074a4bfb1c3&amp;status=101</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -2676,7 +2676,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/api/my/cost/center/items/39850327-fe39-4664-9b55-f7c961f0ae34?applicantOID=${userOID}&amp;companyOID=${companyOID}&amp;costCenterItemOID=&amp;name=&amp;page=0&amp;size=15&amp;sort</stringProp>
+              <stringProp name="HTTPSampler.path">/api/my/cost/center/items/39850327-fe39-4664-9b55-f7c961f0ae34?applicantOID=${userOID}&amp;companyOID=a8fbe783-edeb-4ef8-8c86-a074a4bfb1c3&amp;costCenterItemOID=&amp;name=&amp;page=0&amp;size=15&amp;sort</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -2846,11 +2846,11 @@ vars.put(&quot;AllDetalNew&quot;,str);
     &quot;groupOIDs&quot;:[],&#xd;
     &quot;i18n&quot;:null,&#xd;
     &quot;proxyForm&quot;:false,&#xd;
-    &quot;setOfBooksId&quot;:&quot;${setOfBooksId}&quot;,&#xd;
+    &quot;setOfBooksId&quot;:&quot;1065855339630854145&quot;,&#xd;
     &quot;fromType&quot;:2,&#xd;
     &quot;entityType&quot;:null,&#xd;
     &quot;visibleUserScope&quot;:1001,&#xd;
-    &quot;tenantId&quot;:&quot;${tenantId}&quot;,&#xd;
+    &quot;tenantId&quot;:&quot;1065855339542773762&quot;,&#xd;
     &quot;submit&quot;:false,&#xd;
     &quot;applicantOID&quot;:&quot;${userOID}&quot;,&#xd;
     &quot;booksID&quot;:null,&#xd;
@@ -2945,7 +2945,7 @@ for (int i = 0; i &lt; size; i++){
            		jj.put(&quot;value&quot;,&quot;新建申请单&quot;);
              }
              if (jj.get(&quot;fieldName&quot;).equals(&quot;部门&quot;)){
-             	jj.put(&quot;value&quot;,vars.get(&quot;departmentOID&quot;));
+             	jj.put(&quot;value&quot;,&quot;306d8760-7b3c-45ca-89d8-32924b6d1ea8&quot;);
              }
              if (jj.get(&quot;fieldName&quot;).equals(&quot;公司&quot;)){
              	jj.put(&quot;value&quot;,vars.get(&quot;default_department&quot;));
@@ -3520,7 +3520,7 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
-              <stringProp name="HTTPSampler.path">/api/my/cost/center/items/932c1092-ac7e-4b4a-ac0e-a7190db1e94e?applicantOID=${userOID}&amp;companyOID=${companyOID}&amp;costCenterItemOID=&amp;name=&amp;page=0&amp;size=15&amp;sort</stringProp>
+              <stringProp name="HTTPSampler.path">/api/my/cost/center/items/932c1092-ac7e-4b4a-ac0e-a7190db1e94e?applicantOID=${userOID}&amp;companyOID=a8fbe783-edeb-4ef8-8c86-a074a4bfb1c3&amp;costCenterItemOID=&amp;name=&amp;page=0&amp;size=15&amp;sort</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -3640,7 +3640,7 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
-              <stringProp name="HTTPSampler.path">/supplier/api/ven/info/search?companyOid=${companyOID}&amp;page=0&amp;size=20&amp;userOid=${userOID}&amp;venNickname=</stringProp>
+              <stringProp name="HTTPSampler.path">/supplier/api/ven/info/search?companyOid=a8fbe783-edeb-4ef8-8c86-a074a4bfb1c3&amp;page=0&amp;size=20&amp;userOid=${userOID}&amp;venNickname=</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -3676,7 +3676,7 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
-              <stringProp name="HTTPSampler.path">/api/department/tenant/all?companyOID=${companyOID}&amp;status=101</stringProp>
+              <stringProp name="HTTPSampler.path">/api/department/tenant/all?companyOID=a8fbe783-edeb-4ef8-8c86-a074a4bfb1c3&amp;status=101</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -3713,7 +3713,7 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                     <stringProp name="Argument.value">{&#xd;
     &quot;travelManageType&quot;:null,&#xd;
     &quot;id&quot;:&quot;${daily_FormId}&quot;,&#xd;
-    &quot;tenantId&quot;:&quot;${tenantId}&quot;,&#xd;
+    &quot;tenantId&quot;:&quot;1065855339542773762&quot;,&#xd;
     &quot;iconName&quot;:&quot;&quot;,&#xd;
     &quot;expenseTypeOIDs&quot;:[&#xd;
 &#xd;
@@ -3739,7 +3739,7 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
     &quot;groupOIDs&quot;:[],&#xd;
     &quot;applicantOID&quot;:&quot;${userOID}&quot;,&#xd;
     &quot;i18n&quot;:null,&#xd;
-    &quot;setOfBooksId&quot;:&quot;${setOfBooksId}&quot;,&#xd;
+    &quot;setOfBooksId&quot;:&quot;1065855339630854145&quot;,&#xd;
     &quot;entityType&quot;:null,&#xd;
     &quot;applicationParticipants&quot;:[{&#xd;
             &quot;highOff&quot;:true,&#xd;
@@ -3765,7 +3765,7 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
     &quot;customFormFields&quot;:${__P(bxcustomFormFields,)},&#xd;
     &quot;expenseReportApplicationDTOS&quot;:[{&#xd;
             &quot;applicationOID&quot;:&quot;${applicationOID}&quot;,&#xd;
-            &quot;tenantId&quot;:&quot;${tenantId}&quot;&#xd;
+            &quot;tenantId&quot;:&quot;1065855339542773762&quot;&#xd;
         }&#xd;
     ],&#xd;
     &quot;formName&quot;:&quot;0806压测差旅报销单&quot;,&#xd;
@@ -3836,7 +3836,7 @@ for (int i = 0; i &lt; size; i++){
            		jj.put(&quot;value&quot;,&quot;新建报销单&quot;);
              }
              if (jj.get(&quot;fieldName&quot;).equals(&quot;部门&quot;)){
-             	jj.put(&quot;value&quot;,vars.get(&quot;departmentOID&quot;));
+             	jj.put(&quot;value&quot;,&quot;306d8760-7b3c-45ca-89d8-32924b6d1ea8&quot;);
              }
              if (jj.get(&quot;fieldName&quot;).equals(&quot;公司&quot;)){
              	jj.put(&quot;value&quot;,vars.get(&quot;default_department&quot;));
@@ -3969,25 +3969,6 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
             <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询发票金额" enabled="false">
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-                <collectionProp name="Arguments.arguments"/>
-              </elementProp>
-              <stringProp name="HTTPSampler.domain"></stringProp>
-              <stringProp name="HTTPSampler.port"></stringProp>
-              <stringProp name="HTTPSampler.protocol"></stringProp>
-              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/invoice/api/invoice/tax/amount/by/receipts</stringProp>
-              <stringProp name="HTTPSampler.method">GET</stringProp>
-              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-              <stringProp name="HTTPSampler.response_timeout"></stringProp>
-            </HTTPSamplerProxy>
-            <hashTree/>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单费用创建" enabled="true">
               <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
               <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -3998,7 +3979,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;attachments&quot;: [],&#xd;
 	&quot;code&quot;: &quot;DEFAULT_SOBEXP0039&quot;,&#xd;
 	&quot;depth&quot;: 2,&#xd;
-	&quot;tenantId&quot;: &quot;${tenantId}&quot;,&#xd;
+	&quot;tenantId&quot;: &quot;1065855339542773762&quot;,&#xd;
 	&quot;occurDateDefaultValue&quot;: &quot;CURRENT&quot;,&#xd;
 	&quot;serviceFeeSplit&quot;: 0,&#xd;
 	&quot;iconName&quot;: &quot;mealAllowance&quot;,&#xd;
@@ -4033,7 +4014,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;isAmountEditable&quot;: true,&#xd;
 	&quot;parentId&quot;: null,&#xd;
 	&quot;i18n&quot;: null,&#xd;
-	&quot;setOfBooksId&quot;: &quot;${setOfBooksId}&quot;,&#xd;
+	&quot;setOfBooksId&quot;: &quot;1065855339630854145&quot;,&#xd;
 	&quot;accessibleRights&quot;: 0,&#xd;
 	&quot;dateLinkageValue&quot;: &quot;none&quot;,&#xd;
 	&quot;comment&quot;: null,&#xd;
@@ -4069,64 +4050,6 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 	&quot;multipleInvoiceSupported&quot;: false,&#xd;
 	&quot;enabled&quot;: true,&#xd;
 	&quot;sequence&quot;: 0&#xd;
-}</stringProp>
-                    <stringProp name="Argument.metadata">=</stringProp>
-                  </elementProp>
-                </collectionProp>
-              </elementProp>
-              <stringProp name="HTTPSampler.domain"></stringProp>
-              <stringProp name="HTTPSampler.port"></stringProp>
-              <stringProp name="HTTPSampler.protocol"></stringProp>
-              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/invoice/api/v5/invoices</stringProp>
-              <stringProp name="HTTPSampler.method">POST</stringProp>
-              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-              <stringProp name="HTTPSampler.response_timeout"></stringProp>
-            </HTTPSamplerProxy>
-            <hashTree>
-              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
-                <stringProp name="JSONPostProcessor.referenceNames">invoinceOID</stringProp>
-                <stringProp name="JSONPostProcessor.jsonPathExprs">$.rows.invoinceOID</stringProp>
-                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              </JSONPostProcessor>
-              <hashTree/>
-            </hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单费用创建" enabled="false">
-              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-                <collectionProp name="Arguments.arguments">
-                  <elementProp name="" elementType="HTTPArgument">
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                    <stringProp name="Argument.value">{&#xd;
-	&quot;attachments&quot;: [],&#xd;
-	&quot;invoiceStatus&quot;: &quot;INIT&quot;,&#xd;
-	&quot;readonly&quot;: false,&#xd;
-	&quot;recognized&quot;: false,&#xd;
-	&quot;currencyCode&quot;: &quot;CNY&quot;,&#xd;
-	&quot;expenseTypeName&quot;: &quot;${expenseTypeName}&quot;,&#xd;
-	&quot;expenseTypeOID&quot;: &quot;${expenseTypeOID}&quot;,&#xd;
-	&quot;expenseTypeId&quot;: &quot;${expenseTypeid}&quot;,&#xd;
-	&quot;expenseTypeIconName&quot;: &quot;coach&quot;,&#xd;
-	&quot;expenseTypeKey&quot;: &quot;expense.type.coach&quot;,&#xd;
-	&quot;receiptList&quot;: [],&#xd;
-	&quot;amount&quot;: 12,&#xd;
-	&quot;actualCurrencyRate&quot;: 1,&#xd;
-	&quot;createdDate&quot;: &quot;${NewUTCstartDate}&quot;,&#xd;
-	&quot;invoiceCurrencyCode&quot;: &quot;CNY&quot;,&#xd;
-	&quot;comment&quot;: &quot;&quot;,&#xd;
-	&quot;invoiceInstead&quot;: false,&#xd;
-	&quot;invoiceInsteadReason&quot;: null,&#xd;
-	&quot;data&quot;:[],&#xd;
-	&quot;baseCurrency&quot;: &quot;CNY&quot;,&#xd;
-	&quot;updateRate&quot;: true,&#xd;
-	&quot;expenseReportOID&quot;: &quot;${expenseReportOID}&quot;,&#xd;
-	&quot;ownerOID&quot;: &quot;${userOID}&quot;,&#xd;
-	&quot;paymentType&quot;: &quot;1001&quot;&#xd;
 }</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>

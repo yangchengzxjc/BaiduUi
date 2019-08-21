@@ -1,7 +1,8 @@
 #!/bin/bash
 # get all filename in specified path
-JtlName=$1
+JtlName=$2
 path=*.jtl
+cd $1
 files=$(ls $path)
 echo $(ls)
 echo '<?xml version="1.0" encoding="UTF-8"?>' >> ${JtlName}

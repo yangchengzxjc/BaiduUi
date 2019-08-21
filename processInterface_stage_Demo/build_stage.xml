@@ -100,7 +100,7 @@
             <fileset dir="${lib.dir}" includes="serializer*.jar"/>
         </path>
 		<exec executable="/opt/jenkins-slave/workspace/workspace/HLY-CN-StageApiTest-Demo/processInterface_stage_Demo/TestResult/jtl/JtlMerge.sh" >
-			<arg value="${ReportName}${time}.jtl"/>
+			<arg value="abcde.jtl"/>
 		</exec>
         <tstamp><format property="show-data" pattern="'n'"/></tstamp>
         <tstamp><format property="report.title" pattern="'HuiLianYi-Interface Test Results'"/></tstamp>

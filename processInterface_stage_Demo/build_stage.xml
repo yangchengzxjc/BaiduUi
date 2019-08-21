@@ -78,6 +78,9 @@
 	
 	<target name="JtlMerge">
 		<echo>deploy clean axis service</echo>
+		<exec executable="cd">
+            <arg line=" ${jmeter.result.jtl.dir}"/>
+        </exec>
 		<exec executable="/opt/jenkins-slave/workspace/workspace/HLY-CN-StageApiTest-Demo/processInterface_stage_Demo/TestResult/jtl/JtlMerge.sh" failonerror="true">
             <arg value="${ReportName}${time}.jtl" />
         </exec>

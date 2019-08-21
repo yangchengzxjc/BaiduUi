@@ -99,8 +99,8 @@
             <fileset dir="${lib.dir}" includes="xalan*.jar"/>
             <fileset dir="${lib.dir}" includes="serializer*.jar"/>
         </path>
-		<exec executable="${jmeter.Script.ShellName}\JtlMerge.sh" failοnerrοr="true">
-			<arg value="${jmeter.result.jtlName}"/>
+		<exec executable="/opt/jenkins-slave/workspace/workspace/HLY-CN-StageApiTest-Demo/processInterface_stage_Demo/TestDataJtlMerge.sh" failοnerrοr="true">
+			<arg value="abc"/>
 		</exec>
         <tstamp><format property="show-data" pattern="'n'"/></tstamp>
         <tstamp><format property="report.title" pattern="'HuiLianYi-Interface Test Results'"/></tstamp>

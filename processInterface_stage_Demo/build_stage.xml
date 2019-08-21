@@ -11,7 +11,7 @@
     </condition>
     <property name="lib.dir" value="${jmeter.home}\lib" />
     <!-- jmeter生成jtl格式的结果报告的路径-->
-    <property name="jmeter.result.jtl.dir" value="${basedir}/TestResult/jtl" />
+    <property name="jmeter.result.jtl.dir" value="${basedir}\TestResult\jtl" />
     <!-- jmeter生成html格式的结果报告的路径-->
     <property name="jmeter.result.html.dir" value="${basedir}\TestReport\html" />
     <property name="jmeter.history.dir" value="${basedir}\TestHistory" />
@@ -100,7 +100,7 @@
             <fileset dir="${lib.dir}" includes="serializer*.jar"/>
         </path>
 		<exec executable="/opt/jenkins-slave/workspace/workspace/HLY-CN-StageApiTest-Demo/processInterface_stage_Demo/TestResult/jtl/JtlMerge.sh" >
-			<arg value="${jmeter.result.jtlName}"/>
+			<arg value="${ReportName}${time}.jtl"/>
 		</exec>
         <tstamp><format property="show-data" pattern="'n'"/></tstamp>
         <tstamp><format property="report.title" pattern="'HuiLianYi-Interface Test Results'"/></tstamp>

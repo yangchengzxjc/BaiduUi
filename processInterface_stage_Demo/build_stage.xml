@@ -54,7 +54,7 @@
         <antcall target="delete" />
         <antcall target="test" />
         <antcall target="JtlMerge" />
-		<!-- <antcall target="report" /> -->
+		<antcall target="report" /> 
         <!--antcall target="sendEmail" /-->
     </target>
 	
@@ -136,6 +136,9 @@
     <target name ="delete">
         <delete includeEmptyDirs="true">
             <fileset dir="${jmeter.result.html.dir}" includes="**/*"/>
+        </delete>
+		<delete includeEmptyDirs="true">
+            <fileset dir="${${jmeter.result.jtl.dir}}" includes="*Script*"/>
         </delete>
     </target>
 </project>

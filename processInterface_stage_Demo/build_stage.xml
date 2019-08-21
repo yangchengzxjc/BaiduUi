@@ -15,6 +15,7 @@
     <!-- jmeter生成html格式的结果报告的路径-->
     <property name="jmeter.result.html.dir" value="${basedir}\TestReport\html" />
     <property name="jmeter.history.dir" value="${basedir}\TestHistory" />
+	<property name="jmeter.Script.ShellName" value="${basedir}\TestData" />
     <!-- 生成的报告的前缀 -->
     <condition property="hostname" value="${serverUrl}" else="apistage.huilianyi.com">
         <isset property="serverUrl" />
@@ -32,8 +33,7 @@
         <isset property="username2" />
     </condition>
     <property name="ReportName" value="HuiLianYi-APITestReport-${serverUrl}-" />
-    <!-- <property name="jmeter.result.jtlName" value="${jmeter.result.jtl.dir}/${ReportName}${time}.jtl" /> -->
-    <!-- <property name="jmeter.result.log" value="${basedir}/TestLog/${time}.log" /> -->
+	<property name="jmeter.result.jtlName" value="${jmeter.result.jtl.dir}/${ReportName}${time}.jtl" />
     <property name="jmeter.result.htmlName" value="${jmeter.result.html.dir}/${ReportName}${time}.html" />
 
     <!-- 电脑地址 -->
@@ -72,8 +72,6 @@
 			<param name="Inputparam" value="Script3_"/>
 		 </antcall>
 			
-			
-			
 		</parallel>
     </target>
 	
@@ -96,22 +94,21 @@
         </jmeter>
     </target>
 	
-	  
-	
-
-	
     <target name="report">
         <path id="xslt.classpath">
             <fileset dir="${lib.dir}" includes="xalan*.jar"/>
             <fileset dir="${lib.dir}" includes="serializer*.jar"/>
         </path>
+		<exec executable="${jmeter.Script.ShellName}\JtlMerge.sh" failοnerrοr="true">
+			<arg value="${jmeter.result.jtlName}"/>
+		</exec>
         <tstamp><format property="show-data" pattern="'n'"/></tstamp>
         <tstamp><format property="report.title" pattern="'HuiLianYi-Interface Test Results'"/></tstamp>
         <tstamp><format property="report.datestamp" pattern="yyyy/MM/dd HH:mm"/></tstamp>
         <xslt
                 classpathref="xslt.classpath"
                 force="true"
-                in="${jmeter.result.jtl.dir}/*.jtl"
+				in="${jmeter.result.jtlName}"
                 out="${jmeter.result.htmlName}"
                 style="${jmeter.home}/extras/jmeter.results.zy.me.xsl">
             <param name="showData" expression="${show-data}"/>

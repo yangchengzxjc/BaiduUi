@@ -99,9 +99,18 @@
             <fileset dir="${lib.dir}" includes="xalan*.jar"/>
             <fileset dir="${lib.dir}" includes="serializer*.jar"/>
         </path>
-		<exec executable="/opt/jenkins-slave/workspace/workspace/HLY-CN-StageApiTest-Demo/processInterface_stage_Demo/TestResult/jtl/JtlMerge.sh" >
-			<arg value="abcde.jtl"/>
-		</exec>
+		
+		<!-- <exec executable="/opt/jenkins-slave/workspace/workspace/HLY-CN-StageApiTest-Demo/processInterface_stage_Demo/TestResult/jtl/JtlMerge.sh" > -->
+			<!-- <arg value="abcde.jtl"/> -->
+		<!-- </exec> -->
+		
+		
+		<exec executable="/opt/jenkins-slave/workspace/workspace/HLY-CN-StageApiTest-Demo/processInterface_stage_Demo/TestResult/jtl/JtlMerge.sh" failonerror="true">
+            <arg value="MyName" />
+            <arg value="Age" />
+        </exec>
+		
+		
         <tstamp><format property="show-data" pattern="'n'"/></tstamp>
         <tstamp><format property="report.title" pattern="'HuiLianYi-Interface Test Results'"/></tstamp>
         <tstamp><format property="report.datestamp" pattern="yyyy/MM/dd HH:mm"/></tstamp>

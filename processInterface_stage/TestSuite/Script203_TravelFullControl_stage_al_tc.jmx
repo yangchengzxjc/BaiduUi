@@ -226,7 +226,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">username=${username}&amp;password=${password}&amp;grant_type=password&amp;scope=read+write</stringProp>
+                <stringProp name="Argument.value">username=${loginUserNmae}&amp;password=${password}&amp;grant_type=password&amp;scope=read+write</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -254,6 +254,28 @@
             <stringProp name="RegexExtractor.default"></stringProp>
             <stringProp name="RegexExtractor.match_number">0</stringProp>
           </RegexExtractor>
+          <hashTree/>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 预处理程序" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">
+String loginUserNmae;
+String userName =vars.get(&quot;username&quot;);
+
+if(userName.length()==4){
+	loginUserNmae =userName+&quot;0000003&quot;;
+	log.info(&quot;用户名:&quot;+loginUserNmae);
+}
+else{
+	loginUserNmae = username;
+	log.info(&quot;用户名:&quot;+loginUserNmae);
+}
+
+vars.put(&quot;loginUserNmae&quot;, loginUserNmae);
+</stringProp>
+          </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
         <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="处理时间问题" enabled="true">

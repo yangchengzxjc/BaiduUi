@@ -2,7 +2,7 @@
 <project name="shell" default="execSH" basedir=".">
 <target name="execSH">
 <echo>deploy clean axis service</echo>
-<exec executable="${basedir}/loadTest.sh" failοnerrοr="true">
+<exec executable="${basedir}/loadTest.sh">
 </exec>
 </target>
 </project>

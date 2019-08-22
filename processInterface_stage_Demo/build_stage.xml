@@ -64,15 +64,15 @@
 	<target name="test">
 		<parallel threadCount="10">
 		 <antcall target="run_jmeter">
-			<param name="Inputparam" value="Script1_"/>
+			<param name="Inputparam" value="Script1"/>
 		 </antcall>
 		 
 		 <antcall target="run_jmeter">
-			<param name="Inputparam" value="Script2_"/>
+			<param name="Inputparam" value="Script2"/>
 		 </antcall>
 		 
 		 <antcall target="run_jmeter">
-			<param name="Inputparam" value="Script3_"/>
+			<param name="Inputparam" value="Script3"/>
 		 </antcall>
 			
 		</parallel>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="shell" default="execSH" basedir=".">
+<target name="execSH">
+<echo>deploy clean axis service</echo>
+<exec executable="${basedir}/loadTest.sh">
+</exec>
+</target>
+</project>

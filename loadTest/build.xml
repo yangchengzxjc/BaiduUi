@@ -44,7 +44,7 @@
 	<target name="JtlMerge">
 		<echo>deploy clean axis service</echo>
 		<exec executable="${basedir}/PerformanceTesting.sh" failonerror="true">
-			<arg value=" ${time}"/>
+			<arg value="${time}"/>
         </exec>
     </target>
 </project>

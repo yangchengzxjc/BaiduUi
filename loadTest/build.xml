@@ -23,6 +23,9 @@
 
     <!-- 电脑地址 -->
     <property name="ComputerName" value="LAPTOP-VJV4S5M8" />
+	<condition property="time" value="${time}" else="123456789">
+        <isset property="time" />
+    </condition>
 
     <target name="show-test-properties">
         <echo>JMETER_HOME				: ${jmeter.home}</echo>
@@ -41,6 +44,7 @@
 	<target name="JtlMerge">
 		<echo>deploy clean axis service</echo>
 		<exec executable="${basedir}/PerformanceTesting.sh" failonerror="true">
+			<arg value=" ${time}"/>
         </exec>
     </target>
 </project>

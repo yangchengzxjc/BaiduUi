@@ -64,6 +64,10 @@
 	<target name="test">
 		<parallel threadCount="10">
 		 <antcall target="run_jmeter">
+			<param name="Inputparam" value="Script0"/>
+		 </antcall>
+		 
+		 <antcall target="run_jmeter">
 			<param name="Inputparam" value="Script1"/>
 		 </antcall>
 		 
@@ -71,8 +75,33 @@
 			<param name="Inputparam" value="Script2"/>
 		 </antcall>
 		 
-		 <antcall target="run_jmeter">
+		 		 <antcall target="run_jmeter">
 			<param name="Inputparam" value="Script3"/>
+		 </antcall>
+		 
+		 <antcall target="run_jmeter">
+			<param name="Inputparam" value="Script4"/>
+		 </antcall>
+		 
+		 <antcall target="run_jmeter">
+			<param name="Inputparam" value="Script5"/>
+		 </antcall>
+		 
+		 		 <antcall target="run_jmeter">
+			<param name="Inputparam" value="Script6"/>
+		 </antcall>
+		 
+		 <antcall target="run_jmeter">
+			<param name="Inputparam" value="Script7"/>
+		 </antcall>
+		 
+		 <antcall target="run_jmeter">
+			<param name="Inputparam" value="Script8"/>
+		 </antcall>
+		 
+		 
+		 <antcall target="run_jmeter">
+			<param name="Inputparam" value="Script9"/>
 		 </antcall>
 			
 		</parallel>

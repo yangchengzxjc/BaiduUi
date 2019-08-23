@@ -14,12 +14,12 @@
           </elementProp>
           <elementProp name="serverUrl" elementType="Argument">
             <stringProp name="Argument.name">serverUrl</stringProp>
-            <stringProp name="Argument.value">${__P(serverUrl,console.huilianyi.com)}</stringProp>
+            <stringProp name="Argument.value">${__P(serverUrl,stage.huilianyi.com)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,13609265517)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,1321)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
@@ -29,7 +29,7 @@
           </elementProp>
           <elementProp name="Delay" elementType="Argument">
             <stringProp name="Argument.name">Delay</stringProp>
-            <stringProp name="Argument.value">${__P(Delay,1000)}</stringProp>
+            <stringProp name="Argument.value">${__P(Delay,300)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -278,7 +278,7 @@
           </collectionProp>
         </HeaderManager>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="02_pre_获取token" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="用户登录获取token" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
             <collectionProp name="Arguments.arguments">
               <elementProp name="username" elementType="HTTPArgument">
@@ -349,7 +349,7 @@ if(userName.length()==4){
 	log.info(&quot;用户名:&quot;+loginUserNmae);
 }
 else{
-	loginUserNmae = username;
+	loginUserNmae = userName;
 	log.info(&quot;用户名:&quot;+loginUserNmae);
 }
 
@@ -786,7 +786,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1002]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1002]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -1113,7 +1113,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1002]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1002]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -1440,7 +1440,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -1767,7 +1767,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -2094,7 +2094,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001,1002]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001,1002]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -2421,7 +2421,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001,1002]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001,1002]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -2734,7 +2734,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1002]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1002]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -3061,7 +3061,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1002]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1002]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -3388,7 +3388,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -3715,7 +3715,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -4042,7 +4042,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001,1002]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001,1002]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -4369,7 +4369,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001,1002]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001,1002]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -4682,7 +4682,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -4995,7 +4995,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1003]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1003]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -5308,7 +5308,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1003]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1003]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -5621,7 +5621,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -5934,7 +5934,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1003]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1003]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -6247,7 +6247,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1003]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:1,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1003]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -6560,7 +6560,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001,1002,1003]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001,1002,1003]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -6873,7 +6873,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${apformOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;document.overapplication&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:0.2,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001,1002,1003]}&quot;&#xd;
+	&quot;propertyValue&quot;: &quot;{\&quot;isForce\&quot;:0,\&quot;overflowProportion\&quot;:20,\&quot;enabled\&quot;:true,\&quot;controlDimesion\&quot;:[1001,1002,1003]}&quot;&#xd;
 }]</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>

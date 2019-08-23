@@ -14,12 +14,12 @@
           </elementProp>
           <elementProp name="serverUrl" elementType="Argument">
             <stringProp name="Argument.name">serverUrl</stringProp>
-            <stringProp name="Argument.value">${__P(serverUrl,console.huilianyi.com)}</stringProp>
+            <stringProp name="Argument.value">${__P(serverUrl,stage.huilianyi.com)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,13609265517)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,13700000000)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
@@ -39,7 +39,7 @@
           </elementProp>
           <elementProp name="Delay" elementType="Argument">
             <stringProp name="Argument.name">Delay</stringProp>
-            <stringProp name="Argument.value">${__P(Delay,500)}</stringProp>
+            <stringProp name="Argument.value">${__P(Delay,300)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -57,8 +57,8 @@
         <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
         <stringProp name="HTTPSampler.path"></stringProp>
         <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
-        <stringProp name="HTTPSampler.connect_timeout">15000</stringProp>
-        <stringProp name="HTTPSampler.response_timeout">15000</stringProp>
+        <stringProp name="HTTPSampler.connect_timeout">1500000</stringProp>
+        <stringProp name="HTTPSampler.response_timeout">1500000</stringProp>
       </ConfigTestElement>
       <hashTree/>
       <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
@@ -215,10 +215,6 @@
             <stringProp name="JSONPostProcessor.jsonPathExprs">$.access_token</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
           </JSONPostProcessor>
-          <hashTree/>
-          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="true">
-            <stringProp name="ConstantTimer.delay">3000</stringProp>
-          </ConstantTimer>
           <hashTree/>
           <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 预处理程序" enabled="true">
             <stringProp name="scriptLanguage">groovy</stringProp>
@@ -1375,124 +1371,13 @@ vars.put(&quot;AllDetalNew&quot;,str);
           <hashTree/>
           <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="检查报销单状态" enabled="true">
             <stringProp name="BeanShellAssertion.query">String status= vars.get(&quot;status&quot;);
-if(!status.equals(&quot;1005&quot;)) {
+if(!status.equals(&quot;1008&quot;)) {
     Failure = true; 
     FailureMessage = &quot;报销单状态失败&quot;;
 }else{
     FailureMessage = &quot;报销单状态成功&quot;;
     }
 </stringProp>
-            <stringProp name="BeanShellAssertion.filename"></stringProp>
-            <stringProp name="BeanShellAssertion.parameters"></stringProp>
-            <boolProp name="BeanShellAssertion.resetInterpreter">false</boolProp>
-          </BeanShellAssertion>
-          <hashTree/>
-          <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="检查报销单审批历史" enabled="false">
-            <stringProp name="BeanShellAssertion.query">import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-String approvalHistoryDTOs= vars.get(&quot;approvalHistoryDTOs&quot;);
-JSONArray approvalHistoryDTO = JSON.parseArray(approvalHistoryDTOs);
-int size = approvalHistoryDTO.size();
-
-if(size !=7) {
-    Failure = true; 
-    FailureMessage = &quot;报销单操作历史检查失败&quot;;
-}else{
-    Failure=false;
-    FailureMessage = &quot;报销单操作历史检查成功&quot;;
-    }
-</stringProp>
-            <stringProp name="BeanShellAssertion.filename"></stringProp>
-            <stringProp name="BeanShellAssertion.parameters"></stringProp>
-            <boolProp name="BeanShellAssertion.resetInterpreter">false</boolProp>
-          </BeanShellAssertion>
-          <hashTree/>
-          <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="检查报销单审批历史明细" enabled="false">
-            <stringProp name="BeanShellAssertion.query">import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-String approvalHistoryDTOs= vars.get(&quot;approvalHistoryDTOs&quot;);
-JSONArray approvalHistoryDTO = JSON.parseArray(approvalHistoryDTOs);
-int size = approvalHistoryDTO.size();
-
-for (int i = 0; i &lt; size; i++){
-	jj = approvalHistoryDTO.getJSONObject(i);
-	String operationDescription=jj.get(&quot;operationDescription&quot;);
-	String operatorOID=jj.get(&quot;operatorOID&quot;);
-	String operationDetail=jj.get(&quot;operationDetail&quot;);
-	String remark=jj.get(&quot;remark&quot;);
-//	检查第0历史
-	if (i==0)
-	{  if(!operationDescription.equals(&quot;已付款&quot;) || !operatorOID.equals(vars.get(&quot;userOID&quot;))  || operationDetail != null ) {
-		    Failure = true; 
-		    FailureMessage = &quot;报销单操作历史检查失败&quot;;
-		}else{
-		    Failure=false;
-		    FailureMessage = &quot;报销单操作历史检查成功1&quot;;
-		    }
-	}
-//	检查第1历史
-	if (i==1)
-	{if(!operationDescription.equals(&quot;付款中&quot;) || !operatorOID.equals(vars.get(&quot;userOID&quot;))  || operationDetail != null ) {
-		    Failure = true; 
-		    FailureMessage = &quot;报销单操作历史检查失败&quot;;
-		}else{
-		    Failure=false;
-		    FailureMessage = &quot;报销单操作历史检查成功2&quot;;
-		    }
-	}
-//	检查第2历史
-	if (i==2)
-	{if(!operationDescription.equals(&quot;审核通过&quot;) || !operatorOID.equals(vars.get(&quot;userOID&quot;))  || !operationDetail.equals(&quot;财务审核通过&quot;) ) {
-		    Failure = true; 
-		    FailureMessage = &quot;报销单操作历史检查失败&quot;;
-		}else{
-		    Failure=false;
-		    FailureMessage = &quot;报销单操作历史检查成功3&quot;;
-		    }
-	}
-//	检查第3历史
-	if (i==3)
-	{if(!operationDescription.equals(&quot;修改金额&quot;) || !operatorOID.equals(vars.get(&quot;userOID&quot;)) || !remark.equals(&quot;大巴费用,金额由 CNY123.45 修改为 CNY87.99&quot;) ) {
-		    Failure = true; 
-		    FailureMessage = &quot;报销单操作历史检查失败&quot;;
-		}else{
-			Failure=false;
-		    FailureMessage = &quot;报销单操作历史检查成功4&quot;;
-		    }
-	}
-//	检查第4历史
-	if (i==4)
-	{if(!operationDescription.equals(&quot;审批通过&quot;) || !operatorOID.equals(vars.get(&quot;userOID&quot;))  || !operationDetail.equals(&quot;经理审批通过&quot;) ) {
-		    Failure = true; 
-		    FailureMessage = &quot;报销单操作历史检查失败&quot;;
-		}else{
-			Failure=false;
-		    FailureMessage = &quot;报销单操作历史检查成功5&quot;;
-		    }
-	}
-//	检查第5历史
-	if (i==5)
-	{if(!operationDescription.equals(&quot;审批通过&quot;) || !operatorOID.equals(vars.get(&quot;userOID&quot;))  || !operationDetail.equals(&quot;财务审批通过&quot;) ) {
-		    Failure = true; 
-		    FailureMessage = &quot;报销单操作历史检查失败&quot;;
-		}else{
-			Failure=false;
-		    FailureMessage = &quot;报销单操作历史检查成功6&quot;;
-		    }
-	}
-//	检查第6历史
-	if (i==6)
-	{if(!operationDescription.equals(&quot;提交单据&quot;) || !operatorOID.equals(vars.get(&quot;userOID&quot;))  || operationDetail != null  ) {
-		    Failure = true; 
-		    FailureMessage = &quot;报销单操作历史检查失败&quot;;
-		}else{
-			Failure=false;
-		    FailureMessage = &quot;报销单操作历史检查成功&quot;;
-		    }
-	}
-}</stringProp>
             <stringProp name="BeanShellAssertion.filename"></stringProp>
             <stringProp name="BeanShellAssertion.parameters"></stringProp>
             <boolProp name="BeanShellAssertion.resetInterpreter">false</boolProp>

@@ -229,7 +229,7 @@ if(userName.length()==4){
 	log.info(&quot;用户名:&quot;+loginUserNmae);
 }
 else{
-	loginUserNmae = username;
+	loginUserNmae = userName;
 	log.info(&quot;用户名:&quot;+loginUserNmae);
 }
 

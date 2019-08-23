@@ -123,7 +123,7 @@
 		
         <jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtl.dir}/${ReportName}${Inputparam}_${Ditetime}.jtl" jmeterlogfile="${basedir}/TestLog/${Ditetime}.log">
             <!-- 声明要运行的脚本。"*.jmx"指包含此目录下的所有jmeter脚本 -->
-        <testplans dir="${basedir}\TestSuite" includes="*${Inputparam}*Concurrency" />
+        <testplans dir="${basedir}\TestSuite" includes="*${Inputparam}*Concurrency*" />
 	    <property name="protocol" value="${protocolV}"/>
 		<property name="serverUrl" value="${hostname}"/>
 	    <property name="username" value="${username}"/>
@@ -166,6 +166,7 @@
     <target name ="delete">
         <delete includeEmptyDirs="true">
             <fileset dir="${jmeter.result.html.dir}" includes="**/*"/>
+			<fileset dir="${jmeter.result.jtl.dir}" includes="*Script*"/>
         </delete>
     </target>
 	

@@ -15,8 +15,6 @@
     <property name="jmeter.history.dir" value="${basedir}\TestHistory" />
 	<property name="jmeter.result.Report.dir" value="${basedir}\LoadTestReport" />
 
-scriptName
-
 	<condition property="time" value="${time}" else="123456789">
         <isset property="time" />
     </condition>

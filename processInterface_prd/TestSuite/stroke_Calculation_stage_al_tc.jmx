@@ -4,7 +4,7 @@
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="测试计划" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
       <boolProp name="TestPlan.functional_mode">false</boolProp>
-      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">true</boolProp>
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
         <collectionProp name="Arguments.arguments">
           <elementProp name="protocol" elementType="Argument">
@@ -14,12 +14,12 @@
           </elementProp>
           <elementProp name="serverUrl" elementType="Argument">
             <stringProp name="Argument.name">serverUrl</stringProp>
-            <stringProp name="Argument.value">${__P(serverUrl,console.huilianyi.com)}</stringProp>
+            <stringProp name="Argument.value">${__P(serverUrl,stage.huilianyi.com)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,13609265517)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,13700000000)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
@@ -203,7 +203,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="username" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                <stringProp name="Argument.value">${username}</stringProp>
+                <stringProp name="Argument.value">${loginUserNmae}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">username</stringProp>
@@ -258,6 +258,29 @@
           <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="false">
             <stringProp name="ConstantTimer.delay">3000</stringProp>
           </ConstantTimer>
+          <hashTree/>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 预处理程序" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">
+
+String loginUserNmae;
+String userName =vars.get(&quot;username&quot;);
+
+if(userName.length()==4){
+	loginUserNmae =userName+&quot;0000001&quot;;
+	log.info(&quot;用户名:&quot;+loginUserNmae);
+}
+else{
+	loginUserNmae =userName;
+	log.info(&quot;用户名:&quot;+loginUserNmae);
+}
+
+vars.put(&quot;loginUserNmae&quot;, loginUserNmae);
+</stringProp>
+          </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
         <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="获得相关时间" enabled="true">
@@ -13757,7 +13780,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="删除费用标准" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="删除费用标准" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -29289,7 +29312,7 @@ vars.put(&quot;subsidies_rule&quot;,valueObject2.toString());
             <hashTree/>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="第一笔报销单加入差补" enabled="true">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="第一笔报销单加入差补" enabled="false">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
@@ -30046,7 +30069,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
             </hashTree>
           </hashTree>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单撤回1" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单撤回1" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -30093,7 +30116,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
           </ConstantTimer>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="删除报销单1" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="删除报销单1" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -32634,7 +32657,7 @@ vars.put(&quot;subsidies_rule&quot;,valueObject2.toString());
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="5054-case8差补行程增加自定义字段(规则中值列表“包含”：则行程上该列表的值等于规则中值列表的任一值时命中)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="5054-case8差补行程增加自定义字段(规则中值列表“不包含”：差补规则获取逻辑：规则中值列表“不包含”：则行程上该列表的值不等于规则中值列表的任一值时命中" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -33758,7 +33781,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="5054-case7差补行程增加自定义字段(规则中值列表“包含”：则行程上该列表的值等于规则中值列表的任一值时命中)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="5054-case11自动计算行程中，值列表不会从费用中获取，点击[自动计算行程]的必填处理同“到达城市”" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -34989,6 +35012,48 @@ vars.put(&quot;AllDetalNew&quot;,str);
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/api/expense/reports/${bxExpenseReportOID}</stringProp>
           <stringProp name="HTTPSampler.method">DELETE</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="关闭行程自动计算" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
+    &quot;allowanceAmountModify&quot;:1001,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
+    &quot;travelAutoCalculateEnable&quot;:false&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/travel/subsidies/rule/base/setting?setOfBooksId=</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -45491,7 +45556,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
             </hashTree>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="清理环境" enabled="false">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="清理环境" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
@@ -48931,6 +48996,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
             <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="修改报销单自动获取补贴方式:报销单头起止日期生成补贴" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -48945,7 +49011,6 @@ vars.put(&quot;AllDetalNew&quot;,str);
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -48962,6 +49027,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
           </HTTPSamplerProxy>
           <hashTree/>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="修改差补规则去除差补城市" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -49069,7 +49135,6 @@ vars.put(&quot;AllDetalNew&quot;,str);
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -49159,6 +49224,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
             <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存差补规则1" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -49168,7 +49234,6 @@ vars.put(&quot;AllDetalNew&quot;,str);
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -49369,6 +49434,7 @@ log.info(&quot;subsidies_rule:&quot;+valueObject2.toString());</stringProp>
               <hashTree/>
             </hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建日常报销单-日期控件" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
               <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
                 <collectionProp name="Arguments.arguments">
                   <elementProp name="" elementType="HTTPArgument">
@@ -49427,7 +49493,6 @@ log.info(&quot;subsidies_rule:&quot;+valueObject2.toString());</stringProp>
                   </elementProp>
                 </collectionProp>
               </elementProp>
-              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
               <stringProp name="HTTPSampler.domain"></stringProp>
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -50034,6 +50099,7 @@ vars.put(&quot;AllDetal&quot;,AllDetal);
           </IfController>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="再次提交报销单" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
               <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
                 <collectionProp name="Arguments.arguments">
                   <elementProp name="" elementType="HTTPArgument">
@@ -50043,7 +50109,6 @@ vars.put(&quot;AllDetal&quot;,AllDetal);
                   </elementProp>
                 </collectionProp>
               </elementProp>
-              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
               <stringProp name="HTTPSampler.domain"></stringProp>
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -50148,6 +50213,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
             <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="修改报销单自动获取补贴方式:报销单头起止日期生成补贴" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -50162,7 +50228,6 @@ vars.put(&quot;AllDetalNew&quot;,str);
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -50179,6 +50244,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
           </HTTPSamplerProxy>
           <hashTree/>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="修改差补规则去除差补时长" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -50286,7 +50352,6 @@ vars.put(&quot;AllDetalNew&quot;,str);
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -50303,6 +50368,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
           </HTTPSamplerProxy>
           <hashTree/>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单撤回1" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -50312,7 +50378,6 @@ vars.put(&quot;AllDetalNew&quot;,str);
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -50350,6 +50415,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
             <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="删除报销单1" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -50359,7 +50425,1540 @@ vars.put(&quot;AllDetalNew&quot;,str);
                 </elementProp>
               </collectionProp>
             </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/expense/reports/${bxExpenseReportOID}</stringProp>
+            <stringProp name="HTTPSampler.method">DELETE</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">8</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="6937-case1自动计算补贴支持:城市就高到达城市计算()" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Authorization</stringProp>
+              <stringProp name="Header.value">Bearer ${accessToken}</stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
+        <hashTree/>
+        <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="用户登录" enabled="true">
+          <collectionProp name="ModuleController.node_path">
+            <stringProp name="869052411">测试计划</stringProp>
+            <stringProp name="869052411">测试计划</stringProp>
+            <stringProp name="964666">登录</stringProp>
+          </collectionProp>
+        </ModuleController>
+        <hashTree/>
+        <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="基础用户登录" enabled="true">
+          <stringProp name="IncludeController.includepath">../../common/base_login.jmx</stringProp>
+        </IncludeController>
+        <hashTree/>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="差补配制" enabled="true">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
+        </TransactionController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="00获取所有类型的单据（差旅报销单-代理制单人）" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">utf8</stringProp>
+            <stringProp name="HTTPSampler.path">/api/custom/forms/my/available?formType=101&amp;userOID=${userOID}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">8</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取表单OID" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">apply_FormOID;apply_formId</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.formName==&quot;差旅申请单-UI自动化&quot;)].formOID;$..[?(@.formName==&quot;差旅申请单-UI自动化&quot;)].formId</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">formOID;formId</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="修改报销单自动获取补贴方式:报销单头起止日期生成补贴" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
+    &quot;allowanceAmountModify&quot;:1001,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
+    &quot;travelAutoCalculateEnable&quot;:false&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/travel/subsidies/rule/base/setting?setOfBooksId=</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="修改差补规则去除差补城市" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;formOID&quot;:&quot;${apply_FormOID}&quot;,&#xd;
+    &quot;formName&quot;:&quot;差旅申请单-UI自动化&quot;,&#xd;
+    &quot;dimensionTypes&quot;:[&#xd;
+        {&#xd;
+            &quot;name&quot;:&quot;DEFAULT_RULES&quot;,&#xd;
+            &quot;code&quot;:1001,&#xd;
+            &quot;selectable&quot;:false,&#xd;
+            &quot;dimensionDetails&quot;:[&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;EXPENSE_LEVEL&quot;,&#xd;
+                    &quot;code&quot;:&quot;EXPENSE_LEVEL&quot;,&#xd;
+                    &quot;selected&quot;:true&#xd;
+                },&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;USER_GROUPS&quot;,&#xd;
+                    &quot;code&quot;:&quot;USER_GROUPS&quot;,&#xd;
+                    &quot;selected&quot;:true&#xd;
+                },&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;CURRENCY_CODE&quot;,&#xd;
+                    &quot;code&quot;:&quot;CURRENCY_CODE&quot;,&#xd;
+                    &quot;selected&quot;:true&#xd;
+                },&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;ALLOWANCE_AMOUNT&quot;,&#xd;
+                    &quot;code&quot;:&quot;ALLOWANCE_AMOUNT&quot;,&#xd;
+                    &quot;selected&quot;:true&#xd;
+                },&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;ALLOWANCE_CITY&quot;,&#xd;
+                    &quot;code&quot;:&quot;ALLOWANCE_CITY&quot;,&#xd;
+                    &quot;selected&quot;:true&#xd;
+                }&#xd;
+            ],&#xd;
+            &quot;formFieldDetails&quot;:null,&#xd;
+            &quot;itineraryFieldList&quot;:null&#xd;
+        },&#xd;
+        {&#xd;
+            &quot;name&quot;:&quot;TRAVEL_FIELDS&quot;,&#xd;
+            &quot;code&quot;:1002,&#xd;
+            &quot;selectable&quot;:true,&#xd;
+            &quot;dimensionDetails&quot;:[&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;TRAVEL_HOURS&quot;,&#xd;
+                    &quot;code&quot;:&quot;TRAVEL_HOURS&quot;,&#xd;
+                    &quot;selected&quot;:true&#xd;
+                },&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;TRAVEL_DAYS&quot;,&#xd;
+                    &quot;code&quot;:&quot;TRAVEL_DAYS&quot;,&#xd;
+                    &quot;selected&quot;:false&#xd;
+                }&#xd;
+            ],&#xd;
+            &quot;formFieldDetails&quot;:[&#xd;
+&#xd;
+            ],&#xd;
+            &quot;itineraryFieldList&quot;:null&#xd;
+        },&#xd;
+        {&#xd;
+            &quot;name&quot;:&quot;SPECIAL_RULES&quot;,&#xd;
+            &quot;code&quot;:1003,&#xd;
+            &quot;selectable&quot;:true,&#xd;
+            &quot;dimensionDetails&quot;:[&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;HOLIDAY_WEEKEND&quot;,&#xd;
+                    &quot;code&quot;:&quot;HOLIDAY_WEEKEND&quot;,&#xd;
+                    &quot;selected&quot;:false&#xd;
+                },&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;DEPARTURE_DAY&quot;,&#xd;
+                    &quot;code&quot;:&quot;DEPARTURE_DAY&quot;,&#xd;
+                    &quot;selected&quot;:false&#xd;
+                },&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;RETURN_DAY&quot;,&#xd;
+                    &quot;code&quot;:&quot;RETURN_DAY&quot;,&#xd;
+                    &quot;selected&quot;:false&#xd;
+                }&#xd;
+            ],&#xd;
+            &quot;formFieldDetails&quot;:null,&#xd;
+            &quot;itineraryFieldList&quot;:null&#xd;
+        },&#xd;
+        {&#xd;
+            &quot;name&quot;:&quot;ITINERARY_FIELDS&quot;,&#xd;
+            &quot;code&quot;:1004,&#xd;
+            &quot;selectable&quot;:true,&#xd;
+            &quot;dimensionDetails&quot;:[&#xd;
+&#xd;
+            ],&#xd;
+            &quot;formFieldDetails&quot;:null,&#xd;
+            &quot;itineraryFieldList&quot;:null&#xd;
+        }&#xd;
+    ],&#xd;
+    &quot;tips&quot;:&quot;&quot;,&#xd;
+    &quot;withTips&quot;:false,&#xd;
+    &quot;subsidySelection&quot;:true,&#xd;
+    &quot;applicationAutoSubsidy&quot;:false&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/travel/subsidies/rule/dimension</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取申请单下的所有差补规则" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">utf8</stringProp>
+            <stringProp name="HTTPSampler.path">/api/travel/subsidies/rule/list?formOID=${apply_FormOID}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON提取器" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">travelSubsidiesRuleDTOs1_id</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.expenseTypeName==&quot;测试重复补贴1&quot;)].travelSubsidiesRuleDTOs[0].id</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取差补规则详情" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">utf8</stringProp>
+            <stringProp name="HTTPSampler.path">/api/travel/subsidies/rule?id=${travelSubsidiesRuleDTOs1_id}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON提取器" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">subsidies_rule;travelSubsidiesConditions;travelSubsidiesConditions1</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$;$.travelSubsidiesConditions;$.travelSubsidiesConditions[1]</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">subsidies_rule;travelSubsidiesConditions;travelSubsidiesConditions1</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存差补规则1" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${subsidies_rule}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">utf8</stringProp>
+            <stringProp name="HTTPSampler.path">/api/travel/subsidies/rule?setOfBooksId=</stringProp>
+            <stringProp name="HTTPSampler.method">PUT</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 预处理程序" enabled="true">
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="script">import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+String subsidies_rule = vars.get(&quot;subsidies_rule&quot;);
+
+String travelSubsidiesConditions = vars.get(&quot;travelSubsidiesConditions&quot;);
+
+String travelSubsidiesConditions1 = vars.get(&quot;travelSubsidiesConditions1&quot;);
+
+log.info(&quot;travelSubsidiesConditions1:&quot;+vars.get(&quot;travelSubsidiesConditions1&quot;));
+
+JsonArray valueArray = new JsonParser().parse(travelSubsidiesConditions).getAsJsonArray();
+
+JsonObject valueObject1 = new JsonParser().parse(travelSubsidiesConditions1).getAsJsonObject();
+
+JsonObject valueObject2 = new JsonParser().parse(subsidies_rule).getAsJsonObject();
+
+valueObject1.addProperty(&quot;messageKey&quot;,&quot;TRAVEL_HOURS&quot;);
+
+valueObject1.addProperty(&quot;fieldType&quot;,101);
+
+valueObject1.addProperty(&quot;values&quot;,&quot;[3,5]&quot;);
+
+valueObject1.addProperty(&quot;restriction&quot;,1008);
+
+//log.info(&quot;valueObject1:&quot;+valueObject1.toString());
+
+JsonElement element1 = new JsonParser().parse(valueObject1.toString());
+
+valueArray.add(element1);
+log.info(&quot;valueArray:&quot;+valueArray.toString());
+
+JsonElement element2 = new JsonParser().parse(valueArray.toString());
+
+valueObject2.add(&quot;travelSubsidiesConditions&quot;,element2);
+
+vars.put(&quot;subsidies_rule&quot;,valueObject2.toString());
+log.info(&quot;subsidies_rule:&quot;+valueObject2.toString());</stringProp>
+              <stringProp name="scriptLanguage">groovy</stringProp>
+            </JSR223PreProcessor>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="第一笔报销单加入差补" enabled="true">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
+        </TransactionController>
+        <hashTree>
+          <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="新建报销单" enabled="true">
+            <boolProp name="TransactionController.includeTimers">false</boolProp>
+            <boolProp name="TransactionController.parent">false</boolProp>
+          </TransactionController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取所有类型的单据（报销单）" enabled="true">
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+                <collectionProp name="Arguments.arguments"/>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">/api/custom/forms/company/my/available/all/?formType=102</stringProp>
+              <stringProp name="HTTPSampler.method">GET</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="49586">200</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">8</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="bxFormOID;bxFormId;bxFormType" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">bxFormOID;bxFormId;bxFormType</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.formName==&quot;日常报销单-日期控件&quot;)].formOID;$..[?(@.formName==&quot;日常报销单-日期控件&quot;)].formId;$..[?(@.formName==&quot;日常报销单-日期控件&quot;)].formType</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询表单详情" enabled="true">
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+                <collectionProp name="Arguments.arguments"/>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">/api/custom/forms/${bxFormOID}?roleType=TENANT</stringProp>
+              <stringProp name="HTTPSampler.method">GET</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="select_box" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                <stringProp name="RegexExtractor.refname">bxSelect_box</stringProp>
+                <stringProp name="RegexExtractor.regex">&quot;fieldContent&quot;:&quot;(.+?),{</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default">Not found</stringProp>
+                <stringProp name="RegexExtractor.match_number">1</stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="customFormFields" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">customFormFields1</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.customFormFields</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="JSONPostProcessor.defaultValues">Not found</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="customFormProperties;customFormPropertyMap" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">bxCustomFormProperties;bxCustomFormPropertyMap</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.customFormProperties;$.customFormPropertyMap</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="fieldName" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                <stringProp name="RegexExtractor.refname">bxFieldName</stringProp>
+                <stringProp name="RegexExtractor.regex">&quot;fieldName&quot;:&quot;(.+?)&quot;,</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default">Not found</stringProp>
+                <stringProp name="RegexExtractor.match_number">-1</stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="referenceOID" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                <stringProp name="RegexExtractor.refname">bxReferenceOID</stringProp>
+                <stringProp name="RegexExtractor.regex">&quot;referenceOID&quot;:&quot;(.+?)&quot;,</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default">Not found</stringProp>
+                <stringProp name="RegexExtractor.match_number">1</stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="49586">200</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">8</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取申请单信息" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">customFormFields;referenceOID;tenantId;setOfBooksId;customFormProperties;customFormPropertyMap</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.customFormFields;$.referenceOID;$.tenantId;$.setOfBooksId;$.customFormProperties;$.customFormPropertyMap</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="JSONPostProcessor.defaultValues">null;null;null;null;null;null</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="新建日常报销单-日期控件" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&#xd;
+	&quot;formOID&quot;: &quot;${bxFormOID}&quot;,&#xd;
+	&quot;id&quot;: &quot;${bxFormId}&quot;,&#xd;
+	&quot;formName&quot;: &quot;日常报销单-日期控件&quot;,&#xd;
+	&quot;iconName&quot;: &quot;&quot;,&#xd;
+	&quot;iconUrl&quot;: null,&#xd;
+	&quot;messageKey&quot;: &quot;&quot;,&#xd;
+	&quot;formType&quot;: 3001,&#xd;
+	&quot;asSystem&quot;: true,&#xd;
+	&quot;valid&quot;: true,&#xd;
+	&quot;createdDate&quot;: &quot;${NewUTCstartDate}&quot;,&#xd;
+	&quot;lastModifiedDate&quot;: &quot;${NewUTCstartDate}&quot;,&#xd;
+	&quot;parentOID&quot;: null,&#xd;
+	&quot;associateExpenseReport&quot;: false,&#xd;
+	&quot;customFormFields&quot;: ${customFormFields},&#xd;
+	&quot;remark&quot;: null,&#xd;
+	&quot;sequence&quot;: 40,&#xd;
+	&quot;referenceOID&quot;: null,&#xd;
+	&quot;groupOIDs&quot;: [],&#xd;
+	&quot;visibleExpenseTypeScope&quot;: 1002,&#xd;
+	&quot;visibleLoanTypeScope&quot;: null,&#xd;
+	&quot;expenseTypeOIDs&quot;: [],&#xd;
+	&quot;expenseReport&quot;: null,&#xd;
+	&quot;formCode&quot;: null,&#xd;
+	&quot;companyOID&quot;: &quot;${companyOID}&quot;,&#xd;
+	&quot;companyId&quot;: ${companyId},&#xd;
+	&quot;travelManageType&quot;: null,&#xd;
+	&quot;controlFields&quot;: null,&#xd;
+	&quot;customFormProperties&quot;: ${bxCustomFormProperties},&#xd;
+	&quot;customFormPropertyMap&quot;: ${bxCustomFormPropertyMap},&#xd;
+	&quot;expenseTypeCheckStatus&quot;: null,&#xd;
+	&quot;proxyForm&quot;: false,&#xd;
+	&quot;i18n&quot;: null,&#xd;
+	&quot;tenantId&quot;: &quot;${tenantId}&quot;,&#xd;
+	&quot;booksID&quot;: null,&#xd;
+	&quot;setOfBooksId&quot;: &quot;${setOfBooksId}&quot;,&#xd;
+	&quot;fromType&quot;:1,&#xd;
+	&quot;visibleCompanyScope&quot;: 1,&#xd;
+	&quot;companyOIDList&quot;: null,&#xd;
+	&quot;companyList&quot;: null,&#xd;
+	&quot;companyName&quot;: null,&#xd;
+	&quot;budgetEnabled&quot;: false,&#xd;
+	&quot;visibleUserScope&quot;: 1001,&#xd;
+	&quot;submit&quot;: false,&#xd;
+	&quot;currencySame&quot;: false,&#xd;
+	&quot;countersignApproverOIDs&quot;:null,&#xd;
+	&quot;custFormValues&quot;: ${NcustomFormFields},&#xd;
+	&quot;recalculateSubsidy&quot;:true&#xd;
+	&#xd;
+}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+              <stringProp name="HTTPSampler.path">/api/expense/reports/custom/form/draft?roleType=TENANT</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/json;charset=UTF-8</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取bxBusinessCode;bxCorporationOID;bxReasonExpenseReportOID" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">bxBusinessCode;bxCorporationOID;bxExpenseReportOID;relevantPerson</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.businessCode;$.corporationOID;$.expenseReportOID;$.applicantOID</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found;Not found</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取bxReasonFormValueOID;bxDeptFormValueOID;bxReasonBizOID;bxDeptBizOID" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">bxReasonFormValueOID;bxDeptFormValueOID;bxReasonBizOID;bxDeptBizOID</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.fieldName==&quot;事由&quot;)].formValueOID;$..[?(@.fieldName==&quot;部门&quot;)].formValueOID;$..[?(@.fieldName==&quot;事由&quot;)].bizOID;$..[?(@.fieldName==&quot;部门&quot;)].bizOID</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="JSONPostProcessor.defaultValues">Not found;Not found;Not found;Not found</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="49586">200</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">1</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+              <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="BeanShell PreProcessor" enabled="true">
+                <stringProp name="filename"></stringProp>
+                <stringProp name="parameters"></stringProp>
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="script">import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
+String json = vars.get(&quot;customFormFields&quot;);
+//log.info(&quot;companyid===========&quot;+vars.get(&quot;companyid&quot;));
+JSONArray customFormFields = JSON.parseArray(json);
+
+int size = customFormFields.size();
+
+for (int i = 0; i &lt; size; i++){
+		   jj = customFormFields.getJSONObject(i);
+             if (jj.get(&quot;fieldName&quot;).equals(&quot;事由&quot;))
+           		jj.put(&quot;value&quot;,&quot;差补按照时长计算&quot;);
+             if (jj.get(&quot;fieldName&quot;).equals(&quot;部门&quot;))
+           		jj.put(&quot;value&quot;,vars.get(&quot;departmentOID&quot;));
+             if (jj.get(&quot;messageKey&quot;).equals(&quot;venMaster&quot;))
+           		jj.put(&quot;value&quot;,vars.get(&quot;EXPENSE_REPORT&quot;));
+             if (jj.get(&quot;messageKey&quot;).equals(&quot;payee&quot;))
+           		jj.put(&quot;value&quot;,vars.get(&quot;payee&quot;));
+             if (jj.get(&quot;messageKey&quot;).equals(&quot;contact_bank_account&quot;))
+           		jj.put(&quot;value&quot;,vars.get(&quot;contact_bank_account&quot;));
+             if (jj.get(&quot;messageKey&quot;).equals(&quot;start_date&quot;))
+           		jj.put(&quot;value&quot;,&quot;&quot;);
+             if (jj.get(&quot;messageKey&quot;).equals(&quot;end_date&quot;))
+           		jj.put(&quot;value&quot;,&quot;&quot;);
+            
+             
+}
+String str =customFormFields.toString();
+log.info(&quot;创建日常报销单表单数据:&quot;+str);
+vars.put(&quot;NcustomFormFields&quot;,str);
+</stringProp>
+              </BeanShellPreProcessor>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取城市代码" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/location-service/api/custom/location/search/keyword?keyword=${cityName2}&amp;language=zh_cn&amp;country=china</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">8</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取城市代码" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">cityCode</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.vndLocationName==&quot;${cityName2}&quot;)].adCode</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">null</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取报销单详情" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/v3/expense/reports/${bxExpenseReportOID}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">8</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取formValueOID" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">gongsiformValueOID;bumenformValueOID;shiyouformValueOID;xuanzekuangformValueOID;zhiliebiaoformValueOID;shuziformValueOID;bizhongformValueOID;danhangformValueOID;duohangformValueOID;shijianformValueOID;chengbenformValueOID</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.fieldName==&quot;公司&quot;)].formValueOID;$..[?(@.fieldName==&quot;部门&quot;)].formValueOID;$..[?(@.fieldName==&quot;事由&quot;)].formValueOID;$..[?(@.fieldName==&quot;选择框&quot;)].formValueOID;$..[?(@.fieldName==&quot;自定义列表&quot;)].formValueOID;$..[?(@.fieldName==&quot;数字&quot;)].formValueOID;$..[?(@.fieldName==&quot;币种&quot;)].formValueOID;$..[?(@.fieldName==&quot;单行输入框&quot;)].formValueOID;$..[?(@.fieldName==&quot;多行输入框&quot;)].formValueOID;$..[?(@.fieldName==&quot;时间&quot;)].formValueOID;$..[?(@.fieldName==&quot;成本中心&quot;)].formValueOID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">null;null;null;null;null;null;null;null;null;null;null</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取formValueOID" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">putongformValueOID;didianformValueOID;riqiformValueOID;riqishiformValueOID;gerenformValueOID;shoukuanformValueOID;liandongformValueOID;yinhangformValueOID;xuanrenformValueOID;beizhuformValueOID</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.fieldName==&quot;普通开关&quot;)].formValueOID;$..[?(@.fieldName==&quot;地点&quot;)].formValueOID;$..[?(@.fieldName==&quot;日期&quot;)].formValueOID;$..[?(@.fieldName==&quot;日期时间&quot;)].formValueOID;$..[?(@.fieldName==&quot;个人信息扩展字段&quot;)].formValueOID;$..[?(@.fieldName==&quot;收款单位/个人&quot;)].formValueOID;$..[?(@.fieldName==&quot;是否请顾客吃饭&quot;)].formValueOID;$..[?(@.fieldName==&quot;银行卡号&quot;)].formValueOID;$..[?(@.fieldName==&quot;选人&quot;)].formValueOID;$..[?(@.fieldName==&quot;备注&quot;)].formValueOID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">null;null;null;null;null;null;null;null;null;null</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">AllDetal</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">applicationOID3;applicationOID4</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.expenseReportApplicationDTOS[0].applicationOID; $.expenseReportApplicationDTOS[1].applicationOID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">null; null</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">travel_data2</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.expenseReportApplicationDTOS[0].travelStartDate</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取到费用的归属人和代理人" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">ownid;proxyid;participant2</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.invoiceGroups[0].invoices[1].invoiceView.reimbursementUserOID;$.invoiceGroups[0].invoices[1].invoiceView.userOID;$.invoiceGroups[0].invoices[1].invoiceView.ownerOID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">ownid;proxyid;participant2</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取差补费用详情" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/expense/report/v3/subsidy/view?expenseReportOID=${bxExpenseReportOID}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">8</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取补贴详情" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">userDTOList;subsidyExtendID</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.expenseReportSubsidyViewList[0].userDTOList;$.expenseReportSubsidyViewList[0].subsidyExtendID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">notfound;notfound</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="true">
+              <stringProp name="ConstantTimer.delay">1000</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="更新大行程" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;expenseReportSubsidyDTOS&quot;:[&#xd;
+        {&#xd;
+            &quot;edit&quot;:true,&#xd;
+            &quot;idealID&quot;:1,&#xd;
+            &quot;startDate&quot;:&quot;${ONEDAYAGO}T16:00:00Z&quot;,&#xd;
+            &quot;endDate&quot;:&quot;${now}T15:59:00Z&quot;,&#xd;
+            &quot;international&quot;:false,&#xd;
+            &quot;dpCityInternational&quot;:false,&#xd;
+            &quot;subsidyExtendID&quot;:&quot;${subsidyExtendID}&quot;&#xd;
+        }&#xd;
+    ],&#xd;
+    &quot;subsidyStartDate&quot;:&quot;${now}T01:00:00.000Z&quot;,&#xd;
+    &quot;subsidyEndDate&quot;:&quot;${now}T04:01:00.000Z&quot;,&#xd;
+    &quot;userDTOList&quot;:${userDTOList},&#xd;
+    &quot;subsidyExtendID&quot;:&quot;${subsidyExtendID}&quot;,&#xd;
+    &quot;expenseReportOID&quot;:&quot;${bxExpenseReportOID}&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/v3/subsidy/extend/update</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">8</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取补贴详情" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">expenseReportSubsidyViewList;expenseReportSubsidyDTOS;subsidyExtendID</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$;$.expenseReportSubsidyDTOS;$.subsidyExtendID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">notfound;notfound;notfound</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="添加差补符合中国香港的国籍对应的差补" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;expenseReportSubsidyDTOS&quot;:[&#xd;
+        {&#xd;
+            &quot;cityCode&quot;:&quot;${cityCode}&quot;,&#xd;
+            &quot;cityName&quot;:&quot;${cityName2}&quot;,&#xd;
+            &quot;expenseReportOID&quot;:&quot;${bxExpenseReportOID}&quot;,&#xd;
+            &quot;subsidyExtendID&quot;:&quot;${subsidyExtendID}&quot;,&#xd;
+            &quot;subsidyEnumDTOs&quot;:null,&#xd;
+            &quot;startDate&quot;:&quot;${now}T01:00Z&quot;,&#xd;
+            &quot;endDate&quot;:&quot;${now}T04:01Z&quot;&#xd;
+        }&#xd;
+    ],&#xd;
+   &quot;subsidyStartDate&quot;:&quot;${now}T01:00:00Z&quot;,&#xd;
+    &quot;subsidyEndDate&quot;:&quot;${now}T04:01:00Z&quot;,&#xd;
+    &quot;userDTOList&quot;:${userDTOList},&#xd;
+    &quot;expenseReportOID&quot;:&quot;${bxExpenseReportOID}&quot;,&#xd;
+    &quot;showExtend&quot;:true&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">utf8</stringProp>
+            <stringProp name="HTTPSampler.path">/api/expense/report/v4/subsidy/add</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="1424591384">测试重复补贴1</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">1</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取补贴详情" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">expenseReportSubsidyDTOS;expenseTypeOID1;expenseTypeOID2</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$;$.expenseTypes[0].expenseTypeOID;$.expenseTypes[1].expenseTypeOID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">notfound;notfound;notfound</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="保存差补" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;expenseReportSubsidyViewList&quot;:[&#xd;
+        {&#xd;
+            &quot;expenseReportSubsidyDTOS&quot;:[${travel_data}],&#xd;
+            &quot;subsidyTips&quot;:null,&#xd;
+            &quot;subsidyStartDate&quot;:&quot;${now}T01:00:00Z&quot;,&#xd;
+            &quot;subsidyEndDate&quot;:&quot;${now}T04:01:00Z&quot;,&#xd;
+            &quot;userDTOList&quot;:${userDTOList},&#xd;
+            &quot;subsidyExtendID&quot;:&quot;${subsidyExtendID}&quot;,&#xd;
+            &quot;tenantID&quot;:&quot;${tenantId}&quot;,&#xd;
+            &quot;expenseReportOID&quot;:&quot;${bxExpenseReportOID}&quot;,&#xd;
+            &quot;showExtend&quot;:true&#xd;
+        }&#xd;
+    ],&#xd;
+    &quot;showExtend&quot;:true&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">utf8</stringProp>
+            <stringProp name="HTTPSampler.path">/api/expense/report/v3/subsidy/save/${bxExpenseReportOID}</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="1206195277">餐饮补贴</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">12</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="BeanShell PreProcessor" enabled="true">
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="script">import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+
+
+String expenseTypeOIDs = &quot;[&quot;+vars.get(&quot;expenseTypeOID1&quot;)+&quot;,&quot;+vars.get(&quot;expenseTypeOID2&quot;)+&quot;]&quot;;
+
+log.info(&quot;expenseTypeOIDs:&quot;+expenseTypeOIDs);
+
+String expenseReportSubsidyDTOS = vars.get(&quot;expenseReportSubsidyDTOS&quot;);
+
+JsonElement element = new JsonParser().parse(expenseTypeOIDs);
+
+JsonObject valueObject = new JsonParser().parse(expenseReportSubsidyDTOS).getAsJsonObject();
+
+valueObject.add(&quot;expenseTypeOIDs&quot;,element);
+
+valueObject.addProperty(&quot;error&quot;,new Boolean(false));
+
+valueObject.addProperty(&quot;subsidyExtendID&quot;,vars.get(&quot;subsidyExtendID&quot;));
+
+String travel_data = valueObject.toString();
+
+vars.put(&quot;travel_data&quot;,travel_data);
+</stringProp>
+            </BeanShellPreProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取报销单详情" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/v3/expense/reports/${bxExpenseReportOID}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">formDetal</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.rows</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">8</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取报销单内的费用详情" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/expense/report/invoices?expenseReportOID=${bxExpenseReportOID}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">invoiceDetal</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.rows.expenseReportInvoices</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="193391358">success&quot;:true,&quot;code&quot;:&quot;0000</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="true">
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="script">import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+
+String formDetal = vars.get(&quot;formDetal&quot;);
+
+String invoiceDetal = vars.get(&quot;invoiceDetal&quot;);
+
+JsonElement valueElement = new JsonParser().parse(invoiceDetal);
+
+JsonObject valueObject = new JsonParser().parse(formDetal).getAsJsonObject();
+
+valueObject.add(&quot;expenseReportInvoices&quot;,valueElement);
+
+String AllDetal =valueObject.toString();
+
+vars.put(&quot;AllDetal&quot;,AllDetal);
+</stringProp>
+            </BeanShellPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="00提交报销单" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${AllDetal}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/v3/expense/report/submit</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">8</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="拿到提交响应" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">checkResultList</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.checkResultList[0].externalPropertyName</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">null</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="有弱管控强制提交" enabled="true">
+            <stringProp name="IfController.condition">&quot;${checkResultList}&quot; !=&quot;null&quot;</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="再次提交报销单" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">${AllDetalNew}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">/api/v3/expense/report/submit</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="49586">200</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">8</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="文本响应断言" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="1235267225">${SuccessSubmit}</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">16</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+              <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="加强制提交" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
+String json = vars.get(&quot;AllDetal&quot;);
+log.info(&quot;checkResultList============&quot;+vars.get(&quot;checkResultList&quot;));
+json = json.replaceAll(&quot;:null,&quot;,&quot;:\&quot;null\&quot;,&quot;);
+JSONObject jsonObject = JSONObject.parseObject(json);
+
+jsonObject.put(&quot;ignoreBudgetWarningFlag&quot;,true);
+
+String str =jsonObject.toString();
+str  = str.replaceAll(&quot;\&quot;null\&quot;&quot;,&quot;null&quot;);
+
+vars.put(&quot;AllDetalNew&quot;,str);
+
+</stringProp>
+              </BeanShellPreProcessor>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="清理环境" enabled="true">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
+        </TransactionController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="00获取所有类型的单据" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">utf8</stringProp>
+            <stringProp name="HTTPSampler.path">/api/custom/forms/my/available?formType=101&amp;userOID=${userOID}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">8</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取表单OID" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">apply_FormOID;apply_formId</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.formName==&quot;差旅申请单-UI自动化&quot;)].formOID;$..[?(@.formName==&quot;差旅报销单-UI自动化&quot;)].formId</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">formOID;formId</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="修改报销单自动获取补贴方式:报销单头起止日期生成补贴" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;allowanceReduplicateTreatment&quot;:1001,&#xd;
+    &quot;allowanceAmountModify&quot;:1001,&#xd;
+    &quot;allowanceAttachExpenseReportDisable&quot;:&quot;true&quot;,&#xd;
+    &quot;travelAutoCalculateEnable&quot;:false&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/travel/subsidies/rule/base/setting?setOfBooksId=</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="修改差补规则去除差补时长" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;formOID&quot;:&quot;${apply_FormOID}&quot;,&#xd;
+    &quot;formName&quot;:&quot;差旅申请单-UI自动化&quot;,&#xd;
+    &quot;dimensionTypes&quot;:[&#xd;
+        {&#xd;
+            &quot;name&quot;:&quot;DEFAULT_RULES&quot;,&#xd;
+            &quot;code&quot;:1001,&#xd;
+            &quot;selectable&quot;:false,&#xd;
+            &quot;dimensionDetails&quot;:[&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;EXPENSE_LEVEL&quot;,&#xd;
+                    &quot;code&quot;:&quot;EXPENSE_LEVEL&quot;,&#xd;
+                    &quot;selected&quot;:true&#xd;
+                },&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;USER_GROUPS&quot;,&#xd;
+                    &quot;code&quot;:&quot;USER_GROUPS&quot;,&#xd;
+                    &quot;selected&quot;:true&#xd;
+                },&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;CURRENCY_CODE&quot;,&#xd;
+                    &quot;code&quot;:&quot;CURRENCY_CODE&quot;,&#xd;
+                    &quot;selected&quot;:true&#xd;
+                },&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;ALLOWANCE_AMOUNT&quot;,&#xd;
+                    &quot;code&quot;:&quot;ALLOWANCE_AMOUNT&quot;,&#xd;
+                    &quot;selected&quot;:true&#xd;
+                },&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;ALLOWANCE_CITY&quot;,&#xd;
+                    &quot;code&quot;:&quot;ALLOWANCE_CITY&quot;,&#xd;
+                    &quot;selected&quot;:true&#xd;
+                }&#xd;
+            ],&#xd;
+            &quot;formFieldDetails&quot;:null,&#xd;
+            &quot;itineraryFieldList&quot;:null&#xd;
+        },&#xd;
+        {&#xd;
+            &quot;name&quot;:&quot;TRAVEL_FIELDS&quot;,&#xd;
+            &quot;code&quot;:1002,&#xd;
+            &quot;selectable&quot;:true,&#xd;
+            &quot;dimensionDetails&quot;:[&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;TRAVEL_HOURS&quot;,&#xd;
+                    &quot;code&quot;:&quot;TRAVEL_HOURS&quot;,&#xd;
+                    &quot;selected&quot;:false&#xd;
+                },&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;TRAVEL_DAYS&quot;,&#xd;
+                    &quot;code&quot;:&quot;TRAVEL_DAYS&quot;,&#xd;
+                    &quot;selected&quot;:true&#xd;
+                }&#xd;
+            ],&#xd;
+            &quot;formFieldDetails&quot;:[&#xd;
+&#xd;
+            ],&#xd;
+            &quot;itineraryFieldList&quot;:null&#xd;
+        },&#xd;
+        {&#xd;
+            &quot;name&quot;:&quot;SPECIAL_RULES&quot;,&#xd;
+            &quot;code&quot;:1003,&#xd;
+            &quot;selectable&quot;:true,&#xd;
+            &quot;dimensionDetails&quot;:[&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;HOLIDAY_WEEKEND&quot;,&#xd;
+                    &quot;code&quot;:&quot;HOLIDAY_WEEKEND&quot;,&#xd;
+                    &quot;selected&quot;:false&#xd;
+                },&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;DEPARTURE_DAY&quot;,&#xd;
+                    &quot;code&quot;:&quot;DEPARTURE_DAY&quot;,&#xd;
+                    &quot;selected&quot;:false&#xd;
+                },&#xd;
+                {&#xd;
+                    &quot;name&quot;:&quot;RETURN_DAY&quot;,&#xd;
+                    &quot;code&quot;:&quot;RETURN_DAY&quot;,&#xd;
+                    &quot;selected&quot;:false&#xd;
+                }&#xd;
+            ],&#xd;
+            &quot;formFieldDetails&quot;:null,&#xd;
+            &quot;itineraryFieldList&quot;:null&#xd;
+        },&#xd;
+        {&#xd;
+            &quot;name&quot;:&quot;ITINERARY_FIELDS&quot;,&#xd;
+            &quot;code&quot;:1004,&#xd;
+            &quot;selectable&quot;:true,&#xd;
+            &quot;dimensionDetails&quot;:[&#xd;
+&#xd;
+            ],&#xd;
+            &quot;formFieldDetails&quot;:null,&#xd;
+            &quot;itineraryFieldList&quot;:null&#xd;
+        }&#xd;
+    ],&#xd;
+    &quot;tips&quot;:&quot;&quot;,&#xd;
+    &quot;withTips&quot;:false,&#xd;
+    &quot;subsidySelection&quot;:true,&#xd;
+    &quot;applicationAutoSubsidy&quot;:false&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/travel/subsidies/rule/dimension</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单撤回1" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;entities&quot;:[{&quot;entityOID&quot;:&quot;${bxExpenseReportOID}&quot;,&quot;entityType&quot;:1002}]}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/approvals/withdraw</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="状态响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">8</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">AllDetal2</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="true">
+              <stringProp name="ConstantTimer.delay">1000</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="删除报销单1" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>

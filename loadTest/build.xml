@@ -15,10 +15,14 @@
     <property name="jmeter.history.dir" value="${basedir}\TestHistory" />
 	<property name="jmeter.result.Report.dir" value="${basedir}\LoadTestReport" />
 
-
+scriptName
 
 	<condition property="time" value="${time}" else="123456789">
         <isset property="time" />
+    </condition>
+	
+	<condition property="scriptName" value="${scriptName}" else="0809.jmx">
+        <isset property="scriptName" />
     </condition>
 
     <target name="show-test-properties">
@@ -40,6 +44,7 @@
 		<echo>deploy clean axis service</echo>
 		<exec executable="${basedir}/PerformanceTesting.sh" failonerror="true">
 			<arg value="${time}"/>
+			<arg value="${scriptName}"/>
         </exec>
 		<copy todir="${jmeter.history.dir}">
             <fileset dir="${jmeter.result.Report.dir}">

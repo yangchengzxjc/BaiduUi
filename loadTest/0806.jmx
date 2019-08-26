@@ -1033,7 +1033,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 String json = vars.get(&quot;apply_customFormFields&quot;);
-log.info(&quot;控件信息:&quot;+json);
+log.info(&quot;申请单控件信息:&quot;+json);
 
 String fullName = vars.get(&quot;fullName&quot;);
 

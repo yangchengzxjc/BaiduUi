@@ -19,7 +19,7 @@
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,1321)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,13700000000)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
@@ -1371,7 +1371,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
           <hashTree/>
           <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="检查报销单状态" enabled="true">
             <stringProp name="BeanShellAssertion.query">String status= vars.get(&quot;status&quot;);
-if(!status.equals(&quot;1005&quot;)) {
+if(!status.equals(&quot;1008&quot;)) {
     Failure = true; 
     FailureMessage = &quot;报销单状态失败&quot;;
 }else{

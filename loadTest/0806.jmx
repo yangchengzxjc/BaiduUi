@@ -639,7 +639,7 @@ ${__setProperty(bxcustomFormProperties,${customFormProperties},)};</stringProp>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="参数化文件获取" enabled="true">
           <stringProp name="delimiter">,</stringProp>
           <stringProp name="fileEncoding">GBK</stringProp>
-          <stringProp name="filename">../stage_TokenINfo.txt</stringProp>
+          <stringProp name="filename">./stage_TokenINfo.txt</stringProp>
           <boolProp name="ignoreFirstLine">false</boolProp>
           <boolProp name="quotedData">false</boolProp>
           <boolProp name="recycle">true</boolProp>

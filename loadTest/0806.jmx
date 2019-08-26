@@ -24,7 +24,7 @@
           </elementProp>
           <elementProp name="concurrentNumber" elementType="Argument">
             <stringProp name="Argument.name">concurrentNumber</stringProp>
-            <stringProp name="Argument.value">${__P(concurrentNumber,2)}</stringProp>
+            <stringProp name="Argument.value">${__P(concurrentNumber,1)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -754,7 +754,7 @@ vars.put(&quot;apply_customFormFields&quot;,result.toString());</stringProp>
           <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
         </BeanShellSampler>
         <hashTree/>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="申请单" enabled="false">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
@@ -1576,7 +1576,7 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
             </hashTree>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="报销单" enabled="false">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="报销单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>

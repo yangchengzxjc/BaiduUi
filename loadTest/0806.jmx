@@ -694,7 +694,7 @@ ${__setProperty(bxcustomFormProperties,${bxCustomFormProperties},)};</stringProp
           <stringProp name="BeanShellSampler.query">import java.io.*;
 import java.lang.String;
 
-File file = new File(&quot;./applyCustomFormFields.txt&quot;);
+File file = new File(&quot;/opt/jenkins-slave/workspace/workspace/HLY-CN-LoadTest/loadTest/applyCustomFormFields.txt&quot;);
         
         StringBuilder result = new StringBuilder();
         try{

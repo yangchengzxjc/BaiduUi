@@ -24,7 +24,7 @@
           </elementProp>
           <elementProp name="concurrentNumber" elementType="Argument">
             <stringProp name="Argument.name">concurrentNumber</stringProp>
-            <stringProp name="Argument.value">${__P(concurrentNumber,3)}</stringProp>
+            <stringProp name="Argument.value">${__P(concurrentNumber,2)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -651,7 +651,7 @@ ${__setProperty(bxcustomFormProperties,${customFormProperties},)};</stringProp>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="费用类别获取" enabled="false">
           <stringProp name="delimiter">,</stringProp>
           <stringProp name="fileEncoding">GBK</stringProp>
-          <stringProp name="filename">D:\apache-jmeter-5.1.1\stage_expensetypes.txt</stringProp>
+          <stringProp name="filename">./stage_expensetypes.txt</stringProp>
           <boolProp name="ignoreFirstLine">false</boolProp>
           <boolProp name="quotedData">false</boolProp>
           <boolProp name="recycle">true</boolProp>

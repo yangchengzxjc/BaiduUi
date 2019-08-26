@@ -600,7 +600,7 @@ ${__setProperty(bxcustomFormProperties,${customFormProperties},)};</stringProp>
         <stringProp name="Start users period">1</stringProp>
         <stringProp name="Stop users count">1</stringProp>
         <stringProp name="Stop users period">1</stringProp>
-        <stringProp name="flighttime">60</stringProp>
+        <stringProp name="flighttime">${durationTime}</stringProp>
         <stringProp name="rampUp">0</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -648,7 +648,7 @@ ${__setProperty(bxcustomFormProperties,${customFormProperties},)};</stringProp>
           <stringProp name="variableNames">user,fullName,accessToken,appaccessToken,userOID,companyOID,setOfBooksId,tenantId,companyId,departmentOID</stringProp>
         </CSVDataSet>
         <hashTree/>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="费用类别获取" enabled="true">
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="费用类别获取" enabled="false">
           <stringProp name="delimiter">,</stringProp>
           <stringProp name="fileEncoding">GBK</stringProp>
           <stringProp name="filename">D:\apache-jmeter-5.1.1\stage_expensetypes.txt</stringProp>

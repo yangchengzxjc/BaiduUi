@@ -24,7 +24,7 @@
           </elementProp>
           <elementProp name="concurrentNumber" elementType="Argument">
             <stringProp name="Argument.name">concurrentNumber</stringProp>
-            <stringProp name="Argument.value">${__P(concurrentNumber,2)}</stringProp>
+            <stringProp name="Argument.value">${__P(concurrentNumber,1)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -175,6 +175,11 @@ if(file.exists()&amp;&amp;file.isFile())
 
 
 File file=new File(vars.get(&quot;path&quot;)+&quot;stage_expensetypes.txt&quot;);
+if(file.exists()&amp;&amp;file.isFile())
+   file.delete();
+
+
+File file=new File(vars.get(&quot;path&quot;)+&quot;applyCustomFormFields.txt&quot;);
 if(file.exists()&amp;&amp;file.isFile())
    file.delete();</stringProp>
           <stringProp name="BeanShellSampler.filename"></stringProp>
@@ -516,7 +521,7 @@ execParam();</stringProp>
             <stringProp name="filename"></stringProp>
             <stringProp name="script">//String Session=bsh.args[0];
 
-${__setProperty(apply_customFormFields,${applyCustomFormFields},)};
+//${__setProperty(apply_customFormFields,${applyCustomFormFields},)};
 
 
 
@@ -534,8 +539,38 @@ ${__setProperty(apply_customFormProperties,${applyCustomFormProperties},)};
 ${__setProperty(apreferenceOID,${applyReferenceOID},)};</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">public static void execParam() 
+{
+
+String getdata =vars.get(&quot;applyCustomFormFields&quot;);
+log.info(&quot;applyCustomFormFields&quot;+getdata);
+//String filename = vars.get(&quot;path&quot;)+&quot;applyCustomFormFields.txt&quot;;
+String filename = &quot;applyCustomFormFields.txt&quot;;
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(getdata);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+            log.info(&quot;applyCustomFormFields&quot;+getdata);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+execParam();</stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取报销单表单字段" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取报销单表单字段" enabled="false">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -592,7 +627,7 @@ ${__setProperty(bxcustomFormProperties,${bxCustomFormProperties},)};</stringProp
           <hashTree/>
         </hashTree>
       </hashTree>
-      <kg.apc.jmeter.threads.SteppingThreadGroup guiclass="kg.apc.jmeter.threads.SteppingThreadGroupGui" testclass="kg.apc.jmeter.threads.SteppingThreadGroup" testname="jp@gc - Stepping Thread Group (deprecated)" enabled="true">
+      <kg.apc.jmeter.threads.SteppingThreadGroup guiclass="kg.apc.jmeter.threads.SteppingThreadGroupGui" testclass="kg.apc.jmeter.threads.SteppingThreadGroup" testname="jp@gc - Stepping Thread Group (deprecated)" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <stringProp name="ThreadGroup.num_threads">${concurrentNumber}</stringProp>
         <stringProp name="Threads initial delay">0</stringProp>
@@ -624,11 +659,6 @@ ${__setProperty(bxcustomFormProperties,${bxCustomFormProperties},)};</stringProp
         <hashTree/>
         <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
           <collectionProp name="Arguments.arguments">
-            <elementProp name="apply_customFormFields" elementType="Argument">
-              <stringProp name="Argument.name">apply_customFormFields</stringProp>
-              <stringProp name="Argument.value">${__P(apply_customFormFields,)}</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
             <elementProp name="bxcustomFormFields" elementType="Argument">
               <stringProp name="Argument.name">bxcustomFormFields</stringProp>
               <stringProp name="Argument.value">${__P(bxcustomFormFields,)}</stringProp>
@@ -647,6 +677,18 @@ ${__setProperty(bxcustomFormProperties,${bxCustomFormProperties},)};</stringProp
           <stringProp name="shareMode">shareMode.all</stringProp>
           <boolProp name="stopThread">false</boolProp>
           <stringProp name="variableNames">user,fullName,accessToken,appaccessToken,userOID,companyOID,setOfBooksId,tenantId,companyId,departmentOID</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="参数化文件获取" enabled="true">
+          <stringProp name="delimiter">,</stringProp>
+          <stringProp name="fileEncoding">GBK</stringProp>
+          <stringProp name="filename">./applyCustomFormFields.txt</stringProp>
+          <boolProp name="ignoreFirstLine">false</boolProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="variableNames">apply_customFormFields</stringProp>
         </CSVDataSet>
         <hashTree/>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="费用类别获取" enabled="false">

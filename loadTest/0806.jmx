@@ -690,6 +690,30 @@ ${__setProperty(bxcustomFormProperties,${bxCustomFormProperties},)};</stringProp
           <stringProp name="variableNames">expenseTypeName,expenseTypeOID,expenseTypeid</stringProp>
         </CSVDataSet>
         <hashTree/>
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BeanShell 取样器" enabled="true">
+          <stringProp name="BeanShellSampler.query">import java.io.*;
+import java.lang.String;
+
+File file = new File(&quot;./applyCustomFormFields.txt&quot;);
+        
+        StringBuilder result = new StringBuilder();
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(file));       //构造一个BufferedReader类来读取文件
+            String s = null;
+            while((s = br.readLine())!=null){//使用readLine方法，一次读一行
+                result.append(s);
+            }
+            br.close();    
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        log.info(&quot;读取到的字符是:&quot;+result.toString);
+        vars.put(&quot;apply_customFormFields&quot;,result.toString());</stringProp>
+          <stringProp name="BeanShellSampler.filename"></stringProp>
+          <stringProp name="BeanShellSampler.parameters"></stringProp>
+          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+        </BeanShellSampler>
+        <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
           <boolProp name="TransactionController.parent">false</boolProp>
@@ -1170,30 +1194,6 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
         vars.put(&quot;apply_customFormFields&quot;,result.toString());</stringProp>
                 <stringProp name="scriptLanguage">groovy</stringProp>
               </JSR223PostProcessor>
-              <hashTree/>
-              <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 预处理程序" enabled="true">
-                <stringProp name="scriptLanguage">groovy</stringProp>
-                <stringProp name="parameters"></stringProp>
-                <stringProp name="filename"></stringProp>
-                <stringProp name="cacheKey">true</stringProp>
-                <stringProp name="script">import java.io.*;
-import java.lang.String;
-
-File file = new File(&quot;./applyCustomFormFields.txt&quot;);
-        
-        StringBuilder result = new StringBuilder();
-        try{
-            BufferedReader br = new BufferedReader(new FileReader(file));       //构造一个BufferedReader类来读取文件
-            String s = null;
-            while((s = br.readLine())!=null){//使用readLine方法，一次读一行
-                result.append(System.lineSeparator()+s);
-            }
-            br.close();    
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        vars.put(&quot;apply_customFormFields&quot;,result.toString());</stringProp>
-              </JSR223PreProcessor>
               <hashTree/>
             </hashTree>
           </hashTree>

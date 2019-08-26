@@ -19,7 +19,7 @@
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,13700000000)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,1321)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
@@ -253,7 +253,7 @@
           </JSONPostProcessor>
           <hashTree/>
           <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="true">
-            <stringProp name="ConstantTimer.delay">3000</stringProp>
+            <stringProp name="ConstantTimer.delay">300</stringProp>
           </ConstantTimer>
           <hashTree/>
           <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 预处理程序" enabled="true">
@@ -559,7 +559,7 @@ vars.put(&quot;NewUTCYestDay&quot;,startDate);</stringProp>
           </JSONPostProcessor>
           <hashTree/>
           <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="true">
-            <stringProp name="ConstantTimer.delay">3000</stringProp>
+            <stringProp name="ConstantTimer.delay">300</stringProp>
           </ConstantTimer>
           <hashTree/>
         </hashTree>
@@ -631,7 +631,7 @@ vars.put(&quot;NewUTCYestDay&quot;,startDate);</stringProp>
         </DurationAssertion>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="01不校验费用金额是否必须等于发票价税合计总和" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="01发票重复校验_不校验费用金额是否必须等于发票价税合计总和" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -1753,7 +1753,7 @@ vars.put(&quot;invoiceDetal&quot;,Detal+&quot;&quot;);</stringProp>
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="02配置为0_校验费用金额是否&lt;发票价税合计总和,费用之和小于于发票金额" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="02发票重复校验_配置为0_校验费用金额是否&lt;发票价税合计总和,费用之和小于于发票金额" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -2692,7 +2692,7 @@ vars.put(&quot;invoiceDetal&quot;,Detal+&quot;&quot;);</stringProp>
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="03配置为false_校验费用金额是否&lt;发票价税合计总和,费用之和小于于发票金额" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="03发票重复校验_配置为false_校验费用金额是否&lt;发票价税合计总和,费用之和小于于发票金额" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -3580,7 +3580,7 @@ vars.put(&quot;invoiceDetal&quot;,Detal+&quot;&quot;);</stringProp>
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="04配置为0_校验费用金额是否&lt;发票价税合计总和,费用总和等于发票金额" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="04发票重复校验_配置为0_校验费用金额是否&lt;发票价税合计总和,费用总和等于发票金额" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -4591,7 +4591,7 @@ vars.put(&quot;invoiceDetal&quot;,Detal+&quot;&quot;);</stringProp>
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="05配置为false_校验费用金额是否&lt;发票价税合计总和,费用总和等于发票金额" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="05发票重复校验_配置为false_校验费用金额是否&lt;发票价税合计总和,费用总和等于发票金额" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -5714,7 +5714,7 @@ if(!subsidyDetailTime.equals(&quot;null&quot;)) {
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="06配置为2_校验费用金额是否&lt;发票价税合计总和,费用总和等于发票金额" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="06发票重复校验_发票重复校验_配置为2_校验费用金额是否&lt;发票价税合计总和,费用总和等于发票金额" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -7183,6 +7183,12 @@ String Newamount_bus=Float.toString(unt);
 vars.put(&quot;Newamount_bus&quot;,Newamount_bus);
 vars.put(&quot;receiptList&quot;,str);</stringProp>
           </BeanShellPreProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">invoiceOID1</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.rows.[&quot;invoiceOID&quot;]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${Name}_创建费用1(大巴)-费用金额等于发票金额,系统提示创建成功" enabled="true">

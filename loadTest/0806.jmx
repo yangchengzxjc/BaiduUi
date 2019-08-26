@@ -548,8 +548,7 @@ ${__setProperty(apreferenceOID,${applyReferenceOID},)};</stringProp>
 
 String getdata =vars.get(&quot;applyCustomFormFields&quot;);
 log.info(&quot;applyCustomFormFields&quot;+getdata);
-//String filename = vars.get(&quot;path&quot;)+&quot;applyCustomFormFields.txt&quot;;
-String filename = &quot;applyCustomFormFields.txt&quot;;
+String filename = vars.get(&quot;path&quot;)+&quot;applyCustomFormFields.txt&quot;;
 FileWriter writer;  
         try {
             writer = new FileWriter(filename,true);

@@ -504,7 +504,7 @@ execParam();</stringProp>
           </ResponseAssertion>
           <hashTree/>
           <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">customFormFields;referenceOID;customFormProperties;customFormPropertyMap</stringProp>
+            <stringProp name="JSONPostProcessor.referenceNames">applyCustomFormFields;applyReferenceOID;applyCustomFormProperties;applyCustomFormPropertyMap</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$.customFormFields;$.referenceOID;$.customFormProperties;$.customFormPropertyMap</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
             <stringProp name="JSONPostProcessor.defaultValues">null;null;null;NotFound</stringProp>
@@ -515,22 +515,23 @@ execParam();</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
             <stringProp name="script">//String Session=bsh.args[0];
-${__setProperty(apply_customFormFields,${customFormFields},)};
+
+${__setProperty(apply_customFormFields,${applyCustomFormFields},)};
 
 
 
 //String Session=bsh.args[0];
-${__setProperty(apply_customFormPropertyMap,${customFormPropertyMap},)};
+${__setProperty(apply_customFormPropertyMap,${applyCustomFormPropertyMap},)};
 
 
 
 
 //String Session=bsh.args[0];
-${__setProperty(apply_customFormProperties,${customFormProperties},)};
+${__setProperty(apply_customFormProperties,${applyCustomFormProperties},)};
 
 
 //String Session=bsh.args[0];
-${__setProperty(apreferenceOID,${referenceOID},)};</stringProp>
+${__setProperty(apreferenceOID,${applyReferenceOID},)};</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
@@ -564,7 +565,7 @@ ${__setProperty(apreferenceOID,${referenceOID},)};</stringProp>
           </ResponseAssertion>
           <hashTree/>
           <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">customFormFields;referenceOID;customFormProperties;customFormPropertyMap</stringProp>
+            <stringProp name="JSONPostProcessor.referenceNames">bxCustomFormFields;bxReferenceOID;bxCustomFormProperties;bxCustomFormPropertyMap</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$.customFormFields;$.referenceOID;$.customFormProperties;$.customFormPropertyMap</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
             <stringProp name="JSONPostProcessor.defaultValues">null;null;null;null</stringProp>
@@ -575,18 +576,18 @@ ${__setProperty(apreferenceOID,${referenceOID},)};</stringProp>
             <stringProp name="parameters">${customFormFields};${customFormPropertyMap};${customFormProperties}</stringProp>
             <stringProp name="filename"></stringProp>
             <stringProp name="script">String Session=bsh.args[0];
-${__setProperty(bxcustomFormFields,${customFormFields},)};
+${__setProperty(bxcustomFormFields,${bxCustomFormFields},)};
 
 
 
 String Session=bsh.args[0];
-${__setProperty(bxcustomFormPropertyMap,${customFormPropertyMap},)};
+${__setProperty(bxcustomFormPropertyMap,${bxCustomFormPropertyMap},)};
 
 
 
 
 String Session=bsh.args[0];
-${__setProperty(bxcustomFormProperties,${customFormProperties},)};</stringProp>
+${__setProperty(bxcustomFormProperties,${bxCustomFormProperties},)};</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>

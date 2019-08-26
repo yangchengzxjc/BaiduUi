@@ -19,12 +19,12 @@
           </elementProp>
           <elementProp name="durationTime" elementType="Argument">
             <stringProp name="Argument.name">durationTime</stringProp>
-            <stringProp name="Argument.value">${__P(durationTime,1200)}</stringProp>
+            <stringProp name="Argument.value">${__P(durationTime,60)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="concurrentNumber" elementType="Argument">
             <stringProp name="Argument.name">concurrentNumber</stringProp>
-            <stringProp name="Argument.value">${__P(concurrentNumber,20)}</stringProp>
+            <stringProp name="Argument.value">${__P(concurrentNumber,3)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -227,8 +227,8 @@ if(file.exists()&amp;&amp;file.isFile())
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">2</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">2</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${concurrentNumber}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${concurrentNumber}</stringProp>
         <longProp name="ThreadGroup.start_time">1546505677000</longProp>
         <longProp name="ThreadGroup.end_time">1546505677000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>

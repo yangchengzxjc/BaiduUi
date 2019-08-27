@@ -34,7 +34,7 @@ def test_bug_24399_bill_refuse(enter):
     business_Code = process.get_businessCode()
     driver.click(submit_expense, timeout=2)
     process.continue_submit()
-    sleep(3)
+    sleep(5)
     process.open_reimbursement(business_Code)
     # 撤回报销单
     sleep(4)

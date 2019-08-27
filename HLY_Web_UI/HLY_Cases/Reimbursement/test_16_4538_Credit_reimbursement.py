@@ -35,7 +35,7 @@ def test_credit_reimbursement(enter):
     sleep(5)
     # 点击标签的+号
     reimbursement.get_elements_click(0, check_lable)
-    assert "信用报销"in driver.get_text(reimbursement.get_xpath("信用报销"))
+    assert "信用报销" in driver.get_text(reimbursement.get_xpath("信用报销"))
     # 进入报销单详情页查看
     process.open_reimbursement(business_Code)
     sleep(4)
@@ -70,8 +70,8 @@ def test_credit_reimbursement(enter):
     assert driver.get_text(reimbursement.get_xpath("信用报销")) == "信用报销"
     reimbursement.Pagescroll(reimbursement.get_xpath("大巴"), timeout=1)
     reimbursement.get_elements_click(1, detal_page_lable)
-    assert loan_Code in reimbursement.get_elements_text(0,loan_links)
-    assert loan_Code in reimbursement.get_elements_text(1,loan_links)
+    assert loan_Code in reimbursement.get_elements_text(0, loan_links)
+    assert loan_Code in reimbursement.get_elements_text(1, loan_links)
 
 
 

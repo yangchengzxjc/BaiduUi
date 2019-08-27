@@ -255,15 +255,7 @@
 if(file.exists()&amp;&amp;file.isFile())
    file.delete();
 
-
-File file=new File(vars.get(&quot;path&quot;)+&quot;stage_expensetypes.txt&quot;);
-if(file.exists()&amp;&amp;file.isFile())
-   file.delete();
-
-
-File file=new File(vars.get(&quot;path&quot;)+&quot;applyCustomFormFields.txt&quot;);
-if(file.exists()&amp;&amp;file.isFile())
-   file.delete();</stringProp>
+</stringProp>
           <stringProp name="BeanShellSampler.filename"></stringProp>
           <stringProp name="BeanShellSampler.parameters"></stringProp>
           <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
@@ -1257,7 +1249,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                 <stringProp name="JSONPostProcessor.defaultValues">notfound</stringProp>
               </JSONPostProcessor>
               <hashTree/>
-              <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 后置处理程序" enabled="true">
+              <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 后置处理程序" enabled="false">
                 <stringProp name="cacheKey">true</stringProp>
                 <stringProp name="filename"></stringProp>
                 <stringProp name="parameters"></stringProp>
@@ -3222,7 +3214,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                 <stringProp name="JSONPostProcessor.defaultValues">notfound</stringProp>
               </JSONPostProcessor>
               <hashTree/>
-              <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 后置处理程序" enabled="true">
+              <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 后置处理程序" enabled="false">
                 <stringProp name="cacheKey">true</stringProp>
                 <stringProp name="filename"></stringProp>
                 <stringProp name="parameters"></stringProp>

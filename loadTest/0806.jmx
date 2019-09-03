@@ -509,7 +509,7 @@ FileWriter writer;
 	
 String responseCode =vars.get(&quot;responseCode1&quot;);
 String getdata = vars.get(&quot;url1&quot;)+&quot;:&quot;+vars.get(&quot;spanId1&quot;);
-String filename = &quot;spanId.txt&quot;;
+String filename = &quot;span.txt&quot;;
 FileWriter writer;  
 
 

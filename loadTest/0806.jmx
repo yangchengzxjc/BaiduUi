@@ -256,9 +256,9 @@ if(file.exists()&amp;&amp;file.isFile())
    file.delete();
 
 
-File file1=new File(&quot;spanId.txt&quot;);
-if(file1.exists()&amp;&amp;file1.isFile())
-   file1.delete();
+//File file1=new File(&quot;spanId.txt&quot;);
+//if(file1.exists()&amp;&amp;file1.isFile())
+//   file1.delete();
 
 </stringProp>
           <stringProp name="BeanShellSampler.filename"></stringProp>

@@ -474,7 +474,7 @@ if(file1.exists()&amp;&amp;file1.isFile())
 String responseCode1 =vars.get(&quot;responseCode1&quot;);
 String url1 =vars.get(&quot;url1&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -490,7 +490,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode1.equals(&quot;200&quot;)){
 	bw.write(url1+&quot;:&quot;+responseCode1);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -621,7 +621,7 @@ execParam();</stringProp>
 String responseCode2 =vars.get(&quot;responseCode2&quot;);
 String url2 =vars.get(&quot;url2&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -637,7 +637,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode2.equals(&quot;200&quot;)){
 	bw.write(url2+&quot;:&quot;+responseCode2);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -774,7 +774,7 @@ ${__setProperty(apply_customFormFields,${applyCustomFormFields},)};
 String responseCode3 =vars.get(&quot;responseCode3&quot;);
 String url3 =vars.get(&quot;url3&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -790,7 +790,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode3.equals(&quot;200&quot;)){
 	bw.write(url3+&quot;:&quot;+responseCode3);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -952,7 +952,7 @@ vars.put(&quot;apply_customFormFields&quot;,props.get(&quot;apply_customFormFiel
 String responseCode4 =vars.get(&quot;responseCode4&quot;);
 String url4 =vars.get(&quot;url4&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -968,7 +968,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode4.equals(&quot;200&quot;)){
 	bw.write(url4+&quot;:&quot;+responseCode4);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -1043,7 +1043,7 @@ if(!responseCode4.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode5&quot;);
 String url =vars.get(&quot;url5&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -1059,7 +1059,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -1135,7 +1135,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode6&quot;);
 String url =vars.get(&quot;url6&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -1151,7 +1151,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -1220,8 +1220,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode7&quot;);
 String url =vars.get(&quot;url7&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
-
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 File file =new File(Path);
 if(!file.exists()){
   try {
@@ -1236,7 +1235,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -1324,7 +1323,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode8&quot;);
 String url =vars.get(&quot;url8&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -1340,7 +1339,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -1419,7 +1418,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode9&quot;);
 String url =vars.get(&quot;url9&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -1435,7 +1434,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -1753,7 +1752,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 String responseCode =vars.get(&quot;responseCode10&quot;);
 String url =vars.get(&quot;url10&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -1769,7 +1768,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -1838,7 +1837,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode11&quot;);
 String url =vars.get(&quot;ur11&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -1854,7 +1853,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -1924,7 +1923,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode12&quot;);
 String url =vars.get(&quot;url12&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -1940,7 +1939,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -2071,7 +2070,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode13&quot;);
 String url =vars.get(&quot;url13&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -2087,7 +2086,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -2192,7 +2191,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode14&quot;);
 String url =vars.get(&quot;url14&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -2208,7 +2207,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -2335,7 +2334,7 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
 String responseCode =vars.get(&quot;responseCode15&quot;);
 String url =vars.get(&quot;url5&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -2351,7 +2350,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -2446,7 +2445,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode16&quot;);
 String url =vars.get(&quot;url16&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -2462,7 +2461,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -2547,7 +2546,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode17&quot;);
 String url =vars.get(&quot;url17&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -2563,7 +2562,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -2642,7 +2641,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode18&quot;);
 String url =vars.get(&quot;url18&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -2658,7 +2657,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -2737,7 +2736,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode19&quot;);
 String url =vars.get(&quot;url19&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -2753,7 +2752,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -2838,7 +2837,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode20&quot;);
 String url =vars.get(&quot;url20&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -2854,7 +2853,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -2939,7 +2938,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode21&quot;);
 String url =vars.get(&quot;url21&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -2955,7 +2954,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -3034,7 +3033,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode22&quot;);
 String url =vars.get(&quot;url22&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -3050,7 +3049,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -3129,7 +3128,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode23&quot;);
 String url =vars.get(&quot;url23&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -3145,7 +3144,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -3224,7 +3223,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode24&quot;);
 String url =vars.get(&quot;url24&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -3240,7 +3239,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -3548,7 +3547,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 String responseCode =vars.get(&quot;responseCode25&quot;);
 String url =vars.get(&quot;url25&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -3564,7 +3563,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -3721,7 +3720,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode26&quot;);
 String url =vars.get(&quot;url26&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -3737,7 +3736,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -3822,8 +3821,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode27&quot;);
 String url =vars.get(&quot;url27&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
-
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 File file =new File(Path);
 if(!file.exists()){
   try {
@@ -3838,7 +3836,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -3949,7 +3947,7 @@ vars.put(&quot;AllDetal&quot;,AllDetal);
 String responseCode =vars.get(&quot;responseCode28&quot;);
 String url =vars.get(&quot;url28&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -3965,7 +3963,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -4073,7 +4071,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode29&quot;);
 String url =vars.get(&quot;url29&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -4089,7 +4087,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -4206,7 +4204,7 @@ vars.put(&quot;AllDetalNew&quot;,str);
 String responseCode =vars.get(&quot;responseCode30&quot;);
 String url =vars.get(&quot;url30&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -4222,7 +4220,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
 	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }
@@ -4318,7 +4316,7 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode1 =vars.get(&quot;responseCode31&quot;);
 String url1 =vars.get(&quot;url31&quot;);
 
-String Path=path+&quot;spanId.txt&quot;;
+String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
 
 File file =new File(Path);
 if(!file.exists()){
@@ -4334,7 +4332,7 @@ fw = new FileWriter(file);
 bw = new BufferedWriter(fw);
 if(!responseCode1.equals(&quot;200&quot;)){
 	bw.write(url1+&quot;:&quot;+responseCode1);
-	bw.write();
+	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
 }

@@ -402,7 +402,7 @@ if(file1.exists()&amp;&amp;file1.isFile())
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/auth/api/account22</stringProp>
+          <stringProp name="HTTPSampler.path">/auth/api/account</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -472,20 +472,21 @@ if(file1.exists()&amp;&amp;file1.isFile())
             <stringProp name="filename"></stringProp>
             <stringProp name="script">import java.io.*;
 
-String spanId1 =vars.get(&quot;spanId1&quot;);
-String responseCode1 =vars.get(&quot;responseCode1&quot;);
-String url1 =vars.get(&quot;url1&quot;);
+String spanId =vars.get(&quot;spanId1&quot;);
+String responseCode =vars.get(&quot;responseCode1&quot;);
+String url =vars.get(&quot;url1&quot;);
 log.info(&quot;url:&quot;+url1);
 
 log.info(&quot;spanid:&quot;+spanId1);
 
 String filename = &quot;span.txt&quot;;
 
+if(!responseCode.equals(&quot;200&quot;)){
 FileWriter writer;  
         try {
             writer = new FileWriter(filename,true);
             BufferedWriter bw = new BufferedWriter(writer);
-            bw.write(url1+&quot;:&quot;+spanId1);
+            bw.write(url+&quot;:&quot;+spanId);
             log.info(&quot;bw:&quot;+bw);
             bw.write(&quot;\r\n&quot;);
             bw.flush();
@@ -495,9 +496,7 @@ FileWriter writer;
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-</stringProp>
+}</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
           <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="写登录后参数化文件" enabled="false">
@@ -546,7 +545,7 @@ execParam();</stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/custom/forms/${apply_FormOID}</stringProp>
+          <stringProp name="HTTPSampler.path">api/custom/forms/${apply_FormOID}</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -656,23 +655,27 @@ execParam();</stringProp>
             <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
-            <stringProp name="script">String spanId2 =vars.get(&quot;spanId2&quot;);
-String responseCode2 =vars.get(&quot;responseCode2&quot;);
-String url2 =vars.get(&quot;url2&quot;);
+            <stringProp name="script">String spanId =vars.get(&quot;spanId2&quot;);
+String responseCode=vars.get(&quot;responseCode2&quot;);
+String url=vars.get(&quot;url2&quot;);
+String filename = &quot;span.txt&quot;;
 
-String Path=&quot;span.txt&quot;;
-
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(Path,true);
-bw = new BufferedWriter(fw);
-if(!responseCode2.equals(&quot;200&quot;)){
-	bw.write(url2+&quot;:&quot;+spanId2);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 }
-
 </stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
@@ -685,7 +688,7 @@ if(!responseCode2.equals(&quot;200&quot;)){
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/custom/forms/${daily_FormOID}</stringProp>
+          <stringProp name="HTTPSampler.path">api/custom/forms/${daily_FormOID}</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -801,23 +804,28 @@ ${__setProperty(apply_customFormFields,${applyCustomFormFields},)};
             <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
-            <stringProp name="script">String spanId3 =vars.get(&quot;spanId3&quot;);
-String responseCode3 =vars.get(&quot;responseCode3&quot;);
-String url3 =vars.get(&quot;url3&quot;);
+            <stringProp name="script">String spanId =vars.get(&quot;spanId3&quot;);
+String responseCode =vars.get(&quot;responseCode3&quot;);
+String url =vars.get(&quot;url3&quot;);
 
-String Path=&quot;span.txt&quot;;
+String filename = &quot;span.txt&quot;;
 
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(Path,true);
-bw = new BufferedWriter(fw);
-if(!responseCode3.equals(&quot;200&quot;)){
-	bw.write(url3+&quot;:&quot;+responseCode3);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 }
-
 </stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
@@ -971,32 +979,30 @@ vars.put(&quot;apply_customFormFields&quot;,props.get(&quot;apply_customFormFiel
                 <boolProp name="resetInterpreter">false</boolProp>
                 <stringProp name="parameters"></stringProp>
                 <stringProp name="filename"></stringProp>
-                <stringProp name="script">String spanId4 =vars.get(&quot;spanId4&quot;);
-String responseCode4 =vars.get(&quot;responseCode4&quot;);
-String url4 =vars.get(&quot;url4&quot;);
+                <stringProp name="script">import java.io.*;
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String spanId =vars.get(&quot;spanId4&quot;);
+String responseCode =vars.get(&quot;responseCode4&quot;);
+String url =vars.get(&quot;url4&quot;);
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
-if(!responseCode4.equals(&quot;200&quot;)){
-	bw.write(url4+&quot;:&quot;+responseCode4);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
-}
+String filename = &quot;span.txt&quot;;
 
-</stringProp>
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
@@ -1062,29 +1068,28 @@ if(!responseCode4.equals(&quot;200&quot;)){
                 <boolProp name="resetInterpreter">false</boolProp>
                 <stringProp name="parameters"></stringProp>
                 <stringProp name="filename"></stringProp>
-                <stringProp name="script">String spanId =vars.get(&quot;spanId5&quot;);
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId5&quot;);
 String responseCode =vars.get(&quot;responseCode5&quot;);
 String url =vars.get(&quot;url5&quot;);
+String filename = &quot;span.txt&quot;;
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
-
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 }
 
 </stringProp>
@@ -1154,32 +1159,29 @@ if(!responseCode.equals(&quot;200&quot;)){
                 <boolProp name="resetInterpreter">false</boolProp>
                 <stringProp name="parameters"></stringProp>
                 <stringProp name="filename"></stringProp>
-                <stringProp name="script">String spanId =vars.get(&quot;spanId6&quot;);
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId6&quot;);
 String responseCode =vars.get(&quot;responseCode6&quot;);
 String url =vars.get(&quot;url6&quot;);
+String filename = &quot;span.txt&quot;;
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
-
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
-}
-
-</stringProp>
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
@@ -1239,28 +1241,28 @@ if(!responseCode.equals(&quot;200&quot;)){
                 <boolProp name="resetInterpreter">false</boolProp>
                 <stringProp name="parameters"></stringProp>
                 <stringProp name="filename"></stringProp>
-                <stringProp name="script">String spanId =vars.get(&quot;spanId7&quot;);
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId7&quot;);
 String responseCode =vars.get(&quot;responseCode7&quot;);
 String url =vars.get(&quot;url7&quot;);
+String filename = &quot;span.txt&quot;;
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 }
 
 </stringProp>
@@ -1342,32 +1344,29 @@ if(!responseCode.equals(&quot;200&quot;)){
                 <boolProp name="resetInterpreter">false</boolProp>
                 <stringProp name="parameters"></stringProp>
                 <stringProp name="filename"></stringProp>
-                <stringProp name="script">String spanId =vars.get(&quot;spanId8&quot;);
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId8&quot;);
 String responseCode =vars.get(&quot;responseCode8&quot;);
 String url =vars.get(&quot;url8&quot;);
+String filename = &quot;span.txt&quot;;
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
-
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
-}
-
-</stringProp>
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
@@ -1437,32 +1436,31 @@ if(!responseCode.equals(&quot;200&quot;)){
                 <boolProp name="resetInterpreter">false</boolProp>
                 <stringProp name="parameters"></stringProp>
                 <stringProp name="filename"></stringProp>
-                <stringProp name="script">String spanId =vars.get(&quot;spanId9&quot;);
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId9&quot;);
 String responseCode =vars.get(&quot;responseCode9&quot;);
 String url =vars.get(&quot;url9&quot;);
+String filename = &quot;span.txt&quot;;
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String filename = &quot;span.txt&quot;;
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
-}
-
-</stringProp>
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
@@ -1771,29 +1769,28 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                 <boolProp name="resetInterpreter">false</boolProp>
                 <stringProp name="parameters"></stringProp>
                 <stringProp name="filename"></stringProp>
-                <stringProp name="script">String spanId =vars.get(&quot;spanId10&quot;);
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId10&quot;);
 String responseCode =vars.get(&quot;responseCode10&quot;);
 String url =vars.get(&quot;url10&quot;);
+String filename = &quot;span.txt&quot;;
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
-
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 }
 
 </stringProp>
@@ -1856,29 +1853,28 @@ if(!responseCode.equals(&quot;200&quot;)){
                 <boolProp name="resetInterpreter">false</boolProp>
                 <stringProp name="parameters"></stringProp>
                 <stringProp name="filename"></stringProp>
-                <stringProp name="script">String spanId =vars.get(&quot;spanId11&quot;);
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId11&quot;);
 String responseCode =vars.get(&quot;responseCode11&quot;);
-String url =vars.get(&quot;ur11&quot;);
+String url =vars.get(&quot;url11&quot;);
+String filename = &quot;span.txt&quot;;
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
-
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 }
 
 </stringProp>
@@ -1942,30 +1938,28 @@ if(!responseCode.equals(&quot;200&quot;)){
                 <boolProp name="resetInterpreter">false</boolProp>
                 <stringProp name="parameters"></stringProp>
                 <stringProp name="filename"></stringProp>
-                <stringProp name="script">String spanId =vars.get(&quot;spanId12&quot;);
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId12&quot;);
 String responseCode =vars.get(&quot;responseCode12&quot;);
 String url =vars.get(&quot;url12&quot;);
+String filename = &quot;span.txt&quot;;
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
-if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
-}
 
 </stringProp>
               </BeanShellPostProcessor>
@@ -2089,32 +2083,30 @@ if(!responseCode.equals(&quot;200&quot;)){
                 <boolProp name="resetInterpreter">false</boolProp>
                 <stringProp name="parameters"></stringProp>
                 <stringProp name="filename"></stringProp>
-                <stringProp name="script">String spanId =vars.get(&quot;spanId13&quot;);
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId13&quot;);
 String responseCode =vars.get(&quot;responseCode13&quot;);
 String url =vars.get(&quot;url13&quot;);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String filename = &quot;span.txt&quot;;
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
-}
-
-</stringProp>
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
@@ -2210,30 +2202,30 @@ if(!responseCode.equals(&quot;200&quot;)){
                 <boolProp name="resetInterpreter">false</boolProp>
                 <stringProp name="parameters"></stringProp>
                 <stringProp name="filename"></stringProp>
-                <stringProp name="script">String spanId =vars.get(&quot;spanId14&quot;);
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId14&quot;);
 String responseCode =vars.get(&quot;responseCode14&quot;);
 String url =vars.get(&quot;url14&quot;);
+String filename = &quot;span.txt&quot;;
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
-
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url1+&quot;:&quot;+spanId1);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 }
+
 
 </stringProp>
               </BeanShellPostProcessor>
@@ -2353,30 +2345,30 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <boolProp name="resetInterpreter">false</boolProp>
                 <stringProp name="parameters"></stringProp>
                 <stringProp name="filename"></stringProp>
-                <stringProp name="script">String spanId =vars.get(&quot;spanId15&quot;);
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId15&quot;);
 String responseCode =vars.get(&quot;responseCode15&quot;);
-String url =vars.get(&quot;url5&quot;);
+String url =vars.get(&quot;url15&quot;);
+String filename = &quot;span.txt&quot;;
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
-
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url1+&quot;:&quot;+spanId1);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 }
+
 
 </stringProp>
               </BeanShellPostProcessor>
@@ -2412,7 +2404,7 @@ if(!responseCode.equals(&quot;200&quot;)){
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/api/approvals/pass</stringProp>
+              <stringProp name="HTTPSampler.path">/api/approvals/</stringProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -2464,31 +2456,29 @@ if(!responseCode.equals(&quot;200&quot;)){
                 <boolProp name="resetInterpreter">false</boolProp>
                 <stringProp name="parameters"></stringProp>
                 <stringProp name="filename"></stringProp>
-                <stringProp name="script">String spanId =vars.get(&quot;spanId16&quot;);
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId16&quot;);
 String responseCode =vars.get(&quot;responseCode16&quot;);
 String url =vars.get(&quot;url16&quot;);
+String filename = &quot;span.txt&quot;;
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
-
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url1+&quot;:&quot;+spanId1);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 }
-
 </stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
@@ -2565,31 +2555,30 @@ if(!responseCode.equals(&quot;200&quot;)){
                 <boolProp name="resetInterpreter">false</boolProp>
                 <stringProp name="parameters"></stringProp>
                 <stringProp name="filename"></stringProp>
-                <stringProp name="script">String spanId =vars.get(&quot;spanId17&quot;);
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId17&quot;);
 String responseCode =vars.get(&quot;responseCode17&quot;);
 String url =vars.get(&quot;url17&quot;);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String filename = &quot;span.txt&quot;;
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 }
-
 </stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
@@ -2664,28 +2653,24 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode18&quot;);
 String url =vars.get(&quot;url18&quot;);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String filename = &quot;span.txt&quot;;
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
-}
-
-</stringProp>
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
@@ -2759,27 +2744,24 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode19&quot;);
 String url =vars.get(&quot;url19&quot;);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String filename = &quot;span.txt&quot;;
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 }
-
 </stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
@@ -2860,27 +2842,24 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode20&quot;);
 String url =vars.get(&quot;url20&quot;);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String filename = &quot;span.txt&quot;;
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 }
-
 </stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
@@ -2961,27 +2940,24 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode21&quot;);
 String url =vars.get(&quot;url21&quot;);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String filename = &quot;span.txt&quot;;
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 }
-
 </stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
@@ -3056,28 +3032,24 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode22&quot;);
 String url =vars.get(&quot;url22&quot;);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String filename = &quot;span.txt&quot;;
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
-}
-
-</stringProp>
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
@@ -3151,28 +3123,24 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode23&quot;);
 String url =vars.get(&quot;url23&quot;);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String filename = &quot;span.txt&quot;;
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
-}
-
-</stringProp>
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
@@ -3246,28 +3214,24 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode24&quot;);
 String url =vars.get(&quot;url24&quot;);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String filename = &quot;span.txt&quot;;
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
-}
-
-</stringProp>
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
@@ -3570,28 +3534,24 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 String responseCode =vars.get(&quot;responseCode25&quot;);
 String url =vars.get(&quot;url25&quot;);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String filename = &quot;span.txt&quot;;
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
-}
-
-</stringProp>
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
@@ -3743,25 +3703,23 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode26&quot;);
 String url =vars.get(&quot;url26&quot;);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String filename = &quot;span.txt&quot;;
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 }
 
 </stringProp>
@@ -3844,27 +3802,24 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode27&quot;);
 String url =vars.get(&quot;url27&quot;);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
-if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
-}
+String filename = &quot;span.txt&quot;;
 
-</stringProp>
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
@@ -3970,28 +3925,24 @@ vars.put(&quot;AllDetal&quot;,AllDetal);
 String responseCode =vars.get(&quot;responseCode28&quot;);
 String url =vars.get(&quot;url28&quot;);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String filename = &quot;span.txt&quot;;
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
-}
-
-</stringProp>
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
@@ -4089,28 +4040,24 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode =vars.get(&quot;responseCode29&quot;);
 String url =vars.get(&quot;url29&quot;);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String filename = &quot;span.txt&quot;;
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
-}
-
-</stringProp>
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
@@ -4222,28 +4169,24 @@ vars.put(&quot;AllDetalNew&quot;,str);
 String responseCode =vars.get(&quot;responseCode30&quot;);
 String url =vars.get(&quot;url30&quot;);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String filename = &quot;span.txt&quot;;
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
 if(!responseCode.equals(&quot;200&quot;)){
-	bw.write(url+&quot;:&quot;+responseCode);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
-}
-
-</stringProp>
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
                 </BeanShellPostProcessor>
                 <hashTree/>
               </hashTree>
@@ -4334,28 +4277,24 @@ if(!responseCode.equals(&quot;200&quot;)){
 String responseCode1 =vars.get(&quot;responseCode31&quot;);
 String url1 =vars.get(&quot;url31&quot;);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String filename = &quot;span.txt&quot;;
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
-if(!responseCode1.equals(&quot;200&quot;)){
-	bw.write(url1+&quot;:&quot;+responseCode1);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
-}
-
-</stringProp>
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>

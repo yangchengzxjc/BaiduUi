@@ -7170,7 +7170,7 @@ vars.put(&quot;participant&quot;,str);
             <collectionProp name="Arguments.arguments">
               <elementProp name="SuccessSubmit" elementType="Argument">
                 <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                <stringProp name="Argument.value">酒店 可报销CNY${bxamount0}，实际报销CNY${bxamount}</stringProp>
+                <stringProp name="Argument.value">酒店 可报销CNY 120.00，实际报销CNY 121.00</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="expenseReportOID" elementType="Argument">
@@ -7540,7 +7540,7 @@ vars.put(&quot;participant&quot;,str);
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;酒店 可报销CNY40，实际报销CNY41</stringProp>
+                  <stringProp name="Argument.value">酒店 可报销CNY 40.00，实际报销CNY 41.00，超出CNY 1.00</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -8054,7 +8054,7 @@ vars.put(&quot;participant&quot;,str);
                 </elementProp>
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">酒店 可报销CNY360，实际报销CNY362，超出CNY2</stringProp>
+                  <stringProp name="Argument.value">酒店 可报销CNY 360.00，实际报销CNY 362.00，超出CNY 2.00</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="needConfirm" elementType="Argument">
@@ -8335,7 +8335,7 @@ vars.put(&quot;participant&quot;,str);
             <collectionProp name="Arguments.arguments">
               <elementProp name="SuccessSubmit" elementType="Argument">
                 <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                <stringProp name="Argument.value">酒店 可报销CNY${bxamount0}，实际报销CNY${bxamount}</stringProp>
+                <stringProp name="Argument.value">酒店 可报销CNY 120.00，实际报销CNY 121.00，超出CNY 1.00</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="expenseReportOID" elementType="Argument">
@@ -8705,7 +8705,7 @@ vars.put(&quot;participant&quot;,str);
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">酒店 可报销CNY40，实际报销CNY41</stringProp>
+                  <stringProp name="Argument.value">酒店 可报销CNY 40.00，实际报销CNY 41.00</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -9219,7 +9219,7 @@ vars.put(&quot;participant&quot;,str);
                 </elementProp>
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">酒店 可报销CNY360，实际报销CNY362，超出CNY2</stringProp>
+                  <stringProp name="Argument.value">酒店 可报销CNY 360.00，实际报销CNY 362.00，超出CNY 2.00</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="needConfirm" elementType="Argument">
@@ -9533,7 +9533,7 @@ vars.put(&quot;participant&quot;,str);
             <collectionProp name="Arguments.arguments">
               <elementProp name="SuccessSubmit" elementType="Argument">
                 <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY120，实际报销CNY121</stringProp>
+                <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 120.00，实际报销CNY 121.00</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="expenseReportOID" elementType="Argument">
@@ -9933,7 +9933,7 @@ vars.put(&quot;participant&quot;,str);
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY99，实际报销CNY100</stringProp>
+                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 99.00，实际报销CNY 100.00</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -10436,7 +10436,7 @@ vars.put(&quot;participant&quot;,str);
                 </elementProp>
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY120，实际报销CNY122</stringProp>
+                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 120.00，实际报销CNY 122.00</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="needConfirm" elementType="Argument">
@@ -10750,7 +10750,7 @@ vars.put(&quot;participant&quot;,str);
             <collectionProp name="Arguments.arguments">
               <elementProp name="SuccessSubmit" elementType="Argument">
                 <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY120，实际报销CNY121</stringProp>
+                <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 120.00，实际报销CNY 121.00</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="expenseReportOID" elementType="Argument">
@@ -11150,7 +11150,7 @@ vars.put(&quot;participant&quot;,str);
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY99，实际报销CNY100</stringProp>
+                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 99.00，实际报销CNY 100.00</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -11653,7 +11653,7 @@ vars.put(&quot;participant&quot;,str);
                 </elementProp>
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY120，实际报销CNY122</stringProp>
+                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 120.00，实际报销CNY 122.00</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="needConfirm" elementType="Argument">
@@ -11994,7 +11994,7 @@ vars.put(&quot;participant&quot;,str);
             <collectionProp name="Arguments.arguments">
               <elementProp name="SuccessSubmit" elementType="Argument">
                 <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                <stringProp name="Argument.value">&quot;总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY120，实际报销CNY120.5</stringProp>
+                <stringProp name="Argument.value">&quot;总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 120.00，实际报销CNY 120.50</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="expenseReportOID" elementType="Argument">
@@ -12009,7 +12009,7 @@ vars.put(&quot;participant&quot;,str);
               </elementProp>
               <elementProp name="OtherSubmit1" elementType="Argument">
                 <stringProp name="Argument.name">OtherSubmit1</stringProp>
-                <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;大巴 可报销CNY24，实际报销CNY24.5，超出CNY0.5</stringProp>
+                <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;大巴 可报销CNY 24.00，实际报销CNY 24.50，超出CNY 0.50</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -12332,7 +12332,7 @@ vars.put(&quot;participant&quot;,str);
                 </elementProp>
                 <elementProp name="OtherSubmit11" elementType="Argument">
                   <stringProp name="Argument.name">OtherSubmit11</stringProp>
-                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;大巴 可报销CNY24，实际报销CNY24.5，超出CNY0.5</stringProp>
+                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;大巴 可报销CNY 24.00，实际报销CNY 24.50，超出CNY 0.50</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -12404,7 +12404,7 @@ vars.put(&quot;participant&quot;,str);
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY95.5，实际报销CNY96，超出CNY0.5</stringProp>
+                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 95.50，实际报销CNY 96.00，超出CNY 0.50</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -12939,7 +12939,7 @@ vars.put(&quot;participant&quot;,str);
                 </elementProp>
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">本次可报销 CNY120，实际报销CNY120.5，超出CNY0.5</stringProp>
+                  <stringProp name="Argument.value">本次可报销 CNY 120.00，实际报销CNY 120.50，超出CNY 0.50</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="needConfirm" elementType="Argument">
@@ -12949,7 +12949,7 @@ vars.put(&quot;participant&quot;,str);
                 </elementProp>
                 <elementProp name="OtherSubmit1" elementType="Argument">
                   <stringProp name="Argument.name">OtherSubmit1</stringProp>
-                  <stringProp name="Argument.value">大巴 可报销CNY24，实际报销CNY24.5，超出CNY0.5</stringProp>
+                  <stringProp name="Argument.value">大巴 可报销CNY 24.00，实际报销CNY 24.50，超出CNY 0.50</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -13285,7 +13285,7 @@ vars.put(&quot;participant&quot;,str);
             <collectionProp name="Arguments.arguments">
               <elementProp name="SuccessSubmit" elementType="Argument">
                 <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                <stringProp name="Argument.value">&quot;总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY120，实际报销CNY120.5</stringProp>
+                <stringProp name="Argument.value">&quot;总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 120.00，实际报销CNY 120.50</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="expenseReportOID" elementType="Argument">
@@ -13300,7 +13300,7 @@ vars.put(&quot;participant&quot;,str);
               </elementProp>
               <elementProp name="OtherSubmit1" elementType="Argument">
                 <stringProp name="Argument.name">OtherSubmit1</stringProp>
-                <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;大巴 可报销CNY24，实际报销CNY24.5，超出CNY0.5</stringProp>
+                <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;大巴 可报销CNY 24.00，实际报销CNY 24.50，超出CNY 0.50</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -13623,7 +13623,7 @@ vars.put(&quot;participant&quot;,str);
                 </elementProp>
                 <elementProp name="OtherSubmit11" elementType="Argument">
                   <stringProp name="Argument.name">OtherSubmit11</stringProp>
-                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;大巴 可报销CNY24，实际报销CNY24.5，超出CNY0.5</stringProp>
+                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;大巴 可报销CNY 24.00，实际报销CNY 24.50，超出CNY 0.50</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -13695,7 +13695,7 @@ vars.put(&quot;participant&quot;,str);
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY95.5，实际报销CNY96，超出CNY0.5</stringProp>
+                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 95.50，实际报销CNY 96.00，超出CNY 0.50</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -14230,7 +14230,7 @@ vars.put(&quot;participant&quot;,str);
                 </elementProp>
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">本次可报销 CNY120，实际报销CNY120.5，超出CNY0.5</stringProp>
+                  <stringProp name="Argument.value">本次可报销 CNY 120.00，实际报销CNY 120.50，超出CNY 0.50</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="needConfirm" elementType="Argument">
@@ -14240,7 +14240,7 @@ vars.put(&quot;participant&quot;,str);
                 </elementProp>
                 <elementProp name="OtherSubmit1" elementType="Argument">
                   <stringProp name="Argument.name">OtherSubmit1</stringProp>
-                  <stringProp name="Argument.value">大巴 可报销CNY24，实际报销CNY24.5，超出CNY0.5</stringProp>
+                  <stringProp name="Argument.value">大巴 可报销CNY 24.00，实际报销CNY 24.50，超出CNY 0.50</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -14451,7 +14451,7 @@ log.info(&quot;报销单提费用金额为:&quot;+String.valueOf(amount));</stri
             <collectionProp name="Arguments.arguments">
               <elementProp name="SuccessSubmit" elementType="Argument">
                 <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                <stringProp name="Argument.value">酒店 可报销CNY${bxamount0}，实际报销CNY${bxamount}</stringProp>
+                <stringProp name="Argument.value">酒店 可报销CNY ${bxamount0}.00，实际报销CNY ${bxamount}.00</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="expenseReportOID" elementType="Argument">
@@ -14763,7 +14763,7 @@ vars.put(&quot;bxamount2&quot;,&quot;41&quot;);</stringProp>
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;酒店 可报销CNY40，实际报销CNY41</stringProp>
+                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;酒店 可报销CNY 40.00，实际报销CNY 41.00</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -15172,7 +15172,7 @@ vars.put(&quot;proportion2&quot;,&quot;0.5&quot;);</stringProp>
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;酒店 可报销CNY360，实际报销CNY362，超出CNY2</stringProp>
+                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;酒店 可报销CNY 360.00，实际报销CNY 362.00，超出CNY 2.00</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -15393,7 +15393,7 @@ log.info(&quot;报销单提费用金额为:&quot;+String.valueOf(amount));</stri
             <collectionProp name="Arguments.arguments">
               <elementProp name="SuccessSubmit" elementType="Argument">
                 <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                <stringProp name="Argument.value">酒店 可报销CNY${bxamount0}，实际报销CNY${bxamount}</stringProp>
+                <stringProp name="Argument.value">酒店 可报销CNY ${bxamount0}.00，实际报销CNY ${bxamount}.00</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="expenseReportOID" elementType="Argument">
@@ -15705,7 +15705,7 @@ vars.put(&quot;bxamount2&quot;,&quot;41&quot;);</stringProp>
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;酒店 可报销CNY40，实际报销CNY41</stringProp>
+                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;酒店 可报销CNY 40.00，实际报销CNY 41.00</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -16114,7 +16114,7 @@ vars.put(&quot;proportion2&quot;,&quot;0.5&quot;);</stringProp>
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;酒店 可报销CNY360，实际报销CNY362，超出CNY2</stringProp>
+                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;酒店 可报销CNY 360.00，实际报销CNY 362.00，超出CNY 2.00</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -16394,7 +16394,7 @@ vars.put(&quot;bxamount3&quot;,&quot;100&quot;);</stringProp>
             <collectionProp name="Arguments.arguments">
               <elementProp name="SuccessSubmit" elementType="Argument">
                 <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY120，实际报销CNY121</stringProp>
+                <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 120.00，实际报销CNY 121.00</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="expenseReportOID" elementType="Argument">
@@ -16787,7 +16787,7 @@ vars.put(&quot;bxamount32&quot;,&quot;90&quot;);</stringProp>
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY100，实际报销CNY101，超出CNY1</stringProp>
+                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 100.00，实际报销CNY 101.00，超出CNY 1.00</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -17211,7 +17211,7 @@ vars.put(&quot;bxamount3&quot;,&quot;120&quot;);
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY240，实际报销CNY240.5</stringProp>
+                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 240.00，实际报销CNY 240.50</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -17491,7 +17491,7 @@ vars.put(&quot;bxamount3&quot;,&quot;100&quot;);</stringProp>
             <collectionProp name="Arguments.arguments">
               <elementProp name="SuccessSubmit" elementType="Argument">
                 <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY120，实际报销CNY121</stringProp>
+                <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 120.00，实际报销CNY 121.00</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="expenseReportOID" elementType="Argument">
@@ -17884,7 +17884,7 @@ vars.put(&quot;bxamount32&quot;,&quot;90&quot;);</stringProp>
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY100，实际报销CNY101，超出CNY1</stringProp>
+                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 100.00，实际报销CNY 101.00，超出CNY 1.00</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -18308,7 +18308,7 @@ vars.put(&quot;bxamount3&quot;,&quot;120&quot;);
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY240，实际报销CNY240.5</stringProp>
+                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 240.00，实际报销CNY 240.50</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -18590,7 +18590,7 @@ vars.put(&quot;bxamount3&quot;,&quot;96&quot;);</stringProp>
             <collectionProp name="Arguments.arguments">
               <elementProp name="SuccessSubmit" elementType="Argument">
                 <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY120，实际报销CNY120.5，超出CNY0.5</stringProp>
+                <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 120.00，实际报销CNY 120.50，超出CNY 0.50</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="expenseReportOID" elementType="Argument">
@@ -18605,7 +18605,7 @@ vars.put(&quot;bxamount3&quot;,&quot;96&quot;);</stringProp>
               </elementProp>
               <elementProp name="OtherSubmit1" elementType="Argument">
                 <stringProp name="Argument.name">OtherSubmit1</stringProp>
-                <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;大巴 可报销CNY24，实际报销CNY24.5，超出CNY0.5</stringProp>
+                <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;大巴 可报销CNY 24.00，实际报销CNY 24.50，超出CNY 0.50</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -19073,7 +19073,7 @@ vars.put(&quot;proportion202&quot;,&quot;0.4845&quot;);
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY240，实际报销CNY240.5</stringProp>
+                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 240.00，实际报销CNY 240.50</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -19088,7 +19088,7 @@ vars.put(&quot;proportion202&quot;,&quot;0.4845&quot;);
                 </elementProp>
                 <elementProp name="OtherSubmit1" elementType="Argument">
                   <stringProp name="Argument.name">OtherSubmit1</stringProp>
-                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;大巴 可报销CNY48，实际报销CNY48.5</stringProp>
+                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;大巴 可报销CNY 48.00，实际报销CNY 48.50</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -19472,7 +19472,7 @@ vars.put(&quot;bxamount32&quot;,&quot;86.5&quot;);</stringProp>
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY100，实际报销CNY100.5，超出CNY0.5</stringProp>
+                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 100.00，实际报销CNY 100.50，超出CNY 0.50</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -19487,7 +19487,7 @@ vars.put(&quot;bxamount32&quot;,&quot;86.5&quot;);</stringProp>
                 </elementProp>
                 <elementProp name="needConfirm1" elementType="Argument">
                   <stringProp name="Argument.name">needConfirm1</stringProp>
-                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;酒店 可报销CNY86，实际报销CNY86.5，超出CNY0.5</stringProp>
+                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;酒店 可报销CNY 86.00，实际报销CNY 86.50，超出CNY 0.50</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -19759,7 +19759,7 @@ vars.put(&quot;bxamount3&quot;,&quot;96&quot;);</stringProp>
             <collectionProp name="Arguments.arguments">
               <elementProp name="SuccessSubmit" elementType="Argument">
                 <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY120，实际报销CNY120.5，超出CNY0.5</stringProp>
+                <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 120.00，实际报销CNY 120.50，超出CNY 0.50</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="expenseReportOID" elementType="Argument">
@@ -19774,7 +19774,7 @@ vars.put(&quot;bxamount3&quot;,&quot;96&quot;);</stringProp>
               </elementProp>
               <elementProp name="OtherSubmit1" elementType="Argument">
                 <stringProp name="Argument.name">OtherSubmit1</stringProp>
-                <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;大巴 可报销CNY24，实际报销CNY24.5，超出CNY0.5</stringProp>
+                <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;大巴 可报销CNY 24.00，实际报销CNY 24.50，超出CNY 0.50</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -20242,7 +20242,7 @@ vars.put(&quot;proportion202&quot;,&quot;0.4845&quot;);
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY240，实际报销CNY240.5</stringProp>
+                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 240.00，实际报销CNY 240.50</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -20257,7 +20257,7 @@ vars.put(&quot;proportion202&quot;,&quot;0.4845&quot;);
                 </elementProp>
                 <elementProp name="OtherSubmit1" elementType="Argument">
                   <stringProp name="Argument.name">OtherSubmit1</stringProp>
-                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;大巴 可报销CNY48，实际报销CNY48.5</stringProp>
+                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;大巴 可报销CNY 48.00，实际报销CNY 48.50</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -20641,7 +20641,7 @@ vars.put(&quot;bxamount32&quot;,&quot;86.5&quot;);</stringProp>
               <collectionProp name="Arguments.arguments">
                 <elementProp name="SuccessSubmit" elementType="Argument">
                   <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY100，实际报销CNY100.5，超出CNY0.5</stringProp>
+                  <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 100.00，实际报销CNY 100.50，超出CNY 0.5</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
                 <elementProp name="expenseReportOID" elementType="Argument">
@@ -20656,7 +20656,7 @@ vars.put(&quot;bxamount32&quot;,&quot;86.5&quot;);</stringProp>
                 </elementProp>
                 <elementProp name="needConfirm1" elementType="Argument">
                   <stringProp name="Argument.name">needConfirm1</stringProp>
-                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;酒店 可报销CNY86，实际报销CNY86.5，超出CNY0.5</stringProp>
+                  <stringProp name="Argument.value">费用超申请&quot;,&quot;message&quot;:&quot;酒店 可报销CNY 86.00，实际报销CNY 86.50，超出CNY 0.50</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -22299,7 +22299,7 @@ vars.put(&quot;draft&quot;,str);
             <hashTree/>
             <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="文本断言" enabled="true">
               <collectionProp name="Asserion.test_strings">
-                <stringProp name="-1085103136">本次可报销 CNY120，实际报销CNY122，超出CNY2</stringProp>
+                <stringProp name="-248022706">本次可报销 CNY 120.00，实际报销CNY 122.00，超出CNY 2.00</stringProp>
                 <stringProp name="1029844912">needConfirm&quot;:true</stringProp>
               </collectionProp>
               <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
@@ -24029,7 +24029,7 @@ vars.put(&quot;draft&quot;,str);
             <hashTree/>
             <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="文本断言" enabled="true">
               <collectionProp name="Asserion.test_strings">
-                <stringProp name="-1085103136">本次可报销 CNY120，实际报销CNY122，超出CNY2</stringProp>
+                <stringProp name="-248022706">本次可报销 CNY 120.00，实际报销CNY 122.00，超出CNY 2.00</stringProp>
                 <stringProp name="1846977345">needConfirm&quot;:false</stringProp>
               </collectionProp>
               <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
@@ -25631,7 +25631,7 @@ vars.put(&quot;draft&quot;,str);
             <hashTree/>
             <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="文本断言" enabled="true">
               <collectionProp name="Asserion.test_strings">
-                <stringProp name="-163655228">本次可报销 CNY120，实际报销CNY121</stringProp>
+                <stringProp name="-482000734">本次可报销 CNY 120.00，实际报销CNY 121.00</stringProp>
               </collectionProp>
               <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
               <boolProp name="Assertion.assume_success">false</boolProp>
@@ -26562,7 +26562,7 @@ vars.put(&quot;participant&quot;,str);
             <collectionProp name="Arguments.arguments">
               <elementProp name="SuccessSubmit" elementType="Argument">
                 <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                <stringProp name="Argument.value">酒店 可报销CNY${bxamount0}，实际报销CNY${bxamount}</stringProp>
+                <stringProp name="Argument.value">酒店 可报销CNY ${bxamount0}.00，实际报销CNY ${bxamount}.00</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="expenseReportOID" elementType="Argument">
@@ -27742,7 +27742,7 @@ vars.put(&quot;participant&quot;,str);
             <collectionProp name="Arguments.arguments">
               <elementProp name="SuccessSubmit" elementType="Argument">
                 <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                <stringProp name="Argument.value">酒店 可报销CNY${bxamount0}，实际报销CNY${bxamount}</stringProp>
+                <stringProp name="Argument.value">酒店 可报销CNY ${bxamount0}.00，实际报销CNY ${bxamount}.00</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="expenseReportOID" elementType="Argument">
@@ -28857,7 +28857,7 @@ log.info(&quot;报销单提费用金额为:&quot;+String.valueOf(amount));</stri
             <collectionProp name="Arguments.arguments">
               <elementProp name="SuccessSubmit" elementType="Argument">
                 <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                <stringProp name="Argument.value">酒店 可报销CNY${bxamount0}，实际报销CNY${bxamount}</stringProp>
+                <stringProp name="Argument.value">酒店 可报销CNY ${bxamount0}.00，实际报销CNY ${bxamount}.00</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="expenseReportOID" elementType="Argument">
@@ -29789,7 +29789,7 @@ log.info(&quot;报销单提费用金额为:&quot;+String.valueOf(amount));</stri
             <collectionProp name="Arguments.arguments">
               <elementProp name="SuccessSubmit" elementType="Argument">
                 <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                <stringProp name="Argument.value">酒店 可报销CNY${bxamount0}，实际报销CNY${bxamount}</stringProp>
+                <stringProp name="Argument.value">酒店 可报销CNY ${bxamount0}.00，实际报销CNY ${bxamount}.00</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="expenseReportOID" elementType="Argument">
@@ -30813,7 +30813,7 @@ vars.put(&quot;participant&quot;,str);
             <collectionProp name="Arguments.arguments">
               <elementProp name="SuccessSubmit" elementType="Argument">
                 <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY120，实际报销CNY121</stringProp>
+                <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 120.00，实际报销CNY 121.00</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="expenseReportOID" elementType="Argument">
@@ -31065,7 +31065,7 @@ vars.put(&quot;bxamount3&quot;,&quot;100&quot;);</stringProp>
             <collectionProp name="Arguments.arguments">
               <elementProp name="SuccessSubmit" elementType="Argument">
                 <stringProp name="Argument.name">SuccessSubmit</stringProp>
-                <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY120，实际报销CNY121</stringProp>
+                <stringProp name="Argument.value">总金额超申请&quot;,&quot;message&quot;:&quot;本次可报销 CNY 120.00，实际报销CNY 121.00</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="expenseReportOID" elementType="Argument">

@@ -196,6 +196,7 @@
         <boolProp name="FileSaver.successonly">false</boolProp>
         <boolProp name="FileSaver.skipsuffix">true</boolProp>
         <boolProp name="FileSaver.skipautonumber">false</boolProp>
+        <boolProp name="FileSaver.addTimstamp">true</boolProp>
       </ResultSaver>
       <hashTree/>
       <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="Error Writer" enabled="false">

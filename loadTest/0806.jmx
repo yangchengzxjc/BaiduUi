@@ -256,7 +256,7 @@ if(file.exists()&amp;&amp;file.isFile())
    file.delete();
 
 
-File file1=new File(vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;);
+File file1=new File(&quot;spanId.txt&quot;);
 if(file1.exists()&amp;&amp;file1.isFile())
    file1.delete();
 

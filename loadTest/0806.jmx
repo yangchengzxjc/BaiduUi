@@ -466,7 +466,7 @@ if(file1.exists()&amp;&amp;file1.isFile())
             <stringProp name="RegexExtractor.match_number"></stringProp>
           </RegexExtractor>
           <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="false">
             <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -480,6 +480,7 @@ log.info(&quot;url:&quot;+url1);
 log.info(&quot;spanid:&quot;+spanId1);
 
 String filename = &quot;./spanId.txt&quot;;
+
 FileWriter writer;  
         try {
             writer = new FileWriter(filename,true);
@@ -571,7 +572,7 @@ execParam();</stringProp>
             <stringProp name="TestPlan.comments">../TestData/${attachmentName}</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="写登录后参数化文件" enabled="false">
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="写登录后参数化文件" enabled="true">
             <stringProp name="filename"></stringProp>
             <stringProp name="parameters"></stringProp>
             <boolProp name="resetInterpreter">false</boolProp>

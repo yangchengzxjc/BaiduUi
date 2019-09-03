@@ -255,6 +255,11 @@
 if(file.exists()&amp;&amp;file.isFile())
    file.delete();
 
+
+File file1=new File(vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;);
+if(file1.exists()&amp;&amp;file1.isFile())
+   file1.delete();
+
 </stringProp>
           <stringProp name="BeanShellSampler.filename"></stringProp>
           <stringProp name="BeanShellSampler.parameters"></stringProp>
@@ -434,94 +439,63 @@ if(file.exists()&amp;&amp;file.isFile())
             <stringProp name="JSONPostProcessor.defaultValues">null;null;null;null;null;null;null;null;null;null;null;null</stringProp>
           </JSONPostProcessor>
           <hashTree/>
-        </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取费用类型" enabled="false">
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-	&quot;formOID&quot;: &quot;${daily_FormOID}&quot;,&#xd;
-	&quot;setOfBooksId&quot;: &quot;${setOfBooksId}&quot;,&#xd;
-	&quot;userOID&quot;: &quot;${userOID}&quot;,&#xd;
-	&quot;createManually&quot;: true&#xd;
-}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain"></stringProp>
-          <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/expense/type/byUser</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">8</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-          </ResponseAssertion>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+            <stringProp name="RegexExtractor.refname">spanId1</stringProp>
+            <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default"></stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+          </RegexExtractor>
           <hashTree/>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
-            <collectionProp name="HeaderManager.headers">
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Authorization</stringProp>
-                <stringProp name="Header.value">Bearer ${accessToken}</stringProp>
-              </elementProp>
-            </collectionProp>
-          </HeaderManager>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+            <stringProp name="RegexExtractor.refname">responseCode1</stringProp>
+            <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default"></stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+          </RegexExtractor>
           <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取费用类型OID" enabled="false">
-            <stringProp name="JSONPostProcessor.referenceNames">expenseTypeOID;expenseTypeid</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${expenseTypeName}&quot;)].expenseTypeOID;$..[?(@.name==&quot;${expenseTypeName}&quot;)].id</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            <stringProp name="JSONPostProcessor.defaultValues">null;null</stringProp>
-          </JSONPostProcessor>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+            <stringProp name="RegexExtractor.refname">url1</stringProp>
+            <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default"></stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+          </RegexExtractor>
           <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="写参数化文件" enabled="false">
-            <stringProp name="filename"></stringProp>
-            <stringProp name="parameters"></stringProp>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
             <boolProp name="resetInterpreter">false</boolProp>
-            <stringProp name="script">public static void execParam() 
-{
-	
-String getdata = vars.get(&quot;expenseTypeName&quot;)+&quot;,&quot;+vars.get(&quot;expenseTypeOID&quot;)+&quot;,&quot;+vars.get(&quot;expenseTypeid&quot;);
-String filename = vars.get(&quot;path&quot;)+&quot;stage_expensetypes.txt&quot;;
-FileWriter writer;  
-        try {
-            writer = new FileWriter(filename,true);
-            BufferedWriter bw = new BufferedWriter(writer);
-            bw.write(getdata);
-            bw.write(&quot;\r\n&quot;);
-            bw.flush();
-            writer.flush();
-            bw.close();
-            writer.close();
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">String spanId1 =vars.get(&quot;spanId1&quot;);
+String responseCode1 =vars.get(&quot;responseCode1&quot;);
+String url1 =vars.get(&quot;url1&quot;);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
 }
-execParam();</stringProp>
-            <stringProp name="TestPlan.comments">../TestData/${attachmentName}</stringProp>
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode1.equals(&quot;200&quot;)){
+	bw.write(url1+&quot;:&quot;+responseCode1);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
@@ -561,7 +535,7 @@ execParam();</stringProp>
             <stringProp name="JSONPostProcessor.defaultValues">null;null;null;NotFound</stringProp>
           </JSONPostProcessor>
           <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="false">
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
             <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -585,7 +559,7 @@ ${__setProperty(apply_customFormProperties,${applyCustomFormProperties},)};
 ${__setProperty(apreferenceOID,${applyReferenceOID},)};</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="false">
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
             <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -610,6 +584,65 @@ FileWriter writer;
         }
 }
 execParam();</stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+            <stringProp name="RegexExtractor.refname">spanId2</stringProp>
+            <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default"></stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+          </RegexExtractor>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+            <stringProp name="RegexExtractor.refname">responseCode2</stringProp>
+            <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default"></stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+          </RegexExtractor>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+            <stringProp name="RegexExtractor.refname">url2</stringProp>
+            <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default"></stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+          </RegexExtractor>
+          <hashTree/>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">String spanId2 =vars.get(&quot;spanId2&quot;);
+String responseCode2 =vars.get(&quot;responseCode2&quot;);
+String url2 =vars.get(&quot;url2&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode2.equals(&quot;200&quot;)){
+	bw.write(url2+&quot;:&quot;+responseCode2);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
@@ -702,6 +735,65 @@ ${__setProperty(apreferenceOID,${applyReferenceOID},)};
 ${__setProperty(apply_customFormFields,${applyCustomFormFields},)};
 
 
+
+</stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+            <stringProp name="RegexExtractor.refname">spanId3</stringProp>
+            <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default"></stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+          </RegexExtractor>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+            <stringProp name="RegexExtractor.refname">responseCode3</stringProp>
+            <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default"></stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+          </RegexExtractor>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+            <stringProp name="RegexExtractor.refname">url3</stringProp>
+            <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default"></stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+          </RegexExtractor>
+          <hashTree/>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">String spanId3 =vars.get(&quot;spanId3&quot;);
+String responseCode3 =vars.get(&quot;responseCode3&quot;);
+String url3 =vars.get(&quot;url3&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode3.equals(&quot;200&quot;)){
+	bw.write(url3+&quot;:&quot;+responseCode3);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
 
 </stringProp>
           </BeanShellPostProcessor>
@@ -825,6 +917,65 @@ vars.put(&quot;apply_customFormFields&quot;,props.get(&quot;apply_customFormFiel
                 <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
               </JSONPostProcessor>
               <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId4</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode4</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url4</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId4 =vars.get(&quot;spanId4&quot;);
+String responseCode4 =vars.get(&quot;responseCode4&quot;);
+String url4 =vars.get(&quot;url4&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode4.equals(&quot;200&quot;)){
+	bw.write(url4+&quot;:&quot;+responseCode4);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="申请单查询部门信息" enabled="true">
@@ -856,6 +1007,65 @@ vars.put(&quot;apply_customFormFields&quot;,props.get(&quot;apply_customFormFiel
                 <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;性能测试专用账户&quot;)].departmentOID</stringProp>
                 <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
               </JSONPostProcessor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId5</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode5</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url5</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId5&quot;);
+String responseCode =vars.get(&quot;responseCode5&quot;);
+String url =vars.get(&quot;url5&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
           </hashTree>
@@ -890,6 +1100,65 @@ vars.put(&quot;apply_customFormFields&quot;,props.get(&quot;apply_customFormFiel
                 <stringProp name="JSONPostProcessor.defaultValues">costCenterItemOID;costCenterItemid</stringProp>
               </JSONPostProcessor>
               <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId6</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode6</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url6</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId6&quot;);
+String responseCode =vars.get(&quot;responseCode6&quot;);
+String url =vars.get(&quot;url6&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="申请单获取多选值列表" enabled="true">
@@ -915,7 +1184,67 @@ vars.put(&quot;apply_customFormFields&quot;,props.get(&quot;apply_customFormFiel
               <stringProp name="HTTPSampler.connect_timeout"></stringProp>
               <stringProp name="HTTPSampler.response_timeout"></stringProp>
             </HTTPSamplerProxy>
-            <hashTree/>
+            <hashTree>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId7</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode7</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url7</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId7&quot;);
+String responseCode =vars.get(&quot;responseCode7&quot;);
+String url =vars.get(&quot;url7&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
+            </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="申请单获取地点服务" enabled="true">
             <boolProp name="TransactionController.includeTimers">false</boolProp>
@@ -960,6 +1289,65 @@ vars.put(&quot;apply_customFormFields&quot;,props.get(&quot;apply_customFormFiel
                 </collectionProp>
               </HeaderManager>
               <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId8</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode8</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url8</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId8&quot;);
+String responseCode =vars.get(&quot;responseCode8&quot;);
+String url =vars.get(&quot;url8&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="申请单查询自选审批人" enabled="true">
@@ -995,6 +1383,65 @@ vars.put(&quot;apply_customFormFields&quot;,props.get(&quot;apply_customFormFiel
                 <boolProp name="Assertion.assume_success">false</boolProp>
                 <intProp name="Assertion.test_type">16</intProp>
               </ResponseAssertion>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId9</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode9</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url9</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId9&quot;);
+String responseCode =vars.get(&quot;responseCode9&quot;);
+String url =vars.get(&quot;url9&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
           </hashTree>
@@ -1271,6 +1718,65 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                 <stringProp name="scriptLanguage">groovy</stringProp>
               </JSR223PostProcessor>
               <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId10</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode10</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url10</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId10&quot;);
+String responseCode =vars.get(&quot;responseCode10&quot;);
+String url =vars.get(&quot;url10&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="申请单添加行程" enabled="true">
@@ -1296,7 +1802,67 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
               <stringProp name="HTTPSampler.connect_timeout"></stringProp>
               <stringProp name="HTTPSampler.response_timeout"></stringProp>
             </HTTPSamplerProxy>
-            <hashTree/>
+            <hashTree>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId11</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode11</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url12</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId11&quot;);
+String responseCode =vars.get(&quot;responseCode11&quot;);
+String url =vars.get(&quot;ur11&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
+            </hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询供应商" enabled="true">
               <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
                 <collectionProp name="Arguments.arguments"/>
@@ -1322,6 +1888,65 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                 <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
                 <stringProp name="JSONPostProcessor.defaultValues">notfound</stringProp>
               </JSONPostProcessor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId12</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode12</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url12</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId12&quot;);
+String responseCode =vars.get(&quot;responseCode12&quot;);
+String url =vars.get(&quot;url12&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="添加飞机行程" enabled="true">
@@ -1411,6 +2036,65 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                 <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
               </JSONPostProcessor>
               <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId13</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode13</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url13</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId13&quot;);
+String responseCode =vars.get(&quot;responseCode13&quot;);
+String url =vars.get(&quot;url13&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="提交申请单" enabled="true">
@@ -1472,6 +2156,65 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                 <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
                 <stringProp name="JSONPostProcessor.defaultValues">notfound</stringProp>
               </JSONPostProcessor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId14</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode14</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url14</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId14&quot;);
+String responseCode =vars.get(&quot;responseCode14&quot;);
+String url =vars.get(&quot;url14&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="提交申请单请求" enabled="true">
@@ -1557,6 +2300,65 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <stringProp name="scriptLanguage">groovy</stringProp>
               </JSR223PreProcessor>
               <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId15</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode15</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url15</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId15&quot;);
+String responseCode =vars.get(&quot;responseCode15&quot;);
+String url =vars.get(&quot;url5&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="申请单审批通过" enabled="true">
@@ -1588,7 +2390,7 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/api/approvals/pass</stringProp>
+              <stringProp name="HTTPSampler.path">/api/approvals/</stringProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -1608,6 +2410,65 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <intProp name="Assertion.test_type">16</intProp>
                 <stringProp name="Assertion.custom_message"></stringProp>
               </ResponseAssertion>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId16</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode16</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url16</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId16&quot;);
+String responseCode =vars.get(&quot;responseCode16&quot;);
+String url =vars.get(&quot;url16&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
           </hashTree>
@@ -1651,6 +2512,65 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <stringProp name="Assertion.custom_message"></stringProp>
               </ResponseAssertion>
               <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId17</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode17</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url17</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId17&quot;);
+String responseCode =vars.get(&quot;responseCode17&quot;);
+String url =vars.get(&quot;url17&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="报销单界面查询自定义列表" enabled="true">
@@ -1687,6 +2607,65 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <stringProp name="Assertion.custom_message"></stringProp>
               </ResponseAssertion>
               <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId18</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode18</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url18</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId18&quot;);
+String responseCode =vars.get(&quot;responseCode18&quot;);
+String url =vars.get(&quot;url18&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="报销单获取币种" enabled="true">
@@ -1722,6 +2701,65 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <intProp name="Assertion.test_type">8</intProp>
                 <stringProp name="Assertion.custom_message"></stringProp>
               </ResponseAssertion>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId19</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode19</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url19</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId19&quot;);
+String responseCode =vars.get(&quot;responseCode19&quot;);
+String url =vars.get(&quot;url19&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
           </hashTree>
@@ -1765,6 +2803,65 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
               </JSONPostProcessor>
               <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId20</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode20</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url20</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId20&quot;);
+String responseCode =vars.get(&quot;responseCode20&quot;);
+String url =vars.get(&quot;url20&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="报销单选人控件查询" enabled="true">
@@ -1807,6 +2904,65 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
               </JSONPostProcessor>
               <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId21</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode21</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url21</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId21&quot;);
+String responseCode =vars.get(&quot;responseCode21&quot;);
+String url =vars.get(&quot;url21&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="报销单查询公司" enabled="true">
@@ -1842,6 +2998,65 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <intProp name="Assertion.test_type">8</intProp>
                 <stringProp name="Assertion.custom_message"></stringProp>
               </ResponseAssertion>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId22</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode22</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url22</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId22&quot;);
+String responseCode =vars.get(&quot;responseCode22&quot;);
+String url =vars.get(&quot;url22&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
           </hashTree>
@@ -1879,6 +3094,65 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <stringProp name="Assertion.custom_message"></stringProp>
               </ResponseAssertion>
               <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId23</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode23</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url23</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId23&quot;);
+String responseCode =vars.get(&quot;responseCode23&quot;);
+String url =vars.get(&quot;url23&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="报销单查询部门" enabled="true">
@@ -1914,6 +3188,65 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <intProp name="Assertion.test_type">8</intProp>
                 <stringProp name="Assertion.custom_message"></stringProp>
               </ResponseAssertion>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId24</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode24</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url24</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId24&quot;);
+String responseCode =vars.get(&quot;responseCode24&quot;);
+String url =vars.get(&quot;url24&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
           </hashTree>
@@ -2180,6 +3513,65 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
 //vars.put(&quot;NewUTCEndDate&quot;,startDate);</stringProp>
               </BeanShellPreProcessor>
               <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId25</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode25</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url25</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId25&quot;);
+String responseCode =vars.get(&quot;responseCode25&quot;);
+String url =vars.get(&quot;url25&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="报销单创建费用" enabled="true">
@@ -2187,25 +3579,6 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
             <boolProp name="TransactionController.parent">false</boolProp>
           </TransactionController>
           <hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询发票金额" enabled="false">
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
-                <collectionProp name="Arguments.arguments"/>
-              </elementProp>
-              <stringProp name="HTTPSampler.domain"></stringProp>
-              <stringProp name="HTTPSampler.port"></stringProp>
-              <stringProp name="HTTPSampler.protocol"></stringProp>
-              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/invoice/api/invoice/tax/amount/by/receipts</stringProp>
-              <stringProp name="HTTPSampler.method">GET</stringProp>
-              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-              <stringProp name="HTTPSampler.response_timeout"></stringProp>
-            </HTTPSamplerProxy>
-            <hashTree/>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单费用创建" enabled="true">
               <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
               <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -2313,63 +3686,64 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                 <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
               </JSONPostProcessor>
               <hashTree/>
-            </hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单费用创建" enabled="false">
-              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-                <collectionProp name="Arguments.arguments">
-                  <elementProp name="" elementType="HTTPArgument">
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                    <stringProp name="Argument.value">{&#xd;
-	&quot;attachments&quot;: [],&#xd;
-	&quot;invoiceStatus&quot;: &quot;INIT&quot;,&#xd;
-	&quot;readonly&quot;: false,&#xd;
-	&quot;recognized&quot;: false,&#xd;
-	&quot;currencyCode&quot;: &quot;CNY&quot;,&#xd;
-	&quot;expenseTypeName&quot;: &quot;${expenseTypeName}&quot;,&#xd;
-	&quot;expenseTypeOID&quot;: &quot;${expenseTypeOID}&quot;,&#xd;
-	&quot;expenseTypeId&quot;: &quot;${expenseTypeid}&quot;,&#xd;
-	&quot;expenseTypeIconName&quot;: &quot;coach&quot;,&#xd;
-	&quot;expenseTypeKey&quot;: &quot;expense.type.coach&quot;,&#xd;
-	&quot;receiptList&quot;: [],&#xd;
-	&quot;amount&quot;: 12,&#xd;
-	&quot;actualCurrencyRate&quot;: 1,&#xd;
-	&quot;createdDate&quot;: &quot;${NewUTCstartDate}&quot;,&#xd;
-	&quot;invoiceCurrencyCode&quot;: &quot;CNY&quot;,&#xd;
-	&quot;comment&quot;: &quot;&quot;,&#xd;
-	&quot;invoiceInstead&quot;: false,&#xd;
-	&quot;invoiceInsteadReason&quot;: null,&#xd;
-	&quot;data&quot;:[],&#xd;
-	&quot;baseCurrency&quot;: &quot;CNY&quot;,&#xd;
-	&quot;updateRate&quot;: true,&#xd;
-	&quot;expenseReportOID&quot;: &quot;${expenseReportOID}&quot;,&#xd;
-	&quot;ownerOID&quot;: &quot;${userOID}&quot;,&#xd;
-	&quot;paymentType&quot;: &quot;1001&quot;&#xd;
-}</stringProp>
-                    <stringProp name="Argument.metadata">=</stringProp>
-                  </elementProp>
-                </collectionProp>
-              </elementProp>
-              <stringProp name="HTTPSampler.domain"></stringProp>
-              <stringProp name="HTTPSampler.port"></stringProp>
-              <stringProp name="HTTPSampler.protocol"></stringProp>
-              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/invoice/api/v5/invoices</stringProp>
-              <stringProp name="HTTPSampler.method">POST</stringProp>
-              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-              <stringProp name="HTTPSampler.response_timeout"></stringProp>
-            </HTTPSamplerProxy>
-            <hashTree>
-              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
-                <stringProp name="JSONPostProcessor.referenceNames">invoinceOID</stringProp>
-                <stringProp name="JSONPostProcessor.jsonPathExprs">$.rows.invoinceOID</stringProp>
-                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              </JSONPostProcessor>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId26</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode26</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url26</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId26&quot;);
+String responseCode =vars.get(&quot;responseCode26&quot;);
+String url =vars.get(&quot;url26&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
           </hashTree>
@@ -2412,6 +3786,65 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                 <intProp name="Assertion.test_type">8</intProp>
                 <stringProp name="Assertion.custom_message"></stringProp>
               </ResponseAssertion>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId27</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode27</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url27</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId27&quot;);
+String responseCode =vars.get(&quot;responseCode27&quot;);
+String url =vars.get(&quot;url27&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
           </hashTree>
@@ -2481,6 +3914,65 @@ vars.put(&quot;AllDetal&quot;,AllDetal);
 </stringProp>
               </BeanShellPostProcessor>
               <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId28</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode28</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url28</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId28&quot;);
+String responseCode =vars.get(&quot;responseCode28&quot;);
+String url =vars.get(&quot;url28&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="提交报销单" enabled="true">
@@ -2545,6 +4037,65 @@ vars.put(&quot;AllDetal&quot;,AllDetal);
                 <intProp name="groupSize">0</intProp>
                 <longProp name="timeoutInMs">0</longProp>
               </SyncTimer>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId29</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode29</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url29</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId29&quot;);
+String responseCode =vars.get(&quot;responseCode29&quot;);
+String url =vars.get(&quot;url29&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
             <IfController guiclass="IfControllerPanel" testclass="IfController" testname="如果有弱管控强制提交" enabled="true">
@@ -2620,6 +4171,65 @@ vars.put(&quot;AllDetalNew&quot;,str);
 </stringProp>
                 </BeanShellPreProcessor>
                 <hashTree/>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                  <stringProp name="RegexExtractor.refname">spanId30</stringProp>
+                  <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                  <stringProp name="RegexExtractor.template">$1$</stringProp>
+                  <stringProp name="RegexExtractor.default"></stringProp>
+                  <stringProp name="RegexExtractor.match_number"></stringProp>
+                </RegexExtractor>
+                <hashTree/>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                  <stringProp name="RegexExtractor.refname">responseCode30</stringProp>
+                  <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                  <stringProp name="RegexExtractor.template">$1$</stringProp>
+                  <stringProp name="RegexExtractor.default"></stringProp>
+                  <stringProp name="RegexExtractor.match_number"></stringProp>
+                </RegexExtractor>
+                <hashTree/>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                  <stringProp name="RegexExtractor.refname">url30</stringProp>
+                  <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                  <stringProp name="RegexExtractor.template">$1$</stringProp>
+                  <stringProp name="RegexExtractor.default"></stringProp>
+                  <stringProp name="RegexExtractor.match_number"></stringProp>
+                </RegexExtractor>
+                <hashTree/>
+                <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                  <boolProp name="resetInterpreter">false</boolProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="script">String spanId =vars.get(&quot;spanId30&quot;);
+String responseCode =vars.get(&quot;responseCode30&quot;);
+String url =vars.get(&quot;url30&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode.equals(&quot;200&quot;)){
+	bw.write(url+&quot;:&quot;+responseCode);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+                </BeanShellPostProcessor>
+                <hashTree/>
               </hashTree>
             </hashTree>
           </hashTree>
@@ -2672,6 +4282,65 @@ vars.put(&quot;AllDetalNew&quot;,str);
                 <intProp name="Assertion.test_type">16</intProp>
                 <stringProp name="Assertion.custom_message"></stringProp>
               </ResponseAssertion>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+                <stringProp name="RegexExtractor.refname">spanId31</stringProp>
+                <stringProp name="RegexExtractor.regex">SpanID: (.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+                <stringProp name="RegexExtractor.refname">responseCode31</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">URL</stringProp>
+                <stringProp name="RegexExtractor.refname">url31</stringProp>
+                <stringProp name="RegexExtractor.regex">(.+)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId1 =vars.get(&quot;spanId31&quot;);
+String responseCode1 =vars.get(&quot;responseCode31&quot;);
+String url1 =vars.get(&quot;url31&quot;);
+
+String Path=path+&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+if(!file.exists()){
+  try {
+      file.createNewFile();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+}
+FileWriter fw = null;
+BufferedWriter bw = null;
+fw = new FileWriter(file);
+bw = new BufferedWriter(fw);
+if(!responseCode1.equals(&quot;200&quot;)){
+	bw.write(url1+&quot;:&quot;+responseCode1);
+	bw.write();
+     bw.flush();
+     fw.close();
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
           </hashTree>

@@ -191,7 +191,7 @@
       </ResultCollector>
       <hashTree/>
       <ResultSaver guiclass="ResultSaverGui" testclass="ResultSaver" testname="保存响应到文件" enabled="true">
-        <stringProp name="FileSaver.filename">D:/errorT/</stringProp>
+        <stringProp name="FileSaver.filename">./error/</stringProp>
         <boolProp name="FileSaver.errorsonly">true</boolProp>
         <boolProp name="FileSaver.successonly">false</boolProp>
         <boolProp name="FileSaver.skipsuffix">true</boolProp>

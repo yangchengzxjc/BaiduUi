@@ -466,7 +466,7 @@ if(file1.exists()&amp;&amp;file1.isFile())
             <stringProp name="RegexExtractor.match_number"></stringProp>
           </RegexExtractor>
           <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="false">
             <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -500,93 +500,21 @@ FileWriter writer;
 </stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="写登录后参数化文件" enabled="false">
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="写登录后参数化文件" enabled="true">
             <stringProp name="filename"></stringProp>
             <stringProp name="parameters"></stringProp>
             <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="script">public static void execParam() 
 {
 	
-String spanId1 =vars.get(&quot;spanId1&quot;);
-String responseCode1 =vars.get(&quot;responseCode1&quot;);
-String url1 =vars.get(&quot;url1&quot;);
-log.info(&quot;url:&quot;+url1);
-
-log.info(&quot;spanid:&quot;+spanId1);
-
-String Path=&quot;spanId.txt&quot;;
-
-File file =new File(Path);
-FileWriter writer;  
-        try {
-            writer = new FileWriter(Path,true);
-            BufferedWriter bw = new BufferedWriter(writer);
-            bw.write(&quot;1111111111&quot;);
-            bw.write(&quot;\r\n&quot;);
-            bw.flush();
-            writer.flush();
-            bw.close();
-            writer.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-}
-execParam();</stringProp>
-            <stringProp name="TestPlan.comments">../TestData/${attachmentName}</stringProp>
-          </BeanShellPostProcessor>
-          <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="写登录后参数化文件" enabled="false">
-            <stringProp name="filename"></stringProp>
-            <stringProp name="parameters"></stringProp>
-            <boolProp name="resetInterpreter">false</boolProp>
-            <stringProp name="script">public static void execParam() 
-{
-	
-String spanId1 =vars.get(&quot;spanId1&quot;);
-String responseCode1 =vars.get(&quot;responseCode1&quot;);
-String url1 =vars.get(&quot;url1&quot;);
-log.info(&quot;url:&quot;+url1);
-
-log.info(&quot;spanid:&quot;+spanId1);
-
-String Path=&quot;spanId.txt&quot;;
-
-File file =new File(Path);
-FileWriter writer;  
-        try {
-            writer = new FileWriter(Path,true);
-            BufferedWriter bw = new BufferedWriter(writer);
-            bw.write(&quot;1111111111&quot;);
-            bw.write(&quot;\r\n&quot;);
-            bw.flush();
-            writer.flush();
-            bw.close();
-            writer.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-}
-execParam();</stringProp>
-            <stringProp name="TestPlan.comments">../TestData/${attachmentName}</stringProp>
-          </BeanShellPostProcessor>
-          <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="写登录后参数化文件" enabled="false">
-            <stringProp name="filename"></stringProp>
-            <stringProp name="parameters"></stringProp>
-            <boolProp name="resetInterpreter">false</boolProp>
-            <stringProp name="script">public static void execParam() 
-{
-	
-String responseCode1 =vars.get(&quot;responseCode1&quot;);
-String getdata = vars.get(&quot;spanId1&quot;)+&quot;:&quot;+vars.get(&quot;url1&quot;);
-String filename = &quot;aaaaaaaaaa.txt&quot;;
+String responseCode =vars.get(&quot;responseCode1&quot;);
+String getdata = vars.get(&quot;url1&quot;)+&quot;:&quot;+vars.get(&quot;spanId1&quot;);
+String filename = &quot;spanId.txt&quot;;
 FileWriter writer;  
 
-if(!responseCode1.equals(&quot;200&quot;))
+
+if(!responseCode.equals(&quot;200&quot;))
 {
-	
 try {
             writer = new FileWriter(filename,true);
             BufferedWriter bw = new BufferedWriter(writer);

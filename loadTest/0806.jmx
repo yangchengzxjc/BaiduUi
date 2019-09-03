@@ -256,9 +256,9 @@ if(file.exists()&amp;&amp;file.isFile())
    file.delete();
 
 
-//File file1=new File(&quot;spanId.txt&quot;);
-//if(file1.exists()&amp;&amp;file1.isFile())
-//   file1.delete();
+File file1=new File(vars.get(&quot;path&quot;)+&quot;span.txt&quot;);
+if(file1.exists()&amp;&amp;file1.isFile())
+   file1.delete();
 
 </stringProp>
           <stringProp name="BeanShellSampler.filename"></stringProp>
@@ -466,7 +466,7 @@ if(file.exists()&amp;&amp;file.isFile())
             <stringProp name="RegexExtractor.match_number"></stringProp>
           </RegexExtractor>
           <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="false">
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
             <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -479,7 +479,7 @@ log.info(&quot;url:&quot;+url1);
 
 log.info(&quot;spanid:&quot;+spanId1);
 
-String filename = &quot;spanId.txt&quot;;
+String filename = &quot;span.txt&quot;;
 
 FileWriter writer;  
         try {
@@ -500,7 +500,7 @@ FileWriter writer;
 </stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="写登录后参数化文件" enabled="true">
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="写登录后参数化文件" enabled="false">
             <stringProp name="filename"></stringProp>
             <stringProp name="parameters"></stringProp>
             <boolProp name="resetInterpreter">false</boolProp>
@@ -546,7 +546,7 @@ execParam();</stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/custom/forms/${apply_FormOID}</stringProp>
+          <stringProp name="HTTPSampler.path">/custom/forms/${apply_FormOID}</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -660,22 +660,14 @@ execParam();</stringProp>
 String responseCode2 =vars.get(&quot;responseCode2&quot;);
 String url2 =vars.get(&quot;url2&quot;);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String Path=&quot;span.txt&quot;;
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
 FileWriter fw = null;
 BufferedWriter bw = null;
-fw = new FileWriter(file);
+fw = new FileWriter(Path,true);
 bw = new BufferedWriter(fw);
 if(!responseCode2.equals(&quot;200&quot;)){
-	bw.write(url2+&quot;:&quot;+responseCode2);
+	bw.write(url2+&quot;:&quot;+spanId2);
 	bw.write(&quot;\r\n&quot;);
      bw.flush();
      fw.close();
@@ -693,7 +685,7 @@ if(!responseCode2.equals(&quot;200&quot;)){
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/custom/forms/${daily_FormOID}</stringProp>
+          <stringProp name="HTTPSampler.path">/custom/forms/${daily_FormOID}</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -813,19 +805,11 @@ ${__setProperty(apply_customFormFields,${applyCustomFormFields},)};
 String responseCode3 =vars.get(&quot;responseCode3&quot;);
 String url3 =vars.get(&quot;url3&quot;);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+String Path=&quot;span.txt&quot;;
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
 FileWriter fw = null;
 BufferedWriter bw = null;
-fw = new FileWriter(file);
+fw = new FileWriter(Path,true);
 bw = new BufferedWriter(fw);
 if(!responseCode3.equals(&quot;200&quot;)){
 	bw.write(url3+&quot;:&quot;+responseCode3);

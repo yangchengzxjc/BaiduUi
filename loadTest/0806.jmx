@@ -19,12 +19,12 @@
           </elementProp>
           <elementProp name="durationTime" elementType="Argument">
             <stringProp name="Argument.name">durationTime</stringProp>
-            <stringProp name="Argument.value">${__P(durationTime,60)}</stringProp>
+            <stringProp name="Argument.value">${__P(durationTime,30)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="concurrentNumber" elementType="Argument">
             <stringProp name="Argument.name">concurrentNumber</stringProp>
-            <stringProp name="Argument.value">${__P(concurrentNumber,2)}</stringProp>
+            <stringProp name="Argument.value">${__P(concurrentNumber,1)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -402,7 +402,7 @@ if(file1.exists()&amp;&amp;file1.isFile())
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/auth/api/account</stringProp>
+          <stringProp name="HTTPSampler.path">/auth/api/account22</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -470,32 +470,142 @@ if(file1.exists()&amp;&amp;file1.isFile())
             <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
-            <stringProp name="script">String spanId1 =vars.get(&quot;spanId1&quot;);
+            <stringProp name="script">import java.io.*;
+
+String spanId1 =vars.get(&quot;spanId1&quot;);
 String responseCode1 =vars.get(&quot;responseCode1&quot;);
 String url1 =vars.get(&quot;url1&quot;);
+log.info(&quot;url:&quot;+url1);
 
-String Path=vars.get(&quot;path&quot;)+&quot;spanId.txt&quot;;
+log.info(&quot;spanid:&quot;+spanId1);
 
-File file =new File(Path);
-if(!file.exists()){
-  try {
-      file.createNewFile();
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-}
-FileWriter fw = null;
-BufferedWriter bw = null;
-fw = new FileWriter(file);
-bw = new BufferedWriter(fw);
-if(!responseCode1.equals(&quot;200&quot;)){
-	bw.write(url1+&quot;:&quot;+responseCode1);
-	bw.write(&quot;\r\n&quot;);
-     bw.flush();
-     fw.close();
-}
+String filename = &quot;./spanId.txt&quot;;
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url1+&quot;:&quot;+spanId1);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
 </stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="写登录后参数化文件" enabled="false">
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="script">public static void execParam() 
+{
+	
+String spanId1 =vars.get(&quot;spanId1&quot;);
+String responseCode1 =vars.get(&quot;responseCode1&quot;);
+String url1 =vars.get(&quot;url1&quot;);
+log.info(&quot;url:&quot;+url1);
+
+log.info(&quot;spanid:&quot;+spanId1);
+
+String Path=&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+FileWriter writer;  
+        try {
+            writer = new FileWriter(Path,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(&quot;1111111111&quot;);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+execParam();</stringProp>
+            <stringProp name="TestPlan.comments">../TestData/${attachmentName}</stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="写登录后参数化文件" enabled="false">
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="script">public static void execParam() 
+{
+	
+String spanId1 =vars.get(&quot;spanId1&quot;);
+String responseCode1 =vars.get(&quot;responseCode1&quot;);
+String url1 =vars.get(&quot;url1&quot;);
+log.info(&quot;url:&quot;+url1);
+
+log.info(&quot;spanid:&quot;+spanId1);
+
+String Path=&quot;spanId.txt&quot;;
+
+File file =new File(Path);
+FileWriter writer;  
+        try {
+            writer = new FileWriter(Path,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(&quot;1111111111&quot;);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+execParam();</stringProp>
+            <stringProp name="TestPlan.comments">../TestData/${attachmentName}</stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="写登录后参数化文件" enabled="false">
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="script">public static void execParam() 
+{
+	
+String responseCode1 =vars.get(&quot;responseCode1&quot;);
+String getdata = vars.get(&quot;spanId1&quot;)+&quot;:&quot;+vars.get(&quot;url1&quot;);
+String filename = &quot;aaaaaaaaaa.txt&quot;;
+FileWriter writer;  
+
+if(!responseCode1.equals(&quot;200&quot;))
+{
+	
+try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(getdata);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }	
+	
+	
+}
+        
+}
+execParam();</stringProp>
+            <stringProp name="TestPlan.comments">../TestData/${attachmentName}</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
@@ -800,7 +910,7 @@ if(!responseCode3.equals(&quot;200&quot;)){
           <hashTree/>
         </hashTree>
       </hashTree>
-      <kg.apc.jmeter.threads.SteppingThreadGroup guiclass="kg.apc.jmeter.threads.SteppingThreadGroupGui" testclass="kg.apc.jmeter.threads.SteppingThreadGroup" testname="jp@gc - Stepping Thread Group (deprecated)" enabled="true">
+      <kg.apc.jmeter.threads.SteppingThreadGroup guiclass="kg.apc.jmeter.threads.SteppingThreadGroupGui" testclass="kg.apc.jmeter.threads.SteppingThreadGroup" testname="jp@gc - Stepping Thread Group (deprecated)" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <stringProp name="ThreadGroup.num_threads">${concurrentNumber}</stringProp>
         <stringProp name="Threads initial delay">0</stringProp>
@@ -2389,7 +2499,7 @@ if(!responseCode.equals(&quot;200&quot;)){
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/api/approvals/</stringProp>
+              <stringProp name="HTTPSampler.path">/api/approvals/pass</stringProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -4030,11 +4140,6 @@ if(!responseCode.equals(&quot;200&quot;)){
                 <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
                 <stringProp name="JSONPostProcessor.defaultValues">null</stringProp>
               </JSONPostProcessor>
-              <hashTree/>
-              <SyncTimer guiclass="TestBeanGUI" testclass="SyncTimer" testname="同步定时器" enabled="true">
-                <intProp name="groupSize">0</intProp>
-                <longProp name="timeoutInMs">0</longProp>
-              </SyncTimer>
               <hashTree/>
               <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
                 <stringProp name="RegexExtractor.useHeaders">true</stringProp>

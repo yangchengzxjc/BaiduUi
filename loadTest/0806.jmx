@@ -767,7 +767,7 @@ ${__setProperty(apply_customFormFields,${applyCustomFormFields},)};
           <stringProp name="cacheKey">true</stringProp>
           <stringProp name="script">vars.put(&quot;bxcustomFormFields&quot;,props.get(&quot;bxcustomFormFields&quot;));
 vars.put(&quot;bxcustomFormPropertyMap&quot;,props.get(&quot;bxcustomFormPropertyMap&quot;));
-log.info(&quot;bxcustomFormProperties&quot;+props.get(&quot;bxcustomFormProperties&quot;));
+//log.info(&quot;bxcustomFormProperties&quot;+props.get(&quot;bxcustomFormProperties&quot;));
 
 vars.put(&quot;apply_customFormPropertyMap&quot;,props.get(&quot;apply_customFormPropertyMap&quot;));
 vars.put(&quot;apply_customFormProperties&quot;,props.get(&quot;apply_customFormProperties&quot;));

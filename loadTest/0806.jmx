@@ -219,39 +219,7 @@
             <url>true</url>
           </value>
         </objProp>
-        <stringProp name="filename">/opt/jenkins-slave/workspace/workspace/HLY-CN-LoadTest/loadTest/Error.txt</stringProp>
-      </ResultCollector>
-      <hashTree/>
-      <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="错误请求写入文件" enabled="false">
-        <boolProp name="ResultCollector.error_logging">true</boolProp>
-        <objProp>
-          <name>saveConfig</name>
-          <value class="SampleSaveConfiguration">
-            <time>false</time>
-            <latency>false</latency>
-            <timestamp>false</timestamp>
-            <success>false</success>
-            <label>false</label>
-            <code>false</code>
-            <message>false</message>
-            <threadName>false</threadName>
-            <dataType>false</dataType>
-            <encoding>false</encoding>
-            <assertions>false</assertions>
-            <subresults>false</subresults>
-            <responseData>true</responseData>
-            <samplerData>false</samplerData>
-            <xml>true</xml>
-            <fieldNames>false</fieldNames>
-            <responseHeaders>true</responseHeaders>
-            <requestHeaders>false</requestHeaders>
-            <responseDataOnError>false</responseDataOnError>
-            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
-            <assertionsResultsToSave>0</assertionsResultsToSave>
-            <url>true</url>
-          </value>
-        </objProp>
-        <stringProp name="filename">Error.txt</stringProp>
+        <stringProp name="filename">${path}Error.txt</stringProp>
       </ResultCollector>
       <hashTree/>
       <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="删除已有文件" enabled="true">

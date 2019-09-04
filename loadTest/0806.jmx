@@ -219,7 +219,7 @@
             <url>true</url>
           </value>
         </objProp>
-        <stringProp name="filename">./Error.txt</stringProp>
+        <stringProp name="filename">Error.txt</stringProp>
       </ResultCollector>
       <hashTree/>
       <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="删除已有文件" enabled="true">

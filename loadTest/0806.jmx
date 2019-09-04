@@ -219,7 +219,7 @@
             <url>true</url>
           </value>
         </objProp>
-        <stringProp name="filename">${path}Error.txt</stringProp>
+        <stringProp name="filename">./Error.txt</stringProp>
       </ResultCollector>
       <hashTree/>
       <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="删除已有文件" enabled="true">
@@ -1302,7 +1302,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 String json = vars.get(&quot;apply_customFormFields&quot;);
-log.info(&quot;申请单控件信息:&quot;+json);
+//log.info(&quot;申请单控件信息:&quot;+json);
 
 String fullName = vars.get(&quot;fullName&quot;);
 
@@ -1310,7 +1310,7 @@ String participantOID =vars.get(&quot;userOID&quot;);
 
 String participant=&quot;[{\&quot;participantOID\&quot;:\&quot;&quot;+participantOID+&quot;\&quot;,\&quot;fullName\&quot;:\&quot;&quot;+fullName+&quot;\&quot;,\&quot;userOID\&quot;:\&quot;&quot;+participantOID+&quot;\&quot;}]&quot;;
 
-log.info(&quot;participant:&quot;+participant);
+//log.info(&quot;participant:&quot;+participant);
 
 JSONArray customFormFields = JSON.parseArray(json);
 int size = customFormFields.size();
@@ -1350,7 +1350,7 @@ for (int i = 0; i &lt; size; i++){
              }
 }
 String str =customFormFields.toString();
-log.info(&quot;NcustomFormFields:&quot;+str);
+//log.info(&quot;NcustomFormFields:&quot;+str);
 vars.put(&quot;NcustomFormFields&quot;,str);
 
 </stringProp>
@@ -2623,7 +2623,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 String json = vars.get(&quot;bxcustomFormFields&quot;);
-log.info(&quot;控件信息:&quot;+json);
+//log.info(&quot;控件信息:&quot;+json);
 
 String fullName = vars.get(&quot;fullName&quot;);
 
@@ -2675,7 +2675,7 @@ for (int i = 0; i &lt; size; i++){
              }
 }
 String str =customFormFields.toString();
-log.info(&quot;bxcustFormValues:&quot;+str);
+//log.info(&quot;bxcustFormValues:&quot;+str);
 vars.put(&quot;bxcustFormValues&quot;,str);</stringProp>
               </BeanShellPreProcessor>
               <hashTree/>

@@ -190,6 +190,54 @@
         <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
+      <ResultSaver guiclass="ResultSaverGui" testclass="ResultSaver" testname="保存响应到文件" enabled="true">
+        <stringProp name="FileSaver.filename">./error/</stringProp>
+        <boolProp name="FileSaver.errorsonly">true</boolProp>
+        <boolProp name="FileSaver.successonly">false</boolProp>
+        <boolProp name="FileSaver.skipsuffix">false</boolProp>
+        <boolProp name="FileSaver.skipautonumber">false</boolProp>
+        <boolProp name="FileSaver.addTimstamp">true</boolProp>
+      </ResultSaver>
+      <hashTree/>
+      <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="Error Writer" enabled="false">
+        <boolProp name="ResultCollector.error_logging">true</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>true</responseData>
+            <samplerData>true</samplerData>
+            <xml>true</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>true</responseHeaders>
+            <requestHeaders>true</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <fileName>true</fileName>
+            <threadCounts>true</threadCounts>
+            <sampleCount>true</sampleCount>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename">./Error.txt</stringProp>
+      </ResultCollector>
+      <hashTree/>
       <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="错误请求写入文件" enabled="true">
         <boolProp name="ResultCollector.error_logging">true</boolProp>
         <objProp>
@@ -219,7 +267,7 @@
             <url>true</url>
           </value>
         </objProp>
-        <stringProp name="filename">${path}Error.txt</stringProp>
+        <stringProp name="filename">./Error.txt</stringProp>
       </ResultCollector>
       <hashTree/>
       <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="删除已有文件" enabled="true">
@@ -244,11 +292,6 @@ if(file.exists()&amp;&amp;file.isFile())
 
 
 File file1=new File(vars.get(&quot;path&quot;)+&quot;span.txt&quot;);
-if(file1.exists()&amp;&amp;file1.isFile())
-   file1.delete();
-
-
-File file1=new File(vars.get(&quot;path&quot;)+&quot;Error.txt&quot;);
 if(file1.exists()&amp;&amp;file1.isFile())
    file1.delete();
 
@@ -458,6 +501,76 @@ if(file1.exists()&amp;&amp;file1.isFile())
             <stringProp name="RegexExtractor.match_number"></stringProp>
           </RegexExtractor>
           <hashTree/>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId1&quot;);
+String responseCode =vars.get(&quot;responseCode1&quot;);
+String url =vars.get(&quot;url1&quot;);
+log.info(&quot;url:&quot;+url1);
+
+log.info(&quot;spanid:&quot;+spanId1);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="写登录后参数化文件" enabled="false">
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="script">public static void execParam() 
+{
+	
+String responseCode =vars.get(&quot;responseCode1&quot;);
+String getdata = vars.get(&quot;url1&quot;)+&quot;:&quot;+vars.get(&quot;spanId1&quot;);
+String filename = &quot;span.txt&quot;;
+FileWriter writer;  
+
+
+if(!responseCode.equals(&quot;200&quot;))
+{
+try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(getdata);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }	
+	
+	
+}
+        
+}
+execParam();</stringProp>
+            <stringProp name="TestPlan.comments">../TestData/${attachmentName}</stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取申请单表单字段" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
@@ -572,6 +685,34 @@ execParam();</stringProp>
             <stringProp name="RegexExtractor.default"></stringProp>
             <stringProp name="RegexExtractor.match_number"></stringProp>
           </RegexExtractor>
+          <hashTree/>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">String spanId =vars.get(&quot;spanId2&quot;);
+String responseCode=vars.get(&quot;responseCode2&quot;);
+String url=vars.get(&quot;url2&quot;);
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+</stringProp>
+          </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="获取报销单表单字段" enabled="true">
@@ -694,6 +835,35 @@ ${__setProperty(apply_customFormFields,${applyCustomFormFields},)};
             <stringProp name="RegexExtractor.match_number"></stringProp>
           </RegexExtractor>
           <hashTree/>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">String spanId =vars.get(&quot;spanId3&quot;);
+String responseCode =vars.get(&quot;responseCode3&quot;);
+String url =vars.get(&quot;url3&quot;);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+</stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
         </hashTree>
       </hashTree>
       <kg.apc.jmeter.threads.SteppingThreadGroup guiclass="kg.apc.jmeter.threads.SteppingThreadGroupGui" testclass="kg.apc.jmeter.threads.SteppingThreadGroup" testname="jp@gc - Stepping Thread Group (deprecated)" enabled="true">
@@ -778,7 +948,7 @@ vars.put(&quot;apply_customFormFields&quot;,props.get(&quot;apply_customFormFiel
 </stringProp>
         </JSR223PreProcessor>
         <hashTree/>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="申请单模块" enabled="true">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="申请单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
@@ -839,6 +1009,36 @@ vars.put(&quot;apply_customFormFields&quot;,props.get(&quot;apply_customFormFiel
                 <stringProp name="RegexExtractor.default"></stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId4&quot;);
+String responseCode =vars.get(&quot;responseCode4&quot;);
+String url =vars.get(&quot;url4&quot;);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
               <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
                 <collectionProp name="Asserion.test_strings">
@@ -908,6 +1108,37 @@ vars.put(&quot;apply_customFormFields&quot;,props.get(&quot;apply_customFormFiel
                 <stringProp name="RegexExtractor.default"></stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId5&quot;);
+String responseCode =vars.get(&quot;responseCode5&quot;);
+String url =vars.get(&quot;url5&quot;);
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
               <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
                 <collectionProp name="Asserion.test_strings">
@@ -979,6 +1210,35 @@ vars.put(&quot;apply_customFormFields&quot;,props.get(&quot;apply_customFormFiel
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
               <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId6&quot;);
+String responseCode =vars.get(&quot;responseCode6&quot;);
+String url =vars.get(&quot;url6&quot;);
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
               <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
                 <collectionProp name="Asserion.test_strings">
                   <stringProp name="50547">300</stringProp>
@@ -1041,6 +1301,37 @@ vars.put(&quot;apply_customFormFields&quot;,props.get(&quot;apply_customFormFiel
                 <stringProp name="RegexExtractor.default"></stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId7&quot;);
+String responseCode =vars.get(&quot;responseCode7&quot;);
+String url =vars.get(&quot;url7&quot;);
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
           </hashTree>
@@ -1114,6 +1405,35 @@ vars.put(&quot;apply_customFormFields&quot;,props.get(&quot;apply_customFormFiel
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
               <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId8&quot;);
+String responseCode =vars.get(&quot;responseCode8&quot;);
+String url =vars.get(&quot;url8&quot;);
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="申请单查询自选审批人" enabled="true">
@@ -1176,6 +1496,37 @@ vars.put(&quot;apply_customFormFields&quot;,props.get(&quot;apply_customFormFiel
                 <stringProp name="RegexExtractor.default"></stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId9&quot;);
+String responseCode =vars.get(&quot;responseCode9&quot;);
+String url =vars.get(&quot;url9&quot;);
+String filename = &quot;span.txt&quot;;
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
           </hashTree>
@@ -1479,6 +1830,37 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
               <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId10&quot;);
+String responseCode =vars.get(&quot;responseCode10&quot;);
+String url =vars.get(&quot;url10&quot;);
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="申请单添加行程" enabled="true">
@@ -1531,6 +1913,37 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                 <stringProp name="RegexExtractor.default"></stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId11&quot;);
+String responseCode =vars.get(&quot;responseCode11&quot;);
+String url =vars.get(&quot;url11&quot;);
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询供应商" enabled="true">
@@ -1585,6 +1998,36 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                 <stringProp name="RegexExtractor.default"></stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId12&quot;);
+String responseCode =vars.get(&quot;responseCode12&quot;);
+String url =vars.get(&quot;url12&quot;);
+String filename = &quot;span.txt&quot;;
+
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="添加飞机行程" enabled="true">
@@ -1701,6 +2144,36 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
               <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId13&quot;);
+String responseCode =vars.get(&quot;responseCode13&quot;);
+String url =vars.get(&quot;url13&quot;);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="提交申请单" enabled="true">
@@ -1789,6 +2262,38 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                 <stringProp name="RegexExtractor.default"></stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId14&quot;);
+String responseCode =vars.get(&quot;responseCode14&quot;);
+String url =vars.get(&quot;url14&quot;);
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url1+&quot;:&quot;+spanId1);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+
+
+</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="提交申请单请求" enabled="true">
@@ -1901,6 +2406,38 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
               <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId15&quot;);
+String responseCode =vars.get(&quot;responseCode15&quot;);
+String url =vars.get(&quot;url15&quot;);
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url1+&quot;:&quot;+spanId1);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+
+
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="申请单审批通过" enabled="true">
@@ -1980,10 +2517,40 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
               <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId16&quot;);
+String responseCode =vars.get(&quot;responseCode16&quot;);
+String url =vars.get(&quot;url16&quot;);
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url1+&quot;:&quot;+spanId1);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="报销单模块" enabled="true">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="报销单" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
@@ -2049,6 +2616,37 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
               <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">import java.io.*;
+
+String spanId =vars.get(&quot;spanId17&quot;);
+String responseCode =vars.get(&quot;responseCode17&quot;);
+String url =vars.get(&quot;url17&quot;);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="报销单界面查询自定义列表" enabled="true">
@@ -2112,6 +2710,34 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
               <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId18&quot;);
+String responseCode =vars.get(&quot;responseCode18&quot;);
+String url =vars.get(&quot;url18&quot;);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="报销单获取币种" enabled="true">
@@ -2174,6 +2800,35 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <stringProp name="RegexExtractor.default"></stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId19&quot;);
+String responseCode =vars.get(&quot;responseCode19&quot;);
+String url =vars.get(&quot;url19&quot;);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
           </hashTree>
@@ -2244,6 +2899,35 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
               <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId20&quot;);
+String responseCode =vars.get(&quot;responseCode20&quot;);
+String url =vars.get(&quot;url20&quot;);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="报销单选人控件查询" enabled="true">
@@ -2313,6 +2997,35 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
               <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId21&quot;);
+String responseCode =vars.get(&quot;responseCode21&quot;);
+String url =vars.get(&quot;url21&quot;);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="报销单查询公司" enabled="true">
@@ -2375,6 +3088,34 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <stringProp name="RegexExtractor.default"></stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId22&quot;);
+String responseCode =vars.get(&quot;responseCode22&quot;);
+String url =vars.get(&quot;url22&quot;);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
           </hashTree>
@@ -2439,6 +3180,34 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
               <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId23&quot;);
+String responseCode =vars.get(&quot;responseCode23&quot;);
+String url =vars.get(&quot;url23&quot;);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="报销单查询部门" enabled="true">
@@ -2501,6 +3270,34 @@ vars.put(&quot;Save_response_new&quot;,str_new);</stringProp>
                 <stringProp name="RegexExtractor.default"></stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId24&quot;);
+String responseCode =vars.get(&quot;responseCode24&quot;);
+String url =vars.get(&quot;url24&quot;);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
           </hashTree>
@@ -2794,6 +3591,34 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
               <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId25&quot;);
+String responseCode =vars.get(&quot;responseCode25&quot;);
+String url =vars.get(&quot;url25&quot;);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="报销单创建费用" enabled="true">
@@ -2935,6 +3760,36 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
               <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId26&quot;);
+String responseCode =vars.get(&quot;responseCode26&quot;);
+String url =vars.get(&quot;url26&quot;);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+
+</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="报销单详情查看" enabled="true">
@@ -3003,6 +3858,34 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                 <stringProp name="RegexExtractor.default"></stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId27&quot;);
+String responseCode =vars.get(&quot;responseCode27&quot;);
+String url =vars.get(&quot;url27&quot;);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
           </hashTree>
@@ -3099,6 +3982,34 @@ vars.put(&quot;AllDetal&quot;,AllDetal);
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
               <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId28&quot;);
+String responseCode =vars.get(&quot;responseCode28&quot;);
+String url =vars.get(&quot;url28&quot;);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
+              </BeanShellPostProcessor>
+              <hashTree/>
             </hashTree>
           </hashTree>
           <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="提交报销单" enabled="true">
@@ -3185,6 +4096,34 @@ vars.put(&quot;AllDetal&quot;,AllDetal);
                 <stringProp name="RegexExtractor.default"></stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId =vars.get(&quot;spanId29&quot;);
+String responseCode =vars.get(&quot;responseCode29&quot;);
+String url =vars.get(&quot;url29&quot;);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
             <IfController guiclass="IfControllerPanel" testclass="IfController" testname="如果有弱管控强制提交" enabled="true">
@@ -3287,6 +4226,34 @@ vars.put(&quot;AllDetalNew&quot;,str);
                   <stringProp name="RegexExtractor.match_number"></stringProp>
                 </RegexExtractor>
                 <hashTree/>
+                <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                  <boolProp name="resetInterpreter">false</boolProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="script">String spanId =vars.get(&quot;spanId30&quot;);
+String responseCode =vars.get(&quot;responseCode30&quot;);
+String url =vars.get(&quot;url30&quot;);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
+                </BeanShellPostProcessor>
+                <hashTree/>
               </hashTree>
             </hashTree>
           </hashTree>
@@ -3366,6 +4333,34 @@ vars.put(&quot;AllDetalNew&quot;,str);
                 <stringProp name="RegexExtractor.default"></stringProp>
                 <stringProp name="RegexExtractor.match_number"></stringProp>
               </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="script">String spanId1 =vars.get(&quot;spanId31&quot;);
+String responseCode1 =vars.get(&quot;responseCode31&quot;);
+String url1 =vars.get(&quot;url31&quot;);
+
+String filename = &quot;span.txt&quot;;
+
+if(!responseCode.equals(&quot;200&quot;)){
+FileWriter writer;  
+        try {
+            writer = new FileWriter(filename,true);
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(url+&quot;:&quot;+spanId);
+            log.info(&quot;bw:&quot;+bw);
+            bw.write(&quot;\r\n&quot;);
+            bw.flush();
+            writer.flush();
+            bw.close();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}</stringProp>
+              </BeanShellPostProcessor>
               <hashTree/>
             </hashTree>
           </hashTree>

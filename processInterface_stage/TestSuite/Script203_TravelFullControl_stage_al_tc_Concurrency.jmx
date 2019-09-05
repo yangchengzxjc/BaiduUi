@@ -4777,7 +4777,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
         </ModuleController>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅报销单-创建-费用操作-提交-撤回-删除" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅报销单-创建-费用操作-提交-撤回-删除" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -4889,7 +4889,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅报销单-创建-费用操作-差补带入-提交-工作流" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅报销单-创建-费用操作-差补带入-提交-工作流" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -5835,7 +5835,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
         </DebugSampler>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅报销单-创建-费用操作-差补带入-提交-工作流-确认付款" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅报销单-创建-费用操作-差补带入-提交-工作流-确认付款" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -6066,7 +6066,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
         </DebugSampler>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅报销单全控件-报销单自动代入相关申请单的费用" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="差旅报销单全控件-报销单自动代入相关申请单的费用" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -7286,7 +7286,7 @@ vars.put(&quot;xuanzekuang_fieldContentNew&quot;,cc);</stringProp>
             <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="650406311">&quot;code&quot;:&quot;0000&quot;</stringProp>
-                <stringProp name="-999492280">&quot;msg&quot;:&quot;成功&quot;</stringProp>
+                <stringProp name="-2087113351">&quot;msg&quot;:&quot;操作成功&quot;</stringProp>
               </collectionProp>
               <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
               <boolProp name="Assertion.assume_success">false</boolProp>
@@ -7342,7 +7342,7 @@ vars.put(&quot;xuanzekuang_fieldContentNew&quot;,cc);</stringProp>
             <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="650406311">&quot;code&quot;:&quot;0000&quot;</stringProp>
-                <stringProp name="-999492280">&quot;msg&quot;:&quot;成功&quot;</stringProp>
+                <stringProp name="-2087113351">&quot;msg&quot;:&quot;操作成功&quot;</stringProp>
               </collectionProp>
               <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
               <boolProp name="Assertion.assume_success">false</boolProp>
@@ -9735,7 +9735,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="case1差旅申请单和差旅报销单,【公司】和【部门】字段名称一致(唯一性的控件,带入逻辑)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="case1差旅申请单和差旅报销单,【公司】和【部门】字段名称一致(唯一性的控件,带入逻辑)" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -11833,7 +11833,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="case2差旅申请单和差旅报销单,【公司】和【部门】字段名称不一致(报销单的公司名称为公司111)(唯一性的控件,带入逻辑)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="case2差旅申请单和差旅报销单,【公司】和【部门】字段名称不一致(报销单的公司名称为公司111)(唯一性的控件,带入逻辑)" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -14905,7 +14905,7 @@ vars.put(&quot;newdata&quot;,newdata);
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="case3差旅申请单和差旅报销单,【公司】和【部门】字段名称不一致(字段名称一致，启用默认值)(唯一性的控件,带入逻辑)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="case3差旅申请单和差旅报销单,【公司】和【部门】字段名称不一致(字段名称一致，启用默认值)(唯一性的控件,带入逻辑)" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -18140,7 +18140,7 @@ vars.put(&quot;newdata&quot;,newdata);
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="case4差旅申请单和差旅报销单,【公司】和【部门】字段名称不一致(报销单的公司名称为公司111，并且启用默认值)(唯一性的控件,带入逻辑)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="case4差旅申请单和差旅报销单,【公司】和【部门】字段名称不一致(报销单的公司名称为公司111，并且启用默认值)(唯一性的控件,带入逻辑)" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>

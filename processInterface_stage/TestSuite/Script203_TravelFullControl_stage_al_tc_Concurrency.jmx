@@ -19,7 +19,7 @@
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,1321)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,13700000000)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
@@ -1629,7 +1629,7 @@ vars.put(&quot;xuanzekuang_fieldContentNew&quot;,cc);</stringProp>
             <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="650406311">&quot;code&quot;:&quot;0000&quot;</stringProp>
-                <stringProp name="-999492280">&quot;msg&quot;:&quot;成功&quot;</stringProp>
+                <stringProp name="-2087113351">&quot;msg&quot;:&quot;操作成功&quot;</stringProp>
               </collectionProp>
               <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
               <boolProp name="Assertion.assume_success">false</boolProp>
@@ -1685,7 +1685,7 @@ vars.put(&quot;xuanzekuang_fieldContentNew&quot;,cc);</stringProp>
             <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="650406311">&quot;code&quot;:&quot;0000&quot;</stringProp>
-                <stringProp name="-999492280">&quot;msg&quot;:&quot;成功&quot;</stringProp>
+                <stringProp name="-2087113351">&quot;msg&quot;:&quot;操作成功&quot;</stringProp>
               </collectionProp>
               <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
               <boolProp name="Assertion.assume_success">false</boolProp>
@@ -6004,7 +6004,21 @@ vars.put(&quot;AllDetalNew2&quot;,json);
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&quot;businessCode&quot;:&quot;${travelbusinessCode}&quot;,&quot;status&quot;:&quot;pay_finished&quot;,&quot;formOIDs&quot;:[]}</stringProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;businessCode&quot;:&quot;${travelbusinessCode}&quot;,&#xd;
+    &quot;submittedDateEnd&quot;:null,&#xd;
+    &quot;submittedDateStart&quot;:null,&#xd;
+    &quot;departmentOids&quot;:[&#xd;
+&#xd;
+    ],&#xd;
+    &quot;payeeType&quot;:null,&#xd;
+    &quot;payeeId&quot;:null,&#xd;
+    &quot;page&quot;:0,&#xd;
+    &quot;size&quot;:10,&#xd;
+    &quot;sortDTOs&quot;:[&#xd;
+&#xd;
+    ]&#xd;
+}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -6013,7 +6027,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/v2/expense/reports/finance/admin/search?page=0&amp;size=10&amp;sort=</stringProp>
+          <stringProp name="HTTPSampler.path">/api/payment/schedule/query/paid</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -6036,7 +6050,7 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="-749828016">&quot;status&quot;:1005</stringProp>
+              <stringProp name="193391358">success&quot;:true,&quot;code&quot;:&quot;0000</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>

@@ -34,7 +34,7 @@
           </elementProp>
           <elementProp name="Delay" elementType="Argument">
             <stringProp name="Argument.name">Delay</stringProp>
-            <stringProp name="Argument.value">${__P(Delay,500)}</stringProp>
+            <stringProp name="Argument.value">${__P(Delay,0)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -201,7 +201,7 @@
         <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
-      <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="false">
+      <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="true">
         <stringProp name="ConstantTimer.delay">${Delay}</stringProp>
       </ConstantTimer>
       <hashTree/>

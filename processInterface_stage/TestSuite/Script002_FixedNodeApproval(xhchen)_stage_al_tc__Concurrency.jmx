@@ -19,7 +19,7 @@
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,1321)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,13700000000)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
@@ -39,7 +39,7 @@
           </elementProp>
           <elementProp name="Delay" elementType="Argument">
             <stringProp name="Argument.name">Delay</stringProp>
-            <stringProp name="Argument.value">${__P(Delay,300)}</stringProp>
+            <stringProp name="Argument.value">${__P(Delay,0)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -139,7 +139,7 @@
         </collectionProp>
       </HeaderManager>
       <hashTree/>
-      <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="false">
+      <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器" enabled="true">
         <stringProp name="ConstantTimer.delay">${Delay}</stringProp>
       </ConstantTimer>
       <hashTree/>

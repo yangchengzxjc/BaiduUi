@@ -8,9 +8,7 @@
 #===============================================================================
 from HLY_Elements.FinancialManagement.ReimbursementView_element import delete_time, more, second_page, order_number, \
     display_number
-from HLY_PageObject.UI.Process import Process
 from HLY_PageObject.UI.Reimbursement import Reimbursement
-from HLY_PageObject.UI.my_expense.my_expense import My_Expense
 from common.log import logger
 from config.api_urls import reimbursement_find
 
@@ -48,14 +46,3 @@ def test_FinanceViewExpenseReport(enter):
     reimbursement.Pagescroll(order_number)
     assert driver.get_text(order_number) == "201"
     logger.info("200条数据的编号：%s" % driver.get_text(order_number))
-
-
-
-
-
-
-
-
-
-
-

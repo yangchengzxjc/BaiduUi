@@ -35,7 +35,7 @@ def test_FinanceViewExpenseReport(enter):
     my_expense.ClickNewExpenseButton()
     my_expense.SelectExpense("大巴")
     my_expense.SelectExpense_Currency("HKD")
-    my_expense.InputRate("0.8")
+    my_expense.InputRate("3.9")
     my_expense.InputExpense_Amount("100.12")
     my_expense.ClickExpenseSave(3)
     time.sleep(5)

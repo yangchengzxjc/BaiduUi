@@ -41,7 +41,11 @@ submit ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/form/div[4]/div/div/button[
 no_card_user = 'xpath=>//*[contains(text(),"我没有银行卡")]'
 # 收款方
 Receipt = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[2]/div/div[4]/div[2]/div[2]/div/form/div[2]/div[2]/div/div/span/div/div/div/div'
-
+# 费用归属人
+expense_owner ="xpath=>//span[text()='费用归属人']"
+expense_owners ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[1]/span/div/span/div/div/div[1]/div[2]/div/div/div/div[2]/div/table/tbody/tr/td[13]/span'
+# 用户名
+user_name = 'xpath=>//*[@id="app"]/div/div[2]/div[1]/div[2]/div[7]/div[2]'
 # 付款用途
 PaymentUse = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[2]/div/div[4]/div[2]/div[2]/div/form/div[6]/div[2]/div/div/div/div/div'
 # 未输入收款银行卡的账号保存提示后显示红色的提示请选择
@@ -54,5 +58,8 @@ submit_expense ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[4]/div/button[1
 withdraw_confirm = 'xpath=>/html/body/div[7]/div/div[2]/div/div[1]/div/div/div[2]/button[2]'
 # 分摊驳回后的第二笔费用
 second_apportion = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[1]/span/div/span/div/div/div[1]/div[2]/div/div/div/div[2]/div/table/tbody/tr[2]/td[3]'
-
+# 报销单界面编辑日历
+edit_date ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[1]/div/div[3]/div[2]/div[2]/div/form/div[2]/div/div[3]/div[2]/div/span/span'
+# startDate
+start_Date ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[1]/div/div[1]/div[3]/div[2]'
 

@@ -3,7 +3,7 @@ from time import sleep
 
 import pytest
 
-from HLY_Elements.expense.elReimbursement import cause, data_time, select_day, stroke_time
+from HLY_Elements.expense.elReimbursement import cause, data_time, select_day, stroke_time, edit_date
 from HLY_Elements.expense.elTravel_allowance import Travel_allowance, add_Travel_allowance, city_travel_input, \
     select_place, save_travel_allowance, delete_button, delete_frame, confirm_button1, \
     success_delete, edit
@@ -30,8 +30,8 @@ def config_env(request, enter):
         清理环境：修改补贴方式为申请单带入  并且打开拆不规则中的城市
         :return:
         """
-        # close_auto_route_Calculation()
-        # change_subsidy_rule("差旅申请单-UI自动化", ALLOWANCE_CITY=True)
+        close_auto_route_Calculation()
+        change_subsidy_rule("差旅申请单-UI自动化", ALLOWANCE_CITY=True)
     request.addfinalizer(clear_env)
     return enter
 
@@ -39,6 +39,7 @@ def config_env(request, enter):
 def test_6404_Travel_allowance(config_env):
     """
     需求：差补根据单据头信息自动生成补贴费用（报销单组）正常流
+    6157：差补日期受限于报销单的开始结束日期
     :param enter:
     :return:
     """
@@ -71,7 +72,15 @@ def test_6404_Travel_allowance(config_env):
     assert driver.is_exist(reimbursement.get_xpath("报销单头信息自动生成补贴"))
     driver.click(save_travel_allowance)
     logger.info("保存差补")
-    sleep(4)
+    driver.click(reimbursement.get_xpath("编辑"),  timeout=5)
+    driver.click(edit_date, timeout=1)
+    logger.info("编辑报销单头，点击日期")
+    reimbursement.get_elements_click(day - 1, select_day)
+    reimbursement.get_elements_click(day + 1, select_day)
+    reimbursement.get_elements_click(0, reimbursement.get_origin_parent_xpath("保 存"))
+    assert driver.is_exist(reimbursement.get_xpath("修改后，补贴费用将重新生成，是否继续"))
+    reimbursement.get_elements_click(1, reimbursement.get_origin_parent_xpath("确 定"))
+    sleep(7)
     driver.click(reimbursement.get_parent_xpath("删 除"), timeout=4)
     reimbursement.get_elements_click(1, reimbursement.get_origin_parent_xpath("确 定"))
 

@@ -10,7 +10,7 @@ from HLY_Elements.BudgetElements import BudgetElement
 from HLY_PageObject.UI.BudgetObject.Budget import  Budget
 
 from HLY_PageObject.UI.Reimbursement import Reimbursement
-from common.parameter import  GetConfigp as pa
+from common.parameter import GetConfigp as pa
 from common.globalMap import GlobalMap
 def test_BudgetBalanceInquiry(enter):
     """

@@ -27,7 +27,7 @@ Expense_Amount = 'xpath=>//input[@class="ant-input-number-input" and @placeholde
 Expense_Amount_input='xpath=>//input[@id="actualCurrencyRate"]'
 # 新建费用保存按钮
 # Save_Expense='xpath=>//span[text()="保 存"]'
-Save_Expense='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[2]/button[1]'
+Save_Expense = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div[2]/button[1]'
 
 # 核销按钮
 SalesAccount = 'xpath=>//a[text()="冲借款"]'
@@ -100,19 +100,18 @@ select_expense_frame = '//*[@class="ant-checkbox-input"]'
 select_expense_frames = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[1]/span/div/span/div/div/div[1]/div[2]/div/div/div/div[2]/div/table/tbody/tr[2]/td[2]/span/label/span/span'
 # 目的地
 Destination = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[9]/div[2]/div/div/div/div/div/ul/li/div/input'
-Destination_prod = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[9]/div[2]/div/div/div/div/div/ul/li/div/input'
-# 出发地
+Destination_prod = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[9]/div[2]/div/div/div/div/div/ul/li/div/input'
 departure = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[8]/div[2]/div/div/div/div/div/ul/li/div/input'
-departure_prod ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[8]/div[2]/div/div/div/div/div/ul/li/div/input'
+departure_prod ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[8]/div[2]/div/div/div/div/div/ul/li/div/input'
 # scroll_locate
-scroll_locate = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[7]/div[1]/label'
+scroll_locate = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[7]/div[1]/label'
 # 大巴费用
 bus_expense = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div/div/div[1]/div/div/div/div/div[2]/div[2]/div[7]/div/div/div/div/div'
 # input_expense
 input_expense = 'xpath=>//*[@id="amount"]'
 # 保存按钮
 save = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[2]/button[1]'
-destinations_prod='//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[9]/div[2]/div/div/div/div/div/ul/li/div/input'
+destinations_prod='//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[9]/div[2]/div/div/div/div/div/ul/li/div/input'
 # 出发地
 departures ='//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[8]/div[2]/div/div/div/div/div/ul/li/div/input'
-departures_prod ='//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[8]/div[2]/div/div/div/div/div/ul/li/div/input'
+departures_prod ='//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[8]/div[2]/div/div/div/div/div/ul/li/div/input'

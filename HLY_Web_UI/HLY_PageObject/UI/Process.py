@@ -58,7 +58,7 @@ class Process(Reimbursement):
             pass
         # 保存新建的费用
         sleep(2)
-        self.driver.click(save)
+        self.get_elements_click(3, self.get_origin_parent_xpath("保 存"))
         sleep(5)
         logger.info("新建费用完成")
 
@@ -86,11 +86,11 @@ class Process(Reimbursement):
         self.driver.find_element_by_xpath(input_expenses).send_keys(money)
         # 保存新建的费用
         sleep(2)
-        self.driver.click(save)
+        self.get_elements_click(3, self.get_origin_parent_xpath("保 存"))
         sleep(5)
         logger.info("新建他人费用完成")
 
-    def create_all_expense(self, money, expense_name, departures, Destinations):
+    def create_all_expense(self, money, expense_name, departures, destinations):
         """
         新建有控件的一笔费用
         :return:
@@ -107,12 +107,12 @@ class Process(Reimbursement):
         my_expense.Pagescroll(scroll_locate, timeout=1)
         self.driver.sendkeys(departure_prod, departures, timeout=2)
         logger.info("输入出发地")
-        self.driver.sendkeys(Destination_prod, Destinations, timeout=2)
+        self.driver.sendkeys(Destination_prod, destinations, timeout=2)
         logger.info("输入目的地")
         sleep(1)
         self.driver.find_element_by_xpath(destinations_prod).send_keys(Keys.TAB)
         # 保存新建的费用
-        self.driver.click(save, timeout=3)
+        self.get_elements_click(3, self.get_origin_parent_xpath("保 存"))
         logger.info("新建费用完成")
 
     def approve(self, businessCode):
@@ -301,12 +301,13 @@ class Process(Reimbursement):
         :param businessCode:
         :return:
         """
-        sleep(4)
+        sleep(5)
         self.get_url(reimbursement_look)
         businesscode = self.replace_element(business_code, "ER", businessCode)
         sleep(2)
         self.driver.find_element_by_xpath(businesscode).click()
         sleep(3)
+
 
     def get_businessCode(self):
         """

@@ -41,7 +41,7 @@ def test_4460_Travel_allowance01(enter):
     # 进入差补计算
     reimbursement.get_elements_click(0, Travel_allowance)
     # 点击添加按钮
-    driver.click(add_Travel_allowance)
+    # driver.click(add_Travel_allowance)
     # 判断出差城市的元素是否存在
     assert driver.is_exist(city_travel)
     driver.sendkeys(city_travel_input, "西安")
@@ -49,7 +49,6 @@ def test_4460_Travel_allowance01(enter):
     driver.click(select_place)
     # 选择全部类型
     sleep(5)
-    # reimbursement.get_elements_click(0,travel_type)
     assert driver.is_exist(defult_type_status)
     # 保存差补
     driver.click(save_travel_allowance)
@@ -67,11 +66,12 @@ def test_4460_Travel_allowance01(enter):
     sleep(3)
     driver.sendkeys(travel_input_expenses, "19", timeout=3)
     logger.info("修改差补费用19元")
-    driver.click(save, timeout=2)
+    driver.click(save_travel_allowance, timeout=2)
     sleep(5)
     assert driver.get_text(first_amout) == "19.00"
     reimbursement.get_elements_click(0, Travel_allowance)
     assert reimbursement.get_elements_text(1, city_travel2) == "西安"
+
     # driver.click(submit_expense)
     # reimbursement.continue_submit()
     # reimbursement.open_reimbursement(business_Code)

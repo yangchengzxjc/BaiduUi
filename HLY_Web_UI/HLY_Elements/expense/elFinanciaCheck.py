@@ -21,7 +21,7 @@ get_businessCode = '//*[@id="app"]/div/div[2]/div[2]/div/div[1]/div/div[2]/div/d
 cancel = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[4]/div/button[1]'
 confirm = 'xpath=>/html/body/div[7]/div/div[2]/div/div[1]/div/div/div[2]/button[2]'
 # 第一条单据的状态
-bill_status = '//*[@id="app"]/div/div[2]/div[2]/div/div[3]/div/div/div/div/div/div/table/tbody/tr[1]/td[12]/div/span'
+bill_status = '//*[@id="app"]/div/div[2]/div[2]/div/div[3]/div/div/div/div/div/div/div/table/tbody/tr[1]/td[12]/div/span'
 # 报销单的再次提交
 continue_submit = '//*[@class="ant-btn ant-btn-primary"]'
 # 继续提交的text

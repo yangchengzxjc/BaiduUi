@@ -21,7 +21,7 @@ def test_bug_16265_edit_expense(enter):
     my_expense = My_Expense(driver)
     my_expense.Newexpense("日常报销单-UI自动化")
     sleep(2)
-    reimbursement.get_elements_sendKey(1, cause, "test报销单审核后可打印")
+    reimbursement.get_elements_sendKey(1, cause, "bug16265费用编辑")
     # 新建报销单
     driver.click(reimbursement.get_parent_xpath("新 建"))
     # 新建费用并且保存

@@ -30,9 +30,9 @@ def test_ExpenseReportMultiLinePayment_No_Open(enter):
     my_expense.SelectExpense("大巴")
     my_expense.InputExpense_Amount(100)
     my_expense.ClickExpenseSave(3)
-    my_expense.Pagescroll(elExpense.SalesAccount,2)
+    my_expense.Pagescroll(elExpense.SalesAccount, 2)
     el=driver.find_elements_by_xpath(elExpense.Multi_payment_lineReimbursementFormHasBeenOpened)
-    isTrue=False
+    isTrue = False
     for x in el:
         if str(x.text).find("选择费用添加付款行") !=-1:
             isTrue = True

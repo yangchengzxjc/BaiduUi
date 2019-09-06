@@ -4,7 +4,7 @@ import pytest
 from selenium.webdriver import ActionChains
 from HLY_Elements import elPublic
 from HLY_Elements.BudgetElements.BudgetElement import hly_guild
-from HLY_Elements.elPublic import company_page
+from HLY_Elements.elPublic import company_page, select_company
 from HLY_PageObject.UI.Reimbursement import Reimbursement
 from common.log import logger
 from main import glo
@@ -17,15 +17,18 @@ def enter(request, prepare):
     """
     driver, hly = prepare.driver, prepare.hly
     logger.info("进入新中控")
-    driver.get('%s://%s/main/dashboard'%(glo.get("Webprotocol"),glo.get("Webhost")))
+    driver.get('%s://%s/main/dashboard'%(glo.get("Webprotocol"), glo.get("Webhost")))
     sleep(5)
     if driver.is_exist(company_page):
         pass
     else:
         a = driver.get_element(elPublic.mode)
         ActionChains(driver).move_to_element(a).perform()
-        driver.click(elPublic.SwitchingCompany, timeout=3)
-        driver.click(elPublic.SwitchingCompanyOK, 2)
+        # driver.click(elPublic.SwitchingCompany, timeout=3)
+        # driver.click(elPublic.SwitchingCompanyOK, 2)
+        driver.click(select_company)
+
+
     def awardbacktohome():
         """
         用例执行完返回首页

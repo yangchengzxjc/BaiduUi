@@ -352,6 +352,7 @@ def open_auto_route_Calculation():
     time.sleep(2)
     logger.info("差补规则基础设置:%s" % json)
 
+
 def close_auto_route_Calculation(allowanceAttachExpenseReportDisable ="true", travelAutoCalculateEnable =False):
     """
     差补界面关闭自动计算行程
@@ -364,7 +365,7 @@ def close_auto_route_Calculation(allowanceAttachExpenseReportDisable ="true", tr
            }
     code, json = api.response_json(api_urls.travel_setting, "post", header=hly.apilogin_agin(), rjson=body)
     time.sleep(2)
-    logger.info("差补规则基础设置:%s"% json)
+    logger.info("差补规则基础设置:%s" % json)
 
 
 def get_userOID():
@@ -388,7 +389,7 @@ def get_formType(formName):
                 return i["formOID"]
             pass
 
-def change_subsidy_rule(formName, ALLOWANCE_CITY = True):
+def change_subsidy_rule(formName, ALLOWANCE_CITY = True, TRAVEL_FIELDS=True, subsidySelection=True):
     """
     修改差补规则
     :param ALLOWANCE_CITY: 为True时表示差补选择城市,为false表示城市为空
@@ -435,7 +436,7 @@ def change_subsidy_rule(formName, ALLOWANCE_CITY = True):
         {
             "name":"TRAVEL_FIELDS",
             "code":1002,
-            "selectable":True,
+            "selectable":TRAVEL_FIELDS,
             "dimensionDetails":[
                 {
                     "name":"TRAVEL_HOURS",
@@ -489,7 +490,7 @@ def change_subsidy_rule(formName, ALLOWANCE_CITY = True):
     ],
     "tips":"",
     "withTips":False,
-    "subsidySelection":True,
+    "subsidySelection":subsidySelection,
     "applicationAutoSubsidy":False
 }
     code, json = api.response_json(subsidy_rule, "post", header=hly.apilogin_agin(), rjson=body)

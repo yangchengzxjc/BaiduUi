@@ -3,7 +3,7 @@ from time import sleep
 import pytest
 from selenium.webdriver import ActionChains
 from HLY_Elements import elPublic
-from HLY_Elements.elPublic import company_page
+from HLY_Elements.elPublic import company_page, select_company
 from common.log import logger
 from main import glo
 
@@ -22,8 +22,8 @@ def enter(request, prepare):
     else:
         a = driver.get_element(elPublic.mode)
         ActionChains(driver).move_to_element(a).perform()
-        driver.click(elPublic.SwitchingCompany, timeout=3)
-        driver.click(elPublic.SwitchingCompanyOK, 2)
+        driver.click(select_company)
+
     def awardbacktohome():
         """
         用例执行完返回首页

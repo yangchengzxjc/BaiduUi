@@ -14,7 +14,7 @@
           </elementProp>
           <elementProp name="serviceURL" elementType="Argument">
             <stringProp name="Argument.name">serviceURL</stringProp>
-            <stringProp name="Argument.value">${__P(serviceURL,console.huilianyi.com)}</stringProp>
+            <stringProp name="Argument.value">${__P(serviceURL,stage.huilianyi.com)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="username" elementType="Argument">
@@ -15379,7 +15379,7 @@ vars.put(&quot;bxCustomform&quot;,str);
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${baseAmount1}&amp;currency=${currency}</stringProp>
+              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${baseAmount1}&amp;currency=${currency}&amp;ownerOID=${userOID1}</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -19602,7 +19602,7 @@ vars.put(&quot;bxCustomform&quot;,str);
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${baseAmount1}&amp;currency=${currency}</stringProp>
+              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${baseAmount1}&amp;currency=${currency}&amp;ownerOID=${userOID2}</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -22355,7 +22355,7 @@ vars.put(&quot;bxCustomform&quot;,str);
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=99999&amp;currency=${currency}</stringProp>
+              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=99999&amp;currency=${currency}&amp;ownerOID=${userOID3}</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -25687,7 +25687,7 @@ vars.put(&quot;NcustomFormFields&quot;,str);
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${baseAmount1}&amp;currency=${currency}</stringProp>
+              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${baseAmount1}&amp;currency=${currency}&amp;ownerOID=${userOID1}</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -30077,7 +30077,7 @@ vars.put(&quot;NcustomFormFields&quot;,str);
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${baseAmount1}&amp;currency=${currency}</stringProp>
+              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${baseAmount1}&amp;currency=${currency}&amp;ownerOID=${userOID2}</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -33132,7 +33132,7 @@ vars.put(&quot;NcustomFormFields&quot;,str);
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=99999&amp;currency=${currency}</stringProp>
+              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=99999&amp;currency=${currency}&amp;ownerOID=${userOID3}</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>

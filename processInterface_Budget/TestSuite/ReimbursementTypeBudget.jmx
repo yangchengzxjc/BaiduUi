@@ -14,7 +14,7 @@
           </elementProp>
           <elementProp name="serviceURL" elementType="Argument">
             <stringProp name="Argument.name">serviceURL</stringProp>
-            <stringProp name="Argument.value">${__P(serviceURL,console.huilianyi.com)}</stringProp>
+            <stringProp name="Argument.value">${__P(serviceURL,stage.huilianyi.com)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="username1" elementType="Argument">
@@ -2328,7 +2328,7 @@ vars.put(&quot;bxCustomform&quot;,str);
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${baseAmount}&amp;currency=CNY</stringProp>
+              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${baseAmount}&amp;currency=CNY&amp;ownerOID=${userOID}</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -2847,7 +2847,7 @@ vars.put(&quot;draft&quot;,str);
                 <stringProp name="HTTPSampler.port"></stringProp>
                 <stringProp name="HTTPSampler.protocol"></stringProp>
                 <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-                <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${amount}&amp;currency=CNY</stringProp>
+                <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${amount}&amp;currency=CNY&amp;ownerOID=${userOID}</stringProp>
                 <stringProp name="HTTPSampler.method">GET</stringProp>
                 <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
                 <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -4929,7 +4929,7 @@ vars.put(&quot;bxCustomform&quot;,str);
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${baseAmount}&amp;currency=CNY</stringProp>
+              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${baseAmount}&amp;currency=CNY&amp;ownerOID=${userOID}</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -8098,7 +8098,7 @@ vars.put(&quot;bxCustomform&quot;,str);
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${baseAmount}&amp;currency=CNY</stringProp>
+              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${baseAmount}&amp;currency=CNY&amp;ownerOID=${userOID}</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -8617,7 +8617,7 @@ vars.put(&quot;draft&quot;,str);
                 <stringProp name="HTTPSampler.port"></stringProp>
                 <stringProp name="HTTPSampler.protocol"></stringProp>
                 <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-                <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${baseAmount}&amp;currency=CNY</stringProp>
+                <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${baseAmount}&amp;currency=CNY&amp;ownerOID=${userOID}</stringProp>
                 <stringProp name="HTTPSampler.method">GET</stringProp>
                 <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
                 <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -9292,7 +9292,7 @@ if(bgtAmount.equals(bgtAmount1)&amp;&amp;expUsedAmount.equals(expUsedAmount1)&am
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="3部门预算_费用申请报销_管控费用_报销类型2不受管控" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="4部门预算_费用申请报销_管控费用_报销类型2不受管控" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -11587,7 +11587,7 @@ vars.put(&quot;bxCustomform&quot;,str);
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${baseAmount}&amp;currency=CNY</stringProp>
+              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${bxExpenseId}&amp;amount=${baseAmount}&amp;currency=CNY&amp;ownerOID=${userOID}</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>

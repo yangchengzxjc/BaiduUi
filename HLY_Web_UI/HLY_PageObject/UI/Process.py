@@ -121,7 +121,7 @@ class Process(Reimbursement):
         :return:
         """
         my_expense = My_Expense(self.driver)
-        sleep(3)
+        sleep(4)
         self.get_url(approve_url)
         if self.driver.is_exist(know_prod):
             self.driver.click(know_prod)
@@ -343,6 +343,7 @@ class Process(Reimbursement):
             logger.info(len(els))
             print(len(els))
             els[len(els)-1].click()
+            sleep(2)
         else:
             pass
 

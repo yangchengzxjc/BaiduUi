@@ -61,14 +61,14 @@ def test_4460_Travel_allowance01(enter):
     assert "西安" in place1
     reimbursement.Pagescroll(coin_varity, timeout=1)
     sleep(2)
-    reimbursement.get_elements_click(4, reimbursement.get_origin_xpath("CNY"))
-    logger.info("查看第二个差补费用")
+    reimbursement.get_elements_click(1, reimbursement.get_origin_xpath("100.00"))
+    logger.info("查看第一个差补费用")
     sleep(3)
     driver.sendkeys(travel_input_expenses, "19", timeout=3)
     logger.info("修改差补费用19元")
-    driver.click(save_travel_allowance, timeout=2)
+    reimbursement.get_elements_click(3, reimbursement.get_origin_parent_xpath("保 存"))
     sleep(5)
-    assert driver.get_text(first_amout) == "19.00"
+    assert driver.get_text(reimbursement.get_xpath("19.00")) == "19.00"
     reimbursement.get_elements_click(0, Travel_allowance)
     assert reimbursement.get_elements_text(1, city_travel2) == "西安"
 

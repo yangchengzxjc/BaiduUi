@@ -36,7 +36,7 @@ def test_approval_can_be_printed(enter):
     process.create_expense(200, "大巴")
     business_Code = process.get_businessCode()
     # 提交报销单
-    sleep(3)
+    sleep(4)
     driver.click(submit_expense)
     logger.info("提交报销单")
     sleep(3)
@@ -53,7 +53,7 @@ def test_approval_can_be_printed(enter):
     process.Financial_audit(business_Code)
     process.open_reimbursement(business_Code)
     sleep(5)
-    a=driver.find_element_by_xpath(Printing_button1).text
+    a = driver.find_element_by_xpath(Printing_button1).text
     assert driver.is_exist(Printing_button)
     assert a == "打 印"
 

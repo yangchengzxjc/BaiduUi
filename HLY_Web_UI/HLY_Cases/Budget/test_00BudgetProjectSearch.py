@@ -41,9 +41,9 @@ def test00_BudgetProjectSearch(enter_group):
     driver.sendkeys(project_name, "交通费")
     reimbursement.get_elements_click(1, reimbursement.get_origin_parent_xpath("搜 索"))
     assert driver.get_text(reimbursement.get_xpath("共搜索到 1 条数据")) == "共搜索到 1 条数据 / 已选 0 条"
-    assert reimbursement.get_elements_text(1,reimbursement.get_origin_xpath("交通费"))
-    reimbursement.get_elements_click(1,reimbursement.get_origin_parent_xpath("清 空"))
-    assert driver.getAttribute(project_name,"value") == ""
+    assert reimbursement.get_elements_text(1, reimbursement.get_origin_xpath("交通费"))
+    reimbursement.get_elements_click(1, reimbursement.get_origin_parent_xpath("清 空"))
+    assert driver.getAttribute(project_name, "value") == ""
 
 
 

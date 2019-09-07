@@ -36,9 +36,9 @@ class ReimbursementView(object):
         """
         logger.info("报销单查看页面、搜索报销单")
         if business_Code is not None:
-            time.sleep(5)
-            self.driver.find_element_by_xpath(ReimbursementView_element.ReimbursementID).click()
-            time.sleep(2)
+            # time.sleep(5)
+            # self.driver.find_element_by_xpath(ReimbursementView_element.ReimbursementID).click()
+            time.sleep(3)
             self.driver.find_element_by_xpath(ReimbursementView_element.ReimbursementID2).send_keys(business_Code)
         time.sleep(3)
         self.driver.click(Search)

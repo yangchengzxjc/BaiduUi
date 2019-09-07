@@ -30,7 +30,6 @@ def test_4473_Travel_allowance(enter):
     sleep(5)
     reimbursement.get_elements_click(0, Travel_allowance)
     # 点击添加的按钮
-    driver.click(add_Travel_allowance)
     driver.sendkeys(city_travel_input, "西安")
     driver.click(select_place)
     # 保存差补

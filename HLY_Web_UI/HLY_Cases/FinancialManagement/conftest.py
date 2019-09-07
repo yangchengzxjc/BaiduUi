@@ -22,13 +22,15 @@ def enter(request, prepare):
     else:
         a = driver.get_element(elPublic.mode)
         ActionChains(driver).move_to_element(a).perform()
-        driver.click(select_company)
+        driver.click(select_company, timeout=1)
+        sleep(2)
+
 
     def awardbacktohome():
         """
         用例执行完返回首页
         """
-        import  time
+        import time
         time.sleep(2)
         hly.go_main()
     request.addfinalizer(awardbacktohome)

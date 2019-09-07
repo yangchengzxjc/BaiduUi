@@ -54,8 +54,8 @@ Budget_Amount_back='xpath=>//span[text()="返回修改参数"]/..'
 #汇联易导航页面
 hly_guild ='xpath=>/html/body/div[6]/div/div[2]/div/div[1]/button/span'
 #第一个预算项目
-First_Project_Mapping = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/form/div/div/div/div/div/div/div/table/tbody/tr[1]/td[1]'
-#预算项目名称搜索框
+First_Project_Mapping = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/form/div/div/div/div/div/div/div/div/table/tbody/tr[1]/td[1]'
+# 预算项目名称搜索框
 project_name = 'xpath=>//*[@id="itemName"]'
 #选择来源类别
 source_type ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/form/div/div/div/div/div/div/table/tbody/tr[3]/td[1]/div/div/span'

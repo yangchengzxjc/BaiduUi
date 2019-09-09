@@ -14,7 +14,7 @@ submit = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/form/div[5]/div/div/button
 # 审批页面的汇率输入框
 rate_input = 'xpath=>//*[@id="actualCurrencyRate"]'
 # 审批页面进行保存的button
-rate_save = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[1]/div[2]/div/div[6]/button[1]'
+rate_save = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[1]/div[2]/div/div[6]/button[1]'
 # 审批界面的汇率
 approve_rate = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[1]/span/div/span/div/div/div[1]/div[2]/div/div/div/div[2]/div/table/tbody/tr/td[8]'
 

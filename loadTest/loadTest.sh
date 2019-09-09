@@ -1,5 +1,5 @@
+#!/bin/bash -ilex
 echo "我要开始执行shell脚本了"
-pwd
 time=$1
 scriptName=$2
 TestEnv=$7

@@ -79,8 +79,8 @@ if __name__ == '__main__':
     set_env2()
     # init_global_param(udid="3af53e7")
     # 运行指定mark用例
-    # pytest.main(['--capture=no', '-v',
-    #              '--html=' + get_report_name(), '--self-contained-html'])
+    pytest.main(['--capture=no', '-v',
+                 '--html=' + get_report_name(), '--self-contained-html'])
     # print(glo.get('desired_capabilities'))
     # 运行指定mark用例
     # pytest.main(['--capture=sys', '-v', '--html=' + get_report_name(), '--self-contained-html'])

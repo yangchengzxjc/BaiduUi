@@ -11,14 +11,14 @@
     </condition>
     <property name="lib.dir" value="${jmeter.home}\lib" />
 
-    <!-- jmeter生成html格式的结果报告的路径-->
-    <property name="jmeter.history.dir" value="${basedir}\TestHistory" />
-	<property name="jmeter.result.Report.dir" value="${basedir}\LoadTestReport" />
 
 	<condition property="time" value="${time}" else="123456789">
         <isset property="time" />
     </condition>
 	
+	<condition property="env" value="${env}" else="stage">
+        <isset property="env" />
+    </condition>
 	<condition property="scriptName" value="${scriptName}" else="0809.jmx">
         <isset property="scriptName" />
     </condition>
@@ -38,6 +38,13 @@
 	<condition property="concurrentNumber" value="${concurrentNumber}" else="20">
         <isset property="concurrentNumber" />
     </condition>
+	
+	
+	<!-- jmeter生成html格式的结果报告的路径-->
+    <property name="jmeter.history.dir" value="${basedir}\${env}\TestHistory" />
+	<property name="jmeter.result.Report.dir" value="${basedir}\${env}\LoadTestReport" />
+	
+	
 
     <target name="show-test-properties">
         <echo>JMETER_HOME				: ${jmeter.home}</echo>
@@ -63,6 +70,7 @@
 			<arg value="${serverUrl}"/>
 			<arg value="${durationTime}"/>
 			<arg value="${concurrentNumber}"/>
+			<arg value="${env}"/>
         </exec>
 		<copy todir="${jmeter.history.dir}">
             <fileset dir="${jmeter.result.Report.dir}">

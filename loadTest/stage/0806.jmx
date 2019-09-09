@@ -19,12 +19,12 @@
           </elementProp>
           <elementProp name="durationTime" elementType="Argument">
             <stringProp name="Argument.name">durationTime</stringProp>
-            <stringProp name="Argument.value">${__P(durationTime,30)}</stringProp>
+            <stringProp name="Argument.value">${__P(durationTime,120)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="concurrentNumber" elementType="Argument">
             <stringProp name="Argument.name">concurrentNumber</stringProp>
-            <stringProp name="Argument.value">${__P(concurrentNumber,1)}</stringProp>
+            <stringProp name="Argument.value">${__P(concurrentNumber,2)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="env" elementType="Argument">
@@ -258,45 +258,7 @@ if(file1.exists()&amp;&amp;file1.isFile())
           <stringProp name="BeanShellSampler.parameters"></stringProp>
           <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
         </BeanShellSampler>
-        <hashTree>
-          <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="聚合报告" enabled="true">
-            <boolProp name="ResultCollector.error_logging">false</boolProp>
-            <objProp>
-              <name>saveConfig</name>
-              <value class="SampleSaveConfiguration">
-                <time>true</time>
-                <latency>true</latency>
-                <timestamp>true</timestamp>
-                <success>true</success>
-                <label>true</label>
-                <code>true</code>
-                <message>true</message>
-                <threadName>true</threadName>
-                <dataType>true</dataType>
-                <encoding>false</encoding>
-                <assertions>true</assertions>
-                <subresults>true</subresults>
-                <responseData>false</responseData>
-                <samplerData>false</samplerData>
-                <xml>false</xml>
-                <fieldNames>true</fieldNames>
-                <responseHeaders>false</responseHeaders>
-                <requestHeaders>false</requestHeaders>
-                <responseDataOnError>false</responseDataOnError>
-                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
-                <assertionsResultsToSave>0</assertionsResultsToSave>
-                <bytes>true</bytes>
-                <sentBytes>true</sentBytes>
-                <url>true</url>
-                <threadCounts>true</threadCounts>
-                <idleTime>true</idleTime>
-                <connectTime>true</connectTime>
-              </value>
-            </objProp>
-            <stringProp name="filename"></stringProp>
-          </ResultCollector>
-          <hashTree/>
-        </hashTree>
+        <hashTree/>
       </hashTree>
       <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="用户登录" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -316,7 +278,7 @@ if(file1.exists()&amp;&amp;file1.isFile())
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
           <stringProp name="delimiter">,</stringProp>
           <stringProp name="fileEncoding">GBK</stringProp>
-          <stringProp name="filename">./${env}/stage_userinfo.txt</stringProp>
+          <stringProp name="filename">./stage_userinfo.txt</stringProp>
           <boolProp name="ignoreFirstLine">false</boolProp>
           <boolProp name="quotedData">false</boolProp>
           <boolProp name="recycle">false</boolProp>
@@ -780,7 +742,7 @@ ${__setProperty(apply_customFormFields,${applyCustomFormFields},)};
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="参数化文件获取" enabled="true">
           <stringProp name="delimiter">,</stringProp>
           <stringProp name="fileEncoding">GBK</stringProp>
-          <stringProp name="filename">./${env}/stage_TokenINfo.txt</stringProp>
+          <stringProp name="filename">./stage_TokenINfo.txt</stringProp>
           <boolProp name="ignoreFirstLine">false</boolProp>
           <boolProp name="quotedData">false</boolProp>
           <boolProp name="recycle">true</boolProp>

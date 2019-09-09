@@ -15,7 +15,7 @@ def enter(request, prepare):
     """
     driver, hly = prepare.driver, prepare.hly
     logger.info("进入新中控")
-    driver.get('%s://%s/main/dashboard'%(glo.get("Webprotocol"),glo.get("Webhost")))
+    driver.get('%s://%s/main/dashboard'% (glo.get("Webprotocol"), glo.get("Webhost")))
     sleep(5)
     if driver.is_exist(company_page):
         pass

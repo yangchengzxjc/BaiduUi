@@ -6,12 +6,14 @@
 # @Software: PyCharm
 #脚本功能描述：关于测试环境的配置
 #===============================================================================
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from HLY_Elements.FinancialManagement   import ReimbursementView_element
 from HLY_Elements.FinancialManagement.ReimbursementView_element import Search
+from HLY_Elements.expense.elReimbursement import confirm_businessCode
 from HLY_PageObject.API  import   apis
 from selenium.webdriver import ActionChains
 from common.globalMap import GlobalMap
@@ -29,6 +31,7 @@ class ReimbursementView(object):
         self.glo = GlobalMap()
         self.pa = GetConfigp('./config/hly.config')
         pass
+
     def Search_Reimbursement(self,business_Code=None):
         """
         报销单查看页面、搜索报销单
@@ -40,6 +43,7 @@ class ReimbursementView(object):
             # self.driver.find_element_by_xpath(ReimbursementView_element.ReimbursementID).click()
             time.sleep(3)
             self.driver.find_element_by_xpath(ReimbursementView_element.ReimbursementID2).send_keys(business_Code)
+            self.driver.find_element_by_xpath(ReimbursementView_element.ReimbursementID2).send_keys(Keys.TAB)
         time.sleep(3)
         self.driver.click(Search)
         logger.info("点击搜索按钮")
@@ -82,6 +86,7 @@ class ReimbursementView(object):
         self.driver.find_element_by_xpath(xpath).click()
         time.sleep(2)
         pass
+
     def ReimbursementDetal_click_Print(self):
         """
         财务管理-报销单查看-报销单详情打印按钮点击

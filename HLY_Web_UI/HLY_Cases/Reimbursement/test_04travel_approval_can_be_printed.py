@@ -28,8 +28,8 @@ def test_travel_approval_can_be_peinted(enter):
     my_expense.Newexpense("差旅报销单-UI自动化")
     # 点击关联申请单
     driver.click(elTravel_approval_can_be_printed.form1)
-    reimbursement.get_elements_click(0,reimbursement.get_origin_xpath("test部门信息"))
-    reimbursement.get_elements_click(1,elTravel_approval_can_be_printed.confirm)
+    reimbursement.get_elements_click(0, reimbursement.get_origin_xpath("test部门信息"))
+    reimbursement.get_elements_click(1, elTravel_approval_can_be_printed.confirm)
     # reimbursement.get_elements_click(0,elTravel_approval_can_be_printed.apply_number)
     # 点击确定，选择申请单完毕
     sleep(3)

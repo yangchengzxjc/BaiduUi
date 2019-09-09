@@ -62,4 +62,5 @@ second_apportion = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/di
 edit_date ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[1]/div/div[3]/div[2]/div[2]/div/form/div[2]/div/div[3]/div[2]/div/span/span'
 # startDate
 start_Date ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[1]/div/div[1]/div[3]/div[2]'
-
+# 报销单查看确认单号
+confirm_businessCode = 'xpath=>//li[text()="%s"]'

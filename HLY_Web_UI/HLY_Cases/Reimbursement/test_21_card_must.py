@@ -1,6 +1,8 @@
 from time import sleep
+
+from HLY_Elements.FinancialManagement.ReimbursementView_element import select_applys
 from HLY_Elements.expense import elTravel_approval_can_be_printed
-from HLY_Elements.expense.elExpense import select_expense_frame
+from HLY_Elements.expense.elExpense import select_expense_frame, select_apply
 from HLY_Elements.expense.elFinanciaCheck import apply_search, search_reason
 from HLY_Elements.expense.elReimbursement import Receipt, PaymentUse, card_select
 from HLY_PageObject.UI.Process import Process
@@ -22,17 +24,17 @@ def test_5483_card_must(enter):
     my_expense = My_Expense(driver)
     profile = Profile(driver)
     sleep(3)
-    profile.card_open()
+    # profile.card_open()
     my_expense.Newexpense("差旅报销单-新建他人费用")
     # 选择一个部门
     driver.click(elTravel_approval_can_be_printed.form1, timeout=2)
     reimbursement.get_elements_sendKey(0, apply_search, "test修改付款行信息时，提示")
     reimbursement.get_elements_click(0, search_reason)
     # 选择关联的申请单
-    reimbursement.get_elements_click(1, reimbursement.get_origin_xpath("test修改付款行信息时，提示"))
+    reimbursement.get_elements_click(0, reimbursement.get_origin_xpath("TA00789841"))
     reimbursement.get_elements_click(1, elTravel_approval_can_be_printed.confirm)
     # 创建报销单
-    driver.click(reimbursement.get_parent_xpath("新 建"))
+    driver.click(reimbursement.get_parent_xpath("新 建"), timeout=1)
     process.create_other_expense("100", "大巴")
     reimbursement.Pagescroll(reimbursement.get_xpath("大巴"), timeout=1)
     # 选中付款的费用

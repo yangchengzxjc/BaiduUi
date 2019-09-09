@@ -14,12 +14,11 @@ from common.parameter import GetConfigp as pa
 from common.globalMap import GlobalMap
 def test_BudgetBalanceInquiry(enter):
     """
-    财务管理-报销单查看-打印
     :return:
     """
     glo = GlobalMap()
     pp = pa('./config/hly.config')
-    driver=enter.driver
+    driver = enter.driver
     reimbursement = Reimbursement(driver)
     budget = Budget(driver)
     budget.Click_Budget()

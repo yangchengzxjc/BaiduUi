@@ -24,9 +24,7 @@ def enter(request, prepare):
     else:
         a = driver.get_element(elPublic.mode)
         ActionChains(driver).move_to_element(a).perform()
-        # driver.click(elPublic.SwitchingCompany, timeout=3)
-        # driver.click(elPublic.SwitchingCompanyOK, 2)
-        driver.click(select_company)
+        driver.click(select_company, timeout=2)
 
 
     def awardbacktohome():

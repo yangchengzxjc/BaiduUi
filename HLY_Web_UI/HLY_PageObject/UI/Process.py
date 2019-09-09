@@ -359,6 +359,7 @@ class Process(Reimbursement):
         self.driver.click(self.get_parent_xpath("确 定"))
         logger.info("点击撤回，并确定")
 
+
     def new_apporation_expense(self, amount, approation_amount, department, currency="HKD", rate ="0.8", expense_name="分摊费用类型", flag =False):
         """
         新建分摊费用类型,按照部门分摊自己的部门和测试部门分摊
@@ -435,6 +436,6 @@ class Process(Reimbursement):
                                          self.get_elements_attribute(4, amount_input, "value")))
             assert round((float(self.get_elements_attribute(2, amount_input, "value")) + float(
                 self.get_elements_attribute(4, amount_input, "value"))), 2) == round(float(amount), 2)
-        self.driver.click(save)
+        self.get_elements_click(3, self.get_origin_parent_xpath("保 存"))
         logger.info("保存费用")
         sleep(4)

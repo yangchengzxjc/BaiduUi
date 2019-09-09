@@ -43,12 +43,12 @@ def test_FinancePrintExpenseReport(enter):
     my_expense.summit_expense()
     time.sleep(3)
     process.continue_submit()
-    time.sleep(6)
+    time.sleep(5)
     driver.get('%s://%s%s' % (glo.get("Webprotocol"),glo.get('Webhost'), pp.getoption("BASIC", "ReimbursementView")))
     reimbursementView.Search_Reimbursement(business_Code)
     time.sleep(2)
     ReimbursementID = reimbursementView.get_ReimbursementID(1)
-    logger.info("页面的单号：%s"%ReimbursementID)
+    logger.info("页面的单号：%s"% ReimbursementID)
     assert ReimbursementID == business_Code
     original_window = driver.current_window_handle
     all_handles_old = driver.window_handles

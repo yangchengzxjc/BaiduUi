@@ -30,10 +30,7 @@ def test_4460_Travel_allowance01(enter):
     sleep(5)
     # 进入差补计算
     reimbursement.get_elements_click(0, Travel_allowance)
-    # 点击添加按钮
-    driver.click(add_Travel_allowance)
     # #判断出差城市的元素是否存在
-    # assert driver.is_exist(city_travel)
     driver.sendkeys(setoff_input, "西安")
     sleep(1)
     driver.click(select_place)

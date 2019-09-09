@@ -21,4 +21,4 @@
 /my_main.py
 /HLY_Web_UI/logs/*.txt
 /HLY_Web_UI/main_for_debug.py
-HLY_Web_UI/main.py
+/HLY_Web_UI/main.py

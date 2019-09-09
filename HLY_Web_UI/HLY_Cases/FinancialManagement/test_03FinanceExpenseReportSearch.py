@@ -6,6 +6,7 @@
 # @Software: PyCharm
 #脚本功能描述：财务管理-报销单查看-查看明细
 #===============================================================================
+from HLY_Elements.FinancialManagement.ReimbursementView_element import Search_result
 from HLY_PageObject.UI.Process import Process
 from common.log import logger
 from HLY_Elements.FinancialManagement import ReimbursementView_element
@@ -23,16 +24,14 @@ def test_FinanceViewExpenseReport(enter):
     glo = GlobalMap()
     pp = pa('./config/hly.config')
     driver = enter.driver
-    driver.get('%s://%s%s' % (glo.get("Webprotocol"),glo.get('Webhost'), pp.getoption("BASIC", "ReimbursementView")))
+    driver.get('%s://%s%s' % (glo.get("Webprotocol"), glo.get('Webhost'), pp.getoption("BASIC", "ReimbursementView")))
     logger.info("查看默认界面查找出的数据条数")
-    time.sleep(5)
-    co = driver.get_element(ReimbursementView_element.Search_result, s=True, timeout=2)
-    num0 = re.findall('\d+', co[0].text)[0]
+    time.sleep(4)
+    num0 = driver.get_text(Search_result)
     logger.info(str(num0))
     time.sleep(3)
     driver.click(ReimbursementView_element.Search)
-    c1 = driver.get_element(ReimbursementView_element.Search_result, s=True, timeout=3)
-    num1 = re.findall('\d+', c1[0].text)[0]
+    num1 = driver.get_text(Search_result, timeout=1)
     logger.info(str(num1))
     assert str(num1) == str(num0)
 

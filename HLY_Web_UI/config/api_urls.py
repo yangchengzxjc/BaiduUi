@@ -49,5 +49,3 @@ reimbursement_find = '/main/financial-management/finance-view-expense'
 formType = '/api/custom/forms/my/available?formType=101&userOID=%s'
 # 修改差补规则的url
 subsidy_rule = '/api/travel/subsidies/rule/dimension'
-# 获取resoirceId
-resourceId = '/api/security/resource/key/list'

@@ -52,7 +52,6 @@ class HLY:
         authheader = deepcopy(base.stuHeader)  # 深度拷贝登录后的header,不影响base.stuheader
         authheader['Authorization'] = "Bearer %s" % response.json()['access_token']
         return {"Content-Type": "application/json", "Authorization": "Bearer %s" % response.json()['access_token']}
-
     def  go_main(self, **kwargs):
         """
         返回到主界面

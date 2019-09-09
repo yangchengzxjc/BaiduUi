@@ -89,7 +89,7 @@ if __name__ == '__main__':
     # pytest.main(['-s', '-q', '--capture=sys', '-v', '-m', 'not normal and not low',
     #              '--html=report.html', '--self-contained-html'])
     # 指定文件夹+mark
-    pytest.main(["HLY_Cases/Reimbursement/test_18_5220_change_rate1.py", '-s', '-q', '--capture=sys', '-v', '--html=' + get_report_name(), '--self-contained-html'])
+    # pytest.main(["HLY_Cases/FinancialManagement/test_01FinancePrintExpenseReport.py", '-s', '-q', '--capture=sys', '-v','--html=' + get_report_name(), '--self-contained-html'])
     # E:/git-zhishinet/APPUI/zhishinet-stuAPPUI/HLY_cases/userinfoModify/test_modify_gender.py
     # E:/git-zhishinet/APPUI/zhishinet-stuAPPUI/HLY_cases/register/test_register_05_invalidphonenum.py
     # E:/git-zhishinet/APPUI/zhishinet-stuAPPUI/HLY_cases/register/test_register_01_codeshort.py

@@ -271,8 +271,8 @@ if(file1.exists()&amp;&amp;file1.isFile())
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${concurrentNumber}</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">${concurrentNumber}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">500</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">250</stringProp>
         <longProp name="ThreadGroup.start_time">1546505677000</longProp>
         <longProp name="ThreadGroup.end_time">1546505677000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>

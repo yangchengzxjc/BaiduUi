@@ -7,7 +7,7 @@ from common.parameter import  GetConfigp
 from common.log import logger
 import time
 from common.globalMap import GlobalMap
-from config.api_urls import query_loan_url, expenseTypeOID, formType, subsidy_rule
+from config.api_urls import query_loan_url, expenseTypeOID, formType, subsidy_rule, resourceId
 
 api = ApiRequest()
 glo = GlobalMap()
@@ -171,6 +171,22 @@ def expense_yangzhao():
     logger.info("扬招费用:%s,%s"%(code, json))
     return code
 
+def query_resourceId():
+    """
+    获取resourceId
+    :return:
+    """
+    code, json = api.response_json(resourceId, "get", header=hly.apilogin_agin(), rdata=None)
+    if code == 200:
+        for a in json:
+            if a["key"] == 'confirm-payment':
+                resource_id = a["resource_id"]
+                logger.info(resource_id)
+            else:
+                pass
+    header = hly.apilogin_agin()
+    logger.info("1:%s"% dict(header, **{"resourceId": "%s"% resource_id}))
+    return dict(header, **{"resourceId": "%s"% resource_id})
 
 def query_loan(loan_code):
     """
@@ -192,12 +208,12 @@ def query_loan(loan_code):
     "sortDTOs":[
     ]
 }
-    code, json = api.response_json(query_loan_url, "post", header=hly.apilogin_agin(), rjson=body)
+    code, json = api.response_json(query_loan_url, "post", header=query_resourceId(), rjson=body)
     if code ==200:
         logger.info(json)
         return json["rows"][0]["id"]
     else:
-        logger.info("查询借款单报错：%s,%s"%(code,json))
+        logger.info("查询借款单报错：%s,%s" % (code, json))
 
 def confirm(id,loan_number):
     """
@@ -232,7 +248,7 @@ def confirm(id,loan_number):
     "payeeType":None,
     "payeeId":None
 }
-    code, json = api.response_json(api_urls.confirm, "post", header=hly.apilogin_agin(), rjson=body)
+    code, json = api.response_json(api_urls.confirm, "post", header=query_resourceId(), rjson=body)
     if code ==200:
         logger.info("确认付款成功")
     else:
@@ -270,7 +286,7 @@ def confirm_paid(id):
     "payeeType":None,
     "payeeId":None
 }
-    code, json = api.response_json(api_urls.confirm_paid, "post", header=hly.apilogin_agin(), rjson=body)
+    code, json = api.response_json(api_urls.confirm_paid, "post", header=query_resourceId(), rjson=body)
     if code == 200:
         logger.info("确认已付款成功")
     else:

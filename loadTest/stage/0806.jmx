@@ -1730,6 +1730,7 @@ vars.put(&quot;NewBJEndDate&quot;,localTime);
                 <stringProp name="JSONPostProcessor.referenceNames">invoinceOID</stringProp>
                 <stringProp name="JSONPostProcessor.jsonPathExprs">$.rows.invoinceOID</stringProp>
                 <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                <stringProp name="JSONPostProcessor.defaultValues">notfound</stringProp>
               </JSONPostProcessor>
               <hashTree/>
               <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
@@ -2762,7 +2763,7 @@ vars.put(&quot;bxcustFormValues&quot;,str);</stringProp>
                 <stringProp name="RegexExtractor.refname">businessCode</stringProp>
                 <stringProp name="RegexExtractor.regex">&quot;businessCode&quot;:&quot;(.+?)&quot;</stringProp>
                 <stringProp name="RegexExtractor.template">$1$</stringProp>
-                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.default">notfound</stringProp>
                 <stringProp name="RegexExtractor.match_number">0</stringProp>
               </RegexExtractor>
               <hashTree/>
@@ -2771,7 +2772,7 @@ vars.put(&quot;bxcustFormValues&quot;,str);</stringProp>
                 <stringProp name="RegexExtractor.refname">expenseReportOID</stringProp>
                 <stringProp name="RegexExtractor.regex">&quot;expenseReportOID&quot;:&quot;(.+?)&quot;</stringProp>
                 <stringProp name="RegexExtractor.template">$1$</stringProp>
-                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.default">notfound</stringProp>
                 <stringProp name="RegexExtractor.match_number">0</stringProp>
               </RegexExtractor>
               <hashTree/>
@@ -3362,7 +3363,6 @@ jsonObject.put(&quot;ignoreBudgetWarningFlag&quot;,true);
 
 String str =jsonObject.toString();
 str  = str.replaceAll(&quot;\&quot;null\&quot;&quot;,&quot;null&quot;);
-
 vars.put(&quot;AllDetalNew&quot;,str);
 
 </stringProp>

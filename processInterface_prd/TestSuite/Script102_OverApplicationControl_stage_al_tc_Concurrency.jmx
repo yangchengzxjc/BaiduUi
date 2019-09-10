@@ -14,12 +14,12 @@
           </elementProp>
           <elementProp name="serverUrl" elementType="Argument">
             <stringProp name="Argument.name">serverUrl</stringProp>
-            <stringProp name="Argument.value">${__P(serverUrl,stage.huilianyi.com)}</stringProp>
+            <stringProp name="Argument.value">${__P(serverUrl,console.huilianyi.com)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,13700000000)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,13609265517)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
@@ -25160,7 +25160,7 @@ vars.put(&quot;bxCustomform&quot;,str);
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${Daba_filedID}&amp;amount=${bxamount}&amp;currency=CNY</stringProp>
+              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${Daba_filedID}&amp;amount=${bxamount}&amp;currency=CNY&amp;ownerOID=${userOID}</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -25341,7 +25341,7 @@ vars.put(&quot;data&quot;,str);
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${Daba_filedID}&amp;amount=${bxamount}&amp;currency=CNY</stringProp>
+              <stringProp name="HTTPSampler.path">/api/v3/expense/default/apportionment?expenseReportOID=${bxExpenseReportOID}&amp;expenseTypeId=${Daba_filedID}&amp;amount=${bxamount}&amp;currency=CNY&amp;ownerOID=${userOID}</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>

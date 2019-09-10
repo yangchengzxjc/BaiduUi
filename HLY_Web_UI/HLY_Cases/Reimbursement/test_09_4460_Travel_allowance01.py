@@ -61,7 +61,7 @@ def test_4460_Travel_allowance01(enter):
     assert "西安" in place1
     reimbursement.Pagescroll(coin_varity, timeout=1)
     sleep(2)
-    reimbursement.get_elements_click(1, reimbursement.get_origin_xpath("20"))
+    reimbursement.get_elements_click(1, reimbursement.get_origin_xpath("20.00"))
     logger.info("查看第一个差补费用")
     sleep(3)
     driver.sendkeys(travel_input_expenses, "19", timeout=3)

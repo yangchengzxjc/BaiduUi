@@ -88,8 +88,7 @@ def test_change_rate(enter):
     driver.click((reimbursement.get_xpath("核定金额")), timeout=2)
     driver.sendkeys(rate_input, "6.1001", timeout=2)
     driver.click(rate_save)
-    sleep(5)
-    assert driver.get_text(Finance_rate) == "6.1001"
+    assert driver.get_text(Finance_rate, timeout=2) == "6.1001"
     assert driver.get_text(approve_reason, timeout=1) == '审核通过'
     # case4(财务审核更改汇率超过警告容差，小于禁止容差：警告提示，允许保存修改)
     driver.click(reimbursement.get_xpath("查看"), timeout=2)
@@ -121,6 +120,3 @@ def test_change_rate(enter):
         driver.click(rate_save)
     sleep(3)
     driver.click(passed)
-
-
-

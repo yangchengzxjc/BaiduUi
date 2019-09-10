@@ -29,7 +29,7 @@ def creat_expense(enter):
     # 添加事由
     reimbursement.get_elements_sendKey(1, cause, "test分摊金额和分摊比例尾差的处理")
     driver.click(reimbursement.get_parent_xpath("新 建"), timeout=1)
-    # logger.info("新建报销单完成")
+    logger.info("新建报销单完成")
     return driver, reimbursement, my_expense, process
 
 

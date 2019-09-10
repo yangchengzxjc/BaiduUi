@@ -79,13 +79,14 @@ coin_varity = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div
 # 报销单界面的第一笔费用的金额
 first_amout = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[1]/span/div/span/div/div/div[1]/div[2]/div/div/div/div[2]/div/table/tbody/tr[2]/td[9]/span'
 # 录入发票点击请选择
-invoice_type = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div/div/div[1]/div/div/div/div/form/div[1]/div[2]/div/div/div/div/div'
+invoice_type = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div/div/div[1]/div/div/div/div/form/div[1]/div[2]/div/div/div/div/div'
 # 发票代码
 invoice_code = 'xpath=>//*[@id="invoiceCode"]'
 # 发票号码
 invoice_number = 'xpath=>//*[@id="invoiceNumber"]'
 # 开票日期
-invoice_date = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div/div/div[1]/div/div/div/div/form/div[3]/div[3]/div[2]/div/span/div/input'
+invoice_date = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div/div/div[1]/div/div/div/div/form/div[3]/div[3]/div[2]/div/span/div/input'
+
 # 发票金额（不含税）
 invoice_money = 'xpath=>//*[@id="nonVATinclusiveAmount"]'
 # 1月5日
@@ -110,7 +111,7 @@ bus_expense = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/
 # input_expense
 input_expense = 'xpath=>//*[@id="amount"]'
 # 保存按钮
-save = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[2]/button[1]'
+save = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div[2]/button[1]'
 destinations_prod='//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[9]/div[2]/div/div/div/div/div/ul/li/div/input'
 # 出发地
 departures ='//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[8]/div[2]/div/div/div/div/div/ul/li/div/input'

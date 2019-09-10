@@ -24,7 +24,7 @@ def test_5483_card_must(enter):
     my_expense = My_Expense(driver)
     profile = Profile(driver)
     sleep(3)
-    # profile.card_open()
+    profile.card_open()
     my_expense.Newexpense("差旅报销单-新建他人费用")
     # 选择一个部门
     driver.click(elTravel_approval_can_be_printed.form1, timeout=2)

@@ -438,4 +438,4 @@ class Process(Reimbursement):
                 self.get_elements_attribute(4, amount_input, "value"))), 2) == round(float(amount), 2)
         self.get_elements_click(3, self.get_origin_parent_xpath("保 存"))
         logger.info("保存费用")
-        sleep(4)
+        sleep(5)

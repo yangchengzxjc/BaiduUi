@@ -28,7 +28,7 @@ def  test_36001_no_card(enter):
     reimbursement.get_elements_sendKey(0, apply_search, "test修改付款行信息时，提示")
     reimbursement.get_elements_click(0, search_reason)
     # 选择关联的申请单
-    reimbursement.get_elements_click(1, reimbursement.get_origin_xpath("test修改付款行信息时，提示"))
+    reimbursement.get_elements_click(0, reimbursement.get_origin_xpath("TA00789841"))
     reimbursement.get_elements_click(1, elTravel_approval_can_be_printed.confirm)
     # 创建报销单
     driver.click(reimbursement.get_parent_xpath("新 建"))

@@ -27,8 +27,7 @@ cause = '//*[@class="ant-input"]'
 # 时间控件
 data_time = 'xpath=>//*[@class="ant-calendar-picker-input ant-input"]'
 # 差补行程时间
-stroke_time = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[6]/div/div[2]/div[2]/div/div[1]/div/div/div/div/span/div/div[2]/div[1]/div/div/div[2]'
-
+stroke_time = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[6]/div/div[2]/div[2]/div/section/div/div/div/div/div/span/div/div[2]/div[1]/div/div/div[2]'
 # 选择日期
 select_day = '//*[@class="ant-calendar-cell"]'
 #新建费用

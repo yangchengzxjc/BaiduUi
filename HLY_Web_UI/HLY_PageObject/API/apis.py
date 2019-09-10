@@ -252,7 +252,7 @@ def confirm(id,loan_number):
     if code ==200:
         logger.info("确认付款成功")
     else:
-        logger.info("确认付款失败：%s,%s"%(code,json))
+        logger.info("确认付款失败：%s,%s"%(code, json))
 
 def confirm_paid(id):
     """

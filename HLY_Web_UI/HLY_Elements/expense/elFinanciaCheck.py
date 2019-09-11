@@ -57,7 +57,7 @@ payment = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[4]/div[2]/button[2]'
 second_expense ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[1]/span/div/div[1]/div[2]/div/div/div/div[2]/div/table/tbody/tr[2]/td[13]/a'
 # 输入新的金额
 new_amount = 'xpath=>//*[@id="amount"]'
-save_amount = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[1]/div[2]/div/div[5]/button[1]'
+save_amount = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[1]/div[2]/div/div[5]/button[1]'
 # 审批搜索报销单
 search_approve = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[3]/div[2]/span/input'
 # 财务审核录入专用发票后的分摊金额

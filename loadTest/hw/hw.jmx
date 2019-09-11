@@ -160,7 +160,7 @@
       </ResultCollector>
       <hashTree/>
       <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="察看结果树" enabled="true">
-        <boolProp name="ResultCollector.error_logging">true</boolProp>
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
           <value class="SampleSaveConfiguration">
@@ -271,8 +271,8 @@ if(file1.exists()&amp;&amp;file1.isFile())
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${concurrentNumber}</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">${concurrentNumber}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">500</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">250</stringProp>
         <longProp name="ThreadGroup.start_time">1546505677000</longProp>
         <longProp name="ThreadGroup.end_time">1546505677000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
@@ -1147,9 +1147,9 @@ ${__setProperty(apply_customFormFields,${applyCustomFormFields},)};
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <stringProp name="ThreadGroup.num_threads">${concurrentNumber}</stringProp>
         <stringProp name="Threads initial delay">0</stringProp>
-        <stringProp name="Start users count">2</stringProp>
+        <stringProp name="Start users count">10</stringProp>
         <stringProp name="Start users count burst">0</stringProp>
-        <stringProp name="Start users period">10</stringProp>
+        <stringProp name="Start users period">120</stringProp>
         <stringProp name="Stop users count">1</stringProp>
         <stringProp name="Stop users period">1</stringProp>
         <stringProp name="flighttime">${durationTime}</stringProp>

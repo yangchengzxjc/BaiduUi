@@ -14,7 +14,7 @@
           </elementProp>
           <elementProp name="serverUrl" elementType="Argument">
             <stringProp name="Argument.name">serverUrl</stringProp>
-            <stringProp name="Argument.value">${__P(serverUrl,stage.huilianyi.com)}</stringProp>
+            <stringProp name="Argument.value">${__P(serverUrl,console-tc.huilianyi.com)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
@@ -24,7 +24,7 @@
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,13700000000)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,17709280742)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -20109,14 +20109,6 @@ vars.put(&quot;AllDetalNew2&quot;,json);
           </collectionProp>
         </Arguments>
         <hashTree/>
-        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="处理接口名" enabled="false">
-          <stringProp name="BeanShellSampler.query">vars.put(&quot;amount1&quot;,&quot;日常报销单（费用单笔驳回及时生效，两笔费用与本位币不同）_&quot;);
-vars.put(&quot;amount1&quot;,&quot;日常报销单（费用单笔驳回及时生效，两笔费用与本位币不同）_&quot;);</stringProp>
-          <stringProp name="BeanShellSampler.filename"></stringProp>
-          <stringProp name="BeanShellSampler.parameters"></stringProp>
-          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
-        </BeanShellSampler>
-        <hashTree/>
         <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="费用日期1" enabled="true">
           <stringProp name="BeanShellSampler.query">import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20753,8 +20745,7 @@ vars.put(&quot;bankAccountNo&quot;,timestmp);
               <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.isPrimary==true)].bankAccountNo;$..[?(@.isPrimary==true)].bankCode</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
               <stringProp name="JSONPostProcessor.defaultValues">null;null</stringProp>
-              <stringProp name="Sample.scope">variable</stringProp>
-              <stringProp name="Scope.variable">bankCode</stringProp>
+              <stringProp name="Scope.variable"></stringProp>
             </JSONPostProcessor>
             <hashTree/>
           </hashTree>
@@ -20788,10 +20779,17 @@ vars.put(&quot;bankAccountNo&quot;,timestmp);
             </ResponseAssertion>
             <hashTree/>
             <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON提取器" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">contactBankAccountOID;bankCode</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.enable==true)].contactBankAccountOID;$..[?(@.enable==true)].bankCode</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Nuofound;Nuofound</stringProp>
+              <stringProp name="JSONPostProcessor.referenceNames">contactBankAccountOID</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.enable==true)].contactBankAccountOID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">Nuofound</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON提取器" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">bankCode</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.enable==true)].bankCode</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">Nuofound</stringProp>
             </JSONPostProcessor>
             <hashTree/>
           </hashTree>
@@ -24016,7 +24014,7 @@ vars.put(&quot;NewUTCstartDate2&quot;,startDate);
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="收款方列表查询" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="收款方列表查询" enabled="false">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -24062,7 +24060,7 @@ vars.put(&quot;NewUTCstartDate2&quot;,startDate);
             </JSONPostProcessor>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="收款方对应银行卡查询" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="收款方对应银行卡查询" enabled="false">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -24096,6 +24094,80 @@ vars.put(&quot;NewUTCstartDate2&quot;,startDate);
               <stringProp name="JSONPostProcessor.jsonPathExprs">$[0].contactBankAccountOID;$[0].bankCode</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
               <stringProp name="JSONPostProcessor.defaultValues">contactBankAccountOID;bankCode</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="表单获取默认值信息" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/custom/form/user/default/values?userOID=${userOID}&amp;formOID=${bxFormOID}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">8</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON提取器" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">contactBankAccountOID</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.fieldName==&quot;银行卡号&quot;)].value</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">contactBankAccountOID</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询银行卡具体信息" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/contact/bank/account?userOID=${userOID}&amp;enable=</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">8</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON提取器" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">bankCode</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.contactBankAccountOID==&quot;${contactBankAccountOID}&quot;)].bankCode</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">bankCode</stringProp>
             </JSONPostProcessor>
             <hashTree/>
           </hashTree>
@@ -24195,7 +24267,7 @@ vars.put(&quot;NewUTCstartDate2&quot;,startDate);
               <stringProp name="Assertion.custom_message"></stringProp>
             </ResponseAssertion>
             <hashTree/>
-            <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="新建的customForm" enabled="true">
+            <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="新建的customForm" enabled="false">
               <stringProp name="filename"></stringProp>
               <stringProp name="parameters"></stringProp>
               <boolProp name="resetInterpreter">false</boolProp>
@@ -24217,6 +24289,44 @@ for (int i = 0; i &lt; size; i++){
               if (jsonObject.get(&quot;messageKey&quot;).getAsString().equals(&quot;payee&quot;))
               
               	jsonObject.addProperty(&quot;value&quot;,vars.get(&quot;entire_userOID&quot;));
+              	
+           if (jsonObject.get(&quot;messageKey&quot;).getAsString().equals(&quot;contact_bank_account&quot;))
+              
+              	jsonObject.addProperty(&quot;value&quot;,vars.get(&quot;contactBankAccountOID&quot;));
+              	
+           		
+           		
+
+}
+
+String str =customFormFields.toString();
+log.info(&quot;NcustomFormFields:&quot;+str);
+vars.put(&quot;NcustomFormFields&quot;,str);
+</stringProp>
+            </BeanShellPreProcessor>
+            <hashTree/>
+            <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="新建的customForm" enabled="true">
+              <stringProp name="filename"></stringProp>
+              <stringProp name="parameters"></stringProp>
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="script">import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonObject;
+
+String json = vars.get(&quot;customFormFields&quot;);
+JsonArray customFormFields=new JsonParser().parse(json).getAsJsonArray();
+int size = customFormFields.size();
+
+for (int i = 0; i &lt; size; i++){
+		   JsonObject jsonObject =customFormFields.get(i).getAsJsonObject();
+             if (jsonObject.get(&quot;fieldName&quot;).getAsString().equals(&quot;事由&quot;))
+           		jsonObject.addProperty(&quot;value&quot;,&quot;出去吃饭&quot;);
+             if (jsonObject.get(&quot;fieldName&quot;).getAsString().equals(&quot;部门&quot;))
+           		jsonObject.addProperty(&quot;value&quot;,null);
+              if (jsonObject.get(&quot;messageKey&quot;).getAsString().equals(&quot;payee&quot;))
+              
+              	jsonObject.addProperty(&quot;value&quot;,vars.get(&quot;userOID&quot;));
               	
            if (jsonObject.get(&quot;messageKey&quot;).getAsString().equals(&quot;contact_bank_account&quot;))
               
@@ -32973,10 +33083,17 @@ vars.put(&quot;NewUTCstartDate2&quot;,startDate);
             </ResponseAssertion>
             <hashTree/>
             <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON提取器" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">contactBankAccountOID;bankCode</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.isPrimary!=true)].contactBankAccountOID;$..[?(@.isPrimary!=true)].bankCode</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">Nuofound;Nuofound</stringProp>
+              <stringProp name="JSONPostProcessor.referenceNames">contactBankAccountOID</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.isPrimary==true)].contactBankAccountOID</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">Nuofound</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON提取器" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">bankCode</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.isPrimary==true)].bankCode</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">Nuofound</stringProp>
             </JSONPostProcessor>
             <hashTree/>
           </hashTree>
@@ -33523,20 +33640,6 @@ if(size==1){
               <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.fieldName==&quot;公司&quot;)].formValueOID;$..[?(@.fieldName==&quot;部门&quot;)].formValueOID;$..[?(@.fieldName==&quot;事由&quot;)].formValueOID;$..[?(@.fieldName==&quot;选择框&quot;)].formValueOID;$..[?(@.fieldName==&quot;自定义列表&quot;)].formValueOID;$..[?(@.fieldName==&quot;数字&quot;)].formValueOID;$..[?(@.fieldName==&quot;币种&quot;)].formValueOID;$..[?(@.fieldName==&quot;单行输入框&quot;)].formValueOID;$..[?(@.fieldName==&quot;多行输入框&quot;)].formValueOID;$..[?(@.fieldName==&quot;时间&quot;)].formValueOID;$..[?(@.fieldName==&quot;成本中心&quot;)].formValueOID</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
               <stringProp name="JSONPostProcessor.defaultValues">null;null;null;null;null;null;null;null;null;null;null</stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取formValueOID" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">putongformValueOID;didianformValueOID;riqiformValueOID;riqishiformValueOID;gerenformValueOID;shoukuanformValueOID;liandongformValueOID;yinhangformValueOID;xuanrenformValueOID;beizhuformValueOID</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.fieldName==&quot;普通开关&quot;)].formValueOID;$..[?(@.fieldName==&quot;地点&quot;)].formValueOID;$..[?(@.fieldName==&quot;日期&quot;)].formValueOID;$..[?(@.fieldName==&quot;日期时间&quot;)].formValueOID;$..[?(@.fieldName==&quot;个人信息扩展字段&quot;)].formValueOID;$..[?(@.fieldName==&quot;收款单位/个人&quot;)].formValueOID;$..[?(@.fieldName==&quot;是否请顾客吃饭&quot;)].formValueOID;$..[?(@.fieldName==&quot;银行卡号&quot;)].formValueOID;$..[?(@.fieldName==&quot;选人&quot;)].formValueOID;$..[?(@.fieldName==&quot;备注&quot;)].formValueOID</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">null;null;null;null;null;null;null;null;null;null</stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取expenseReportInvoiceOID" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">travelReportInvoiceOID;jipiaoReportInvoiceOID;huocheReportInvoiceOID;jiudianReportInvoiceOID</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.invoiceOID==&quot;${travelInvoiceOID}&quot;)].expenseReportInvoiceOID;$..[?(@.invoiceOID==&quot;${jipiaoInvoiceOID}&quot;)].expenseReportInvoiceOID;$..[?(@.invoiceOID==&quot;${huocheInvoiceOID}&quot;)].expenseReportInvoiceOID;$..[?(@.invoiceOID==&quot;${jiudianInvoiceOID}&quot;)].expenseReportInvoiceOID</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">null;null;null;null</stringProp>
             </JSONPostProcessor>
             <hashTree/>
             <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="获取差补费用OID" enabled="true">

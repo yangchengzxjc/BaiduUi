@@ -23,7 +23,7 @@ def config_env(request, enter):
     """
     # 报销单自动获取补贴方式 : 不自动获取
     close_auto_route_Calculation(allowanceAttachExpenseReportDisable=False)
-    # change_subsidy_rule("差旅申请单-差补专用", ALLOWANCE_CITY=True)
+    change_subsidy_rule("差旅申请单-差补专用", ALLOWANCE_CITY=True)
     def clear_env():
         """
         清理环境：修改补贴方式为申请单带入  并且打开拆不规则中的城市
@@ -68,7 +68,7 @@ def test_6404_Travel_allowance(config_env):
     logger.info("保存差补")
     reimbursement.get_elements_click(0, Travel_allowance)
     logger.info("再次打开补贴计算查看删除按钮")
-    assert not driver.is_exist(reimbursement.get_xpath("删除"))
+    assert not driver.is_exist(reimbursement.get_xpath("删除"), timeout=2)
     process.Pagescroll(expense_owner, timeout=3)
     assert driver.get_text(expense_owners) == driver.get_text(user_name)
 

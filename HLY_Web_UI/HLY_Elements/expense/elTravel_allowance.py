@@ -12,7 +12,7 @@ setoff_input = 'xpath=>//*[@id="dpCityName"]'
 select_place = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[6]/div/div[2]/div[2]/div/section/div/div/div/div/div[2]/span/div/div[2]/form/div[1]/span/div/div/div[2]/div/div/div/div[2]/div/div/div/ul/li[1]'
 dalian_place = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[6]/div/div[2]/div[2]/div/section/div/div/div/div/div[2]/span/div/div[2]/form/div[1]/span/div[2]/div/div[2]/div/div/div/div[2]/div/div/div/ul/li[1]/span/span'
 # 选择城市
-select_city ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[6]/div/div[2]/div[2]/div/div[1]/div/div/div/div/span/div/form/div[1]/span/div/div/div[2]/div/div/div/div[2]/div/div/div/ul/li[1]'
+select_city ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[6]/div/div[2]/div[2]/div/section/div/div/div/div/div/span/div/div[2]/form/div[1]/span/div/div/div[2]/div/div/div/div[2]/div/div/div/ul/li[1]'
 # 差补类型
 travel_type = '//*[@class="ant-checkbox-inner"]'
 save_travel_allowance = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[6]/div/div[2]/div[2]/div/div/button[1]'

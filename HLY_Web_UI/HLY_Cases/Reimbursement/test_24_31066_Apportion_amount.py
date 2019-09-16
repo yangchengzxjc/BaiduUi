@@ -120,7 +120,7 @@ def test_apportion_line(enter):
     reimbursement.get_elements_click(1, reimbursement.get_origin_parent_xpath("返 回"))
     driver.sendkeys(reason, "审核驳回", timeout=2)
     driver.click(reimbursement.get_parent_xpath("驳 回"))
-    process.open_reimbursement("ER02498401")
+    process.open_reimbursement(businessCode)
     process.Pagescroll(reimbursement.get_xpath("全部费用"), timeout=2)
     logger.info("滑动到费用信息")
     driver.click(second_apportion, timeout=1)

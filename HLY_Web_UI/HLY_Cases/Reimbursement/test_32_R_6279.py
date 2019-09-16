@@ -51,10 +51,10 @@ def test_32_R_6279_1(enter):
     # logger.info(CostCenterName)
     # logger.info(CostCenterCode)
 
-    assert  (CostCenterName.find(OrgCostCenterCode)!=0)
-    assert (CostCenterName.find(OrgCostCenterName) != 0)
-    assert  (DepartmentName.find(OrgDepartmentName) !=0)
-    assert  (DepartmentName.find(OrgDepartmentCode) != 0)
+    assert  (CostCenterName.find(OrgCostCenterCode)!=-1)
+    assert (CostCenterName.find(OrgCostCenterName) != 1)
+    assert  (DepartmentName.find(OrgDepartmentName) !=1)
+    assert  (DepartmentName.find(OrgDepartmentCode) != 1)
 
 
 def test_32_R_6279_2(enter):

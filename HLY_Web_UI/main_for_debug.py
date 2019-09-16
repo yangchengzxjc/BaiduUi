@@ -73,7 +73,7 @@ if __name__ == '__main__':
     #              '--html=report.html', '--self-contained-html'])
 
     # 指定文件夹+mark
-    pytest.main(["HLY_Cases/Reimbursement/test_13_bug_28765_didi.py", '-s', '-q', '--capture=sys', '-v','--html=' + get_report_name(), '--self-contained-html'])
+    pytest.main(["HLY_Cases/Reimbursement/test_32_R_6279.py", '-s', '-q', '--capture=sys', '-v','--html=' + get_report_name(), '--self-contained-html'])
     # E:/git-zhishinet/APPUI/zhishinet-stuAPPUI/HLY_cases/userinfoModify/test_modify_gender.py
     # E:/git-zhishinet/APPUI/zhishinet-stuAPPUI/HLY_cases/register/test_register_05_invalidphonenum.py
     # E:/git-zhishinet/APPUI/zhishinet-stuAPPUI/HLY_cases/register/test_register_01_codeshort.py

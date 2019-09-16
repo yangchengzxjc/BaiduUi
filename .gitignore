@@ -19,6 +19,8 @@
 /screenshot
 /report.html
 /my_main.py
+main.py
+/main.py
 /HLY_Web_UI/logs/*.txt
 /HLY_Web_UI/main_for_debug.py
 /HLY_Web_UI/main.py

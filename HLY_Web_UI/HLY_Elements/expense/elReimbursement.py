@@ -44,7 +44,7 @@ Receipt = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[2]/
 expense_owner ="xpath=>//span[text()='费用归属人']"
 expense_owners ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[1]/span/div/span/div/div/div[1]/div[2]/div/div/div/div[2]/div/table/tbody/tr/td[13]/span'
 # 用户名
-user_name = 'xpath=>//*[@id="app"]/div/div[2]/div[1]/div[2]/div[7]/div[2]'
+user_name = 'xpath=>//*[@id="app"]/div/div[2]/div[1]/div[2]/div[5]/div[2]'
 # 付款用途
 PaymentUse = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[2]/div/div[4]/div[2]/div[2]/div/form/div[6]/div[2]/div/div/div/div/div'
 # 未输入收款银行卡的账号保存提示后显示红色的提示请选择

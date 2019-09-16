@@ -22,10 +22,17 @@ def enter(request, prepare):
     if driver.is_exist(company_page):
         pass
     else:
-        a = driver.get_element(elPublic.mode)
-        ActionChains(driver).move_to_element(a).perform()
-        driver.click(select_company)
-        sleep(2)
+        if glo.get("Webhost")=="console-tc.huilianyi.com":
+            a = driver.get_element(elPublic.mode_tc)
+            ActionChains(driver).move_to_element(a).perform()
+            driver.click(select_company)
+            sleep(2)
+        else:
+            a = driver.get_element(elPublic.mode_al)
+            ActionChains(driver).move_to_element(a).perform()
+            driver.click(select_company)
+            sleep(2)
+
 
 
     def awardbacktohome():

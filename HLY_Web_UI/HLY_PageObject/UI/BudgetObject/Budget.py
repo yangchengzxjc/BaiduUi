@@ -28,7 +28,6 @@ class Budget(object):
         :return:
         """
         logger.info("点击菜单预算余额查询")
-        self.driver
         # self.driver.click(BudgetElement.Budget,timeout=3)
         time.sleep(3)
         self.driver.get('%s://%s/main/budget/budget-balance' % (glo.get("Webprotocol"), glo.get("Webhost")))

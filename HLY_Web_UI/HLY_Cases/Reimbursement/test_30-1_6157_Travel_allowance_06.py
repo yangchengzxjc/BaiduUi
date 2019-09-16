@@ -1,4 +1,3 @@
-import datetime
 from time import sleep
 
 import pytest
@@ -68,7 +67,8 @@ def test_6404_Travel_allowance(config_env):
     logger.info("保存差补")
     reimbursement.get_elements_click(0, Travel_allowance)
     logger.info("再次打开补贴计算查看删除按钮")
-    # assert driver.get_element(reimbursement.get_xpath("删除"), timeout=2)       //后续再想办法   因为页面上看不见删除按钮，但是元素真的存在
+    assert driver.get_element(reimbursement.get_xpath("删除"), timeout=2)
+    # //后续再想办法   因为页面上看不见删除按钮，但是元素真的存在
     process.Pagescroll(expense_owner, timeout=3)
     assert driver.get_text(expense_owners) == driver.get_text(user_name)
 

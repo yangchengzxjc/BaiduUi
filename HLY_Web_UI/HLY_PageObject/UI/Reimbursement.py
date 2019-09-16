@@ -1,7 +1,8 @@
 from time import sleep
 
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.expected_conditions import visibility_of_any_elements_located
 from selenium.webdriver.support.wait import WebDriverWait
-
 from HLY_Elements.expense.elFinanciaCheck import bill_status
 from HLY_PageObject.API.apis import get_account
 from common.globalMap import GlobalMap
@@ -21,13 +22,14 @@ class Reimbursement():
 
     def get_elements_click(self, number, element, timeout=4):
         sleep(timeout)
-        els = self.driver.find_elements_by_xpath(element)
+        els = WebDriverWait(self.driver, 10, 1).until(visibility_of_any_elements_located((By.XPATH, element)))
         logger.info("%s:%s" % (element, len(els)))
         els[number].click()
 
-    def get_elements_attribute(self,number,element,value,timeout=2):
+
+    def get_elements_attribute(self, number, element,value,timeout=2):
         sleep(timeout)
-        els=self.driver.find_elements_by_xpath(element)
+        els = self.driver.find_elements_by_xpath(element)
         logger.info("元素个数：%s" % len(els))
         return els[number].get_attribute(value)
 

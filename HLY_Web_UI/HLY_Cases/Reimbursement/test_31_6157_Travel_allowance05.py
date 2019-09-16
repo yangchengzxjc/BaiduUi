@@ -5,8 +5,8 @@ import pytest
 
 from HLY_Elements.expense.elReimbursement import cause, data_time, select_day, user_name, \
     start_Date
-from HLY_Elements.expense.elTravel_allowance import Travel_allowance, save_travel_allowance,\
-    owen_expense, goBackDate
+from HLY_Elements.expense.elTravel_allowance import Travel_allowance, save_travel_allowance, \
+    owen_expense, goBackDate, stoke_time
 from HLY_PageObject.API.apis import  close_auto_route_Calculation, change_subsidy_rule
 from HLY_PageObject.UI.Process import Process
 from HLY_PageObject.UI.Reimbursement import Reimbursement
@@ -40,6 +40,8 @@ def test_6404_Travel_allowance(config_env):
     """
     6157：显示大行程：显示1条大行程+1条小行程
           1、大行程：费用归属人 = 单据申请人
+          2.大行程：出差往返日期（时间） = 单据头日期（时间）
+          3.行程日期 = 大行程的出差往返日期。
     :param enter:
     :return:
     """
@@ -67,6 +69,7 @@ def test_6404_Travel_allowance(config_env):
     # 进入差补计算
     reimbursement.get_elements_click(0, Travel_allowance)
     # 判断是否有大行程
+    sleep(5)
     assert driver.is_exist(reimbursement.get_xpath("出差往返日期"))
     # 判断费用归熟人= 单据申请人
     assert driver.get_text(owen_expense) == userName
@@ -77,7 +80,12 @@ def test_6404_Travel_allowance(config_env):
     from datetime import datetime
     logger.info("格式化后的时间类型：%s" % (type(datetime.strptime(time.split(",")[0], GMT_FORMAT))))
     assert startDate in str(datetime.strptime(time.split(",")[0], GMT_FORMAT))
-    driver.click(save_travel_allowance)
+    driver.click(save_travel_allowance, timeout=2)
     logger.info("保存差补")
     reimbursement.get_elements_click(0, Travel_allowance)
-    # 判断行程信息
+    logger.info("再次进入差补")
+    stoke_date =driver.get_text(stoke_time).split(" ~ ")[0]
+    logger.info("stoke_date:%s"% stoke_date)
+    assert stoke_date in str(datetime.strptime(time.split(",")[0], GMT_FORMAT))
+
+

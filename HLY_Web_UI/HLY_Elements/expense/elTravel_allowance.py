@@ -49,4 +49,5 @@ alloeance_time = 'xpath=//*[@id="goBackDate"]'
 # 大行程归属人
 owen_expense = 'xpath=>//*[@id="userIDs"]/span'
 goBackDate = 'xpath=>//*[@id="goBackDate"]'
+stoke_time ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[6]/div/div[2]/div[2]/div/section/div/div/div/div/div[2]/span/div/div[2]/div[1]/div/div/div[2]'
 

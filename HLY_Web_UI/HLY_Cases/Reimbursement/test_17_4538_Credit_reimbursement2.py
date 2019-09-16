@@ -30,8 +30,8 @@ def test_credit_reimbursement2(enter):
     # 推送一笔负的机票费用
     Consumer_expense(-10, "空港嘉华机票")
     driver.click(book_enter)
-    reimbursement.get_elements_click(0, reimbursement.get_origin_xpath("空港嘉华机票"))
-    reimbursement.get_elements_click(4, select_button_confirm)
+    reimbursement.get_elements_click(0, reimbursement.get_origin_xpath("空港嘉华机票"), timeout=6)
+    reimbursement.get_elements_click(4, select_button_confirm, timeout=2)
     sleep(3)
     business_Code = process.get_businessCode()
     driver.click(submit_expense, timeout=3)

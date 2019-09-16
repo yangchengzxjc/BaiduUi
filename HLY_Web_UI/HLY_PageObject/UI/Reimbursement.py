@@ -22,7 +22,8 @@ class Reimbursement():
     def get_elements_click(self, number, element, timeout=4):
         sleep(timeout)
         els = self.driver.find_elements_by_xpath(element)
-        logger.info("%s:%s" % (element, len(els)))
+        logger.info("元素已找到")
+        logger.info("%s，找到个数为:%s" % (element, len(els)))
         els[number].click()
 
     def get_elements_attribute(self,number,element,value,timeout=2):
@@ -31,8 +32,8 @@ class Reimbursement():
         logger.info("元素个数：%s" % len(els))
         return els[number].get_attribute(value)
 
-    def get_elements_text(self,number,element):
-        sleep(3)
+    def get_elements_text(self,number,element,timeout=2):
+        sleep(timeout)
         els = self.driver.find_elements_by_xpath(element)
         return els[number].text
 
@@ -59,12 +60,27 @@ class Reimbursement():
         return 'xpath=>//*[text()="%s"]'%name
 
     def get_parent_xpath(self,name):
+        '''
+        获得元素的父节点
+        :param name:
+        :return:
+        '''
         return 'xpath=>//*[text()="%s"]/..'%name
 
     def get_origin_parent_xpath(self,name):
+        '''
+        获得原生的自己父节点元素
+        :param name:
+        :return:
+        '''
         return '//*[text()="%s"]/..'%name
 
     def get_origin_xpath(self,name):
+        '''
+        获得原生的自己
+        :param name:
+        :return:
+        '''
         return '//*[text()="%s"]'%name
 
     def get_bill_status(self):

@@ -10,7 +10,7 @@ from common.log import logger
 
 
 class Reimbursement():
-    def __init__(self,driver):
+    def __init__(self, driver):
         """
         初始化类
         :param driver 实例化时候需要将driver传进:
@@ -22,29 +22,33 @@ class Reimbursement():
 
     def get_elements_click(self, number, element, timeout=4):
         sleep(timeout)
-        els = WebDriverWait(self.driver, 10, 1).until(visibility_of_any_elements_located((By.XPATH, element)))
-        logger.info("%s:%s" % (element, len(els)))
-        els[number].click()
+        if len(WebDriverWait(self.driver, 10, 1).until(visibility_of_any_elements_located((By.XPATH, element))))!=0:
+            els =self.driver.find_elements_by_xpath(element)
+            logger.info("%s:%s" % (element, len(els)))
+            els[number].click()
 
-
-    def get_elements_attribute(self, number, element,value,timeout=2):
+    def get_elements_attribute(self, number, element, value, timeout=2):
         sleep(timeout)
-        els = self.driver.find_elements_by_xpath(element)
-        logger.info("元素个数：%s" % len(els))
-        return els[number].get_attribute(value)
+        if len(WebDriverWait(self.driver, 10, 1).until(visibility_of_any_elements_located((By.XPATH, element)))) != 0:
+            els = self.driver.find_elements_by_xpath(element)
+            logger.info("元素个数：%s" % len(els))
+            return els[number].get_attribute(value)
 
-    def get_elements_text(self,number,element):
-        sleep(3)
-        els = self.driver.find_elements_by_xpath(element)
-        return els[number].text
+    def get_elements_text(self, number, element, timeout=3):
+        sleep(timeout)
+        if len(WebDriverWait(self.driver, 10, 1).until(visibility_of_any_elements_located((By.XPATH, element)))) != 0:
+            sleep(3)
+            els = self.driver.find_elements_by_xpath(element)
+            return els[number].text
 
     def get_elements_sendKey(self, number, element, text, timeout=2):
 
         sleep(timeout)
-        els = self.driver.find_elements_by_xpath(element)
-        self.get_element_clear(number,element)
-        logger.info("%s的元素的个数是：%s"% (text, len(els)))
-        els[number].send_keys(text)
+        if len(WebDriverWait(self.driver, 10, 1).until(visibility_of_any_elements_located((By.XPATH, element)))) != 0:
+            els = self.driver.find_elements_by_xpath(element)
+            self.get_element_clear(number, element)
+            logger.info("%s的元素的个数是：%s" % (text, len(els)))
+            els[number].send_keys(text)
 
     def get_element_clear(self, number, element, timeout=3):
         sleep(timeout)

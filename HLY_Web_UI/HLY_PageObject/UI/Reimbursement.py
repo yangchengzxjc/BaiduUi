@@ -16,14 +16,13 @@ class Reimbursement():
         :param driver 实例化时候需要将driver传进:
         """
         self.driver = driver
-        wait = WebDriverWait(driver,10)
         self.glo = GlobalMap()
         pass
 
     def get_elements_click(self, number, element, timeout=4):
         sleep(timeout)
-        if len(WebDriverWait(self.driver, 10, 1).until(visibility_of_any_elements_located((By.XPATH, element))))!=0:
-            els =self.driver.find_elements_by_xpath(element)
+        if len(WebDriverWait(self.driver, 10, 1).until(visibility_of_any_elements_located((By.XPATH, element)))) != 0:
+            els = self.driver.find_elements_by_xpath(element)
             logger.info("%s:%s" % (element, len(els)))
             els[number].click()
 
@@ -42,7 +41,6 @@ class Reimbursement():
             return els[number].text
 
     def get_elements_sendKey(self, number, element, text, timeout=2):
-
         sleep(timeout)
         if len(WebDriverWait(self.driver, 10, 1).until(visibility_of_any_elements_located((By.XPATH, element)))) != 0:
             els = self.driver.find_elements_by_xpath(element)

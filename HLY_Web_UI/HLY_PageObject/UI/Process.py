@@ -6,7 +6,7 @@ from HLY_Elements.expense.elFinanciaCheck import search_approve, passed, new_amo
     get_businessCode, cancel, confirm, continue_submit_text, continue_submit, input_expenses
 from HLY_Elements.expense.elExpense import Financial_search, save, input_expense, scroll_locate, departure_prod, \
     Destination_prod, destinations_prod
-from HLY_Elements.expense.elReimbursement import new_expense, new_other_expense, no_card_user, withdraw_confirm
+from HLY_Elements.expense.elReimbursement import new_expense, new_other_expense, no_card_user
 from HLY_Elements.expense.expense_type import amount_input, new_apportion
 from HLY_PageObject.UI.Reimbursement import Reimbursement
 from HLY_PageObject.UI.my_expense.my_expense import My_Expense

@@ -3,11 +3,12 @@ import datetime
 from common.baseObject import HLY
 from config import api_urls
 from common.apiRequest import ApiRequest
-from common.parameter import  GetConfigp
+from common.parameter import GetConfigp
 from common.log import logger
 import time
 from common.globalMap import GlobalMap
 from config.api_urls import query_loan_url, expenseTypeOID, formType, subsidy_rule, resourceId
+
 
 api = ApiRequest()
 glo = GlobalMap()

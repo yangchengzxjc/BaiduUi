@@ -25,6 +25,7 @@ class Pyapp_Local(webdriver.Chrome):
         返回浏览器对象
         """
         super(Pyapp_Local, self).__init__(executable_path="chromedriver")
+
     def get_element(self, css, s=False, secs=7, poll_frequency=1, timeout=0, display=True, method=None, **kwargs):
         """
         获取并返回元素

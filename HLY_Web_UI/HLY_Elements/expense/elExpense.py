@@ -116,3 +116,5 @@ destinations_prod='//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div
 # 出发地
 departures ='//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[8]/div[2]/div/div/div/div/div/ul/li/div/input'
 departures_prod ='//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[8]/div[2]/div/div/div/div/div/ul/li/div/input'
+
+book_select_expense = '//td[@class="ant-table-selection-column"]'

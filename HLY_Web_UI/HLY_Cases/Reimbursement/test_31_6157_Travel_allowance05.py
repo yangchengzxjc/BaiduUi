@@ -7,7 +7,7 @@ from HLY_Elements.expense.elReimbursement import cause, data_time, select_day, u
     start_Date
 from HLY_Elements.expense.elTravel_allowance import Travel_allowance, save_travel_allowance, \
     owen_expense, goBackDate, stoke_time
-from HLY_PageObject.API.apis import  close_auto_route_Calculation, change_subsidy_rule
+from HLY_PageObject.API.apis import close_auto_route_Calculation, change_subsidy_rule
 from HLY_PageObject.UI.Process import Process
 from HLY_PageObject.UI.Reimbursement import Reimbursement
 from HLY_PageObject.UI.my_expense.my_expense import My_Expense
@@ -84,8 +84,8 @@ def test_6404_Travel_allowance(config_env):
     logger.info("保存差补")
     reimbursement.get_elements_click(0, Travel_allowance)
     logger.info("再次进入差补")
-    stoke_date =driver.get_text(stoke_time).split(" ~ ")[0]
-    logger.info("stoke_date:%s"% stoke_date)
+    stoke_date = driver.get_text(stoke_time).split(" ~ ")[0]
+    logger.info("stoke_date:%s" % stoke_date)
     assert stoke_date in str(datetime.strptime(time.split(",")[0], GMT_FORMAT))
 
 

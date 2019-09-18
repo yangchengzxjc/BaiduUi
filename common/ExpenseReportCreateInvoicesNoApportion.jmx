@@ -228,7 +228,7 @@ vars.put(&quot;body&quot;,body.toString());
 	&quot;readonly&quot;: false,&#xd;
 	&quot;recognized&quot;: false,&#xd;
 	&quot;currencyCode&quot;: &quot;CNY&quot;,&#xd;
-	&quot;expenseTypeName&quot;: &quot;${Daba_expenseTypeName}&quot;,&#xd;
+	&quot;expenseTypeName&quot;: &quot;${expenseTypeName}&quot;,&#xd;
 	&quot;expenseTypeOID&quot;: &quot;${Daba_expenseTypeOID}&quot;,&#xd;
 	&quot;expenseTypeId&quot;: &quot;${Daba_filedID}&quot;,&#xd;
 	&quot;expenseTypeIconName&quot;: &quot;hotel&quot;,&#xd;
@@ -300,7 +300,7 @@ vars.put(&quot;data&quot;,str);
 </stringProp>
           </BeanShellPreProcessor>
           <hashTree/>
-          <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="BeanShell PreProcessor" enabled="true">
+          <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="处理分摊行" enabled="true">
             <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -310,23 +310,23 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonObject;
 
 String json = vars.get(&quot;expenseApportion&quot;);
+if (!json.equals(&quot;[]&quot;))
+{
 JsonArray MYjsonArray=new JsonParser().parse(json).getAsJsonArray();
-
-
-
 JsonObject jsonObject1 =MYjsonArray.get(0).getAsJsonObject();
 jsonObject1.remove(&quot;amount&quot;);
 jsonObject1.remove(&quot;proportion&quot;);
 jsonObject1.addProperty(&quot;amount&quot;,vars.get(&quot;bxamount&quot;));
-jsonObject1.addProperty(&quot;proportion&quot;,&quot;1&quot;);
-
-
-
-                 
-     
+jsonObject1.addProperty(&quot;proportion&quot;,&quot;1&quot;);   
 String str =MYjsonArray.toString();
-log.info(&quot;data==:&quot;+MYjsonArray.toString());
 vars.put(&quot;NewexpenseApportion&quot;,str);
+}
+else
+{
+String str =&quot;[]&quot;;
+vars.put(&quot;NewexpenseApportion&quot;,str);
+}
+
 
 </stringProp>
           </BeanShellPreProcessor>

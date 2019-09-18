@@ -1,4 +1,6 @@
 from time import sleep
+
+from HLY_Elements.expense.elExpense import book_select_expense
 from HLY_Elements.expense.elFinanciaCheck import book_enter, select_button_confirm
 from HLY_Elements.expense.elReimbursement import cause, submit_expense
 from HLY_Elements.expense.elTravel_allowance import amount
@@ -40,7 +42,7 @@ def test_26_Abnormal_operation(enter):
     driver.get(PageUrl1)
     # 进入第一个报销单导入账本
     driver.click(book_enter, timeout=5)
-    reimbursement.get_elements_click(0, reimbursement.get_origin_xpath("空港嘉华机票"), timeout=7)
+    reimbursement.get_elements_click(0, book_select_expense, timeout=7)
     logger.info("第一个页面选择费用")
     driver.js('window.open("%s")' % PageUrl2, timeout=1)
     # 当前页面打开账本
@@ -51,7 +53,7 @@ def test_26_Abnormal_operation(enter):
     logger.info("切换到第二个标签页")
     driver.click(book_enter, timeout=2)
     logger.info("第二个页面点击账本导入")
-    reimbursement.get_elements_click(0, reimbursement.get_origin_xpath("空港嘉华机票"), timeout=6)
+    reimbursement.get_elements_click(0, book_select_expense, timeout=6)
     logger.info("第二个页面选择费用")
     reimbursement.get_elements_click(4, select_button_confirm)
     logger.info("第二页面费用选择确定")
@@ -66,7 +68,7 @@ def test_26_Abnormal_operation(enter):
     # case 3和case 4 同一个报销单导入同一笔费用
     Consumer_expense(110, "空港嘉华机票")
     driver.click(book_enter, timeout=6)
-    reimbursement.get_elements_click(0, reimbursement.get_origin_xpath("空港嘉华机票"), timeout=6)
+    reimbursement.get_elements_click(0, book_select_expense, timeout=6)
     # 切换到第二个标签页
     driver.switch_to_window(handlers[1])
     sleep(2)
@@ -74,7 +76,7 @@ def test_26_Abnormal_operation(enter):
     logger.info("第二个页面打开第一个报销单")
     driver.click(book_enter, timeout=6)
     logger.info("第二个页面点击账本导入")
-    reimbursement.get_elements_click(0, reimbursement.get_origin_xpath("空港嘉华机票"), timeout=6)
+    reimbursement.get_elements_click(0, book_select_expense, timeout=6)
     logger.info("第二个页面选择费用")
     reimbursement.get_elements_click(4, select_button_confirm)
     logger.info("第二页面费用选择确定")

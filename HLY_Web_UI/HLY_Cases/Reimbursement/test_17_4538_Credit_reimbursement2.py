@@ -1,7 +1,8 @@
 from time import sleep
 from HLY_Elements.expense.elFinanciaCheck import book_enter, \
     select_button_confirm
-from HLY_Elements.expense.elExpense import check_lable, detal_page_lable, loan_link, check_lable2, submit_expense
+from HLY_Elements.expense.elExpense import check_lable, detal_page_lable, loan_link, check_lable2, submit_expense, \
+    book_select_expense
 from HLY_Elements.expense.elReimbursement import cause
 from HLY_PageObject.API.apis import Consumer_expense
 from HLY_PageObject.UI.Process import Process
@@ -30,7 +31,8 @@ def test_credit_reimbursement2(enter):
     # 推送一笔负的机票费用
     Consumer_expense(-10, "空港嘉华机票")
     driver.click(book_enter)
-    reimbursement.get_elements_click(0, reimbursement.get_origin_xpath("空港嘉华机票"), timeout=6)
+    # 选择第一笔的费用
+    reimbursement.get_elements_click(0, book_select_expense, timeout=6)
     reimbursement.get_elements_click(4, select_button_confirm, timeout=2)
     sleep(3)
     business_Code = process.get_businessCode()

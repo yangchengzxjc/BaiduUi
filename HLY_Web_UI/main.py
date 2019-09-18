@@ -79,8 +79,8 @@ if __name__ == '__main__':
     set_env2()
     # init_global_param(udid="3af53e7")
     # 运行指定mark用例
-    # pytest.main(['--capture=no', '-v',
-    #              '--html=' + get_report_name(), '--self-contained-html'])
+    pytest.main(['--capture=no', '-v',
+                 '--html=' + get_report_name(), '--self-contained-html'])
     # print(glo.get('desired_capabilities'))
     # 运行指定mark用例
     # pytest.main(['--capture=sys', '-v', '--html=' + get_report_name(), '--self-contained-html'])
@@ -89,7 +89,7 @@ if __name__ == '__main__':
     # pytest.main(['-s', '-q', '--capture=sys', '-v', '-m', 'not normal and not low',
     #              '--html=report.html', '--self-contained-html'])
     # 指定文件夹+mark
-    pytest.main(["HLY_Cases/Reimbursement/test_30-3_6157_Travel_allowance_08.py", '-s', '-q', '--capture=sys', '-v','--html=' + get_report_name(), '--self-contained-html'])
+    # pytest.main(["HLY_Cases/Reimbursement/test_30-3_6157_Travel_allowance_08.py", '-s', '-q', '--capture=sys', '-v','--html=' + get_report_name(), '--self-contained-html'])
     # E:/git-zhishinet/APPUI/zhishinet-stuAPPUI/HLY_cases/userinfoModify/test_modify_gender.py
     # E:/git-zhishinet/APPUI/zhishinet-stuAPPUI/HLY_cases/register/test_register_05_invalidphonenum.py
     # E:/git-zhishinet/APPUI/zhishinet-stuAPPUI/HLY_cases/register/test_register_01_codeshort.py

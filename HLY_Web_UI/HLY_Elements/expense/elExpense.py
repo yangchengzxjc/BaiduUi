@@ -112,7 +112,9 @@ bus_expense = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/
 input_expense = 'xpath=>//*[@id="amount"]'
 # 保存按钮
 save = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div[2]/button[1]'
-destinations_prod='//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[9]/div[2]/div/div/div/div/div/ul/li/div/input'
+destinations_prod = '//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[9]/div[2]/div/div/div/div/div/ul/li/div/input'
 # 出发地
-departures ='//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[8]/div[2]/div/div/div/div/div/ul/li/div/input'
-departures_prod ='//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[8]/div[2]/div/div/div/div/div/ul/li/div/input'
+departures = '//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[8]/div[2]/div/div/div/div/div/ul/li/div/input'
+departures_prod = '//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[8]/div[2]/div/div/div/div/div/ul/li/div/input'
+# 费用导入的页面选择费用
+book_select_expense = '//td[@class="ant-table-selection-column"]'

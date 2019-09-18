@@ -30,7 +30,7 @@ def parse_command_params():
 
 def set_env2():
     parse_command_params()
-    env=glo.get("value")
+    env = glo.get("value")
     logger.info("env=="+env)
     pp = pa('./config/hly.config')
     glo.set("env",env)
@@ -61,7 +61,7 @@ def set_env2():
         glo.set("scene", "预算场景")
         glo.set("year", "2019")
         glo.set("Period", "2019-YS_5")
-    if env ==pp.getoption("MLPROD","ENV"):
+    if env == pp.getoption("MLPROD","ENV"):
         glo.set("Webprotocol", pp.getoption("MLPROD", "protocol"))
         glo.set("Webhost", pp.getoption("MLPROD", "host"))
         glo.set("WebUsername", pp.getoption("MLPROD", "username"))
@@ -79,8 +79,8 @@ if __name__ == '__main__':
     set_env2()
     # init_global_param(udid="3af53e7")
     # 运行指定mark用例
-    pytest.main(['--capture=no', '-v',
-                 '--html=' + get_report_name(), '--self-contained-html'])
+    # pytest.main(['--capture=no', '-v',
+    #              '--html=' + get_report_name(), '--self-contained-html'])
     # print(glo.get('desired_capabilities'))
     # 运行指定mark用例
     # pytest.main(['--capture=sys', '-v', '--html=' + get_report_name(), '--self-contained-html'])
@@ -89,7 +89,7 @@ if __name__ == '__main__':
     # pytest.main(['-s', '-q', '--capture=sys', '-v', '-m', 'not normal and not low',
     #              '--html=report.html', '--self-contained-html'])
     # 指定文件夹+mark
-    # pytest.main(["HLY_Cases/FinancialManagement/test_01FinancePrintExpenseReport.py", '-s', '-q', '--capture=sys', '-v','--html=' + get_report_name(), '--self-contained-html'])
+    pytest.main(["HLY_Cases/Reimbursement/test_30-3_6157_Travel_allowance_08.py", '-s', '-q', '--capture=sys', '-v','--html=' + get_report_name(), '--self-contained-html'])
     # E:/git-zhishinet/APPUI/zhishinet-stuAPPUI/HLY_cases/userinfoModify/test_modify_gender.py
     # E:/git-zhishinet/APPUI/zhishinet-stuAPPUI/HLY_cases/register/test_register_05_invalidphonenum.py
     # E:/git-zhishinet/APPUI/zhishinet-stuAPPUI/HLY_cases/register/test_register_01_codeshort.py

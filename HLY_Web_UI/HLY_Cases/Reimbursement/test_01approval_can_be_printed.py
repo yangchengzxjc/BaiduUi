@@ -1,5 +1,7 @@
 from time import sleep
 
+import pytest
+
 from HLY_Elements.expense.elApprove import business_code, approved_Print
 from HLY_Elements.expense.elFinanciaCheck import Printing_button, \
     Printing_button1
@@ -10,21 +12,30 @@ from HLY_PageObject.UI.my_expense.Profile import Profile
 from HLY_PageObject.UI.my_expense.my_expense import My_Expense
 from common.log import logger
 
+@pytest.fixture(scope='function')
+def open_profile(request, enter):
+    driver = enter.driver
+    profile = Profile(driver)
+    profile.print_open()
+    def awardbacktohome():
+        """
+        用例执行完返回首页
+        """
+    request.addfinalizer(awardbacktohome)
+    return enter
 
-def test_approval_can_be_printed(enter):
+
+def test_approval_can_be_printed(open_profile):
     """
     报销单审核通过后可进行打印
     需求：4828审核后是否长打印按钮受profile控制：显示按钮打开
     :return:
     """
-    driver = enter.driver
+    driver = open_profile.driver
     reimbursement = Reimbursement(driver)
     process = Process(driver)
     # 选择报销单类型(日常报销单)
     my_expense = My_Expense(driver)
-    profile = Profile(driver)
-    sleep(2)
-    profile.print_open()
     sleep(3)
     my_expense.Newexpense("日常报销单-UI自动化")
     sleep(2)

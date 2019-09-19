@@ -32,9 +32,6 @@ def enter(request, prepare):
             ActionChains(driver).move_to_element(a).perform()
             driver.click(select_company)
             sleep(2)
-
-
-
     def awardbacktohome():
         """
         用例执行完返回首页

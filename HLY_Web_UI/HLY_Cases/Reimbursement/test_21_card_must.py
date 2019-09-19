@@ -39,7 +39,8 @@ def test_5483_card_must(enter):
     reimbursement.Pagescroll(reimbursement.get_xpath("大巴"), timeout=1)
     # 选中付款的费用
     sleep(3)
-    reimbursement.get_elements_click(1, select_expense_frame)
+    els = driver.find_elements_by_xpath(select_expense_frame)
+    els[1].click()
     driver.click(reimbursement.get_parent_xpath("选择费用添加付款行"))
     # 点击收款方并选择一个收款方
     driver.click(Receipt, timeout=2)

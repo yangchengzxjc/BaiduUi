@@ -21,6 +21,7 @@ class Reimbursement():
 
     def get_elements_click(self, number, element, timeout=4):
         sleep(timeout)
+        logger.info("可见的元素：%s" % len(WebDriverWait(self.driver, 10, 1).until(visibility_of_any_elements_located((By.XPATH, element)))))
         if len(WebDriverWait(self.driver, 10, 1).until(visibility_of_any_elements_located((By.XPATH, element)))) != 0:
             els = self.driver.find_elements_by_xpath(element)
             logger.info("%s:%s" % (element, len(els)))

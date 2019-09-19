@@ -36,9 +36,10 @@ def  test_36001_no_card(enter):
     process.create_other_expense("100", "大巴")
     process.create_expense("100", "大巴")
     # 选中付款的费用
-    reimbursement.Pagescroll(reimbursement.get_xpath("大巴"), timeout=1)
+    reimbursement.Pagescroll(reimbursement.get_xpath("全部费用"), timeout=1)
     sleep(3)
-    reimbursement.get_elements_click(2, select_expense_frame)
+    els =driver.find_elements_by_xpath(select_expense_frame)
+    els[2].click()
     driver.click(reimbursement.get_parent_xpath("选择费用添加付款行"))
     # 点击收款方并选择一个收款方
     driver.click(Receipt, timeout=2)

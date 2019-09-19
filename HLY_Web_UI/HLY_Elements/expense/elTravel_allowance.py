@@ -52,5 +52,5 @@ goBackDate = 'xpath=>//*[@id="goBackDate"]'
 
 stoke_time ='xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[6]/div/div[2]/div[2]/div/section/div/div/div/div/div[2]/span/div/div[2]/div[1]/div/div/div[2]'
 stoke_time_noStoke = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[6]/div/div[2]/div[2]/div/section/div/div/div/div/div/span/div/div[2]/div[1]/div/div/div[2]'
-edit_expense_owen = 'xparh=>//*[@id="app"]/div/div[2]/div[2]/div/div[6]/div/div[2]/div[2]/div/section/div/div/div/div/div[1]/form/div/div[1]/div/div[2]/div/div/div/div/ul/li[1]/div'
+edit_expense_owen = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[6]/div/div[2]/div[2]/div/section/div/div/div/div/div[1]/form/div/div[1]/div/div[2]/div/div/div/div/ul/li[1]/div'
 select_persion = 'xpath=>/html/body/div[7]/div/div/div/ul/li[1]'

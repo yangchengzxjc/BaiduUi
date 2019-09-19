@@ -97,7 +97,7 @@ page_turning = 'xpath=>/html/body/div[11]/div/div/div/div/div[2]/div[1]/div/a[2]
 month = 'xpath=>/html/body/div[7]/div/div/div/div/div[2]/div[1]/div/span/a[2]'
 # 一月
 juanary = 'xpath=>/html/body/div[7]/div/div/div/div/div[2]/div[1]/div[2]/div/div[2]/table/tbody/tr[1]/td[1]/a'
-select_expense_frame = '//*[@class="ant-checkbox-input"]'
+select_expense_frame = '//input[@class="ant-checkbox-input"]'
 select_expense_frames = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[2]/div[2]/div/div[1]/span/div/span/div/div/div[1]/div[2]/div/div/div/div[2]/div/table/tbody/tr[2]/td[2]/span/label/span/span'
 # 目的地
 Destination = 'xpath=>//*[@id="app"]/div/div[2]/div[2]/div/div[5]/div[2]/div[2]/span/div/div/div[1]/div/div[2]/div/form/div[1]/div/div/div/div[9]/div[2]/div/div/div/div/div/ul/li/div/input'

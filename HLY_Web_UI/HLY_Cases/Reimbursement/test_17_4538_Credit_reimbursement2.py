@@ -32,7 +32,7 @@ def test_credit_reimbursement2(enter):
     Consumer_expense(-10, "空港嘉华机票")
     driver.click(book_enter)
     # 选择第一笔的费用
-    reimbursement.get_elements_click(0, book_select_expense, timeout=6)
+    reimbursement.get_elements_click(1, book_select_expense, timeout=6)
     reimbursement.get_elements_click(4, select_button_confirm, timeout=2)
     sleep(3)
     business_Code = process.get_businessCode()
@@ -67,7 +67,3 @@ def test_credit_reimbursement2(enter):
     process.change_amount(business_Code)
     reimbursement.Pagescroll(reimbursement.get_xpath("收款账号"), timeout=1)
     assert not driver.is_exist(check_lable2)
-
-
-
-

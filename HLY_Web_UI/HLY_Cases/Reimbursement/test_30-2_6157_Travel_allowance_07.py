@@ -60,7 +60,7 @@ def test_6404_Travel_allowance(config_env):
     driver.click(save_travel_allowance, timeout=3)
     logger.info("保存差补")
     reimbursement.get_elements_click(0, Travel_allowance, timeout=5)
-    assert date in str(driver.get_text(stoke_time_noStoke))
+    assert str(date) in driver.get_text(stoke_time_noStoke)
 
 
 

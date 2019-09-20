@@ -67,18 +67,3 @@ def test_approval_can_be_printed(open_profile):
     a = driver.find_element_by_xpath(Printing_button1).text
     assert driver.is_exist(Printing_button)
     assert a == "打 印"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

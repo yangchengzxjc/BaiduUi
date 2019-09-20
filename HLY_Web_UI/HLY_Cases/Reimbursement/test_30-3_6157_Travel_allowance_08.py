@@ -57,12 +57,13 @@ def test_6404_Travel_allowance(config_env):
     # 新建报销单
     driver.click(reimbursement.get_parent_xpath("新 建"), timeout=1)
     reimbursement.get_elements_click(0, Travel_allowance)
-    reimbursement.get_elements_click(1, reimbursement.get_origin_xpath("编辑"), timeout=2)
-    driver.click(edit_expense_owen)
+    reimbursement.get_elements_click(0, '//div[@class="big-subsidy-operate"]', timeout=2)
+    driver.click(edit_expense_owen, timeout=1)
     driver.click(select_persion, timeout=2)
+    assert driver.is_exist(reimbursement.get_xpath("更改费用归属人或者出差往返日期，可能更改相应行程日期，请重新选择生成的补贴。"))
     driver.click(reimbursement.get_xpath("更改"))
     # 点击更改发生了变化
-    assert driver.is_exist(reimbursement.get_xpath("更改费用归属人或者出差往返日期，可能更改相应行程日期，请重新选择生成的补贴。"))
+    logger.info(driver.get_text(owen_expense))
     assert "员工1号" in driver.get_text(owen_expense)
     driver.sendkeys(city_travel_input, "西安")
     logger.info("输入出差城市")

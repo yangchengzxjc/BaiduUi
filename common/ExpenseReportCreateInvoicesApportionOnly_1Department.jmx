@@ -195,8 +195,8 @@
 	&quot;updateRate&quot;: true,&#xd;
 	&quot;expenseApportion&quot;: ${NewexpenseApportion},&#xd;
 	&quot;expenseReportOID&quot;: &quot;${bxExpenseReportOID}&quot;,&#xd;
-	&quot;ownerOID&quot;: &quot;${userOID}&quot;,&#xd;
-	&quot;paymentType&quot;: &quot;1001&quot;&#xd;
+	&quot;ownerOID&quot;: &quot;${__groovy(${__isVarDefined(ownerOID)}?&apos;${ownerOID}&apos;:&apos;${__V(userOID,)}&apos;)}&quot;,&#xd;
+	&quot;paymentType&quot;: &quot;${__groovy(${__isVarDefined(paymentType)}?&apos;${paymentType}&apos;:&apos;1001&apos;)}&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>

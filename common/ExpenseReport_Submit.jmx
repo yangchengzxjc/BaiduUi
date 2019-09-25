@@ -235,7 +235,7 @@ vars.put(&quot;AllDetal&quot;,AllDetal);
               <stringProp name="Assertion.custom_message"></stringProp>
             </ResponseAssertion>
             <hashTree/>
-            <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="加强制提交" enabled="true">
+            <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="加强制提交" enabled="false">
               <boolProp name="resetInterpreter">false</boolProp>
               <stringProp name="parameters"></stringProp>
               <stringProp name="filename"></stringProp>
@@ -255,6 +255,27 @@ str  = str.replaceAll(&quot;\&quot;null\&quot;&quot;,&quot;null&quot;);
 vars.put(&quot;AllDetalNew&quot;,str);
 
 </stringProp>
+            </BeanShellPreProcessor>
+            <hashTree/>
+            <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="加强制提交" enabled="true">
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="script">import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+String json = vars.get(&quot;AllDetal&quot;);
+log.info(&quot;AllDetal:&quot;+json);
+
+JsonObject valueobject = new JsonParser().parse(json).getAsJsonObject();
+
+log.info(&quot;*************************&quot;);
+
+valueobject.addProperty(&quot;ignoreBudgetWarningFlag&quot;, new Boolean(true));
+
+vars.put(&quot;AllDetalNew&quot;, valueobject.toString());</stringProp>
             </BeanShellPreProcessor>
             <hashTree/>
           </hashTree>

@@ -34,6 +34,3 @@ class GetConfigp(object):
         self.config.write(open(self.mail_config_file, "w"))
     def has_option(self,section="self.go.get('Environment')",option=None,):
         return self.config.has_option(section, option)
-
-
-        

@@ -23431,7 +23431,7 @@ vars.put(&quot;zh_cneName31&quot;,&quot;刘德华骑着小毛驴买菜刘德华�
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="日常报销单(导入账本中的滴滴费用、提交后撤回、退回账本、账本中删除)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="日常报销单(导入账本中的滴滴费用、提交后撤回、退回账本、账本中删除)" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>

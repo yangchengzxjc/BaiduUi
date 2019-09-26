@@ -14,7 +14,7 @@
           </elementProp>
           <elementProp name="serverUrl" elementType="Argument">
             <stringProp name="Argument.name">serverUrl</stringProp>
-            <stringProp name="Argument.value">${__P(serverUrl,console-tc.huilianyi.com)}</stringProp>
+            <stringProp name="Argument.value">${__P(serverUrl,console.huilianyi.com)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="password" elementType="Argument">
@@ -24,7 +24,7 @@
           </elementProp>
           <elementProp name="username" elementType="Argument">
             <stringProp name="Argument.name">username</stringProp>
-            <stringProp name="Argument.value">${__P(username,17709280742)}</stringProp>
+            <stringProp name="Argument.value">${__P(username,13609265517)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="Delay" elementType="Argument">
@@ -2960,6 +2960,35 @@ JSONObject NewformOID = JSONObject.parseObject(jsonObject.get(&quot;subsidyConfi
 vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringProp>
             </BeanShellPostProcessor>
             <hashTree/>
+            <DebugPostProcessor guiclass="TestBeanGUI" testclass="DebugPostProcessor" testname="调试后置处理程序" enabled="true">
+              <boolProp name="displayJMeterProperties">false</boolProp>
+              <boolProp name="displayJMeterVariables">true</boolProp>
+              <boolProp name="displaySamplerProperties">true</boolProp>
+              <boolProp name="displaySystemProperties">false</boolProp>
+            </DebugPostProcessor>
+            <hashTree/>
+            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="script">import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+String customFormPropertyMap =vars.get(&quot;customFormPropertyMap&quot;);
+
+JsonObject valueObject =new JsonParser().parse(customFormPropertyMap).getAsJsonObject();
+
+JsonElement reportSubsidyConfig = valueObject.get(&quot;report.subsidy.config&quot;);
+
+log.info(&quot;**************************************&quot;+reportSubsidyConfig.toString());
+
+vars.put(&quot;reportSubsidyConfig&quot;,reportSubsidyConfig.toString());
+
+</stringProp>
+            </BeanShellPostProcessor>
+            <hashTree/>
           </hashTree>
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="表单修改" enabled="true">
@@ -3003,7 +3032,7 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${bxFormOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;report.subsidy.config&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;withSubsidies\&quot;:true,\&quot;withTime\&quot;:false,\&quot;notShowItinerary\&quot;:false,\&quot;formOID\&quot;:\&quot;e055560e-165e-4b0d-874f-ab0d8c22af57\&quot;}&quot;&#xd;
+	&quot;propertyValue&quot;: ${reportSubsidyConfig}&#xd;
 }]</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
@@ -3875,6 +3904,28 @@ JSONObject NewformOID = JSONObject.parseObject(jsonObject.get(&quot;subsidyConfi
 vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringProp>
             </BeanShellPostProcessor>
             <hashTree/>
+            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="script">import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+String customFormPropertyMap =vars.get(&quot;customFormPropertyMap&quot;);
+
+JsonObject valueObject =new JsonParser().parse(customFormPropertyMap).getAsJsonObject();
+
+JsonElement reportSubsidyConfig = valueObject.get(&quot;report.subsidy.config&quot;);
+
+log.info(&quot;**************************************&quot;+reportSubsidyConfig.toString());
+
+vars.put(&quot;reportSubsidyConfig&quot;,reportSubsidyConfig.toString());
+
+</stringProp>
+            </BeanShellPostProcessor>
+            <hashTree/>
           </hashTree>
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="表单修改" enabled="true">
@@ -3883,6 +3934,7 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="表单付款方式修改" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -3917,13 +3969,12 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${bxFormOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;report.subsidy.config&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;withSubsidies\&quot;:true,\&quot;withTime\&quot;:false,\&quot;notShowItinerary\&quot;:false,\&quot;formOID\&quot;:\&quot;e055560e-165e-4b0d-874f-ab0d8c22af57\&quot;}&quot;&#xd;
+	&quot;propertyValue&quot;:${reportSubsidyConfig}&#xd;
 }]</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -4097,6 +4148,7 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单创建" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -4153,7 +4205,6 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -4826,6 +4877,28 @@ JSONObject NewformOID = JSONObject.parseObject(jsonObject.get(&quot;subsidyConfi
 vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringProp>
             </BeanShellPostProcessor>
             <hashTree/>
+            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="script">import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+String customFormPropertyMap =vars.get(&quot;customFormPropertyMap&quot;);
+
+JsonObject valueObject =new JsonParser().parse(customFormPropertyMap).getAsJsonObject();
+
+JsonElement reportSubsidyConfig = valueObject.get(&quot;report.subsidy.config&quot;);
+
+log.info(&quot;**************************************&quot;+reportSubsidyConfig.toString());
+
+vars.put(&quot;reportSubsidyConfig&quot;,reportSubsidyConfig.toString());
+
+</stringProp>
+            </BeanShellPostProcessor>
+            <hashTree/>
           </hashTree>
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="表单修改" enabled="true">
@@ -4834,6 +4907,7 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="表单付款方式修改" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -4868,13 +4942,12 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${bxFormOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;report.subsidy.config&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;withSubsidies\&quot;:true,\&quot;withTime\&quot;:false,\&quot;notShowItinerary\&quot;:false,\&quot;formOID\&quot;:\&quot;e055560e-165e-4b0d-874f-ab0d8c22af57\&quot;}&quot;&#xd;
+	&quot;propertyValue&quot;: ${reportSubsidyConfig}&#xd;
 }]</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -5048,6 +5121,7 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单创建" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -5104,7 +5178,6 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -5303,6 +5376,7 @@ vars.put(&quot;draft&quot;,str);
             <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="提交报销单" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -5312,7 +5386,6 @@ vars.put(&quot;draft&quot;,str);
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -5741,6 +5814,28 @@ JSONObject NewformOID = JSONObject.parseObject(jsonObject.get(&quot;subsidyConfi
 vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringProp>
             </BeanShellPostProcessor>
             <hashTree/>
+            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="script">import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+String customFormPropertyMap =vars.get(&quot;customFormPropertyMap&quot;);
+
+JsonObject valueObject =new JsonParser().parse(customFormPropertyMap).getAsJsonObject();
+
+JsonElement reportSubsidyConfig = valueObject.get(&quot;report.subsidy.config&quot;);
+
+log.info(&quot;**************************************&quot;+reportSubsidyConfig.toString());
+
+vars.put(&quot;reportSubsidyConfig&quot;,reportSubsidyConfig.toString());
+
+</stringProp>
+            </BeanShellPostProcessor>
+            <hashTree/>
           </hashTree>
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="表单修改" enabled="true">
@@ -5749,6 +5844,7 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="表单付款方式修改" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -5783,13 +5879,12 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${bxFormOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;report.subsidy.config&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;withSubsidies\&quot;:true,\&quot;withTime\&quot;:false,\&quot;notShowItinerary\&quot;:false,\&quot;formOID\&quot;:\&quot;e055560e-165e-4b0d-874f-ab0d8c22af57\&quot;}&quot;&#xd;
+	&quot;propertyValue&quot;:${reportSubsidyConfig}&#xd;
 }]</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -5963,6 +6058,7 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单创建" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -6019,7 +6115,6 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -6338,7 +6433,7 @@ vars.put(&quot;draft&quot;,str);
             <stringProp name="23804353">customEnumerationName</stringProp>
           </collectionProp>
           <collectionProp name="UserParameters.thread_values">
-            <collectionProp name="-959781259">
+            <collectionProp name="-406210866">
               <stringProp name="1617726314">OFFLINE_PAYMENT</stringProp>
               <stringProp name="-1585075764">付款方式类型</stringProp>
             </collectionProp>
@@ -6692,6 +6787,28 @@ JSONObject NewformOID = JSONObject.parseObject(jsonObject.get(&quot;subsidyConfi
 vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringProp>
             </BeanShellPostProcessor>
             <hashTree/>
+            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="script">import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+String customFormPropertyMap =vars.get(&quot;customFormPropertyMap&quot;);
+
+JsonObject valueObject =new JsonParser().parse(customFormPropertyMap).getAsJsonObject();
+
+JsonElement reportSubsidyConfig = valueObject.get(&quot;report.subsidy.config&quot;);
+
+log.info(&quot;**************************************&quot;+reportSubsidyConfig.toString());
+
+vars.put(&quot;reportSubsidyConfig&quot;,reportSubsidyConfig.toString());
+
+</stringProp>
+            </BeanShellPostProcessor>
+            <hashTree/>
           </hashTree>
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="表单修改" enabled="true">
@@ -6700,6 +6817,7 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="表单付款方式修改" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -6734,13 +6852,12 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${bxFormOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;report.subsidy.config&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;withSubsidies\&quot;:true,\&quot;withTime\&quot;:false,\&quot;notShowItinerary\&quot;:false,\&quot;formOID\&quot;:\&quot;e055560e-165e-4b0d-874f-ab0d8c22af57\&quot;}&quot;&#xd;
+	&quot;propertyValue&quot;:${reportSubsidyConfig}&#xd;
 }]</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -6914,6 +7031,7 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单创建" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -6970,7 +7088,6 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -7169,6 +7286,7 @@ vars.put(&quot;draft&quot;,str);
             <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="提交报销单" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -7178,7 +7296,6 @@ vars.put(&quot;draft&quot;,str);
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -7253,7 +7370,7 @@ vars.put(&quot;draft&quot;,str);
             <stringProp name="23804353">customEnumerationName</stringProp>
           </collectionProp>
           <collectionProp name="UserParameters.thread_values">
-            <collectionProp name="-959781259">
+            <collectionProp name="-406210866">
               <stringProp name="1617726314">OFFLINE_PAYMENT</stringProp>
               <stringProp name="-1585075764">付款方式类型</stringProp>
             </collectionProp>
@@ -7607,6 +7724,28 @@ JSONObject NewformOID = JSONObject.parseObject(jsonObject.get(&quot;subsidyConfi
 vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringProp>
             </BeanShellPostProcessor>
             <hashTree/>
+            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="script">import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+String customFormPropertyMap =vars.get(&quot;customFormPropertyMap&quot;);
+
+JsonObject valueObject =new JsonParser().parse(customFormPropertyMap).getAsJsonObject();
+
+JsonElement reportSubsidyConfig = valueObject.get(&quot;report.subsidy.config&quot;);
+
+log.info(&quot;**************************************&quot;+reportSubsidyConfig.toString());
+
+vars.put(&quot;reportSubsidyConfig&quot;,reportSubsidyConfig.toString());
+
+</stringProp>
+            </BeanShellPostProcessor>
+            <hashTree/>
           </hashTree>
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="表单修改" enabled="true">
@@ -7615,6 +7754,7 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="表单付款方式修改" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -7649,13 +7789,12 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
 }, {&#xd;
 	&quot;formOID&quot;: &quot;${bxFormOID}&quot;,&#xd;
 	&quot;propertyName&quot;: &quot;report.subsidy.config&quot;,&#xd;
-	&quot;propertyValue&quot;: &quot;{\&quot;withSubsidies\&quot;:true,\&quot;withTime\&quot;:false,\&quot;notShowItinerary\&quot;:false,\&quot;formOID\&quot;:\&quot;e055560e-165e-4b0d-874f-ab0d8c22af57\&quot;}&quot;&#xd;
+	&quot;propertyValue&quot;:${reportSubsidyConfig}&#xd;
 }]</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
@@ -7829,6 +7968,7 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
         </TransactionController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="报销单创建" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
@@ -7885,7 +8025,6 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>

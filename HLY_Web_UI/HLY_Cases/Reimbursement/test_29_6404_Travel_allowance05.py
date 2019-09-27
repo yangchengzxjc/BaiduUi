@@ -4,9 +4,7 @@ from time import sleep
 import pytest
 
 from HLY_Elements.expense.elReimbursement import cause, data_time, select_day, stroke_time, edit_date
-from HLY_Elements.expense.elTravel_allowance import Travel_allowance, add_Travel_allowance, city_travel_input, \
-    select_place, save_travel_allowance, delete_button, delete_frame, confirm_button1, \
-    success_delete, edit
+from HLY_Elements.expense.elTravel_allowance import Travel_allowance, save_travel_allowance
 from HLY_PageObject.API.apis import get_formType, close_auto_route_Calculation, change_subsidy_rule
 from HLY_PageObject.UI.Process import Process
 from HLY_PageObject.UI.Reimbursement import Reimbursement

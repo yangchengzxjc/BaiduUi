@@ -2967,6 +2967,15 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
               <boolProp name="displaySystemProperties">false</boolProp>
             </DebugPostProcessor>
             <hashTree/>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="正则表达式提取器" enabled="true">
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <stringProp name="RegexExtractor.refname">reportSubsidyConfig</stringProp>
+              <stringProp name="RegexExtractor.regex">&quot;report.subsidy.config&quot;:&quot;(.*?)&quot;,</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
+              <stringProp name="RegexExtractor.default">mmm</stringProp>
+              <stringProp name="RegexExtractor.match_number">0</stringProp>
+            </RegexExtractor>
+            <hashTree/>
             <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell 后置处理程序" enabled="true">
               <boolProp name="resetInterpreter">false</boolProp>
               <stringProp name="parameters"></stringProp>
@@ -2975,6 +2984,10 @@ vars.put(&quot;NewformOID&quot;,NewformOID.get(&quot;formOID&quot;));</stringPro
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+String a =vars.get(&quot;reportSubsidyConfig&quot;);
+
+log.info(&quot;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;:&quot;+a);
 
 String customFormPropertyMap =vars.get(&quot;customFormPropertyMap&quot;);
 

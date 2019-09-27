@@ -70,9 +70,3 @@ def test_FinanceViewExpenseReport(enter):
     all_handle = driver.window_handles
     time.sleep(5)
     driver.switch_to_window(all_handle[0])
-
-
-
-
-
-

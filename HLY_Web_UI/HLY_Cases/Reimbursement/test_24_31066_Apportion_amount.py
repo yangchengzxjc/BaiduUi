@@ -1,9 +1,9 @@
 from time import sleep
 from HLY_Elements.expense import elTravel_approval_can_be_printed
 from HLY_Elements.expense.elApprove import reason
-from HLY_Elements.expense.elExpense import invoice_type, invoice_code, invoice_number, invoice_date, page_turning, date, \
+from HLY_Elements.expense.elExpense import invoice_type, invoice_code, invoice_number, invoice_date,\
     invoice_money, month, submit_expense
-from HLY_Elements.expense.elFinanciaCheck import financial_apportion1, financial_apportion2, origin_amout, \
+from HLY_Elements.expense.elFinanciaCheck import financial_apportion1, financial_apportion2,\
     delete_invoice, financial_apportion3, financial_apportion4, new_amount
 from HLY_Elements.expense.elReimbursement import invoice_amount, pay_amount, cause, second_apportion
 from HLY_Elements.expense.expense_type import approation_amount1, approation_amount2, amount_input

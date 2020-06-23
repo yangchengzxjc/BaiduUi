@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.ExpenseComponent;
 import com.hand.basicconstant.ApiPath;
 import com.hand.basicconstant.BaseConstant;
 import com.hand.utils.GsonUtil;
@@ -25,7 +26,6 @@ import java.util.Map;
 public class ReimbursementApi extends BaseRequest {
 
     private ComponentQuery componentQuery ;
-
     public ReimbursementApi(){
         componentQuery =new ComponentQuery();
     }
@@ -194,6 +194,37 @@ public class ReimbursementApi extends BaseRequest {
     }
 
     /**
+     *
+     * @param employee
+     * @param formdetal   控件详情
+     * @param jobId    岗位id
+     * @param userOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public  JsonObject createExpenseReport(Employee employee, JsonObject formdetal, ExpenseComponent component,String jobId, String userOID) throws HttpStatusException {
+        JsonObject responseEntity=null;
+        JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
+        String url = employee.getEnvironment().getUrl()+ ApiPath.NEW_EXPENSE_REPORT;
+        JsonArray  custFormValues=processCustFormValues(employee,formdetal,component);
+        formdetal.remove("custFormValues");
+        formdetal.remove("customFormFields");
+        formdetal.add("custFormValues",custFormValues);
+        formdetal.add("customFormFields",customFormFields);
+        formdetal.addProperty("visibleUserScope",1001);
+        formdetal.addProperty("timeZoneOffset",480);
+        formdetal.addProperty("currencySame",false);
+        formdetal.addProperty("applicantJobId",jobId);
+        formdetal.add("countersignApproverOIDs",new JsonArray());
+        formdetal.addProperty("applicantOID",userOID);
+        formdetal.add("expenseReportInvoices", new JsonArray());
+        formdetal.addProperty("recalculateSubsidy",true);
+        String res= doPost(url,getHeader(employee.getAccessToken()),null,formdetal.toString(),null,employee);
+        responseEntity=new JsonParser().parse(res).getAsJsonObject();
+        return  responseEntity;
+    }
+
+    /**
      * 获取表单默认带出的值
      * @param employee
      * @param formOID
@@ -225,7 +256,7 @@ public class ReimbursementApi extends BaseRequest {
      * @return
      * @throws HttpStatusException
      */
-    public  JsonArray processCustFormValues(Employee employee, JsonObject  formdetal, String departmentOID,int costCenterItemOID,String startDate,
+    private JsonArray processCustFormValues(Employee employee, JsonObject  formdetal, String departmentOID,int costCenterItemOID,String startDate,
                                             String endDate, String companyOID,String cityCode,String participant,JsonArray attachment, JsonArray image) throws HttpStatusException {
         JsonArray custFormValues=formdetal.get("customFormFields").getAsJsonArray();
         String formOID=formdetal.get("formOID").getAsString();
@@ -346,6 +377,128 @@ public class ReimbursementApi extends BaseRequest {
         }
         return  custFormValues;
     }
+
+    /**
+     * 报销单处理控件值
+     * @param employee
+     * @param formdetal
+     * @return
+     * @throws HttpStatusException
+     */
+    private JsonArray processCustFormValues(Employee employee, JsonObject  formdetal, ExpenseComponent component) throws HttpStatusException {
+        JsonArray custFormValues=formdetal.get("customFormFields").getAsJsonArray();
+        String formOID=formdetal.get("formOID").getAsString();
+        for (int i=0;i<custFormValues.size();i++)
+        {
+            JsonObject data= custFormValues.get(i).getAsJsonObject();
+            String messageKey=data.get("messageKey").getAsString();
+            switch (messageKey)
+            {
+                case "select_box":            //选择框
+                    JsonArray fieldContentlist=new JsonParser().parse(data.get("fieldContent").getAsString()).getAsJsonArray();
+                    JsonObject fieldContent=fieldContentlist.get(0).getAsJsonObject();
+                    fieldContent.remove("promoptInfo");
+                    data.addProperty("value",fieldContent.toString());
+                    break;
+                case "cust_list":          //自定义列表
+//                    JsonArray customenumerationlist = componentQuery.getCustomEumerationOid(employee,data.get("customEnumerationOID").getAsString());
+//                    data.addProperty("value", customenumerationlist.get(0).getAsJsonObject().get("value").getAsString());
+                    data.addProperty("value",component.getCustList());
+                    break;
+                case "number":      //数字
+                    data.addProperty("value",1);
+                    break;
+                case "currency_code":      //币种
+                    data.addProperty("value",componentQuery.getCurrency(employee).get(0).getAsJsonObject().get("baseCurrency").getAsString());
+                    break;
+                case "input":     //输入框
+                    data.addProperty("value","text");
+                    break;
+                case "text_area":      //多行输入框
+                    data.addProperty("value","text");
+                    break;
+                case "time":           // 时间
+                    data.addProperty("value",UTCTime.getNowUtcTime());
+                    break;
+                case "attachment":         //  附件
+                        data.addProperty("value", component.getAttachment().toString());
+                        break;
+                case "select_cost_center":        //选择成本中心
+//                    data.addProperty("value", componentQuery.getCostCenterOIDItems(employee,new JsonParser().parse(data.get("dataSource").getAsString()).getAsJsonObject().
+//                            get("costCenterOID").getAsString()).get(costCenterItemOID).getAsJsonObject().get("costCenterItemOID").getAsString());
+                    data.addProperty("value",component.getCostCenter());
+                    break;
+                case "select_department":             //选择部门
+//                    JsonArray  DepartmentList= componentQuery.getBxformDepartment(employee);
+//                    data.addProperty("value",DepartmentList.get(0).getAsJsonObject().get("departmentOid").getAsString());
+                    data.addProperty("value",component.getDepartment());
+                    break;
+                case "switch":       //普通开关
+                    data.addProperty("value",true);
+                    break;
+                case "end_data":     // 结束日期
+
+                    data.addProperty("value",component.getEndDate());
+                case "start_data":      //开始日期
+                    data.addProperty("value",component.getStartDate());
+                case "common.date":             //日期
+                    data.addProperty("value", UTCTime.getNowUtcTime());
+                    break;
+                case "dateTime":            //时间
+                    data.addProperty("value",UTCTime.getNowUtcTime());
+                    break;
+                case "employee_expand":       //个人信息扩展字段
+                    String fieldOID=data.get("fieldOID").getAsString();
+                    String Default_values=getFormDefault_values(employee,formOID,employee.getJobId()).getAsString();
+                    String value= GsonUtil.JsonExtractor(Default_values,String.format("$..[?(@.fieldOID == '%s')].value",fieldOID)).get(0);
+                    data.addProperty("value",value);
+                    break;
+                case "select_user":               //选人
+                    data.addProperty("value",componentQuery.queryEmployees(employee).get(0).getAsJsonObject().get("userOID").getAsString());
+                    break;
+                case "select_company":                //选择公司
+//                    data.addProperty("value",componentQuery.getCompanies(employee).get(0).getAsJsonObject().get("companyOID").getAsString());
+                    data.addProperty("value",component.getCompany());
+                    break;
+                case "title":                      //事由
+                    data.addProperty("value","自动化测试");
+                    break;
+                case "city":               //城市
+//                    String  city=componentQuery.locationSearch(employee,"西安").get(0).getAsJsonObject().get("city").getAsString();
+                    data.addProperty("value", component.getCity());
+                    break;
+                case "select_participant":                   //参与人
+//                    JsonObject Participant=componentQuery.getSelectParticipant(employee,formOID).get(0).getAsJsonObject();
+//                    JsonArray ja0 = new JsonArray();
+//                    JsonObject myobj = new JsonObject();
+//                    myobj.addProperty("userOID",Participant.get("userOID").getAsString());
+//                    myobj.addProperty("fullName",Participant.get("fullName").getAsString());
+//                    myobj.addProperty("participantOID",Participant.get("userOID").getAsString());
+//                    ja0.add(myobj);
+                    data.addProperty("value",component.getParticipant());
+                    break;
+                case "image":      //图片
+                        data.addProperty("value", component.getImage().toString());
+                        break;
+                case "linkage_switch":       //联动开关
+                    data.addProperty("value","true");
+                    String Content=data.get("fieldContent").getAsString().replace("null","\"22222\"");
+                    data.remove("fieldContent");
+                    data.addProperty("fieldContent",Content);
+                    break;
+                case "contact_bank_account":          //银行卡号
+//                    String contactBankAccountOID=componentQuery.getBankAccount(employee).get(0).getAsJsonObject().get("contactBankAccountOID").getAsString();
+                    data.addProperty("value",component.getBankAccount());
+                    break;
+                case "remark":              //备注
+                    data.addProperty("value","Cause");
+                    break;
+            }
+        }
+        return  custFormValues;
+    }
+
+
 
     /**
      * 获取报销单的审批历史

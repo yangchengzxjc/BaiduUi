@@ -2,6 +2,7 @@ package com.test.api.testcase;
 
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.ExpenseComponent;
 import com.test.BaseTest;
 import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportInvoice;
@@ -20,11 +21,13 @@ public class ApportionTest extends BaseTest {
     private ExpenseReport expenseReport;
     private ExpenseReportInvoice expenseReportInvoice;
     private Employee employee;
+    private ExpenseComponent component;
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
     public void beforeClass(@Optional("14082978625") String phoneNumber, @Optional("hly12345") String pwd, @Optional("stage") String env){
         expenseReport =new ExpenseReport();
+        component =new ExpenseComponent("测试导入费用分摊费用标签");
         expenseReportInvoice =new ExpenseReportInvoice();
         employee=getEmployee(phoneNumber,pwd,env);
     }
@@ -34,7 +37,7 @@ public class ApportionTest extends BaseTest {
         //新建火车费用（非分摊费用）
         expenseReportInvoice.createExpenseInvoice(employee,"火车","",100).get("invoiceOID");
         //新建报销单
-        String expenseReportOID = expenseReport.createExpenseReport(employee,"yuuki的测试表单","","").get("expenseReportOID");
+        String expenseReportOID = expenseReport.createExpenseReport(employee,"yuuki的测试表单",component).get("expenseReportOID");
         //导入非分摊费用
         expenseReport.importInvoice(employee, expenseReportOID,"火车",employee.getFullName(), 1, true);
         assert expenseReport.invoiceLabel(employee,expenseReportOID).contains("无标签");
@@ -53,10 +56,12 @@ public class ApportionTest extends BaseTest {
 
     @Test(description = "配置:报销单配置了部门控件参与分摊,表头有分摊项->导入的费用分摊项不为空，不标记必填未输")
     public void apportionTest3() throws HttpStatusException {
+        //表单头需要部门
+        component.setDepartment(employee.getDepartmentOID());
         //新建分摊费用类型
         expenseReportInvoice.createExpenseInvoice(employee,"分摊费用类型","",100).get("invoiceOID");
         //新建报销单
-        String expenseReportOID = expenseReport.createExpenseReport(employee,"yuuki的测试表单",employee.getDepartmentOID(),"").get("expenseReportOID");
+        String expenseReportOID = expenseReport.createExpenseReport(employee,"yuuki的测试表单",component).get("expenseReportOID");
         //导入分摊费用
         expenseReport.importInvoice(employee, expenseReportOID,"分摊费用类型",employee.getFullName(), 1, true);
         assert expenseReport.invoiceLabel(employee,expenseReportOID).contains("无标签");
@@ -67,7 +72,7 @@ public class ApportionTest extends BaseTest {
         //新建分摊费用类型
         expenseReportInvoice.createExpenseInvoice(employee,"分摊费用类型","",100).get("invoiceOID");
         //新建报销单
-        String expenseReportOID = expenseReport.createExpenseReport(employee,"日常报销单-测试",employee.getDepartmentOID(),"").get("expenseReportOID");
+        String expenseReportOID = expenseReport.createExpenseReport(employee,"日常报销单-测试",component).get("expenseReportOID");
         //导入分摊费用
         expenseReport.importInvoice(employee, expenseReportOID,"分摊费用类型",employee.getFullName(), 1, true);
         assert expenseReport.invoiceLabel(employee,expenseReportOID).contains("无标签");

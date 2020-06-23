@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
+import com.hand.basicObject.InvoiceComponent;
 import com.hand.basicconstant.ApiPath;
 import com.hand.basicconstant.BaseConstant;
 import com.hand.basicObject.Employee;
@@ -258,14 +259,153 @@ public class ExpenseApi extends BaseRequest{
         body.addProperty("updateRate",true);
 //        分摊项
         body.add("expenseApportion", expenseApportion);
-
         if (expenseReportOID !=null) {
             body.addProperty("expenseReportOID",expenseReportOID);
         }
         body.addProperty("timeZoneOffset",480);
         body.addProperty("ownerOID",employee.getUserOID());
-        body.addProperty("paymentType",1002);
+        body.addProperty("paymentType",1001);
         getHeader(employee.getAccessToken()).put("Authorization", "Bearer "+employee.getAccessToken()+"");
+        String res= doPost(url,getHeader(employee.getAccessToken()),null,body.toString(),null, employee);
+        responseEntity=new JsonParser().parse(res).getAsJsonObject();
+        return  responseEntity;
+    }
+
+    /**
+     *
+     * @param employee
+     * @param expenseTypeinfo
+     * @param expenseReportOID   报销单的oid
+     * @param amount    费用金额
+     * @param attachments   附件  没有则为空
+     * @return
+     * @throws HttpStatusException
+     */
+    public  JsonObject expenseReportCreateinvoice(Employee employee, JsonObject expenseTypeinfo, InvoiceComponent component,String expenseReportOID,
+                                                  int amount, JsonArray attachments, JsonArray receiptList,JsonArray expenseApportion) throws HttpStatusException {
+        JsonObject responseEntity=null;
+        String url=employee.getEnvironment().getUrl()+ ApiPath.CREATEINVOICE;
+        JsonObject body=new JsonObject();
+        String accountSetId=expenseTypeinfo.get("setOfBooks").getAsJsonObject().get("accountSetId").getAsString();
+        String messageKey=null;
+        if (!expenseTypeinfo.get("messageKey").isJsonNull()) {
+            messageKey=expenseTypeinfo.get("messageKey").getAsString();
+        }
+        JsonArray fieldsdata=expenseTypeinfo.get("fields").getAsJsonArray();
+        //开始给控件塞值
+        for (int i=0;i<fieldsdata.size();i++) {
+            JsonObject data = fieldsdata.get(i).getAsJsonObject();
+            String fieldType=data.get("fieldType").getAsString();
+            switch (fieldType)
+            {
+                case "ASSOCIATE_APPLICATION":                //关联申请单
+                    data.addProperty("value",component.getApplication());
+                    break;
+                case "CUSTOM_ENUMERATION":                          //值列表
+                    JsonArray customenumerationlist =componentQuery.getCustomEumerationOid(employee,data.get("customEnumerationOID").getAsString());
+                    data.addProperty("value", customenumerationlist.get(0).getAsJsonObject().get("value").getAsString());
+                    break;
+                case  "MONTH":
+                    data.addProperty("value", UTCTime.getNowUtcTime());
+                    break;
+                case  "TEXT":
+                    data.addProperty("value", "test");
+                    break;
+                case  "LONG":
+                    data.addProperty("value", 125L);
+                    break;
+                case  "POSITIVE_INTEGER":
+                    data.addProperty("value", 125L);
+                    break;
+                case  "DATETIME":
+                    data.addProperty("value",component.getDateTime());
+                    break;
+                case  "DOUBLE":
+                    data.addProperty("value", 1.25f);
+                    break;
+                case  "DATE":
+                    data.addProperty("value", UTCTime.getNowUtcTime());
+                    break;
+                case  "LOCATION":              //城市控件
+                    String  code=componentQuery.locationSearch(employee,"大").get(0).getAsJsonObject().get("code").getAsString();
+                    data.addProperty("value", code);
+                    break;
+                case  "PARTICIPANTS":                 //参与人
+                    data.addProperty("value",component.getParticipants());
+                    break;
+                case  "PARTICIPANT":                 //同行人
+                    data.addProperty("value",component.getParticipant());
+                    break;
+                case  "START_DATE_AND_END_DATE":               //开始结束日期
+                    data.addProperty("value",component.getStartAndEndData());
+                    break;
+                case  "TEXT_AREA":
+                    data.addProperty("value", "text");
+                    break;
+                case  "COMPANY_PAID":             //公司支付   1002是公司已付    默认1001是公司未付费用
+                    if (component.isCompanyPay()){
+                        data.addProperty("value", "1002");
+                    }
+                    else {
+                        data.addProperty("value", "1001");
+                    }
+                    break;
+                case  "GPS":                //出发地或者目的地
+                    if(data.get("messageKey").getAsString().equalsIgnoreCase("departure.location")){
+                        data.addProperty("value",component.getDeparture());
+                    }else if(data.get("messageKey").getAsString().equalsIgnoreCase("destination.location")){
+                        data.addProperty("value",component.getDestination());
+                    }
+                    break;
+            }
+        }
+//        结束给控件塞值  附件
+        if (attachments !=null) {
+            body.add("attachments",attachments);
+        }
+        else {
+            body.add("attachments",new JsonArray());
+        }
+        body.addProperty("invoiceStatus","INIT");
+        body.addProperty("readonly",expenseTypeinfo.get("readonly").getAsBoolean());
+        body.addProperty("recognized",false);
+        if(component.getCurrencyCode()==null){
+            body.addProperty("currencyCode","CNY");
+        }else{
+            body.addProperty("currencyCode",component.getCurrencyCode());
+        }
+        body.addProperty("expenseTypeName",expenseTypeinfo.get("name").getAsString());
+        body.addProperty("expenseTypeOID",expenseTypeinfo.get("expenseTypeOID").getAsString());
+        body.addProperty("expenseTypeId",expenseTypeinfo.get("id").getAsString());
+        body.addProperty("expenseTypeIconName",expenseTypeinfo.get("iconName").getAsString());
+        body.addProperty("expenseTypeKey",messageKey);
+        body.addProperty("pasteInvoiceNeeded",expenseTypeinfo.get("pasteInvoiceNeeded").getAsBoolean());
+        body.addProperty("invoiceRequired",expenseTypeinfo.get("invoiceRequired").getAsBoolean());
+        body.addProperty("amount",amount);
+        //如果非人民币的汇率要加上汇率 使用equals会出现空指针,因为初始化的时候没有赋值。
+        if(component.getCurrencyCode()!=("CNY")){
+            body.addProperty("actualCurrencyRate",component.getRate());
+        }
+        body.add("receiptList",receiptList);
+        body.addProperty("createdDate",UTCTime.getNowUtcTime());
+        if(component.getCurrencyCode()==null){
+            body.addProperty("invoiceCurrencyCode","CNY");
+        }else {
+            body.addProperty("invoiceCurrencyCode",component.getCurrencyCode());
+        }
+        body.addProperty("comment","事由");
+        body.addProperty("invoiceInsteadReason","");
+        body.add("data",fieldsdata);
+        body.addProperty("baseCurrency","CNY");
+        body.addProperty("updateRate",true);
+//        分摊项
+        body.add("expenseApportion", expenseApportion);
+        if (expenseReportOID !=null) {
+            body.addProperty("expenseReportOID",expenseReportOID);
+        }
+        body.addProperty("timeZoneOffset",480);
+        body.addProperty("ownerOID",employee.getUserOID());
+        body.addProperty("paymentType",1001);
         String res= doPost(url,getHeader(employee.getAccessToken()),null,body.toString(),null, employee);
         responseEntity=new JsonParser().parse(res).getAsJsonObject();
         return  responseEntity;

@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.hand.api.ExpenseApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.InvoiceComponent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -71,6 +72,28 @@ public class ExpenseReportInvoice {
            jsonObject= expenseApi.expenseReportCreateinvoice(employee,"",getExpenseTypeInfo(employee,expenseTypenName,expenseReportOID),
                     expenseReportOID,"","",amount,new JsonArray(),new JsonObject(),new JsonObject(),new JsonArray(),
                     false,new JsonArray(),expenseReportComponent.getExpenseLocation(employee,"西安环普科技产业园E座"),new JsonObject());
+        } catch (HttpStatusException e) {
+            e.printStackTrace();
+        }
+        log.info("新建费用的返回:{}",jsonObject);
+        HashMap<String,String> info =new HashMap<>();
+        info.put("invoiceOID",jsonObject.get("rows").getAsJsonObject().get("invoiceOID").getAsString());
+        return info;
+    }
+
+    /**
+     * 创建一笔费用，
+     * @param employee
+     * @param expenseTypenName  费用类型的名称
+     * @param expenseReportOID   报销单的OID
+     * @param amount   金额
+     * @return
+     */
+    public HashMap<String,String> createExpenseInvoice(Employee employee, InvoiceComponent component, String expenseTypenName, String expenseReportOID, int amount){
+        JsonObject jsonObject=null;
+        try {
+            jsonObject= expenseApi.expenseReportCreateinvoice(employee,getExpenseTypeInfo(employee,expenseTypenName,expenseReportOID),component,
+                    expenseReportOID,amount,new JsonArray(),new JsonArray(),new JsonArray());
         } catch (HttpStatusException e) {
             e.printStackTrace();
         }

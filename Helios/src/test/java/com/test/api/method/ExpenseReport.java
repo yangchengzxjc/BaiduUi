@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.hand.api.ReimbursementApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.ExpenseComponent;
 import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
 
@@ -103,6 +104,7 @@ public class ExpenseReport {
 //        return jsonObject.get("customFormFields").getAsJsonArray();
 //    }
 
+
     /**
      * 创建报销单，根据自己表单的控件传参数，如果表单没有的参数的话  就随便传一个获取根据自己的需要重载方法就行了。
      * @param employee
@@ -121,6 +123,24 @@ public class ExpenseReport {
         log.info("businessCode:{}",info.get("businessCode"));
         return info;
     }
+
+    /**
+     * 通过
+     * @param employee
+     * @param formName
+     * @param component
+     * @return
+     * @throws HttpStatusException
+     */
+    public HashMap<String,String> createExpenseReport (Employee employee, String formName, ExpenseComponent component) throws HttpStatusException {
+        JsonObject jsonObject =reimbursementApi.createExpenseReport(employee,reimbursementApi.getFormDetal(employee,getFormOID(employee,formName)),component,employee.getJobId(),employee.getUserOID());
+        HashMap<String,String> info =new HashMap<>();
+        info.put("expenseReportOID",jsonObject.get("expenseReportOID").getAsString());
+        info.put("businessCode",jsonObject.get("businessCode").getAsString());
+        log.info("businessCode:{}",info.get("businessCode"));
+        return info;
+    }
+
 
     /**
      * 获取报销单的详情

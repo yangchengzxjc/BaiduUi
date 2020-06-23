@@ -1,10 +1,13 @@
 package com.hand.basicObject;
 
 import com.hand.basicconstant.Environment;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
-
 @Data
+@AllArgsConstructor
+@Builder
 public class Employee {
     //登录名
     private  String userName;

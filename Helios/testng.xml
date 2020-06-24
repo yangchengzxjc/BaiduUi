@@ -8,12 +8,9 @@
     <test verbose="10" preserve-order="true" name="报销单演示demo1">
         <parameter name="phoneNumber" value="14082978625"/>
         <classes>
-            <class name="com.test.api.testcase.ExpenseReportTest">
-                <methods>
-                    <include name="login"></include>
-                </methods>
-            </class>
-            <class name="com.test.api.testcase.AuthorityCheck"></class>
+            <!--<class name="com.test.api.testcase.ExpenseReportTest">-->
+            <!--</class>-->
+            <!--<class name="com.test.api.testcase.AuthorityCheck"></class>-->
         </classes>
     </test>
 

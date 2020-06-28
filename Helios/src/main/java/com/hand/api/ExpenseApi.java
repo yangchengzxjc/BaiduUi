@@ -12,6 +12,7 @@ import com.hand.utils.UTCTime;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -138,7 +139,7 @@ public class ExpenseApi extends BaseRequest{
      * @throws HttpStatusException
      */
     public  JsonObject expenseReportCreateinvoice(Employee employee, String currencyCode,JsonObject  expenseTypeinfo, String expenseReportOID,
-                                                  String participantOid,String applicationBusinessCode, int amount,
+                                                  String participantOid,String applicationBusinessCode, double amount,
                                                   JsonArray attachments, JsonObject startDate, JsonObject participants, JsonArray receiptList,
                                                   boolean COMPANY_PAID,JsonArray expenseApportion,JsonObject departureLocation,JsonObject destinationLocation) throws HttpStatusException {
         JsonObject responseEntity=null;
@@ -241,7 +242,7 @@ public class ExpenseApi extends BaseRequest{
         body.addProperty("expenseTypeKey",messageKey);
         body.addProperty("pasteInvoiceNeeded",expenseTypeinfo.get("pasteInvoiceNeeded").getAsBoolean());
         body.addProperty("invoiceRequired",expenseTypeinfo.get("invoiceRequired").getAsBoolean());
-        body.addProperty("amount",amount);
+        body.addProperty("amount",new DecimalFormat("#0.00").format(amount));
         body.addProperty("actualCurrencyRate","1");
         body.add("receiptList",receiptList);
         body.addProperty("createdDate",UTCTime.getNowUtcTime());
@@ -258,7 +259,7 @@ public class ExpenseApi extends BaseRequest{
         body.addProperty("updateRate",true);
 //        分摊项
         body.add("expenseApportion", expenseApportion);
-        if (expenseReportOID !=null) {
+        if (!expenseReportOID.equals("")) {
             body.addProperty("expenseReportOID",expenseReportOID);
         }
         body.addProperty("timeZoneOffset",480);
@@ -281,7 +282,7 @@ public class ExpenseApi extends BaseRequest{
      * @throws HttpStatusException
      */
     public  JsonObject expenseReportCreateinvoice(Employee employee, JsonObject expenseTypeinfo, InvoiceComponent component,String expenseReportOID,
-                                                  int amount, JsonArray attachments, JsonArray receiptList,JsonArray expenseApportion) throws HttpStatusException {
+                                                  double amount, JsonArray attachments, JsonArray receiptList,JsonArray expenseApportion) throws HttpStatusException {
         JsonObject responseEntity=null;
         String url=employee.getEnvironment().getUrl()+ ApiPath.CREATEINVOICE;
         JsonObject body=new JsonObject();
@@ -399,7 +400,7 @@ public class ExpenseApi extends BaseRequest{
         body.addProperty("updateRate",true);
 //        分摊项
         body.add("expenseApportion", expenseApportion);
-        if (expenseReportOID !=null) {
+        if (!expenseReportOID.equals("")) {
             body.addProperty("expenseReportOID",expenseReportOID);
         }
         body.addProperty("timeZoneOffset",480);

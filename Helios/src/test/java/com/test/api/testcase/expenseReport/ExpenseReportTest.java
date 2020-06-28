@@ -50,7 +50,7 @@ public class ExpenseReportTest extends BaseTest{
         //新建报销单
         String expenseReportOID = expenseReport.createExpenseReport(employee,"yuuki的测试表单",component).get("expenseReportOID");
         //新建费用
-        String invoiceOID = expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,"火车",expenseReportOID,100).get("invoiceOID");
+        String invoiceOID = expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,"火车",expenseReportOID,100.00).get("invoiceOID");
         //报销单提交
         assert expenseReport.expenseReportSubmit(employee,expenseReportOID).equalsIgnoreCase("true");
         //报销单撤回

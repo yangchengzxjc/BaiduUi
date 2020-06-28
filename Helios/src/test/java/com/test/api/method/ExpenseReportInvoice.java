@@ -6,7 +6,9 @@ import com.hand.api.ExpenseApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.InvoiceComponent;
+import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.core.util.JsonUtils;
 
 import java.util.*;
 
@@ -66,7 +68,7 @@ public class ExpenseReportInvoice {
      * @param amount   金额
      * @return
      */
-    public HashMap<String,String> createExpenseInvoice(Employee employee,String expenseTypenName,String expenseReportOID,int amount){
+    public HashMap<String,String> createExpenseInvoice(Employee employee,String expenseTypenName,String expenseReportOID,double amount){
         JsonObject jsonObject=null;
         try {
            jsonObject= expenseApi.expenseReportCreateinvoice(employee,"",getExpenseTypeInfo(employee,expenseTypenName,expenseReportOID),
@@ -89,7 +91,7 @@ public class ExpenseReportInvoice {
      * @param amount   金额
      * @return
      */
-    public HashMap<String,String> createExpenseInvoice(Employee employee, InvoiceComponent component, String expenseTypenName, String expenseReportOID, int amount){
+    public HashMap<String,String> createExpenseInvoice(Employee employee, InvoiceComponent component, String expenseTypenName, String expenseReportOID, double amount){
         JsonObject jsonObject=null;
         try {
             jsonObject= expenseApi.expenseReportCreateinvoice(employee,getExpenseTypeInfo(employee,expenseTypenName,expenseReportOID),component,
@@ -119,7 +121,7 @@ public class ExpenseReportInvoice {
      * @return
      * @throws HttpStatusException
      */
-    public ArrayList<String> getExpenseItem(Employee employee) throws HttpStatusException {
+    public ArrayList getExpenseItem(Employee employee) throws HttpStatusException {
         ArrayList<String> expenseItem =new ArrayList<>();
         JsonArray jsonArray=expenseApi.getInvoiceLlist(employee);
         for (int i=0;i<jsonArray.size();i++){
@@ -148,12 +150,7 @@ public class ExpenseReportInvoice {
      */
     public String searchTransferUser(Employee employee,String fullName, String setOfBooksId) throws HttpStatusException {
        JsonArray jsonArray= expenseApi.searchTransferUser(employee,setOfBooksId);
-       String userId ="";
-       for(int i=0; i<jsonArray.size();i++){
-           if(jsonArray.get(i).getAsJsonObject().get("fullName").getAsString().equals(fullName)){
-               userId = jsonArray.get(i).getAsJsonObject().get("id").getAsString();
-           }
-       }
+       String userId =GsonUtil.getJsonValue(jsonArray,"fullName",fullName,"id");;
        return userId;
     }
 
@@ -164,8 +161,9 @@ public class ExpenseReportInvoice {
      * @param invoiceOIDs
      * @throws HttpStatusException
      */
-    public void TransferTo(Employee employee, String fullName,JsonArray invoiceOIDs) throws HttpStatusException {
-        expenseApi.transferTo(employee,searchTransferUser(employee,fullName,employee.getSetOfBookId()),invoiceOIDs);
+    public String  transferTo(Employee employee, String fullName,JsonArray invoiceOIDs) throws HttpStatusException {
+        JsonObject object=expenseApi.transferTo(employee,searchTransferUser(employee,fullName,employee.getSetOfBookId()),invoiceOIDs);
+        return object.get("success").getAsString();
     }
 
 }

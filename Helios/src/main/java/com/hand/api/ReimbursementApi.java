@@ -30,11 +30,12 @@ public class ReimbursementApi extends BaseRequest {
         componentQuery =new ComponentQuery();
     }
 
+
     /**
      * 获取员工可用单据类型
      * @param formType 单据类型   可选102为报销单  101 申请单
      */
-    public JsonArray getavailableBxforms(Employee employee, String formType, String jobId) throws HttpStatusException {
+    public JsonArray getAvailableforms(Employee employee, String formType, String jobId) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.GETAVAILABLE_BXFORMS;
         Map<String, String> datas = new HashMap<>();
         datas.put("formType", formType);
@@ -46,7 +47,7 @@ public class ReimbursementApi extends BaseRequest {
     /**
      * 获取报销单的控件的详情信息
      */
-    public JsonObject getFormDetal(Employee employee, String FormOID) throws HttpStatusException {
+    public JsonObject getFormDetail(Employee employee, String FormOID) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + String.format(ApiPath.GETBX_FORMS, FormOID);
         String res = doGet(url, getHeader(employee.getAccessToken()), null, employee);
         return new JsonParser().parse(res).getAsJsonObject();
@@ -58,7 +59,7 @@ public class ReimbursementApi extends BaseRequest {
      * @param expenseReportOID
      * @return
      */
-    public JsonObject getexpenseReportDetal(Employee employee, String expenseReportOID) throws HttpStatusException {
+    public JsonObject getexpensereportdetal(Employee employee, String expenseReportOID) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + String.format(ApiPath.GETEXPENSE_REPORT_DETAL, expenseReportOID);
         String res = doGet(url, getHeader(employee.getAccessToken()), null, employee);
         return new JsonParser().parse(res).getAsJsonObject();
@@ -82,7 +83,6 @@ public class ReimbursementApi extends BaseRequest {
         String res = doPost(url, getHeader(employee.getAccessToken()), null, ExpenseReportdetal.toString(), null, employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
-
 
     /**
      * 报销单提交等管控检查，在提交的时候必须加这个接口
@@ -192,7 +192,7 @@ public class ReimbursementApi extends BaseRequest {
     }
 
     /**
-     *
+     * 日常报销单创建
      * @param employee
      * @param formdetal   控件详情
      * @param jobId    岗位id
@@ -200,7 +200,7 @@ public class ReimbursementApi extends BaseRequest {
      * @return
      * @throws HttpStatusException
      */
-    public  JsonObject createExpenseReport(Employee employee, JsonObject formdetal, ExpenseComponent component,String jobId, String userOID) throws HttpStatusException {
+    public  JsonObject createExpenseReport(Employee employee,JsonObject formdetal, ExpenseComponent component,String jobId, String userOID) throws HttpStatusException {
         JsonObject responseEntity=null;
         JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
         String url = employee.getEnvironment().getUrl()+ ApiPath.NEW_EXPENSE_REPORT;
@@ -223,13 +223,50 @@ public class ReimbursementApi extends BaseRequest {
     }
 
     /**
+     * 差旅报销单创建
+     * @param employee
+     * @param isMoreApplication 是否多关联多申请
+     * @param formdetal   控件详情
+     * @param jobId    岗位id
+     * @param userOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public  JsonObject createTravelExpenseReport(Employee employee,boolean isMoreApplication,JsonObject formdetal, ExpenseComponent component,String jobId, String userOID) throws HttpStatusException {
+        JsonObject responseEntity=null;
+        JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
+        String url = employee.getEnvironment().getUrl()+ ApiPath.NEW_EXPENSE_REPORT;
+        JsonArray  custFormValues=processCustFormValues(employee,formdetal,component);
+        formdetal.remove("custFormValues");
+        formdetal.remove("customFormFields");
+        formdetal.add("custFormValues",custFormValues);
+        formdetal.add("customFormFields",customFormFields);
+        formdetal.addProperty("visibleUserScope",1001);
+        formdetal.addProperty("timeZoneOffset",480);
+        formdetal.addProperty("currencySame",false);
+        formdetal.addProperty("applicantJobId",jobId);
+        formdetal.add("countersignApproverOIDs",new JsonArray());
+        formdetal.addProperty("applicantOID",userOID);
+        formdetal.addProperty("associateExpenseReport",true);
+        formdetal.addProperty("applicationOID",component.getApplicationOID());
+        if(isMoreApplication){
+            formdetal.add("expenseReportApplicationDTOS",component.getExpenseReportApplicationDTOS());
+        }
+        formdetal.add("expenseReportInvoices", new JsonArray());
+        formdetal.addProperty("recalculateSubsidy",true);
+        String res= doPost(url,getHeader(employee.getAccessToken()),null,formdetal.toString(),null,employee);
+        responseEntity=new JsonParser().parse(res).getAsJsonObject();
+        return  responseEntity;
+    }
+
+    /**
      * 获取表单默认带出的值
      * @param employee
      * @param formOID
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray getFormDefault_values(Employee employee,String formOID,String jobID) throws  HttpStatusException {
+    public JsonArray getFormDefaultValues(Employee employee,String formOID,String jobID) throws  HttpStatusException {
         String url=employee.getEnvironment().getUrl()+ ApiPath.DEFAULT_VALUES;
         Map<String, String> urlform = new HashMap<>();
         urlform.put("formOID",formOID);
@@ -323,7 +360,7 @@ public class ReimbursementApi extends BaseRequest {
                     break;
                 case "employee_expand":       //个人信息扩展字段
                     String fieldOID=data.get("fieldOID").getAsString();
-                    String Default_values=getFormDefault_values(employee,formOID,employee.getJobId()).getAsString();
+                    String Default_values=getFormDefaultValues(employee,formOID,employee.getJobId()).getAsString();
                     String value= GsonUtil.JsonExtractor(Default_values,String.format("$..[?(@.fieldOID == '%s')].value",fieldOID)).get(0);
                     data.addProperty("value",value);
                     break;
@@ -447,7 +484,7 @@ public class ReimbursementApi extends BaseRequest {
                     break;
                 case "employee_expand":       //个人信息扩展字段
                     String fieldOID=data.get("fieldOID").getAsString();
-                    String Default_values=getFormDefault_values(employee,formOID,employee.getJobId()).getAsString();
+                    String Default_values=getFormDefaultValues(employee,formOID,employee.getJobId()).getAsString();
                     String value= GsonUtil.JsonExtractor(Default_values,String.format("$..[?(@.fieldOID == '%s')].value",fieldOID)).get(0);
                     data.addProperty("value",value);
                     break;
@@ -571,5 +608,24 @@ public class ReimbursementApi extends BaseRequest {
         String url = employee.getEnvironment().getUrl()+String.format(ApiPath.removeExpense,expenseReportOID,invoiceOID);
         JsonObject  object =new JsonObject();
         doDlete(url,getHeader(employee.getAccessToken()),null,object,employee);
+    }
+
+    /**
+     * 报销单关联申请单-查询申请单
+     * @param employee
+     * @param formOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getApplication(Employee employee,String formOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ApiPath.searchApplication;
+        Map<String, String> urlform = new HashMap<>();
+        urlform.put("page","0");
+        urlform.put("size","10");
+        urlform.put("formOID",formOID);
+        urlform.put("userOID",employee.getUserOID());
+        String res= doGet(url,getHeader(employee.getAccessToken()),urlform,employee);
+        return new JsonParser().parse(res).getAsJsonArray();
+
     }
 }

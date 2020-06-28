@@ -7,8 +7,6 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashMap;
-
 /**
  * @Author peng.zhang
  * @Date 2020/6/10
@@ -30,7 +28,6 @@ public class EmployeeAccount{
         JsonObject jsonObject=null;
         try {
             jsonObject= employeeInfoApi.getEmployeeInfo(employee);
-
         } catch (HttpStatusException e) {
             e.printStackTrace();
         }
@@ -82,7 +79,7 @@ public class EmployeeAccount{
     public String getSetOfBooksId(Employee employee){
         JsonObject jsonObject=null;
         try {
-            jsonObject = employeeInfoApi.getcompanys(employee);
+            jsonObject = employeeInfoApi.getCompanys(employee);
         } catch (HttpStatusException e) {
             e.printStackTrace();
         }

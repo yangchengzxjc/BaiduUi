@@ -28,7 +28,6 @@ public class BookInvoiceTest extends BaseTest {
     @Parameters({"phoneNumber", "passWord", "environment"})
     public void beforeClass(@Optional("14082978625") String phoneNumber, @Optional("hly12345") String pwd, @Optional("stage") String env){
         expenseReport =new ExpenseReport();
-//        component =new ExpenseComponent("");
         expenseReportInvoice =new ExpenseReportInvoice();
         employee=getEmployee(phoneNumber,pwd,env);
         bookInvoicePage =new BookInvoicePage();

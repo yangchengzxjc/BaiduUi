@@ -163,6 +163,8 @@ public class ApiPath {
         public static final String SEARCHTRANSFERUser = "/api/users/v3/search";
         //费用转交
         public static final String transferTo = "/invoice/api/invoices/transfer/to";
+        // 搜索可以关联的申请单
+        public static final String searchApplication = "/api/applications/passed/search";
     }
 
 

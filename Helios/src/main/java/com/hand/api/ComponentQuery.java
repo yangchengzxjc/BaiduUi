@@ -68,7 +68,7 @@ public class ComponentQuery extends BaseRequest{
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray getBxformDepartment(Employee employee) throws  HttpStatusException {
+    public JsonArray getformDepartment(Employee employee) throws  HttpStatusException {
         String url=employee.getEnvironment().getUrl()+ ApiPath.EXPENSE_REPORT_SELECT_DEPARTMENT;
         Map<String, String> datas = new HashMap<>();
         datas.put("leafEnable", "false");

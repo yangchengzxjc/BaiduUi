@@ -31,7 +31,7 @@ public class ApproveApi extends BaseRequest{
      * @throws HttpStatusException
      
      */
-    public JsonArray expensereportApprovalListSearch(Employee employee,String businessCode) throws  HttpStatusException {
+    public JsonArray expenseReportApprovalListSearch(Employee employee,String businessCode) throws  HttpStatusException {
         String url=employee.getEnvironment().getUrl()+ ApiPath.APPROVAL_LIST_SEARCH;
         Map<String, String> datas = new HashMap<String, String>();
         datas.put("entityType","");
@@ -58,7 +58,7 @@ public class ApproveApi extends BaseRequest{
      * @return
      * @throws HttpStatusException
      */
-    public  JsonObject expensereport_approval(Employee employee, String  expenseReportOID, int entityType) throws HttpStatusException {
+    public  JsonObject expenseReportApproval(Employee employee, String  expenseReportOID, int entityType) throws HttpStatusException {
         JsonObject responseEntity=null;
         String url=employee.getEnvironment().getUrl()+ ApiPath.EXPENSEREPORT_APPROVAL;
         JsonObject jsonObject=new JsonObject();

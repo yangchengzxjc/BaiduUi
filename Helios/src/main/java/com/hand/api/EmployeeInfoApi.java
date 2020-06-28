@@ -25,14 +25,13 @@ public class EmployeeInfoApi extends BaseRequest {
     public JsonObject getEmployeeInfo(Employee employee) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.GET_ACCOUNT;
         String res = doGet(url, getHeader(employee.getAccessToken()), null, employee);
-        log.info("{res}"+res);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
     /**
      * 获取当前登录用户公司详情
      */
-    public JsonObject getcompanys(Employee employee) throws HttpStatusException {
+    public JsonObject getCompanys(Employee employee) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.GETCOMPANIES;
         String res = doGet(url, getHeader(employee.getAccessToken()), null, employee);
         return new JsonParser().parse(res).getAsJsonObject();
@@ -44,7 +43,7 @@ public class EmployeeInfoApi extends BaseRequest {
      * @return
      * @throws HttpStatusException
      */
-    public  JsonArray getCustomenumerationoid( Employee employee,String customEnumerationOID) throws  HttpStatusException {
+    public  JsonArray getCustomEnumerationOID( Employee employee,String customEnumerationOID) throws  HttpStatusException {
         String url=employee.getEnvironment().getUrl()+ String.format(ApiPath.GET_CUSTOMENUMERATIONOID,customEnumerationOID);
         String res= doGet(url,getHeader(employee.getAccessToken()),null,employee);
         return new JsonParser().parse(res).getAsJsonArray();

@@ -71,6 +71,10 @@ public class ExpenseComponent{
     String input;
     //事由
     String cause;
+    //关联的申请单号
+    String applicationOID;
+    //关联多申请的dto      例：[{"applicationOID":"073b77b0-d7af-44cb-bd0e-bff9c8bc4d98","tenantId":"1089991852293296130"}]  如果有多个的话 就添加多个object就好
+    JsonArray expenseReportApplicationDTOS;
 
     //因为事由是必输项 所以初始化的时候就输入
     public ExpenseComponent(String cause){

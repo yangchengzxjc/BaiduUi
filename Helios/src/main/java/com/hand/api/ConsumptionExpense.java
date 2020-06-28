@@ -9,8 +9,8 @@ import com.hand.basicObject.Employee;
  **/
 public class ConsumptionExpense extends BaseRequest{
 
-
-    public void xieChengExpense(Employee employee){
+    //携程费用
+    public void ctrip(Employee employee){
 
     }
 }

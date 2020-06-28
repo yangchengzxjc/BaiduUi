@@ -1,7 +1,9 @@
 package com.hand.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.jayway.jsonpath.JsonPath;
+import org.openqa.selenium.json.Json;
 
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class GsonUtil {
             return gson.fromJson(json,t);
         }
 
+
     public static List<String> JsonExtractor(Object obj, String jsonParth) {
         String str = obj.toString();
         List<String> titless = null;
@@ -35,5 +38,21 @@ public class GsonUtil {
             e.printStackTrace();
         }
         return titless;
+    }
+
+    /**
+     * 获取和key1有相同的value的层级 来获取key2的value  并返回这个value2
+     * @param object json 对象
+     * @param key1   用于判断的key1
+     * @param value  用于判断的vaue
+     * @param key2   需要获取的key2,
+     * @return
+     */
+    public String getJsonValue(JsonObject object,String key1, String value,String key2){
+        String value2="";
+        if(object.get(key1).getAsString().equals(value)){
+            value2 = object.get(key2).getAsString();
+        }
+         return value2;
     }
 }

@@ -1,4 +1,4 @@
-package com.test.api.testcase;
+package com.test.api.testcase.expenseReport;
 
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
@@ -45,14 +45,21 @@ public class ExpenseReportTest extends BaseTest{
 //        log.info("companyOID:{}",employee.getCompanyOID());
     }
 
-    @Test(priority = 1,description = "创建报销单并添加费用")
+    @Test(priority = 1,description = "创建报销单并添加费用-删除费用-在账本中能够查找到费用")
     public void test1() throws HttpStatusException {
         //新建报销单
         String expenseReportOID = expenseReport.createExpenseReport(employee,"yuuki的测试表单",component).get("expenseReportOID");
         //新建费用
-        expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,"火车",expenseReportOID,100).get("invoiceOID");
+        String invoiceOID = expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,"火车",expenseReportOID,100).get("invoiceOID");
         //报销单提交
         assert expenseReport.expenseReportSubmit(employee,expenseReportOID).equalsIgnoreCase("true");
+        //报销单撤回
+        expenseReport.withdraw(employee,expenseReportOID);
+        //删除费用
+        expenseReport.removeInvoice(employee,expenseReportOID,invoiceOID);
+        //在账本中查找退回
+        assert expenseReportInvoice.getExpenseItem(employee).toString().contains(invoiceOID);
+        expenseReport.deleteExpenseReport(employee,expenseReportOID);
     }
 
     @Test(description = "报销单成功导入结算费用以及账本中的费用")

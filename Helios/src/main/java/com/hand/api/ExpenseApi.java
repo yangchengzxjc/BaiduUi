@@ -76,7 +76,6 @@ public class ExpenseApi extends BaseRequest{
      * 集团管理员查询基础数据
      * @param employee
      * @return
-
      * @throws HttpStatusException
 
      */
@@ -422,11 +421,10 @@ public class ExpenseApi extends BaseRequest{
         JsonObject object=new JsonObject();
         object.addProperty("page",0);
         object.addProperty("size",20);
-        object.addProperty("expenseTypeIds","");
+        object.addProperty("expenseTypeIds", (String) null);
         String Res= doPost(url,getHeader(employee.getAccessToken()),null,object.toString(),null,employee);
         return new JsonParser().parse(Res).getAsJsonObject().get("rows").getAsJsonArray();
     }
-
 
     /**
      * 获得系统当前费用类型可以选择的控件信息列表

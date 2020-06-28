@@ -220,6 +220,7 @@ public class ExpenseReport {
     public ArrayList<String> getImportInvoice(Employee employee, String expenseReportOID,int number,boolean isbook) throws HttpStatusException {
         JsonArray jsonArray=reimbursementApi.searchAvailableImport(employee,expenseReportOID,isbook);
         ArrayList<String> invoicesOID =new ArrayList<>();
+        log.info("账本的费用：{}",jsonArray);
         //然后根据你想导入的费用的数量进行导入
         for(int j =0;j<number;j++){
             invoicesOID.add(jsonArray.get(j).getAsJsonObject().get("invoiceOID").getAsString());
@@ -287,4 +288,24 @@ public class ExpenseReport {
         reimbursementApi.expenseReportDelete(employee,expenseReportOID);
     }
 
+    /**
+     * 报销单撤回
+     * @param employee
+     * @param expenseReportOID
+     * @throws HttpStatusException
+     */
+    public void withdraw(Employee employee,String expenseReportOID) throws HttpStatusException {
+        reimbursementApi.expenseReportWithdraw(employee,expenseReportOID);
+    }
+
+    /**
+     * 报销单内删除费用
+     * @param employee
+     * @param expenseReportOID
+     * @param invoiceOID
+     * @throws HttpStatusException
+     */
+    public void removeInvoice(Employee employee,String expenseReportOID,String invoiceOID) throws HttpStatusException {
+        reimbursementApi.removeExpense(employee,expenseReportOID,invoiceOID);
+    }
 }

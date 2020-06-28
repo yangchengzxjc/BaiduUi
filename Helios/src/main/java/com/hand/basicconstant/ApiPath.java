@@ -98,7 +98,8 @@ public class ApiPath {
         public static final String GET_TRAVEL_STANDARD ="/api/expense/report/subsidy/add";
 //        修改差补时间
         public static final String SUBSIDY_UPDATE ="/api/subsidy/extend/update";
-
+        //报销单撤回费用
+        public static final String removeExpense ="/api/expense/reports/remove/invoice/%s/%s";
 //        差旅补贴计算
         public static final String CALCULATION_TRAVEL_EXPENSE ="/api/expense/report/subsidy/save/%s";
 

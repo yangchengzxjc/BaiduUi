@@ -1,4 +1,4 @@
-package com.test.api.testcase;
+package com.test.api.testcase.invoice;
 
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
@@ -41,6 +41,8 @@ public class ApportionTest extends BaseTest {
         //导入非分摊费用
         expenseReport.importInvoice(employee, expenseReportOID,"火车",employee.getFullName(), 1, true);
         assert expenseReport.invoiceLabel(employee,expenseReportOID).contains("无标签");
+        //报销单删除
+        expenseReport.deleteExpenseReport(employee,expenseReportOID);
     }
 
     @Test(description = "配置:报销单配置了部门控件参与分摊,表头有分摊项->导入的费用分摊项为空，标记必填未输")

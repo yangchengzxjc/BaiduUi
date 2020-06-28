@@ -117,8 +117,6 @@ public class ReimbursementApi extends BaseRequest {
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
-
-
     /**
      *   报销单撤回请求
      * @param employee
@@ -133,8 +131,8 @@ public class ReimbursementApi extends BaseRequest {
         JsonArray entities=new JsonArray();
         expenseReport.addProperty("entityOID",expenseReportOID);
         expenseReport.addProperty("entityType", BaseConstant.ENTITY_TYPE[1]);
-        entities.add(new JsonParser().parse(expenseReport.getAsString()));
-        body.add("entities", new JsonParser().parse(entities.getAsString()));
+        entities.add(expenseReport);
+        body.add("entities", entities);
         String res= doPost(url,getHeader(employee.getAccessToken()),null,body.toString(),null,  employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
@@ -560,5 +558,18 @@ public class ReimbursementApi extends BaseRequest {
         object.add("invoiceOIDs",jsonArray);
         String Res= doPost(url,getHeader(employee.getAccessToken()),null,object.toString(),null,employee);
         return new JsonParser().parse(Res).getAsJsonObject().get("success").getAsString();
+    }
+
+    /**
+     * 报销单内费用删除退回账本
+     * @param employee
+     * @param expenseReportOID
+     * @param invoiceOID
+     * @throws HttpStatusException
+     */
+    public void removeExpense(Employee employee, String expenseReportOID,String invoiceOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+String.format(ApiPath.removeExpense,expenseReportOID,invoiceOID);
+        JsonObject  object =new JsonObject();
+        doDlete(url,getHeader(employee.getAccessToken()),null,object,employee);
     }
 }

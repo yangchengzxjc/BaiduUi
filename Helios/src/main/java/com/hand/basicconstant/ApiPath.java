@@ -57,7 +57,7 @@ public class ApiPath {
         public static final String GET_COMPANIES ="/api/refactor/companies/user/setOfBooks";
 
 //        参与人员查询
-        public static final String SELECT_PARTICIPANT ="api/application/participant";
+        public static final String SELECT_PARTICIPANT ="api/application/participantsList";
 
         public static final String queryInvoiceDetail ="/api/expense/report/invoices";
 //        查询我的借款

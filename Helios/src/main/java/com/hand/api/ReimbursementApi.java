@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.ExpenseComponent;
+import com.hand.basicObject.FormComponent;
 import com.hand.basicconstant.ApiPath;
 import com.hand.basicconstant.BaseConstant;
 import com.hand.utils.GsonUtil;
@@ -200,7 +200,7 @@ public class ReimbursementApi extends BaseRequest {
      * @return
      * @throws HttpStatusException
      */
-    public  JsonObject createExpenseReport(Employee employee,JsonObject formdetal, ExpenseComponent component,String jobId, String userOID) throws HttpStatusException {
+    public  JsonObject createExpenseReport(Employee employee, JsonObject formdetal, FormComponent component, String jobId, String userOID) throws HttpStatusException {
         JsonObject responseEntity=null;
         JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
         String url = employee.getEnvironment().getUrl()+ ApiPath.NEW_EXPENSE_REPORT;
@@ -232,7 +232,7 @@ public class ReimbursementApi extends BaseRequest {
      * @return
      * @throws HttpStatusException
      */
-    public  JsonObject createTravelExpenseReport(Employee employee,boolean isMoreApplication,JsonObject formdetal, ExpenseComponent component,String jobId, String userOID) throws HttpStatusException {
+    public  JsonObject createTravelExpenseReport(Employee employee, boolean isMoreApplication, JsonObject formdetal, FormComponent component, String jobId, String userOID) throws HttpStatusException {
         JsonObject responseEntity=null;
         JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
         String url = employee.getEnvironment().getUrl()+ ApiPath.NEW_EXPENSE_REPORT;
@@ -420,7 +420,7 @@ public class ReimbursementApi extends BaseRequest {
      * @return
      * @throws HttpStatusException
      */
-    private JsonArray processCustFormValues(Employee employee, JsonObject  formdetal, ExpenseComponent component) throws HttpStatusException {
+    private JsonArray processCustFormValues(Employee employee, JsonObject  formdetal, FormComponent component) throws HttpStatusException {
         JsonArray custFormValues=formdetal.get("customFormFields").getAsJsonArray();
         String formOID=formdetal.get("formOID").getAsString();
         for (int i=0;i<custFormValues.size();i++)

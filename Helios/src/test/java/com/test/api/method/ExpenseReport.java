@@ -5,8 +5,7 @@ import com.google.gson.JsonObject;
 import com.hand.api.ReimbursementApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.ExpenseComponent;
-import com.hand.utils.GsonUtil;
+import com.hand.basicObject.FormComponent;
 import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
 
@@ -133,7 +132,7 @@ public class ExpenseReport {
      * @return
      * @throws HttpStatusException
      */
-    public HashMap<String,String> createExpenseReport (Employee employee, String formName, ExpenseComponent component) throws HttpStatusException {
+    public HashMap<String,String> createExpenseReport (Employee employee, String formName, FormComponent component) throws HttpStatusException {
         JsonObject jsonObject =reimbursementApi.createExpenseReport(employee,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName)),component,employee.getJobId(),employee.getUserOID());
         HashMap<String,String> info =new HashMap<>();
         info.put("expenseReportOID",jsonObject.get("expenseReportOID").getAsString());
@@ -310,6 +309,13 @@ public class ExpenseReport {
         reimbursementApi.removeExpense(employee,expenseReportOID,invoiceOID);
     }
 
+    /**
+     * 差旅报销单获取关联的差旅申请单
+     * @param employee
+     * @param formName
+     * @return
+     * @throws HttpStatusException
+     */
     public ArrayList<String> getApplication(Employee employee,String formName) throws HttpStatusException {
         JsonArray array = reimbursementApi.getApplication(employee,getFormOID(employee,formName));
         ArrayList<String> list =new ArrayList<>();
@@ -317,5 +323,14 @@ public class ExpenseReport {
             list.add(array.get(i).getAsJsonObject().get("applicationOID").getAsString());
         }
         return list;
+    }
+
+    public HashMap<String, String> createTravelExpenseReport(Employee employee, boolean isMoreApplication, String formName, FormComponent component) throws HttpStatusException {
+        JsonObject jsonObject = reimbursementApi.createTravelExpenseReport(employee,isMoreApplication,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName)),component,employee.getJobId(),employee.getUserOID());
+        HashMap<String,String> info =new HashMap<>();
+        info.put("[expenseReportOID]:{}",jsonObject.get("expenseReportOID").getAsString());
+        info.put("businessCode",jsonObject.get("businessCode").getAsString());
+        log.info("[businessCode]:{}",info.get("businessCode"));
+        return info;
     }
 }

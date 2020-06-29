@@ -1,8 +1,6 @@
 package com.hand.utils;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.jayway.jsonpath.JsonPath;
 import org.openqa.selenium.json.Json;
 
@@ -58,4 +56,22 @@ public class GsonUtil {
         }
          return value2;
     }
+
+    /**
+     * json字符串转为json对象
+     * @param jsonString
+     */
+    public static JsonObject stringToJsonObject(String jsonString){
+         return new JsonParser().parse(jsonString).getAsJsonObject();
+    }
+
+    /**
+     * json字符串转为json数组
+     * @param jsString
+     * @return
+     */
+    public static JsonArray stringToJsonArray(String jsString){
+        return new JsonParser().parse(jsString).getAsJsonArray();
+    }
+
 }

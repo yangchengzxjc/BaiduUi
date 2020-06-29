@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class ExpenseComponent{
+public class FormComponent {
 
     //公司
     String company;
@@ -77,10 +77,10 @@ public class ExpenseComponent{
     JsonArray expenseReportApplicationDTOS;
 
     //因为事由是必输项 所以初始化的时候就输入
-    public ExpenseComponent(String cause){
+    public FormComponent(String cause){
         this.cause =cause;
     }
-    public ExpenseComponent(){
+    public FormComponent(){
 
     }
 

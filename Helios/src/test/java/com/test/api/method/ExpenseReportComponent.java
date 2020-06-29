@@ -37,21 +37,25 @@ public class ExpenseReportComponent {
     }
 
     /**
-     * 从控件上查询参与人
+     * 从控件上查询参与人根据fullName 获取参与人
      * @param employee
      * @param formOID
-     * @param number   表示你需要拿第几个参与人，0代表第一个人
+     * @param fullName 员工的姓名
      * @throws HttpStatusException
      */
-    public JsonObject getParticipant(Employee employee,String formOID,int number) throws HttpStatusException {
-        JsonObject Participant=componentQuery.getSelectParticipant(employee,formOID,employee.getJobId()).get(number).getAsJsonObject();
-        JsonObject myobj = new JsonObject();
-        myobj.addProperty("userOID",Participant.get("userOID").getAsString());
-        myobj.addProperty("fullName",Participant.get("fullName").getAsString());
-        myobj.addProperty("participantOID",Participant.get("userOID").getAsString());
-        myobj.addProperty("highOff",Participant.get("highOff").getAsString());
-        myobj.addProperty("avatar",Participant.get("avatar").getAsString());
-        return myobj;
+    public JsonObject getParticipant(Employee employee,String formOID,String fullName) throws HttpStatusException {
+        JsonArray array = componentQuery.getSelectParticipant(employee,formOID,employee.getJobId());
+        JsonObject participant = new JsonObject();
+        for(int i=0; i<array.size();i++){
+            if(array.get(i).getAsJsonObject().get("fullName").getAsString().equals(fullName)){
+                participant.addProperty("userOID",array.get(i).getAsJsonObject().get("userOID").getAsString());
+                participant.addProperty("fullName",array.get(i).getAsJsonObject().get("fullName").getAsString());
+                participant.addProperty("participantOID",array.get(i).getAsJsonObject().get("userOID").getAsString());
+                participant.addProperty("highOff",array.get(i).getAsJsonObject().get("highOff").getAsString());
+                participant.addProperty("avatar",array.get(i).getAsJsonObject().get("avatar").getAsString());
+            }
+        }
+        return participant;
     }
 
     /**

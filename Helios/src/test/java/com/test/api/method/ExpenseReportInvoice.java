@@ -8,7 +8,6 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.InvoiceComponent;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.core.util.JsonUtils;
 
 import java.util.*;
 
@@ -37,7 +36,6 @@ public class ExpenseReportInvoice {
      */
     public HashMap<String, String> getExpenseReportExpenseTypes(Employee employee, String expenseTypenName, String expenseReportOID) throws HttpStatusException {
        JsonArray jsonArray=expenseApi.getExpenseReportExpenseTypes(employee,expenseReportOID).get("rows").getAsJsonArray();
-       log.info("费用控件信息：{}",jsonArray);
        HashMap<String,String> map =new HashMap<>();
        for(int i =0;i<jsonArray.size();i++){
            if(jsonArray.get(i).getAsJsonObject().get("name").getAsString().equalsIgnoreCase(expenseTypenName)){
@@ -77,7 +75,6 @@ public class ExpenseReportInvoice {
         } catch (HttpStatusException e) {
             e.printStackTrace();
         }
-        log.info("新建费用的返回:{}",jsonObject);
         HashMap<String,String> info =new HashMap<>();
         info.put("invoiceOID",jsonObject.get("rows").getAsJsonObject().get("invoiceOID").getAsString());
         return info;
@@ -99,7 +96,6 @@ public class ExpenseReportInvoice {
         } catch (HttpStatusException e) {
             e.printStackTrace();
         }
-        log.info("新建费用的返回:{}",jsonObject);
         HashMap<String,String> info =new HashMap<>();
         info.put("invoiceOID",jsonObject.get("rows").getAsJsonObject().get("invoiceOID").getAsString());
         return info;
@@ -150,7 +146,7 @@ public class ExpenseReportInvoice {
      */
     public String searchTransferUser(Employee employee,String fullName, String setOfBooksId) throws HttpStatusException {
        JsonArray jsonArray= expenseApi.searchTransferUser(employee,setOfBooksId);
-       String userId =GsonUtil.getJsonValue(jsonArray,"fullName",fullName,"id");;
+       String userId =GsonUtil.getJsonValue(jsonArray,"fullName",fullName,"id");
        return userId;
     }
 

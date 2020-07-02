@@ -6,6 +6,7 @@ import com.hand.api.ReimbursementApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;
+import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
 
@@ -325,12 +326,34 @@ public class ExpenseReport {
         return list;
     }
 
+    /**
+     * 新建差旅报销单
+     * @param employee
+     * @param isMoreApplication
+     * @param formName
+     * @param component
+     * @return
+     * @throws HttpStatusException
+     */
     public HashMap<String, String> createTravelExpenseReport(Employee employee, boolean isMoreApplication, String formName, FormComponent component) throws HttpStatusException {
         JsonObject jsonObject = reimbursementApi.createTravelExpenseReport(employee,isMoreApplication,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName)),component,employee.getJobId(),employee.getUserOID());
         HashMap<String,String> info =new HashMap<>();
-        info.put("[expenseReportOID]:{}",jsonObject.get("expenseReportOID").getAsString());
+        info.put("expenseReportOID",jsonObject.get("expenseReportOID").getAsString());
         info.put("businessCode",jsonObject.get("businessCode").getAsString());
         log.info("[businessCode]:{}",info.get("businessCode"));
         return info;
+    }
+
+    /**
+     * 根据控件名称获取申请单中带出的字段
+     * @param employee
+     * @param applicationOID  可能会存在关联多个申请单所以需要传俩个applicationOID
+     * @param fieldName
+     * @return
+     * @throws HttpStatusException
+     */
+    public String getValueFromApplication(Employee employee, ArrayList applicationOID,String fieldName) throws HttpStatusException {
+        JsonArray array =reimbursementApi.getValueFromApplication(employee,applicationOID);
+        return GsonUtil.getJsonValue(array,"fieldName",fieldName,"value");
     }
 }

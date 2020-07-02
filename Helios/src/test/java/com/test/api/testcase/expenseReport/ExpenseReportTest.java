@@ -2,12 +2,11 @@ package com.test.api.testcase.expenseReport;
 
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.ExpenseComponent;
+import com.hand.basicObject.FormComponent;
 import com.hand.basicObject.InvoiceComponent;
 import com.test.BaseTest;
 import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportInvoice;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
 
@@ -22,15 +21,14 @@ public class ExpenseReportTest extends BaseTest{
     private ExpenseReport expenseReport;
     private ExpenseReportInvoice expenseReportInvoice;
     private Employee employee;
-    private ExpenseComponent component;
-    //feiyong
+    private FormComponent component;
     private InvoiceComponent invoiceComponent;
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
     public void beforeClass(@Optional("14082978625") String phoneNumber, @Optional("hly12345") String pwd, @Optional("stage") String env){
         expenseReport =new ExpenseReport();
-        component =ExpenseComponent.builder().cause("自动化测试").build();
+        component = FormComponent.builder().cause("自动化测试").build();
         invoiceComponent= new InvoiceComponent();
         expenseReportInvoice =new ExpenseReportInvoice();
         employee=getEmployee(phoneNumber,pwd,env);

@@ -618,7 +618,7 @@ public class ReimbursementApi extends BaseRequest {
      * @throws HttpStatusException
      */
     public JsonArray getApplication(Employee employee,String formOID) throws HttpStatusException {
-        String url = employee.getEnvironment().getUrl()+ApiPath.searchApplication;
+        String url = employee.getEnvironment().getUrl()+ApiPath.SEARCH_APPLICATION;
         Map<String, String> urlform = new HashMap<>();
         urlform.put("page","0");
         urlform.put("size","10");
@@ -627,5 +627,24 @@ public class ReimbursementApi extends BaseRequest {
         String res= doGet(url,getHeader(employee.getAccessToken()),urlform,employee);
         return new JsonParser().parse(res).getAsJsonArray();
 
+    }
+
+    /**
+     * 申请单带入的默认value
+     * @param employee
+     * @param applicationOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getValueFromApplication(Employee employee,ArrayList applicationOID) throws HttpStatusException {
+        String url =employee.getEnvironment().getUrl()+ApiPath.APPLICATION_VALUE;
+        Map<String, String> urlform = new HashMap<>();
+        urlform.put("jobId",employee.getJobId());
+        JsonArray array =new JsonArray();
+        for (Object anApplicationOID : applicationOID) {
+            array.add(anApplicationOID.toString());
+        }
+        String res= doPost(url,getHeader(employee.getAccessToken()),urlform,array.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonArray();
     }
 }

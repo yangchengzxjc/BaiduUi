@@ -20,10 +20,17 @@ public class BookInvoicePage {
         expenseReportInvoice =new ExpenseReportInvoice();
     }
 
+    /**
+     * 费用的转交
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
     public String transferInvoice(Employee employee) throws HttpStatusException {
         if(expenseReportInvoice.getExpenseItem(employee).size()==0){
             expenseReportInvoice.createExpenseInvoice(employee,"交通","",101.11);
         }
+        //获取账本费用的费用OID
         ArrayList invoicdOID = expenseReportInvoice.getExpenseItem(employee);
         JsonArray array =new JsonArray();
         array.add(invoicdOID.get(0).toString());

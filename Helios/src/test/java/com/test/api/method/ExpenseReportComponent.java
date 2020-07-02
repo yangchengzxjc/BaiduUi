@@ -37,7 +37,7 @@ public class ExpenseReportComponent {
     }
 
     /**
-     * 从控件上查询参与人根据fullName 获取参与人
+     * 从控件上查询参与人根据fullName 获取参与人 （是否是自己）
      * @param employee
      * @param formOID
      * @param fullName 员工的姓名
@@ -51,8 +51,8 @@ public class ExpenseReportComponent {
                 participant.addProperty("userOID",array.get(i).getAsJsonObject().get("userOID").getAsString());
                 participant.addProperty("fullName",array.get(i).getAsJsonObject().get("fullName").getAsString());
                 participant.addProperty("participantOID",array.get(i).getAsJsonObject().get("userOID").getAsString());
-                participant.addProperty("highOff",array.get(i).getAsJsonObject().get("highOff").getAsString());
-                participant.addProperty("avatar",array.get(i).getAsJsonObject().get("avatar").getAsString());
+                participant.addProperty("highOff", (String) null);
+                participant.addProperty("avatar",(String) null);
             }
         }
         return participant;

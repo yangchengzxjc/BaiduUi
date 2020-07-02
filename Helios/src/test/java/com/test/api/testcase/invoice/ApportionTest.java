@@ -2,7 +2,7 @@ package com.test.api.testcase.invoice;
 
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.ExpenseComponent;
+import com.hand.basicObject.FormComponent;
 import com.test.BaseTest;
 import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportInvoice;
@@ -21,13 +21,13 @@ public class ApportionTest extends BaseTest {
     private ExpenseReport expenseReport;
     private ExpenseReportInvoice expenseReportInvoice;
     private Employee employee;
-    private ExpenseComponent component;
+    private FormComponent component;
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
     public void beforeClass(@Optional("14082978625") String phoneNumber, @Optional("hly12345") String pwd, @Optional("stage") String env){
         expenseReport =new ExpenseReport();
-        component =new ExpenseComponent("测试导入费用分摊费用标签");
+        component =new FormComponent("测试导入费用分摊费用标签");
         expenseReportInvoice =new ExpenseReportInvoice();
         employee=getEmployee(phoneNumber,pwd,env);
     }

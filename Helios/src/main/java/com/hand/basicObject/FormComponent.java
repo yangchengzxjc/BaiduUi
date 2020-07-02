@@ -32,7 +32,7 @@ public class FormComponent {
     //级联成本中心
     String jilianCostCenter;
     //下级成本中心
-    String xiajiCostCenter;
+    String subordinateCostCenter;
     //数字控件
     String number;
     //employee_expand   个人信息扩展字段
@@ -81,7 +81,5 @@ public class FormComponent {
         this.cause =cause;
     }
     public FormComponent(){
-
     }
-
 }

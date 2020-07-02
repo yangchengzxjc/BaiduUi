@@ -178,7 +178,7 @@ public class ComponentQuery extends BaseRequest{
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray getFormDefault_values(Employee employee,String formOID) throws  HttpStatusException {
+    public JsonArray getFormDefaultValues(Employee employee,String formOID) throws  HttpStatusException {
         String url=employee.getEnvironment().getUrl()+ ApiPath.DEFAULT_VALUES;
         Map<String, String> urlform = new HashMap<>();
         urlform.put("formOID",formOID);

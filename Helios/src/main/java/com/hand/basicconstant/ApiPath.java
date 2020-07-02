@@ -57,7 +57,7 @@ public class ApiPath {
         public static final String GET_COMPANIES ="/api/refactor/companies/user/setOfBooks";
 
 //        参与人员查询
-        public static final String SELECT_PARTICIPANT ="api/application/participantsList";
+        public static final String SELECT_PARTICIPANT ="/api/application/participantsList";
 
         public static final String queryInvoiceDetail ="/api/expense/report/invoices";
 //        查询我的借款
@@ -162,9 +162,13 @@ public class ApiPath {
         //搜索用户
         public static final String SEARCHTRANSFERUser = "/api/users/v3/search";
         //费用转交
-        public static final String transferTo = "/invoice/api/invoices/transfer/to";
+        public static final String TRANSFER_TO = "/invoice/api/invoices/transfer/to";
         // 搜索可以关联的申请单
-        public static final String searchApplication = "/api/applications/passed/search";
+        public static final String SEARCH_APPLICATION = "/api/applications/passed/search";
+        //申请单带出的value
+        public static final String APPLICATION_VALUE = "/api/expense/report/application/value";
+        //员工新增
+        public static final String ADD_EMPLOYEE = "/api/refactor/users/v2?roleType=TENANT";
     }
 
 

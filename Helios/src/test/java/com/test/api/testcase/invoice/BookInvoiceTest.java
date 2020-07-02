@@ -2,7 +2,7 @@ package com.test.api.testcase.invoice;
 
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.ExpenseComponent;
+import com.hand.basicObject.FormComponent;
 import com.test.BaseTest;
 import com.test.api.method.ExpenseMethod.BookInvoicePage;
 import com.test.api.method.ExpenseReport;
@@ -21,7 +21,7 @@ public class BookInvoiceTest extends BaseTest {
     private ExpenseReport expenseReport;
     private ExpenseReportInvoice expenseReportInvoice;
     private Employee employee;
-    private ExpenseComponent component;
+    private FormComponent component;
     private BookInvoicePage bookInvoicePage;
 
     @BeforeClass

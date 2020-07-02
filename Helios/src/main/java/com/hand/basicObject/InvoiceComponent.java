@@ -18,7 +18,7 @@ public class InvoiceComponent {
     String application;
     //币种 会默认人民币
     String currencyCode;
-    //是否公司支付  false=1001   true=1002可选
+    //是否公司支付  false=1001   true=1002可选  默认公司未付
     boolean isCompanyPay;
     //地点控件  一般名称为出发地和目的地
     String departure ;

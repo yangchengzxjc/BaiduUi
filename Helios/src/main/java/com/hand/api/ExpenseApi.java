@@ -6,14 +6,11 @@ import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.InvoiceComponent;
 import com.hand.basicconstant.ApiPath;
-import com.hand.basicconstant.BaseConstant;
 import com.hand.basicObject.Employee;
 import com.hand.utils.UTCTime;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -502,7 +499,7 @@ public class ExpenseApi extends BaseRequest{
      * @param array
      */
     public JsonObject transferTo(Employee employee,String reimbursementUserId,JsonArray array) throws HttpStatusException {
-        String url = employee.getEnvironment().getUrl()+ApiPath.transferTo;
+        String url = employee.getEnvironment().getUrl()+ApiPath.TRANSFER_TO;
         JsonObject object =new JsonObject();
         object.addProperty("reimbursementUserId",reimbursementUserId);
         object.add("invoiceOIDs",array);

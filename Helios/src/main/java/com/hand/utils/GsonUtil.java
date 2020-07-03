@@ -16,13 +16,20 @@ public class GsonUtil {
         /**
          * 序列化为json字符串
          */
-        public <T> String  objectToString(T tClass){
+        public static <T> String  objectToString(T tClass){
 
             Gson gson =new Gson();
             return gson.toJson(tClass);
         }
 
-        public <T> T stringToObject(String json, Class<T> t){
+    /**
+     * 反序列化
+     * @param json
+     * @param t
+     * @param <T>
+     * @return
+     */
+        public static <T> T stringToObject(String json, Class<T> t){
             Gson gson =new Gson();
             return gson.fromJson(json,t);
         }

@@ -29,4 +29,7 @@ public class InfraEmployee {
     private String directManagerId;
     //领导的名字
     private String directManagerName;
+
+    public InfraEmployee(){
+    }
 }

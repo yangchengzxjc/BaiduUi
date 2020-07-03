@@ -169,6 +169,24 @@ public class ApiPath {
         public static final String APPLICATION_VALUE = "/api/expense/report/application/value";
         //员工新增
         public static final String ADD_EMPLOYEE = "/api/refactor/users/v2?roleType=TENANT";
+        //获取系统值列表
+        public static final String GET_SYSTEM_ENUMERATION ="/api/custom/enumeration/by/system/type";
+        //获取值列表的详情
+        public static final String ENUMERATION_DETAIL = "/api/custom/enumerations/%s";
+        //根据值列表的类型查询系统值列表的详情
+        public static final String QUERY_ENUMERATION_DETAIL="/api/custom/enumeration/system/by/type/condition";
+        //获取员工扩展字段
+        public static final String GET_EMPLOYEE_EXPAND = "/api/custom/values/form";
+        //获取员工扩展字段的的表单名称
+        public static final String GET_EMPLOYEE_EXPAND_form = "/api/custom/forms/by/form/code";
+        //系统值列表
+        public static final String System_CUSTOMENUMATIONTYPE = "/api/v2/custom/enumerations";
+        //搜索用户
+        public static final String SEARCH_USER = "/api/users/v3/search";
+        //搜索公司
+        public static final String SEARCH_COMPANY = "/api/widget/simpleCompany/all";
+        //搜索部门
+        public static final String SEARCH_DEPARTMENT ="/api/DepartmentGroup/selectDept/deptCode/name";
     }
 
 

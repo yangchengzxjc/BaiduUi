@@ -36,8 +36,6 @@ public class InfraJob {
     //部门名称
     String departmentPath;
 
-
-
-
-
+    public InfraJob(){
+    }
 }

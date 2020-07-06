@@ -63,7 +63,7 @@ public class InfraStructure {
     }
 
     /**
-     * 员工岗位添加
+     * 员工岗位添加  可以有多个岗位直接add进去即可
      * @param infraJob
      * @return
      */

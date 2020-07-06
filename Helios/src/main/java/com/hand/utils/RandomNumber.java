@@ -26,7 +26,7 @@ public class RandomNumber {
      */
     public static int getRandomNumber(){
         Random random =new Random(10000);
-        return (int) (Math.random()*9000+new Random(0000).nextInt());
+        return (int) (Math.random()*90000);
     }
 
     /**

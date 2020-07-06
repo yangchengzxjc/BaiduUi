@@ -42,7 +42,7 @@ public class InfraStructureApi extends BaseRequest{
         JsonObject contactI18n2 =new JsonObject();
         body.add("userJobsDTOs",userJobsDTOs);
         body.addProperty("departmentPath","");
-        body.addProperty("directManager","");
+        body.addProperty("directManager",infraEmployee.getDirectManager());
         body.addProperty("directManagerId",infraEmployee.getDirectManagerId());
         body.addProperty("directManagerName",infraEmployee.getDirectManagerName());
         body.addProperty("employeeType",(String) null);

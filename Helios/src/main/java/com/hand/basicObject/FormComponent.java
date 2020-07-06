@@ -30,7 +30,7 @@ public class FormComponent {
     //成本中心
     String costCenter;
     //级联成本中心
-    String jilianCostCenter;
+    String associatCostCenter;
     //下级成本中心
     String subordinateCostCenter;
     //数字控件

@@ -18,7 +18,7 @@ public class BaseTest{
     private EmployeeAccount employeeAccount;
 
     public Employee getEmployee(String phoneNumber, String pwd, String env){
-        employeeLogin =new EmployeeLogin();
+        employeeLogin = new EmployeeLogin();
         employeeAccount =new EmployeeAccount();
         employee=new Employee(phoneNumber,pwd,Environment.getEnv(env));
         employee.setAccessToken(employeeLogin.getToken(employee));

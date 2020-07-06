@@ -4,10 +4,12 @@ import com.hand.basicconstant.Environment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @Builder
+@NoArgsConstructor
 public class Employee {
     //登录名
     private  String userName;
@@ -48,8 +50,6 @@ public class Employee {
     //账套id
     private String setOfBookId;
 
-    public Employee(){
-    }
 
     public Employee(String username, String password, Environment environment) {
         this.userName = username;

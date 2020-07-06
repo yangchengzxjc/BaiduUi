@@ -173,12 +173,14 @@ public class InfraStructureApi extends BaseRequest{
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray searchCompany(Employee employee) throws HttpStatusException {
+    public JsonArray searchCompany(Employee employee,String companyName) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl()+ApiPath.SEARCH_COMPANY;
         Map<String,String> urlParam=new HashMap<>();
         urlParam.put("enabled","true");
         urlParam.put("page","0");
         urlParam.put("size","10");
+        urlParam.put("keyword",companyName);
+        urlParam.put("keywordLable",companyName);
         String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
         return new JsonParser().parse(res).getAsJsonArray();
     }
@@ -190,15 +192,18 @@ public class InfraStructureApi extends BaseRequest{
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray searchDepartment(Employee employee,String companyOID) throws HttpStatusException {
+    public JsonArray searchDepartment(Employee employee,String deptCode,String companyOID) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl()+ApiPath.SEARCH_DEPARTMENT;
         Map<String,String> urlParam=new HashMap<>();
         urlParam.put("needVirtual","true");
         urlParam.put("page","0");
         urlParam.put("size","10");
-        urlParam.put("deptCode","");
+        urlParam.put("name","");
+        urlParam.put("deptCode",deptCode);
         urlParam.put("companyOID",companyOID);
+        urlParam.put("deptCodeLable",deptCode);
         String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
+        log.info("查询的公司：{}",res);
         return new JsonParser().parse(res).getAsJsonArray();
     }
 }

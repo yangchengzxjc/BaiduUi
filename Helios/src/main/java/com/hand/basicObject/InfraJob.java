@@ -15,6 +15,7 @@ public class InfraJob {
     String companyName;
     //公司id
     String companyId;
+    String companyOID;
     //部门名称
     String departmentName;
     //部门ID
@@ -25,6 +26,7 @@ public class InfraJob {
     String dutyCode;
     //级别
     String rank;
+    String userId;
     //级别代码
     String rankCode;
     //工号
@@ -33,8 +35,12 @@ public class InfraJob {
     String position;
     //是否主岗
     boolean companyMainPosition;
-    //部门名称
+    //部门路径
     String departmentPath;
+    boolean deleted  =false;
+    //岗位标识
+    String uni_id;
+    int _index =0;
 
     public InfraJob(){
     }

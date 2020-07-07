@@ -20,6 +20,8 @@ public class ApiPath {
         public static final String GETBX_FORMS ="/api/custom/forms/%s";
         //报销单保存
         public static final String NEW_EXPENSE_REPORT ="/api/expense/reports/custom/form/draft";
+        //差旅申请单保存
+        public static final String TRAVEL_APPLICATION_SAVE = "/api/travel/applications/draft";
 //        报销单选择部门
         public static final String EXPENSE_REPORT_SELECT_DEPARTMENT ="/api/DepartmentGroup/selectDept/enabled";
         //获取报销单中的审批历史

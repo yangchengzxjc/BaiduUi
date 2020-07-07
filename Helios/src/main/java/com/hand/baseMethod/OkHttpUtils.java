@@ -298,7 +298,7 @@ public class OkHttpUtils {
             catch (Exception e) {
                 e.printStackTrace();
             }
-            if(httpCode!=200){
+            if(httpCode!=200&&httpCode!=201){
                 addResponseLog(GET, Url, Url, null, null,response,httpCode, res, response.header("SpanID"),startTime);
             }
             return handleHttpResponse(httpCode, res, response);
@@ -385,7 +385,7 @@ public class OkHttpUtils {
         }catch (Exception e) {
             e.printStackTrace();
         }
-        if(httpCode!=200){
+        if(httpCode!=200&&httpCode!=201){
             addResponseLog(PUT, Url, Url, jsonlog, FormLog,response,httpCode, res, response.header("SpanID"),startTime);
         }
         return handleHttpResponse(httpCode, res, response);
@@ -470,7 +470,7 @@ public class OkHttpUtils {
             }catch (Exception e) {
                 e.printStackTrace();
             }
-            if(httpCode!=200){
+            if(httpCode!=200&&httpCode!=201){
                 addResponseLog(POST, Url, Url, jsonlog, FormLog,response,httpCode, res, response.header("SpanID"),startTime);
             }
             return handleHttpResponse(httpCode, res, response);
@@ -598,7 +598,7 @@ public class OkHttpUtils {
         }
         int httpCode = response.code();
 
-        if(httpCode!=200){
+        if(httpCode!=200&&httpCode!=201){
             addResponseLog(DELETE, Url, Url, null, null,response,httpCode, res, response.header("SpanID"),startTime);
         }
         return handleHttpResponse(httpCode, res, response);

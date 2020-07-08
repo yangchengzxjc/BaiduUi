@@ -55,11 +55,10 @@ public class ReimbursementApi extends BaseRequest {
 
     /**
      * 获取报销单详情接口
-     *
      * @param expenseReportOID
      * @return
      */
-    public JsonObject getexpensereportdetal(Employee employee, String expenseReportOID) throws HttpStatusException {
+    public JsonObject getExpenseReportDetail(Employee employee, String expenseReportOID) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + String.format(ApiPath.GETEXPENSE_REPORT_DETAL, expenseReportOID);
         String res = doGet(url, getHeader(employee.getAccessToken()), null, employee);
         return new JsonParser().parse(res).getAsJsonObject();
@@ -469,8 +468,10 @@ public class ReimbursementApi extends BaseRequest {
                     break;
                 case "级联成本中心":
                     data.addProperty("value",component.getAssociatCostCenter());
+                    break;
                 case "下级成本中心":
                     data.addProperty("value",component.getSubordinateCostCenter());
+                    break;
                 case "部门":             //选择部门
 //                    JsonArray  DepartmentList= componentQuery.getBxformDepartment(employee);
 //                    data.addProperty("value",DepartmentList.get(0).getAsJsonObject().get("departmentOid").getAsString());
@@ -480,10 +481,11 @@ public class ReimbursementApi extends BaseRequest {
                     data.addProperty("value",true);
                     break;
                 case "结束日期":     // 结束日期
-
                     data.addProperty("value",component.getEndDate());
+                    break;
                 case "开始日期":      //开始日期
                     data.addProperty("value",component.getStartDate());
+                    break;
                 case "日期":             //日期
                     data.addProperty("value", UTCTime.getNowUtcTime());
                     break;
@@ -510,7 +512,7 @@ public class ReimbursementApi extends BaseRequest {
 //                    String  city=componentQuery.locationSearch(employee,"西安").get(0).getAsJsonObject().get("city").getAsString();
                     data.addProperty("value", component.getCity());
                     break;
-                case "参与人":                   //参与人
+                case "参与人员":                   //参与人
 //                    JsonObject Participant=componentQuery.getSelectParticipant(employee,formOID).get(0).getAsJsonObject();
 //                    JsonArray ja0 = new JsonArray();
 //                    JsonObject myobj = new JsonObject();

@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @Author peng.zhang
@@ -12,7 +13,8 @@ import lombok.Data;
  **/
 @Data
 @AllArgsConstructor
-@Builder(toBuilder = true)
+@NoArgsConstructor
+@Builder
 public class FormComponent {
 
     //公司
@@ -79,7 +81,5 @@ public class FormComponent {
     //因为事由是必输项 所以初始化的时候就输入
     public FormComponent(String cause){
         this.cause =cause;
-    }
-    public FormComponent(){
     }
 }

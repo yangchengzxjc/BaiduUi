@@ -189,6 +189,14 @@ public class ApiPath {
         public static final String SEARCH_COMPANY = "/api/widget/simpleCompany/all";
         //搜索部门
         public static final String SEARCH_DEPARTMENT ="/api/DepartmentGroup/selectDept/deptCode/name";
+        //添加飞机行程
+        public static final String ADD_FLIGHT_ITINERARY ="/api/travel/flight/itinerary";
+        //添加酒店
+        public static final String ADD_HOTEL_ITINERARY = "/api/travel/hotel/itinerary";
+        //差旅申请单提交
+        public static final String SUBMIT_APPLICATION = "/api/travel/applications/submit/v2";
+        //差旅申请单提交检查
+        public static final String SUBMIT_CHECK = "/api/application/submit/check";
     }
 
 

@@ -126,7 +126,7 @@ public class ExpenseReport {
     }
 
     /**
-     * 通过
+     * 使用控件对象新建报销单
      * @param employee
      * @param formName
      * @param component
@@ -142,7 +142,6 @@ public class ExpenseReport {
         return info;
     }
 
-
     /**
      * 获取报销单的详情
      * @param employee
@@ -151,7 +150,7 @@ public class ExpenseReport {
      * @throws HttpStatusException
      */
     public JsonObject getExpenseReportDetail(Employee employee,String expenseReportOID) throws HttpStatusException {
-        return reimbursementApi.getexpensereportdetal(employee,expenseReportOID).get("rows").getAsJsonObject();
+        return reimbursementApi.getExpenseReportDetail(employee,expenseReportOID).get("rows").getAsJsonObject();
     }
 
     /**

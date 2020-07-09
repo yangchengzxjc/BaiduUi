@@ -1,10 +1,17 @@
 package com.hand.basicObject;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * @Author peng.zhang
  * @Date 2020/7/7
  * @Version 1.0
  **/
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class HotelItinerary {
     //入住城市
     String cityName;

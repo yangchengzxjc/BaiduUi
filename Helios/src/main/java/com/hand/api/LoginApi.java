@@ -6,7 +6,6 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicconstant.ApiPath;
 import com.hand.basicconstant.BaseConstant;
-import com.hand.basicconstant.Environment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +25,7 @@ public class LoginApi extends BaseRequest{
         headersdatas.put("Authorization", BaseConstant.AUTHORIZATION);
         headersdatas.put("Content-Type", BaseConstant.CONTENT_TYPE);
         Map<String, String> data = new HashMap<String, String>();
-        data.put("username", employee.getUserName());
+        data.put("username", employee.getPhoneNumber());
         data.put("password", employee.getPassWord());
         data.put("grant_type", "password");
         data.put("scope", "write");

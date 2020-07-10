@@ -35,7 +35,7 @@ public class BaseTest{
 ////        employee=new Employee(phoneNumber,pwd,Environment.getEnv(env));
 ////        employee.setAccessToken(employeeLogin.getToken(employee));
 ////        employee=employeeAccount.setEmployeeInfo(employee);
-////        log.info("用户的手机号：{}",employee.getUserName());
+////        log.info("用户的手机号：{}",employee.getPhoneNumber());
 //    }
 
 
@@ -52,7 +52,7 @@ public class BaseTest{
      * @param language   语言
      */
     public void setEmployee(Employee employee,String env,String username,String pass,String language){
-        employee.setUserName(username);
+        employee.setPhoneNumber(username);
         employee.setPassWord(pass);
         employee.setLanguage(language);
         employee.setEnv(env);

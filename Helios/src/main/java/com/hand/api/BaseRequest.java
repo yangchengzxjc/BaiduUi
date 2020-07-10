@@ -12,8 +12,6 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.http.HttpStatus;
 
-import java.util.Base64;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +33,7 @@ public  class BaseRequest{
         Map<String, String> headersdatas = new HashMap<String, String>();
         headersdatas.put("Authorization", BaseConstant.AUTHORIZATION);
         Map<String, String> data = new HashMap<String, String>();
-        data.put("username", employee.getUserName());
+        data.put("username", employee.getPhoneNumber());
         data.put("password", employee.getPassWord());
         data.put("grant_type", "password");
         data.put("scope", "read write");

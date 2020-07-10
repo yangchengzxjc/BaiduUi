@@ -82,7 +82,7 @@ public class ExpenseReport {
     public String participant(Employee employee){
         JsonArray jsonArray =new JsonArray();
         JsonObject jsonObject =new JsonObject();
-        jsonObject.addProperty("userOID",employee.getUserName());
+        jsonObject.addProperty("userOID",employee.getPhoneNumber());
         jsonObject.addProperty("fullName",employee.getFullName());
         jsonObject.addProperty("participantOID",employee.getUserOID());
         jsonObject.addProperty("avatar", (String) null);

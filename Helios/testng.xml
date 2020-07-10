@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite" parallel="tests" thread-count="2">
-    <parameter name="propertiesUrl" value="src/test/resources/config/config.properties"/>
 
-    <parameter name="environment" value="stage"/>
+    <parameter name="environment" value="${environment}"/>
     <parameter name="passWord" value="hly12345"/>
-    <test verbose="10" preserve-order="true" name="报销单演示demo1">
-        <parameter name="phoneNumber" value="14082978625"/>
+
+    <test verbose="10" preserve-order="true" name="报销单测试">
+        <parameter name="phoneNumber" value="${phoneNumber}"/>
         <classes>
-            <!--<class name="com.test.api.testcase.expenseReport.ExpenseReportTest">-->
-            <!--</class>-->
-            <!--<class name="com.test.api.testcase.AuthorityCheck"></class>-->
+
         </classes>
     </test>
 
-    <!--<test verbose="10" preserve-order="true" name="报销单演示demo2">-->
-        <!--<parameter name="phoneNumber" value="15317834783"/>-->
-        <!--<classes>-->
-            <!--<class name="com.test.api.testcase.Test2"></class>-->
-        <!--</classes>-->
-    <!--</test>-->
+
+    <test verbose="10" preserve-order="true" name="费用测试">
+        <parameter name="phoneNumber" value="${phoneNumber}"/>
+        <classes>
+
+        </classes>
+    </test>
 
     <listeners>
         <listener class-name="com.test.listener.TestLogListener"/>

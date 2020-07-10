@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Employee {
     //登录名
-    private  String userName;
+    private  String phoneNumber;
     //登录密码
     private  String passWord;
     //员工名
@@ -52,7 +52,7 @@ public class Employee {
 
 
     public Employee(String username, String password, Environment environment) {
-        this.userName = username;
+        this.phoneNumber = username;
         passWord = password;
         this.environment =environment;
     }

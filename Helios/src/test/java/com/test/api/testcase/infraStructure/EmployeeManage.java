@@ -2,12 +2,11 @@ package com.test.api.testcase.infraStructure;
 
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.FormComponent;
+import com.hand.basicObject.InfraEmployee;
+import com.hand.utils.RandomNumber;
+import com.hand.utils.UTCTime;
 import com.test.BaseTest;
-import com.test.api.method.ExpenseReport;
-import com.test.api.method.ExpenseReportInvoice;
 import com.test.api.method.Infra.EmployeeManagePage;
-import com.test.api.method.InfraStructure;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
@@ -32,8 +31,17 @@ public class EmployeeManage extends BaseTest {
         employeeManagePage =new EmployeeManagePage();
     }
 
-    @Test(description = "新增员工")
+    @Test(description = "新增员正常流程")
     public void addEmployee() throws HttpStatusException {
         employeeManagePage.addEmployee(employee,"甄滙_上海通用公司","上海通用总裁办","112233","测试工程师");
+    }
+
+    @Test(description = "编辑员工-正常编辑-修改了邮箱,手机号以及生日")
+    public void editEmployee() throws HttpStatusException {
+        InfraEmployee infraEmployee =new InfraEmployee();
+        infraEmployee.setMobile("130000"+RandomNumber.getRandomNumber());
+        infraEmployee.setEmail(RandomNumber.getTimeNumber()+"@123.com");
+        infraEmployee.setBirthday(UTCTime.getBeijingDate(-2000));
+        assert employeeManagePage.editEmploye(employee,"11101",infraEmployee).toString().contains("fullName");
     }
 }

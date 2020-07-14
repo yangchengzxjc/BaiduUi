@@ -9,7 +9,6 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.InfraEmployee;
 import com.hand.basicObject.InfraJob;
 import com.hand.utils.GsonUtil;
-import org.apache.poi.ss.formula.functions.T;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +39,7 @@ public class InfraStructure {
     }
 
     /**
-     * 获取员工的扩展字段暂未输值
+     * 获取员工扩展字段customFormValue 暂时为空
      * @param employee
      * @throws HttpStatusException
      */
@@ -75,10 +74,24 @@ public class InfraStructure {
      * 新增员工
      * @param employee
      * @param infraEmployee
+     * @param infraJobs
      * @throws HttpStatusException
      */
     public void addEmployee(Employee employee, InfraEmployee infraEmployee, ArrayList<InfraJob> infraJobs) throws HttpStatusException {
         JsonObject object = infraStructureApi.addEmployee(employee,infraEmployee,userJobsDTOs(infraJobs),getEmployeeExpandForm(employee));
+    }
+
+    /**
+     * 编辑员工
+     * @param employee
+     * @param userInfo   根据userOID查询到的员工详情
+     * @param infraEmployee   编辑员工 只需要初始化需要改的字段  未初始化的字段会从员工详情中获取到
+     * @param customFormValues    从详情中可以获取到customFormValues  然后根据修改内容可以重新修改
+     * @param userJobsDTOs    从详情中获取到的岗位信息userJobsDTOs 根据需要修改的岗位信息新型修改编辑
+     * @throws HttpStatusException
+     */
+    public JsonObject editEmploye(Employee employee,JsonObject userInfo,InfraEmployee infraEmployee,JsonArray customFormValues,JsonArray userJobsDTOs) throws HttpStatusException {
+        return infraStructureApi.editEmployeeInfo(employee,userInfo,infraEmployee,customFormValues,userJobsDTOs);
     }
 
     /**
@@ -111,7 +124,7 @@ public class InfraStructure {
      * 获取部门
      * @param employee
      * @param deptCode  部门编码
-     * @param companyOID
+     * @param companyOID  公司的OID
      * @return
      * @throws HttpStatusException
      */
@@ -122,4 +135,27 @@ public class InfraStructure {
         map.put("departmentPath",object.get("path").getAsString());
         return map;
     }
+
+    /**
+     * 在员工列表获取员工的userOID
+     * @param employee
+     * @param keyWords
+     * @return
+     * @throws HttpStatusException
+     */
+    private String getUserUserOID(Employee employee, String keyWords) throws HttpStatusException {
+        return infraStructureApi.getUser(employee,keyWords).get(0).getAsJsonObject().get("userOID").getAsString();
+    }
+
+    /**
+     * 获取员工详情
+     * @param employee
+     * @param keyWords
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getUserDetail(Employee employee, String keyWords) throws HttpStatusException {
+        return infraStructureApi.employeeDetail(employee,getUserUserOID(employee,keyWords));
+    }
+
 }

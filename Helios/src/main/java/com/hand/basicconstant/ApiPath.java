@@ -185,6 +185,8 @@ public class ApiPath {
         public static final String System_CUSTOMENUMATIONTYPE = "/api/v2/custom/enumerations";
         //搜索用户
         public static final String SEARCH_USER = "/api/users/v3/search";
+        //员工详情
+        public static final String USER_DETAIL = "/api/users/v2/%s";
         //搜索公司
         public static final String SEARCH_COMPANY = "/api/widget/simpleCompany/all";
         //搜索部门

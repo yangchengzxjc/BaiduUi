@@ -33,7 +33,7 @@ public class RandomNumber {
      * 通过时间戳的形式获取一个独一无二的数
      * @return
      */
-    public static String timeNumber(){
+    public static String getTimeNumber(){
         Date date= new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSS");
         return dateFormat.format(date);

@@ -29,6 +29,12 @@ public class InfraEmployee {
     private String directManagerId;
     //领导的名字
     private String directManagerName;
+    //性别    0 和1
+    private int genderCode;
+    //出生日期   2020 -07-01
+    private String birthday;
+    //入职日期  2020 -07-01
+    private String entryTime;
 
     public InfraEmployee(){
     }

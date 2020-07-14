@@ -86,6 +86,82 @@ public class InfraStructureApi extends BaseRequest{
     }
 
     /**
+     * 编辑员工
+     * @param employee
+     * @param userInfo   员工详情信息 防止有不修改的字段
+     * @param infraEmployee
+     * @param customFormValues    如果需要更新customFormValues  则从 userInfo获取到 然后修改customFormValues
+     * @param userJobsDTOs  编辑信息的话 同上个人信息扩展字段 不需要修改的话直接从详情中get到
+     * @return
+     */
+    public JsonObject editEmployeeInfo(Employee employee,JsonObject userInfo,InfraEmployee infraEmployee,JsonArray customFormValues,JsonArray userJobsDTOs) throws HttpStatusException{
+        String url = employee.getEnvironment().getUrl()+ ApiPath.ADD_EMPLOYEE;
+        JsonObject employeeInfo = new JsonObject();
+        employeeInfo.addProperty("userOID",userInfo.get("userOID").getAsString());
+        try {
+            if(infraEmployee.getDirectManager() == null){
+                employeeInfo.addProperty("directManager",userInfo.get("directManager").getAsString());
+            }else{
+                employeeInfo.addProperty("directManager",infraEmployee.getDirectManager());
+            }
+        }catch (NullPointerException e){
+            log.info("员工信息中直属领导为空");
+        }
+        try{
+            if(infraEmployee.getEmployeeTypeCode() == null){
+                employeeInfo.addProperty("employeeTypeCode",userInfo.get("employeeTypeCode").getAsString());
+            }else{
+                employeeInfo.addProperty("employeeTypeCode",infraEmployee.getEmployeeTypeCode());
+            }
+        }catch (NullPointerException e){
+            log.info("员工信息中人员类型为空");
+        }
+        if(infraEmployee.getEmail() == null){
+            employeeInfo.addProperty("email",userInfo.get("email").getAsString());
+        }else{
+            employeeInfo.addProperty("email",infraEmployee.getEmail());
+        }
+        employeeInfo.addProperty("countryCode","CN");
+        employeeInfo.addProperty("mobileCode","86");
+        if(infraEmployee.getEmployeeID() == null){
+            employeeInfo.addProperty("employeeID",userInfo.get("employeeID").getAsString());
+        }else{
+            employeeInfo.addProperty("employeeID",infraEmployee.getEmployeeID());
+        }
+        try{
+            if(infraEmployee.getMobile() == null){
+                employeeInfo.addProperty("mobile",userInfo.get("mobile").getAsString());
+            }else{
+                employeeInfo.addProperty("mobile",infraEmployee.getMobile());
+            }
+        }catch (NullPointerException e){
+            log.info("员工的手机号为空");
+        }
+
+        if(infraEmployee.getFullName() ==null){
+            employeeInfo.addProperty("fullName","11101");
+        }else{
+            employeeInfo.addProperty("fullName",infraEmployee.getFullName());
+        }
+        employeeInfo.addProperty("genderCode",0);
+        if(infraEmployee.getBirthday() == null){
+            employeeInfo.addProperty("birthday",userInfo.get("birthday").getAsString());
+        }else{
+            employeeInfo.addProperty("birthday",infraEmployee.getBirthday());
+        }
+        if(infraEmployee.getEntryTime() == null){
+            employeeInfo.addProperty("entryTime",userInfo.get("entryTime").getAsString());
+        }else{
+            employeeInfo.addProperty("entryTime",infraEmployee.getEntryTime());
+        }
+        employeeInfo.add("contactI18n",new JsonArray());
+        employeeInfo.add("customFormValues",customFormValues);
+        employeeInfo.add("userJobsDTOs",userJobsDTOs);
+        String res= doPut(url,getHeader(employee.getAccessToken()),null,employeeInfo.toString(),null, employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
      * 获取系统默认的值列表的详情
      */
     public JsonArray getSystemEnumerationDetail(Employee employee,String systemCustomEnumerationTypes) throws HttpStatusException {
@@ -155,7 +231,7 @@ public class InfraStructureApi extends BaseRequest{
     }
 
     /**
-     * 查询领导  也就是查询员工
+     * 查询领导也就是查询员工
      * @param employee
      */
     public JsonArray getUser(Employee employee) throws HttpStatusException {
@@ -165,6 +241,36 @@ public class InfraStructureApi extends BaseRequest{
         urlParam.put("size","10");
         String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
         return new JsonParser().parse(res).getAsJsonArray();
+    }
+
+    /**
+     * 根据关键字搜索用户
+     * @param employee
+     * @param kewWords  姓名  工号  邮箱  手机号  部门
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getUser(Employee employee, String kewWords) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ApiPath.SEARCH_USER;
+        Map<String,String> urlParam=new HashMap<>();
+        urlParam.put("page","0");
+        urlParam.put("size","10");
+        urlParam.put("keyword",kewWords);
+        urlParam.put("keywordLable",kewWords);
+        String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
+        return new JsonParser().parse(res).getAsJsonArray();
+    }
+
+    /**
+     * 获取员工详情
+     * @param employee
+     * @param userOID
+     * @return
+     */
+    public JsonObject employeeDetail(Employee employee,String userOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+String.format(ApiPath.USER_DETAIL,userOID);
+        String res = doGet(url,getHeader(employee.getAccessToken()),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
     }
 
     /**

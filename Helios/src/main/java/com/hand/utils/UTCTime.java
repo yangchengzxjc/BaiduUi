@@ -14,8 +14,32 @@ public class UTCTime {
 
     private static final String UTC_FORMATTER_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z'";
     private static final String UTC_FORMATTER_PATTERN16 = "yyyy-MM-dd'T'16:00:00'Z'";
-    private static final String UTC_FORMATTER_PATTERN15  ="yyyy-MM-dd'T'15:59:59'Z'";
+    private static final String UTC_FORMATTER_PATTERN15  = "yyyy-MM-dd'T'15:59:59'Z'";
+    private static final String BEiJING_FORMATTER_PATTERN15  = "yyyy-MM-dd";
+    private static final String BEIJING_FORMATTER_TIME = "yyyy-MM-dd HH:mm:ss";
 
+    /**
+     * 返回北京时间的任意日期
+     * @param day
+     * @return
+     */
+    public static String getBeijingDate(int day){
+        DateTimeFormatter fmt = DateTimeFormat.forPattern(BEiJING_FORMATTER_PATTERN15);
+        DateTime date = DateTime.now().plusDays(day);
+        return fmt.print(date);
+    }
+
+    /**
+     * 获取北京时间如果是当前时间  则 day  和time  传0  以此类推
+     * @param day 当前时间0  明天+1,昨天-1
+     * @param time 同上
+     * @return
+     */
+    public static String getBeijingTime(int day, int time){
+        DateTimeFormatter fmt = DateTimeFormat.forPattern(BEIJING_FORMATTER_TIME);
+        DateTime Bejingtime = DateTime.now().plusDays(day).plusHours(time);
+        return fmt.print(Bejingtime);
+    }
     /**
      * 获取当前utc时间
      * @return
@@ -62,7 +86,7 @@ public class UTCTime {
     }
 
     /**
-     * 这个时间如果需要获取当天的时间则传个0；  时间格式为2020-07-06T15:59:59Z
+     * 这个时间如果需要获取当天的时间则传个0;时间格式为2020-07-06T15:59:59Z
      * 转换成北京时间则为：2020-07-06 23:59:59
      * @param day
      * @return

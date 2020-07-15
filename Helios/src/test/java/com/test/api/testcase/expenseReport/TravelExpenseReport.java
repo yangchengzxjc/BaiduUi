@@ -56,7 +56,7 @@ public class TravelExpenseReport extends BaseTest {
         component.setParticipant(expenseReport.getValueFromApplication(employee,applicationOIDs,"参与人员"));
         String expenseReportOID = expenseReport.createTravelExpenseReport(employee,false,"差旅报销单-节假日",component).get("expenseReportOID");
         //报销单新建费用
-        expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseReportOID,"交通",23.43);
+        expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseReportOID,"交通",23.43,new JsonArray());
         expenseReport.expenseReportSubmit(employee,expenseReportOID);
     }
 
@@ -85,7 +85,7 @@ public class TravelExpenseReport extends BaseTest {
         component.setParticipant(expenseReport.getValueFromApplication(employee,applicationOIDs,"参与人员"));
         String expenseReportOID = expenseReport.createTravelExpenseReport(employee,true,"差旅报销单-节假日",component).get("expenseReportOID");
         //报销单新建费用
-        expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,"交通",expenseReportOID,23.43);
+        expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,"交通",expenseReportOID,23.43,new JsonArray());
         expenseReport.expenseReportSubmit(employee,expenseReportOID);
     }
 }

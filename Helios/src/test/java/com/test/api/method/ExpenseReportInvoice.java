@@ -89,11 +89,11 @@ public class ExpenseReportInvoice {
      * @param amount   金额
      * @return
      */
-    public HashMap<String,String> createExpenseInvoice(Employee employee, InvoiceComponent component, String expenseTypenName, String expenseReportOID, double amount){
+    public HashMap<String,String> createExpenseInvoice(Employee employee, InvoiceComponent component, String expenseTypenName, String expenseReportOID, double amount,JsonArray expenseApportion){
         JsonObject jsonObject=null;
         try {
             jsonObject= expenseApi.expenseReportCreateinvoice(employee,getExpenseTypeInfo(employee,expenseTypenName,expenseReportOID),component,
-                    expenseReportOID,amount,new JsonArray(),new JsonArray(),new JsonArray());
+                    expenseReportOID,amount,new JsonArray(),new JsonArray(),expenseApportion);
         } catch (HttpStatusException e) {
             e.printStackTrace();
         }
@@ -161,6 +161,55 @@ public class ExpenseReportInvoice {
     public String  transferTo(Employee employee, String fullName,JsonArray invoiceOIDs) throws HttpStatusException {
         JsonObject object=expenseApi.transferTo(employee,searchTransferUser(employee,fullName,employee.getSetOfBookId()),invoiceOIDs);
         return object.get("success").getAsString();
+    }
+
+    /**
+     * 分摊行数据  支持按照部门或者按照成本中心分摊
+     * @param employee
+     * @param isDefaultApportion 是否是默认的分摊行
+     * @param expenseTypeName   费用名称
+     * @param proportion   分摊比例   为小数比如0.12
+     * @param amount   分摊金额
+     * @param currency  币种
+     * @param expenseReportOID   报销单的OID
+     * @param costCenterItemOID   部门OID 或者成本中心的OID
+     * @param costCenterItemName  部门名称  或者成本中心的名称
+     * @param itemCode   部门编码或者成本中心的编码
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject apportionLine(Employee employee,boolean isDefaultApportion, String expenseTypeName,double proportion, double amount,
+                                    String currency,String expenseReportOID,String costCenterItemOID, String costCenterItemName,
+                                    String itemCode) throws HttpStatusException {
+        JsonObject apportionment = expenseApi.defaultApportionment(employee,currency,expenseReportOID,getExpenseReportExpenseTypes(employee,expenseTypeName,expenseReportOID).get("expenseTypeId"));
+        log.info("分摊项:{}",apportionment);
+        JsonArray costCenterItems = apportionment .get("costCenterItems").getAsJsonArray();
+        apportionment.addProperty("amount",amount);
+        apportionment.addProperty("proportion",proportion);
+        apportionment.addProperty("defaultApportion",isDefaultApportion);
+        //这块逻辑是：表头有部门信息或者成本中心 并且是默认分摊行的话 则不需要进行分摊项的数据输入
+        if(!isDefaultApportion && costCenterItems.get(0).getAsJsonObject().get("costCenterItemOID").isJsonNull()){
+            costCenterItems.get(0).getAsJsonObject().addProperty("costCenterItemOID",costCenterItemOID);
+            costCenterItems.get(0).getAsJsonObject().addProperty("costCenterItemName",costCenterItemName);
+            costCenterItems.get(0).getAsJsonObject().addProperty("itemCode",itemCode);
+            costCenterItems.get(0).getAsJsonObject().addProperty("departmentOid",costCenterItemOID);
+            costCenterItems.get(0).getAsJsonObject().addProperty("name",costCenterItemName);
+        }
+        apportionment.add("costCenterItems",costCenterItems);
+        return apportionment;
+    }
+
+    /**
+     * 设置总的分摊行
+     * @param expenseApportion  一个可变参数 需要传一个分摊行的JsonObject
+     * @return
+     */
+    public JsonArray createrExpenseApporation(JsonObject ...expenseApportion){
+        JsonArray expenseApportions =new JsonArray();
+        for(int i =0 ;i<expenseApportion.length;i++){
+            expenseApportions.add(expenseApportion[i]);
+        }
+        return expenseApportions;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.test.api.testcase.expenseReport;
 
+import com.google.gson.JsonArray;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;
@@ -48,7 +49,7 @@ public class ExpenseReportTest extends BaseTest{
         //新建报销单
         String expenseReportOID = expenseReport.createExpenseReport(employee,"yuuki的测试表单",component).get("expenseReportOID");
         //新建费用
-        String invoiceOID = expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,"火车",expenseReportOID,100.00).get("invoiceOID");
+        String invoiceOID = expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,"火车",expenseReportOID,100.00,new JsonArray()).get("invoiceOID");
         //报销单提交
         assert expenseReport.expenseReportSubmit(employee,expenseReportOID).equalsIgnoreCase("true");
         //报销单撤回

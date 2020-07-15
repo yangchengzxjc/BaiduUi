@@ -258,10 +258,10 @@ public class ExpenseApi extends BaseRequest{
         if (!expenseReportOID.equals("")) {
             body.addProperty("expenseReportOID",expenseReportOID);
         }
+        body.add("expenseAmortise",new JsonArray());
         body.addProperty("timeZoneOffset",480);
         body.addProperty("ownerOID",employee.getUserOID());
         body.addProperty("paymentType",1001);
-        getHeader(employee.getAccessToken()).put("Authorization", "Bearer "+employee.getAccessToken()+"");
         String res= doPost(url,getHeader(employee.getAccessToken()),null,body.toString(),null, employee);
         responseEntity=new JsonParser().parse(res).getAsJsonObject();
         return  responseEntity;
@@ -379,7 +379,7 @@ public class ExpenseApi extends BaseRequest{
         body.addProperty("invoiceRequired",expenseTypeinfo.get("invoiceRequired").getAsBoolean());
         body.addProperty("amount",amount);
         //如果非人民币的汇率要加上汇率 使用equals会出现空指针,因为初始化的时候没有赋值。
-        if(component.getCurrencyCode()!=("CNY")){
+        if(!component.getCurrencyCode().equals("CNY")){
             body.addProperty("actualCurrencyRate",component.getRate());
         }
         body.add("receiptList",receiptList);
@@ -399,6 +399,7 @@ public class ExpenseApi extends BaseRequest{
         if (!expenseReportOID.equals("")) {
             body.addProperty("expenseReportOID",expenseReportOID);
         }
+        body.add("expenseAmortise",new JsonArray());
         body.addProperty("timeZoneOffset",480);
         body.addProperty("ownerOID",employee.getUserOID());
         body.addProperty("paymentType",1001);
@@ -506,4 +507,29 @@ public class ExpenseApi extends BaseRequest{
         String Res= doPost(url,getHeader(employee.getAccessToken()),null,object.toString(),null,employee);
         return new JsonParser().parse(Res).getAsJsonObject();
     }
+
+    /**
+     *分摊费用类型带出的默认分摊行  新建分摊行的话必须修改字段defaultApportion：false
+     * 一般第一个分摊行为默认的分摊行并且只有一个  后续新建的分摊行如果不改的话 会导分摊
+     * 行出现俩个默认的分摊行。
+     * @param employee
+     * @param currency
+     * @param expenseReportOID
+     * @param expenseTypeId
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject defaultApportionment(Employee employee,String currency,String expenseReportOID,String expenseTypeId) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.DEFAULT_APPORTIONEMNT;
+        Map<String,String> urlParam=new HashMap<>();
+        urlParam.put("expenseReportOID",expenseReportOID);
+        urlParam.put("expenseTypeId",expenseTypeId);
+        urlParam.put("amount","100");
+        urlParam.put("currency",currency);
+        urlParam.put("ownerOID",employee.getUserOID());
+        urlParam.put("merge","true");
+        String res= doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
+        return new JsonParser().parse(res).getAsJsonArray().get(0).getAsJsonObject();
+    }
+
 }

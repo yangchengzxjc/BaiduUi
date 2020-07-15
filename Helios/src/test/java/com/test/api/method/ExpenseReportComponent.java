@@ -7,6 +7,9 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @Author peng.zhang
  * @Date 2020/6/11
@@ -78,5 +81,14 @@ public class ExpenseReportComponent {
         }
         return jsonObject;
     }
+
+    public Map<String,String> queryDepartment(Employee employee, String deptCode) throws HttpStatusException {
+        JsonObject departmentInfo = componentQuery.getformDepartment(employee,deptCode).getAsJsonArray().get(0).getAsJsonObject();
+        Map<String,String> deptMap = new HashMap<>();
+        deptMap.put("departmentOID",departmentInfo.get("departmentOid").getAsString());
+        deptMap.put("name",departmentInfo.get("name").getAsString());
+        return deptMap;
+    }
+
 
 }

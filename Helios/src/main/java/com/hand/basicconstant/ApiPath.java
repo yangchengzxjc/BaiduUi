@@ -165,6 +165,8 @@ public class ApiPath {
         public static final String SEARCHTRANSFERUser = "/api/users/v3/search";
         //费用转交
         public static final String TRANSFER_TO = "/invoice/api/invoices/transfer/to";
+        //获取默认的分摊行
+        public static final String DEFAULT_APPORTIONEMNT = "/api/v3/expense/default/apportionment";
         // 搜索可以关联的申请单
         public static final String SEARCH_APPLICATION = "/api/applications/passed/search";
         //申请单带出的value

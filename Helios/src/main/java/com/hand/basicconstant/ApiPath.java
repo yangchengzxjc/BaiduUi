@@ -201,6 +201,13 @@ public class ApiPath {
         public static final String SUBMIT_APPLICATION = "/api/travel/applications/submit/v2";
         //差旅申请单提交检查
         public static final String SUBMIT_CHECK = "/api/application/submit/check";
+        //差补设置
+        public static final String TRAVEL_SUBSIDY_CONFIG = "/api/travel/subsidy/control";
+        //获取差补表单列表
+        public static final String TRAVEL_SUBSIDY_FORM = "/api/travel/subsidy/control/form/list";
+
+
+
     }
 
 

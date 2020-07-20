@@ -91,7 +91,7 @@ public class ApportionTest extends BaseTest {
 
     @Test(description = "报销单内新建分摊费用 - 按照部门进行分摊")
     public void createApporationTest5() throws HttpStatusException {
-        //初始化部门信息
+        //表单控件初始化部门信息
         formComponent.setDepartment(employee.getDepartmentOID());
         formComponent.setCause("测试报销单分摊费用");
         //新建报销单

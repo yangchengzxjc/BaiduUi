@@ -16,10 +16,17 @@ import java.util.Random;
 
 @Slf4j
 public class SetOfBooksApi extends BaseRequest {
-    /*
-    * 新增账套
-    * */
-    public JsonObject addSetOfBooks(Employee employee, SetOfBooks setOfBooks,boolean enabled, String SetOfBooksName, String SetOfBooksCode) throws HttpStatusException {
+    /**
+     * 新增账套
+     * @param enabled  账套状态
+     * @param employee
+     * @param setOfBooks
+     * @param setOfBooksName
+     * @param setOfBooksCode
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject addSetOfBooks(Employee employee, SetOfBooks setOfBooks,boolean enabled, String setOfBooksName, String setOfBooksCode) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.ADD_SET_OF_BOOKS;
         Random random = new Random();
         random.nextInt();
@@ -32,8 +39,8 @@ public class SetOfBooksApi extends BaseRequest {
         body.addProperty("periodSetCode",setOfBooks.getPeriodSetCode());
         body.addProperty("accountSetId",setOfBooks.getAccountSetId());
         body.addProperty("functionalCurrencyCode",setOfBooks.getFunctionalCurrencyCode());
-        body.addProperty("setOfBooksName",SetOfBooksName + String.valueOf(RandomNumber.getTimeNumber()));
-        body.addProperty("setOfBooksCode",SetOfBooksCode + String.valueOf(RandomNumber.getTimeNumber()));
+        body.addProperty("setOfBooksName",setOfBooksName + String.valueOf(RandomNumber.getTimeNumber()));
+        body.addProperty("setOfBooksCode",setOfBooksCode + String.valueOf(RandomNumber.getTimeNumber()));
         body.addProperty("enabled",enabled);
         SetOfBooksNameI18n1.addProperty("language","zh_cn");
         SetOfBooksNameI18n1.addProperty("value",RandomNumber.getUUID());
@@ -42,13 +49,15 @@ public class SetOfBooksApi extends BaseRequest {
         array.add(SetOfBooksNameI18n1);
         array.add(SetOfBooksNameI18n2);
         String res = doPost(url,getHeader(employee.getAccessToken()),urlParam,body.toString(),null,employee);
-        log.info("新增账套数据为：" + res);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
-    /*
+    /**
      * 获取会计期
-     * */
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
     public JsonArray getAccountingPeriod(Employee employee) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.GET_ACCOUNTING_PERIOD;
         Map<String, String> urlParam = new HashMap<>();
@@ -58,9 +67,12 @@ public class SetOfBooksApi extends BaseRequest {
         return new JsonParser().parse(res).getAsJsonArray();
     }
 
-    /*
-    * 获取科目表
-    * */
+    /**
+     * 获取科目表
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
     public JsonObject getAccountSetId(Employee employee) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.GET_LEDGER_ACCOUNT;
         Map<String, String> urlParam = new HashMap<>();
@@ -75,10 +87,13 @@ public class SetOfBooksApi extends BaseRequest {
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
-    /*
-    * 获取本位币
-    * */
-    public JsonObject getfunctionalCurrencyCode(Employee employee) throws HttpStatusException {
+    /**
+     * 获取本位币
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getFunctionalCurrencyCode(Employee employee) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.GET_CURRENCY;
         Map<String, String> urlParam = new HashMap<>();
         urlParam.put("roleType","TENANT");

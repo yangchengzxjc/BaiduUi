@@ -205,7 +205,14 @@ public class ApiPath {
         public static final String TRAVEL_SUBSIDY_CONFIG = "/api/travel/subsidy/control";
         //获取差补表单列表
         public static final String TRAVEL_SUBSIDY_FORM = "/api/travel/subsidy/control/form/list";
-
+        //获取会计期
+        public static final String GET_ACCOUNTING_PERIOD = "/api/periodset";
+        //获取科目表
+        public static final String GET_LEDGER_ACCOUNT = "/ledger/api/account/set/query";
+        //获取本位币
+        public static final String GET_CURRENCY = "/api/currencyI18n";
+        //新增/编辑账套
+        public static final String ADD_SET_OF_BOOKS = "/api/setOfBooks";
 
 
     }

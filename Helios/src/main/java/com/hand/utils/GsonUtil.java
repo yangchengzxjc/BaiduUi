@@ -2,6 +2,7 @@ package com.hand.utils;
 
 import com.google.gson.*;
 import com.jayway.jsonpath.JsonPath;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.json.Json;
 
 import java.util.List;

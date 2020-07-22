@@ -201,7 +201,7 @@ public class ApiPath {
         public static final String SUBMIT_APPLICATION = "/api/travel/applications/submit/v2";
         //差旅申请单提交检查
         public static final String SUBMIT_CHECK = "/api/application/submit/check";
-        //差补设置
+        //差补管控
         public static final String TRAVEL_SUBSIDY_CONFIG = "/api/travel/subsidy/control";
         //获取差补表单列表
         public static final String TRAVEL_SUBSIDY_FORM = "/api/travel/subsidy/control/form/list";
@@ -215,6 +215,12 @@ public class ApiPath {
         public static final String ADD_SET_OF_BOOKS = "/api/setOfBooks";
 
 
+        //获取表单差补基础配置
+        public static final String TRAVEL_RULE_BASE_CONFIG = "/api/travel/subsidies/rule/dimension";
+        //获取表单差补规则list
+        public static final String SUBSIDY_RULE_List = "/api/travel/subsidies/rule/list/v2";
+        //获取差补规则详情/差补规则保存
+        public static final String SUBSIDY_RULE_DETAIL = "/api/travel/subsidies/rule";
     }
 
 

@@ -5,9 +5,9 @@ import java.io.*;
 import java.util.Properties;
 
 /**
- * @Author ： xinghong.chen
- * @Email: xinghong.chen@huilianyi.com
- * @DATE : 2019/3/5 18:08
+ * @Author peng.zhang
+ * @Date 2019/11/3
+ * @Version 1.0
  **/
 
 public class PropertyReader {

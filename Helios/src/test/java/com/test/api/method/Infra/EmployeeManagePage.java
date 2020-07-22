@@ -58,7 +58,7 @@ public class EmployeeManagePage {
         infraJob.setDuty("CEO");
         infraJob.setDutyCode(infraStructure.getCustomEnumerationValue(employee,"职务","CEO"));
         infraJob.setRank("P");
-        infraJob.setRankCode(infraStructure.getCustomEnumerationValue(employee,"级别","P"));
+        infraJob.setRankCode(infraStructure.getCustomEnumerationValue(employee,"级别A","A"));
         infraJob.setPosition(position);
         infraJob.setCompanyMainPosition(true);
         infraJob.setUni_id(company.get("companyId")+department.get("departmentId")+position);

@@ -11,9 +11,9 @@ import redis.clients.jedis.JedisPoolConfig;
 import java.io.IOException;
 
 /**
- * @Author ： xinghong.chen
- * @Email: xinghong.chen@huilianyi.com
- * @DATE : 2019/3/5 9:44
+ * @Author peng.zhang
+ * @Date 2019/11/4
+ * @Version 1.0
  **/
 
 @Slf4j

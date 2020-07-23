@@ -16,7 +16,7 @@ import java.util.UUID;
 public class RandomNumber {
 
     /**
-     * 返回UUID字符串 总共32个长度
+     * 返回UUID字符串 总共32个长度 所以可选长度为1-32  为了避免重复 请尽量选择打的长度
      * @return
      */
     public static String getUUID(int length){

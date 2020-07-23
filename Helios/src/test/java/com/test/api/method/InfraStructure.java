@@ -9,6 +9,8 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.InfraEmployee;
 import com.hand.basicObject.InfraJob;
 import com.hand.utils.GsonUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +21,7 @@ import java.util.Map;
  * @Date 2020/7/2
  * @Version 1.0
  **/
+@Slf4j
 public class InfraStructure {
     private InfraStructureApi infraStructureApi;
 
@@ -58,12 +61,18 @@ public class InfraStructure {
      */
     public String getCustomEnumerationValue(Employee employee,String customEnumerationNameValue,String customEnumerationName) throws HttpStatusException {
         JsonArray array = infraStructureApi.getSystemEnumerationDetail(employee,getSystemCustomEnumerationType(employee,customEnumerationNameValue));
-        return GsonUtil.getJsonValue(array,"messageKey",customEnumerationName,"value");
+        String customEnumerationValue="";
+        if(GsonUtil.isNotEmpt(array)){
+            customEnumerationValue = GsonUtil.getJsonValue(array,"messageKey",customEnumerationName,"value");
+        }else{
+            log.info("未能获取到值列表详情，请检查入参");
+        }
+        return customEnumerationValue;
     }
 
     /**
-     * 员工岗位添加  可以有多个岗位直接add进去即可
-     * @param infraJob
+     * 员工岗位添加  可以有多个岗位直接add 一个或者多个infraJob对象进去即可
+     * @param infraJob 员工岗位对象
      * @return
      */
     public JsonArray userJobsDTOs(ArrayList<InfraJob> infraJob){
@@ -114,9 +123,14 @@ public class InfraStructure {
      */
     public Map<String,String> searchCompany(Employee employee, String companyName) throws HttpStatusException {
          HashMap<String,String> map =new HashMap<>();
-         JsonObject object = infraStructureApi.searchCompany(employee,companyName).get(0).getAsJsonObject();
-         map.put("companyId",object.get("id").getAsString());
-         map.put("companyOID",object.get("companyOID").getAsString());
+         JsonArray companyList = infraStructureApi.searchCompany(employee,companyName);
+         if(GsonUtil.isNotEmpt(companyList)){
+             JsonObject object = companyList.get(0).getAsJsonObject();
+             map.put("companyId",object.get("id").getAsString());
+             map.put("companyOID",object.get("companyOID").getAsString());
+         }else{
+             log.info("搜索公司列表为空,请检查参数");
+         }
          return map;
     }
 
@@ -130,9 +144,16 @@ public class InfraStructure {
      */
     public  Map<String,String> searchDepartment(Employee employee,String deptCode,String companyOID) throws HttpStatusException {
         HashMap<String,String> map =new HashMap<>();
-        JsonObject object =infraStructureApi.searchDepartment(employee,deptCode,companyOID).get(0).getAsJsonObject();
-        map.put("departmentId",object.get("departmentId").getAsString());
-        map.put("departmentPath",object.get("path").getAsString());
+        JsonArray departmentList = infraStructureApi.searchDepartment(employee,deptCode,companyOID);
+        //判断搜索的部门为空的情况
+        if(GsonUtil.isNotEmpt(departmentList)){
+            JsonObject object =departmentList.get(0).getAsJsonObject();
+            //从搜索部门的响应中获取到部门id以及部门path
+            map.put("departmentId",object.get("departmentId").getAsString());
+            map.put("departmentPath",object.get("path").getAsString());
+        }else{
+            log.info("搜索的部门为空,请检查入参");
+        }
         return map;
     }
 
@@ -144,7 +165,14 @@ public class InfraStructure {
      * @throws HttpStatusException
      */
     private String getUserUserOID(Employee employee, String keyWords) throws HttpStatusException {
-        return infraStructureApi.getUser(employee,keyWords).get(0).getAsJsonObject().get("userOID").getAsString();
+        JsonArray userList = infraStructureApi.getUser(employee,keyWords);
+        String userOID ="";
+        if(GsonUtil.isNotEmpt(userList)){
+            userOID = userList.get(0).getAsJsonObject().get("userOID").getAsString();
+        }else{
+            log.info("用户列表查询结果为空,请检查入参");
+        }
+        return userOID;
     }
 
     /**

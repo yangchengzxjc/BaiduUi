@@ -109,7 +109,7 @@ public class ExpenseReportInvoice {
      * @return
      */
     public JsonArray getInvoiceDetail(Employee employee,String expenseReportOID) throws HttpStatusException {
-        return expenseApi.getInvoiceDetail(employee,expenseReportOID).get("rows").getAsJsonObject().get("expenseReportInvoices").getAsJsonArray();
+        return expenseApi.getInvoiceDetail(employee,expenseReportOID).getAsJsonObject("rows").getAsJsonArray("expenseReportInvoices");
     }
 
     /**
@@ -120,9 +120,14 @@ public class ExpenseReportInvoice {
      */
     public ArrayList getExpenseItem(Employee employee) throws HttpStatusException {
         ArrayList<String> expenseItem =new ArrayList<>();
-        JsonArray jsonArray=expenseApi.getInvoiceLlist(employee);
-        for (int i=0;i<jsonArray.size();i++){
-            expenseItem.add(jsonArray.get(i).getAsJsonObject().get("invoiceOID").getAsString());
+        JsonArray expenseList=expenseApi.getInvoiceLlist(employee);
+        //检查账本是否为空
+        if(GsonUtil.isNotEmpt(expenseList)){
+            for (int i=0;i<expenseList.size();i++){
+                expenseItem.add(expenseList.get(i).getAsJsonObject().get("invoiceOID").getAsString());
+            }
+        }else{
+            log.info("账本暂无费用");
         }
         return expenseItem;
     }
@@ -147,6 +152,7 @@ public class ExpenseReportInvoice {
      */
     public String searchTransferUser(Employee employee,String fullName, String setOfBooksId) throws HttpStatusException {
        JsonArray jsonArray= expenseApi.searchTransferUser(employee,setOfBooksId);
+
        String userId =GsonUtil.getJsonValue(jsonArray,"fullName",fullName,"id");
        return userId;
     }

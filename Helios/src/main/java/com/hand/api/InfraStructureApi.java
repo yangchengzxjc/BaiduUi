@@ -47,7 +47,7 @@ public class InfraStructureApi extends BaseRequest{
         body.addProperty("directManagerName",infraEmployee.getDirectManagerName());
         body.addProperty("employeeType",(String) null);
         if(infraEmployee.getEmail()==null){
-            body.addProperty("email", RandomNumber.getUUID()+"@hly.com");
+            body.addProperty("email", RandomNumber.getUUID(6)+"@hly.com");
         }else{
             body.addProperty("email", infraEmployee.getEmail());
         }

@@ -94,10 +94,8 @@ public class OkHttpUtils {
                     log.info("MyResponse: {}", new JsonParser().parse(result).getAsJsonArray().toString());
 
                 } catch (Exception ignored) {
-                    ;
                 }
             }
-
             log.info("Time: {} ms", endTime - startTime);
             if((endTime - startTime)>=5000 && (endTime - startTime)<7000){
                 log.info("请求大于5秒，有待观察:");
@@ -105,7 +103,6 @@ public class OkHttpUtils {
             else if((endTime - startTime)>=7000){
                 log.info("请求大于7秒，有待观察:");
             }
-
             log.info("===========================response end================================================");
     }
 

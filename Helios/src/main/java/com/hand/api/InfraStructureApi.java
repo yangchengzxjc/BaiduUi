@@ -309,7 +309,6 @@ public class InfraStructureApi extends BaseRequest{
         urlParam.put("companyOID",companyOID);
         urlParam.put("deptCodeLable",deptCode);
         String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
-        log.info("查询的公司：{}",res);
         return new JsonParser().parse(res).getAsJsonArray();
     }
 }

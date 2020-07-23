@@ -37,14 +37,10 @@ public class ExpenseReport {
      * @param formName
      * @return
      */
-    public String getFormOID(Employee employee, String formName){
+    public String getFormOID(Employee employee, String formName) throws HttpStatusException {
         JsonArray jsonArray=null;
         String formOID="";
-        try {
-            jsonArray=reimbursementApi.getAvailableforms(employee,"102",employee.getJobId());
-        } catch (HttpStatusException e){
-            e.printStackTrace();
-        }
+        jsonArray=reimbursementApi.getAvailableforms(employee,"102",employee.getJobId());
         for(int i=0; i<jsonArray.size(); i++){
             JsonObject jsonObject=jsonArray.get(i).getAsJsonObject();
             if(jsonObject.get("formName").getAsString().equalsIgnoreCase(formName)){

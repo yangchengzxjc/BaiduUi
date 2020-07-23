@@ -1,4 +1,4 @@
-package com.test.api.method.SetOfBooksMethod;
+package com.test.api.method.Infra.SetOfBooksMethod;
 
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;

@@ -1,11 +1,11 @@
-package com.test.api.testcase.setOfBooks;
+package com.test.api.testcase.infraStructure.setOfBooks;
 
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.SetOfBooks;
 import com.test.BaseTest;
 import com.test.api.method.SetOfBooksDefine;
-import com.test.api.method.SetOfBooksMethod.SetOfBooksPage;
+import com.test.api.method.Infra.SetOfBooksMethod.SetOfBooksPage;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;

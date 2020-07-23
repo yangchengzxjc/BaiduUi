@@ -118,8 +118,8 @@ public class TravelSubsidy {
     /**
      * 根据规则的name获取travelSubsidiesRuleOID
      * @param employee
-     * @param ruleName
-     * @param forName
+     * @param ruleName   规则名称 不可重复
+     * @param forName   表单的名称
      */
     public String getRuleOID(Employee employee, String ruleName,String forName) throws HttpStatusException {
         JsonArray ruleList = subsidyConfigAPi.getSubsidyRuleList(employee,getSubFormOID(employee,forName));

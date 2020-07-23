@@ -2,8 +2,6 @@ package com.hand.utils;
 
 import com.google.gson.*;
 import com.jayway.jsonpath.JsonPath;
-import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.json.Json;
 
 import java.util.List;
 
@@ -80,6 +78,15 @@ public class GsonUtil {
      */
     public static JsonArray stringToJsonArray(String jsString){
         return new JsonParser().parse(jsString).getAsJsonArray();
+    }
+
+    /**
+     * 判断Json 数组是否为空
+     * @param array
+     * @return
+     */
+    public static boolean isNotEmpt(JsonArray array){
+        return array.size() != 0;
     }
 
 }

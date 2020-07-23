@@ -47,7 +47,7 @@ public class InfraStructureApi extends BaseRequest{
         body.addProperty("directManagerName",infraEmployee.getDirectManagerName());
         body.addProperty("employeeType",(String) null);
         if(infraEmployee.getEmail()==null){
-            body.addProperty("email", RandomNumber.getUUID()+"@hly.com");
+            body.addProperty("email", RandomNumber.getUUID(6)+"@hly.com");
         }else{
             body.addProperty("email", infraEmployee.getEmail());
         }
@@ -309,7 +309,6 @@ public class InfraStructureApi extends BaseRequest{
         urlParam.put("companyOID",companyOID);
         urlParam.put("deptCodeLable",deptCode);
         String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
-        log.info("查询的公司：{}",res);
         return new JsonParser().parse(res).getAsJsonArray();
     }
 }

@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.hand.api.ComponentQuery;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -24,6 +25,13 @@ public class ExpenseReportComponent {
         componentQuery=new ComponentQuery();
     }
 
+    /**
+     * 根据城市名称查询城市cityCode  城市控件等地方需要传入此参数
+     * @param employee
+     * @param city
+     * @return
+     * @throws HttpStatusException
+     */
     public String getCityCode(Employee employee,String city) throws HttpStatusException {
         String cityCode="";
         if(city.equals("")){
@@ -82,11 +90,23 @@ public class ExpenseReportComponent {
         return jsonObject;
     }
 
+    /**
+     * 根据部门编码查询部门相关信息
+     * @param employee
+     * @param deptCode   部门编码
+     * @return
+     * @throws HttpStatusException
+     */
     public Map<String,String> queryDepartment(Employee employee, String deptCode) throws HttpStatusException {
-        JsonObject departmentInfo = componentQuery.getformDepartment(employee,deptCode).getAsJsonArray().get(0).getAsJsonObject();
         Map<String,String> deptMap = new HashMap<>();
-        deptMap.put("departmentOID",departmentInfo.get("departmentOid").getAsString());
-        deptMap.put("name",departmentInfo.get("name").getAsString());
+        JsonArray deptList = componentQuery.getformDepartment(employee,deptCode);
+        if(GsonUtil.isNotEmpt(deptList)){
+            JsonObject departmentInfo = deptList.get(0).getAsJsonObject();
+            deptMap.put("departmentOID",departmentInfo.get("departmentOid").getAsString());
+            deptMap.put("name",departmentInfo.get("name").getAsString());
+        }else{
+            log.info("查询部门信息为空,请检查参数");
+        }
         return deptMap;
     }
 

@@ -18,36 +18,39 @@ import java.util.Random;
 public class SetOfBooksApi extends BaseRequest {
     /**
      * 新增账套
-     * @param enabled  账套状态
      * @param employee
-     * @param setOfBooks
-     * @param setOfBooksName
-     * @param setOfBooksCode
+     * @param setOfBooks 账套字段对象
+     * @param enabled
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject addSetOfBooks(Employee employee, SetOfBooks setOfBooks,boolean enabled, String setOfBooksName, String setOfBooksCode) throws HttpStatusException {
+    public JsonObject addSetOfBooks(Employee employee, SetOfBooks setOfBooks,boolean enabled) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.ADD_SET_OF_BOOKS;
         Random random = new Random();
         random.nextInt();
         JsonObject body = new JsonObject();
-        JsonArray array = new JsonArray();
+        //账套名称多语言数组
+        JsonArray arrayLanguage = new JsonArray();
         Map<String, String> urlParam = new HashMap<>();
         urlParam.put("roleType","TENANT");
-        JsonObject SetOfBooksNameI18n1 =  new JsonObject();
-        JsonObject SetOfBooksNameI18n2 =  new JsonObject();
+        //账套名称多语言对象
+        JsonObject objectSetOfBooksName = new JsonObject();
+        JsonObject setOfBooksNameI18n1 =  new JsonObject();
+        JsonObject setOfBooksNameI18n2 =  new JsonObject();
         body.addProperty("periodSetCode",setOfBooks.getPeriodSetCode());
         body.addProperty("accountSetId",setOfBooks.getAccountSetId());
         body.addProperty("functionalCurrencyCode",setOfBooks.getFunctionalCurrencyCode());
-        body.addProperty("setOfBooksName",setOfBooksName + String.valueOf(RandomNumber.getTimeNumber()));
-        body.addProperty("setOfBooksCode",setOfBooksCode + String.valueOf(RandomNumber.getTimeNumber()));
+        body.addProperty("setOfBooksName",setOfBooks.getSetOfBooksName());
+        body.addProperty("setOfBooksCode",setOfBooks.getSetOfBooksCode());
         body.addProperty("enabled",enabled);
-        SetOfBooksNameI18n1.addProperty("language","zh_cn");
-        SetOfBooksNameI18n1.addProperty("value",RandomNumber.getUUID());
-        SetOfBooksNameI18n2.addProperty("language","en");
-        SetOfBooksNameI18n2.addProperty("value",RandomNumber.getUUID());
-        array.add(SetOfBooksNameI18n1);
-        array.add(SetOfBooksNameI18n2);
+        setOfBooksNameI18n1.addProperty("language","zh_cn");
+        setOfBooksNameI18n1.addProperty("value",setOfBooks.getSetOfBooksName());
+        setOfBooksNameI18n2.addProperty("language","en");
+        setOfBooksNameI18n2.addProperty("value",setOfBooks.getSetOfBooksName());
+        arrayLanguage.add(setOfBooksNameI18n1);
+        arrayLanguage.add(setOfBooksNameI18n2);
+        objectSetOfBooksName.add("setOfBooksName",arrayLanguage);
+        body.add("i18n",objectSetOfBooksName);
         String res = doPost(url,getHeader(employee.getAccessToken()),urlParam,body.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }

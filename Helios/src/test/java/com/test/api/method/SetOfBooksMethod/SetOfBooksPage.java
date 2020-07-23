@@ -26,12 +26,12 @@ public class SetOfBooksPage {
     public void addSetOfBooks(Employee employee,boolean enabled, String setOfBooksName, String setOfBooksCode) throws HttpStatusException{
         SetOfBooks setOfBooks = new SetOfBooks();
         setOfBooks.setEnabled(enabled);
-        setOfBooks.setSetOfBooksName(setOfBooksName + String.valueOf(RandomNumber.getTimeNumber()));
-        setOfBooks.setSetOfBooksCode(setOfBooksCode + String.valueOf(RandomNumber.getTimeNumber()));
+        setOfBooks.setSetOfBooksName(setOfBooksName + RandomNumber.getTimeNumber());
+        setOfBooks.setSetOfBooksCode(setOfBooksCode + RandomNumber.getTimeNumber());
         setOfBooks.setAccountSetId(setOfBooksDefine.getAccountSetId(employee,"DEFAULT_ACC"));
         setOfBooks.setPeriodSetCode(setOfBooksDefine.getAccountingPeriod(employee,"默认会计期"));
         setOfBooks.setFunctionalCurrencyCode(setOfBooksDefine.getFunctionalCurrencyCode(employee,"人民币"));
-        log.info("新增的账套信息为：" + setOfBooks);
-        setOfBooksDefine.addSetOfBooks(employee,setOfBooks,enabled,setOfBooksName,setOfBooksCode);
+        log.info("新增的数据：" + setOfBooks);
+        setOfBooksDefine.addSetOfBooks(employee,setOfBooks,enabled);
     }
 }

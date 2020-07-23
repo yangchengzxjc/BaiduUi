@@ -7,6 +7,7 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.SetOfBooks;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,13 +24,20 @@ public class SetOfBooksDefine {
      * 新增账套所需字段
      * @param employee
      * @param setOfBooks
-     * @param enabled
-     * @param setOfBooksName
-     * @param setOfBooksCode
      * @throws HttpStatusException
      */
-    public void addSetOfBooks(Employee employee, SetOfBooks setOfBooks,boolean enabled, String setOfBooksName, String setOfBooksCode) throws HttpStatusException {
-        JsonObject object = SetOfBooksApi.addSetOfBooks(employee,setOfBooks,enabled,setOfBooksName,setOfBooksCode);
+    public HashMap<String,String> addSetOfBooks(Employee employee,SetOfBooks setOfBooks,boolean enabled) throws HttpStatusException {
+        JsonObject object = SetOfBooksApi.addSetOfBooks(employee,setOfBooks,enabled);
+        HashMap<String,String> info = new HashMap<>();
+//        info.put("setOfBooksCode",object.get("setOfBooksCode").getAsString());
+//        info.put("setOfBooksName",object.get("setOfBooksName").getAsString());
+//        info.put("periodSetCode",object.get("periodSetCode").getAsString());
+//        info.put("functionalCurrencyCode",object.get("functionalCurrencyCode").getAsString());
+//        info.put("tenantId",object.get("tenantId").getAsString());
+//        info.put("id",object.get("id").getAsString());
+        info.put("message",object.get("message").getAsString());
+        info.put("errorCode",object.get("errorCode").getAsString());
+        return info;
 
     }
 

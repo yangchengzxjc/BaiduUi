@@ -25,8 +25,7 @@ public class RandomNumber {
      * @return
      */
     public static int getRandomNumber(){
-        Random random =new Random(10000);
-        return (int) (Math.random()*90000);
+        return (int) (Math.random()*90000+10000);
     }
 
     /**

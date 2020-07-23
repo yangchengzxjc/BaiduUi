@@ -36,9 +36,9 @@ public class SetOfBooksApi extends BaseRequest {
         body.addProperty("setOfBooksCode",SetOfBooksCode + String.valueOf(RandomNumber.getTimeNumber()));
         body.addProperty("enabled",enabled);
         SetOfBooksNameI18n1.addProperty("language","zh_cn");
-        SetOfBooksNameI18n1.addProperty("value",RandomNumber.getUUID());
+        SetOfBooksNameI18n1.addProperty("value",RandomNumber.getUUID(1));
         SetOfBooksNameI18n2.addProperty("language","en");
-        SetOfBooksNameI18n2.addProperty("value",RandomNumber.getUUID());
+        SetOfBooksNameI18n2.addProperty("value",RandomNumber.getUUID(1));
         array.add(SetOfBooksNameI18n1);
         array.add(SetOfBooksNameI18n2);
         String res = doPost(url,getHeader(employee.getAccessToken()),urlParam,body.toString(),null,employee);

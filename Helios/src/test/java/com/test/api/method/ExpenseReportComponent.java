@@ -2,7 +2,7 @@ package com.test.api.method;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.hand.api.ComponentQuery;
+import com.hand.api.ComponentQueryApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.utils.GsonUtil;
@@ -19,10 +19,10 @@ import java.util.Map;
 @Slf4j
 public class ExpenseReportComponent {
 
-    private ComponentQuery componentQuery;
+    private ComponentQueryApi componentQueryApi;
 
     public ExpenseReportComponent(){
-        componentQuery=new ComponentQuery();
+        componentQueryApi =new ComponentQueryApi();
     }
 
     /**
@@ -37,7 +37,7 @@ public class ExpenseReportComponent {
         if(city.equals("")){
             return cityCode;
         }else{
-            JsonArray jsonArray=componentQuery.locationSearch(employee,city);
+            JsonArray jsonArray= componentQueryApi.locationSearch(employee,city);
             for (int i =0 ;i< jsonArray.size();i++){
                 if(jsonArray.get(i).getAsJsonObject().get("vndLocationName").getAsString().equalsIgnoreCase(city)){
                     cityCode = jsonArray.get(i).getAsJsonObject().get("vndLocationCode").getAsString();
@@ -55,7 +55,7 @@ public class ExpenseReportComponent {
      * @throws HttpStatusException
      */
     public JsonObject getParticipant(Employee employee,String formOID,String fullName) throws HttpStatusException {
-        JsonArray array = componentQuery.getSelectParticipant(employee,formOID,employee.getJobId());
+        JsonArray array = componentQueryApi.getSelectParticipant(employee,formOID,employee.getJobId());
         JsonObject participant = new JsonObject();
         for(int i=0; i<array.size();i++){
             if(array.get(i).getAsJsonObject().get("fullName").getAsString().equals(fullName)){
@@ -76,7 +76,7 @@ public class ExpenseReportComponent {
      * @throws HttpStatusException
      */
     public JsonObject getExpenseLocation(Employee employee, String keyWords) throws HttpStatusException {
-        JsonArray jsonArray=componentQuery.queryExpenseLocation(employee,keyWords);
+        JsonArray jsonArray= componentQueryApi.queryExpenseLocation(employee,keyWords);
         JsonObject jsonObject =new JsonObject();
         for(int i= 0;i<jsonArray.size();i++){
             if(jsonArray.get(i).getAsJsonObject().get("name").getAsString().equals(keyWords)){
@@ -99,7 +99,7 @@ public class ExpenseReportComponent {
      */
     public Map<String,String> queryDepartment(Employee employee, String deptCode) throws HttpStatusException {
         Map<String,String> deptMap = new HashMap<>();
-        JsonArray deptList = componentQuery.getformDepartment(employee,deptCode);
+        JsonArray deptList = componentQueryApi.getformDepartment(employee,deptCode);
         if(GsonUtil.isNotEmpt(deptList)){
             JsonObject departmentInfo = deptList.get(0).getAsJsonObject();
             deptMap.put("departmentOID",departmentInfo.get("departmentOid").getAsString());

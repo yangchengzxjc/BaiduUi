@@ -34,35 +34,31 @@ public class OkHttpUtils {
 
     private static final byte[] LOCKER = new byte[0];
     private static OkHttpUtils mInstance;
-    private OkHttpClient mOkHttpClient;
-    private static final int CONNECT_TIMEOUT = 500;
-    private static final int READ_TIMEOUT = 700;
-    private static final int WRITE_TIMEOUT = 700;
+    private static OkHttpClient mOkHttpClient;
+    private static final int CONNECT_TIMEOUT = 20;
+    private static final int READ_TIMEOUT = 20;
+    private static final int WRITE_TIMEOUT = 20;
     private static final String GET = "GET";
     private static final String POST = "POST";
     private static final String DELETE = "DELETE";
     private static final String PUT = "PUT";
-    private OkHttpUtils() {
-        okhttp3.OkHttpClient.Builder clientBuilder = new okhttp3.OkHttpClient.Builder();
-        //读取超时
-        clientBuilder.readTimeout(READ_TIMEOUT, TimeUnit.SECONDS);
-        //连接超时
-        clientBuilder.connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS);
-        //写入超时
-        clientBuilder.writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS);
-        mOkHttpClient = clientBuilder.build();
 
+    private OkHttpUtils(){
     }
 
-    public static OkHttpUtils getInstance() {
-        if (mInstance == null) {
+    public static OkHttpClient getInstance() {
+        if (mOkHttpClient == null) {
             synchronized (LOCKER) {
-                if (mInstance == null) {
-                    mInstance = new OkHttpUtils();
+                if (mOkHttpClient == null) {
+                    mOkHttpClient = new OkHttpClient.Builder()
+                            .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+                            .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+                            .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+                            .build();
                 }
             }
         }
-        return mInstance;
+        return mOkHttpClient;
     }
 
     private static void addRequestLog(String method, String url, String urlParam, String body, String formParam) {
@@ -254,7 +250,7 @@ public class OkHttpUtils {
         Headers headers=null;
         String strParams = "";
         long startTime = System.currentTimeMillis();
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = getInstance();
             if(headersParams != null){
                 headers= setHeaders(headersParams);
             }
@@ -312,7 +308,7 @@ public class OkHttpUtils {
         Headers headers=null;
         RequestBody body=null;
         String strParams = "";
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = getInstance();
         Request req=null;
         long startTime = System.currentTimeMillis();
         String res="";
@@ -395,11 +391,11 @@ public class OkHttpUtils {
      * @return
      * @throws IOException
      */
-    public static MyResponse  post(String Url, Map<String, String> headersParams, Map<String, String> UrlMapParams, String Jsonbody,Map<String, String> BodyParams) throws HttpStatusException {
+    public static MyResponse post(String Url, Map<String, String> headersParams, Map<String, String> UrlMapParams, String Jsonbody,Map<String, String> BodyParams) throws HttpStatusException {
         Headers headers=null;
         RequestBody body=null;
         String strParams = "";
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = getInstance();
         Request req=null;
         long startTime = System.currentTimeMillis();
         String res="";
@@ -458,6 +454,7 @@ public class OkHttpUtils {
                 Call call = client.newCall(req);
                 try {
                     response = call.execute();
+                    log.info("执行了吗");
                     res=response.body().string();
                 } catch (Exception ex) {
                     log.error("Retry still fails:"+ex.getMessage());
@@ -493,7 +490,7 @@ public class OkHttpUtils {
         okhttp3.MultipartBody.Builder  MultipartBodyBuilder=new okhttp3.MultipartBody.Builder();
         MultipartBodyBuilder.setType(MultipartBody.FORM);
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = getInstance();
         if(headersParams != null)
         {
             headers= setHeaders(headersParams);

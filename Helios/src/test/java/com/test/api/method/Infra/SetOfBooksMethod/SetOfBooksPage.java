@@ -1,5 +1,6 @@
 package com.test.api.method.Infra.SetOfBooksMethod;
 
+import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.SetOfBooks;
@@ -23,15 +24,14 @@ public class SetOfBooksPage {
      * @param setOfBooksCode
      * @throws HttpStatusException
      */
-    public void addSetOfBooks(Employee employee,boolean enabled, String setOfBooksName, String setOfBooksCode) throws HttpStatusException{
-        SetOfBooks setOfBooks = new SetOfBooks();
+    public JsonObject addSetOfBooks(Employee employee,SetOfBooks setOfBooks, boolean enabled, String setOfBooksName, String setOfBooksCode) throws HttpStatusException{
+//        SetOfBooks setOfBooks = new SetOfBooks();
         setOfBooks.setEnabled(enabled);
         setOfBooks.setSetOfBooksName(setOfBooksName + RandomNumber.getTimeNumber());
         setOfBooks.setSetOfBooksCode(setOfBooksCode + RandomNumber.getTimeNumber());
         setOfBooks.setAccountSetId(setOfBooksDefine.getAccountSetId(employee,"DEFAULT_ACC"));
         setOfBooks.setPeriodSetCode(setOfBooksDefine.getAccountingPeriod(employee,"默认会计期"));
         setOfBooks.setFunctionalCurrencyCode(setOfBooksDefine.getFunctionalCurrencyCode(employee,"人民币"));
-        log.info("新增的数据：" + setOfBooks);
-        setOfBooksDefine.addSetOfBooks(employee,setOfBooks,enabled);
+        return setOfBooksDefine.addSetOfBooks(employee,setOfBooks,enabled);
     }
 }

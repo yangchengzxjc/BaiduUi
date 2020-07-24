@@ -36,16 +36,17 @@ public class EmployeeManagePage {
      * @param position
      * @throws HttpStatusException
      */
-    public void addEmployee(Employee employee,String companyName,String departmentName,String departmentCode,String position,String fullName,String dtuy,String level) throws HttpStatusException {
+    public void addEmployee(Employee employee,String companyName,String departmentName,String departmentCode,String position,String duty,String rank) throws HttpStatusException {
         InfraEmployee infraEmployee =new InfraEmployee();
         InfraJob infraJob  = new InfraJob();
         //邮箱不set的话会有默认值输入
-        infraEmployee.setFullName("接口测试新增"+String.valueOf(RandomNumber.getRandomNumber()));
+        infraEmployee.setFullName("fullNameApi"+String.valueOf(RandomNumber.getRandomNumber()));
         infraEmployee.setEmployeeID(String.valueOf(RandomNumber.getRandomNumber()));
         infraEmployee.setMobile("283666"+RandomNumber.getRandomNumber());
         infraEmployee.setEmail(String.format("zhang%s@hui.com",RandomNumber.getRandomNumber()));
         infraEmployee.setEmployeeTypeCode(infraStructure.getCustomEnumerationValue(employee,"人员类型","技术"));
-        infraEmployee.setDirectManager(infraStructure.searchUser(employee,fullName));
+        infraEmployee.setDirectManager(infraStructure.searchUser(employee,"曾任康"));
+        infraEmployee.setGenderCode(0);
         log.info("新增的员工信息：{}",infraEmployee);
         ArrayList<InfraJob> infraJobArrayList = new ArrayList<>();
         Map<String,String> company =infraStructure.searchCompany(employee,companyName);
@@ -56,10 +57,10 @@ public class EmployeeManagePage {
         infraJob.setDepartmentName(departmentName);
         infraJob.setDepartmentId(department.get("departmentId"));
         infraJob.setDepartmentPath(department.get("departmentPath"));
-        infraJob.setDuty(dtuy);
-        infraJob.setDutyCode(infraStructure.getCustomEnumerationValue(employee,"职务",dtuy));
-        infraJob.setRank(level);
-        infraJob.setRankCode(infraStructure.getCustomEnumerationValue(employee,"级别",level));
+        infraJob.setDuty(duty);
+        infraJob.setDutyCode(infraStructure.getCustomEnumerationValue(employee,"职务",duty));
+        infraJob.setRank(rank);
+        infraJob.setRankCode(infraStructure.getCustomEnumerationValue(employee,"级别",rank));
         infraJob.setPosition(position);
         infraJob.setCompanyMainPosition(true);
         infraJob.setUni_id(company.get("companyId")+department.get("departmentId")+position);

@@ -33,7 +33,7 @@ public class EmployeeManage extends BaseTest {
 
     @Test(description = "新增员正常流程")
     public void addEmployee() throws HttpStatusException {
-        employeeManagePage.addEmployee(employee,"甄滙_上海通用公司","上海通用总裁办","112233","测试工程师","","","");
+        employeeManagePage.addEmployee(employee,"甄滙_上海通用公司","上海通用总裁办","112233","测试工程师","","");
     }
 
     @Test(description = "编辑员工-正常编辑-修改了邮箱,手机号以及生日")

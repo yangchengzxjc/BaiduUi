@@ -25,7 +25,7 @@ public class SyncEmployee extends BaseTest {
 
     @Test(description = "新增员正常流程")
     public void addEmployee() throws HttpStatusException {
-        employeeManagePage.addEmployee(employee,"甄滙消费商测试公司1","测试部门A","0002","测试接口新建","懿消费商(xiao/feishang)","职务01","级别A");
+        employeeManagePage.addEmployee(employee,"甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
     }
 
 

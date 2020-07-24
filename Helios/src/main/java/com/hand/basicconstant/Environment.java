@@ -17,8 +17,10 @@ public enum Environment {
     CONSOLE("console", "https://console.huilianyi.com"),
     CONSOLE_TC("console-tc", "https://console-tc.huilianyi.com");
 
+
     private String environment;
     private String url;
+
 
     public static Environment getEnv(String environment) {
         for (Environment env : Environment.values()) {

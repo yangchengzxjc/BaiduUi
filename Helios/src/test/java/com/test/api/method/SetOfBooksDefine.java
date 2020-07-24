@@ -21,24 +21,14 @@ public class SetOfBooksDefine {
     }
 
     /**
-     * 新增账套所需字段
+     * 获取新增账套响应数据
      * @param employee
      * @param setOfBooks
      * @throws HttpStatusException
      */
-    public HashMap<String,String> addSetOfBooks(Employee employee,SetOfBooks setOfBooks,boolean enabled) throws HttpStatusException {
+    public JsonObject addSetOfBooks(Employee employee,SetOfBooks setOfBooks,boolean enabled) throws HttpStatusException {
         JsonObject object = SetOfBooksApi.addSetOfBooks(employee,setOfBooks,enabled);
-        HashMap<String,String> info = new HashMap<>();
-//        info.put("setOfBooksCode",object.get("setOfBooksCode").getAsString());
-//        info.put("setOfBooksName",object.get("setOfBooksName").getAsString());
-//        info.put("periodSetCode",object.get("periodSetCode").getAsString());
-//        info.put("functionalCurrencyCode",object.get("functionalCurrencyCode").getAsString());
-//        info.put("tenantId",object.get("tenantId").getAsString());
-//        info.put("id",object.get("id").getAsString());
-        info.put("message",object.get("message").getAsString());
-        info.put("errorCode",object.get("errorCode").getAsString());
-        return info;
-
+        return object;
     }
 
     /**

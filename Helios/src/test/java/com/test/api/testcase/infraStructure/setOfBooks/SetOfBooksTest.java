@@ -48,12 +48,16 @@ public class SetOfBooksTest extends BaseTest {
     @Test(description = "正常新建账套")
     public void addSetOfBooksTest01() throws HttpStatusException {
         setOfBooksPage.addSetOfBooks(employee,true,"新增","add");
+//        String setOfBooksName = setOfBooksDefine.addSetOfBooks(employee,setOfBooks,true).get("setOfBooksName").getAsString();
+//        String setOfBooksCode = setOfBooksDefine.addSetOfBooks(employee,setOfBooks,true).get("setOfBooksCode").getAsString();
+//        Assert.assertEquals(setOfBooksName,setOfBooks.getSetOfBooksName());
+//        Assert.assertEquals(setOfBooksCode,setOfBooks.getSetOfBooksCode());
     }
 
     @Test(description = "异常新建账套，账套code不符合编码规则，包含中文")
     public void addSetOfBooksTest02() throws HttpStatusException {
         setOfBooksPage.addSetOfBooks(employee,true,"新增","中文");
-        String message = setOfBooksDefine.addSetOfBooks(employee,setOfBooks,true).get("message");
+        String message = setOfBooksDefine.addSetOfBooks(employee,setOfBooks,true).get("message").getAsString();
         log.info("获取到的message信息：" + message);
         //应该获取到的message为：字符长度大于0&小于36,且只能输入数字,字母,下划线,点符号
         //但实际获取到的是账套代码不能为空，因为报错后还执行了一次

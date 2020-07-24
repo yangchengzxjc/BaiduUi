@@ -6,6 +6,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class SetOfBooks {
+    //账套id
+    String id;
     //账套名称
     String setOfBooksName;
     //账套代码

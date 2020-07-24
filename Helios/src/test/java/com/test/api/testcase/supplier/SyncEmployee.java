@@ -28,7 +28,4 @@ public class SyncEmployee extends BaseTest {
         employeeManagePage.addEmployee(employee,"甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
     }
 
-
-
-
 }

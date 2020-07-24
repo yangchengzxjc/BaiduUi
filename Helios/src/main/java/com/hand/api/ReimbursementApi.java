@@ -25,9 +25,9 @@ import java.util.Map;
 @Slf4j
 public class ReimbursementApi extends BaseRequest {
 
-    private ComponentQuery componentQuery ;
+    private ComponentQueryApi componentQueryApi;
     public ReimbursementApi(){
-        componentQuery =new ComponentQuery();
+        componentQueryApi =new ComponentQueryApi();
     }
 
 
@@ -307,7 +307,7 @@ public class ReimbursementApi extends BaseRequest {
                     data.addProperty("value",fieldContent.toString());
                     break;
                 case "自定义列表":          //自定义列表
-                    JsonArray customenumerationlist = componentQuery.getCustomEumerationOid(employee,data.get("customEnumerationOID").getAsString());
+                    JsonArray customenumerationlist = componentQueryApi.getCustomEumerationOid(employee,data.get("customEnumerationOID").getAsString());
                     data.addProperty("value", customenumerationlist.get(0).getAsJsonObject().get("value").getAsString());
 //                    data.addProperty("value",custList);
                     break;
@@ -315,7 +315,7 @@ public class ReimbursementApi extends BaseRequest {
                     data.addProperty("value",1);
                     break;
                 case "币种":
-                    data.addProperty("value",componentQuery.getCurrency(employee).get(0).getAsJsonObject().get("baseCurrency").getAsString());
+                    data.addProperty("value", componentQueryApi.getCurrency(employee).get(0).getAsJsonObject().get("baseCurrency").getAsString());
                     break;
                 case "单行输入框":     //输入框
                     data.addProperty("value","text");
@@ -334,12 +334,12 @@ public class ReimbursementApi extends BaseRequest {
                         break;
                     }
                 case "成本中心":        //选择成本中心
-                    data.addProperty("value", componentQuery.getCostCenterOIDItems(employee,new JsonParser().parse(data.get("dataSource").getAsString()).getAsJsonObject().
+                    data.addProperty("value", componentQueryApi.getCostCenterOIDItems(employee,new JsonParser().parse(data.get("dataSource").getAsString()).getAsJsonObject().
                             get("costCenterOID").getAsString()).get(costCenterItemOID).getAsJsonObject().get("costCenterItemOID").getAsString());
 //                    data.addProperty("value",costCenterItemOID);
                     break;
                 case "部门":             //选择部门
-//                    JsonArray  DepartmentList= componentQuery.getBxformDepartment(employee);
+//                    JsonArray  DepartmentList= componentQueryApi.getBxformDepartment(employee);
 //                    data.addProperty("value",DepartmentList.get(0).getAsJsonObject().get("departmentOid").getAsString());
                     data.addProperty("value",departmentOID);
                     break;
@@ -364,21 +364,21 @@ public class ReimbursementApi extends BaseRequest {
                     data.addProperty("value",value);
                     break;
                 case "选人":               //选人
-                    data.addProperty("value",componentQuery.queryEmployees(employee).get(0).getAsJsonObject().get("userOID").getAsString());
+                    data.addProperty("value", componentQueryApi.queryEmployees(employee).get(0).getAsJsonObject().get("userOID").getAsString());
                     break;
                 case "公司":                //选择公司
-//                    data.addProperty("value",componentQuery.getCompanies(employee).get(0).getAsJsonObject().get("companyOID").getAsString());
+//                    data.addProperty("value",componentQueryApi.getCompanies(employee).get(0).getAsJsonObject().get("companyOID").getAsString());
                     data.addProperty("value",companyOID);
                     break;
                 case "事由":                      //事由
                     data.addProperty("value","自动化测试");
                     break;
                 case "城市":               //城市
-//                    String  city=componentQuery.locationSearch(employee,"西安").get(0).getAsJsonObject().get("city").getAsString();
+//                    String  city=componentQueryApi.locationSearch(employee,"西安").get(0).getAsJsonObject().get("city").getAsString();
                     data.addProperty("value", cityCode);
                     break;
                 case "参与人":                   //参与人
-//                    JsonObject Participant=componentQuery.getSelectParticipant(employee,formOID).get(0).getAsJsonObject();
+//                    JsonObject Participant=componentQueryApi.getSelectParticipant(employee,formOID).get(0).getAsJsonObject();
 //                    JsonArray ja0 = new JsonArray();
 //                    JsonObject myobj = new JsonObject();
 //                    myobj.addProperty("userOID",Participant.get("userOID").getAsString());
@@ -401,7 +401,7 @@ public class ReimbursementApi extends BaseRequest {
                     data.addProperty("fieldContent",Content);
                     break;
                 case "银行卡号":          //银行卡号
-                    String contactBankAccountOID=componentQuery.getBankAccount(employee).get(0).getAsJsonObject().get("contactBankAccountOID").getAsString();
+                    String contactBankAccountOID= componentQueryApi.getBankAccount(employee).get(0).getAsJsonObject().get("contactBankAccountOID").getAsString();
                     data.addProperty("value",contactBankAccountOID);
                     break;
                 case "备注":              //备注
@@ -435,7 +435,7 @@ public class ReimbursementApi extends BaseRequest {
                     data.addProperty("value",fieldContent.toString());
                     break;
                 case "自定义列表":          //自定义列表
-//                    JsonArray customenumerationlist = componentQuery.getCustomEumerationOid(employee,data.get("customEnumerationOID").getAsString());
+//                    JsonArray customenumerationlist = componentQueryApi.getCustomEumerationOid(employee,data.get("customEnumerationOID").getAsString());
 //                    data.addProperty("value", customenumerationlist.get(0).getAsJsonObject().get("value").getAsString());
                     data.addProperty("value",component.getCustList());
                     break;
@@ -462,7 +462,7 @@ public class ReimbursementApi extends BaseRequest {
                         data.addProperty("value", component.getAttachment().toString());
                         break;
                 case "成本中心":        //选择成本中心
-//                    data.addProperty("value", componentQuery.getCostCenterOIDItems(employee,new JsonParser().parse(data.get("dataSource").getAsString()).getAsJsonObject().
+//                    data.addProperty("value", componentQueryApi.getCostCenterOIDItems(employee,new JsonParser().parse(data.get("dataSource").getAsString()).getAsJsonObject().
 //                            get("costCenterOID").getAsString()).get(costCenterItemOID).getAsJsonObject().get("costCenterItemOID").getAsString());
                     data.addProperty("value",component.getCostCenter());
                     break;
@@ -473,7 +473,7 @@ public class ReimbursementApi extends BaseRequest {
                     data.addProperty("value",component.getSubordinateCostCenter());
                     break;
                 case "部门":             //选择部门
-//                    JsonArray  DepartmentList= componentQuery.getBxformDepartment(employee);
+//                    JsonArray  DepartmentList= componentQueryApi.getBxformDepartment(employee);
 //                    data.addProperty("value",DepartmentList.get(0).getAsJsonObject().get("departmentOid").getAsString());
                     data.addProperty("value",component.getDepartment());
                     break;
@@ -499,21 +499,21 @@ public class ReimbursementApi extends BaseRequest {
                     data.addProperty("value",value);
                     break;
                 case "选人":               //选人
-                    data.addProperty("value",componentQuery.queryEmployees(employee).get(0).getAsJsonObject().get("userOID").getAsString());
+                    data.addProperty("value", componentQueryApi.queryEmployees(employee).get(0).getAsJsonObject().get("userOID").getAsString());
                     break;
                 case "公司":                //选择公司
-//                    data.addProperty("value",componentQuery.getCompanies(employee).get(0).getAsJsonObject().get("companyOID").getAsString());
+//                    data.addProperty("value",componentQueryApi.getCompanies(employee).get(0).getAsJsonObject().get("companyOID").getAsString());
                     data.addProperty("value",component.getCompany());
                     break;
                 case "事由":                      //事由
                     data.addProperty("value","自动化测试");
                     break;
                 case "城市":               //城市
-//                    String  city=componentQuery.locationSearch(employee,"西安").get(0).getAsJsonObject().get("city").getAsString();
+//                    String  city=componentQueryApi.locationSearch(employee,"西安").get(0).getAsJsonObject().get("city").getAsString();
                     data.addProperty("value", component.getCity());
                     break;
                 case "参与人员":                   //参与人
-//                    JsonObject Participant=componentQuery.getSelectParticipant(employee,formOID).get(0).getAsJsonObject();
+//                    JsonObject Participant=componentQueryApi.getSelectParticipant(employee,formOID).get(0).getAsJsonObject();
 //                    JsonArray ja0 = new JsonArray();
 //                    JsonObject myobj = new JsonObject();
 //                    myobj.addProperty("userOID",Participant.get("userOID").getAsString());
@@ -532,7 +532,7 @@ public class ReimbursementApi extends BaseRequest {
                     data.addProperty("fieldContent",Content);
                     break;
                 case "银行卡号":          //银行卡号
-//                    String contactBankAccountOID=componentQuery.getBankAccount(employee).get(0).getAsJsonObject().get("contactBankAccountOID").getAsString();
+//                    String contactBankAccountOID=componentQueryApi.getBankAccount(employee).get(0).getAsJsonObject().get("contactBankAccountOID").getAsString();
                     data.addProperty("value",component.getBankAccount());
                     break;
                 case "备注":              //备注

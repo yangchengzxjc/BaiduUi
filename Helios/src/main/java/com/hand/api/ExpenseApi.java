@@ -24,12 +24,12 @@ import java.util.Map;
 public class ExpenseApi extends BaseRequest{
 
 
-    private ComponentQuery componentQuery;
+    private ComponentQueryApi componentQueryApi;
 
     private EmployeeInfoApi employeeInfoApi;
 
     public ExpenseApi(){
-        componentQuery =new ComponentQuery();
+        componentQueryApi =new ComponentQueryApi();
         employeeInfoApi =new EmployeeInfoApi();
     }
 
@@ -157,7 +157,7 @@ public class ExpenseApi extends BaseRequest{
                     data.addProperty("value",applicationBusinessCode);
                     break;
                 case "CUSTOM_ENUMERATION":                          //值列表
-                    JsonArray customenumerationlist =componentQuery.getCustomEumerationOid(employee,data.get("customEnumerationOID").getAsString());
+                    JsonArray customenumerationlist = componentQueryApi.getCustomEumerationOid(employee,data.get("customEnumerationOID").getAsString());
                     data.addProperty("value", customenumerationlist.get(0).getAsJsonObject().get("value").getAsString());
                     break;
                 case  "MONTH":
@@ -182,7 +182,7 @@ public class ExpenseApi extends BaseRequest{
                     data.addProperty("value", UTCTime.getNowUtcTime());
                     break;
                 case  "LOCATION":              //城市控件
-                    String  code=componentQuery.locationSearch(employee,"大").get(0).getAsJsonObject().get("code").getAsString();
+                    String  code= componentQueryApi.locationSearch(employee,"大").get(0).getAsJsonObject().get("code").getAsString();
                     data.addProperty("value", code);
                     break;
                 case  "PARTICIPANTS":                 //参与人
@@ -298,7 +298,7 @@ public class ExpenseApi extends BaseRequest{
                     data.addProperty("value",component.getApplication());
                     break;
                 case "CUSTOM_ENUMERATION":                          //值列表
-                    JsonArray customenumerationlist =componentQuery.getCustomEumerationOid(employee,data.get("customEnumerationOID").getAsString());
+                    JsonArray customenumerationlist = componentQueryApi.getCustomEumerationOid(employee,data.get("customEnumerationOID").getAsString());
                     data.addProperty("value", customenumerationlist.get(0).getAsJsonObject().get("value").getAsString());
                     break;
                 case  "MONTH":
@@ -323,7 +323,7 @@ public class ExpenseApi extends BaseRequest{
                     data.addProperty("value", UTCTime.getNowUtcTime());
                     break;
                 case  "LOCATION":              //城市控件
-                    String  code=componentQuery.locationSearch(employee,"大").get(0).getAsJsonObject().get("code").getAsString();
+                    String  code= componentQueryApi.locationSearch(employee,"大").get(0).getAsJsonObject().get("code").getAsString();
                     data.addProperty("value", code);
                     break;
                 case  "PARTICIPANTS":                 //参与人

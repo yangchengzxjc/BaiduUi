@@ -16,7 +16,7 @@ import java.util.Map;
  * @Version 1.0
  **/
 @Slf4j
-public class ComponentQuery extends BaseRequest{
+public class ComponentQueryApi extends BaseRequest{
 
 
 

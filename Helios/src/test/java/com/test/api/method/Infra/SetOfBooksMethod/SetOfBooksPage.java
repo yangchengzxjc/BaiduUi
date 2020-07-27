@@ -24,8 +24,8 @@ public class SetOfBooksPage {
      * @param setOfBooksCode
      * @throws HttpStatusException
      */
-    public JsonObject addSetOfBooks(Employee employee,SetOfBooks setOfBooks, boolean enabled, String setOfBooksName, String setOfBooksCode) throws HttpStatusException{
-//        SetOfBooks setOfBooks = new SetOfBooks();
+    public JsonObject addSetOfBooks(Employee employee,boolean enabled, String setOfBooksName, String setOfBooksCode) throws HttpStatusException{
+        SetOfBooks setOfBooks = new SetOfBooks();
         setOfBooks.setEnabled(enabled);
         setOfBooks.setSetOfBooksName(setOfBooksName + RandomNumber.getTimeNumber());
         setOfBooks.setSetOfBooksCode(setOfBooksCode + RandomNumber.getTimeNumber());
@@ -33,5 +33,19 @@ public class SetOfBooksPage {
         setOfBooks.setPeriodSetCode(setOfBooksDefine.getAccountingPeriod(employee,"默认会计期"));
         setOfBooks.setFunctionalCurrencyCode(setOfBooksDefine.getFunctionalCurrencyCode(employee,"人民币"));
         return setOfBooksDefine.addSetOfBooks(employee,setOfBooks,enabled);
+    }
+
+    /**
+     * 编辑账套数据
+     * @param employee
+     * @param setOfBooksCode
+     * @param setOfBooksName
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject editSetOfBooks(Employee employee,SetOfBooks setOfBooks,String setOfBooksCode,String setOfBooksName) throws HttpStatusException {
+//        SetOfBooks setOfBooks = new SetOfBooks();
+        JsonObject setOfBooksInfo = setOfBooksDefine.getSetOfBooksDetail(employee,setOfBooksCode,setOfBooksName);
+        return setOfBooksDefine.editSetOfBooks(employee,setOfBooks,setOfBooksInfo);
     }
 }

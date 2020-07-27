@@ -213,7 +213,10 @@ public class ApiPath {
         public static final String GET_CURRENCY = "/api/currencyI18n";
         //新增/编辑账套
         public static final String ADD_SET_OF_BOOKS = "/api/setOfBooks";
-
+        //搜索账套
+        public static final String SEARCH_SET_OF_BOOKS = "/api/setOfBooks/query/dto";
+        //获取账套详情
+        public static final String GET_SET_OF_BOOKS_DETAIL ="/api/setOfBooks/%s";
 
         //获取表单差补基础配置
         public static final String TRAVEL_RULE_BASE_CONFIG = "/api/travel/subsidies/rule/dimension";

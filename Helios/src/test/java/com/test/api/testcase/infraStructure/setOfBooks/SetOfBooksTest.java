@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.SetOfBooks;
+import com.hand.utils.RandomNumber;
 import com.test.BaseTest;
 import com.test.api.method.SetOfBooksDefine;
 import com.test.api.method.Infra.SetOfBooksMethod.SetOfBooksPage;
@@ -48,7 +49,7 @@ public class SetOfBooksTest extends BaseTest {
 
     @Test(description = "正常新建账套")
     public void addSetOfBooksTest01() throws HttpStatusException {
-        JsonObject object = setOfBooksPage.addSetOfBooks(employee,setOfBooks,true,"新增","add");
+        JsonObject object = setOfBooksPage.addSetOfBooks(employee,true,"新增","add");
         String setOfBooksName = object.get("setOfBooksName").getAsString();
         String setOfBooksCode = object.get("setOfBooksCode").getAsString();
         log.info("新增的账套名称为：" + setOfBooksName);
@@ -59,7 +60,7 @@ public class SetOfBooksTest extends BaseTest {
 
     @Test(description = "异常新建账套，账套code不符合编码规则，包含中文")
     public void addSetOfBooksTest02() throws HttpStatusException {
-        JsonObject object = setOfBooksPage.addSetOfBooks(employee,setOfBooks,true,"新增","中文");
+        JsonObject object = setOfBooksPage.addSetOfBooks(employee,true,"新增","中文");
         String message = object.get("message").getAsString();
         log.info("获取到的message信息：" + message);
         String errorCode = object.get("errorCode").getAsString();
@@ -68,5 +69,17 @@ public class SetOfBooksTest extends BaseTest {
         Assert.assertEquals(errorCode,"6029001");
     }
 
+    @Test(description = "正常编辑账套")
+    public void editSetOfBooksTest01() throws HttpStatusException {
+        JsonObject object = setOfBooksDefine.getSetOfBooksDetail(employee,"","");
+        String setOfBooksName = object.get("setOfBooksName").getAsString();
+        String setOfBooksCode = object.get("setOfBooksCode").getAsString();
+        setOfBooks.setSetOfBooksName("修改数据" + RandomNumber.getTimeNumber());
+        JsonObject editObject = setOfBooksPage.editSetOfBooks(employee,setOfBooks,setOfBooksCode,setOfBooksName);
+        String editSetOfBooksName = editObject.get("setOfBooksName").getAsString();
+        log.info("修改后的账套Name为：" + editSetOfBooksName);
+        Assert.assertEquals(editSetOfBooksName,setOfBooks.getSetOfBooksName());
+
+    }
 
 }

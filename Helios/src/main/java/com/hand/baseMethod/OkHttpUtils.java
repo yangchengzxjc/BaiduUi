@@ -32,8 +32,6 @@ import org.apache.http.entity.ContentType;
 @Slf4j
 public class OkHttpUtils {
 
-    private static final byte[] LOCKER = new byte[0];
-    private static OkHttpUtils mInstance;
     private static OkHttpClient mOkHttpClient;
     private static final int CONNECT_TIMEOUT = 20;
     private static final int READ_TIMEOUT = 20;
@@ -48,7 +46,7 @@ public class OkHttpUtils {
 
     public static OkHttpClient getInstance() {
         if (mOkHttpClient == null) {
-            synchronized (LOCKER) {
+            synchronized (OkHttpClient.class) {
                 if (mOkHttpClient == null) {
                     mOkHttpClient = new OkHttpClient.Builder()
                             .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)

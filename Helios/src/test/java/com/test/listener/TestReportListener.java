@@ -22,7 +22,7 @@ public class TestReportListener implements IReporter{
     private static Date date = new Date();
     private static SimpleDateFormat simpleDateFormat  = new SimpleDateFormat("yyyyMMdd,HH点mm分ss秒");
     private static String reportdate = simpleDateFormat .format(date);
-    private static String getReportName = "自动化测试报告" + reportdate;
+    private static String getReportName = "汇联易自动化测试报告" + reportdate;
 
     // 定义html模板所在路径
     private String templatePath = this.getClass().getResource("/").getPath() + "report/template.html";
@@ -58,6 +58,7 @@ public class TestReportListener implements IReporter{
             System.out.println("browseNumber:" + suite.getParameter("browseNumber"));
             System.out.println("language:" + suite.getParameter("language"));
 */
+            if(suite.getParameter(environment)==null)
             if(suite.getParameter("environment").equals("uat")){
                 this.environment = "UAT";
             }else if(suite.getParameter("environment").equals("stage")){

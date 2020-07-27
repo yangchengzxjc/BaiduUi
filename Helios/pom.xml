@@ -6,7 +6,7 @@
   <groupId>Helios.cn</groupId>
   <artifactId>Helios</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <name>Helios Maven Webapp</name>
 
   <properties>
@@ -27,8 +27,7 @@
     <allure-maven.version>2.13.3</allure-maven.version>
     <allure.report.version>2.13.3</allure.report.version>
     <xml.file>${xmlFileName}</xml.file>
-    <!--<environment>${env.environment}</environment>-->
-    <!--<language>${env.language}</language>-->
+    <!--<environment>${environment}</environment>-->
 
 
   </properties>

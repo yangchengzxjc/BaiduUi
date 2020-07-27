@@ -13,12 +13,12 @@
     </test>
 
 
-    <test verbose="10" preserve-order="true" name="费用测试">
-        <parameter name="phoneNumber" value="${phoneNumber}"/>
-        <classes>
+    <!--<test verbose="10" preserve-order="true" name="费用测试">-->
+        <!--<parameter name="phoneNumber" value="${phoneNumber}"/>-->
+        <!--<classes>-->
 
-        </classes>
-    </test>
+        <!--</classes>-->
+    <!--</test>-->
 
     <listeners>
         <listener class-name="com.test.listener.TestLogListener"/>

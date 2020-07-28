@@ -2,6 +2,7 @@ package com.test.api.method.Infra;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.InfraEmployee;
@@ -36,7 +37,7 @@ public class EmployeeManagePage {
      * @param position
      * @throws HttpStatusException
      */
-    public void addEmployee(Employee employee,String companyName,String departmentName,String departmentCode,String position,String duty,String rank) throws HttpStatusException {
+    public JsonObject addEmployee(Employee employee,String companyName,String departmentName,String departmentCode,String position,String duty,String rank) throws HttpStatusException {
         InfraEmployee infraEmployee =new InfraEmployee();
         InfraJob infraJob  = new InfraJob();
         //邮箱不set的话会有默认值输入
@@ -45,7 +46,7 @@ public class EmployeeManagePage {
         infraEmployee.setMobile("283666"+RandomNumber.getRandomNumber());
         infraEmployee.setEmail(String.format("zhang%s@hui.com",RandomNumber.getRandomNumber()));
         infraEmployee.setEmployeeTypeCode(infraStructure.getCustomEnumerationValue(employee,"人员类型","技术"));
-        infraEmployee.setDirectManager(infraStructure.searchUser(employee,"曾任康"));
+        infraEmployee.setDirectManager(infraStructure.searchUser(employee,"懿消费商(xiao/feishang)"));
         infraEmployee.setGenderCode(0);
         log.info("新增的员工信息：{}",infraEmployee);
         ArrayList<InfraJob> infraJobArrayList = new ArrayList<>();
@@ -66,7 +67,8 @@ public class EmployeeManagePage {
         infraJob.setUni_id(company.get("companyId")+department.get("departmentId")+position);
         infraJob.set_index(0);
         infraJobArrayList.add(infraJob);
-        infraStructure.addEmployee(employee,infraEmployee,infraJobArrayList);
+        JsonObject jsonObject = infraStructure.addEmployee(employee,infraEmployee,infraJobArrayList);
+        return jsonObject;
     }
 
     /**
@@ -76,11 +78,12 @@ public class EmployeeManagePage {
      * @param infraEmployee
      * @throws HttpStatusException
      */
-    public JsonObject editEmploye(Employee employee,String keyWords,InfraEmployee infraEmployee) throws HttpStatusException {
+    public JsonObject editEmployee(Employee employee, String keyWords, InfraEmployee infraEmployee) throws HttpStatusException {
         //获取员工详情
        JsonObject userInfo = infraStructure.getUserDetail(employee,keyWords);
        JsonArray custformValue = userInfo.get("customFormValues").getAsJsonArray();
        JsonArray userJobsDTOs = userInfo.get("userJobsDTOs").getAsJsonArray();
        return infraStructure.editEmploye(employee,userInfo,infraEmployee,custformValue,userJobsDTOs);
     }
+
 }

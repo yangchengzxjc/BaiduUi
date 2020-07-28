@@ -70,7 +70,7 @@ public class SetOfBooksApi extends BaseRequest {
         JsonObject setOfBooksObject = new JsonObject();
         setOfBooksObject.addProperty("id",setOfBooksInfo.get("id").getAsString());
         setOfBooksObject.addProperty("setOfBooksId",setOfBooksInfo.get("setOfBooksId").getAsString());
-        setOfBooksObject.addProperty("setOfBooksCode",setOfBooksInfo.get("setOfBooksCode").getAsString());
+        setOfBooksObject.addProperty("setOfBooksCode",setOfBooks.getSetOfBooksCode());
         setOfBooksObject.addProperty("setOfBooksName",setOfBooks.getSetOfBooksName());
         setOfBooksObject.addProperty("periodSetId","null");
         setOfBooksObject.addProperty("periodSetCode",setOfBooksInfo.get("periodSetCode").getAsString());

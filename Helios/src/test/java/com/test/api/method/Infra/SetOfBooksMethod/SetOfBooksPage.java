@@ -45,10 +45,14 @@ public class SetOfBooksPage {
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject editSetOfBooks(Employee employee,SetOfBooks setOfBooks,String setOfBooksCode,String setOfBooksName) throws HttpStatusException {
+    public JsonObject editSetOfBooks(Employee employee,SetOfBooks setOfBooks,String setOfBooksCode,String setOfBooksName,String updateSetOfBooksCode,String updateSetOfBooksName,String updatePeriodSetCode,String updateAccountSetId,String updateCurrencyCode) throws HttpStatusException {
 //        SetOfBooks setOfBooks = new SetOfBooks();
         JsonObject setOfBooksInfo = setOfBooksDefine.getSetOfBooksDetail(employee,setOfBooksCode,setOfBooksName);
-        setOfBooks.setSetOfBooksName("修改数据" + RandomNumber.getTimeNumber());
+        setOfBooks.setSetOfBooksName(updateSetOfBooksName);
+        setOfBooks.setSetOfBooksCode(updateSetOfBooksCode);
+        setOfBooks.setPeriodSetCode(updatePeriodSetCode);
+        setOfBooks.setAccountSetId(updateAccountSetId);
+        setOfBooks.setFunctionalCurrencyCode(updateCurrencyCode);
         //账套名称多语言数组
         JsonArray arrayLanguage = new JsonArray();
         //账套名称多语言对象
@@ -56,9 +60,9 @@ public class SetOfBooksPage {
         JsonObject setOfBooksNameI18n1 =  new JsonObject();
         JsonObject setOfBooksNameI18n2 =  new JsonObject();
         setOfBooksNameI18n1.addProperty("language","zh_cn");
-        setOfBooksNameI18n1.addProperty("value","修改数据" + RandomNumber.getTimeNumber());
+        setOfBooksNameI18n1.addProperty("value",updateSetOfBooksName);
         setOfBooksNameI18n2.addProperty("language","en");
-        setOfBooksNameI18n2.addProperty("value","修改数据" + RandomNumber.getTimeNumber());
+        setOfBooksNameI18n2.addProperty("value",updateSetOfBooksName);
         arrayLanguage.add(setOfBooksNameI18n1);
         arrayLanguage.add(setOfBooksNameI18n2);
         objectSetOfBooksName.add("setOfBooksName",arrayLanguage);

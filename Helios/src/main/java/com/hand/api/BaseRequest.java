@@ -186,7 +186,7 @@ public  class BaseRequest{
                 return  res;
             case HttpStatus.BAD_REQUEST_400 :
                 if (res.contains("baseRequest speed is too fast")){
-                    myResponse = myResponse = OkHttpUtils.get(url,headersParams,urlMapParams);
+                    myResponse = OkHttpUtils.get(url,headersParams,urlMapParams);
                     return myResponse.getBody();
                 }
             case HttpStatus.UNAUTHORIZED_401 :
@@ -277,6 +277,14 @@ public  class BaseRequest{
         Map<String, String> headersdatas = new HashMap<>();
         headersdatas.put("Authorization", "Bearer "+token);
         headersdatas.put("Content-Type", BaseConstant.CONTENT_TYPE);
+        return  headersdatas;
+    }
+
+    public HashMap<String,String> getHeader(String token,String key){
+        HashMap<String, String> headersdatas = new HashMap<>();
+        headersdatas.put("Authorization", "Bearer "+token);
+        headersdatas.put("Content-Type", BaseConstant.CONTENT_TYPE);
+        headersdatas.put("key",key);
         return  headersdatas;
     }
 

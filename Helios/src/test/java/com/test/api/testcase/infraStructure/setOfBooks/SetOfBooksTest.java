@@ -81,11 +81,9 @@ public class SetOfBooksTest extends BaseTest {
         String updatePeriodSetCode = object.get("periodSetCode").getAsString();
         String updateAccountSetId = object.get("accountSetId").getAsString();
         String updateCurrencyCode = object.get("functionalCurrencyCode").getAsString();
-        log.info("修改后的账套Name为：" + updateCurrencyCode);
         //将取到的账套code和name传递给编辑账套方法
         JsonObject editObject = setOfBooksPage.editSetOfBooks(employee, setOfBooks, setOfBooksCode, setOfBooksName, updateSetOfBooksCode, updateSetOfBooksName, updatePeriodSetCode, updateAccountSetId, updateCurrencyCode);
         String editSetOfBooksName = editObject.get("setOfBooksName").getAsString();
-        log.info("修改后的账套Name为：" + editSetOfBooksName);
         Assert.assertEquals(editSetOfBooksName, setOfBooks.getSetOfBooksName());
     }
 

@@ -12,7 +12,6 @@
 .prefs
 .DS_Store
 .cache
-*.html
 ### Java template
 *.class
 

@@ -2,13 +2,12 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite" parallel="tests" thread-count="2">
 
-    <parameter name="environment" value="stage"/>
+    <parameter name="environment" value="${environment}"/>
     <parameter name="passWord" value="hly12345"/>
 
     <test verbose="10" preserve-order="true" name="报销单测试">
-        <parameter name="phoneNumber" value="18292036529"/>
+        <parameter name="phoneNumber" value="${phoneNumber}"/>
         <classes>
-                <class name="com.test.api.testcase.Check"></class>
         </classes>
     </test>
 

@@ -20,7 +20,7 @@ import java.util.*;
 public class TestReportListener implements IReporter{
     // 日期格式化
     private static Date date = new Date();
-    private static SimpleDateFormat simpleDateFormat  = new SimpleDateFormat("yyyyMMdd,HH点mm分ss秒");
+    private static SimpleDateFormat simpleDateFormat  = new SimpleDateFormat("yyyyMMdd-HHmmss");
     private static String reportdate = simpleDateFormat .format(date);
     private static String getReportName = "汇联易自动化测试报告" + reportdate;
 

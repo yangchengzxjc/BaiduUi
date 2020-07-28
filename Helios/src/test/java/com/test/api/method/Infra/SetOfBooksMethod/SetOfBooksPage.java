@@ -1,5 +1,6 @@
 package com.test.api.method.Infra.SetOfBooksMethod;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
@@ -38,6 +39,7 @@ public class SetOfBooksPage {
     /**
      * 编辑账套数据
      * @param employee
+     * @param setOfBooks
      * @param setOfBooksCode
      * @param setOfBooksName
      * @return
@@ -46,6 +48,21 @@ public class SetOfBooksPage {
     public JsonObject editSetOfBooks(Employee employee,SetOfBooks setOfBooks,String setOfBooksCode,String setOfBooksName) throws HttpStatusException {
 //        SetOfBooks setOfBooks = new SetOfBooks();
         JsonObject setOfBooksInfo = setOfBooksDefine.getSetOfBooksDetail(employee,setOfBooksCode,setOfBooksName);
+        setOfBooks.setSetOfBooksName("修改数据" + RandomNumber.getTimeNumber());
+        //账套名称多语言数组
+        JsonArray arrayLanguage = new JsonArray();
+        //账套名称多语言对象
+        JsonObject objectSetOfBooksName = new JsonObject();
+        JsonObject setOfBooksNameI18n1 =  new JsonObject();
+        JsonObject setOfBooksNameI18n2 =  new JsonObject();
+        setOfBooksNameI18n1.addProperty("language","zh_cn");
+        setOfBooksNameI18n1.addProperty("value","修改数据" + RandomNumber.getTimeNumber());
+        setOfBooksNameI18n2.addProperty("language","en");
+        setOfBooksNameI18n2.addProperty("value","修改数据" + RandomNumber.getTimeNumber());
+        arrayLanguage.add(setOfBooksNameI18n1);
+        arrayLanguage.add(setOfBooksNameI18n2);
+        objectSetOfBooksName.add("setOfBooksName",arrayLanguage);
+        setOfBooks.setI18n(objectSetOfBooksName);
         return setOfBooksDefine.editSetOfBooks(employee,setOfBooks,setOfBooksInfo);
     }
 }

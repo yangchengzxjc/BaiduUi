@@ -58,6 +58,7 @@ public class SetOfBooksApi extends BaseRequest {
     /**
      * 编辑账套信息
      * @param employee
+     * @param setOfBooks
      * @param setOfBooksInfo
      * @return
      * @throws HttpStatusException
@@ -70,14 +71,14 @@ public class SetOfBooksApi extends BaseRequest {
         setOfBooksObject.addProperty("id",setOfBooksInfo.get("id").getAsString());
         setOfBooksObject.addProperty("setOfBooksId",setOfBooksInfo.get("setOfBooksId").getAsString());
         setOfBooksObject.addProperty("setOfBooksCode",setOfBooksInfo.get("setOfBooksCode").getAsString());
-        setOfBooksObject.addProperty("setOfBooksName",setOfBooksInfo.get("setOfBooksName").getAsString());
-        setOfBooksObject.addProperty("periodSetId",setOfBooksInfo.get("periodSetId").getAsString());
+        setOfBooksObject.addProperty("setOfBooksName",setOfBooks.getSetOfBooksName());
+        setOfBooksObject.addProperty("periodSetId","null");
         setOfBooksObject.addProperty("periodSetCode",setOfBooksInfo.get("periodSetCode").getAsString());
         setOfBooksObject.addProperty("accountSetId",setOfBooksInfo.get("accountSetId").getAsString());
         setOfBooksObject.addProperty("accountSetCode",setOfBooksInfo.get("accountSetCode").getAsString());
         setOfBooksObject.addProperty("functionalCurrencyCode",setOfBooksInfo.get("functionalCurrencyCode").getAsString());
         setOfBooksObject.addProperty("enabled",setOfBooksInfo.get("enabled").getAsString());
-        setOfBooksObject.add("i18n",new JsonArray());
+        setOfBooksObject.add("i18n",setOfBooks.getI18n());
         String res = doPut(url,getHeader(employee.getAccessToken()),urlParam,setOfBooksObject.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
@@ -151,7 +152,7 @@ public class SetOfBooksApi extends BaseRequest {
         urlParam.put("page","0");
         urlParam.put("size","20");
         urlParam.put("withAdditionalInfo","true");
-        String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
+        String res = doGet(url,getHeader(employee.getAccessToken(),"set-of-books"),urlParam,employee);
         return new JsonParser().parse(res).getAsJsonArray();
     }
 
@@ -166,7 +167,7 @@ public class SetOfBooksApi extends BaseRequest {
         String url = employee.getEnvironment().getUrl() + String.format(ApiPath.GET_SET_OF_BOOKS_DETAIL,id);
         Map<String, String> urlParam = new HashMap<>();
         urlParam.put("roleType","TENANT");
-        String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
+        String res = doGet(url,getHeader(employee.getAccessToken(),"set-of-books"),urlParam,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 }

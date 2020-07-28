@@ -71,15 +71,15 @@ public class SetOfBooksTest extends BaseTest {
 
     @Test(description = "正常编辑账套")
     public void editSetOfBooksTest01() throws HttpStatusException {
+        //不传账套code和name，默认取到第一条账套数据的code和name
         JsonObject object = setOfBooksDefine.getSetOfBooksDetail(employee,"","");
         String setOfBooksName = object.get("setOfBooksName").getAsString();
         String setOfBooksCode = object.get("setOfBooksCode").getAsString();
-        setOfBooks.setSetOfBooksName("修改数据" + RandomNumber.getTimeNumber());
+        //将取到的账套code和name传递给编辑账套方法
         JsonObject editObject = setOfBooksPage.editSetOfBooks(employee,setOfBooks,setOfBooksCode,setOfBooksName);
         String editSetOfBooksName = editObject.get("setOfBooksName").getAsString();
         log.info("修改后的账套Name为：" + editSetOfBooksName);
         Assert.assertEquals(editSetOfBooksName,setOfBooks.getSetOfBooksName());
-
     }
 
 }

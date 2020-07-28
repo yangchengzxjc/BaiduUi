@@ -1,5 +1,7 @@
 package com.hand.basicObject;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -26,6 +28,8 @@ public class SetOfBooks {
     String functionalCurrencyCode;
     //状态
     boolean enabled;
+    //账套名称多语言
+    JsonObject i18n;
 
     public SetOfBooks(){
 

@@ -3,6 +3,7 @@ package com.hand.utils;
 import com.google.gson.*;
 import com.jayway.jsonpath.JsonPath;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -55,12 +56,33 @@ public class GsonUtil {
      */
     public static String getJsonValue(JsonArray array, String key1, String value, String key2){
         String value2="";
-        for(int i=0;i<array.size();i++){
-            if(array.get(i).getAsJsonObject().get(key1).getAsString().equals(value)){
-                value2 = array.get(i).getAsJsonObject().get(key2).getAsString();
+        if(isNotEmpt(array)){
+            for(int i=0;i<array.size();i++){
+                if(array.get(i).getAsJsonObject().get(key1).getAsString().equals(value)){
+                    value2 = array.get(i).getAsJsonObject().get(key2).getAsString();
+                }
             }
         }
          return value2;
+    }
+
+    /**
+     * 根据key相同的value的话 返回的是一个object
+     * @param array
+     * @param key1
+     * @param value
+     * @return
+     */
+    public static JsonObject getJsonValue(JsonArray array, String key1,String value){
+        JsonObject object =new JsonObject();
+        if(isNotEmpt(array)){
+            for(int i=0;i<array.size();i++){
+                if(array.get(i).getAsJsonObject().get(key1).getAsString().equals(value)){
+                    object =array.get(i).getAsJsonObject();
+                }
+            }
+        }
+        return object;
     }
 
     /**
@@ -87,6 +109,10 @@ public class GsonUtil {
      */
     public static boolean isNotEmpt(JsonArray array){
         return array.size() != 0;
+    }
+
+    public void compareJson(JsonObject object1, JsonObject object2){
+
     }
 
 }

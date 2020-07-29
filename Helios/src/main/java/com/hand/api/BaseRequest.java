@@ -90,13 +90,13 @@ public  class BaseRequest{
      * @param url url
      * @param headersParams  请求头参数
      * @param urlMapParams   url参数
-     * @param jsonbody  JSON参数提
+     * @param jsonBody  JSON参数提
      * @param bodyParams Form消息体
      * @return
      */
-    public String doPost(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, String jsonbody, Map<String, String> bodyParams, Employee employee) throws HttpStatusException {
+    public String doPost(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, String jsonBody, Map<String, String> bodyParams, Employee employee) throws HttpStatusException {
         MyResponse myResponse= null;
-        myResponse = OkHttpUtils.post(url,headersParams,urlMapParams,jsonbody,bodyParams);
+        myResponse = OkHttpUtils.post(url,headersParams,urlMapParams,jsonBody,bodyParams);
         int code=myResponse.getStatusCode();
         String res=myResponse.getBody();
         switch (code){
@@ -108,18 +108,18 @@ public  class BaseRequest{
                 log.info("使用新Token："+newToken );
                 employee.setAccessToken(newToken );
                 headersParams.put("Authorization", "Bearer "+employee.getAccessToken()+"");
-                myResponse = OkHttpUtils.post(url,headersParams,urlMapParams,jsonbody,bodyParams);
+                myResponse = OkHttpUtils.post(url,headersParams,urlMapParams,jsonBody,bodyParams);
                 return  myResponse.getBody();
             case HttpStatus.GATEWAY_TIMEOUT_504:
             case HttpStatus.BAD_GATEWAY_502:
-                myResponse = OkHttpUtils.post(url,headersParams,urlMapParams,jsonbody,bodyParams);
+                myResponse = OkHttpUtils.post(url,headersParams,urlMapParams,jsonBody,bodyParams);
                 return   myResponse.getBody();
             default:
                 log.info("未知错误，还需定位");
         }
 
         if (HttpStatus.BAD_REQUEST_400==code && res.contains("baseRequest speed is too fast")) {
-            myResponse = OkHttpUtils.post(url,headersParams,urlMapParams,jsonbody,bodyParams);
+            myResponse = OkHttpUtils.post(url,headersParams,urlMapParams,jsonBody,bodyParams);
             res=  myResponse.getBody();
         }
         return  res;

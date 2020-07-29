@@ -53,7 +53,7 @@ public class EmployeeDTO {
     //部门全路径
     private String deptPath;
     //证件信息
-    private List<UserCardInfoEntity> userCardInfos;
+    private List<UserCardInfoDTO> userCardInfos;
     //扩展字段
     private List<CustomFormValueDTO> customFormValues;
 

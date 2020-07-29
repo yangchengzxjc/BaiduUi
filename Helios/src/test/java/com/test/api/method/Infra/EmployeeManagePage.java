@@ -7,7 +7,9 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.InfraEmployee;
 import com.hand.basicObject.InfraJob;
+import com.hand.basicconstant.CardType;
 import com.hand.utils.RandomNumber;
+import com.hand.utils.UTCTime;
 import com.test.api.method.InfraStructure;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,7 +43,7 @@ public class EmployeeManagePage {
         InfraEmployee infraEmployee =new InfraEmployee();
         InfraJob infraJob  = new InfraJob();
         //邮箱不set的话会有默认值输入
-        infraEmployee.setFullName("fullNameApi"+String.valueOf(RandomNumber.getRandomNumber()));
+        infraEmployee.setFullName("接口新建"+ UTCTime.getBeijingDate(0));
         infraEmployee.setEmployeeID(String.valueOf(RandomNumber.getRandomNumber()));
         infraEmployee.setMobile("283666"+RandomNumber.getRandomNumber());
         infraEmployee.setEmail(String.format("zhang%s@hui.com",RandomNumber.getRandomNumber()));
@@ -84,6 +86,14 @@ public class EmployeeManagePage {
        JsonArray custformValue = userInfo.get("customFormValues").getAsJsonArray();
        JsonArray userJobsDTOs = userInfo.get("userJobsDTOs").getAsJsonArray();
        return infraStructure.editEmploye(employee,userInfo,infraEmployee,custformValue,userJobsDTOs);
+    }
+
+    /**
+     * 新增员工证件信息
+     */
+    public JsonObject addUserCard(Employee employee,String userOID, CardType cardType,String lastName,Boolean enable) throws HttpStatusException {
+        JsonObject jsonObject = infraStructure.addUserCardInfo(employee,userOID,cardType,lastName,enable);
+        return jsonObject;
     }
 
 }

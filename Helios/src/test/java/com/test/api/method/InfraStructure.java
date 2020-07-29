@@ -86,8 +86,9 @@ public class InfraStructure {
      * @param infraJobs
      * @throws HttpStatusException
      */
-    public void addEmployee(Employee employee, InfraEmployee infraEmployee, ArrayList<InfraJob> infraJobs) throws HttpStatusException {
+    public JsonObject addEmployee(Employee employee, InfraEmployee infraEmployee, ArrayList<InfraJob> infraJobs) throws HttpStatusException {
         JsonObject object = infraStructureApi.addEmployee(employee,infraEmployee,userJobsDTOs(infraJobs),getEmployeeExpandForm(employee));
+        return object;
     }
 
     /**

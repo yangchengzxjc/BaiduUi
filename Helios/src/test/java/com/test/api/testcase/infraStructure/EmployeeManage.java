@@ -42,6 +42,6 @@ public class EmployeeManage extends BaseTest {
         infraEmployee.setMobile("130000"+RandomNumber.getRandomNumber());
         infraEmployee.setEmail(RandomNumber.getTimeNumber()+"@123.com");
         infraEmployee.setBirthday(UTCTime.getBeijingDate(-2000));
-        assert employeeManagePage.editEmploye(employee,"11101",infraEmployee).toString().contains("fullName");
+        assert employeeManagePage.editEmployee(employee,"11101",infraEmployee).toString().contains("fullName");
     }
 }

@@ -1,5 +1,6 @@
 package com.test.api.method;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hand.api.SetOfBooksApi;
 import com.hand.baseMethod.HttpStatusException;
@@ -7,10 +8,6 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.SetOfBooks;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 public class SetOfBooksDefine {
@@ -21,24 +18,26 @@ public class SetOfBooksDefine {
     }
 
     /**
-     * 新增账套所需字段
+     * 获取新增账套响应数据
      * @param employee
      * @param setOfBooks
      * @throws HttpStatusException
      */
-    public HashMap<String,String> addSetOfBooks(Employee employee,SetOfBooks setOfBooks,boolean enabled) throws HttpStatusException {
+    public JsonObject addSetOfBooks(Employee employee,SetOfBooks setOfBooks,boolean enabled) throws HttpStatusException {
         JsonObject object = SetOfBooksApi.addSetOfBooks(employee,setOfBooks,enabled);
-        HashMap<String,String> info = new HashMap<>();
-//        info.put("setOfBooksCode",object.get("setOfBooksCode").getAsString());
-//        info.put("setOfBooksName",object.get("setOfBooksName").getAsString());
-//        info.put("periodSetCode",object.get("periodSetCode").getAsString());
-//        info.put("functionalCurrencyCode",object.get("functionalCurrencyCode").getAsString());
-//        info.put("tenantId",object.get("tenantId").getAsString());
-//        info.put("id",object.get("id").getAsString());
-        info.put("message",object.get("message").getAsString());
-        info.put("errorCode",object.get("errorCode").getAsString());
-        return info;
+        return object;
+    }
 
+    /**
+     * 获取编辑账套响应数据
+     * @param employee
+     * @param setOfBooksInfo
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject editSetOfBooks(Employee employee,SetOfBooks setOfBooks,JsonObject setOfBooksInfo) throws HttpStatusException {
+        JsonObject object = SetOfBooksApi.editSetOfBooks(employee,setOfBooks,setOfBooksInfo);
+        return object;
     }
 
     /**
@@ -78,5 +77,36 @@ public class SetOfBooksDefine {
         String currencyCode = GsonUtil.getJsonValue(SetOfBooksApi.getFunctionalCurrencyCode(employee).getAsJsonArray("rows"),"currencyName",currencyName,"currencyCode");
         log.info("获取到的币种code为：" + currencyCode);
         return currencyCode;
+    }
+
+    /**
+     * 根据账套code和账套name查询获取账套id
+     * @param employee
+     * @param setOfBooksCode
+     * @param setOfBooksName
+     * @return
+     * @throws HttpStatusException
+     */
+    public String getSetOfBooksId(Employee employee,String setOfBooksCode,String setOfBooksName) throws HttpStatusException {
+        JsonArray setOfBooksList = SetOfBooksApi.getSetOfBooks(employee,setOfBooksCode,setOfBooksName);
+        String id = "";
+        if(GsonUtil.isNotEmpt(setOfBooksList)){
+            id = setOfBooksList.get(0).getAsJsonObject().get("id").getAsString();
+        }else{
+            log.info("账套列表查询结果为空,请检查入参");
+        }
+        return id;
+    }
+
+    /**
+     * 根据账套id获取账套详情
+     * @param employee
+     * @param setOfBooksCode
+     * @param setOfBooksName
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getSetOfBooksDetail(Employee employee,String setOfBooksCode,String setOfBooksName) throws HttpStatusException {
+        return SetOfBooksApi.getSetOfBooksDetail(employee,getSetOfBooksId(employee,setOfBooksCode,setOfBooksName));
     }
 }

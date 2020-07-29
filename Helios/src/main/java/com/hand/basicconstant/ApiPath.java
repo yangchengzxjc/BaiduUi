@@ -224,6 +224,17 @@ public class ApiPath {
         public static final String SUBSIDY_RULE_List = "/api/travel/subsidies/rule/list/v2";
         //获取差补规则详情/差补规则保存
         public static final String SUBSIDY_RULE_DETAIL = "/api/travel/subsidies/rule";
+
+        //新建报销标准规则
+        public static final String ADD_Reimb_Standard = "/api/expense/standard/rule";
+        //获取费用类型
+        public static final String EXPENSE_TYPE = "/api/expense/type/by/setOfBooks";
+        //获取启用公司
+        public static final String ENABLED_COMPANY = "/api/widget/company/all";
+        //获取人员组
+        public static final String USER_GROUPS = "/api/user/groups/search";
+        //获取单据类型
+        public static final String FORM_TYPE = "/api/custom/forms/loan/reference";
     }
 
 

@@ -81,6 +81,7 @@ public class InfraStructureApi extends BaseRequest{
         contactI18n2.addProperty("value",infraEmployee.getFullName());
         array.add(contactI18n1);
         array.add(contactI18n2);
+        body.add("contactI18n",array);
         body.add("customFormValues",customFormValues);
         String res= doPost(url,getHeader(employee.getAccessToken()),null,body.toString(),null, employee);
         return new JsonParser().parse(res).getAsJsonObject();

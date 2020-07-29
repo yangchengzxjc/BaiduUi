@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.InfraEmployee;
+import com.hand.basicObject.supplierObject.UserCardInfoEntity;
 import com.hand.basicconstant.ApiPath;
 import com.hand.utils.RandomNumber;
 import lombok.extern.slf4j.Slf4j;
@@ -311,5 +312,31 @@ public class InfraStructureApi extends BaseRequest{
         urlParam.put("deptCodeLable",deptCode);
         String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
         return new JsonParser().parse(res).getAsJsonArray();
+    }
+
+    /**
+     * 新增证件信息
+     * @param employee
+     * @param userCardInfoEntity
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject addUserCardInfo(Employee employee,UserCardInfoEntity userCardInfoEntity) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ApiPath.USERCARD;
+        JsonObject body = new JsonObject();
+        body.addProperty("cardType",userCardInfoEntity.getCardType().getCardCode());
+        body.addProperty("contactCardOID",userCardInfoEntity.getContactCardOID());
+        body.addProperty("lastName",userCardInfoEntity.getLastName());
+        body.addProperty("gender",userCardInfoEntity.getGender());
+        body.addProperty("birthday",userCardInfoEntity.getBirthday());
+        body.addProperty("nationalityCode",userCardInfoEntity.getNationalityCode());
+        body.addProperty("default",userCardInfoEntity.getCardDefault());
+        body.addProperty("enable",userCardInfoEntity.getEnable());
+        body.addProperty("cardNo",userCardInfoEntity.getCardNo());
+        body.addProperty("cardExpiredTime",userCardInfoEntity.getCardExpiredTime());
+        body.addProperty("originalCardNo",userCardInfoEntity.getOriginalCardNo());
+        body.addProperty("userOID",userCardInfoEntity.getUserOID());
+        String res = doPost(url,getHeader(employee.getAccessToken()),null,body.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
     }
 }

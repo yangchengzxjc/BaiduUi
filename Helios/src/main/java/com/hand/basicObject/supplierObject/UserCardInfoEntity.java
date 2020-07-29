@@ -1,25 +1,39 @@
 package com.hand.basicObject.supplierObject;
 
+import com.hand.basicconstant.CardType;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserCardInfoEntity {
-    //证件号码
-    private String cardNo;
     //证件类型
-    private String cardType;
-    //证件名称
-    private String cardTypeName;
-    //证件有效期
-    private String IDCardTimelimit;
-    //firstName
-    private String enFirstName;
-    //listName
-    private String enLastName;
+    private CardType cardType;
+    //证件OID
+    private String contactCardOID;
+    //性别
+    private String gender;
+    //生日
+    private String birthday;
+    //国籍
+    private String nationalityCode;
+    //是否默认证件
+    private Boolean cardDefault;
+    //是否启用
+    private Boolean enable;
+    //firstName   除身份证军人证外需要set firstName
+    private String firstName;
+    //listName;
+    private String lastName;
+    //卡号
+    private String cardNo;
+    //旧卡号
+    private String originalCardNo;
+    //用户oid
+    private String userOID;
+    //失效日期
+    private String cardExpiredTime;
+
 }

@@ -288,4 +288,20 @@ public  class BaseRequest{
         return  headersdatas;
     }
 
+    /**
+     *
+     * @param token
+     * @param key
+     * @param resourceId  各个组的权限认证
+     * @return
+     */
+    public HashMap<String,String> getHeader(String token,String key,String resourceId){
+        HashMap<String, String> headersdatas = new HashMap<>();
+        headersdatas.put("Authorization", "Bearer "+token);
+        headersdatas.put("Content-Type", BaseConstant.CONTENT_TYPE);
+        headersdatas.put("key",key);
+        headersdatas.put("resourceId",resourceId);
+        return  headersdatas;
+    }
+
 }

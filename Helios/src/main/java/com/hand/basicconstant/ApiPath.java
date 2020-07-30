@@ -235,6 +235,8 @@ public class ApiPath {
         public static final String USER_GROUPS = "/api/user/groups/search";
         //获取单据类型
         public static final String FORM_TYPE = "/api/custom/forms/loan/reference";
+        //删除报销标准
+        public static final String DELETE_REIMB_STANDARD = "/api/expense/standard/rule/delete";
     }
 
 

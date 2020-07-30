@@ -185,4 +185,10 @@ public class ReimbStandardApi  extends BaseRequest {
 //        return new JsonParser().parse(res).getAsJsonObject();
         return res;
     }
+    /**
+     * 删除报销标准规则
+     *
+     */
+
+
 }

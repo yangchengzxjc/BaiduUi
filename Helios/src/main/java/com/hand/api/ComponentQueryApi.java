@@ -200,4 +200,20 @@ public class ComponentQueryApi extends BaseRequest{
         return new JsonParser().parse(res).getAsJsonObject().get("tips").getAsJsonArray();
     }
 
+
+    /**
+     * 查询城市组
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getCityGroup(Employee employee) throws HttpStatusException {
+        String url =employee.getEnvironment().getUrl()+ApiPath.QueryExpenseLocation;
+        Map<String,String> parameters =new HashMap<>();
+        parameters.put("roleType","TENANT");
+        parameters.put("page","0");
+        parameters.put("size","20");
+        String res =doGet(url,getHeader(employee.getAccessToken()),parameters,employee);
+        return new JsonParser().parse(res).getAsJsonArray();
+    }
 }

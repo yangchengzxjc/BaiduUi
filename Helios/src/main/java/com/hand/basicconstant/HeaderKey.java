@@ -7,5 +7,7 @@ package com.hand.basicconstant;
  **/
 public class HeaderKey {
 
+    //差补的key
+    public static final String SUBSIDT_RULE ="subsidy-rule";
     
 }

@@ -52,6 +52,9 @@ public class ApiPath {
         public static final String DEFAULT_VALUES ="/api/custom/form/user/default/values";
 
         public static final String QueryExpenseLocation= "/amap/v3/assistant/inputtips";
+
+        //查询城市组
+        public static final String QUERYCITYGROUP = "/api/levels/my";
 //        查询源泉税类别
         public static final String SOURCE_TAX ="/api/source/tax/category";
 
@@ -173,6 +176,8 @@ public class ApiPath {
         public static final String APPLICATION_VALUE = "/api/expense/report/application/value";
         //员工新增
         public static final String ADD_EMPLOYEE = "/api/refactor/users/v2?roleType=TENANT";
+        //证件新增 修改
+        public static final String USERCARD="/api/contact/cards?roleType=TENANT";
         //获取系统值列表
         public static final String GET_SYSTEM_ENUMERATION ="/api/custom/enumeration/by/system/type";
         //获取值列表的详情
@@ -213,14 +218,32 @@ public class ApiPath {
         public static final String GET_CURRENCY = "/api/currencyI18n";
         //新增/编辑账套
         public static final String ADD_SET_OF_BOOKS = "/api/setOfBooks";
-
+        //搜索账套
+        public static final String SEARCH_SET_OF_BOOKS = "/api/setOfBooks/query/dto";
+        //获取账套详情
+        public static final String GET_SET_OF_BOOKS_DETAIL ="/api/setOfBooks/%s";
 
         //获取表单差补基础配置
         public static final String TRAVEL_RULE_BASE_CONFIG = "/api/travel/subsidies/rule/dimension";
         //获取表单差补规则list
         public static final String SUBSIDY_RULE_List = "/api/travel/subsidies/rule/list/v2";
+        //获取表单配置的差补规则的基础设置
+        public static final String SUBSIDY_RULE_CONFIG = "/api/travel/subsidies/rule/form";
         //获取差补规则详情/差补规则保存
         public static final String SUBSIDY_RULE_DETAIL = "/api/travel/subsidies/rule";
+
+        //新建报销标准规则
+        public static final String ADD_Reimb_Standard = "/api/expense/standard/rule";
+        //获取费用类型
+        public static final String EXPENSE_TYPE = "/api/expense/type/by/setOfBooks";
+        //获取启用公司
+        public static final String ENABLED_COMPANY = "/api/widget/company/all";
+        //获取人员组
+        public static final String USER_GROUPS = "/api/user/groups/search";
+        //获取单据类型
+        public static final String FORM_TYPE = "/api/custom/forms/loan/reference";
+        //删除报销标准
+        public static final String DELETE_REIMB_STANDARD = "/api/expense/standard/rule/delete";
     }
 
 

@@ -56,6 +56,34 @@ public class SetOfBooksApi extends BaseRequest {
     }
 
     /**
+     * 编辑账套信息
+     * @param employee
+     * @param setOfBooks
+     * @param setOfBooksInfo
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject editSetOfBooks(Employee employee,SetOfBooks setOfBooks,JsonObject setOfBooksInfo) throws HttpStatusException{
+        String url = employee.getEnvironment().getUrl() + ApiPath.ADD_SET_OF_BOOKS;
+        Map<String, String> urlParam = new HashMap<>();
+        urlParam.put("roleType","TENANT");
+        JsonObject setOfBooksObject = new JsonObject();
+        setOfBooksObject.addProperty("id",setOfBooksInfo.get("id").getAsString());
+        setOfBooksObject.addProperty("setOfBooksId",setOfBooksInfo.get("setOfBooksId").getAsString());
+        setOfBooksObject.addProperty("setOfBooksCode",setOfBooks.getSetOfBooksCode());
+        setOfBooksObject.addProperty("setOfBooksName",setOfBooks.getSetOfBooksName());
+        setOfBooksObject.addProperty("periodSetId","null");
+        setOfBooksObject.addProperty("periodSetCode",setOfBooksInfo.get("periodSetCode").getAsString());
+        setOfBooksObject.addProperty("accountSetId",setOfBooksInfo.get("accountSetId").getAsString());
+        setOfBooksObject.addProperty("accountSetCode",setOfBooksInfo.get("accountSetCode").getAsString());
+        setOfBooksObject.addProperty("functionalCurrencyCode",setOfBooksInfo.get("functionalCurrencyCode").getAsString());
+        setOfBooksObject.addProperty("enabled",setOfBooksInfo.get("enabled").getAsString());
+        setOfBooksObject.add("i18n",setOfBooks.getI18n());
+        String res = doPut(url,getHeader(employee.getAccessToken()),urlParam,setOfBooksObject.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
      * 获取会计期
      * @param employee
      * @return
@@ -104,6 +132,42 @@ public class SetOfBooksApi extends BaseRequest {
         urlParam.put("language","zh_cn");
         String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
         log.info("获取到的币种数据：" + res);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 搜索账套
+     * @param employee
+     * @param setOfBooksCode
+     * @param setOfBooksName
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getSetOfBooks(Employee employee,String setOfBooksCode,String setOfBooksName) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.SEARCH_SET_OF_BOOKS;
+        Map<String, String> urlParam = new HashMap<>();
+        urlParam.put("roleType","TENANT");
+        urlParam.put("setOfBooksCode",setOfBooksCode);
+        urlParam.put("setOfBooksName",setOfBooksName);
+        urlParam.put("page","0");
+        urlParam.put("size","20");
+        urlParam.put("withAdditionalInfo","true");
+        String res = doGet(url,getHeader(employee.getAccessToken(),"set-of-books"),urlParam,employee);
+        return new JsonParser().parse(res).getAsJsonArray();
+    }
+
+    /**
+     * 获取账套详情信息
+     * @param employee
+     * @param id
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getSetOfBooksDetail(Employee employee,String id) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + String.format(ApiPath.GET_SET_OF_BOOKS_DETAIL,id);
+        Map<String, String> urlParam = new HashMap<>();
+        urlParam.put("roleType","TENANT");
+        String res = doGet(url,getHeader(employee.getAccessToken(),"set-of-books"),urlParam,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 }

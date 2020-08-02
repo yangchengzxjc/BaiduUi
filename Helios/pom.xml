@@ -6,7 +6,7 @@
   <groupId>Helios.cn</groupId>
   <artifactId>Helios</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <name>Helios Maven Webapp</name>
 
   <properties>
@@ -26,9 +26,6 @@
     <allure-testng.version>2.13.3</allure-testng.version>
     <allure-maven.version>2.13.3</allure-maven.version>
     <allure.report.version>2.13.3</allure.report.version>
-    <xml.file>${xmlFileName}</xml.file>
-    <!--<environment>${env.environment}</environment>-->
-    <!--<language>${env.language}</language>-->
 
 
   </properties>
@@ -234,18 +231,18 @@
         <configuration>
           <!--xml 路径-->
           <suiteXmlFiles>
-            <suiteXmlFile>${xml.file}</suiteXmlFile>
+            <suiteXmlFile>${xmlFileName}</suiteXmlFile>
           </suiteXmlFiles>
           <!--<argLine>-->
             <!-- -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"-->
           <!--</argLine>-->
-          <!--需testng_pc.xml.xml 中的参数-->
-          <!--<systemPropertyVariables>-->
-            <!--prod 还是 uat-->
-            <!--<environment>${environment}</environment>-->
-            <!--zh_CN 还是 zh_HK 还是 en_GB-->
-            <!--<language>${language}</language>-->
-          <!--</systemPropertyVariables>-->
+          <!--设置testng.xml文件中的参数-->
+          <systemPropertyVariables>
+            <!--设置环境-->
+            <environment>${environment}</environment>
+            <!--设置账号-->
+            <phoneNumber>${phoneNumber}</phoneNumber>
+          </systemPropertyVariables>
           <argLine>-Dfile.encoding=UTF-8</argLine>
           <testFailureIgnore>true</testFailureIgnore>
         </configuration>

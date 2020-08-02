@@ -8,9 +8,12 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.InfraEmployee;
 import com.hand.basicObject.InfraJob;
+import com.hand.basicObject.supplierObject.UserCardInfoEntity;
+import com.hand.basicconstant.CardType;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,8 +89,9 @@ public class InfraStructure {
      * @param infraJobs
      * @throws HttpStatusException
      */
-    public void addEmployee(Employee employee, InfraEmployee infraEmployee, ArrayList<InfraJob> infraJobs) throws HttpStatusException {
+    public JsonObject addEmployee(Employee employee, InfraEmployee infraEmployee, ArrayList<InfraJob> infraJobs) throws HttpStatusException {
         JsonObject object = infraStructureApi.addEmployee(employee,infraEmployee,userJobsDTOs(infraJobs),getEmployeeExpandForm(employee));
+        return object;
     }
 
     /**
@@ -186,4 +190,25 @@ public class InfraStructure {
         return infraStructureApi.employeeDetail(employee,getUserUserOID(employee,keyWords));
     }
 
+    /**
+     * 新增证件信息
+     * @param employee
+     */
+    public JsonObject addUserCardInfo(Employee employee,String userOID,CardType cardType,String lastName,Boolean enable) throws HttpStatusException {
+        UserCardInfoEntity userCardInfoEntity = new UserCardInfoEntity();
+        userCardInfoEntity.setCardType(cardType);
+        userCardInfoEntity.setContactCardOID(null);
+        userCardInfoEntity.setLastName(lastName);
+        userCardInfoEntity.setGender("0");
+        userCardInfoEntity.setBirthday("2020-07-29T10:25:11+08:00");
+        userCardInfoEntity.setNationalityCode("CN");
+        userCardInfoEntity.setCardDefault(false);
+        userCardInfoEntity.setEnable(enable);
+        userCardInfoEntity.setCardNo("11223344");
+        userCardInfoEntity.setOriginalCardNo("");
+        userCardInfoEntity.setCardExpiredTime("2022-07-29T10:25:11+08:00");
+        userCardInfoEntity.setUserOID(userOID);
+        JsonObject cardInfo = infraStructureApi.addUserCardInfo(employee,userCardInfoEntity);
+        return cardInfo;
+    }
 }

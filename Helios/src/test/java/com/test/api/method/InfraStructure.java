@@ -194,20 +194,7 @@ public class InfraStructure {
      * 新增证件信息
      * @param employee
      */
-    public JsonObject addUserCardInfo(Employee employee,String userOID,CardType cardType,String lastName,Boolean enable) throws HttpStatusException {
-        UserCardInfoEntity userCardInfoEntity = new UserCardInfoEntity();
-        userCardInfoEntity.setCardType(cardType);
-        userCardInfoEntity.setContactCardOID(null);
-        userCardInfoEntity.setLastName(lastName);
-        userCardInfoEntity.setGender("0");
-        userCardInfoEntity.setBirthday("2020-07-29T10:25:11+08:00");
-        userCardInfoEntity.setNationalityCode("CN");
-        userCardInfoEntity.setCardDefault(false);
-        userCardInfoEntity.setEnable(enable);
-        userCardInfoEntity.setCardNo("11223344");
-        userCardInfoEntity.setOriginalCardNo("");
-        userCardInfoEntity.setCardExpiredTime("2022-07-29T10:25:11+08:00");
-        userCardInfoEntity.setUserOID(userOID);
+    public JsonObject addUserCardInfo(Employee employee,UserCardInfoEntity userCardInfoEntity) throws HttpStatusException {
         JsonObject cardInfo = infraStructureApi.addUserCardInfo(employee,userCardInfoEntity);
         return cardInfo;
     }

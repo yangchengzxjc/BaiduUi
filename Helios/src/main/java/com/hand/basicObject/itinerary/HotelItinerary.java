@@ -1,4 +1,4 @@
-package com.hand.basicObject;
+package com.hand.basicObject.itinerary;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +21,7 @@ public class HotelItinerary {
     String fromDatel;
     //退房日期
     String leaveDate;
-    //供应商
+    //供应商OID
     String supplierOID;
     //入住城市code
     String cityCode;

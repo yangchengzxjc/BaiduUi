@@ -110,5 +110,22 @@ public class ExpenseReportComponent {
         return deptMap;
     }
 
+    /**
+     * 获取城市组的levelOID
+     * @param employee
+     * @param cityGroupName 城市组的名称
+     * @return
+     * @throws HttpStatusException
+     */
+    public String getCityGrouplevelOID(Employee employee,String cityGroupName) throws HttpStatusException {
+        JsonArray cityGroup = componentQueryApi.getCityGroup(employee);
+        String levelOID ="";
+        if(GsonUtil.isNotEmpt(cityGroup)){
+            levelOID =GsonUtil.getJsonValue(cityGroup,"levelName",cityGroupName,levelOID);
+        }else{
+            log.info("城市组为空,请检查参数");
+        }
+        return levelOID;
+    }
 
 }

@@ -52,6 +52,9 @@ public class ApiPath {
         public static final String DEFAULT_VALUES ="/api/custom/form/user/default/values";
 
         public static final String QueryExpenseLocation= "/amap/v3/assistant/inputtips";
+
+        //查询城市组
+        public static final String QUERYCITYGROUP = "/api/levels/my";
 //        查询源泉税类别
         public static final String SOURCE_TAX ="/api/source/tax/category";
 
@@ -224,6 +227,8 @@ public class ApiPath {
         public static final String TRAVEL_RULE_BASE_CONFIG = "/api/travel/subsidies/rule/dimension";
         //获取表单差补规则list
         public static final String SUBSIDY_RULE_List = "/api/travel/subsidies/rule/list/v2";
+        //获取表单配置的差补规则的基础设置
+        public static final String SUBSIDY_RULE_CONFIG = "/api/travel/subsidies/rule/form";
         //获取差补规则详情/差补规则保存
         public static final String SUBSIDY_RULE_DETAIL = "/api/travel/subsidies/rule";
 
@@ -237,6 +242,8 @@ public class ApiPath {
         public static final String USER_GROUPS = "/api/user/groups/search";
         //获取单据类型
         public static final String FORM_TYPE = "/api/custom/forms/loan/reference";
+        //删除报销标准
+        public static final String DELETE_REIMB_STANDARD = "/api/expense/standard/rule/delete";
     }
 
 

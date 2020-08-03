@@ -7,6 +7,8 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.TravelSubsidyConfig;
 import com.hand.basicconstant.ApiPath;
+import com.hand.basicconstant.HeaderKey;
+import com.hand.basicconstant.ResourceId;
 
 import java.util.HashMap;
 
@@ -212,6 +214,20 @@ public class TravelSubsidyConfigAPi extends BaseRequest{
         subsidyBaseConfig.addProperty("subsidySelection",false);
         subsidyBaseConfig.addProperty("applicationAutoSubsidy",false);
         String res = doPost(url, getHeader(employee.getAccessToken()), null,subsidyBaseConfig.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 获取差补规则的基础设置
+     * @param employee
+     * @param formOID 表单oid
+     */
+    public JsonObject getSubsidyRuleConfig(Employee employee,String formOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ApiPath.SUBSIDY_RULE_List;
+        HashMap<String,String> map =new HashMap<>();
+        map.put("formOID", formOID);
+        map.put("roleType","TENANT");
+        String res = doGet(url, getHeader(employee.getAccessToken(), HeaderKey.SUBSIDT_RULE, ResourceId.SUBSIDY_RULE), map,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 

@@ -1,4 +1,4 @@
-package com.hand.basicObject;
+package com.hand.basicObject.itinerary;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

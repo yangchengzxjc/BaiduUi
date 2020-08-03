@@ -84,7 +84,7 @@ public class TravelSubsidyConfigAPi extends BaseRequest{
         body.addProperty("companyId",(String) null);
         body.addProperty("setOfBooksId",employee.getSetOfBookId());
         body.addProperty("valid",true);
-        String res = doPost(url, getHeader(employee.getAccessToken()), null,body.toString(),null,employee);
+        String res = doPost(url, getHeader(employee.getAccessToken(),HeaderKey.SUBSIDT_RULE,ResourceId.SUBSIDY_RULE), null,body.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
@@ -95,7 +95,7 @@ public class TravelSubsidyConfigAPi extends BaseRequest{
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject getSubsidyBaseConfig(Employee employee,String formOID) throws HttpStatusException {
+    public JsonObject getSubsidyBaseConfigDetail(Employee employee,String formOID) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl()+ApiPath.TRAVEL_RULE_BASE_CONFIG;
         HashMap<String,String> map =new HashMap<>();
         map.put("formOID",formOID);
@@ -218,12 +218,12 @@ public class TravelSubsidyConfigAPi extends BaseRequest{
     }
 
     /**
-     * 获取差补规则的基础设置
+     * 查询表单差补规则启用的维度
      * @param employee
      * @param formOID 表单oid
      */
     public JsonObject getSubsidyRuleConfig(Employee employee,String formOID) throws HttpStatusException {
-        String url = employee.getEnvironment().getUrl()+ApiPath.SUBSIDY_RULE_List;
+        String url = employee.getEnvironment().getUrl()+ApiPath.SUBSIDY_RULE_CONFIG;
         HashMap<String,String> map =new HashMap<>();
         map.put("formOID", formOID);
         map.put("roleType","TENANT");
@@ -262,7 +262,7 @@ public class TravelSubsidyConfigAPi extends BaseRequest{
      * @param employee
      * @param newSubsidyRule  修改后的差补详情规则
      */
-    public JsonObject saveSubsidyRule(Employee employee, JsonObject newSubsidyRule) throws HttpStatusException {
+    public JsonObject editSubsidyRule(Employee employee, JsonObject newSubsidyRule) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl()+ApiPath.SUBSIDY_RULE_DETAIL;
         HashMap<String,String> map =new HashMap<>();
         map.put("setOfBooksId",employee.getSetOfBookId());
@@ -270,6 +270,20 @@ public class TravelSubsidyConfigAPi extends BaseRequest{
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
+    /**
+     * 新建差补规则
+     * @param employee
+     * @param subsidyRule
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject createSubsidyRule(Employee employee, JsonObject subsidyRule) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ApiPath.SUBSIDY_RULE_DETAIL;
+        HashMap<String,String> map =new HashMap<>();
+        map.put("setOfBooksId",employee.getSetOfBookId());
+        String res = doPost(url, getHeader(employee.getAccessToken()), map,subsidyRule.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
     /**
      * 删除差补规则（根据规则的id）
      * @param employee
@@ -281,5 +295,18 @@ public class TravelSubsidyConfigAPi extends BaseRequest{
         HashMap<String,String> map = new HashMap<>();
         map.put("id",ruleID);
         doDlete(url, getHeader(employee.getAccessToken()), map,new JsonObject(),employee);
+    }
+
+    /**
+     * 差补查看表单详情
+     * @param employee
+     * @param formOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getFromDetail(Employee employee, String formOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+String.format(ApiPath.FORM_DETAIL,formOID);
+        String res = doGet(url, getHeader(employee.getAccessToken(),HeaderKey.SUBSIDT_RULE,ResourceId.SUBSIDY_RULE),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
     }
 }

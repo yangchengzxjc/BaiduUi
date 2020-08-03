@@ -231,7 +231,8 @@ public class ApiPath {
         public static final String SUBSIDY_RULE_CONFIG = "/api/travel/subsidies/rule/form";
         //获取差补规则详情/差补规则保存
         public static final String SUBSIDY_RULE_DETAIL = "/api/travel/subsidies/rule";
-
+        //差补表单详情
+        public static final String FORM_DETAIL = "/api/custom/forms/%s/detail";
         //新建报销标准规则
         public static final String ADD_Reimb_Standard = "/api/expense/standard/rule";
         //获取费用类型

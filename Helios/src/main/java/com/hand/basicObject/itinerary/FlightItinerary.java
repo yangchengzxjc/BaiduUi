@@ -1,4 +1,4 @@
-package com.hand.basicObject;
+package com.hand.basicObject.itinerary;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,10 +25,16 @@ public class FlightItinerary {
     String startDate;
     //返回时间
     String endDate;
-    //供应商
+    //供应商OID
     String supplierOID;
+    //起飞时间
+    String takeOffBeginTime;
+    //落地时间
+    String takeOffEndTime;
     //账户
     String discount;
+    //舱等 经济舱、公务舱、头等舱、超级经济舱
+    String seatClass;
     //出发城市code
     String fromCityCode;
     // 到达城市code

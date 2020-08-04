@@ -211,4 +211,15 @@ public class InfraStructure {
         JsonObject cardInfo = infraStructureApi.addUserCardInfo(employee,userCardInfoEntity);
         return cardInfo;
     }
+
+    /**
+     * 员工离职
+     * @param employee
+     * @param fullName
+     * @return
+     * @throws HttpStatusException
+     */
+    public int leaveEmployee(Employee employee,String fullName) throws HttpStatusException {
+       return infraStructureApi.leaveEmployee(employee,searchUser(employee,fullName));
+    }
 }

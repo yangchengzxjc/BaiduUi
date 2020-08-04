@@ -162,7 +162,7 @@ public  class BaseRequest{
             }
 
             if (HttpStatus.BAD_REQUEST_400==code && res.contains("baseRequest speed is too fast")) {
-                myResponse = myResponse = OkHttpUtils.delete(url,headersParams,urlMapParams,jsonbody);
+                myResponse = OkHttpUtils.delete(url,headersParams,urlMapParams,jsonbody);
                 res=  myResponse.getBody();
             }
             return  res;
@@ -203,7 +203,7 @@ public  class BaseRequest{
             default:
                 log.info("未知错误，还需定位");
         }
-        return  res;
+        return res;
     }
 
     /**
@@ -246,7 +246,7 @@ public  class BaseRequest{
         }
 
         if (HttpStatus.BAD_REQUEST_400==code && res.contains("baseRequest speed is too fast")) {
-            myResponse = myResponse =OkHttpUtils.UpLoadFile(url,headersParams,bodyParams,name,filePath,fileMediaType);
+            myResponse =OkHttpUtils.UpLoadFile(url,headersParams,bodyParams,name,filePath,fileMediaType);
             res=  myResponse.getBody();
         }
         return  res;
@@ -302,6 +302,71 @@ public  class BaseRequest{
         headersdatas.put("key",key);
         headersdatas.put("resourceId",resourceId);
         return  headersdatas;
+    }
+
+    /**
+     * 返回get请求的statusCode
+     * @param url
+     * @param headersParams
+     * @param urlMapParams
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public int doGetStatusCode(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, Employee employee) throws HttpStatusException {
+        MyResponse myResponse= null;
+        myResponse = OkHttpUtils.get(url,headersParams,urlMapParams);
+        return myResponse.getStatusCode();
+    }
+
+    /**
+     * 返回post请求的状态码
+     * @param url
+     * @param headersParams
+     * @param urlMapParams
+     * @param jsonBody
+     * @param bodyParams
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public int getPostStatusCode(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, String jsonBody, Map<String, String> bodyParams, Employee employee) throws HttpStatusException {
+        MyResponse myResponse= null;
+        myResponse = OkHttpUtils.post(url,headersParams,urlMapParams,jsonBody,bodyParams);
+        return myResponse.getStatusCode();
+    }
+
+    /**
+     * 返回delete 请求的状态码
+     * @param url
+     * @param headersParams
+     * @param urlMapParams
+     * @param jsonbody
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public  int getDleteStatusCode(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, JsonObject jsonbody, Employee employee) throws HttpStatusException {
+        MyResponse myResponse= null;
+        myResponse = OkHttpUtils.delete(url,headersParams,urlMapParams,jsonbody);
+        return myResponse.getStatusCode();
+    }
+
+    /**
+     * 返回put请求的状态码
+     * @param url
+     * @param headersParams
+     * @param urlMapParams
+     * @param jsonbody
+     * @param bodyParams
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public int getPutStatusCode(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, String jsonbody, Map<String, String> bodyParams, Employee employee) throws HttpStatusException {
+        MyResponse myResponse= null;
+        myResponse = OkHttpUtils.put(url,headersParams,urlMapParams,jsonbody,bodyParams);
+        return myResponse.getStatusCode();
     }
 
 }

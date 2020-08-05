@@ -216,4 +216,8 @@ public class ComponentQueryApi extends BaseRequest{
         String res =doGet(url,getHeader(employee.getAccessToken()),parameters,employee);
         return new JsonParser().parse(res).getAsJsonArray();
     }
+
+    public void getSupplierOID(){
+
+    }
 }

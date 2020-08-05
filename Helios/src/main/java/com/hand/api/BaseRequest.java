@@ -346,7 +346,7 @@ public  class BaseRequest{
      * @return
      * @throws HttpStatusException
      */
-    public  int getDleteStatusCode(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, JsonObject jsonbody, Employee employee) throws HttpStatusException {
+    public  int getDeleteStatusCode(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, JsonObject jsonbody, Employee employee) throws HttpStatusException {
         MyResponse myResponse= null;
         myResponse = OkHttpUtils.delete(url,headersParams,urlMapParams,jsonbody);
         return myResponse.getStatusCode();

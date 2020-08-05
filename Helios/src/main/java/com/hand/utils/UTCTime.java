@@ -17,6 +17,7 @@ public class UTCTime {
     private static final String UTC_FORMATTER_PATTERN15  = "yyyy-MM-dd'T'15:59:59'Z'";
     private static final String BEiJING_FORMATTER_PATTERN15  = "yyyy-MM-dd";
     private static final String BEIJING_FORMATTER_TIME = "yyyy-MM-dd HH:mm:ss";
+    private static final String BEIJING_TIME = "HH:mm";
 
     /**
      * 返回北京时间的任意日期
@@ -28,6 +29,19 @@ public class UTCTime {
         DateTime date = DateTime.now().plusDays(day);
         return fmt.print(date);
     }
+
+    /**
+     * 返回北京时间   例如：  13:30
+     * @param hour  0为当前小时
+     * @param minute  0 为当前分钟
+     * @return
+     */
+    public static String getTime(int hour,int minute){
+        DateTimeFormatter fmt = DateTimeFormat.forPattern(BEIJING_TIME);
+        DateTime time = DateTime.now().plusHours(hour).plusMinutes(minute);
+        return fmt.print(time);
+    }
+
 
     /**
      * 获取北京时间如果是当前时间  则 day  和time  传0  以此类推

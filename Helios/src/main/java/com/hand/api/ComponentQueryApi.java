@@ -131,7 +131,7 @@ public class ComponentQueryApi extends BaseRequest{
         urlbody.put("country","china");
         urlbody.put("size","10");
         String res=doGet(url,getHeader(employee.getAccessToken()),urlbody,employee);
-        log.info(res);
+        log.info("获取城市信息:{}",res);
         return new JsonParser().parse(res).getAsJsonArray();
     }
 

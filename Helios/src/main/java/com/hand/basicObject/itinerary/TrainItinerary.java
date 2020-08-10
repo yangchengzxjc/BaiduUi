@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
  * @Version 1.0
  **/
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class TrainItinerary {
     //出发城市

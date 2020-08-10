@@ -18,6 +18,7 @@ public enum Environment {
     CONSOLE_TC("console-tc", "https://console-tc.huilianyi.com");
 
 
+
     private String environment;
     private String url;
 

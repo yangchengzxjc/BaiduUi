@@ -235,18 +235,6 @@ public class InfraStructureApi extends BaseRequest{
         return new JsonParser().parse(res).getAsJsonArray();
     }
 
-    /**
-     * 查询领导也就是查询员工
-     * @param employee
-     */
-    public JsonArray getUser(Employee employee) throws HttpStatusException {
-        String url = employee.getEnvironment().getUrl()+ApiPath.SEARCH_USER;
-        Map<String,String> urlParam=new HashMap<>();
-        urlParam.put("page","0");
-        urlParam.put("size","10");
-        String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
-        return new JsonParser().parse(res).getAsJsonArray();
-    }
 
     /**
      * 根据关键字搜索用户

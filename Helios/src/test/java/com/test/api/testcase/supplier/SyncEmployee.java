@@ -6,7 +6,6 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.EmployeeDTO;
 import com.hand.basicconstant.CardType;
 import com.test.BaseTest;
-import com.test.api.method.EmployeeLogin;
 import com.test.api.method.Infra.EmployeeManagePage;
 import com.test.api.method.InfraStructure;
 import org.testng.annotations.BeforeClass;
@@ -17,6 +16,7 @@ import org.testng.annotations.Test;
 public class SyncEmployee extends BaseTest {
     private Employee employee;
     private EmployeeManagePage employeeManagePage;
+    private InfraStructure infraStructure;
 
 
     @BeforeClass
@@ -24,16 +24,17 @@ public class SyncEmployee extends BaseTest {
     public void beforeClass(@Optional("14082978000") String phoneNumber, @Optional("hly123456") String pwd, @Optional("stage") String env){
         employee=getEmployee(phoneNumber,pwd,env);
         employeeManagePage =new EmployeeManagePage();
-//        System.out.println(employee);
+        infraStructure =new InfraStructure();
     }
 
-    @Test(description = "新增员正常流程")
+    @Test(description = "新增员正常流程----离职员工流程")
     public void addEmployee() throws HttpStatusException {
         EmployeeDTO employeeDTO = new EmployeeDTO();
         JsonObject empObject = employeeManagePage.addEmployee(employee,"甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
         String userOID=empObject.get("userOID").getAsString();
         JsonObject userCardInfo=employeeManagePage.addUserCard(employee,userOID,CardType.CHINA_ID,"身份证名字",true);
-
+        //员工离职
+        infraStructure.leaveEmployee(employee,userOID);
 //        if (empObject.get("status").toString() == "1001") {
 //            employeeDTO.setStatus("1");
 //            }

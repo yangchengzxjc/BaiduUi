@@ -8,6 +8,7 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;
 import com.hand.basicconstant.ApiPath;
 import com.hand.utils.GsonUtil;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import java.util.Map;
  * @Date 2020/7/6
  * @Version 1.0
  **/
+@Slf4j
 public class ApplicationApi extends BaseRequest{
 
 
@@ -125,6 +127,21 @@ public class ApplicationApi extends BaseRequest{
         return new JsonParser().parse(res).getAsJsonArray();
     }
 
+    /**
+     * 添加一个火车的行程
+     * @param employee
+     * @param applicationOID
+     * @param trainItineraries
+     */
+    public <E> JsonArray addTrainItinerary(Employee employee, String applicationOID, ArrayList<E> trainItineraries) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.ADD_TRAIN_ININERARY;
+        Map<String, String> data = new HashMap<>();
+        data.put("applicationOID",applicationOID);
+        JsonArray array = new JsonParser().parse(GsonUtil.objectToString(trainItineraries)).getAsJsonArray();
+        String res= doPost(url,getHeader(employee.getAccessToken()),data,array.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonArray();
+    }
+
 
     /**
      * 获取预算费用类型
@@ -178,4 +195,36 @@ public class ApplicationApi extends BaseRequest{
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
+    /**
+     * 获取差旅申请单中的行程
+     * @param employee
+     * @param applicationOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getItinerarys(Employee employee,String applicationOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.APPLICATION_ITINERARY;
+        HashMap<String,String> map = new HashMap<>();
+        map.put("applicationOID",applicationOID);
+        map.put("itineraryShowDetails","true");
+        map.put("withItemDetail","true");
+        map.put("withRequestDetail","true");
+        String res= doGet(url,getHeader(employee.getAccessToken()),map,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 获取差旅申请单中的预算费用信息
+     * @param employee
+     * @param applicationOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getBudgetExpense(Employee employee,String applicationOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.BUDGET_EXPENSE;
+        HashMap<String,String> map = new HashMap<>();
+        map.put("applicationOID",applicationOID);
+        String res= doGet(url,getHeader(employee.getAccessToken()),map,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
 }

@@ -51,20 +51,19 @@ public class ExpenseReportComponent {
      * 从控件上查询参与人根据fullName 获取参与人 （是否是自己）
      * @param employee
      * @param formOID
-     * @param fullName 员工的姓名
+     * @param keyWord 可以是工号 姓名
      * @throws HttpStatusException
      */
-    public JsonObject getParticipant(Employee employee,String formOID,String fullName) throws HttpStatusException {
-        JsonArray array = componentQueryApi.getSelectParticipant(employee,formOID,employee.getJobId());
+    public JsonObject getParticipant(Employee employee,String formOID,String keyWord) throws HttpStatusException {
+        JsonArray array = componentQueryApi.getSelectParticipant(employee,formOID,keyWord);
+        log.info("查找参与人:{}",array);
         JsonObject participant = new JsonObject();
         for(int i=0; i<array.size();i++){
-            if(array.get(i).getAsJsonObject().get("fullName").getAsString().equals(fullName)){
-                participant.addProperty("userOID",array.get(i).getAsJsonObject().get("userOID").getAsString());
-                participant.addProperty("fullName",array.get(i).getAsJsonObject().get("fullName").getAsString());
-                participant.addProperty("participantOID",array.get(i).getAsJsonObject().get("userOID").getAsString());
-                participant.addProperty("highOff", (String) null);
-                participant.addProperty("avatar",(String) null);
-            }
+            participant.addProperty("userOID",array.get(i).getAsJsonObject().get("userOID").getAsString());
+            participant.addProperty("fullName",array.get(i).getAsJsonObject().get("fullName").getAsString());
+            participant.addProperty("participantOID",array.get(i).getAsJsonObject().get("userOID").getAsString());
+            participant.addProperty("highOff", (String) null);
+            participant.addProperty("avatar",(String) null);
         }
         return participant;
     }

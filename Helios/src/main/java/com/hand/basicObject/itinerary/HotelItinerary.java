@@ -2,7 +2,6 @@ package com.hand.basicObject.itinerary;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @Author peng.zhang
@@ -11,7 +10,6 @@ import lombok.NoArgsConstructor;
  **/
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class HotelItinerary {
     //入住城市
     String cityName;

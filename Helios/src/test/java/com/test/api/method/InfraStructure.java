@@ -108,14 +108,21 @@ public class InfraStructure {
     }
 
     /**
-     * 根据员工的fullName 返回userOID
+     * 根据员工的根据员工的邮箱 返回userOID
      * @param employee
-     * @param fullName
+     * @param keyWord   可以使用工号 姓名 邮箱进行搜索  但是工号可能匹配到别的地方 姓名可能重复  尽量使用邮箱进行搜索
      * @return
      * @throws HttpStatusException
      */
-    public String  searchUser(Employee employee,String fullName) throws HttpStatusException {
-        return GsonUtil.getJsonValue(infraStructureApi.getUser(employee),"fullName",fullName,"userOID");
+    public String searchUser(Employee employee,String keyWord) throws HttpStatusException {
+        JsonArray userList = infraStructureApi.getUser(employee, keyWord);
+        String userOID ="";
+        if(GsonUtil.isNotEmpt(userList)){
+            userOID = userList.get(0).getAsJsonObject().get("userOID").getAsString();
+        }else{
+            log.info("未搜索到用户");
+        }
+        return userOID;
     }
 
     /**
@@ -168,7 +175,7 @@ public class InfraStructure {
      * @return
      * @throws HttpStatusException
      */
-    private String getUserUserOID(Employee employee, String keyWords) throws HttpStatusException {
+    private String getUserOID(Employee employee, String keyWords) throws HttpStatusException {
         JsonArray userList = infraStructureApi.getUser(employee,keyWords);
         String userOID ="";
         if(GsonUtil.isNotEmpt(userList)){
@@ -187,7 +194,7 @@ public class InfraStructure {
      * @throws HttpStatusException
      */
     public JsonObject getUserDetail(Employee employee, String keyWords) throws HttpStatusException {
-        return infraStructureApi.employeeDetail(employee,getUserUserOID(employee,keyWords));
+        return infraStructureApi.employeeDetail(employee,getUserOID(employee,keyWords));
     }
 
     /**
@@ -215,11 +222,11 @@ public class InfraStructure {
     /**
      * 员工离职
      * @param employee
-     * @param fullName
+     * @param keyWord
      * @return
      * @throws HttpStatusException
      */
-    public int leaveEmployee(Employee employee,String fullName) throws HttpStatusException {
-       return infraStructureApi.leaveEmployee(employee,searchUser(employee,fullName));
+    public int leaveEmployee(Employee employee,String keyWord) throws HttpStatusException {
+       return infraStructureApi.leaveEmployee(employee,searchUser(employee,keyWord));
     }
 }

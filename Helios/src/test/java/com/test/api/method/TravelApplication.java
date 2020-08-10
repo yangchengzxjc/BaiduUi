@@ -7,12 +7,11 @@ import com.hand.api.ExpenseApi;
 import com.hand.api.ReimbursementApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.FlightItinerary;
+import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.basicObject.FormComponent;
-import com.hand.basicObject.HotelItinerary;
+import com.hand.basicObject.itinerary.HotelItinerary;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.formula.functions.T;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -143,6 +142,8 @@ public class TravelApplication {
         }
         //把新的custFormValues加到详情中去
         applicationDetail.add("custFormValues",custFormValues);
+        //设置统一订票人
+        applicationDetail.getAsJsonObject("travelApplication").addProperty("bookingClerkOID",employee.getUserOID());
         log.info("申请单的详情:{}",applicationDetail);
         return applicationApi.submitApplication(employee,applicationDetail);
     }

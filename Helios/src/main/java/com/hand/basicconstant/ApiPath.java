@@ -178,6 +178,8 @@ public class ApiPath {
         public static final String ADD_EMPLOYEE = "/api/refactor/users/v2?roleType=TENANT";
         //证件新增 修改
         public static final String USERCARD="/api/contact/cards?roleType=TENANT";
+        //员工离职
+        public static final String LEAVE_EMPLOYEE = "/api/users/%s/set/leaving/date/%s";
         //获取系统值列表
         public static final String GET_SYSTEM_ENUMERATION ="/api/custom/enumeration/by/system/type";
         //获取值列表的详情
@@ -231,7 +233,8 @@ public class ApiPath {
         public static final String SUBSIDY_RULE_CONFIG = "/api/travel/subsidies/rule/form";
         //获取差补规则详情/差补规则保存
         public static final String SUBSIDY_RULE_DETAIL = "/api/travel/subsidies/rule";
-
+        //差补表单详情
+        public static final String FORM_DETAIL = "/api/custom/forms/%s/detail";
         //新建报销标准规则
         public static final String ADD_Reimb_Standard = "/api/expense/standard/rule";
         //获取费用类型

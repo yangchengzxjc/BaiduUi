@@ -29,17 +29,17 @@ public class ReimbStandard {
         JsonArray BookList = reimbStandardRules.getSetOfBooks(employee);
         return GsonUtil.getJsonValue(BookList,"setOfBooksName",BooksName,"id");
     }
+
     /*
      * 根据人员组名称获取人员组
      * @ userGroupsName 人员组名称
      * @ return
      */
-
     public JsonObject getUserGroups(Employee employee,String userGroupsName) throws HttpStatusException {
         JsonArray userGroupsList = reimbStandardRules.getUserGroups(employee, getSetOfBookId(employee, "默认账套"));
         JsonObject userGroups;
         userGroups = GsonUtil.getJsonValue(userGroupsList,"name",userGroupsName);
-       log.info("userList,{}",userGroupsList);
+        log.info("userList,{}",userGroupsList);
         return userGroups;
     }
 

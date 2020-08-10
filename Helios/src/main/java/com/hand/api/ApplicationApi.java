@@ -107,7 +107,7 @@ public class ApplicationApi extends BaseRequest{
         data.put("applicationOID",applicationOID);
         JsonArray array = new JsonParser().parse(GsonUtil.objectToString(flightItineraries)).getAsJsonArray();
         String res= doPost(url,getHeader(employee.getAccessToken()),data,array.toString(),null,employee);
-         return new JsonParser().parse(res).getAsJsonArray();
+        return new JsonParser().parse(res).getAsJsonArray();
     }
 
     /**

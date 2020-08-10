@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * @Date 2020/6/29
  * @Version 1.0
  **/
-public class TravelExpenseReport extends BaseTest {
+public class TravelExpenseReportTest extends BaseTest {
 
 
     private ExpenseReport expenseReport;

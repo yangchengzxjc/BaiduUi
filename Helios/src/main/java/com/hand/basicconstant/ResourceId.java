@@ -22,4 +22,6 @@ public class ResourceId {
     public static final String APPLICATION = "66000300";
     //差补resourceId
     public static final String SUBSIDY_RULE="660013000400";
+    //员工管理
+    public static final String EMPLOYEE_MANAGE = "64000500";
 }

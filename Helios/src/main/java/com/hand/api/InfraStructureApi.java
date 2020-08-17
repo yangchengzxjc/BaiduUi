@@ -339,9 +339,24 @@ public class InfraStructureApi extends BaseRequest{
      * @throws HttpStatusException
      */
     public int leaveEmployee(Employee employee,String userOID) throws HttpStatusException {
-        String url = employee.getEnvironment().getUrl()+String.format(ApiPath.LEAVE_EMPLOYEE,userOID, UTCTime.getBeijingDate(0));
+        String url = employee.getEnvironment().getUrl()+String.format(ApiPath.LEAVE_EMPLOYEE,userOID, UTCTime.getBeijingDate(-1));
         HashMap<String,String> map =new HashMap<>();
         map.put("roleType","TENANT");
         return getPostStatusCode(url,getHeader(employee.getAccessToken(), HeaderKey.PERSION_MANAGE, ResourceId.EMPLOYEE_MANAGE),map,new JsonObject().toString(),null,employee);
+    }
+
+    /**
+     * 员工再次入职
+     * @param employee
+     * @param userOID  员工的userOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject rehire(Employee employee, String userOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+String.format(ApiPath.REHIRE,userOID);
+        HashMap<String,String> map =new HashMap<>();
+        map.put("roleType","TENANT");
+        String res = doPost(url,getHeader(employee.getAccessToken(), HeaderKey.PERSION_MANAGE, ResourceId.EMPLOYEE_MANAGE),map,new JsonObject().toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
     }
 }

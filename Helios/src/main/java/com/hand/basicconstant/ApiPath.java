@@ -179,6 +179,8 @@ public class ApiPath {
         public static final String USERCARD="/api/contact/cards?roleType=TENANT";
         //员工离职
         public static final String LEAVE_EMPLOYEE = "/api/users/%s/set/leaving/date/%s";
+        //员工重新入职
+        public static final String REHIRE = "/api/refactor/users/rehire/%s";
         //获取系统值列表
         public static final String GET_SYSTEM_ENUMERATION ="/api/custom/enumeration/by/system/type";
         //获取值列表的详情

@@ -70,8 +70,8 @@ public class EmployeeManagePage {
         infraJob.setUni_id(company.get("companyId")+department.get("departmentId")+position);
         infraJob.set_index(0);
         infraJobArrayList.add(infraJob);
-        JsonObject jsonObject = infraStructure.addEmployee(employee,infraEmployee,infraJobArrayList);
-        return jsonObject;
+        JsonObject employeeInfo = infraStructure.addEmployee(employee,infraEmployee,infraJobArrayList);
+        return employeeInfo;
     }
 
     /**

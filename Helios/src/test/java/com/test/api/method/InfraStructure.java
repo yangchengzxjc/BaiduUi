@@ -90,8 +90,8 @@ public class InfraStructure {
      * @throws HttpStatusException
      */
     public JsonObject addEmployee(Employee employee, InfraEmployee infraEmployee, ArrayList<InfraJob> infraJobs) throws HttpStatusException {
-        JsonObject object = infraStructureApi.addEmployee(employee,infraEmployee,userJobsDTOs(infraJobs),getEmployeeExpandForm(employee));
-        return object;
+        JsonObject employeeInfo = infraStructureApi.addEmployee(employee,infraEmployee,userJobsDTOs(infraJobs),getEmployeeExpandForm(employee));
+        return employeeInfo;
     }
 
     /**
@@ -207,13 +207,27 @@ public class InfraStructure {
     }
 
     /**
-     * 员工离职
+     * 员工离职    (员工离职后 员工详情中的status字段是1003 待离职是1002  未离职是1001)
      * @param employee
-     * @param keyWord
+     * @param keyWord   可以使用工号 姓名 邮箱进行搜索  但是工号可能匹配到别的地方 姓名可能重复  尽量使用邮箱进行搜索
      * @return
      * @throws HttpStatusException
      */
     public int leaveEmployee(Employee employee,String keyWord) throws HttpStatusException {
        return infraStructureApi.leaveEmployee(employee,searchUser(employee,keyWord));
     }
+
+    /**
+     * 员工再次入职
+     * @param employee
+     * @param keyWord   姓名   工号  邮箱等关键字
+     * @return
+     * @throws HttpStatusException
+     */
+    public String rehire(Employee employee, String keyWord) throws HttpStatusException {
+        JsonObject checkResult = infraStructureApi.rehire(employee,searchUser(employee,keyWord));
+        return checkResult.get("checkResult").getAsString();
+    }
+
+
 }

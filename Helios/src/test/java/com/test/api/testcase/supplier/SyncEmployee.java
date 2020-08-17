@@ -33,7 +33,7 @@ public class SyncEmployee extends BaseTest {
         JsonObject empObject = employeeManagePage.addEmployee(employee,"甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
         String userOID=empObject.get("userOID").getAsString();
         JsonObject userCardInfo=employeeManagePage.addUserCard(employee,userOID,CardType.CHINA_ID,"身份证名字",true);
-        if (empObject.get("status").toString() == "1001") {
+        if (empObject.get("status").toString().equals("1001")) {
             employeeDTO.setStatus("1");
             }
         else{
@@ -49,7 +49,7 @@ public class SyncEmployee extends BaseTest {
         else {
             employeeDTO.setName(empObject.get("fullName").toString());//优先身份证名字 没有就取系统名字
         }
-        if (userCardInfo.get("cardType").toString() == "102"){
+        if (userCardInfo.get("cardType").toString().equals("102")){
             employeeDTO.setEnFirstName(userCardInfo.get("firstName").toString());
             employeeDTO.setEnLastName(userCardInfo.get("lastName").toString());
         }
@@ -60,9 +60,6 @@ public class SyncEmployee extends BaseTest {
         employeeDTO.setNationality(null);
         employeeDTO.setGender(empObject.get("genderCode").toString());
         employeeDTO.setRankName(empObject.get("rank").toString());
-
-
-
     }
 
     @Test(description = "离职员工正常流程")

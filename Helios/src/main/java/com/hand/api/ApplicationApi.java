@@ -8,6 +8,7 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;
 import com.hand.basicconstant.ApiPath;
 import com.hand.utils.GsonUtil;
+import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class ApplicationApi extends BaseRequest{
     }
 
     /**
-     * 获得可用的差旅申请的表单
+     * 获得可用的申请的表单
      * @param employee
      * @param jobId
      * @return
@@ -68,11 +69,9 @@ public class ApplicationApi extends BaseRequest{
      * @param employee
      * @param formdetal
      * @param component
-     * @param jobId
-     * @param userOID
      * @throws HttpStatusException
      */
-    public JsonObject createApplication(Employee employee,JsonObject formdetal, FormComponent component, String jobId, String userOID) throws HttpStatusException {
+    public JsonObject createApplication(Employee employee,JsonObject formdetal, FormComponent component) throws HttpStatusException {
         JsonObject responseEntity=null;
         JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
         String url = employee.getEnvironment().getUrl()+ ApiPath.TRAVEL_APPLICATION_SAVE;
@@ -88,7 +87,8 @@ public class ApplicationApi extends BaseRequest{
         formdetal.addProperty("quotaAmount",0);
         formdetal.addProperty("quotaBankCardOID","");
         formdetal.addProperty("referenceApplicationOID","");
-        formdetal.addProperty("applicantOID",userOID);
+        formdetal.add("countersignApproverOIDs",new JsonArray());
+        formdetal.addProperty("applicantOID",employee.getUserOID());
         formdetal.addProperty("jobId",employee.getJobId());
         formdetal.add("travelApplication",new JsonObject());
         String res= doPost(url,getHeader(employee.getAccessToken()),null,formdetal.toString(),null,employee);
@@ -96,6 +96,42 @@ public class ApplicationApi extends BaseRequest{
         return  responseEntity;
     }
 
+    /**
+     * 费用申请单新建
+     * @param employee
+     * @param formdetal
+     * @param component
+     * @param budget  预算明细   可以先拼成jsonArray然后toString()
+     * @throws HttpStatusException
+     */
+    public JsonObject expenseApplication(Employee employee,JsonObject formdetal,FormComponent component,String budget) throws HttpStatusException {
+        JsonObject responseEntity=null;
+        JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
+        String url = employee.getEnvironment().getUrl()+ ApiPath.EXPENSE_APPLICATION_SAVE;
+        JsonArray  custFormValues = new ReimbursementApi().processCustFormValues(employee,formdetal,component);
+        //给费用申请单添加预算  费用申请单预算明细  一般是在表头必填
+        for(int i=0; i<custFormValues.size();i++){
+            if(custFormValues.get(i).getAsJsonObject().get("fieldName").getAsString().equals("预算明细")){
+                custFormValues.get(i).getAsJsonObject().addProperty("value",budget);
+            }
+        }
+        formdetal.remove("custFormValues");
+        formdetal.remove("customFormFields");
+        formdetal.add("custFormValues",custFormValues);
+        formdetal.add("customFormFields",customFormFields);
+        formdetal.addProperty("applicant",(String) null);
+        formdetal.addProperty("takeQuota",false);
+        formdetal.addProperty("quotaCurrencyCode","");
+        formdetal.addProperty("quotaAmount",0);
+        formdetal.addProperty("quotaBankCardOID","");
+        formdetal.addProperty("referenceApplicationOID","");
+        formdetal.add("countersignApproverOIDs",new JsonArray());
+        formdetal.addProperty("applicantOID",employee.getUserOID());
+        formdetal.addProperty("jobId",employee.getJobId());
+        String res= doPost(url,getHeader(employee.getAccessToken()),null,formdetal.toString(),null,employee);
+        responseEntity=new JsonParser().parse(res).getAsJsonObject();
+        return  responseEntity;
+    }
 
     /**
      * 添加一个飞机的行程
@@ -189,10 +225,28 @@ public class ApplicationApi extends BaseRequest{
      *差旅申请单提交检查
      * @param employee
      */
-    public JsonObject submitCheck(Employee employee,JsonObject applicationDetail) throws HttpStatusException {
+    public JsonObject submitCheck(Employee employee,String applicationOID,JsonObject applicationDetail) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl()+ ApiPath.SUBMIT_CHECK;
-        String res= doPost(url,getHeader(employee.getAccessToken()),null,applicationDetail.toString(),null,employee);
+        HashMap<String,String> map = new HashMap<>();
+        map.put("applicationOID",applicationOID);
+        map.put("startDate", UTCTime.getNowUtcTime());
+        map.put("endDate",UTCTime.getNowUtcTime());
+        map.put("userOIDs",employee.getUserOID());
+        String res= doPost(url,getHeader(employee.getAccessToken()),map,applicationDetail.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     *费用申请单提交
+     * @param employee
+     * @param expenseApplicationDetail
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject submitExpenseApplication(Employee employee, JsonObject expenseApplicationDetail) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.SUBMIT_EXPENSE_APPLICATION;
+        String res= doPost(url,getHeader(employee.getAccessToken()),null,expenseApplicationDetail.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject().get("applicationDTO").getAsJsonObject();
     }
 
     /**
@@ -214,7 +268,7 @@ public class ApplicationApi extends BaseRequest{
     }
 
     /**
-     * 获取差旅申请单中的预算费用信息
+     * 获取差旅申请单中的预算费用信息   如果是自动获取的预算费用可以调这个方法
      * @param employee
      * @param applicationOID
      * @return
@@ -227,4 +281,5 @@ public class ApplicationApi extends BaseRequest{
         String res= doGet(url,getHeader(employee.getAccessToken()),map,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
+
 }

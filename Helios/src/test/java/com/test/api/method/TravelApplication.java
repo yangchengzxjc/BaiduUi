@@ -2,6 +2,7 @@ package com.test.api.method;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.hand.api.ApplicationApi;
 import com.hand.api.ExpenseApi;
 import com.hand.api.ReimbursementApi;
@@ -56,7 +57,7 @@ public class TravelApplication {
      */
     public HashMap<String,String> createTravelApplication(Employee employee, String formName, FormComponent component) throws HttpStatusException {
         JsonObject formDetail = reimbursementApi.getFormDetail(employee,applicationFormOID(employee,formName));
-        JsonObject jsonObject = applicationApi.createApplication(employee,formDetail,component,employee.getJobId(),employee.getUserOID());
+        JsonObject jsonObject = applicationApi.createApplication(employee,formDetail,component);
         HashMap<String,String> info = new HashMap<>();
         info.put("applicationOID",jsonObject.get("applicationOID").getAsString());
         info.put("businessCode",jsonObject.get("businessCode").getAsString());
@@ -112,7 +113,7 @@ public class TravelApplication {
     }
 
     /**
-     * 此方法是获取到申请单中所有的预算费用
+     * 此方法是构建申请单中的预算费用
      * @param employee
      * @param budgetDetail
      * @param allAmount  所有的预算费用的的金额
@@ -129,33 +130,24 @@ public class TravelApplication {
      * 2.在提交前：获取到申请单详情 然后给详情中的customformValue的预算控件的value假如预算费用。
      * 这个方法是在获取详情后在添加预算费用
      * @param employee
-     * @param applicationOID
-     * @param budgetDetail  预算明细   如果确定该申请单配置了根据行程自动生成预算费用 则可以传空值
+     * @param applicationOID   申请单OID
+     * @param budgetDetail  预算明细   如果确定该申请单配置了根据行程自动生成预算费用 则可以传空值会自动生成预算费用
      */
     public JsonObject submitApplication(Employee employee,String applicationOID,String budgetDetail) throws HttpStatusException {
         JsonObject applicationDetail = applicationApi.getApplicationDetail(employee,applicationOID);
-        //进行申请单的检查
-        applicationApi.submitCheck(employee,applicationDetail);
+        log.info("申请单详情:{}",applicationDetail);
         JsonArray custFormValues = applicationDetail.get("custFormValues").getAsJsonArray();
         //检查申请单是否存预算费用 如果包含此字符串则预算费用为空
         String budgetExpense = getBudgetExpense(employee,applicationOID);
-        if(budgetExpense.contains("\"amount\":0.0")){
+        log.info("获取的申请单的预算为:{}",budgetExpense);
+        if(budgetExpense.contains("\"amount\":0,")) {
             //找到那个预算明细的控件  手动新建预算费用
-            for(int i=0; i<custFormValues.size();i++){
-                if(custFormValues.get(i).getAsJsonObject().get("fieldName").getAsString().equals("预算明细")){
-                    custFormValues.get(i).getAsJsonObject().addProperty("value",budgetDetail);
-                }
-            }
-        }else{
-            //找到那个预算明细的控件  自动加入预算
-            for(int i=0; i<custFormValues.size();i++){
-                if(custFormValues.get(i).getAsJsonObject().get("fieldName").getAsString().equals("预算明细")){
-                    custFormValues.get(i).getAsJsonObject().addProperty("value",budgetExpense);
+            for (int i = 0; i < custFormValues.size(); i++) {
+                if (custFormValues.get(i).getAsJsonObject().get("fieldName").getAsString().equals("预算明细")) {
+                    custFormValues.get(i).getAsJsonObject().addProperty("value", budgetDetail);
                 }
             }
         }
-        //把新的custFormValues加到详情中去
-        applicationDetail.add("custFormValues",custFormValues);
         //获取行程信息
         JsonObject itineraryInfo = getItinerary(employee,applicationOID);
         if(itineraryInfo.get("FLIGHT")!=null){
@@ -170,8 +162,42 @@ public class TravelApplication {
         if(itineraryInfo.get("HOTEL")!=null){
             applicationDetail.getAsJsonObject("travelApplication").addProperty("hotelBookingClerkOID",employee.getUserOID());
         }
-        log.info("申请单的详情:{}",applicationDetail);
+        log.info("添加完预算后的申请单的详情:{}",applicationDetail);
         return applicationApi.submitApplication(employee,applicationDetail);
+    }
+
+    /**
+     *申请单提交检查
+     * @param employee
+     * @param applicationOID
+     * @param applicationDetail
+     * @throws HttpStatusException
+     */
+    public JsonObject applicationSubmitCheck(Employee employee,String applicationOID,JsonObject applicationDetail) throws HttpStatusException {
+        return applicationApi.submitCheck(employee,applicationOID,applicationDetail);
+    }
+
+    /**
+     * 获取预算费用并修改金额
+     * @param employee
+     * @param applicationOID
+     * @param allamount    预算费用的总金额
+     * @param amount   单个预算费用的金额,
+     * @throws HttpStatusException
+     */
+    public JsonObject modifyBudgetAmount(Employee employee,String applicationOID,double allamount,double ... amount) throws HttpStatusException {
+        //获取到申请单中的预算费用
+        String budget = getBudgetExpense(employee,applicationOID);
+        JsonObject budgetObject = new JsonParser().parse(budget).getAsJsonObject();
+        budgetObject.addProperty("amount",allamount);
+        JsonArray budgetDetail = budgetObject.get("budgetDetail").getAsJsonArray();
+        for(int i=0;i<budgetDetail.size();i++){
+            budgetDetail.get(i).getAsJsonObject().addProperty("amount",amount[i]);
+            budgetDetail.get(i).getAsJsonObject().addProperty("baseCurrencyAmount",amount[i]);
+        }
+        //更新预算费用
+        budgetObject.add("budgetDetail",budgetDetail);
+        return budgetObject;
     }
 
     /**
@@ -214,5 +240,29 @@ public class TravelApplication {
         return applicationApi.getBudgetExpense(employee,applicationOID).get("value").getAsString();
     }
 
+    /**
+     * 提交费用申请单
+     * @param employee
+     * @param applicationOID
+     * @throws HttpStatusException
+     */
+    public void submitExpenseApplication(Employee employee,String applicationOID) throws HttpStatusException {
+        JsonObject applicationDetail = applicationApi.getApplicationDetail(employee,applicationOID);
+        applicationApi.submitExpenseApplication(employee,applicationDetail);
+    }
+
+    /**
+     * 创建费用申请单
+     * @param employee
+     * @param formName    表单名称
+     * @param component   控件对象
+     * @param budget   预算费用
+     * @throws HttpStatusException
+     */
+    public JsonObject createExpenseApplication(Employee employee,String formName,FormComponent component,String budget) throws HttpStatusException {
+        //获取表单详情
+        JsonObject formDetail = reimbursementApi.getFormDetail(employee,applicationFormOID(employee,formName));
+        return applicationApi.expenseApplication(employee,formDetail,component,budget);
+    }
 
 }

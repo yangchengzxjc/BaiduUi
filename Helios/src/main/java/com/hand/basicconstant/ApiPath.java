@@ -52,7 +52,6 @@ public class ApiPath {
         public static final String DEFAULT_VALUES ="/api/custom/form/user/default/values";
 
         public static final String QueryExpenseLocation= "/amap/v3/assistant/inputtips";
-
         //查询城市组
         public static final String QUERYCITYGROUP = "/api/levels/my";
 //        查询源泉税类别
@@ -178,6 +177,10 @@ public class ApiPath {
         public static final String ADD_EMPLOYEE = "/api/refactor/users/v2?roleType=TENANT";
         //证件新增 修改
         public static final String USERCARD="/api/contact/cards?roleType=TENANT";
+        //员工离职
+        public static final String LEAVE_EMPLOYEE = "/api/users/%s/set/leaving/date/%s";
+        //员工重新入职
+        public static final String REHIRE = "/api/refactor/users/rehire/%s";
         //获取系统值列表
         public static final String GET_SYSTEM_ENUMERATION ="/api/custom/enumeration/by/system/type";
         //获取值列表的详情
@@ -202,10 +205,16 @@ public class ApiPath {
         public static final String ADD_FLIGHT_ITINERARY ="/api/travel/flight/itinerary";
         //添加酒店
         public static final String ADD_HOTEL_ITINERARY = "/api/travel/hotel/itinerary";
+        //添加火车
+        public static final String ADD_TRAIN_ININERARY = "/api/travel/train/itinerary";
         //差旅申请单提交
         public static final String SUBMIT_APPLICATION = "/api/travel/applications/submit/v2";
         //差旅申请单提交检查
         public static final String SUBMIT_CHECK = "/api/application/submit/check";
+        //获取申请单中的差旅详情
+        public static final String APPLICATION_ITINERARY = "/api/travel/applications/itinerarys";
+        //自动获取预算费用
+        public static final String BUDGET_EXPENSE = "/api/application/form/expense/budget";
         //差补管控
         public static final String TRAVEL_SUBSIDY_CONFIG = "/api/travel/subsidy/control";
         //获取差补表单列表

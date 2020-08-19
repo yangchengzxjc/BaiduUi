@@ -8,7 +8,10 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.InfraEmployee;
 import com.hand.basicObject.supplierObject.UserCardInfoEntity;
 import com.hand.basicconstant.ApiPath;
+import com.hand.basicconstant.HeaderKey;
+import com.hand.basicconstant.ResourceId;
 import com.hand.utils.RandomNumber;
+import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -232,18 +235,6 @@ public class InfraStructureApi extends BaseRequest{
         return new JsonParser().parse(res).getAsJsonArray();
     }
 
-    /**
-     * 查询领导也就是查询员工
-     * @param employee
-     */
-    public JsonArray getUser(Employee employee) throws HttpStatusException {
-        String url = employee.getEnvironment().getUrl()+ApiPath.SEARCH_USER;
-        Map<String,String> urlParam=new HashMap<>();
-        urlParam.put("page","0");
-        urlParam.put("size","10");
-        String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
-        return new JsonParser().parse(res).getAsJsonArray();
-    }
 
     /**
      * 根据关键字搜索用户
@@ -337,6 +328,35 @@ public class InfraStructureApi extends BaseRequest{
         body.addProperty("originalCardNo",userCardInfoEntity.getOriginalCardNo());
         body.addProperty("userOID",userCardInfoEntity.getUserOID());
         String res = doPost(url,getHeader(employee.getAccessToken()),null,body.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 员工离职
+     * @param employee
+     * @param userOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public int leaveEmployee(Employee employee,String userOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+String.format(ApiPath.LEAVE_EMPLOYEE,userOID, UTCTime.getBeijingDate(-1));
+        HashMap<String,String> map =new HashMap<>();
+        map.put("roleType","TENANT");
+        return getPostStatusCode(url,getHeader(employee.getAccessToken(), HeaderKey.PERSION_MANAGE, ResourceId.EMPLOYEE_MANAGE),map,new JsonObject().toString(),null,employee);
+    }
+
+    /**
+     * 员工再次入职
+     * @param employee
+     * @param userOID  员工的userOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject rehire(Employee employee, String userOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+String.format(ApiPath.REHIRE,userOID);
+        HashMap<String,String> map =new HashMap<>();
+        map.put("roleType","TENANT");
+        String res = doPost(url,getHeader(employee.getAccessToken(), HeaderKey.PERSION_MANAGE, ResourceId.EMPLOYEE_MANAGE),map,new JsonObject().toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 }

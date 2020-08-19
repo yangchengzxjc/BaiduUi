@@ -131,7 +131,7 @@ public class ComponentQueryApi extends BaseRequest{
         urlbody.put("country","china");
         urlbody.put("size","10");
         String res=doGet(url,getHeader(employee.getAccessToken()),urlbody,employee);
-        log.info(res);
+        log.info("获取城市信息:{}",res);
         return new JsonParser().parse(res).getAsJsonArray();
     }
 
@@ -142,15 +142,17 @@ public class ComponentQueryApi extends BaseRequest{
      * @return
      * @throws HttpStatusException
      */
-    public  JsonArray getSelectParticipant(Employee employee,String formOID,String jobId) throws  HttpStatusException {
+    public  JsonArray getSelectParticipant(Employee employee,String formOID,String keyword) throws  HttpStatusException {
         String url=employee.getEnvironment().getUrl()+ ApiPath.SELECT_PARTICIPANT;
         Map<String, String> urlform = new HashMap<>();
         urlform.put("proposerOID",employee.getUserOID());
+        urlform.put("keyword",keyword);
         urlform.put("departmentOID",employee.getDepartmentOID());
         urlform.put("method", "0");
         urlform.put("size", "10");
         urlform.put("formOID", formOID);
-        urlform.put("jobId",jobId);
+        urlform.put("keywordLable",keyword);
+        urlform.put("jobId",employee.getJobId());
         String res= doGet(url,getHeader(employee.getAccessToken()),urlform,employee);
         return new JsonParser().parse(res).getAsJsonArray();
     }
@@ -215,5 +217,9 @@ public class ComponentQueryApi extends BaseRequest{
         parameters.put("size","20");
         String res =doGet(url,getHeader(employee.getAccessToken()),parameters,employee);
         return new JsonParser().parse(res).getAsJsonArray();
+    }
+
+    public void getSupplierOID(){
+
     }
 }

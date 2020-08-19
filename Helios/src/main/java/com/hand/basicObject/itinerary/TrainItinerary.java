@@ -1,4 +1,4 @@
-package com.hand.basicObject;
+package com.hand.basicObject.itinerary;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
  * @Version 1.0
  **/
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class TrainItinerary {
     //出发城市

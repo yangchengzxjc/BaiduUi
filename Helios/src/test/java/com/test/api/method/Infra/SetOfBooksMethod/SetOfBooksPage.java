@@ -45,9 +45,9 @@ public class SetOfBooksPage {
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject editSetOfBooks(Employee employee,SetOfBooks setOfBooks,String setOfBooksCode,String setOfBooksName,String updateSetOfBooksCode,String updateSetOfBooksName,String updatePeriodSetCode,String updateAccountSetId,String updateCurrencyCode) throws HttpStatusException {
+    public JsonObject editSetOfBooks(Employee employee,SetOfBooks setOfBooks,String setOfBooksCode,String setOfBooksName,String updateSetOfBooksCode,String updateSetOfBooksName,String updatePeriodSetCode,String updateAccountSetId,String updateCurrencyCode,String key) throws HttpStatusException {
 //        SetOfBooks setOfBooks = new SetOfBooks();
-        JsonObject setOfBooksInfo = setOfBooksDefine.getSetOfBooksDetail(employee,setOfBooksCode,setOfBooksName);
+        JsonObject setOfBooksInfo = setOfBooksDefine.getSetOfBooksDetail(employee,setOfBooksCode,setOfBooksName,key);
         setOfBooks.setSetOfBooksName(updateSetOfBooksName);
         setOfBooks.setSetOfBooksCode(updateSetOfBooksCode);
         setOfBooks.setPeriodSetCode(updatePeriodSetCode);

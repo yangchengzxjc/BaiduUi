@@ -232,7 +232,7 @@ public class ApiPath {
         //新增/编辑账套
         public static final String ADD_SET_OF_BOOKS = "/api/setOfBooks";
         //搜索账套
-        public static final String SEARCH_SET_OF_BOOKS = "/api/setOfBooks/query/dto";
+        public static final String GET_SET_OF_BOOKS = "/api/setOfBooks/query/dto";
         //获取账套详情
         public static final String GET_SET_OF_BOOKS_DETAIL ="/api/setOfBooks/%s";
 

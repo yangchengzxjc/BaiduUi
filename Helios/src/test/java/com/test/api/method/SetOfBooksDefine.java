@@ -87,8 +87,8 @@ public class SetOfBooksDefine {
      * @return
      * @throws HttpStatusException
      */
-    public String getSetOfBooksId(Employee employee,String setOfBooksCode,String setOfBooksName) throws HttpStatusException {
-        JsonArray setOfBooksList = SetOfBooksApi.getSetOfBooks(employee,setOfBooksCode,setOfBooksName);
+    public String getSetOfBooksId(Employee employee,String setOfBooksCode,String setOfBooksName,String key) throws HttpStatusException {
+        JsonArray setOfBooksList = SetOfBooksApi.getSetOfBooks(employee,setOfBooksCode,setOfBooksName,key);
         String id = "";
         if(GsonUtil.isNotEmpt(setOfBooksList)){
             id = setOfBooksList.get(0).getAsJsonObject().get("id").getAsString();
@@ -106,7 +106,7 @@ public class SetOfBooksDefine {
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject getSetOfBooksDetail(Employee employee,String setOfBooksCode,String setOfBooksName) throws HttpStatusException {
-        return SetOfBooksApi.getSetOfBooksDetail(employee,getSetOfBooksId(employee,setOfBooksCode,setOfBooksName));
+    public JsonObject getSetOfBooksDetail(Employee employee,String setOfBooksCode,String setOfBooksName,String key) throws HttpStatusException {
+        return SetOfBooksApi.getSetOfBooksDetail(employee,getSetOfBooksId(employee,setOfBooksCode,setOfBooksName,key));
     }
 }

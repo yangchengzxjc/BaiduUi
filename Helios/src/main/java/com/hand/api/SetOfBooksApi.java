@@ -143,8 +143,8 @@ public class SetOfBooksApi extends BaseRequest {
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray getSetOfBooks(Employee employee,String setOfBooksCode,String setOfBooksName) throws HttpStatusException {
-        String url = employee.getEnvironment().getUrl() + ApiPath.SEARCH_SET_OF_BOOKS;
+    public JsonArray getSetOfBooks(Employee employee,String setOfBooksCode,String setOfBooksName,String key) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.GET_SET_OF_BOOKS;
         Map<String, String> urlParam = new HashMap<>();
         urlParam.put("roleType","TENANT");
         urlParam.put("setOfBooksCode",setOfBooksCode);
@@ -152,7 +152,7 @@ public class SetOfBooksApi extends BaseRequest {
         urlParam.put("page","0");
         urlParam.put("size","20");
         urlParam.put("withAdditionalInfo","true");
-        String res = doGet(url,getHeader(employee.getAccessToken(),"set-of-books"),urlParam,employee);
+        String res = doGet(url,getHeader(employee.getAccessToken(),key),urlParam,employee);
         return new JsonParser().parse(res).getAsJsonArray();
     }
 

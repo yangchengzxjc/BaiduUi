@@ -22,6 +22,8 @@ public class ApiPath {
         public static final String NEW_EXPENSE_REPORT ="/api/expense/reports/custom/form/draft";
         //差旅申请单保存
         public static final String TRAVEL_APPLICATION_SAVE = "/api/travel/applications/draft";
+        //费用申请单保存
+        public static final String EXPENSE_APPLICATION_SAVE = "/api/expense/applications/draft";
 //        报销单选择部门
         public static final String EXPENSE_REPORT_SELECT_DEPARTMENT ="/api/DepartmentGroup/selectDept/enabled";
         //获取报销单中的审批历史
@@ -209,6 +211,8 @@ public class ApiPath {
         public static final String ADD_TRAIN_ININERARY = "/api/travel/train/itinerary";
         //差旅申请单提交
         public static final String SUBMIT_APPLICATION = "/api/travel/applications/submit/v2";
+        //费用申请单提交
+        public static final String SUBMIT_EXPENSE_APPLICATION = "/api/expense/applications/submit/v2";
         //差旅申请单提交检查
         public static final String SUBMIT_CHECK = "/api/application/submit/check";
         //获取申请单中的差旅详情

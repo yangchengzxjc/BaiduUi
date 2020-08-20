@@ -55,7 +55,7 @@ public class SyncApplicationTest extends BaseTest {
         component.setEndDate(UTCTime.getUtcTime(3,0));
         //添加参与人员  参与人员的value 是一段json数组。
         JsonArray array = new JsonArray();
-        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-员工"),"懿消费商(xiao/feishang)"));
+        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-消费平台"),"懿消费商(xiao/feishang)"));
         component.setParticipant(array.toString());
 //        创建申请单
         String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
@@ -67,7 +67,7 @@ public class SyncApplicationTest extends BaseTest {
         HotelItinerary hotelItinerary =new HotelItinerary("北京",1,component.getStartDate(),component.getEndDate(),SupplierOID.cimccTMC,expenseReportComponent.getCityCode(employee,"北京"));
         //初始化火车行程   中集
         ArrayList<TrainItinerary> trainItineraries =new ArrayList<>();
-        TrainItinerary trainItinerary =new TrainItinerary("南京市","广州市",component.getStartDate(),SupplierOID.cimccTMC,expenseReportComponent.getCityCode(employee,"南京市"),expenseReportComponent.getCityCode(employee,"广州市"));
+        TrainItinerary trainItinerary =new TrainItinerary("北京","深圳",component.getStartDate(),SupplierOID.cimccTMC,expenseReportComponent.getCityCode(employee,"北京"),expenseReportComponent.getCityCode(employee,"深圳"));
         flightItineraries.add(flightItinerary);
         hotelItineraries.add(hotelItinerary);
         trainItineraries.add(trainItinerary);
@@ -75,6 +75,7 @@ public class SyncApplicationTest extends BaseTest {
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
         travelApplication.addItinerary(employee,applicationOID,hotelItineraries);
         travelApplication.addItinerary(employee,applicationOID,trainItineraries);
+        //申请单提交
         travelApplication.submitApplication(employee,applicationOID,"");
     }
 
@@ -86,20 +87,15 @@ public class SyncApplicationTest extends BaseTest {
         component.setEndDate(UTCTime.getUtcTime(3,0));
         //添加参与人员  参与人员的value 是一段json数组。
         JsonArray array = new JsonArray();
-        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-员工"),"懿消费商"));
+        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-消费平台"),"懿消费商(xiao/feishang)"));
         component.setParticipant(array.toString());
         //创建申请单
-        String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-员工",component).get("applicationOID");
+        String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
         //添加飞机行程 供应商为中集
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
         FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, SupplierOID.dttrip,"西安市","北京",component.getEndDate(),component.getStartDate());
         flightItineraries.add(flightItinerary);
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
-        //申请单添加机票的预算
-        JsonObject expenseObject = travelApplication.addBudgetExpenseType(employee,1000.00,false,"机票","差旅申请单-节假日");
-        JsonArray expenseArray =new JsonArray();
-        expenseArray.add(expenseObject);
-        String budgetDetail = travelApplication.getBudgetDetail(employee,expenseArray,1000.00);
-        travelApplication.submitApplication(employee,applicationOID,budgetDetail);
+        travelApplication.submitApplication(employee,applicationOID,"");
     }
 }

@@ -77,7 +77,7 @@ public class SyncEmployee extends BaseTest {
         Assert.assertEquals(1003,status);
     }
 
-    @Test(description = "员工再次入职")
+    @Test(description = "员工重新入职")
     public void rehireTest03() throws HttpStatusException {
         //先判断员工是否是离职的状态
         if(infraStructure.getUserDetail(employee,"zhang58062@hui.com").get("status").getAsInt() != 1003){

@@ -77,7 +77,6 @@ public class DocumnetUtil {
         if(!file.exists()){
             try {
                 file.createNewFile();
-                file.getAbsolutePath();
             } catch (IOException e) {
                 e.printStackTrace();
             }

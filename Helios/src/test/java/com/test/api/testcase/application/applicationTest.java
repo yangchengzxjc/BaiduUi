@@ -29,7 +29,6 @@ import java.util.ArrayList;
 @Slf4j
 public class applicationTest extends BaseTest {
 
-    private FormComponent component;
     private Employee employee;
     private TravelApplication travelApplication;
     private ExpenseReportComponent expenseReportComponent;
@@ -39,7 +38,6 @@ public class applicationTest extends BaseTest {
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
     public void beforeClass(@Optional("14082978625") String phoneNumber, @Optional("hly12345") String pwd, @Optional("stage") String env){
-        component = FormComponent.builder().cause("自动化测试").build();
         employee=getEmployee(phoneNumber,pwd,env);
         travelApplication =new TravelApplication();
         expenseReportComponent = new ExpenseReportComponent();
@@ -48,7 +46,8 @@ public class applicationTest extends BaseTest {
     }
 
     @Test(description = "新建差旅申请单")
-    public void createApplication() throws HttpStatusException {
+    public void createApplicationTest01() throws HttpStatusException {
+        FormComponent component = new FormComponent("自动化测试新建差旅申请单");
         component.setDepartment(employee.getDepartmentOID());
         component.setStartDate(UTCTime.getNowUtcTime());
         component.setEndDate(UTCTime.getUtcTime(3,0));
@@ -69,5 +68,13 @@ public class applicationTest extends BaseTest {
         expenseArray.add(expenseObject);
         String budgetDetail = travelApplication.getBudgetDetail(employee,expenseArray,1000.00);
         travelApplication.submitApplication(employee,applicationOID,budgetDetail);
+    }
+
+    @Test(description = "新建费用申请单")
+    public void createApplicationTest02(){
+        FormComponent component = new FormComponent("自动化测试新建费用申请单");
+        component.setDepartment(employee.getDepartmentOID());
+//        travelApplication.addBudgetExpenseType(employee,)
+//        travelApplication.createExpenseApplication(employee,"费用申请单-测试",component);
     }
 }

@@ -33,11 +33,22 @@ public class RandomNumber {
     }
 
     /**
-     * 返回5位数的小数
+     * 返回5位数的随机数
      * @return
      */
     public static int getRandomNumber(){
         return (int) (Math.random()*90000+10000);
+    }
+
+    /**
+     * 返回两数之间的随机数
+     * @param number1
+     * @param number2
+     * @return
+     */
+    public static int getRandomNumber(int number1, int number2){
+        Random random =new Random();
+        return random.nextInt(number2-number1+1)+number1;
     }
 
     /**

@@ -9,6 +9,7 @@ import com.hand.basicObject.FormComponent;
 import com.hand.basicconstant.ApiPath;
 import com.hand.basicconstant.BaseConstant;
 import com.hand.utils.GsonUtil;
+import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
 
@@ -226,16 +227,14 @@ public class ReimbursementApi extends BaseRequest {
      * @param employee
      * @param isMoreApplication 是否多关联多申请
      * @param formdetal   控件详情
-     * @param jobId    岗位id
-     * @param userOID
      * @return
      * @throws HttpStatusException
      */
-    public  JsonObject createTravelExpenseReport(Employee employee, boolean isMoreApplication, JsonObject formdetal, FormComponent component, String jobId, String userOID) throws HttpStatusException {
+    public  JsonObject createTravelExpenseReport(Employee employee, boolean isMoreApplication, JsonObject formdetal, FormComponent component) throws HttpStatusException {
         JsonObject responseEntity=null;
         JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
         String url = employee.getEnvironment().getUrl()+ ApiPath.NEW_EXPENSE_REPORT;
-        JsonArray  custFormValues=processCustFormValues(employee,formdetal,component);
+        JsonArray  custFormValues = processCustFormValues(employee,formdetal,component);
         formdetal.remove("custFormValues");
         formdetal.remove("customFormFields");
         formdetal.add("custFormValues",custFormValues);
@@ -243,14 +242,46 @@ public class ReimbursementApi extends BaseRequest {
         formdetal.addProperty("visibleUserScope",1001);
         formdetal.addProperty("timeZoneOffset",480);
         formdetal.addProperty("currencySame",false);
-        formdetal.addProperty("applicantJobId",jobId);
+        formdetal.addProperty("applicantJobId",employee.getJobId());
         formdetal.add("countersignApproverOIDs",new JsonArray());
-        formdetal.addProperty("applicantOID",userOID);
+        formdetal.addProperty("applicantOID",employee.getUserOID());
         formdetal.addProperty("associateExpenseReport",true);
         formdetal.addProperty("applicationOID",component.getApplicationOID());
         if(isMoreApplication){
             formdetal.add("expenseReportApplicationDTOS",component.getExpenseReportApplicationDTOS());
         }
+        formdetal.add("expenseReportInvoices", new JsonArray());
+        formdetal.addProperty("recalculateSubsidy",true);
+        String res= doPost(url,getHeader(employee.getAccessToken()),null,formdetal.toString(),null,employee);
+        responseEntity=new JsonParser().parse(res).getAsJsonObject();
+        return  responseEntity;
+    }
+
+    /**
+     * 差旅报销单创建  ---控件信息由申请单带出
+     * @param employee
+     * @param applicationOID  需要关联的申请单的OID
+     * @param formdetal   控件详情
+     * @param customFormValues  申请单带出的控件信息
+     * @return
+     * @throws HttpStatusException
+     */
+    public  JsonObject createTravelExpenseReport(Employee employee, String applicationOID,JsonObject formdetal,JsonArray customFormValues) throws HttpStatusException {
+        JsonObject responseEntity=null;
+        JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
+        String url = employee.getEnvironment().getUrl()+ ApiPath.NEW_EXPENSE_REPORT;
+        formdetal.remove("custFormValues");
+        formdetal.remove("customFormFields");
+        formdetal.add("custFormValues",customFormValues);
+        formdetal.add("customFormFields",customFormFields);
+        formdetal.addProperty("visibleUserScope",1001);
+        formdetal.addProperty("timeZoneOffset",480);
+        formdetal.addProperty("currencySame",false);
+        formdetal.addProperty("applicantJobId",employee.getJobId());
+        formdetal.add("countersignApproverOIDs",new JsonArray());
+        formdetal.addProperty("applicantOID",employee.getUserOID());
+        formdetal.addProperty("associateExpenseReport",true);
+        formdetal.addProperty("applicationOID",applicationOID);
         formdetal.add("expenseReportInvoices", new JsonArray());
         formdetal.addProperty("recalculateSubsidy",true);
         String res= doPost(url,getHeader(employee.getAccessToken()),null,formdetal.toString(),null,employee);
@@ -506,7 +537,7 @@ public class ReimbursementApi extends BaseRequest {
                     data.addProperty("value",component.getCompany());
                     break;
                 case "事由":                      //事由
-                    data.addProperty("value","自动化测试");
+                    data.addProperty("value",component.getCause());
                     break;
                 case "城市":               //城市
 //                    String  city=componentQueryApi.locationSearch(employee,"西安").get(0).getAsJsonObject().get("city").getAsString();
@@ -636,11 +667,10 @@ public class ReimbursementApi extends BaseRequest {
         urlform.put("userOID",employee.getUserOID());
         String res= doGet(url,getHeader(employee.getAccessToken()),urlform,employee);
         return new JsonParser().parse(res).getAsJsonArray();
-
     }
 
     /**
-     * 申请单带入的默认value
+     * 报销单默认带出申请单带入的默认value
      * @param employee
      * @param applicationOID
      * @return
@@ -657,4 +687,60 @@ public class ReimbursementApi extends BaseRequest {
         String res= doPost(url,getHeader(employee.getAccessToken()),urlform,array.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonArray();
     }
+
+    /**
+     * 制造数据   根据需求添加控件
+     * @param employee
+     * @param formdetal
+     * @return
+     * @throws HttpStatusException
+     */
+    JsonArray processCustFormValues(Employee employee, JsonObject formdetal) throws HttpStatusException {
+        JsonArray custFormValues = formdetal.get("customFormFields").getAsJsonArray();
+        String formOID = formdetal.get("formOID").getAsString();
+        for (int i = 0; i < custFormValues.size(); i++) {
+            JsonObject data = custFormValues.get(i).getAsJsonObject();
+            String fieldName = data.get("fieldName").getAsString();
+            switch (fieldName){
+                case "事由":
+                    String [] casue ={"事由1","事由2","事由3"};
+                    data.addProperty("value",casue[RandomNumber.getRandomNumber(0,2)]);
+                case "部门":
+                    data.addProperty("value",employee.getDepartmentOID());
+            }
+        }
+        return custFormValues;
+    }
+
+    /**
+     * 造数据    日常报销单创建
+     * @param employee
+     * @param formdetal   控件详情
+     * @param jobId    岗位id
+     * @param userOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public  JsonObject createExpenseReport(Employee employee, JsonObject formdetal, String jobId, String userOID) throws HttpStatusException {
+        JsonObject responseEntity=null;
+        JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
+        String url = employee.getEnvironment().getUrl()+ ApiPath.NEW_EXPENSE_REPORT;
+        JsonArray  custFormValues=processCustFormValues(employee,formdetal);
+        formdetal.remove("custFormValues");
+        formdetal.remove("customFormFields");
+        formdetal.add("custFormValues",custFormValues);
+        formdetal.add("customFormFields",customFormFields);
+        formdetal.addProperty("visibleUserScope",1001);
+        formdetal.addProperty("timeZoneOffset",480);
+        formdetal.addProperty("currencySame",false);
+        formdetal.addProperty("applicantJobId",jobId);
+        formdetal.add("countersignApproverOIDs",new JsonArray());
+        formdetal.addProperty("applicantOID",userOID);
+        formdetal.add("expenseReportInvoices", new JsonArray());
+        formdetal.addProperty("recalculateSubsidy",true);
+        String res= doPost(url,getHeader(employee.getAccessToken()),null,formdetal.toString(),null,employee);
+        responseEntity=new JsonParser().parse(res).getAsJsonObject();
+        return  responseEntity;
+    }
+
 }

@@ -24,7 +24,7 @@ public class SetOfBooksTest extends BaseTest {
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void beforeClass(@Optional("14007080001") String phoneNumber, @Optional("hly123456") String pwd, @Optional("stage") String env) {
+    public void beforeClass(@Optional("14082978888") String phoneNumber, @Optional("hly123") String pwd, @Optional("stage") String env) {
         employee = getEmployee(phoneNumber, pwd, env);
         setOfBooksDefine = new SetOfBooksDefine();
         setOfBooksPage = new SetOfBooksPage();
@@ -99,13 +99,12 @@ public class SetOfBooksTest extends BaseTest {
         String updateCurrencyCode = object.get("functionalCurrencyCode").getAsString();
         //将取到的账套code和name传递给编辑账套方法
         JsonObject editObject = setOfBooksPage.editSetOfBooks(employee, setOfBooks, setOfBooksCode, setOfBooksName, updateSetOfBooksCode, updateSetOfBooksName, updatePeriodSetCode, updateAccountSetId, updateCurrencyCode);
-        //没有正常返回错误信息
-//        String message = editObject.get("message").getAsString();
-//        log.info("获取到的message信息：" + message);
-//        String errorCode = editObject.get("errorCode").getAsString();
-//        log.info("获取到的错误代码：" + errorCode);
-//        Assert.assertEquals(message,"字符长度大于0&小于36,且只能输入数字,字母,下划线,点符号");
-//        Assert.assertEquals(errorCode,"6029001");
+        String message = editObject.get("message").getAsString();
+        log.info("获取到的message信息：" + message);
+        String errorCode = editObject.get("errorCode").getAsString();
+        log.info("获取到的错误代码：" + errorCode);
+        Assert.assertEquals(message,"帐套code不允许修改");
+        Assert.assertEquals(errorCode,"6018016");
     }
 
 }

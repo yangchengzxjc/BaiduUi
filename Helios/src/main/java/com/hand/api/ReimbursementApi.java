@@ -232,9 +232,14 @@ public class ReimbursementApi extends BaseRequest {
      */
     public  JsonObject createTravelExpenseReport(Employee employee, boolean isMoreApplication, JsonObject formdetal, FormComponent component) throws HttpStatusException {
         JsonObject responseEntity=null;
+        JsonArray  custFormValues;
         JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
         String url = employee.getEnvironment().getUrl()+ ApiPath.NEW_EXPENSE_REPORT;
-        JsonArray  custFormValues = processCustFormValues(employee,formdetal,component);
+        if(component==null){
+            custFormValues = processCustFormValues(employee,formdetal);
+        }else{
+            custFormValues = processCustFormValues(employee,formdetal,component);
+        }
         formdetal.remove("custFormValues");
         formdetal.remove("customFormFields");
         formdetal.add("custFormValues",custFormValues);
@@ -513,9 +518,11 @@ public class ReimbursementApi extends BaseRequest {
                     break;
                 case "结束日期":     // 结束日期
                     data.addProperty("value",component.getEndDate());
+                    data.addProperty("startDate",component.getStartDate());
                     break;
                 case "开始日期":      //开始日期
                     data.addProperty("value",component.getStartDate());
+                    data.addProperty("endDate",component.getEndDate());
                     break;
                 case "日期":             //日期
                     data.addProperty("value", UTCTime.getNowUtcTime());
@@ -704,9 +711,34 @@ public class ReimbursementApi extends BaseRequest {
             switch (fieldName){
                 case "事由":
                     String [] casue ={"事由1","事由2","事由3"};
-                    data.addProperty("value",casue[RandomNumber.getRandomNumber(0,2)]);
+                    int number =RandomNumber.getRandomNumber(0,2);
+                    data.addProperty("value",casue[number]);
+                    break;
                 case "部门":
                     data.addProperty("value",employee.getDepartmentOID());
+                    break;
+                case "参与人员":
+                    //添加参与人员  参与人员的value 是一段json数组。 默认选择自己
+                    JsonArray array = new JsonArray();
+                    ComponentQueryApi componentQueryApi = new ComponentQueryApi();
+//                    JsonArray participants = componentQueryApi.getSelectParticipant(employee,formdetal.get("formOID").getAsString(),employee.getFullName());
+                    JsonObject participant =new JsonObject();
+                    participant.addProperty("userOID",employee.getUserOID());
+                    participant.addProperty("fullName",employee.getFullName());
+                    participant.addProperty("participantOID",employee.getUserOID());
+                    participant.addProperty("highOff", (String) null);
+                    participant.addProperty("avatar",(String) null);
+                    array.add(participant);
+                    data.addProperty("value",array.toString());
+                    break;
+                case "结束日期":     // 结束日期
+                    data.addProperty("value",UTCTime.getUtcTime(5,0));
+                    data.addProperty("startDate",UTCTime.getNowUtcTime());
+                    break;
+                case "开始日期":      //开始日期
+                    data.addProperty("value",UTCTime.getNowUtcTime());
+                    data.addProperty("endDate",UTCTime.getUtcTime(5,0));
+                    break;
             }
         }
         return custFormValues;

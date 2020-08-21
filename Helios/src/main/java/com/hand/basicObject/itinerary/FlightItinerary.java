@@ -31,6 +31,10 @@ public class FlightItinerary {
     String takeOffBeginTime;
     //落地时间
     String takeOffEndTime;
+    //返回起飞时间
+    String arrivalBeginTime;
+    //返回落地时间
+    String arrivalEndTime;
     //账户
     String discount;
     //舱等 经济舱、公务舱、头等舱、超级经济舱

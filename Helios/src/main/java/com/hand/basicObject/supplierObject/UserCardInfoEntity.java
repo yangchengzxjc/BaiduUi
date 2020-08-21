@@ -13,7 +13,7 @@ public class UserCardInfoEntity {
     private CardType cardType;
     //证件OID
     private String contactCardOID;
-    //性别
+    //性别  男：0  女：1
     private String gender;
     //生日
     private String birthday;

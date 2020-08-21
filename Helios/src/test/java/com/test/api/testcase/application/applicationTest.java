@@ -6,8 +6,10 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.basicObject.FormComponent;
+import com.hand.basicconstant.SupplierOID;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
+import com.test.api.method.ApplicationMethod.TravelApplicationPage;
 import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportComponent;
 import com.test.api.method.TravelApplication;
@@ -27,24 +29,25 @@ import java.util.ArrayList;
 @Slf4j
 public class applicationTest extends BaseTest {
 
-    private FormComponent component;
     private Employee employee;
     private TravelApplication travelApplication;
     private ExpenseReportComponent expenseReportComponent;
     private ExpenseReport expenseReport;
+    private TravelApplicationPage travelApplicationPage;
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
     public void beforeClass(@Optional("14082978625") String phoneNumber, @Optional("hly12345") String pwd, @Optional("stage") String env){
-        component = FormComponent.builder().cause("自动化测试").build();
         employee=getEmployee(phoneNumber,pwd,env);
         travelApplication =new TravelApplication();
         expenseReportComponent = new ExpenseReportComponent();
         expenseReport =new ExpenseReport();
+        travelApplicationPage =new TravelApplicationPage();
     }
 
     @Test(description = "新建差旅申请单")
-    public void createApplication() throws HttpStatusException {
+    public void createApplicationTest01() throws HttpStatusException {
+        FormComponent component = new FormComponent("自动化测试新建差旅申请单");
         component.setDepartment(employee.getDepartmentOID());
         component.setStartDate(UTCTime.getNowUtcTime());
         component.setEndDate(UTCTime.getUtcTime(3,0));
@@ -56,16 +59,7 @@ public class applicationTest extends BaseTest {
         String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-节假日",component).get("applicationOID");
         //添加差旅行程(目前支持飞机行程和酒店行程)
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
-        FlightItinerary flightItinerary =new FlightItinerary();
-        flightItinerary.setItineraryType(1002);
-        flightItinerary.setDiscount("");
-        flightItinerary.setFromCity("西安");
-        flightItinerary.setToCity("北京");
-        flightItinerary.setStartDate(UTCTime.getNowStartUtcDate());
-        //如果这块是往返的话，这块时间必须跟控件上的结束时间一致  单程的话就是今天时间
-        flightItinerary.setEndDate(UTCTime.getUtcStartDate(3));
-        flightItinerary.setFromCityCode(expenseReportComponent.getCityCode(employee,"西安"));
-        flightItinerary.setToCityCode(expenseReportComponent.getCityCode(employee,"北京"));
+        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001,SupplierOID.CTRIP_AIR,"西安市","北京",component.getEndDate(),component.getStartDate());
         flightItineraries.add(flightItinerary);
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
         //申请单添加预算
@@ -74,5 +68,13 @@ public class applicationTest extends BaseTest {
         expenseArray.add(expenseObject);
         String budgetDetail = travelApplication.getBudgetDetail(employee,expenseArray,1000.00);
         travelApplication.submitApplication(employee,applicationOID,budgetDetail);
+    }
+
+    @Test(description = "新建费用申请单")
+    public void createApplicationTest02(){
+        FormComponent component = new FormComponent("自动化测试新建费用申请单");
+        component.setDepartment(employee.getDepartmentOID());
+//        travelApplication.addBudgetExpenseType(employee,)
+//        travelApplication.createExpenseApplication(employee,"费用申请单-测试",component);
     }
 }

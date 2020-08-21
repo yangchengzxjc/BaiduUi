@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite" parallel="tests" thread-count="2">
+
+    <parameter name="environment" value="${environment}"/>
+    <parameter name="passWord" value="hly12345"/>
+
+    <test verbose="10" preserve-order="true" name="消费平台测试">
+        <parameter name="phoneNumber" value="${phoneNumber}"/>
+        <classes>
+            <class name="com.test.api.testcase.supplier.SyncApplicationTest"/>
+            <class name="com.test.api.testcase.supplier.SyncEmployee"/>
+        </classes>
+    </test>
+
+    <listeners>
+        <listener class-name="com.test.listener.TestLogListener"/>
+        <listener class-name="com.test.listener.TestReportListener"/>
+    </listeners>
+</suite>
+

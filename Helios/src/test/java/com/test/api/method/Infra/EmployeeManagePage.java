@@ -7,6 +7,7 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.InfraEmployee;
 import com.hand.basicObject.InfraJob;
+import com.hand.basicObject.supplierObject.UserCardInfoEntity;
 import com.hand.basicconstant.CardType;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
@@ -69,8 +70,8 @@ public class EmployeeManagePage {
         infraJob.setUni_id(company.get("companyId")+department.get("departmentId")+position);
         infraJob.set_index(0);
         infraJobArrayList.add(infraJob);
-        JsonObject jsonObject = infraStructure.addEmployee(employee,infraEmployee,infraJobArrayList);
-        return jsonObject;
+        JsonObject employeeInfo = infraStructure.addEmployee(employee,infraEmployee,infraJobArrayList);
+        return employeeInfo;
     }
 
     /**
@@ -89,10 +90,30 @@ public class EmployeeManagePage {
     }
 
     /**
-     * 新增员工证件信息
+     * 新增证件
+     * @param employee
+     * @param userOID
+     * @param cardType
+     * @param lastName
+     * @param enable
+     * @return
+     * @throws HttpStatusException
      */
     public JsonObject addUserCard(Employee employee,String userOID, CardType cardType,String lastName,Boolean enable) throws HttpStatusException {
-        JsonObject jsonObject = infraStructure.addUserCardInfo(employee,userOID,cardType,lastName,enable);
+        UserCardInfoEntity userCardInfoEntity = new UserCardInfoEntity();
+        userCardInfoEntity.setCardType(cardType);
+        userCardInfoEntity.setContactCardOID(null);
+        userCardInfoEntity.setLastName(lastName);
+        userCardInfoEntity.setGender("0");
+        userCardInfoEntity.setBirthday("2020-07-29T10:25:11+08:00");
+        userCardInfoEntity.setNationalityCode("CN");
+        userCardInfoEntity.setCardDefault(false);
+        userCardInfoEntity.setEnable(enable);
+        userCardInfoEntity.setCardNo("11223344");
+        userCardInfoEntity.setOriginalCardNo("");
+        userCardInfoEntity.setCardExpiredTime("2022-07-29T10:25:11+08:00");
+        userCardInfoEntity.setUserOID(userOID);
+        JsonObject jsonObject = infraStructure.addUserCardInfo(employee,userCardInfoEntity);
         return jsonObject;
     }
 

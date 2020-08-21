@@ -10,6 +10,7 @@ import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -131,6 +132,22 @@ public class ExpenseReport {
      */
     public HashMap<String,String> createExpenseReport (Employee employee, String formName, FormComponent component) throws HttpStatusException {
         JsonObject jsonObject =reimbursementApi.createExpenseReport(employee,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName)),component,employee.getJobId(),employee.getUserOID());
+        HashMap<String,String> info =new HashMap<>();
+        info.put("expenseReportOID",jsonObject.get("expenseReportOID").getAsString());
+        info.put("businessCode",jsonObject.get("businessCode").getAsString());
+        log.info("businessCode:{}",info.get("businessCode"));
+        return info;
+    }
+
+    /**
+     * 造数据---新建报销单
+     * @param employee
+     * @param formName
+     * @return
+     * @throws HttpStatusException
+     */
+    public HashMap<String,String> createExpenseReport (Employee employee, String formName) throws HttpStatusException {
+        JsonObject jsonObject =reimbursementApi.createExpenseReport(employee,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName)),employee.getJobId(),employee.getUserOID());
         HashMap<String,String> info =new HashMap<>();
         info.put("expenseReportOID",jsonObject.get("expenseReportOID").getAsString());
         info.put("businessCode",jsonObject.get("businessCode").getAsString());
@@ -331,13 +348,31 @@ public class ExpenseReport {
      * @throws HttpStatusException
      */
     public HashMap<String, String> createTravelExpenseReport(Employee employee, boolean isMoreApplication, String formName, FormComponent component) throws HttpStatusException {
-        JsonObject jsonObject = reimbursementApi.createTravelExpenseReport(employee,isMoreApplication,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName)),component,employee.getJobId(),employee.getUserOID());
+        JsonObject jsonObject = reimbursementApi.createTravelExpenseReport(employee,isMoreApplication,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName)),component);
         HashMap<String,String> info =new HashMap<>();
         info.put("expenseReportOID",jsonObject.get("expenseReportOID").getAsString());
         info.put("businessCode",jsonObject.get("businessCode").getAsString());
         log.info("[businessCode]:{}",info.get("businessCode"));
         return info;
     }
+
+    /**
+     * 新建差旅报销单 ----- 控件数据由申请单带出的
+     * @param employee
+     * @param customFormValues 申请单带出的控件信息
+     * @param formName
+     * @return
+     * @throws HttpStatusException
+     */
+    public HashMap<String, String> createTravelExpenseReport(Employee employee, String formName, String applicationOID,JsonArray customFormValues) throws HttpStatusException {
+        JsonObject reportdetail = reimbursementApi.createTravelExpenseReport(employee,applicationOID,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName)),customFormValues);
+        HashMap<String,String> info =new HashMap<>();
+        info.put("expenseReportOID",reportdetail.get("expenseReportOID").getAsString());
+        info.put("businessCode",reportdetail.get("businessCode").getAsString());
+        log.info("[businessCode]:{}",info.get("businessCode"));
+        return info;
+    }
+
 
     /**
      * 根据控件名称获取申请单中带出的字段
@@ -351,4 +386,19 @@ public class ExpenseReport {
         JsonArray array =reimbursementApi.getValueFromApplication(employee,applicationOID);
         return GsonUtil.getJsonValue(array,"fieldName",fieldName,"value");
     }
+
+    /**
+     * 获取申请单自动默认带出的控件信息 all
+     * @param employee
+     * @param applicationOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getValueFromApplication(Employee employee,String applicationOID) throws HttpStatusException {
+        ArrayList<String> list =new ArrayList<>();
+        list.add(applicationOID);
+        return reimbursementApi.getValueFromApplication(employee,list);
+    }
+
+
 }

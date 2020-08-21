@@ -90,8 +90,8 @@ public class InfraStructure {
      * @throws HttpStatusException
      */
     public JsonObject addEmployee(Employee employee, InfraEmployee infraEmployee, ArrayList<InfraJob> infraJobs) throws HttpStatusException {
-        JsonObject object = infraStructureApi.addEmployee(employee,infraEmployee,userJobsDTOs(infraJobs),getEmployeeExpandForm(employee));
-        return object;
+        JsonObject employeeInfo = infraStructureApi.addEmployee(employee,infraEmployee,userJobsDTOs(infraJobs),getEmployeeExpandForm(employee));
+        return employeeInfo;
     }
 
     /**
@@ -108,14 +108,21 @@ public class InfraStructure {
     }
 
     /**
-     * 根据员工的fullName 返回userOID
+     * 根据员工的根据员工的邮箱 返回userOID
      * @param employee
-     * @param fullName
+     * @param keyWord   可以使用工号 姓名 邮箱进行搜索  但是工号可能匹配到别的地方 姓名可能重复  尽量使用邮箱进行搜索
      * @return
      * @throws HttpStatusException
      */
-    public String  searchUser(Employee employee,String fullName) throws HttpStatusException {
-        return GsonUtil.getJsonValue(infraStructureApi.getUser(employee),"fullName",fullName,"userOID");
+    public String searchUser(Employee employee,String keyWord) throws HttpStatusException {
+        JsonArray userList = infraStructureApi.getUser(employee, keyWord);
+        String userOID ="";
+        if(GsonUtil.isNotEmpt(userList)){
+            userOID = userList.get(0).getAsJsonObject().get("userOID").getAsString();
+        }else{
+            log.info("未搜索到用户");
+        }
+        return userOID;
     }
 
     /**
@@ -168,7 +175,7 @@ public class InfraStructure {
      * @return
      * @throws HttpStatusException
      */
-    private String getUserUserOID(Employee employee, String keyWords) throws HttpStatusException {
+    private String getUserOID(Employee employee, String keyWords) throws HttpStatusException {
         JsonArray userList = infraStructureApi.getUser(employee,keyWords);
         String userOID ="";
         if(GsonUtil.isNotEmpt(userList)){
@@ -187,28 +194,40 @@ public class InfraStructure {
      * @throws HttpStatusException
      */
     public JsonObject getUserDetail(Employee employee, String keyWords) throws HttpStatusException {
-        return infraStructureApi.employeeDetail(employee,getUserUserOID(employee,keyWords));
+        return infraStructureApi.employeeDetail(employee,getUserOID(employee,keyWords));
     }
 
     /**
      * 新增证件信息
      * @param employee
      */
-    public JsonObject addUserCardInfo(Employee employee,String userOID,CardType cardType,String lastName,Boolean enable) throws HttpStatusException {
-        UserCardInfoEntity userCardInfoEntity = new UserCardInfoEntity();
-        userCardInfoEntity.setCardType(cardType);
-        userCardInfoEntity.setContactCardOID(null);
-        userCardInfoEntity.setLastName(lastName);
-        userCardInfoEntity.setGender("0");
-        userCardInfoEntity.setBirthday("2020-07-29T10:25:11+08:00");
-        userCardInfoEntity.setNationalityCode("CN");
-        userCardInfoEntity.setCardDefault(false);
-        userCardInfoEntity.setEnable(enable);
-        userCardInfoEntity.setCardNo("11223344");
-        userCardInfoEntity.setOriginalCardNo("");
-        userCardInfoEntity.setCardExpiredTime("2022-07-29T10:25:11+08:00");
-        userCardInfoEntity.setUserOID(userOID);
+    public JsonObject addUserCardInfo(Employee employee,UserCardInfoEntity userCardInfoEntity) throws HttpStatusException {
         JsonObject cardInfo = infraStructureApi.addUserCardInfo(employee,userCardInfoEntity);
         return cardInfo;
     }
+
+    /**
+     * 员工离职    (员工离职后 员工详情中的status字段是1003 待离职是1002  未离职是1001)
+     * @param employee
+     * @param keyWord   可以使用工号 姓名 邮箱进行搜索  但是工号可能匹配到别的地方 姓名可能重复  尽量使用邮箱进行搜索
+     * @return
+     * @throws HttpStatusException
+     */
+    public int leaveEmployee(Employee employee,String keyWord) throws HttpStatusException {
+       return infraStructureApi.leaveEmployee(employee,searchUser(employee,keyWord));
+    }
+
+    /**
+     * 员工再次入职
+     * @param employee
+     * @param keyWord   姓名   工号  邮箱等关键字
+     * @return
+     * @throws HttpStatusException
+     */
+    public String rehire(Employee employee, String keyWord) throws HttpStatusException {
+        JsonObject checkResult = infraStructureApi.rehire(employee,searchUser(employee,keyWord));
+        return checkResult.get("checkResult").getAsString();
+    }
+
+
 }

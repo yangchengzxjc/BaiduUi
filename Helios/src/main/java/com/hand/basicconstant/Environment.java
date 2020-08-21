@@ -15,7 +15,10 @@ public enum Environment {
     UAT("uat", "https://uat.huilianyi.com"),
     STAGE("stage", "https://stage.huilianyi.com"),
     CONSOLE("console", "https://console.huilianyi.com"),
+    mcd("mcd","https://tes.mcd.com.cn/"),
     CONSOLE_TC("console-tc", "https://console-tc.huilianyi.com");
+
+
 
 
     private String environment;

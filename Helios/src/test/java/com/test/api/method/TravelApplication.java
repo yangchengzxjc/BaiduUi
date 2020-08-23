@@ -51,8 +51,8 @@ public class TravelApplication {
     /**
      *创建（保存）差旅申请单
      * @param employee
-     * @param formName
-     * @param component
+     * @param formName  表单名称
+     * @param component    component 为空对象的话就会进入默认的造数据表单控件
      * @throws HttpStatusException
      */
     public HashMap<String,String> createTravelApplication(Employee employee, String formName, FormComponent component) throws HttpStatusException {
@@ -65,18 +65,19 @@ public class TravelApplication {
         return info;
     }
 
+
     /**
      *预算费用类型详情  此方法是单个差旅预算费用 生成之后要添加到一个JsonArray 中去
-     * 需要俩个的话 就添加俩个
+     * 需要俩个的话 就添加俩个 (暂时默认币种是人民币)
      * @param employee
-     * @param amount
-     * @param isCompanyPay
-     * @param expenseName
+     * @param amount 金额
+     * @param isCompanyPay  是否公司支付
+     * @param expenseName  费用名称
      * @param formName
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject addBudgetExpenseType(Employee employee,double amount, boolean isCompanyPay,String expenseName,String formName) throws HttpStatusException {
+    public JsonObject addBudgetExpense(Employee employee,double amount, boolean isCompanyPay,String expenseName,String formName) throws HttpStatusException {
         JsonArray array = applicationApi.getBudgetExpenseType(employee,applicationFormOID(employee,formName));
         JsonObject object =new JsonObject();
         JsonObject expenseType =new JsonObject();
@@ -97,7 +98,7 @@ public class TravelApplication {
             budget.addProperty("paymentType",1001);
         }
         budget.addProperty("actualCurrencyRate",1);
-        budget.addProperty("actualCurrencyRate",1);
+        budget.addProperty("companyCurrencyRate",1);
         budget.addProperty("currencyCode","CNY");
         budget.addProperty("amount",amount);
         budget.addProperty("baseCurrencyAmount",amount);
@@ -114,11 +115,10 @@ public class TravelApplication {
 
     /**
      * 此方法是构建申请单中的预算费用
-     * @param employee
      * @param budgetDetail
      * @param allAmount  所有的预算费用的的金额
      */
-    public String getBudgetDetail(Employee employee,JsonArray budgetDetail,double allAmount){
+    public String addBudgetDetail(JsonArray budgetDetail,double allAmount){
         JsonObject object = new JsonObject();
         object.add("budgetDetail",budgetDetail);
         object.addProperty("amount",allAmount);
@@ -135,7 +135,6 @@ public class TravelApplication {
      */
     public JsonObject submitApplication(Employee employee,String applicationOID,String budgetDetail) throws HttpStatusException {
         JsonObject applicationDetail = applicationApi.getApplicationDetail(employee,applicationOID);
-        log.info("申请单详情:{}",applicationDetail);
         JsonArray custFormValues = applicationDetail.get("custFormValues").getAsJsonArray();
         //检查申请单是否存预算费用 如果包含此字符串则预算费用为空
         String budgetExpense = getBudgetExpense(employee,applicationOID);
@@ -162,7 +161,6 @@ public class TravelApplication {
         if(itineraryInfo.get("HOTEL")!=null){
             applicationDetail.getAsJsonObject("travelApplication").addProperty("hotelBookingClerkOID",employee.getUserOID());
         }
-        log.info("添加完预算后的申请单的详情:{}",applicationDetail);
         return applicationApi.submitApplication(employee,applicationDetail);
     }
 

@@ -42,11 +42,13 @@ public class ExpenseReport {
         JsonArray jsonArray=null;
         String formOID="";
         jsonArray=reimbursementApi.getAvailableforms(employee,"102",employee.getJobId());
-        for(int i=0; i<jsonArray.size(); i++){
-            JsonObject jsonObject=jsonArray.get(i).getAsJsonObject();
-            if(jsonObject.get("formName").getAsString().equalsIgnoreCase(formName)){
-                formOID=jsonObject.get("formOID").getAsString();
-            }
+        if(GsonUtil.isNotEmpt(jsonArray)){
+            formOID=GsonUtil.getJsonValue(jsonArray,"formName",formName,"formOID");
+        }
+        //如果formOID 为空的话 则去申请单查找下是否存在该表单
+        if(formOID.equals("")){
+            jsonArray=reimbursementApi.getAvailableforms(employee,"101",employee.getJobId());
+            formOID = GsonUtil.getJsonValue(jsonArray,"formName",formName,"formOID");
         }
         return formOID;
     }
@@ -343,7 +345,7 @@ public class ExpenseReport {
      * @param employee
      * @param isMoreApplication
      * @param formName
-     * @param component
+     * @param component    如果控件数据是从申请单带出的  则初始化的时候使用带出的数据
      * @return
      * @throws HttpStatusException
      */
@@ -357,7 +359,7 @@ public class ExpenseReport {
     }
 
     /**
-     * 新建差旅报销单 ----- 控件数据由申请单带出的
+     * 新建差旅报销单 ----- 控件数据全部由申请单带出的
      * @param employee
      * @param customFormValues 申请单带出的控件信息
      * @param formName
@@ -373,7 +375,6 @@ public class ExpenseReport {
         return info;
     }
 
-
     /**
      * 根据控件名称获取申请单中带出的字段
      * @param employee
@@ -388,7 +389,7 @@ public class ExpenseReport {
     }
 
     /**
-     * 获取申请单自动默认带出的控件信息 all
+     * 获取申请单自动默认带出的控件信息 all   如果报销单的数据是从申请单带入的 则可以掉这个接口 初始化component
      * @param employee
      * @param applicationOID
      * @return

@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import com.hand.api.InfraStructureApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.EmployeeExtendedFields;
 import com.hand.basicObject.InfraEmployee;
 import com.hand.basicObject.InfraJob;
 import com.hand.basicObject.supplierObject.UserCardInfoEntity;
@@ -49,9 +50,17 @@ public class InfraStructure {
      * @param employee
      * @throws HttpStatusException
      */
-    private JsonArray getEmployeeExpandForm(Employee employee) throws HttpStatusException {
+    public String getEmployeeExpandFormOid(Employee employee) throws HttpStatusException {
         String formOID = infraStructureApi.getEmployeeExpandFormOID(employee).get("formOID").getAsString();
-        return infraStructureApi.getEmployeeExpandValue(employee,formOID);
+        log.info("获取到的员工扩展字段oid：" + formOID);
+        return formOID;
+    }
+
+    public JsonArray getEmployeeExpandFormDetail(Employee employee) throws HttpStatusException {
+        JsonObject employeeExpandOid = infraStructureApi.getEmployeeExpandValue(employee,getEmployeeExpandFormOid(employee));
+        JsonArray employeeExpandFormDetail = employeeExpandOid.get("customFormFields").getAsJsonArray();
+        log.info("获取到的员工扩展字段数据：" + employeeExpandFormDetail);
+        return employeeExpandFormDetail;
     }
 
     /**
@@ -82,6 +91,10 @@ public class InfraStructure {
          return new JsonParser().parse(GsonUtil.objectToString(infraJob)).getAsJsonArray();
     }
 
+    public JsonArray userFiledDTOs(ArrayList<EmployeeExtendedFields> EmployeeExtendedFields){
+        return new JsonParser().parse(GsonUtil.objectToString(EmployeeExtendedFields)).getAsJsonArray();
+    }
+
     /**
      * 新增员工
      * @param employee
@@ -89,8 +102,8 @@ public class InfraStructure {
      * @param infraJobs
      * @throws HttpStatusException
      */
-    public JsonObject addEmployee(Employee employee, InfraEmployee infraEmployee, ArrayList<InfraJob> infraJobs) throws HttpStatusException {
-        JsonObject employeeInfo = infraStructureApi.addEmployee(employee,infraEmployee,userJobsDTOs(infraJobs),getEmployeeExpandForm(employee));
+    public JsonObject addEmployee(Employee employee,InfraEmployee infraEmployee, ArrayList<InfraJob> infraJobs, ArrayList<EmployeeExtendedFields> customFormValues) throws HttpStatusException {
+        JsonObject employeeInfo = infraStructureApi.addEmployee(employee,infraEmployee,userJobsDTOs(infraJobs),userFiledDTOs(customFormValues));
         return employeeInfo;
     }
 

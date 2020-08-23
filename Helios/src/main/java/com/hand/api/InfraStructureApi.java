@@ -199,12 +199,13 @@ public class InfraStructureApi extends BaseRequest{
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray getEmployeeExpandValue(Employee employee,String formOID) throws HttpStatusException {
-        String url = employee.getEnvironment().getUrl()+ApiPath.GET_EMPLOYEE_EXPAND;
-        Map<String,String> urlParam=new HashMap<>();
-        urlParam.put("formOID",formOID);
-        String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
-        return new JsonParser().parse(res).getAsJsonArray();
+    public JsonObject getEmployeeExpandValue(Employee employee,String formOID) throws HttpStatusException {
+//        String url = employee.getEnvironment().getUrl()+ApiPath.GET_EMPLOYEE_EXPAND;
+        String url = employee.getEnvironment().getUrl() + String.format(ApiPath.GET_EMPLOYEE_CUSTOM_FORM,formOID);
+//        Map<String,String> urlParam=new HashMap<>();
+//        urlParam.put("formOID",formOID);
+        String res = doGet(url,getHeader(employee.getAccessToken()),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
     }
 
     /**

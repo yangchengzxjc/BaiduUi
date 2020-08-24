@@ -84,6 +84,7 @@ public class applicationTest extends BaseTest {
         String applicationOID =application.get("applicationOID").getAsString();
         //申请单提交
         travelApplication.submitExpenseApplication(employee,applicationOID);
+        //费用申请单审批
         //新建费用报销单
         //获取申请单默认的控件信息
         JsonArray dafaultCustomFormValue = expenseReport.getValueFromApplication(employee,applicationOID);

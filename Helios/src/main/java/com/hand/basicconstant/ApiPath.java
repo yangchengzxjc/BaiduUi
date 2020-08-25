@@ -193,6 +193,8 @@ public class ApiPath {
         public static final String GET_EMPLOYEE_EXPAND = "/api/custom/values/form";
         //获取员工扩展字段的的表单名称
         public static final String GET_EMPLOYEE_EXPAND_form = "/api/custom/forms/by/form/code";
+        //获取员工扩展字段表单数据
+        public static final String GET_EMPLOYEE_CUSTOM_FORM = "/api/custom/forms/%s/simple";
         //系统值列表
         public static final String System_CUSTOMENUMATIONTYPE = "/api/v2/custom/enumerations";
         //搜索用户

@@ -5,10 +5,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.EmployeeExtendedFields;
 import com.hand.basicObject.InfraEmployee;
 import com.hand.basicObject.InfraJob;
 import com.hand.basicObject.supplierObject.UserCardInfoEntity;
 import com.hand.basicconstant.CardType;
+import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import com.test.api.method.InfraStructure;
@@ -43,13 +45,14 @@ public class EmployeeManagePage {
     public JsonObject addEmployee(Employee employee,String companyName,String departmentName,String departmentCode,String position,String duty,String rank) throws HttpStatusException {
         InfraEmployee infraEmployee =new InfraEmployee();
         InfraJob infraJob  = new InfraJob();
+        EmployeeExtendedFields employeeExtendedFields = new EmployeeExtendedFields();
         //邮箱不set的话会有默认值输入
         infraEmployee.setFullName("接口新建"+ UTCTime.getBeijingDate(0));
         infraEmployee.setEmployeeID(String.valueOf(RandomNumber.getRandomNumber()));
         infraEmployee.setMobile("283666"+RandomNumber.getRandomNumber());
         infraEmployee.setEmail(String.format("zhang%s@hui.com",RandomNumber.getRandomNumber()));
         infraEmployee.setEmployeeTypeCode(infraStructure.getCustomEnumerationValue(employee,"人员类型","技术"));
-        infraEmployee.setDirectManager(infraStructure.searchUser(employee,"懿消费商(xiao/feishang)"));
+        infraEmployee.setDirectManager(infraStructure.searchUser(employee,"懿测试宏"));
         infraEmployee.setGenderCode(0);
         log.info("新增的员工信息：{}",infraEmployee);
         ArrayList<InfraJob> infraJobArrayList = new ArrayList<>();
@@ -70,7 +73,22 @@ public class EmployeeManagePage {
         infraJob.setUni_id(company.get("companyId")+department.get("departmentId")+position);
         infraJob.set_index(0);
         infraJobArrayList.add(infraJob);
-        JsonObject employeeInfo = infraStructure.addEmployee(employee,infraEmployee,infraJobArrayList);
+        ArrayList<EmployeeExtendedFields> employeeExtendedFieldsArrayList = new ArrayList<>();
+        JsonObject employeeFiledDetails = getEmployeeFiledDetails(employee,1).getAsJsonObject();
+        employeeExtendedFields.setFieldOID(employeeFiledDetails.get("fieldOID").getAsString());
+        employeeExtendedFields.setFieldConstraint(employeeFiledDetails.get("fieldConstraint").getAsString());
+        employeeExtendedFields.setFieldContent(employeeFiledDetails.get("fieldContent").getAsString());
+        employeeExtendedFields.setFieldName(employeeFiledDetails.get("fieldName").getAsString());
+        employeeExtendedFields.setFieldType(employeeFiledDetails.get("fieldType").getAsString());
+        employeeExtendedFields.setFormOID(employeeFiledDetails.get("formOID").getAsString());
+        employeeExtendedFields.setMessageKey(employeeFiledDetails.get("messageKey").getAsString());
+        employeeExtendedFields.setReadOnly(employeeFiledDetails.get("isReadOnly").getAsBoolean());
+        employeeExtendedFields.setRequired(employeeFiledDetails.get("required").getAsBoolean());
+        employeeExtendedFields.setSequence(employeeFiledDetails.get("sequence").getAsInt());
+        employeeExtendedFields.setSystemSequence(employeeFiledDetails.get("systemSequence").getAsInt());
+        employeeExtendedFields.setValue("15");
+        employeeExtendedFieldsArrayList.add(employeeExtendedFields);
+        JsonObject employeeInfo = infraStructure.addEmployee(employee,infraEmployee,infraJobArrayList,employeeExtendedFieldsArrayList);
         return employeeInfo;
     }
 
@@ -87,6 +105,52 @@ public class EmployeeManagePage {
        JsonArray custformValue = userInfo.get("customFormValues").getAsJsonArray();
        JsonArray userJobsDTOs = userInfo.get("userJobsDTOs").getAsJsonArray();
        return infraStructure.editEmploye(employee,userInfo,infraEmployee,custformValue,userJobsDTOs);
+    }
+
+    /**
+     *获取员工扩展字段oid
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public String getEmployeeFiledOid(Employee employee) throws HttpStatusException {
+        return infraStructure.getEmployeeExpandFormOid(employee);
+    }
+
+    /**
+     * 根据扩展字段oid获取详情
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getEmployeeFiledDetail(Employee employee) throws HttpStatusException{
+        return infraStructure.getEmployeeExpandFormDetail(employee);
+    }
+
+    /**
+     * 根据systemSequence参数获取第n个扩展字段的详细字段信息
+     * @param employee
+     * @param systemSequence  第n个扩展字段的详细字段信息
+     * @return
+     * @throws HttpStatusException
+     */
+    private JsonObject getEmployeeFiledDetails(Employee employee,int systemSequence) throws HttpStatusException {
+        JsonObject employeeFiledDetail = getEmployeeFiledDetail(employee).get(systemSequence).getAsJsonObject();
+        log.info("获取到的第 " + systemSequence + " 个扩展字段的段值字段为：" + employeeFiledDetail);
+        return employeeFiledDetail;
+    }
+
+    /**
+     * 根据扩展字段名称获取对应字段的oid
+     * @param employee
+     * @param fieldName
+     * @return
+     * @throws HttpStatusException
+     */
+    public String getEmployeeFiledDetail01(Employee employee, String fieldName) throws HttpStatusException {
+        String fieldOID = GsonUtil.getJsonValue(infraStructure.getEmployeeExpandFormDetail(employee),"fieldName",fieldName,"fieldOID");
+        log.info("获取到的扩展字段oid：" + fieldOID);
+        return fieldOID;
     }
 
     /**

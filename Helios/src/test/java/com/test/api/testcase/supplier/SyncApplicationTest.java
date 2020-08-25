@@ -61,13 +61,14 @@ public class SyncApplicationTest extends BaseTest {
         String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
 //        //初始化飞机行程 供应商为中集
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
-        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, SupplierOID.cimccTMC,"西安市","北京",component.getEndDate(),component.getStartDate());
+        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, SupplierOID.cimccTMC,"西安市","北京",null,UTCTime.getNowStartUtcDate());
         //初始化酒店行程  中集
         ArrayList<HotelItinerary> hotelItineraries =new ArrayList<>();
-        HotelItinerary hotelItinerary =new HotelItinerary("北京",1,component.getStartDate(),component.getEndDate(),SupplierOID.cimccTMC,expenseReportComponent.getCityCode(employee,"北京"));
+        //酒店行程  开始日期要跟申请单的表头一样
+        HotelItinerary hotelItinerary =new HotelItinerary("北京",1,UTCTime.getNowStartUtcDate(),UTCTime.getUtcStartDate(3),SupplierOID.cimccTMC,expenseReportComponent.getCityCode(employee,"北京"));
         //初始化火车行程   中集
         ArrayList<TrainItinerary> trainItineraries =new ArrayList<>();
-        TrainItinerary trainItinerary =new TrainItinerary("北京","深圳",component.getStartDate(),SupplierOID.cimccTMC,expenseReportComponent.getCityCode(employee,"北京"),expenseReportComponent.getCityCode(employee,"深圳"));
+        TrainItinerary trainItinerary =new TrainItinerary("北京","深圳",UTCTime.getNowStartUtcDate(),SupplierOID.cimccTMC,expenseReportComponent.getCityCode(employee,"北京"),expenseReportComponent.getCityCode(employee,"深圳"));
         flightItineraries.add(flightItinerary);
         hotelItineraries.add(hotelItinerary);
         trainItineraries.add(trainItinerary);
@@ -93,7 +94,8 @@ public class SyncApplicationTest extends BaseTest {
         String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
         //添加飞机行程 供应商为中集
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
-        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, SupplierOID.dttrip,"西安市","北京",component.getEndDate(),component.getStartDate());
+        //单程机票无返回时间
+        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, SupplierOID.dttrip,"西安市","北京",null,UTCTime.getNowStartUtcDate());
         flightItineraries.add(flightItinerary);
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
         travelApplication.submitApplication(employee,applicationOID,"");

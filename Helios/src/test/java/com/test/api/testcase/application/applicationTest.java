@@ -59,22 +59,35 @@ public class applicationTest extends BaseTest {
         String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-节假日",component).get("applicationOID");
         //添加差旅行程(目前支持飞机行程和酒店行程)
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
-        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001,SupplierOID.CTRIP_AIR,"西安市","北京",component.getEndDate(),component.getStartDate());
+        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001,SupplierOID.CTRIP_AIR,"西安市","北京",null,UTCTime.getNowStartUtcDate());
         flightItineraries.add(flightItinerary);
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
         //申请单添加预算
-        JsonObject expenseObject = travelApplication.addBudgetExpenseType(employee,1000.00,false,"机票","差旅申请单-节假日");
+        JsonObject expenseObject = travelApplication.addBudgetExpense(employee,1000.00,false,"机票","差旅申请单-节假日");
         JsonArray expenseArray =new JsonArray();
         expenseArray.add(expenseObject);
-        String budgetDetail = travelApplication.getBudgetDetail(employee,expenseArray,1000.00);
+        String budgetDetail = travelApplication.addBudgetDetail(expenseArray,1000.00);
         travelApplication.submitApplication(employee,applicationOID,budgetDetail);
+
     }
 
     @Test(description = "新建费用申请单")
-    public void createApplicationTest02(){
+    public void createApplicationTest02() throws HttpStatusException {
         FormComponent component = new FormComponent("自动化测试新建费用申请单");
         component.setDepartment(employee.getDepartmentOID());
-//        travelApplication.addBudgetExpenseType(employee,)
-//        travelApplication.createExpenseApplication(employee,"费用申请单-测试",component);
+        //申请单生成预算
+        JsonObject expenseBudget = travelApplication.addBudgetExpense(employee,23.0,false,"大巴","费用申请单-测试");
+        JsonArray expenseBudgets = new JsonArray();
+        expenseBudgets.add(expenseBudget);
+        String budget = travelApplication.addBudgetDetail(expenseBudgets,23.0);
+        JsonObject application = travelApplication.createExpenseApplication(employee,"费用申请单-测试",component,budget);
+        String applicationOID =application.get("applicationOID").getAsString();
+        //申请单提交
+        travelApplication.submitExpenseApplication(employee,applicationOID);
+        //费用申请单审批
+        //新建费用报销单
+        //获取申请单默认的控件信息
+        JsonArray dafaultCustomFormValue = expenseReport.getValueFromApplication(employee,applicationOID);
+        expenseReport.createTravelExpenseReport(employee,"费用报销单-测试",applicationOID,dafaultCustomFormValue);
     }
 }

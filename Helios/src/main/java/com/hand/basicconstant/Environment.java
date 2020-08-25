@@ -12,17 +12,18 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum Environment {
-    UAT("uat", "https://uat.huilianyi.com"),
-    STAGE("stage", "https://stage.huilianyi.com"),
-    CONSOLE("console", "https://console.huilianyi.com"),
-    mcd("mcd","https://tes.mcd.com.cn/"),
-    CONSOLE_TC("console-tc", "https://console-tc.huilianyi.com");
+    UAT("uat", "https://uat.huilianyi.com","https://zhenxuanuat.huilianyi.com/open/"),
+    STAGE("stage", "https://stage.huilianyi.com","https://zhenxuanstage.huilianyi.com/open/"),
+    CONSOLE("console", "https://console.huilianyi.com","https://zhenxuan.huilianyi.com/open/"),
+    mcd("mcd","https://tes.mcd.com.cn/",""),
+    CONSOLE_TC("console-tc", "https://console-tc.huilianyi.com","");
 
 
 
 
     private String environment;
     private String url;
+    private String zhenxuanURL;
 
 
     public static Environment getEnv(String environment) {

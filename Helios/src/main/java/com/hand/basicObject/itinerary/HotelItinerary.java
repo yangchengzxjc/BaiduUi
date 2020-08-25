@@ -15,9 +15,9 @@ public class HotelItinerary {
     String cityName;
     //房间数量
     int roomNumber;
-    //入住日期   2020-07-06T16:00:00Z
+    //入住日期   格式为：2020-07-06T16:00:00Z
     String fromDate;
-    //退房日期
+    //退房日期   格式为：2020 -08-24T16:00:00Z
     String leaveDate;
     //供应商OID
     String supplierOID;

@@ -68,14 +68,20 @@ public class ApplicationApi extends BaseRequest{
      * 新建差旅申请单
      * @param employee
      * @param formdetal
-     * @param component
+     * @param component  component如果是空的对象的话那就是进行造数据
      * @throws HttpStatusException
      */
     public JsonObject createApplication(Employee employee,JsonObject formdetal, FormComponent component) throws HttpStatusException {
         JsonObject responseEntity=null;
+        JsonArray  custFormValues;
+        ReimbursementApi reimbursementApi =new ReimbursementApi();
         JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
         String url = employee.getEnvironment().getUrl()+ ApiPath.TRAVEL_APPLICATION_SAVE;
-        JsonArray  custFormValues = new ReimbursementApi().processCustFormValues(employee,formdetal,component);
+        if(component==null){
+            custFormValues = reimbursementApi.processCustFormValues(employee,formdetal);
+        }else{
+            custFormValues = reimbursementApi.processCustFormValues(employee,formdetal,component);
+        }
         formdetal.remove("custFormValues");
         formdetal.remove("customFormFields");
         formdetal.add("custFormValues",custFormValues);
@@ -100,15 +106,21 @@ public class ApplicationApi extends BaseRequest{
      * 费用申请单新建
      * @param employee
      * @param formdetal
-     * @param component
+     * @param component   造数据的话componnet 为空的话  则认为使用默认的控件
      * @param budget  预算明细   可以先拼成jsonArray然后toString()
      * @throws HttpStatusException
      */
     public JsonObject expenseApplication(Employee employee,JsonObject formdetal,FormComponent component,String budget) throws HttpStatusException {
         JsonObject responseEntity=null;
+        JsonArray  custFormValues;
+        ReimbursementApi reimbursementApi =new ReimbursementApi();
         JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
         String url = employee.getEnvironment().getUrl()+ ApiPath.EXPENSE_APPLICATION_SAVE;
-        JsonArray  custFormValues = new ReimbursementApi().processCustFormValues(employee,formdetal,component);
+        if(component==null){
+            custFormValues = reimbursementApi.processCustFormValues(employee,formdetal);
+        }else{
+            custFormValues = reimbursementApi.processCustFormValues(employee,formdetal,component);
+        }
         //给费用申请单添加预算  费用申请单预算明细  一般是在表头必填
         for(int i=0; i<custFormValues.size();i++){
             if(custFormValues.get(i).getAsJsonObject().get("fieldName").getAsString().equals("预算明细")){

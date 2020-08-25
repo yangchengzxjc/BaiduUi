@@ -89,7 +89,7 @@ public class UTCTime {
     }
 
     /**
-     * 获取任意的utc日期  一般用于结束日期
+     * 获取任意的utc开始结束日期日期  一般用于结束日期
      * @param day
      * @return
      */

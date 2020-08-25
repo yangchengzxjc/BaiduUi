@@ -35,7 +35,7 @@ public class TravelApplicationPage {
      * @return
      * @throws HttpStatusException
      */
-    public FlightItinerary addFlightItinerary(Employee employee, int itineraryType, String supplierOID, String fromCity, String toCity, String endDate,String startDate) throws HttpStatusException {
+    public FlightItinerary addFlightItinerary(Employee employee, int itineraryType, String supplierOID, String fromCity, String toCity,String endDate,String startDate) throws HttpStatusException {
         //添加差旅行程(目前支持飞机行程和酒店行程)
         FlightItinerary flightItinerary =new FlightItinerary();
         //如果是单程的话就不需要返回时间

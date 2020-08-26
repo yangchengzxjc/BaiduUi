@@ -258,6 +258,13 @@ public class ApiPath {
         public static final String FORM_TYPE = "/api/custom/forms/loan/reference";
         //删除报销标准
         public static final String DELETE_REIMB_STANDARD = "/api/expense/standard/rule/delete";
+        //消费商接口
+        //机票,酒店,火车结算数据获取(从供应商)
+        public static final String TMCDATA = "/data/api/openapi/%s/settlement";
+        //机票,酒店,火车 结算数据推送
+        public static final String PUSHTMCDATA = "/data/api/openapi/%s/settlement/push";
+        // 落库查询数据 机票  酒店 火车 结算数据
+        public static final String QUERYVENDORDATA = "/vendor-ervice-data/api/open/internal/%s/settlement";
     }
 
 

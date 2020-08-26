@@ -1,5 +1,9 @@
 package com.hand.basicObject.supplierObject.hotelOrderSettlementInfo;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 /**
@@ -7,6 +11,9 @@ import java.util.List;
  * @Date 2020/8/26
  * @Version 1.0
  **/
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class PassengerInfo {
     //入住人信息
     private String passengerName;

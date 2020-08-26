@@ -1,5 +1,9 @@
 package com.hand.basicObject.supplierObject.trainSettlementInfo;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 
 /**
@@ -7,6 +11,9 @@ import java.math.BigDecimal;
  * @Date 2020/8/26
  * @Version 1.0
  **/
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class TrainBaseSettlement {
 
     //结算明细主键

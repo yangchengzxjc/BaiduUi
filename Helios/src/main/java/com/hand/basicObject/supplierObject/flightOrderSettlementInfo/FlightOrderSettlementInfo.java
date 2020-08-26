@@ -1,6 +1,8 @@
 package com.hand.basicObject.supplierObject.flightOrderSettlementInfo;
 
-import sun.rmi.log.LogInputStream;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -10,6 +12,9 @@ import java.util.List;
  * @Date 2020/8/26
  * @Version 1.0
  **/
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class FlightOrderSettlementInfo {
 
     //结算明细主键	  此条结算信息的唯一标识

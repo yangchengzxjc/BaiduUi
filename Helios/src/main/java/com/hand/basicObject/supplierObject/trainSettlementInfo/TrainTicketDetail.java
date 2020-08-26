@@ -1,10 +1,17 @@
 package com.hand.basicObject.supplierObject.trainSettlementInfo;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * @Author peng.zhang
  * @Date 2020/8/25
  * @Version 1.0
  **/
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class TrainTicketDetail {
 
     //车次编号

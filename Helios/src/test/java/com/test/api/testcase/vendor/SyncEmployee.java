@@ -1,4 +1,4 @@
-package com.test.api.testcase.supplier;
+package com.test.api.testcase.vendor;
 
 import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
@@ -6,7 +6,6 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.EmployeeDTO;
 import com.hand.basicconstant.CardType;
 import com.test.BaseTest;
-import com.test.api.method.EmployeeLogin;
 import com.test.api.method.Infra.EmployeeManagePage;
 import com.test.api.method.InfraStructure;
 import org.testng.Assert;

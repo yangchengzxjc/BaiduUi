@@ -16,7 +16,7 @@ import java.util.HashMap;
  * @Date 2020/6/18
  * @Version 1.0
  **/
-public class ConsumptionApi extends BaseRequest{
+public class VendorApi extends BaseRequest{
 
 
     /**
@@ -47,8 +47,7 @@ public class ConsumptionApi extends BaseRequest{
      */
     public String getMD5Secret(String appName,String corpId,String passWord){
         String md5Password = Md5Util.getMd5(passWord);
-        String signature = Md5Util.getMd5(appName+md5Password+corpId);
-        return signature;
+        return Md5Util.getMd5(appName+md5Password+corpId);
     }
 
     /**

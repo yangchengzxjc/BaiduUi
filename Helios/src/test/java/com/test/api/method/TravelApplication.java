@@ -207,7 +207,7 @@ public class TravelApplication {
      */
     public <E> void addItinerary(Employee employee, String applicationOID, ArrayList<E> t) throws HttpStatusException {
         if(t.size()==0){
-            log.info("请添加至少一个行程");
+            throw new RuntimeException("请添加至少一个行程");
         }else if(t.get(0).getClass().equals(FlightItinerary.class)){
             applicationApi.addFlightItinerary(employee,applicationOID,t);
         }else if(t.get(0).getClass().equals(HotelItinerary.class)){

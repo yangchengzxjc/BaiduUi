@@ -3,6 +3,7 @@ package com.hand.utils;
 import com.google.gson.*;
 import com.jayway.jsonpath.JsonPath;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,26 +16,25 @@ import java.util.List;
  **/
 @Slf4j
 public class GsonUtil {
-        /**
-         * 序列化为json字符串
-         */
-        public static <T> String  objectToString(T tClass){
 
-            Gson gson =new Gson();
-            return gson.toJson(tClass);
-        }
+    /**
+     * 序列化为json字符串
+     */
+    public static <T> String objectToString(T t){
+        Gson gson =new Gson();
+        return gson.toJson(t);
+    }
 
     /**
      * 反序列化
      * @param json
      * @param t
-     * @param <T>
      * @return
      */
-        public static <T> T stringToObject(String json, Class<T> t){
-            Gson gson =new Gson();
-            return gson.fromJson(json,t);
-        }
+    public static <T> T stringToObject(String json, Class<T> t){
+        Gson gson =new Gson();
+        return gson.fromJson(json,t);
+    }
 
 
     public static List<String> JsonExtractor(Object obj, String jsonParth) {

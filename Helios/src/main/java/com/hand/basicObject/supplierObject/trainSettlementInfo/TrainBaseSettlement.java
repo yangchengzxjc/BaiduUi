@@ -21,9 +21,9 @@ public class TrainBaseSettlement {
     private String accBalanceBatchNo;
     //结算对应的订单号
     private String orderNo;
-    //订单类型
+    //订单类型   B：预定  R：退票  C:改签
     private String operateType;
-    //票面价
+    //票面价  两位小数
     private BigDecimal ticketFee;
     //服务费
     private BigDecimal serviceFee;
@@ -35,7 +35,7 @@ public class TrainBaseSettlement {
     private BigDecimal paperFare;
     //快递费
     private BigDecimal expressFee;
-    //改签服务费
+    //改签服务费   含后收服务费用
     private BigDecimal changeServiceFee;
     //后收服务费
     private BigDecimal postServiceFee;
@@ -45,11 +45,11 @@ public class TrainBaseSettlement {
     private BigDecimal deductibleFee;
     //不可抵扣金额
     private BigDecimal nondeductibleFee;
-    //明细支付类型
+    //明细支付类型      月结/现付
     private String payType;
     //明细最晚更新时间
     private String lastUpdateTime;
-    //订单类型
+    //订单类型    月结火车票/现付火车票
     private String orderType;
     //预定人名字
     private String bookClerkName;

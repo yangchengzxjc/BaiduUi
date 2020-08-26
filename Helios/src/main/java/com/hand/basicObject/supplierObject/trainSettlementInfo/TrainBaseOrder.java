@@ -13,15 +13,15 @@ public class TrainBaseOrder {
     private String orderNo;
     //订单状态
     private String orderStatus;
-    //预定来源
+    //预定来源   线上/线下
     private String bookerSource;
     //预定人姓名
     private String bookerName;
     //预定人职级
     private String bookerRank;
-    //订单类型
+    //订单类型    配送票/电子票
     private String orderType;
-    //支付方式
+    //支付方式   月结/现付
     private String payType;
     //预定时间
     private String bookerTime;

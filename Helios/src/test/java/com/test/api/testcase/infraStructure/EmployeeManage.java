@@ -49,6 +49,12 @@ public class EmployeeManage extends BaseTest {
         log.info("扩展字段1中的fieldOid为：" + filedOid);
     }
 
+    @Test(description = "获取人员扩展字段自定义值列表的oid")
+    public void getEmployeeFiledCustomDetail() throws HttpStatusException {
+        String filedOid = employeeManagePage.getEmployeeFiledCustomDetail(employee);
+        log.info("扩展字段自定义值列表的customEnumerationOID：" + filedOid);
+    }
+
     @Test(description = "新增员正常流程")
     public void addEmployee() throws HttpStatusException {
         employeeManagePage.addEmployee(employee,"甄滙测试宏公司（修改）测试修改","20200310072507测试","20200310072507top","测试工程师","","");

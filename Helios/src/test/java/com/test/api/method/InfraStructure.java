@@ -91,6 +91,11 @@ public class InfraStructure {
          return new JsonParser().parse(GsonUtil.objectToString(infraJob)).getAsJsonArray();
     }
 
+    /**
+     * 员工扩展字段
+     * @param EmployeeExtendedFields
+     * @return
+     */
     public JsonArray userFiledDTOs(ArrayList<EmployeeExtendedFields> EmployeeExtendedFields){
         return new JsonParser().parse(GsonUtil.objectToString(EmployeeExtendedFields)).getAsJsonArray();
     }

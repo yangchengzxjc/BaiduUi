@@ -15,6 +15,7 @@ import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import com.test.api.method.InfraStructure;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -141,16 +142,20 @@ public class EmployeeManagePage {
     }
 
     /**
-     * 根据扩展字段名称获取对应字段的oid
+     * 获取自定义值列表dataSource里的oid，用于查询该值列表里的值列表项数据
      * @param employee
-     * @param fieldName
      * @return
      * @throws HttpStatusException
      */
-    public String getEmployeeFiledDetail01(Employee employee, String fieldName) throws HttpStatusException {
-        String fieldOID = GsonUtil.getJsonValue(infraStructure.getEmployeeExpandFormDetail(employee),"fieldName",fieldName,"fieldOID");
-        log.info("获取到的扩展字段oid：" + fieldOID);
-        return fieldOID;
+    public String getEmployeeFiledCustomDetail(Employee employee) throws HttpStatusException {
+        JsonArray employeeFiledCustomDetail = infraStructure.getEmployeeExpandFormDetail(employee);
+        JsonObject filedDetail01 = employeeFiledCustomDetail.get(2).getAsJsonObject();
+        log.info("扩展字段自定义值列表的数据为：" + filedDetail01);
+        String filedDataSource = filedDetail01.get("dataSource").getAsString();
+        log.info("扩展字段自定义值列表的dataSource：" + filedDataSource);
+        String filedOid = filedDataSource.substring(25,61);
+        log.info("扩展字段自定义值列表的customEnumerationOID：" + filedOid);
+        return filedOid;
     }
 
     /**

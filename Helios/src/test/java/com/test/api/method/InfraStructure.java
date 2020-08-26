@@ -56,11 +56,31 @@ public class InfraStructure {
         return formOID;
     }
 
+    /**
+     * 获取员工扩展字段数据
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
     public JsonArray getEmployeeExpandFormDetail(Employee employee) throws HttpStatusException {
         JsonObject employeeExpandOid = infraStructureApi.getEmployeeExpandValue(employee,getEmployeeExpandFormOid(employee));
         JsonArray employeeExpandFormDetail = employeeExpandOid.get("customFormFields").getAsJsonArray();
         log.info("获取到的员工扩展字段数据：" + employeeExpandFormDetail);
         return employeeExpandFormDetail;
+    }
+
+    /**
+     * 根据customEnumerationOID获取自定义值列表的values数据
+     * @param employee
+     * @param customEnumerationOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getEmployeeFiledCustomEnumerationValueDetail(Employee employee,String customEnumerationOID) throws HttpStatusException {
+        JsonObject customEnumerationDetail = infraStructureApi.getEnumerationDetail(employee,customEnumerationOID);
+        JsonArray customEnumerationValues = customEnumerationDetail.get("values").getAsJsonArray();
+        log.info("获取到的员工扩展字段自定义值列表的values数据：" + customEnumerationValues);
+        return customEnumerationValues;
     }
 
     /**

@@ -185,10 +185,10 @@ public class InfraStructureApi extends BaseRequest{
      * @param employee
      * @param customEnumerationOID
      */
-    public JsonObject getEnumerationVDetail(Employee employee,String customEnumerationOID) throws HttpStatusException {
+    public JsonObject getEnumerationDetail(Employee employee,String customEnumerationOID) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl()+ String.format(ApiPath.ENUMERATION_DETAIL,customEnumerationOID);
-        Map<String,String> urlParam=new HashMap<>();
-        String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
+//        Map<String,String> urlParam=new HashMap<>();
+        String res = doGet(url,getHeader(employee.getAccessToken()),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 

@@ -51,8 +51,14 @@ public class EmployeeManage extends BaseTest {
 
     @Test(description = "获取人员扩展字段自定义值列表的oid")
     public void getEmployeeFiledCustomDetail() throws HttpStatusException {
-        String filedOid = employeeManagePage.getEmployeeFiledCustomDetail(employee);
+        String filedOid = employeeManagePage.getEmployeeFiledCustomEnumerationOID(employee,2);
         log.info("扩展字段自定义值列表的customEnumerationOID：" + filedOid);
+    }
+
+    @Test(description = "获取人员扩展字段自定义值列表的value")
+    public void getEmployeeFieldCustomValue() throws HttpStatusException {
+        String customValue = employeeManagePage.getEmployeeFiledCustomEnumerationValue(employee,0,2);
+        log.info("获取到的自定义值列表value值为：" + customValue);
     }
 
     @Test(description = "新增员正常流程")

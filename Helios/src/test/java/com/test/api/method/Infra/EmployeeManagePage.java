@@ -142,20 +142,40 @@ public class EmployeeManagePage {
     }
 
     /**
-     * 获取自定义值列表dataSource里的oid，用于查询该值列表里的值列表项数据
+     * 获取人员扩展字段里自定义值列表dataSource里的oid，用于查询该值列表里的值列表项数据
      * @param employee
+     * @param customNumber      扩展字段序号，数组0开始
      * @return
      * @throws HttpStatusException
      */
-    public String getEmployeeFiledCustomDetail(Employee employee) throws HttpStatusException {
+    public String getEmployeeFiledCustomEnumerationOID(Employee employee,int customNumber) throws HttpStatusException {
         JsonArray employeeFiledCustomDetail = infraStructure.getEmployeeExpandFormDetail(employee);
-        JsonObject filedDetail01 = employeeFiledCustomDetail.get(2).getAsJsonObject();
-        log.info("扩展字段自定义值列表的数据为：" + filedDetail01);
-        String filedDataSource = filedDetail01.get("dataSource").getAsString();
+        JsonObject filedDetailDetail = employeeFiledCustomDetail.get(customNumber).getAsJsonObject();
+        log.info("扩展字段自定义值列表的数据为：" + filedDetailDetail);
+        String filedDataSource = filedDetailDetail.get("dataSource").getAsString();
         log.info("扩展字段自定义值列表的dataSource：" + filedDataSource);
+        //截取dataSource里的customEnumerationOID
         String filedOid = filedDataSource.substring(25,61);
         log.info("扩展字段自定义值列表的customEnumerationOID：" + filedOid);
         return filedOid;
+    }
+
+    /**
+     * 根据人员扩展字段中自定义值列表的oid获取值列表value
+     * @param employee
+     * @param customValueNumber  值列表项序号，数组0开始
+     * @param customNumber        扩展字段序号，数组0开始
+     * @return
+     * @throws HttpStatusException
+     */
+    public String getEmployeeFiledCustomEnumerationValue(Employee employee, int customValueNumber,int customNumber) throws  HttpStatusException {
+        JsonArray employeeFiledCustomEnumerationValues = infraStructure.getEmployeeFiledCustomEnumerationValueDetail(employee,getEmployeeFiledCustomEnumerationOID(employee,customNumber));
+        JsonObject customEnumerationValues = employeeFiledCustomEnumerationValues.get(customValueNumber).getAsJsonObject();
+        log.info("获取到的自定义值列表第1个jsonobject为：" + customEnumerationValues);
+        String customEnumerationValue = customEnumerationValues.get("value").getAsString();
+        log.info("获取到的自定义值列表值为：" + customEnumerationValue);
+        return customEnumerationValue;
+
     }
 
     /**

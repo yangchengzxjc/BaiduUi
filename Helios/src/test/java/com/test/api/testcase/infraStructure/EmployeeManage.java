@@ -43,7 +43,7 @@ public class EmployeeManage extends BaseTest {
     @Test(description = "获取人员扩展字段详细")
     public void getEmployeeFiledDetail() throws HttpStatusException {
         JsonArray filedDetail = employeeManagePage.getEmployeeFiledDetail(employee);
-        JsonObject filedDetail01 = filedDetail.get(1).getAsJsonObject();
+        JsonObject filedDetail01 = filedDetail.get(0).getAsJsonObject();
         log.info("扩展字段1中的数据：" + filedDetail01);
         String filedOid = filedDetail01.get("fieldOID").getAsString();
         log.info("扩展字段1中的fieldOid为：" + filedOid);
@@ -51,13 +51,13 @@ public class EmployeeManage extends BaseTest {
 
     @Test(description = "获取人员扩展字段自定义值列表的oid")
     public void getEmployeeFiledCustomDetail() throws HttpStatusException {
-        String filedOid = employeeManagePage.getEmployeeFiledCustomEnumerationOID(employee,2);
+        String filedOid = employeeManagePage.getEmployeeFiledCustomEnumerationOID(employee,1);
         log.info("扩展字段自定义值列表的customEnumerationOID：" + filedOid);
     }
 
     @Test(description = "获取人员扩展字段自定义值列表的value")
     public void getEmployeeFieldCustomValue() throws HttpStatusException {
-        String customValue = employeeManagePage.getEmployeeFiledCustomEnumerationValue(employee,0,2);
+        String customValue = employeeManagePage.getEmployeeFiledCustomEnumerationValue(employee,0,1);
         log.info("获取到的自定义值列表value值为：" + customValue);
     }
 

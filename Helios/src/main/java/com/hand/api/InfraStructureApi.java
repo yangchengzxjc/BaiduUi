@@ -193,19 +193,31 @@ public class InfraStructureApi extends BaseRequest{
     }
 
     /**
-     * 获取员工扩展字段
+     * 获取员工所有扩展字段
      * @param employee
      * @param formOID
      * @return
      * @throws HttpStatusException
      */
     public JsonObject getEmployeeExpandValue(Employee employee,String formOID) throws HttpStatusException {
-//        String url = employee.getEnvironment().getUrl()+ApiPath.GET_EMPLOYEE_EXPAND;
         String url = employee.getEnvironment().getUrl() + String.format(ApiPath.GET_EMPLOYEE_CUSTOM_FORM,formOID);
-//        Map<String,String> urlParam=new HashMap<>();
-//        urlParam.put("formOID",formOID);
         String res = doGet(url,getHeader(employee.getAccessToken()),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 获取当前启用的人员扩展字段
+     * @param employee
+     * @param formOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getEmployeeExpandValues(Employee employee,String formOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ApiPath.GET_EMPLOYEE_EXPAND;
+        Map<String,String> urlParam=new HashMap<>();
+        urlParam.put("formOID",formOID);
+        String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
+        return new JsonParser().parse(res).getAsJsonArray();
     }
 
     /**

@@ -46,7 +46,10 @@ public class EmployeeManagePage {
     public JsonObject addEmployee(Employee employee,String companyName,String departmentName,String departmentCode,String position,String duty,String rank) throws HttpStatusException {
         InfraEmployee infraEmployee =new InfraEmployee();
         InfraJob infraJob  = new InfraJob();
+        //扩展字段对象1
         EmployeeExtendedFields employeeExtendedFields = new EmployeeExtendedFields();
+        //扩展字段对象2
+        EmployeeExtendedFields employeeExtendedCustomFields = new EmployeeExtendedFields();
         //邮箱不set的话会有默认值输入
         infraEmployee.setFullName("接口新建"+ UTCTime.getBeijingDate(0));
         infraEmployee.setEmployeeID(String.valueOf(RandomNumber.getRandomNumber()));
@@ -75,7 +78,7 @@ public class EmployeeManagePage {
         infraJob.set_index(0);
         infraJobArrayList.add(infraJob);
         ArrayList<EmployeeExtendedFields> employeeExtendedFieldsArrayList = new ArrayList<>();
-        JsonObject employeeFiledDetails = getEmployeeFiledDetails(employee,1).getAsJsonObject();
+        JsonObject employeeFiledDetails = getEmployeeFiledDetails(employee,0).getAsJsonObject();
         employeeExtendedFields.setFieldOID(employeeFiledDetails.get("fieldOID").getAsString());
         employeeExtendedFields.setFieldConstraint(employeeFiledDetails.get("fieldConstraint").getAsString());
         employeeExtendedFields.setFieldContent(employeeFiledDetails.get("fieldContent").getAsString());
@@ -88,7 +91,23 @@ public class EmployeeManagePage {
         employeeExtendedFields.setSequence(employeeFiledDetails.get("sequence").getAsInt());
         employeeExtendedFields.setSystemSequence(employeeFiledDetails.get("systemSequence").getAsInt());
         employeeExtendedFields.setValue("15");
+        JsonObject employeeFiledCustomDetails = getEmployeeFiledDetails(employee,1).getAsJsonObject();
+//        employeeExtendedFields.setCustomEnumerationList(employeeFiledCustomDetails.get("customEnumerationList").getAsJsonObject());
+        employeeExtendedCustomFields.setDataSource(employeeFiledCustomDetails.get("dataSource").getAsString());
+        employeeExtendedCustomFields.setFieldConstraint(employeeFiledCustomDetails.get("fieldConstraint").getAsString());
+        employeeExtendedCustomFields.setFieldContent(employeeFiledCustomDetails.get("fieldContent").getAsString());
+        employeeExtendedCustomFields.setFieldName(employeeFiledCustomDetails.get("fieldName").getAsString());
+        employeeExtendedCustomFields.setFieldOID(employeeFiledCustomDetails.get("fieldOID").getAsString());
+        employeeExtendedCustomFields.setFieldType(employeeFiledCustomDetails.get("fieldType").getAsString());
+        employeeExtendedCustomFields.setFormOID(employeeFiledCustomDetails.get("formOID").getAsString());
+        employeeExtendedCustomFields.setReadOnly(employeeFiledCustomDetails.get("isReadOnly").getAsBoolean());
+        employeeExtendedCustomFields.setMessageKey(employeeFiledCustomDetails.get("messageKey").getAsString());
+        employeeExtendedCustomFields.setRequired(employeeFiledCustomDetails.get("required").getAsBoolean());
+        employeeExtendedCustomFields.setSequence(employeeFiledCustomDetails.get("sequence").getAsInt());
+        employeeExtendedCustomFields.setSystemSequence(employeeFiledCustomDetails.get("systemSequence").getAsInt());
+        employeeExtendedCustomFields.setValue(getEmployeeFiledCustomEnumerationValue(employee,0,1));
         employeeExtendedFieldsArrayList.add(employeeExtendedFields);
+        employeeExtendedFieldsArrayList.add(employeeExtendedCustomFields);
         JsonObject employeeInfo = infraStructure.addEmployee(employee,infraEmployee,infraJobArrayList,employeeExtendedFieldsArrayList);
         return employeeInfo;
     }
@@ -125,7 +144,7 @@ public class EmployeeManagePage {
      * @throws HttpStatusException
      */
     public JsonArray getEmployeeFiledDetail(Employee employee) throws HttpStatusException{
-        return infraStructure.getEmployeeExpandFormDetail(employee);
+        return infraStructure.getEmployeeExpandFormDetails(employee);
     }
 
     /**
@@ -149,7 +168,7 @@ public class EmployeeManagePage {
      * @throws HttpStatusException
      */
     public String getEmployeeFiledCustomEnumerationOID(Employee employee,int customNumber) throws HttpStatusException {
-        JsonArray employeeFiledCustomDetail = infraStructure.getEmployeeExpandFormDetail(employee);
+        JsonArray employeeFiledCustomDetail = infraStructure.getEmployeeExpandFormDetails(employee);
         JsonObject filedDetailDetail = employeeFiledCustomDetail.get(customNumber).getAsJsonObject();
         log.info("扩展字段自定义值列表的数据为：" + filedDetailDetail);
         String filedDataSource = filedDetailDetail.get("dataSource").getAsString();
@@ -175,7 +194,6 @@ public class EmployeeManagePage {
         String customEnumerationValue = customEnumerationValues.get("value").getAsString();
         log.info("获取到的自定义值列表值为：" + customEnumerationValue);
         return customEnumerationValue;
-
     }
 
     /**

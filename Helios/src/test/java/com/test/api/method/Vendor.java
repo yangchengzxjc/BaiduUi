@@ -1,17 +1,16 @@
 package com.test.api.method;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.api.VendorApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.supplierObject.trainSettlementInfo.TrainBaseOrder;
-import com.hand.basicObject.supplierObject.trainSettlementInfo.TrainSettlementInfo;
+import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.utils.GsonUtil;
 import org.apache.poi.ss.formula.functions.T;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Author peng.zhang
@@ -19,6 +18,7 @@ import java.util.List;
  * @Version 1.0
  **/
 public class Vendor {
+
     private VendorApi vendorApi;
 
     public Vendor(){
@@ -26,7 +26,7 @@ public class Vendor {
     }
 
     /**
-     *
+     *消费商数据推送
      * @param employee
      * @param type  结算类型  可选 filght train hotel
      * @param object  机票  酒店  火车等结算对象
@@ -39,7 +39,14 @@ public class Vendor {
     public String pushSettlementData(Employee employee, String type,ArrayList<T> object,String appName,String corpId,String passWord) throws HttpStatusException {
         String info =GsonUtil.objectToString(object);
         JsonArray listOrderSettlementInfo =new JsonParser().parse(info).getAsJsonArray();
-       return vendorApi.pushSettlementData(employee,type,listOrderSettlementInfo,appName,corpId,passWord).get("message").getAsString();
+        return vendorApi.pushSettlementData(employee,type,listOrderSettlementInfo,appName,corpId,passWord).get("message").getAsString();
     }
-    
+
+    /**
+     * 内部使用的查询结算数据的接口
+     * @return
+     */
+    public JsonObject internalQuerySettlement(Employee employee, String type, SettlementBody settlementBody, String appName, String corpId, String passWord) throws HttpStatusException {
+        return vendorApi.internalGetSettlementData(employee,type,settlementBody,appName,corpId,passWord);
+    }
 }

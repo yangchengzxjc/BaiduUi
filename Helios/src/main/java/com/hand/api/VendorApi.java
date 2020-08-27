@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicconstant.ApiPath;
 import com.hand.basicconstant.BaseConstant;
 import com.hand.utils.Md5Util;
@@ -21,12 +22,10 @@ public class VendorApi extends BaseRequest{
 
     /**
      *  商旅TMC 用户调用请求头 （包含签名）
-     * @param token
      * @return
      */
-    public HashMap<String,String> getHeaderSignature(String token,String appName,String corpId,String passWord){
+    public HashMap<String,String> getHeaderSignature(String appName,String corpId,String passWord){
         HashMap<String, String> headersdatas = new HashMap<>();
-        headersdatas.put("Authorization", "Bearer "+token);
         headersdatas.put("Content-Type", BaseConstant.CONTENT_TYPE);
         //签名
         headersdatas.put("appName",appName);
@@ -69,7 +68,34 @@ public class VendorApi extends BaseRequest{
         if(settlementType.equals("train")){
             body.add("trainSettlementInfos",listOrderSettlementInfo);
         }
-        String res =doPost(url,getHeaderSignature(employee.getAccessToken(),appName,corpId,passWord),null,body.toString(),null,employee);
+        String res =doPost(url,getHeaderSignature(appName,corpId,passWord),null,body.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     *  供内部查询结算数据使用
+     * @param employee
+     * @param type
+     * @param settlementBody
+     * @param appName
+     * @param corpId
+     * @param passWord
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject internalGetSettlementData(Employee employee, String type, SettlementBody settlementBody,String appName,String corpId,String passWord) throws HttpStatusException {
+        String url =employee.getEnvironment().getZhenxuanURL()+String.format(ApiPath.QUERYVENDORDATA,type);
+        JsonObject body =new JsonObject();
+        body.addProperty("accBalanceBatchNo",settlementBody.getAccBalanceBatchNo());
+        body.addProperty("dateFrom",settlementBody.getDateFrom());
+        body.addProperty("dateTo",settlementBody.getDateTo());
+        body.addProperty("orderNo",settlementBody.getOrderNo());
+        body.addProperty("companyOid",settlementBody.getCompanyOid());
+        body.addProperty("supplierCode",settlementBody.getSupplierCode());
+        body.addProperty("recordId",settlementBody.getRecordId());
+        body.addProperty("page",settlementBody.getPage());
+        body.addProperty("size",settlementBody.getSize());
+        String res =doPost(url,getHeaderSignature(appName,corpId,passWord),null,body.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 

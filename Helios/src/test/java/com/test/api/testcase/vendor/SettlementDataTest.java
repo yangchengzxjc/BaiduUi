@@ -9,7 +9,6 @@ import com.hand.basicObject.supplierObject.flightOrderSettlementInfo.FlightOrder
 import com.hand.basicObject.supplierObject.hotelOrderSettlementInfo.HotelOrderSettlementInfo;
 import com.hand.basicObject.supplierObject.hotelOrderSettlementInfo.PassengerInfo;
 import com.hand.basicObject.supplierObject.trainSettlementInfo.*;
-import com.hand.basicconstant.Environment;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
@@ -22,7 +21,6 @@ import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Author peng.zhang

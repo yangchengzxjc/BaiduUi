@@ -1,8 +1,6 @@
 package com.hand.basicObject.supplierObject.flightOrderSettlementInfo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,6 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder(toBuilder=true)
 public class FlightOrderSettlementInfo {
 
     //结算明细主键	  此条结算信息的唯一标识
@@ -55,7 +54,7 @@ public class FlightOrderSettlementInfo {
     //退改签类型   出票/改签/退票
     private String detailType;
     // 订单类型   1公司支付     2个人支付
-    private String orderType;
+    private Integer orderType;
     //预定来源  线上/线下
     private String reservationSource;
     //机票价格

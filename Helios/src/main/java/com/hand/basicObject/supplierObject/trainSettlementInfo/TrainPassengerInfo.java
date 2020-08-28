@@ -1,6 +1,7 @@
 package com.hand.basicObject.supplierObject.trainSettlementInfo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,10 +15,11 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder(toBuilder=true)
 public class TrainPassengerInfo {
 
     //出行人编号
-    private String ssengerNo;
+    private String passengerNo;
     //出行人姓名
     private String passengerName;
     //员工编号

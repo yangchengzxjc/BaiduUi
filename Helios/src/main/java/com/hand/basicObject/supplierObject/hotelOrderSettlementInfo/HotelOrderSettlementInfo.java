@@ -1,6 +1,7 @@
 package com.hand.basicObject.supplierObject.hotelOrderSettlementInfo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder(toBuilder = true)
 public class HotelOrderSettlementInfo {
     //结算明细主键
     private String recordId;

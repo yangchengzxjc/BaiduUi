@@ -8,9 +8,8 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.utils.GsonUtil;
-import org.apache.poi.ss.formula.functions.T;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author peng.zhang
@@ -36,10 +35,10 @@ public class Vendor {
      * @return
      * @throws HttpStatusException
      */
-    public String pushSettlementData(Employee employee, String type,ArrayList<T> object,String appName,String corpId,String passWord) throws HttpStatusException {
+    public <T> JsonObject pushSettlementData(Employee employee, String type, List<T> object, String appName, String corpId, String passWord) throws HttpStatusException {
         String info =GsonUtil.objectToString(object);
         JsonArray listOrderSettlementInfo =new JsonParser().parse(info).getAsJsonArray();
-        return vendorApi.pushSettlementData(employee,type,listOrderSettlementInfo,appName,corpId,passWord).get("message").getAsString();
+        return vendorApi.pushSettlementData(employee,type,listOrderSettlementInfo,appName,corpId,passWord);
     }
 
     /**

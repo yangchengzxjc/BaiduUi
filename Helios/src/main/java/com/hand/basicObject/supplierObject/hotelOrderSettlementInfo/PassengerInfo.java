@@ -1,6 +1,7 @@
 package com.hand.basicObject.supplierObject.hotelOrderSettlementInfo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder(toBuilder = true)
 public class PassengerInfo {
     //入住人信息
     private String passengerName;

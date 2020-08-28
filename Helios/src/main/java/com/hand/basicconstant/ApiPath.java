@@ -11,6 +11,8 @@ public class ApiPath {
         //    获取用户信息
         public static final String GET_ACCOUNT ="/api/account";
         //    获取账套
+        //获取租户信息
+        public static final String GETTENANTINFO = "/api/tenant/getById";
         public static final String GETSET_OF_BOOKS ="/api/setOfBooks/query/dto";
         //    获取租户信息
         public static final String GETCOMPANIES ="/api/my/companies";

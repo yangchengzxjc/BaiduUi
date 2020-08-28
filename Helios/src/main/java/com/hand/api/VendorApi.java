@@ -9,6 +9,7 @@ import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicconstant.ApiPath;
 import com.hand.basicconstant.BaseConstant;
 import com.hand.utils.Md5Util;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 
@@ -17,6 +18,7 @@ import java.util.HashMap;
  * @Date 2020/6/18
  * @Version 1.0
  **/
+@Slf4j
 public class VendorApi extends BaseRequest{
 
 
@@ -26,8 +28,6 @@ public class VendorApi extends BaseRequest{
      */
     public HashMap<String,String> getHeaderSignature(String appName,String corpId,String passWord){
         HashMap<String, String> headersdatas = new HashMap<>();
-        headersdatas.put("Content-Type", BaseConstant.CONTENT_TYPE);
-        //签名
         headersdatas.put("appName",appName);
         headersdatas.put("corpId",corpId);
         headersdatas.put("format","JSON");
@@ -68,7 +68,8 @@ public class VendorApi extends BaseRequest{
         if(settlementType.equals("train")){
             body.add("trainSettlementInfos",listOrderSettlementInfo);
         }
-        String res =doPost(url,getHeaderSignature(appName,corpId,passWord),null,body.toString(),null,employee);
+        log.info("请求头:{}",getHeaderSignature(appName,corpId,passWord));
+        String res = doPost(url,getHeaderSignature(appName,corpId,passWord),null,body.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 

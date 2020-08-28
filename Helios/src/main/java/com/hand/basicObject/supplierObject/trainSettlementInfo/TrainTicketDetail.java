@@ -1,8 +1,11 @@
 package com.hand.basicObject.supplierObject.trainSettlementInfo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 
 /**
  * @Author peng.zhang
@@ -12,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder(toBuilder=true)
 public class TrainTicketDetail {
 
     //车次编号
@@ -59,10 +63,10 @@ public class TrainTicketDetail {
     //314：二等卧
     private String seatType;
     //出票实际价格
-    private String ticketActualFee;
+    private BigDecimal ticketActualFee;
     //改签状态    改签时必填
     private String changeStatus;
     //退改预估手续费用
-    private String refundChangeCommission;
+    private BigDecimal refundChangeCommission;
 
 }

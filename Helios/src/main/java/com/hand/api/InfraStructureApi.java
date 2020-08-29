@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.InfraEmployee;
+import com.hand.basicObject.infrastructure.employee.InfraEmployee;
 import com.hand.basicObject.supplierObject.UserCardInfoEntity;
 import com.hand.basicconstant.ApiPath;
 import com.hand.basicconstant.HeaderKey;

@@ -1,24 +1,19 @@
-package com.test.api.method.Infra;
+package com.test.api.method.Infra.EmployeeMethod;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.EmployeeExtendedFields;
-import com.hand.basicObject.InfraEmployee;
-import com.hand.basicObject.InfraJob;
+import com.hand.basicObject.infrastructure.employee.EmployeeExtendedFields;
+import com.hand.basicObject.infrastructure.employee.InfraEmployee;
+import com.hand.basicObject.infrastructure.employee.InfraJob;
 import com.hand.basicObject.supplierObject.UserCardInfoEntity;
 import com.hand.basicconstant.CardType;
-import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
-import com.test.api.method.InfraStructure;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -51,7 +46,7 @@ public class EmployeeManagePage {
         //扩展字段对象2
         EmployeeExtendedFields employeeExtendedCustomFields = new EmployeeExtendedFields();
         //邮箱不set的话会有默认值输入
-        infraEmployee.setFullName("接口新建"+ UTCTime.getBeijingDate(0));
+        infraEmployee.setFullName("接口新建"+ UTCTime.getBeijingTime(0,0));
         infraEmployee.setEmployeeID(String.valueOf(RandomNumber.getRandomNumber()));
         infraEmployee.setMobile("283666"+RandomNumber.getRandomNumber());
         infraEmployee.setEmail(String.format("zhang%s@hui.com",RandomNumber.getRandomNumber()));
@@ -128,16 +123,6 @@ public class EmployeeManagePage {
     }
 
     /**
-     *获取员工扩展字段oid
-     * @param employee
-     * @return
-     * @throws HttpStatusException
-     */
-    public String getEmployeeFiledOid(Employee employee) throws HttpStatusException {
-        return infraStructure.getEmployeeExpandFormOid(employee);
-    }
-
-    /**
      * 根据扩展字段oid获取详情
      * @param employee
      * @return
@@ -170,9 +155,7 @@ public class EmployeeManagePage {
     public String getEmployeeFiledCustomEnumerationOID(Employee employee,int customNumber) throws HttpStatusException {
         JsonArray employeeFiledCustomDetail = infraStructure.getEmployeeExpandFormDetails(employee);
         JsonObject filedDetailDetail = employeeFiledCustomDetail.get(customNumber).getAsJsonObject();
-        log.info("扩展字段自定义值列表的数据为：" + filedDetailDetail);
         String filedDataSource = filedDetailDetail.get("dataSource").getAsString();
-        log.info("扩展字段自定义值列表的dataSource：" + filedDataSource);
         //截取dataSource里的customEnumerationOID
         String filedOid = filedDataSource.substring(25,61);
         log.info("扩展字段自定义值列表的customEnumerationOID：" + filedOid);
@@ -190,7 +173,6 @@ public class EmployeeManagePage {
     public String getEmployeeFiledCustomEnumerationValue(Employee employee, int customValueNumber,int customNumber) throws  HttpStatusException {
         JsonArray employeeFiledCustomEnumerationValues = infraStructure.getEmployeeFiledCustomEnumerationValueDetail(employee,getEmployeeFiledCustomEnumerationOID(employee,customNumber));
         JsonObject customEnumerationValues = employeeFiledCustomEnumerationValues.get(customValueNumber).getAsJsonObject();
-        log.info("获取到的自定义值列表第1个jsonobject为：" + customEnumerationValues);
         String customEnumerationValue = customEnumerationValues.get("value").getAsString();
         log.info("获取到的自定义值列表值为：" + customEnumerationValue);
         return customEnumerationValue;

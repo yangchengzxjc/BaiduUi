@@ -1,16 +1,16 @@
-package com.test.api.testcase.infraStructure;
+package com.test.api.testcase.infraStructure.employee;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.EmployeeExtendedFields;
-import com.hand.basicObject.InfraEmployee;
+import com.hand.basicObject.infrastructure.employee.InfraEmployee;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
-import com.test.api.method.Infra.EmployeeManagePage;
+import com.test.api.method.Infra.EmployeeMethod.EmployeeManagePage;
 import lombok.extern.slf4j.Slf4j;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
@@ -26,18 +26,14 @@ public class EmployeeManage extends BaseTest {
 
     private Employee employee;
     private EmployeeManagePage employeeManagePage;
-    private EmployeeExtendedFields employeeExtendedFields;
+    private InfraEmployee infraEmployee;
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
     public void beforeClass(@Optional("14082978888") String phoneNumber, @Optional("hly123") String pwd, @Optional("stage") String env){
         employee=getEmployee(phoneNumber,pwd,env);
         employeeManagePage =new EmployeeManagePage();
-    }
-
-    @Test(description = "获取员工扩展字段oid")
-    public void getEmployeeFiledOid() throws HttpStatusException {
-        employeeManagePage.getEmployeeFiledOid(employee);
+        infraEmployee = new InfraEmployee();
     }
 
     @Test(description = "获取人员扩展字段详细")
@@ -63,7 +59,10 @@ public class EmployeeManage extends BaseTest {
 
     @Test(description = "新增员正常流程")
     public void addEmployee() throws HttpStatusException {
-        employeeManagePage.addEmployee(employee,"甄滙测试宏公司（修改）测试修改","20200310072507测试","20200310072507top","测试工程师","","");
+        JsonObject object = employeeManagePage.addEmployee(employee,"甄滙测试宏公司（修改）测试修改","20200310072507测试","20200310072507top","测试工程师","测试","技术经理");
+        String fullName = object.get("fullName").getAsString();
+        log.info("获取到的人员姓名为：" + fullName);
+        Assert.assertEquals(fullName,infraEmployee.getFullName());
     }
 
     @Test(description = "编辑员工-正常编辑-修改了邮箱,手机号以及生日")

@@ -1,4 +1,4 @@
-package com.test.api.method;
+package com.test.api.method.Infra.EmployeeMethod;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -6,14 +6,12 @@ import com.google.gson.JsonParser;
 import com.hand.api.InfraStructureApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.EmployeeExtendedFields;
-import com.hand.basicObject.InfraEmployee;
-import com.hand.basicObject.InfraJob;
+import com.hand.basicObject.infrastructure.employee.EmployeeExtendedFields;
+import com.hand.basicObject.infrastructure.employee.InfraEmployee;
+import com.hand.basicObject.infrastructure.employee.InfraJob;
 import com.hand.basicObject.supplierObject.UserCardInfoEntity;
-import com.hand.basicconstant.CardType;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 
 
 import java.util.ArrayList;
@@ -46,7 +44,7 @@ public class InfraStructure {
     }
 
     /**
-     * 获取员工扩展字段customFormValue 暂时为空
+     * 获取员工扩展字段表单oid
      * @param employee
      * @throws HttpStatusException
      */
@@ -57,7 +55,7 @@ public class InfraStructure {
     }
 
     /**
-     * 获取员工扩展字段数据
+     * 获取员工扩展字段所有数据
      * @param employee
      * @return
      * @throws HttpStatusException
@@ -69,6 +67,12 @@ public class InfraStructure {
         return employeeExpandFormDetail;
     }
 
+    /**
+     * 获取员工扩展字段启用的数据
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
     public JsonArray getEmployeeExpandFormDetails(Employee employee) throws HttpStatusException {
         JsonArray employeeExpandFormDetail = infraStructureApi.getEmployeeExpandValues(employee,getEmployeeExpandFormOid(employee)).getAsJsonArray();
         log.info("获取到的员工扩展字段数据：" + employeeExpandFormDetail);

@@ -1,4 +1,4 @@
-package com.hand.basicObject;
+package com.hand.basicObject.infrastructure.employee;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

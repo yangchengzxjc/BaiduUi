@@ -1,11 +1,11 @@
-package com.test.api.method;
+package com.test.api.method.Infra.SetOfBooksMethod;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hand.api.SetOfBooksApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.SetOfBooks;
+import com.hand.basicObject.infrastructure.setOfBooks.SetOfBooks;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
 

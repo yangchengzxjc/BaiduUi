@@ -6,9 +6,8 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.EmployeeDTO;
 import com.hand.basicconstant.CardType;
 import com.test.BaseTest;
-import com.test.api.method.EmployeeLogin;
-import com.test.api.method.Infra.EmployeeManagePage;
-import com.test.api.method.InfraStructure;
+import com.test.api.method.Infra.EmployeeMethod.EmployeeManagePage;
+import com.test.api.method.Infra.EmployeeMethod.InfraStructure;
 import org.testng.Assert;
 import org.testng.annotations.*;
 

@@ -29,6 +29,7 @@ public class SetOfBooksTest extends BaseTest {
         setOfBooksDefine = new SetOfBooksDefine();
         setOfBooksPage = new SetOfBooksPage();
         setOfBooks = new SetOfBooks();
+
     }
 
     @Test(description = "测试获取会计期数据接口")
@@ -50,7 +51,7 @@ public class SetOfBooksTest extends BaseTest {
 
     @Test(description = "正常新建账套")
     public void addSetOfBooksTest01() throws HttpStatusException {
-        JsonObject object = setOfBooksPage.addSetOfBooks(employee, true, "新增", "add");
+        JsonObject object = setOfBooksPage.addSetOfBooks(employee,setOfBooks, true, "新增", "add");
         String setOfBooksName = object.get("setOfBooksName").getAsString();
         String setOfBooksCode = object.get("setOfBooksCode").getAsString();
         log.info("新增的账套名称为：" + setOfBooksName);
@@ -61,7 +62,7 @@ public class SetOfBooksTest extends BaseTest {
 
     @Test(description = "异常新建账套，账套code不符合编码规则，包含中文")
     public void addSetOfBooksTest02() throws HttpStatusException {
-        JsonObject object = setOfBooksPage.addSetOfBooks(employee, true, "新增", "中文");
+        JsonObject object = setOfBooksPage.addSetOfBooks(employee,setOfBooks, true, "新增", "中文");
         String message = object.get("message").getAsString();
         log.info("获取到的message信息：" + message);
         String errorCode = object.get("errorCode").getAsString();

@@ -38,8 +38,8 @@ public class EmployeeManagePage {
      * @param position
      * @throws HttpStatusException
      */
-    public JsonObject addEmployee(Employee employee,String companyName,String departmentName,String departmentCode,String position,String duty,String rank) throws HttpStatusException {
-        InfraEmployee infraEmployee =new InfraEmployee();
+    public JsonObject addEmployee(Employee employee,InfraEmployee infraEmployee, String companyName,String departmentName,String departmentCode,String position,String duty,String rank) throws HttpStatusException {
+//        InfraEmployee infraEmployee =new InfraEmployee();
         InfraJob infraJob  = new InfraJob();
         //扩展字段对象1
         EmployeeExtendedFields employeeExtendedFields = new EmployeeExtendedFields();

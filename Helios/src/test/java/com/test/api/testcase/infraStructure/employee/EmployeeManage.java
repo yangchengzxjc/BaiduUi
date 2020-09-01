@@ -59,7 +59,7 @@ public class EmployeeManage extends BaseTest {
 
     @Test(description = "新增员正常流程")
     public void addEmployee() throws HttpStatusException {
-        JsonObject object = employeeManagePage.addEmployee(employee,"甄滙测试宏公司（修改）测试修改","20200310072507测试","20200310072507top","测试工程师","测试","技术经理");
+        JsonObject object = employeeManagePage.addEmployee(employee,infraEmployee, "甄滙测试宏公司（修改）测试修改","20200310072507测试","20200310072507top","测试工程师","测试","技术经理");
         String fullName = object.get("fullName").getAsString();
         log.info("获取到的人员姓名为：" + fullName);
         Assert.assertEquals(fullName,infraEmployee.getFullName());

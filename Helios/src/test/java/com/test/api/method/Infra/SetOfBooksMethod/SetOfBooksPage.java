@@ -24,8 +24,7 @@ public class SetOfBooksPage {
      * @param setOfBooksCode
      * @throws HttpStatusException
      */
-    public JsonObject addSetOfBooks(Employee employee,boolean enabled, String setOfBooksName, String setOfBooksCode) throws HttpStatusException{
-        SetOfBooks setOfBooks = new SetOfBooks();
+    public JsonObject addSetOfBooks(Employee employee,SetOfBooks setOfBooks, boolean enabled, String setOfBooksName, String setOfBooksCode) throws HttpStatusException{
         setOfBooks.setEnabled(enabled);
         setOfBooks.setSetOfBooksName(setOfBooksName + RandomNumber.getTimeNumber());
         setOfBooks.setSetOfBooksCode(setOfBooksCode + RandomNumber.getTimeNumber());

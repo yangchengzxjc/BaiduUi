@@ -266,7 +266,7 @@ public class ApiPath {
         //机票,酒店,火车 结算数据推送
         public static final String PUSHTMCDATA = "/data/api/openapi/%s/settlement/push";
         // 落库查询数据 机票  酒店 火车 结算数据
-        public static final String QUERYVENDORDATA = "/vendor-service-data/api/open/internal/%s/settlement";
+        public static final String QUERYVENDORDATA = "/vendor-data-service/api/open/internal/%s/settlement";
         //新增管控信息
         public static final String ADD_CONTROLITEM = "/api/expense/standard/controlitem/%s";
         //获取报销标准规则管控信息

@@ -38,7 +38,7 @@ public class Vendor {
     public <T> JsonObject pushSettlementData(Employee employee, String type, List<T> object, String appName, String corpId, String passWord) throws HttpStatusException {
         String info =GsonUtil.objectToString(object);
         JsonArray listOrderSettlementInfo =new JsonParser().parse(info).getAsJsonArray();
-        return vendorApi.pushSettlementData(employee,type,listOrderSettlementInfo,appName,corpId,passWord);
+        return vendorApi.pushSettlementData(employee,type,listOrderSettlementInfo,appName,corpId);
     }
 
     /**
@@ -46,6 +46,6 @@ public class Vendor {
      * @return
      */
     public JsonObject internalQuerySettlement(Employee employee, String type, SettlementBody settlementBody, String appName, String corpId, String passWord) throws HttpStatusException {
-        return vendorApi.internalGetSettlementData(employee,type,settlementBody,appName,corpId,passWord);
+        return vendorApi.internalGetSettlementData(employee,type,settlementBody,appName,corpId).getAsJsonObject("body").get("list").getAsJsonArray().get(0).getAsJsonObject();
     }
 }

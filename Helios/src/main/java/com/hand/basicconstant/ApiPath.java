@@ -11,6 +11,8 @@ public class ApiPath {
         //    获取用户信息
         public static final String GET_ACCOUNT ="/api/account";
         //    获取账套
+        //获取租户信息
+        public static final String GETTENANTINFO = "/api/tenant/getById";
         public static final String GETSET_OF_BOOKS ="/api/setOfBooks/query/dto";
         //    获取租户信息
         public static final String GETCOMPANIES ="/api/my/companies";
@@ -260,6 +262,21 @@ public class ApiPath {
         public static final String FORM_TYPE = "/api/custom/forms/loan/reference";
         //删除报销标准
         public static final String DELETE_REIMB_STANDARD = "/api/expense/standard/rule/delete";
+        //消费商接口
+        //机票,酒店,火车结算数据获取(从供应商)
+        public static final String TMCDATA = "/data/api/openapi/%s/settlement";
+        //机票,酒店,火车 结算数据推送
+        public static final String PUSHTMCDATA = "/data/api/openapi/%s/settlement/push";
+        // 落库查询数据 机票  酒店 火车 结算数据
+        public static final String QUERYVENDORDATA = "/vendor-service-data/api/open/internal/%s/settlement";
+        //新增管控信息
+        public static final String ADD_CONTROLITEM = "/api/expense/standard/controlitem/%s";
+        //获取报销标准规则管控信息
+        public static final String GET_CONTROLITEM = "/api/expense/standard/master/controlitems/%s";
+        //获取报销标准规则基本标准
+        public static final String GET_ITEM = "/api/expense/standard/master/item/%s";
+        //修改报销标准基本标准
+        public static final String ADD_ITEM = "/api/expense/standard/item";
     }
 
 

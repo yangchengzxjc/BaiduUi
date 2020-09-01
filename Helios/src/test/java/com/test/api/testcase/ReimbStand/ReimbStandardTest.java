@@ -1,27 +1,27 @@
 package com.test.api.testcase.ReimbStand;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.hand.api.ReimbStandardApi;
+import com.hand.api.SetOfBooksApi;
 import com.test.api.method.ReimbStandard;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.test.BaseTest;
+import com.test.api.method.Infra.SetOfBooksMethod.SetOfBooksDefine;
 import lombok.extern.slf4j.Slf4j;
 
+import net.minidev.json.JSONArray;
 import org.testng.annotations.*;
 
 @Slf4j
 public class ReimbStandardTest extends BaseTest {
-    /*
-    * 创建报销标准规则
-    * @param employee
-    * @param UserGroups 人员组
-    *
-    */
-
     private Employee employee;
     private ReimbStandardApi reimbStandardApi;
     private ReimbStandard reimbStandard;
+    private SetOfBooksDefine setOfBooksDefine;
+
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
@@ -37,20 +37,16 @@ public class ReimbStandardTest extends BaseTest {
         log.info("token1:{}",employee.getAccessToken());
     }
 
-    @Test(priority = 1,description = "查询所有账套")
+    @Test(priority = 1,description = "查询某个账套详情")
     public void test1() throws HttpStatusException {
-//        JsonArray array = new JsonArray();
-//        JsonObject object= new JsonObject();
-//        object.add("userGroups",reimbStandardApi.GetSetOfBooks(employee));
-//        array.add(object);
-//        log.info("获取到所有的账套："+array);
-//        ruleDetails.getSetOfBookId(employee,"默认账套");
-        JsonArray setBooks = reimbStandardApi.getSetOfBooks(employee);
+        setOfBooksDefine =new SetOfBooksDefine();
+        JsonObject setBooks = setOfBooksDefine.getSetOfBooksDetail(employee,"DEFAULT_SOB","默认账套","");
         System.out.println(setBooks);
     }
     @Test(priority = 1,description = "查询某个账套的id")
     public void test2()throws HttpStatusException{
-        String A = reimbStandard.getSetOfBookId(employee,"默认账套");
+        setOfBooksDefine = new SetOfBooksDefine();
+       String A= setOfBooksDefine.getSetOfBooksId(employee,"DEFAULT_SOB","默认账套","");
         log.info("账套id："+A);
 
     }
@@ -61,17 +57,27 @@ public class ReimbStandardTest extends BaseTest {
         log.info("companyList:{}",companyList);
     }
 
-    @Test(priority = 1,description = "新建报销标准规则")
+    @Test(priority = 1,description = "报销标准")
     public void createRules()throws HttpStatusException{
         JsonArray userGroups = reimbStandard.userGroups(reimbStandard.getUserGroups(employee,"租户级  stage测试员"));
         JsonArray expenseType = reimbStandard.expenseType(reimbStandard.getExpenseType(employee,"摊销费用"));
-        reimbStandard.addReimbstandard(employee,"测试8","WARN","SET_OF_BOOK",
+        //新建规则
+        String rulesOid=reimbStandard.addReimbstandard(employee,"测试23","WARN","SET_OF_BOOK",
                 reimbStandard.getSetOfBookId(employee,"默认账套"),"SINGLE","SINGLE",
                 "该费用超标",userGroups,expenseType,new  JsonArray(),new JsonArray());
+        log.info("ruleOID:{}",rulesOid);
+        //获取默认管控信息
+        JsonArray controlItems = reimbStandard.getControlItems(employee,rulesOid);
+        log.info("controlItems:{}",controlItems);
+        //获取默认基本标准
+        JsonArray item = reimbStandard.getItem(employee,rulesOid);
+        log.info("item:{}",item);
+        //修改基本标准
+        String standardOid=item.get(0).getAsJsonObject().get("standardOID").getAsString();
+        String items= reimbStandard.addItems(employee,standardOid,rulesOid,"100",userGroups,new JsonArray());
+        log.info("items:{}",items);
+        //删除规则
+//        reimbStandard.deleteReimbStandardRules(employee,rulesOid);
     }
-//    @Test(priority = 1,description = "删除报销标准规则")
-//    public void deleteRules()throws HttpStatusException{
-//
-//    }
 
 }

@@ -38,6 +38,20 @@ public class EmployeeInfoApi extends BaseRequest {
     }
 
     /**
+     * 查询账户的租户信息
+     * @param employee
+     * @throws HttpStatusException
+     */
+    public JsonObject getTenantInfo(Employee employee) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.GETTENANTINFO;
+        HashMap<String,String> map = new HashMap<>();
+        map.put("tenantId",employee.getTenantId());
+        String res = doGet(url, getHeader(employee.getAccessToken()), map, employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+
+    /**
      * 获取值列表信息
      * @param employee
      * @return

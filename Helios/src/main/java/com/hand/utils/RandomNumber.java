@@ -6,6 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
+import java.math.BigDecimal;
+
+import static java.math.BigDecimal.ROUND_DOWN;
 
 /**
  * @Author peng.zhang
@@ -49,6 +52,15 @@ public class RandomNumber {
     public static int getRandomNumber(int number1, int number2){
         Random random =new Random();
         return random.nextInt(number2-number1+1)+number1;
+    }
+
+
+    /**
+     * 返回两数之间的随机数  保留两位小数
+     * @return
+     */
+    public static BigDecimal getDoubleNumber(int number1, int number2){
+        return new BigDecimal(Math.random()*(number2-number1)+number1).setScale(2,ROUND_DOWN);
     }
 
     /**

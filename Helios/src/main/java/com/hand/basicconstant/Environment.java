@@ -12,9 +12,9 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum Environment {
-    UAT("uat", "https://uat.huilianyi.com","https://zhenxuanuat.huilianyi.com/open/"),
-    STAGE("stage", "https://stage.huilianyi.com","https://zhenxuanstage.huilianyi.com/open/"),
-    CONSOLE("console", "https://console.huilianyi.com","https://zhenxuan.huilianyi.com/open/"),
+    UAT("uat", "https://uat.huilianyi.com","https://zhenxuanuat.huilianyi.com/open"),
+    STAGE("stage", "https://stage.huilianyi.com","https://zhenxuanstage.huilianyi.com/open"),
+    CONSOLE("console", "https://console.huilianyi.com","https://zhenxuan.huilianyi.com/open"),
     mcd("mcd","https://tes.mcd.com.cn/",""),
     CONSOLE_TC("console-tc", "https://console-tc.huilianyi.com","");
 

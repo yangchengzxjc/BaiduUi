@@ -8,8 +8,8 @@
     <test verbose="10" preserve-order="true" name="消费平台测试">
         <parameter name="phoneNumber" value="${phoneNumber}"/>
         <classes>
-            <class name="com.test.api.testcase.supplier.SyncApplicationTest"/>
-            <class name="com.test.api.testcase.supplier.SyncEmployee"/>
+            <class name="com.test.api.testcase.vendor.SyncApplicationTest"/>
+            <class name="com.test.api.testcase.vendor.SyncEmployee"/>
         </classes>
     </test>
 

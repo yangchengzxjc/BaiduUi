@@ -1,7 +1,6 @@
 package com.hand.api;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
@@ -182,13 +181,89 @@ public class ReimbStandardApi  extends BaseRequest {
         body.addProperty("controlType",controlType);
         body.addProperty("controlModeType",controlModeType);
         String res = doPost(url,getHeader(employee.getAccessToken(),"reimbursement-standard", ResourceId.INFRA),mapParams3,body.toString(),null,employee);
-//        return new JsonParser().parse(res).getAsJsonObject();
-        return res;
+        return new JsonParser().parse(res).getAsString();
     }
+
     /**
-     * 删除报销标准规则
-     *
+     * 删除规则
+     * @param employee
+     * @param rulesOid
+     * @throws HttpStatusException
      */
+    public void deleteReimbStandardRules(Employee employee, String rulesOid) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + String.format(ApiPath.DELETE_REIMB_STANDARD , rulesOid);
+        HashMap<String, String> mapParams = new HashMap<>();
+        mapParams.put("roleType", "TENANT");
+       doPost(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,new JsonObject().toString(),null,employee);
+//        return res;
+//        doPost(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,null,null,employee);
+    }
+//    public void addControlItem(Employee employee,String rulesOid)throws HttpStatusException{
+//        String url =employee.getEnvironment().getUrl() + String.format(ApiPath.ADD_CONTROLITEM , rulesOid.split("\"")[1]);
+//        HashMap<String,String> mapParams = new HashMap<>();
+//        mapParams.put("roleType","TENENT");
+//
+//    }
 
+    /**
+     * 获取报销标准规则的管控信息
+     * @param employee
+     * @param rulesOid
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getControlItem(Employee employee,String rulesOid)throws HttpStatusException{
+        String url = employee.getEnvironment().getUrl() + String.format(ApiPath.GET_CONTROLITEM,rulesOid);
+        HashMap<String, String> mapParams = new HashMap<>();
+        mapParams.put("roleType", "TENANT");
+        String res=doGet(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,employee);
+        return new JsonParser().parse(res).getAsJsonArray();
+    }
 
+    /**
+     * 获取报销标准规则的基本标准
+     * @param employee
+     * @param rulesOid
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getItem(Employee employee,String rulesOid)throws HttpStatusException{
+        String url = employee.getEnvironment().getUrl() + String.format(ApiPath.GET_ITEM,rulesOid) ;
+        HashMap<String,String> mapParams = new HashMap<>();
+        mapParams.put("roleType","TENENT");
+        String res=doGet(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,employee);
+        return new JsonParser().parse(res).getAsJsonArray();
+
+    }
+
+    /**
+     * 添加基本标准
+     * @param employee
+     * @param standardOid
+     * @param amount
+     * @param userGroups
+     * @param citys
+     * @return
+     * @throws HttpStatusException
+     */
+    public String addItems(Employee employee,String standardOid,String rulesOid,String amount,JsonArray userGroups,JsonArray citys)throws HttpStatusException{
+        String url = employee.getEnvironment().getUrl() +ApiPath.ADD_ITEM;
+        HashMap<String,String> mapParams = new HashMap<>();
+        mapParams.put("roleType","TENENT");
+//        JsonArray body = new JsonArray();
+        JsonObject body1 = new JsonObject();
+//        body.add(body1);
+        body1.addProperty("ruleOID",rulesOid);
+        body1.addProperty("standardOID",standardOid);
+        body1.addProperty("currencyCode","CNY");
+        body1.addProperty("amount",amount);
+        body1.add("userGroups",userGroups);
+        body1.add("citys",citys);
+        //1 是包含；0 是不包含
+        body1.addProperty("cityAssociateType",1);
+        body1.addProperty("userAssociateType",1);
+        String res = doPost(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,body1.toString(),null,employee);
+        return res;
+
+    }
 }

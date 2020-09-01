@@ -18,6 +18,7 @@ public class UTCTime {
     private static final String BEiJING_FORMATTER_PATTERN15  = "yyyy-MM-dd";
     private static final String BEIJING_FORMATTER_TIME = "yyyy-MM-dd HH:mm:ss";
     private static final String BEIJING_TIME = "HH:mm";
+    private static final String BEIJING_TIME2 = "yyyyMMdd";
 
     /**
      * 返回北京时间的任意日期
@@ -85,6 +86,17 @@ public class UTCTime {
     public static String getNowStartUtcDate(){
         DateTimeFormatter fmt = DateTimeFormat.forPattern(UTC_FORMATTER_PATTERN16);
         DateTime date = DateTime.now(DateTimeZone.UTC).plusDays(-1);
+        return fmt.print(date);
+    }
+
+    /**
+     * 获取当前的北京时间   格式为：20200828   用于消费计算费用生成批次
+     *
+     * @return
+     */
+    public static String getBeijingDay(int day){
+        DateTimeFormatter fmt = DateTimeFormat.forPattern(BEIJING_TIME2);
+        DateTime date = DateTime.now().plusDays(day);
         return fmt.print(date);
     }
 

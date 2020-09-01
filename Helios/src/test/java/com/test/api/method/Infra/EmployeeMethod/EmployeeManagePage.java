@@ -38,7 +38,9 @@ public class EmployeeManagePage {
      * @param position
      * @throws HttpStatusException
      */
-    public JsonObject addEmployee(Employee employee,InfraEmployee infraEmployee, String companyName,String departmentName,String departmentCode,String position,String duty,String rank) throws HttpStatusException {
+    public JsonObject addEmployee(Employee employee,InfraEmployee infraEmployee,String fullName,String mobile,String employeeId,
+                                  String email,String employeeTypeValueName,String directManager, String companyName,String departmentName,String departmentCode,String position,
+                                  String duty,String rank) throws HttpStatusException {
 //        InfraEmployee infraEmployee =new InfraEmployee();
         InfraJob infraJob  = new InfraJob();
         //扩展字段对象1
@@ -46,12 +48,12 @@ public class EmployeeManagePage {
         //扩展字段对象2
         EmployeeExtendedFields employeeExtendedCustomFields = new EmployeeExtendedFields();
         //邮箱不set的话会有默认值输入
-        infraEmployee.setFullName("接口新建"+ UTCTime.getBeijingTime(0,0));
-        infraEmployee.setEmployeeID(String.valueOf(RandomNumber.getRandomNumber()));
-        infraEmployee.setMobile("283666"+RandomNumber.getRandomNumber());
-        infraEmployee.setEmail(String.format("zhang%s@hui.com",RandomNumber.getRandomNumber()));
-        infraEmployee.setEmployeeTypeCode(infraStructure.getCustomEnumerationValue(employee,"人员类型","技术"));
-        infraEmployee.setDirectManager(infraStructure.searchUser(employee,"懿测试宏"));
+        infraEmployee.setFullName(fullName);
+        infraEmployee.setEmployeeID(employeeId);
+        infraEmployee.setMobile(mobile);
+        infraEmployee.setEmail(email);
+        infraEmployee.setEmployeeTypeCode(infraStructure.getCustomEnumerationValue(employee,"人员类型",employeeTypeValueName));
+        infraEmployee.setDirectManager(infraStructure.searchUser(employee,directManager));
         infraEmployee.setGenderCode(0);
         log.info("新增的员工信息：{}",infraEmployee);
         ArrayList<InfraJob> infraJobArrayList = new ArrayList<>();

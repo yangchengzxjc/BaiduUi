@@ -38,6 +38,7 @@ public class EmployeeAccount{
         employee.setFullName(jsonObject.get("fullName").getAsString());
         employee.setTenantId(jsonObject.get("tenantId").getAsString());
         employee.setDepartmentOID(jsonObject.get("departmentOID").getAsString());
+        employee.setCompanyName(jsonObject.get("companyName").getAsString());
         employee.setJobId(jsonObject.get("companyWithUserJobsDTOList").getAsJsonArray().get(0).getAsJsonObject().get("userJobsDTOList").getAsJsonArray().get(0).getAsJsonObject().get("id").getAsString());
         return employee;
     }

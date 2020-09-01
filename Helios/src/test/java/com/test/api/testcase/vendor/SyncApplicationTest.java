@@ -1,7 +1,6 @@
-package com.test.api.testcase.supplier;
+package com.test.api.testcase.vendor;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;

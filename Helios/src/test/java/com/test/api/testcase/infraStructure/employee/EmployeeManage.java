@@ -27,6 +27,19 @@ public class EmployeeManage extends BaseTest {
     private Employee employee;
     private EmployeeManagePage employeeManagePage;
     private InfraEmployee infraEmployee;
+    //人员入参
+    private String fullName = "接口新建"+ UTCTime.getBeijingTime(0,0);
+    private String employeeID = String.valueOf(RandomNumber.getRandomNumber());
+    private String mobile = "283666"+ RandomNumber.getRandomNumber();
+    private String email = String.format("zhang%s@hui.com",RandomNumber.getRandomNumber());
+    private String employeeTypeValueName = "技术";
+    private String directManager = "懿测试宏";
+    private String companyName = "甄滙测试宏公司（修改）测试修改";
+    private String departmentName = "20200310072507测试";
+    private String departmentCode = "20200310072507top";
+    private String position = "测试工程师";
+    private String duty = "测试";
+    private String rank = "技术经理";
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
@@ -59,10 +72,10 @@ public class EmployeeManage extends BaseTest {
 
     @Test(description = "新增员正常流程")
     public void addEmployee() throws HttpStatusException {
-        JsonObject object = employeeManagePage.addEmployee(employee,infraEmployee, "甄滙测试宏公司（修改）测试修改","20200310072507测试","20200310072507top","测试工程师","测试","技术经理");
-        String fullName = object.get("fullName").getAsString();
-        log.info("获取到的人员姓名为：" + fullName);
-        Assert.assertEquals(fullName,infraEmployee.getFullName());
+        JsonObject object = employeeManagePage.addEmployee(employee,infraEmployee,fullName,mobile,employeeID,email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank);
+        String name = object.get("fullName").getAsString();
+        log.info("获取到的人员姓名为：" + name);
+        Assert.assertEquals(name,infraEmployee.getFullName());
     }
 
     @Test(description = "编辑员工-正常编辑-修改了邮箱,手机号以及生日")

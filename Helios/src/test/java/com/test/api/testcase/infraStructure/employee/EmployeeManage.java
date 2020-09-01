@@ -70,12 +70,17 @@ public class EmployeeManage extends BaseTest {
         log.info("获取到的自定义值列表value值为：" + customValue);
     }
 
-    @Test(description = "新增员正常流程")
-    public void addEmployee() throws HttpStatusException {
+    @Test(description = "新增员工正常流程")
+    public void addEmployee01() throws HttpStatusException {
         JsonObject object = employeeManagePage.addEmployee(employee,infraEmployee,fullName,mobile,employeeID,email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank);
         String name = object.get("fullName").getAsString();
         log.info("获取到的人员姓名为：" + name);
         Assert.assertEquals(name,infraEmployee.getFullName());
+    }
+
+    @Test(description = "新增员工异常流程--工号为空")
+    public void addEmployee02() throws HttpStatusException {
+        JsonObject object = employeeManagePage.addEmployee(employee,infraEmployee,fullName,mobile,"",email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank);
     }
 
     @Test(description = "编辑员工-正常编辑-修改了邮箱,手机号以及生日")

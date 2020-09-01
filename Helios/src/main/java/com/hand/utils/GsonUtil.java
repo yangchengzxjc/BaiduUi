@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.formula.functions.T;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -119,11 +120,22 @@ public class GsonUtil {
      * @param object2
      * @return
      */
-    public static boolean compareJsonObject(JsonObject object1,JsonObject object2){
+    public static boolean compareJsonObject(JsonObject object1, JsonObject object2, HashMap<String,String> mapping) throws Exception {
         ArrayList<Boolean> arrayList =new ArrayList<>();
         Iterator<String> iterator1 = object1.keySet().iterator();
-        while(iterator1.hasNext()){
-            String name=iterator1.next();
+        //先判断下有没有jsonobject 或者jsonArray 有的话删除
+        while (iterator1.hasNext()) {
+            String name = iterator1.next();
+            if (object1.get(name) instanceof JsonArray || object1.get(name) instanceof JsonObject) {
+                object1.remove(name);
+                //删除完后成之后必须重新赋值(Iterator 被创建之后会建立一个指向原来对象的单链索引表，当原来的对象数量发生变化时，这个索引表的内容不会同步改变)
+                iterator1 =object1.keySet().iterator();
+                log.info("删除的字段为:{}", name);
+            }
+        }
+        Iterator<String> iterator2 = object1.keySet().iterator();
+        while(iterator2.hasNext()){
+            String name = iterator2.next();
             if(object1.get(name).isJsonArray() && !object2.get(name).isJsonArray()){
                 arrayList.add(false);
                 System.out.println(name);
@@ -134,15 +146,31 @@ public class GsonUtil {
                 System.out.println(object1.get(name));
                 break;
             }
-            if(object1.get(name) instanceof JsonArray || object1.get(name) instanceof JsonObject){
-                object1.remove(name);
-                object2.remove(name);
-                iterator1=object1.keySet().iterator();
-                System.out.println(object1+"  "+name);
-                continue;
-            }
-            if(!object1.get(name).getAsString().equals(object2.get(name).getAsString())){
-                arrayList.add(false);
+            try{
+                if(object1.get(name).getAsString().equals("") || object2.get(name).getAsString().equals("")){
+                    throw new Exception("数据不必填未被初始化或查询的数据中忽略展示此数据");
+                }
+                if(!object1.get(name).getAsString().equals(object2.get(name).getAsString())){
+                    log.info("数据不一致的字段名:{},value1:{},value2:{}",name,object1.get(name),object2.get(name));
+                    arrayList.add(false);
+                }
+            }catch (NullPointerException e){
+                log.info("此name在json2中不存在:{},正在查找映射表",name);
+                //判断映射表是否存在此映射关系   如果存在的话 就继续判断
+                try{
+                    if(!mapping.get(name).equals("")){
+                        if(!object1.get(name).getAsString().equals(object2.get(mapping.get(name)).getAsString())){
+                            log.info("映射数据不一致的字段名:{},value1:{},value2:{}",name,object1.get(name),object2.get(mapping.get(name)));
+                            arrayList.add(false);
+                        }
+                    }else{
+                        log.info("无法判断此字段,请手动检查,查不到的key为:{}",name);
+                        arrayList.add(false);
+                    }
+                }catch (NullPointerException e1){
+                    log.info("映射表中无此映射,请添加映射关系再试");
+                    arrayList.add(false);
+                }
             }
         }
         return arrayList.size() == 0;
@@ -154,11 +182,11 @@ public class GsonUtil {
      * @param array2
      * @return
      */
-    public boolean compareJsonArray(JsonArray array1, JsonArray array2){
+    public boolean compareJsonArray(JsonArray array1, JsonArray array2,HashMap mapping) throws Exception {
         ArrayList<Boolean> arrayList = new ArrayList<>();
         for(int i=0;i<array1.size();i++){
             if(array1.get(i).isJsonObject()){
-                if(!compareJsonObject(array1.get(i).getAsJsonObject(),array2.get(i).getAsJsonObject())){
+                if(!compareJsonObject(array1.get(i).getAsJsonObject(),array2.get(i).getAsJsonObject(),mapping)){
                     arrayList.add(false);
                     log.info("不同的json对象是:{}",array1.get(i));
                 }

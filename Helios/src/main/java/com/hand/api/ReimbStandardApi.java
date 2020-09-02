@@ -157,8 +157,12 @@ public class ReimbStandardApi  extends BaseRequest {
         JsonObject name2 =new JsonObject();
         name2.addProperty("language","zh_cn");
         name2.addProperty("value",name);
+        JsonObject name3 =new JsonObject();
+        name3.addProperty("language","zh_TW");
+        name3.addProperty("value",name);
         nameList.add(name1);
         nameList.add(name2);
+        nameList.add(name3);
         object.add("name",nameList);
 
         JsonArray nameList1= new JsonArray();
@@ -166,10 +170,14 @@ public class ReimbStandardApi  extends BaseRequest {
         message1.addProperty("language","en");
         message1.addProperty("value",message);
         JsonObject message2 =new JsonObject();
-        message2.addProperty("language","en");
+        message2.addProperty("language","zh_cn");
         message2.addProperty("value",message);
+        JsonObject message3 =new JsonObject();
+        message3.addProperty("language","zh_TW");
+        message3.addProperty("value",message);
         nameList1.add(message1);
         nameList1.add(message2);
+        nameList1.add(message3);
         object.add("message",nameList1);
 
         body.add("i18n",object);
@@ -246,7 +254,7 @@ public class ReimbStandardApi  extends BaseRequest {
      * @return
      * @throws HttpStatusException
      */
-    public String addItems(Employee employee,String standardOid,String rulesOid,String amount,JsonArray userGroups,JsonArray citys)throws HttpStatusException{
+    public String addItems(Employee employee,String standardOid,String rulesOid,Integer amount,JsonArray userGroups,JsonArray citys)throws HttpStatusException{
         String url = employee.getEnvironment().getUrl() +ApiPath.ADD_ITEM;
         HashMap<String,String> mapParams = new HashMap<>();
         mapParams.put("roleType","TENENT");

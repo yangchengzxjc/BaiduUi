@@ -120,7 +120,7 @@ public class GsonUtil {
      * @param object2
      * @return
      */
-    public static boolean compareJsonObject(JsonObject object1, JsonObject object2, HashMap<String,String> mapping) throws Exception {
+    public static boolean compareJsonObject(JsonObject object1, JsonObject object2, HashMap<String,String> mapping){
         ArrayList<Boolean> arrayList =new ArrayList<>();
         Iterator<String> iterator1 = object1.keySet().iterator();
         //先判断下有没有jsonobject 或者jsonArray 有的话删除
@@ -147,15 +147,42 @@ public class GsonUtil {
                 break;
             }
             try{
-                if(object1.get(name).getAsString().equals("") || object2.get(name).getAsString().equals("")){
-                    throw new Exception("数据不必填未被初始化或查询的数据中忽略展示此数据");
+                if(!object1.get(name).isJsonNull() && object2.get(name).isJsonNull()){
+                    log.info("数据不一致的字段名:{},value1:{},value2:null",name,object1.get(name));
+                    arrayList.add(false);
+                    //如果出现了此判断就跳出这一层的循环  不需要在进行判断了
+                    continue;
                 }
                 if(!object1.get(name).getAsString().equals(object2.get(name).getAsString())){
-                    log.info("数据不一致的字段名:{},value1:{},value2:{}",name,object1.get(name),object2.get(name));
-                    arrayList.add(false);
+                    //判断如果字段的值不一样  就去映射表去找一下映射关系
+                    if(mapping.get(object1.get(name).getAsString())!=null){
+                        //
+                        if(!mapping.get(object1.get(name).getAsString()).equals(object2.get(name).getAsString())){
+                            log.info("数据不一致的字段名:{},value1:{},value2:{}",name,object1.get(name),object2.get(name));
+                            arrayList.add(false);
+                        }
+                    }else{
+                        log.info("数据不一致的字段名:{},value1:{},value2:{}",name,object1.get(name),object2.get(name));
+                            arrayList.add(false);
+                    }
+//                    Iterator<String> iterator = mapping.keySet().iterator();
+//                    boolean isfind =false;
+//                    while (iterator.hasNext()){
+//                        String value =iterator.next();
+//                        log.info("获取的字符为1:{},获取的字符2:{},映射表中的key:{},映射表中的value:{}",object1.get(name).getAsString(),object2.get(name).getAsString(),value,mapping.get(value));
+//                        if(object1.get(name).getAsString().equals(value) && object2.get(name).getAsString().equals(mapping.get(value))){
+//                            isfind =true;
+//                            break;
+//                        }
+//                    }
+//                    if(!isfind){
+//                        log.info("数据不一致的字段名:{},value1:{},value2:{}",name,object1.get(name),object2.get(name));
+//                            arrayList.add(false);
+//                    }
                 }
             }catch (NullPointerException e){
-                log.info("此name在json2中不存在:{},正在查找映射表",name);
+                //空指针异常容易出现在 json1中的key 在json2中不存在 就会出现空异常 然后判断映射表
+                log.info("字段{}在json2中不存在,正在查找映射表",name);
                 //判断映射表是否存在此映射关系   如果存在的话 就继续判断
                 try{
                     if(!mapping.get(name).equals("")){
@@ -182,7 +209,7 @@ public class GsonUtil {
      * @param array2
      * @return
      */
-    public boolean compareJsonArray(JsonArray array1, JsonArray array2,HashMap mapping) throws Exception {
+    public static boolean compareJsonArray(JsonArray array1, JsonArray array2,HashMap mapping){
         ArrayList<Boolean> arrayList = new ArrayList<>();
         for(int i=0;i<array1.size();i++){
             if(array1.get(i).isJsonObject()){

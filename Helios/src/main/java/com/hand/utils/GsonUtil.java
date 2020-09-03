@@ -19,7 +19,7 @@ import java.util.List;
 public class GsonUtil {
 
     /**
-     * 序列化为json字符串
+     * 序列化为json字符串   会对对象中为null 的属性过滤掉
      */
     public static <T> String objectToString(T t){
         Gson gson =new Gson();

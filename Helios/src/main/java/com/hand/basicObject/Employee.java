@@ -17,6 +17,8 @@ public class Employee {
     private  String passWord;
     //员工名
     private String fullName;
+    //员工工号
+    private String employeeID;
     //userOID
     private String userOID;
     //accessToken

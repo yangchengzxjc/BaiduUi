@@ -109,6 +109,8 @@ public class HotelOrderSettlementInfo {
     private List<String> bookClerkDepts;
     //入住人信息列表
     private List<PassengerInfo> passengerList;
+    //酒店超标信息
+    private List<HotelExceedInfo> hotelOrderExceedInfos;
     // 成本中心
     private String costCenter1;
     private String costCenter2;

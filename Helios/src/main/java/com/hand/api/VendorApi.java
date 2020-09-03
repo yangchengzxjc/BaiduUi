@@ -7,7 +7,6 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicconstant.ApiPath;
-import com.hand.basicconstant.BaseConstant;
 import com.hand.utils.Md5Util;
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,7 +56,7 @@ public class VendorApi extends BaseRequest{
      * @param corpId 消费商开通的公司Id
      */
     public JsonObject pushSettlementData(Employee employee,String settlementType,JsonArray listOrderSettlementInfo,String appName,String corpId) throws HttpStatusException {
-        String url = employee.getEnvironment().getZhenxuanOpenURL()+ String.format(ApiPath.PUSHTMCDATA,settlementType);
+        String url = employee.getEnvironment().getZhenxuanOpenURL()+ String.format(ApiPath.PUSHTMCSEETLEMRNTDATA,settlementType);
         JsonObject body =new JsonObject();
         if(settlementType.equals("flight")){
             body.add("flightSettlementList",listOrderSettlementInfo);
@@ -98,5 +97,20 @@ public class VendorApi extends BaseRequest{
         String res =doPost(url,getHeader(employee.getAccessToken()),null,body.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
+
+    /**
+     * 订单数据推送
+     * @param employee
+     * @param orderType 标识什么订单数据类型  机票flight  酒店hotel  和 火车 train
+     * @param appName 汇联易消费商注册的应用名称
+     * @param corpId 消费商开通的公司Id
+     */
+    public JsonObject pushOrderData(Employee employee,String orderType,JsonObject orderBody,String appName,String corpId,String tmcPassword) throws HttpStatusException {
+        String url = employee.getEnvironment().getZhenxuanOpenURL()+ String.format(ApiPath.PUSHTMCORDERDATA,orderType);
+        String res = doPost(url,getHeaderSignature(appName,corpId),null,orderBody.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+
 
 }

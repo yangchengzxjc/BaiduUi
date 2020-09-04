@@ -75,8 +75,8 @@ public class SettlementDataTest extends BaseTest {
                 .companyName("中集现代物流发展有限公司")
                 .companyCode("1404")
                 .companyOid("c7c1fd08-e2c7-4567-858e-b4f90be39f2d")
-                .tenantCode("xvdw5895")
-                .tenantName("中集现代物流发展有限公司")
+                .tenantCode(employee.getTenantCode())
+                .tenantName(employee.getTenantName())
                 .approvalCode("TA"+System.currentTimeMillis())
                 //批次号
                 .accBalanceBatchNo(accBalanceBatchNo)

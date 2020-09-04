@@ -1,5 +1,7 @@
 package com.hand.basicObject.supplierObject.hotelOrderInfo;
 
+import lombok.Builder;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -8,6 +10,7 @@ import java.util.List;
  * @Date 2020/9/3
  * @Version 1.0
  **/
+@Builder(toBuilder = true)
 public class HotelBaseOrder {
     //订单类型   B：预订  R：退票
     private String orderType;

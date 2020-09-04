@@ -45,12 +45,19 @@ public class Employee {
     private String departmentName;
     //公司名
     private String companyName;
+    //公司编码
+    private String companyCode;
     //用户Id
     private String userId;
     //岗位id
     private String jobId;
     //账套id
     private String setOfBookId;
+    //租户名称
+    private String tenantName;
+    //租户code
+    private String tenantCode;
+    //
 
 
     public Employee(String username, String password, Environment environment) {

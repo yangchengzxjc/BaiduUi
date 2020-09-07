@@ -163,4 +163,5 @@ public class FlightOrderSettlementInfo {
     private String costCenter4;
     private String costCenter5;
     private String costCenter6;
+    private List<AirExceedInfo> airExceedInfo;
 }

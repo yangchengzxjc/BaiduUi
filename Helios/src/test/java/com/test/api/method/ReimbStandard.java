@@ -174,7 +174,7 @@ public class ReimbStandard {
      * @return
      * @throws HttpStatusException
      */
-    public String addItems(Employee employee,String standardOid,String rulesOid,String amount,JsonArray userGroups,JsonArray citys)throws HttpStatusException{
+    public String addItems(Employee employee,String standardOid,String rulesOid,Integer amount,JsonArray userGroups,JsonArray citys)throws HttpStatusException{
          String items = reimbStandardRules.addItems(employee,standardOid,rulesOid,amount,userGroups,citys);
         return items;
     }

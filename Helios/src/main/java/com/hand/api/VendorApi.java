@@ -57,7 +57,7 @@ public class VendorApi extends BaseRequest{
      * @param corpId 消费商开通的公司Id
      */
     public JsonObject pushSettlementData(Employee employee,String settlementType,JsonArray listOrderSettlementInfo,String appName,String corpId,String passWord) throws HttpStatusException {
-        String url = employee.getEnvironment().getZhenxuanURL()+ String.format(ApiPath.PUSHTMCDATA,settlementType);
+        String url = employee.getEnvironment().getZhenxuanURL()+ String.format(ApiPath.PUSHTMCORDERDATA,settlementType);
         JsonObject body =new JsonObject();
         if(settlementType.equals("flight")){
             body.add("flightSettlementList",listOrderSettlementInfo);

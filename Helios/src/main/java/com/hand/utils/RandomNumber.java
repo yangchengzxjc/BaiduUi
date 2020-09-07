@@ -54,7 +54,6 @@ public class RandomNumber {
         return random.nextInt(number2-number1+1)+number1;
     }
 
-
     /**
      * 返回两数之间的随机数  保留两位小数
      * @return
@@ -71,5 +70,19 @@ public class RandomNumber {
         Date date= new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSS");
         return dateFormat.format(date);
+    }
+
+    public static String getTimeNumber(int length){
+        long timeNumber = System.currentTimeMillis()*getRandomNumber(10000,99999);
+        String randoNumber =String.valueOf(timeNumber);
+        StringBuffer number =new StringBuffer();
+        if(length<=1 || length>15){
+            log.info("无法生成随机数,请修改生成的字符串的长度1-15之间");
+        }else {
+            for (int i = 0; i < length; i++) {
+                number.append(randoNumber.charAt(i));
+            }
+        }
+        return number.toString();
     }
 }

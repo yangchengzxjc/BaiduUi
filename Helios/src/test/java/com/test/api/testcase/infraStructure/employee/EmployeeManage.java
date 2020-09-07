@@ -40,6 +40,7 @@ public class EmployeeManage extends BaseTest {
     private String position = "测试工程师";
     private String duty = "测试";
     private String rank = "技术经理";
+    private String errorEmployeeID = String.valueOf(RandomNumber.getTimeNumber(15));
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
@@ -81,6 +82,20 @@ public class EmployeeManage extends BaseTest {
     @Test(description = "新增员工异常流程--工号为空")
     public void addEmployee02() throws HttpStatusException {
         JsonObject object = employeeManagePage.addEmployee(employee,infraEmployee,fullName,mobile,"",email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank);
+        String message = object.get("message").getAsString();
+        String errorCode = object.get("errorCode").getAsString();
+        Assert.assertEquals(message,"工号不能为空");
+        Assert.assertEquals(errorCode,"6040008");
+    }
+
+    @Test(description = "新增员工异常流程--工号超20位")
+    public void addEmployee03() throws HttpStatusException {
+        JsonObject object = employeeManagePage.addEmployee(employee,infraEmployee,fullName,mobile,"intere"+errorEmployeeID ,email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank);
+        String message = object.get("message").getAsString();
+        String errorCode = object.get("errorCode").getAsString();
+        log.info(message+errorCode);
+//        Assert.assertEquals(message,"工号不能为空");
+//        Assert.assertEquals(errorCode,"6040008");
     }
 
     @Test(description = "编辑员工-正常编辑-修改了邮箱,手机号以及生日")

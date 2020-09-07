@@ -1,10 +1,12 @@
 package com.test.api.testcase.ReimbStand;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.hand.api.ReimbStandardApi;
-import com.hand.api.SetOfBooksApi;
+import com.hand.basicObject.FormComponent;
+import com.hand.utils.UTCTime;
+import com.test.api.method.ExpenseReport;
+import com.test.api.method.ExpenseReportComponent;
 import com.test.api.method.ReimbStandard;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
@@ -12,7 +14,6 @@ import com.test.BaseTest;
 import com.test.api.method.Infra.SetOfBooksMethod.SetOfBooksDefine;
 import lombok.extern.slf4j.Slf4j;
 
-import net.minidev.json.JSONArray;
 import org.testng.annotations.*;
 
 @Slf4j
@@ -21,6 +22,8 @@ public class ReimbStandardTest extends BaseTest {
     private ReimbStandardApi reimbStandardApi;
     private ReimbStandard reimbStandard;
     private SetOfBooksDefine setOfBooksDefine;
+    private ExpenseReport expenseReport;
+    private ExpenseReportComponent expenseReportComponent;
 
 
     @BeforeClass
@@ -29,6 +32,8 @@ public class ReimbStandardTest extends BaseTest {
         employee=getEmployee(phoneNumber,pwd,env);
         reimbStandardApi =new ReimbStandardApi();
         reimbStandard =new ReimbStandard();
+        expenseReport =new ExpenseReport();
+        expenseReportComponent =new ExpenseReportComponent();
     }
 
     @Test(priority = 1,description = "用于测试调试使用")
@@ -57,14 +62,14 @@ public class ReimbStandardTest extends BaseTest {
         log.info("companyList:{}",companyList);
     }
 
-    @Test(priority = 1,description = "报销标准")
+    @Test(priority = 2,description = "报销标准")
     public void createRules()throws HttpStatusException{
         JsonArray userGroups = reimbStandard.userGroups(reimbStandard.getUserGroups(employee,"租户级  stage测试员"));
         JsonArray expenseType = reimbStandard.expenseType(reimbStandard.getExpenseType(employee,"摊销费用"));
         //新建规则
-        String rulesOid=reimbStandard.addReimbstandard(employee,"测试23","WARN","SET_OF_BOOK",
+        String rulesOid=reimbStandard.addReimbstandard(employee,"测试25","WARN","SET_OF_BOOK",
                 reimbStandard.getSetOfBookId(employee,"默认账套"),"SINGLE","SINGLE",
-                "该费用超标",userGroups,expenseType,new  JsonArray(),new JsonArray());
+                "该费用超标啦",userGroups,expenseType,new  JsonArray(),new JsonArray());
         log.info("ruleOID:{}",rulesOid);
         //获取默认管控信息
         JsonArray controlItems = reimbStandard.getControlItems(employee,rulesOid);
@@ -74,10 +79,30 @@ public class ReimbStandardTest extends BaseTest {
         log.info("item:{}",item);
         //修改基本标准
         String standardOid=item.get(0).getAsJsonObject().get("standardOID").getAsString();
-        String items= reimbStandard.addItems(employee,standardOid,rulesOid,"100",userGroups,new JsonArray());
+        String items= reimbStandard.addItems(employee,standardOid,rulesOid, 100,userGroups,new JsonArray());
         log.info("items:{}",items);
         //删除规则
 //        reimbStandard.deleteReimbStandardRules(employee,rulesOid);
+    }
+
+    @Test(priority = 1,description = "报销标准规则校验")
+    public void checkRules()throws HttpStatusException{
+        //新建报销单
+        FormComponent component=new FormComponent();
+        component.setCompany(employee.getCompanyOID());
+        component.setDepartment(employee.getDepartmentOID());
+        component.setStartDate(UTCTime.getNowUtcTime());
+        component.setEndDate(UTCTime.getUtcTime(3,0));
+        //添加参与人员  参与人员的value 是一段json数组。
+        JsonArray array = new JsonArray();
+        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"自动化测试-日常报销单"),"懿佳欢_stage"));
+        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"自动化测试-日常报销单"),"17900001005"));
+        log.info(array.toString());
+        component.setParticipant(array.toString());
+        component.setCause("报销标准规则校验");
+        log.info(String.valueOf(component));
+        String expenseReportOID =expenseReport.createExpenseReport(employee,"自动化测试-日常报销单",component).get("expenseReportOID");
+        log.info(expenseReportOID);
     }
 
 }

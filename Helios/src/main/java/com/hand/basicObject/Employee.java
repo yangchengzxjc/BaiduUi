@@ -17,6 +17,8 @@ public class Employee {
     private  String passWord;
     //员工名
     private String fullName;
+    //员工工号
+    private String employeeID;
     //userOID
     private String userOID;
     //accessToken
@@ -43,12 +45,22 @@ public class Employee {
     private String departmentName;
     //公司名
     private String companyName;
+    //公司编码
+    private String companyCode;
     //用户Id
     private String userId;
     //岗位id
     private String jobId;
     //账套id
     private String setOfBookId;
+    //租户名称
+    private String tenantName;
+    //租户code
+    private String tenantCode;
+    //手机号
+    private String mobile;
+    // 邮箱
+    private String email;
 
 
     public Employee(String username, String password, Environment environment) {

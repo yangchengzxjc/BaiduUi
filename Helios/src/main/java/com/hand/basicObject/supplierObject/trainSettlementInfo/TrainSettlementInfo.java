@@ -27,4 +27,6 @@ public class TrainSettlementInfo {
     private List<TrainTicketDetail> trainTicketDetails;
     //乘客票张关联
     private List<TrainPassengerTicketCorrelation> trainPassengerTicketCorrelations;
+    //订单超标原因
+    private List<TrainExceedInfo> trainExceedInfos;
 }

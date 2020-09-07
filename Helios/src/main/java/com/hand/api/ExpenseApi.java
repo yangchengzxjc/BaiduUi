@@ -270,24 +270,24 @@ public class ExpenseApi extends BaseRequest{
     /**
      *
      * @param employee
-     * @param expenseTypeinfo
+     * @param expenseTypeInfo
      * @param expenseReportOID   报销单的oid
      * @param amount    费用金额
      * @param attachments   附件  没有则为空
      * @return
      * @throws HttpStatusException
      */
-    public  JsonObject expenseReportCreateinvoice(Employee employee, JsonObject expenseTypeinfo, InvoiceComponent component,String expenseReportOID,
+    public  JsonObject expenseReportCreateinvoice(Employee employee, JsonObject expenseTypeInfo, InvoiceComponent component,String expenseReportOID,
                                                   double amount, JsonArray attachments, JsonArray receiptList,JsonArray expenseApportion) throws HttpStatusException {
         JsonObject responseEntity=null;
         String url=employee.getEnvironment().getUrl()+ ApiPath.CREATEINVOICE;
         JsonObject body=new JsonObject();
-        String accountSetId=expenseTypeinfo.get("setOfBooks").getAsJsonObject().get("accountSetId").getAsString();
+        String accountSetId=expenseTypeInfo.get("setOfBooks").getAsJsonObject().get("accountSetId").getAsString();
         String messageKey=null;
-        if (!expenseTypeinfo.get("messageKey").isJsonNull()) {
-            messageKey=expenseTypeinfo.get("messageKey").getAsString();
+        if (!expenseTypeInfo.get("messageKey").isJsonNull()) {
+            messageKey=expenseTypeInfo.get("messageKey").getAsString();
         }
-        JsonArray fieldsdata=expenseTypeinfo.get("fields").getAsJsonArray();
+        JsonArray fieldsdata=expenseTypeInfo.get("fields").getAsJsonArray();
         //开始给控件塞值
         for (int i=0;i<fieldsdata.size();i++) {
             JsonObject data = fieldsdata.get(i).getAsJsonObject();
@@ -323,8 +323,7 @@ public class ExpenseApi extends BaseRequest{
                     data.addProperty("value", UTCTime.getNowUtcTime());
                     break;
                 case  "LOCATION":              //城市控件
-                    String  code= componentQueryApi.locationSearch(employee,"大").get(0).getAsJsonObject().get("code").getAsString();
-                    data.addProperty("value", code);
+                    data.addProperty("value", component.getCity());
                     break;
                 case  "PARTICIPANTS":                 //参与人
                     data.addProperty("value",component.getParticipants());
@@ -363,20 +362,20 @@ public class ExpenseApi extends BaseRequest{
             body.add("attachments",new JsonArray());
         }
         body.addProperty("invoiceStatus","INIT");
-        body.addProperty("readonly",expenseTypeinfo.get("readonly").getAsBoolean());
+        body.addProperty("readonly",expenseTypeInfo.get("readonly").getAsBoolean());
         body.addProperty("recognized",false);
         if(component.getCurrencyCode()==null){
             body.addProperty("currencyCode","CNY");
         }else{
             body.addProperty("currencyCode",component.getCurrencyCode());
         }
-        body.addProperty("expenseTypeName",expenseTypeinfo.get("name").getAsString());
-        body.addProperty("expenseTypeOID",expenseTypeinfo.get("expenseTypeOID").getAsString());
-        body.addProperty("expenseTypeId",expenseTypeinfo.get("id").getAsString());
-        body.addProperty("expenseTypeIconName",expenseTypeinfo.get("iconName").getAsString());
+        body.addProperty("expenseTypeName",expenseTypeInfo.get("name").getAsString());
+        body.addProperty("expenseTypeOID",expenseTypeInfo.get("expenseTypeOID").getAsString());
+        body.addProperty("expenseTypeId",expenseTypeInfo.get("id").getAsString());
+        body.addProperty("expenseTypeIconName",expenseTypeInfo.get("iconName").getAsString());
         body.addProperty("expenseTypeKey",messageKey);
-        body.addProperty("pasteInvoiceNeeded",expenseTypeinfo.get("pasteInvoiceNeeded").getAsBoolean());
-        body.addProperty("invoiceRequired",expenseTypeinfo.get("invoiceRequired").getAsBoolean());
+        body.addProperty("pasteInvoiceNeeded",expenseTypeInfo.get("pasteInvoiceNeeded").getAsBoolean());
+        body.addProperty("invoiceRequired",expenseTypeInfo.get("invoiceRequired").getAsBoolean());
         body.addProperty("amount",amount);
         //如果非人民币的汇率要加上汇率 使用equals会出现空指针,因为初始化的时候没有赋值。
         if(!component.getCurrencyCode().equals("CNY")){

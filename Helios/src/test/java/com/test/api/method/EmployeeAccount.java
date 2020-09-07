@@ -38,10 +38,27 @@ public class EmployeeAccount{
         employee.setFullName(jsonObject.get("fullName").getAsString());
         employee.setTenantId(jsonObject.get("tenantId").getAsString());
         employee.setDepartmentOID(jsonObject.get("departmentOID").getAsString());
+        employee.setDepartmentName(jsonObject.get("departmentName").getAsString());
         employee.setCompanyName(jsonObject.get("companyName").getAsString());
+        employee.setEmployeeID(jsonObject.get("employeeID").getAsString());
         employee.setJobId(jsonObject.get("companyWithUserJobsDTOList").getAsJsonArray().get(0).getAsJsonObject().get("userJobsDTOList").getAsJsonArray().get(0).getAsJsonObject().get("id").getAsString());
+        employee.setMobile(jsonObject.get("mobile").getAsString());
+        employee.setEmail(jsonObject.get("email").getAsString());
+        //获取当前用户的租户信息
+        try{
+            JsonObject tenantInfo = employeeInfoApi.getTenantInfo(employee);
+            employee.setTenantCode(tenantInfo.get("tenantCode").getAsString());
+            employee.setTenantName(tenantInfo.get("tenantName").getAsString());
+            //获取当前登录人的公司信息
+            JsonObject companyInfo = employeeInfoApi.getCompanys(employee);
+            employee.setCompanyCode(companyInfo.get("companyCode").getAsString());
+        }catch (HttpStatusException e){
+            e.printStackTrace();
+        }
         return employee;
     }
+
+
 
     public void setEmployeeInfo(Employee employee,String departmentName){
         JsonObject jsonObject=null;

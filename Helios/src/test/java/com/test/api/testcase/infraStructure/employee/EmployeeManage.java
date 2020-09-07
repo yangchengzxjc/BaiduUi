@@ -40,6 +40,7 @@ public class EmployeeManage extends BaseTest {
     private String position = "测试工程师";
     private String duty = "测试";
     private String rank = "技术经理";
+    private String errorEmployeeID = String.valueOf(RandomNumber.getTimeNumber(15));
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
@@ -70,12 +71,31 @@ public class EmployeeManage extends BaseTest {
         log.info("获取到的自定义值列表value值为：" + customValue);
     }
 
-    @Test(description = "新增员正常流程")
-    public void addEmployee() throws HttpStatusException {
+    @Test(description = "新增员工正常流程")
+    public void addEmployee01() throws HttpStatusException {
         JsonObject object = employeeManagePage.addEmployee(employee,infraEmployee,fullName,mobile,employeeID,email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank);
         String name = object.get("fullName").getAsString();
         log.info("获取到的人员姓名为：" + name);
         Assert.assertEquals(name,infraEmployee.getFullName());
+    }
+
+    @Test(description = "新增员工异常流程--工号为空")
+    public void addEmployee02() throws HttpStatusException {
+        JsonObject object = employeeManagePage.addEmployee(employee,infraEmployee,fullName,mobile,"",email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank);
+        String message = object.get("message").getAsString();
+        String errorCode = object.get("errorCode").getAsString();
+        Assert.assertEquals(message,"工号不能为空");
+        Assert.assertEquals(errorCode,"6040008");
+    }
+
+    @Test(description = "新增员工异常流程--工号超20位")
+    public void addEmployee03() throws HttpStatusException {
+        JsonObject object = employeeManagePage.addEmployee(employee,infraEmployee,fullName,mobile,"intere"+errorEmployeeID ,email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank);
+        String message = object.get("message").getAsString();
+        String errorCode = object.get("errorCode").getAsString();
+        log.info(message+errorCode);
+//        Assert.assertEquals(message,"工号不能为空");
+//        Assert.assertEquals(errorCode,"6040008");
     }
 
     @Test(description = "编辑员工-正常编辑-修改了邮箱,手机号以及生日")

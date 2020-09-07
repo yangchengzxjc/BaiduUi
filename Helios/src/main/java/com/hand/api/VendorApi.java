@@ -7,7 +7,6 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicconstant.ApiPath;
-import com.hand.basicconstant.BaseConstant;
 import com.hand.utils.Md5Util;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,14 +25,14 @@ public class VendorApi extends BaseRequest{
      *  商旅TMC 用户调用请求头 （包含签名）
      * @return
      */
-    public HashMap<String,String> getHeaderSignature(String appName,String corpId,String passWord){
+    public HashMap<String,String> getHeaderSignature(String appName,String corpId){
         HashMap<String, String> headersdatas = new HashMap<>();
         headersdatas.put("appName",appName);
         headersdatas.put("corpId",corpId);
         headersdatas.put("format","JSON");
         headersdatas.put("signType","Md5");
-        // 加密后的数据为：Md5[appName+Md5[password]+corpId]
-        headersdatas.put("signature",getMD5Secret(appName,corpId,passWord));
+        // 加密后的数据为：Md5[appName+Md5[password]+corpId]   加密算法
+        headersdatas.put("signature","0ab0ca2870a369b96132ebf0b11c290b");
         headersdatas.put("version","1.0");
         return  headersdatas;
     }
@@ -56,8 +55,8 @@ public class VendorApi extends BaseRequest{
      * @param appName 汇联易消费商注册的应用名称
      * @param corpId 消费商开通的公司Id
      */
-    public JsonObject pushSettlementData(Employee employee,String settlementType,JsonArray listOrderSettlementInfo,String appName,String corpId,String passWord) throws HttpStatusException {
-        String url = employee.getEnvironment().getZhenxuanURL()+ String.format(ApiPath.PUSHTMCDATA,settlementType);
+    public JsonObject pushSettlementData(Employee employee,String settlementType,JsonArray listOrderSettlementInfo,String appName,String corpId) throws HttpStatusException {
+        String url = employee.getEnvironment().getZhenxuanOpenURL()+ String.format(ApiPath.PUSHTMCSEETLEMRNTDATA,settlementType);
         JsonObject body =new JsonObject();
         if(settlementType.equals("flight")){
             body.add("flightSettlementList",listOrderSettlementInfo);
@@ -68,8 +67,8 @@ public class VendorApi extends BaseRequest{
         if(settlementType.equals("train")){
             body.add("trainSettlementInfos",listOrderSettlementInfo);
         }
-        log.info("请求头:{}",getHeaderSignature(appName,corpId,passWord));
-        String res = doPost(url,getHeaderSignature(appName,corpId,passWord),null,body.toString(),null,employee);
+        log.info("请求头:{}",getHeaderSignature(appName,corpId));
+        String res = doPost(url,getHeaderSignature(appName,corpId),null,body.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
@@ -78,14 +77,11 @@ public class VendorApi extends BaseRequest{
      * @param employee
      * @param type
      * @param settlementBody
-     * @param appName
-     * @param corpId
-     * @param passWord
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject internalGetSettlementData(Employee employee, String type, SettlementBody settlementBody,String appName,String corpId,String passWord) throws HttpStatusException {
-        String url =employee.getEnvironment().getZhenxuanURL()+String.format(ApiPath.QUERYVENDORDATA,type);
+    public JsonObject internalGetSettlementData(Employee employee, String type, SettlementBody settlementBody) throws HttpStatusException {
+        String url =employee.getEnvironment().getUrl()+String.format(ApiPath.QUERYVENDORDATA,type);
         JsonObject body =new JsonObject();
         body.addProperty("accBalanceBatchNo",settlementBody.getAccBalanceBatchNo());
         body.addProperty("dateFrom",settlementBody.getDateFrom());
@@ -96,8 +92,45 @@ public class VendorApi extends BaseRequest{
         body.addProperty("recordId",settlementBody.getRecordId());
         body.addProperty("page",settlementBody.getPage());
         body.addProperty("size",settlementBody.getSize());
-        String res =doPost(url,getHeaderSignature(appName,corpId,passWord),null,body.toString(),null,employee);
+        String res =doPost(url,getHeader(employee.getAccessToken()),null,body.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
+
+    /**
+     * 订单数据推送
+     * @param employee
+     * @param orderType 标识什么订单数据类型  机票flight  酒店hotel  和 火车 train
+     * @param appName 汇联易消费商注册的应用名称
+     * @param corpId 消费商开通的公司Id
+     */
+    public JsonObject pushOrderData(Employee employee,String orderType,JsonObject orderBody,String appName,String corpId,String tmcPassword) throws HttpStatusException {
+        String url = employee.getEnvironment().getZhenxuanOpenURL()+ String.format(ApiPath.PUSHTMCORDERDATA,orderType);
+        String res = doPost(url,getHeaderSignature(appName,corpId),null,orderBody.toString(),null,employee);
+        log.info("头信息:{}",getHeaderSignature(appName,corpId));
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 内部查询订单数据接口请求
+     * @param employee
+     * @param orderType
+     * @param settlementBody
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject queryInternalOrderData(Employee employee,String orderType,SettlementBody settlementBody) throws HttpStatusException {
+        String url =employee.getEnvironment().getUrl()+String.format(ApiPath.QUERYORDERDATA,orderType);
+        JsonObject body =new JsonObject();
+        body.addProperty("dateFrom",settlementBody.getDateFrom());
+        body.addProperty("dateTo",settlementBody.getDateTo());
+        body.addProperty("orderNo",settlementBody.getOrderNo());
+        body.addProperty("companyOid",settlementBody.getCompanyOid());
+        body.addProperty("supplierCode",settlementBody.getSupplierCode());
+        body.addProperty("page",settlementBody.getPage());
+        body.addProperty("size",settlementBody.getSize());
+        String res =doPost(url,getHeader(employee.getAccessToken()),null,body.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
 
 }

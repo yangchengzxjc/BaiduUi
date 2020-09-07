@@ -57,7 +57,10 @@ public class Employee {
     private String tenantName;
     //租户code
     private String tenantCode;
-    //
+    //手机号
+    private String mobile;
+    // 邮箱
+    private String email;
 
 
     public Employee(String username, String password, Environment environment) {

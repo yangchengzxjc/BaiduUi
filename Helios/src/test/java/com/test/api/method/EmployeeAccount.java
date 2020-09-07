@@ -25,7 +25,7 @@ public class EmployeeAccount{
      * set 用户的信息
      * @param employee
      */
-    public Employee setEmployeeInfo(Employee employee) throws HttpStatusException {
+    public Employee setEmployeeInfo(Employee employee){
         JsonObject jsonObject=null;
         try {
             jsonObject= employeeInfoApi.getEmployeeInfo(employee);
@@ -42,13 +42,19 @@ public class EmployeeAccount{
         employee.setCompanyName(jsonObject.get("companyName").getAsString());
         employee.setEmployeeID(jsonObject.get("employeeID").getAsString());
         employee.setJobId(jsonObject.get("companyWithUserJobsDTOList").getAsJsonArray().get(0).getAsJsonObject().get("userJobsDTOList").getAsJsonArray().get(0).getAsJsonObject().get("id").getAsString());
+        employee.setMobile(jsonObject.get("mobile").getAsString());
+        employee.setEmail(jsonObject.get("email").getAsString());
         //获取当前用户的租户信息
-        JsonObject tenantInfo = employeeInfoApi.getTenantInfo(employee);
-        employee.setTenantCode(tenantInfo.get("tenantCode").getAsString());
-        employee.setTenantName(tenantInfo.get("tenantName").getAsString());
-        //获取当前登录人的公司信息
-        JsonObject companyInfo = employeeInfoApi.getCompanys(employee);
-        employee.setCompanyCode(companyInfo.get("companyCode").getAsString());
+        try{
+            JsonObject tenantInfo = employeeInfoApi.getTenantInfo(employee);
+            employee.setTenantCode(tenantInfo.get("tenantCode").getAsString());
+            employee.setTenantName(tenantInfo.get("tenantName").getAsString());
+            //获取当前登录人的公司信息
+            JsonObject companyInfo = employeeInfoApi.getCompanys(employee);
+            employee.setCompanyCode(companyInfo.get("companyCode").getAsString());
+        }catch (HttpStatusException e){
+            e.printStackTrace();
+        }
         return employee;
     }
 

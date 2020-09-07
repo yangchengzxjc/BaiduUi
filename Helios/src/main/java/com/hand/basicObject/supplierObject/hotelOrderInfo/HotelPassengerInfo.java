@@ -1,5 +1,7 @@
 package com.hand.basicObject.supplierObject.hotelOrderInfo;
 
+import lombok.Builder;
+
 import java.util.List;
 
 /**
@@ -7,6 +9,7 @@ import java.util.List;
  * @Date 2020/9/3
  * @Version 1.0
  **/
+@Builder(toBuilder = true)
 public class HotelPassengerInfo {
 
     private String orderNo;

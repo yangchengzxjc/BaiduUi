@@ -12,17 +12,17 @@ import java.util.List;
 @Builder(toBuilder = true)
 public class TrainOrderInfoEntity {
     //订单基本信息
-    private TrainBaseOrder trainBaseOrder;
+    private TrainBaseOrder trainOrderBase;
     //订单车票信息
-    private List<TrainTicketInfo> trainTicketInfos;
+    private List<TrainTicketInfo> trainOrderTicketInfos;
     //订单车次信息
-    private List<TrainSequenceInfo> trainSequenceInfos;
+    private List<TrainSequenceInfo> trainOrderSequenceInfos;
     //订单乘客信息
-    private List<TrainPassengerInfo> trainPassengerInfos;
+    private List<TrainPassengerInfo> trainOrderPassengerInfos;
     //订单改签信息
-    private List<TrainChangeInfo> trainChangeInfos;
+    private List<TrainChangeInfo> trainOrderChangeInfos;
     //订单退票信息
-    private List<TrainRefundInfo> trainRefundInfos;
+    private List<TrainRefundInfo> trainOrderRefundInfos;
     //订单超标原因
     private List<TrainExceedInfo> trainExceedInfos;
 }

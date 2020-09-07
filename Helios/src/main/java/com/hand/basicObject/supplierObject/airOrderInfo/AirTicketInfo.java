@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  **/
 @Builder(toBuilder = true)
 public class AirTicketInfo {
-    //机票唯一标识
+    //机票唯一标识   建议使用票号
     private String ticketKey;
     //乘客序号
     private String passengerNo;

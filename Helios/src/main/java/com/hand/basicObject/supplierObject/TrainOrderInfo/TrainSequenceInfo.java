@@ -1,10 +1,13 @@
 package com.hand.basicObject.supplierObject.TrainOrderInfo;
 
+import lombok.Builder;
+
 /**
  * @Author peng.zhang
  * @Date 2020/9/3
  * @Version 1.0
  **/
+@Builder(toBuilder = true)
 public class TrainSequenceInfo {
 
     //车次对应的订单号

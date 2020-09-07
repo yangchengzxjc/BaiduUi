@@ -1,10 +1,13 @@
 package com.hand.basicObject.supplierObject.hotelOrderInfo;
 
+import lombok.Builder;
+
 /**
  * @Author peng.zhang
  * @Date 2020/9/3
  * @Version 1.0
  **/
+@Builder(toBuilder = true)
 public class HotelExceedInfo {
 
     //关联的订单号

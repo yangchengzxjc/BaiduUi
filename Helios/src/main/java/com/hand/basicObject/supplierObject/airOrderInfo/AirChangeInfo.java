@@ -26,6 +26,8 @@ public class AirChangeInfo {
     private BigDecimal changeFee;
     //改签费率%
     private BigDecimal changeRate;
+    //改签机票差价
+    private BigDecimal changeDifference;
     //商旅改签服务费
     private BigDecimal changeServiceFee;
 }

@@ -1,5 +1,6 @@
 package com.test;
 
+import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicconstant.Environment;
 import com.test.api.method.EmployeeAccount;
 import com.test.api.method.EmployeeLogin;

@@ -2,6 +2,8 @@ package com.hand.basicObject.supplierObject.airOrderInfo;
 
 import lombok.Builder;
 
+import java.math.BigDecimal;
+
 /**
  * @Author peng.zhang
  * @Date 2020/9/4
@@ -19,7 +21,7 @@ public class AirTicketPrint {
     private String printTime;
     private String expressNo;
     private String expressCompany;
-    private String expressFee;
-    private String expressServiceFee;
+    private BigDecimal expressFee;
+    private BigDecimal expressServiceFee;
 
 }

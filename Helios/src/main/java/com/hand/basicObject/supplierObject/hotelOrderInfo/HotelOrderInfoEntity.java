@@ -1,5 +1,7 @@
 package com.hand.basicObject.supplierObject.hotelOrderInfo;
 
+import lombok.Builder;
+
 import java.util.List;
 
 /**
@@ -7,14 +9,17 @@ import java.util.List;
  * @Date 2020/9/3
  * @Version 1.0
  **/
+@Builder(toBuilder = true)
 public class HotelOrderInfoEntity {
 
     //订单基本信息
     private HotelBaseOrder hotelBaseOrder;
     //订单超标信息
-    private List<HotelExceedInfo> HotelExceedInfo;
+    private List<HotelExceedInfo> hotelOrderExceedInfos;
     //订单入住信息
-    private List<HotelPassengerInfo> hotelPassengerInfos;
+    private List<HotelPassengerInfo> hotelOrderPassengerInfos
+
+            ;
 
 
 

@@ -276,7 +276,7 @@ public class ApiPath {
         //修改报销标准基本标准
         public static final String ADD_ITEM = "/api/expense/standard/item";
         // 火车,机票,酒店 订单数据推送
-        public static final String  PUSHTMCORDERDATA = "/data/api/openapi/train/order";
+        public static final String  PUSHTMCORDERDATA = "/data/api/openapi/%s/order/push";
 
     }
 

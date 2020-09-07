@@ -3,13 +3,13 @@ package com.test.api.testcase.vendor;
 import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicObject.supplierObject.TrainOrderInfo.*;
 import com.hand.basicObject.supplierObject.airOrderInfo.*;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelBaseOrder;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelExceedInfo;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelOrderInfoEntity;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelPassengerInfo;
-import com.hand.basicObject.supplierObject.trainSettlementInfo.TrainTicketDetail;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
@@ -106,21 +106,21 @@ public class OrderDataTest extends BaseTest {
                 .departmentName(employee.getDepartmentName())
                 .passengerDepartments(bookerDepartments)
                 .build();
-        HotelExceedInfo hotelExceedInfo =HotelExceedInfo.builder()
-                .orderNo(orderNo)
-                .violationContentCode("")
-                .violationContentName("")
-                .violationReasonName("")
-                .violationReasonCode("")
-                .build();
-        ArrayList<HotelExceedInfo> hotelExceedInfos =new ArrayList<>();
-        hotelExceedInfos.add(hotelExceedInfo);
+        //超标信息
+//        HotelExceedInfo hotelExceedInfo =HotelExceedInfo.builder()
+//                .orderNo(orderNo)
+//                .violationContentCode("")
+//                .violationContentName("")
+//                .violationReasonName("")
+//                .violationReasonCode("")
+//                .build();
+//        ArrayList<HotelExceedInfo> hotelExceedInfos =new ArrayList<>();
+//        hotelExceedInfos.add(hotelExceedInfo);
         ArrayList<HotelPassengerInfo> hotelPassengerInfos =new ArrayList<>();
         hotelPassengerInfos.add(hotelPassengerInfo);
         HotelOrderInfoEntity hotelOrderInfoEntity = HotelOrderInfoEntity.builder()
                 .hotelBaseOrder(hotelBaseOrder)
                 .hotelOrderPassengerInfos(hotelPassengerInfos)
-                .hotelOrderExceedInfos(hotelExceedInfos)
                 .build();
         //订单推送
         JsonObject info=vendor.pushOrderData(employee,"hotel",hotelOrderInfoEntity,"cimccTMC","200428140254184788","");
@@ -145,8 +145,8 @@ public class OrderDataTest extends BaseTest {
                 .supplierName("")
                 .supplierCode("cimccTMC")
                 .approvalCode("TA"+System.currentTimeMillis())
-                .orderStatusName("已提交")
-                .orderStatusCode("Submitted")
+                .orderStatusName("已出票")
+                .orderStatusCode("TD")
                 .tenantCode(employee.getTenantCode())
                 .tenantName(employee.getTenantName())
                 .employeeNum(employee.getEmployeeID())
@@ -256,6 +256,15 @@ public class OrderDataTest extends BaseTest {
         //订单推送
         JsonObject info=vendor.pushOrderData(employee,"train",trainOrderInfoEntity,"cimccTMC","200428140254184788","");
         log.info("推送的数据响应:{}",info);
+        SettlementBody settlementBody = SettlementBody.builder()
+                .companyOid(employee.getCompanyOID())
+                .orderNo(orderNo)
+                .page(1)
+                .size(10)
+                .build();
+        //查询订单数据
+        JsonObject  trainOrder = vendor.queryOrderData(employee,"train",settlementBody);
+        log.info("train order Data:{}",trainOrder);
     }
 
     @Test(description = "机票订单-单程-月结-不改签-不退票")
@@ -453,6 +462,14 @@ public class OrderDataTest extends BaseTest {
         //订单推送
         JsonObject info=vendor.pushOrderData(employee,"flight",airOrderInfoEntity,"cimccTMC","200428140254184788","");
         log.info("推送的数据响应:{}",info);
-
+        SettlementBody settlementBody = SettlementBody.builder()
+                .companyOid(employee.getCompanyOID())
+                .orderNo(orderNo)
+                .page(1)
+                .size(10)
+                .build();
+        //查询订单数据
+        JsonObject  trainOrder = vendor.queryOrderData(employee,"flight",settlementBody);
+        log.info("train order Data:{}",trainOrder);
     }
 }

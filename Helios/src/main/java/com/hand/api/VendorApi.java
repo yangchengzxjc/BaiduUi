@@ -77,12 +77,10 @@ public class VendorApi extends BaseRequest{
      * @param employee
      * @param type
      * @param settlementBody
-     * @param appName
-     * @param corpId
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject internalGetSettlementData(Employee employee, String type, SettlementBody settlementBody,String appName,String corpId) throws HttpStatusException {
+    public JsonObject internalGetSettlementData(Employee employee, String type, SettlementBody settlementBody) throws HttpStatusException {
         String url =employee.getEnvironment().getUrl()+String.format(ApiPath.QUERYVENDORDATA,type);
         JsonObject body =new JsonObject();
         body.addProperty("accBalanceBatchNo",settlementBody.getAccBalanceBatchNo());
@@ -108,9 +106,31 @@ public class VendorApi extends BaseRequest{
     public JsonObject pushOrderData(Employee employee,String orderType,JsonObject orderBody,String appName,String corpId,String tmcPassword) throws HttpStatusException {
         String url = employee.getEnvironment().getZhenxuanOpenURL()+ String.format(ApiPath.PUSHTMCORDERDATA,orderType);
         String res = doPost(url,getHeaderSignature(appName,corpId),null,orderBody.toString(),null,employee);
+        log.info("头信息:{}",getHeaderSignature(appName,corpId));
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
+    /**
+     * 内部查询订单数据接口请求
+     * @param employee
+     * @param orderType
+     * @param settlementBody
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject queryInternalOrderData(Employee employee,String orderType,SettlementBody settlementBody) throws HttpStatusException {
+        String url =employee.getEnvironment().getUrl()+String.format(ApiPath.QUERYORDERDATA,orderType);
+        JsonObject body =new JsonObject();
+        body.addProperty("dateFrom",settlementBody.getDateFrom());
+        body.addProperty("dateTo",settlementBody.getDateTo());
+        body.addProperty("orderNo",settlementBody.getOrderNo());
+        body.addProperty("companyOid",settlementBody.getCompanyOid());
+        body.addProperty("supplierCode",settlementBody.getSupplierCode());
+        body.addProperty("page",settlementBody.getPage());
+        body.addProperty("size",settlementBody.getSize());
+        String res =doPost(url,getHeader(employee.getAccessToken()),null,body.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
 
 
 }

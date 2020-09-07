@@ -65,8 +65,19 @@ public class Vendor {
      * 内部使用的查询结算数据的接口
      * @return
      */
-    public JsonObject internalQuerySettlement(Employee employee, String type, SettlementBody settlementBody, String appName, String corpId, String passWord) throws HttpStatusException {
-        return vendorApi.internalGetSettlementData(employee,type,settlementBody,appName,corpId).getAsJsonObject("body").get("list").getAsJsonArray().get(0).getAsJsonObject();
+    public JsonObject internalQuerySettlement(Employee employee, String type, SettlementBody settlementBody) throws HttpStatusException {
+        return vendorApi.internalGetSettlementData(employee,type,settlementBody).getAsJsonObject("body").get("list").getAsJsonArray().get(0).getAsJsonObject();
     }
 
+    /**
+     * 内部使用查询订单数据接口
+     * @param employee
+     * @param orderType
+     * @param settlementBody
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject queryOrderData(Employee employee,String orderType,SettlementBody settlementBody) throws HttpStatusException {
+        return vendorApi.queryInternalOrderData(employee,orderType,settlementBody);
+    }
 }

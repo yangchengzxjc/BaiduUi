@@ -167,7 +167,7 @@ public class SettlementDataTest extends BaseTest {
                 .page(1)
                 .build();
         //查询结算数据
-        JsonObject settlementData = vendor.internalQuerySettlement(employee,"flight",settlementBody,"cimccTMC","200428140254184788","");
+        JsonObject settlementData = vendor.internalQuerySettlement(employee,"flight",settlementBody);
         log.info("查询的结算数据:{}",settlementData);
         //查询数据中的数据在推送的结算数据中不存在对比 以及jsonarrayz中的数据对比
         //bookClerkEmployeeOid 订票人的OID 对比
@@ -327,7 +327,7 @@ public class SettlementDataTest extends BaseTest {
                 .size(10)
                 .page(1)
                 .build();
-        JsonObject internalQuerySettlement = vendor.internalQuerySettlement(employee,"train",settlementBody,"cimccTMC","200428140254184788","");
+        JsonObject internalQuerySettlement = vendor.internalQuerySettlement(employee,"train",settlementBody);
         log.info("查询的火车结算数据:{}",internalQuerySettlement);
         //映射表
         HashMap<String,String> mapping =new HashMap<>();
@@ -446,7 +446,7 @@ public class SettlementDataTest extends BaseTest {
                 .size(10)
                 .page(1)
                 .build();
-        JsonObject internalQuerySettlement = vendor.internalQuerySettlement(employee,"hotel",settlementBody,"cimccTMC","200428140254184788","");
+        JsonObject internalQuerySettlement = vendor.internalQuerySettlement(employee,"hotel",settlementBody);
         log.info("查询的酒店结算数据:{}",internalQuerySettlement);
         //进行入住旅客数据对比
         HashMap<String,String> mapping =new HashMap<>();

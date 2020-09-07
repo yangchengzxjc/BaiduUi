@@ -277,7 +277,8 @@ public class ApiPath {
         public static final String ADD_ITEM = "/api/expense/standard/item";
         // 火车,机票,酒店 订单数据推送
         public static final String  PUSHTMCORDERDATA = "/data/api/openapi/%s/order/push";
-
+        // 火车 机票 酒店 订单数据内部查询
+        public static final String QUERYORDERDATA = "/vendor-data-service/api/open/internal/%s/order";
     }
 
 

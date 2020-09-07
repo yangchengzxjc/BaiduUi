@@ -11,7 +11,7 @@ import com.test.api.method.ReimbStandard;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.test.BaseTest;
-import com.test.api.method.Infra.SetOfBooksMethod.SetOfBooksDefine;
+import com.test.api.method.SetOfBooksDefine;
 import lombok.extern.slf4j.Slf4j;
 
 import org.testng.annotations.*;
@@ -45,13 +45,13 @@ public class ReimbStandardTest extends BaseTest {
     @Test(priority = 1,description = "查询某个账套详情")
     public void test1() throws HttpStatusException {
         setOfBooksDefine =new SetOfBooksDefine();
-        JsonObject setBooks = setOfBooksDefine.getSetOfBooksDetail(employee,"DEFAULT_SOB","默认账套","");
+        JsonObject setBooks = setOfBooksDefine.getSetOfBooksDetail(employee,"DEFAULT_SOB","默认账套");
         System.out.println(setBooks);
     }
     @Test(priority = 1,description = "查询某个账套的id")
     public void test2()throws HttpStatusException{
         setOfBooksDefine = new SetOfBooksDefine();
-       String A= setOfBooksDefine.getSetOfBooksId(employee,"DEFAULT_SOB","默认账套","");
+       String A= setOfBooksDefine.getSetOfBooksId(employee,"DEFAULT_SOB","默认账套");
         log.info("账套id："+A);
 
     }

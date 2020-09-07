@@ -195,8 +195,6 @@ public class ApiPath {
         public static final String GET_EMPLOYEE_EXPAND = "/api/custom/values/form";
         //获取员工扩展字段的的表单名称
         public static final String GET_EMPLOYEE_EXPAND_form = "/api/custom/forms/by/form/code";
-        //获取员工扩展字段表单数据
-        public static final String GET_EMPLOYEE_CUSTOM_FORM = "/api/custom/forms/%s/simple";
         //系统值列表
         public static final String System_CUSTOMENUMATIONTYPE = "/api/v2/custom/enumerations";
         //搜索用户
@@ -236,7 +234,7 @@ public class ApiPath {
         //新增/编辑账套
         public static final String ADD_SET_OF_BOOKS = "/api/setOfBooks";
         //搜索账套
-        public static final String GET_SET_OF_BOOKS = "/api/setOfBooks/query/dto";
+        public static final String SEARCH_SET_OF_BOOKS = "/api/setOfBooks/query/dto";
         //获取账套详情
         public static final String GET_SET_OF_BOOKS_DETAIL ="/api/setOfBooks/%s";
 
@@ -268,7 +266,7 @@ public class ApiPath {
         //机票,酒店,火车 结算数据推送
         public static final String PUSHTMCSEETLEMRNTDATA = "/data/api/openapi/%s/settlement/push";
         // 落库查询数据 机票  酒店 火车 结算数据
-        public static final String QUERYVENDORDATA = "/vendor-service-data/api/open/internal/%s/settlement";
+        public static final String QUERYVENDORDATA = "/vendor-data-service/api/open/internal/%s/settlement";
         //新增管控信息
         public static final String ADD_CONTROLITEM = "/api/expense/standard/controlitem/%s";
         //获取报销标准规则管控信息

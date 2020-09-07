@@ -47,41 +47,36 @@ public class SettlementDataTest extends BaseTest {
         infraStructure =new InfraStructure();
     }
 
-    @Test(description = "机票结算费用数据对比-订票人和乘机人都是自己-1人未退票-不改签")
-    public void flightSettlementDataTest1() throws Exception {
+    @Test(description = "机票结算费用数据对比-1人未退票-不改签")
+    public void flightSettlementDataTest1() throws HttpStatusException {
         ArrayList<FlightOrderSettlementInfo> FlightOrderSettlementInfos =new ArrayList<>();
         //初始化机票结算信息
-        //结算信息的主键
-        String recordId = String.valueOf(System.currentTimeMillis());
-        //批次号
-        String accBalanceBatchNo ="cimccTMC_200428140254184788_flight_"+UTCTime.getBeijingDay(0);
-        //订单号
-        String orderNo = RandomNumber.getTimeNumber();
         //机票金额
         BigDecimal price = RandomNumber.getDoubleNumber(800,1200);
         //燃油费
         BigDecimal oilFee = new BigDecimal(50).setScale(2);
         //服务费
         BigDecimal serviceFee =new BigDecimal(20).setScale(2);
+        //预定机票人工号
+        String bookClerkEmployeeId =String.valueOf(RandomNumber.getRandomNumber(1,1000));
         //部门
         ArrayList<String> dept =new ArrayList<>();
-        dept.add(employee.getDepartmentName());
+        dept.add("测试部门1");
         FlightOrderSettlementInfo flightOrderSettlementInfo =FlightOrderSettlementInfo.builder()
-                //结算信息的主键
-                .recordId(recordId)
+                .recordId(String.valueOf(System.currentTimeMillis()))
                 .supplierName("")
-                .supplierCode("cimccTMC")
+                .supplierCode("")
                 .corpId("200428140254184788")
-                .companyName("中集现代物流发展有限公司")
-                .companyCode("1404")
+                .companyName("")
+                .companyCode("")
                 .companyOid("c7c1fd08-e2c7-4567-858e-b4f90be39f2d")
-                .tenantCode(employee.getTenantCode())
-                .tenantName(employee.getTenantName())
+                .tenantId("")
+                .tenantCode("")
+                .tenantName("")
                 .approvalCode("TA"+System.currentTimeMillis())
                 //批次号
-                .accBalanceBatchNo(accBalanceBatchNo)
-                //订单号
-                .orderNo(orderNo)
+                .accBalanceBatchNo("cimccTMC_200428140254184788_flight_"+UTCTime.getBeijingDay(0))
+                .orderNo(RandomNumber.getTimeNumber())
                 .createTime(UTCTime.getBeijingTime(0,0))
                 .orderDate(UTCTime.getBeijingTime(0,0))
                 .deductibleFee(new BigDecimal(0.00).setScale(2))
@@ -110,7 +105,7 @@ public class SettlementDataTest extends BaseTest {
                 //改签差价
                 .priceDifferential(new BigDecimal(0).setScale(2))
                 //改签服务费
-                .reBookingServiceFee(new BigDecimal(100).setScale(2))
+                .reBookingServiceFee(new BigDecimal(100))
                 .currency("CNY")
                 .sequence("1")
                 //当前时间5天之前起飞
@@ -125,16 +120,16 @@ public class SettlementDataTest extends BaseTest {
                 .aportName("首都机场")
                 .airlineName("东航")
                 .flightNo("MU1234")
-                .priceRate("5.50")
+                .priceRate("5.5")
                 .className("Y")
                 .travelingStandard("差旅标准")
-                .bookClerkName(employee.getFullName())
+                .bookClerkName("测试人"+bookClerkEmployeeId)
                 //预订人工号
-                .bookClerkEmployeeId(employee.getEmployeeID())
+                .bookClerkEmployeeId(bookClerkEmployeeId)
                 .bookClerkDept(dept)
                 //乘客为1人
-                .passengerName(employee.getFullName())
-                .passengerEmployeeId(employee.getEmployeeID())
+                .passengerName("测试人"+bookClerkEmployeeId)
+                .passengerEmployeeId(bookClerkEmployeeId)
                 .passengerDept(dept)
                 .passengerCostCenter1("综合管理部-文秘组")
                 //使用系统时间戳作为客票号
@@ -146,50 +141,26 @@ public class SettlementDataTest extends BaseTest {
                 .ticketNoStatus("USE")
                 .flightClass("N")
                 .printStatus("")
-                .costCenter1("综合管理部-文秘组")
-                //机票行程单打印时间为航班到达时间的1小时后
-                .printTime(UTCTime.getBeijingTime(-5,4))
+                .costCenter1("")
+                .printTime("")
+                .costCenter2("")
+                .costCenter3("")
+                .costCenter4("")
+                .costCenter5("")
+                .costCenter6("")
                 .build();
         FlightOrderSettlementInfos.add(flightOrderSettlementInfo);
         String info = GsonUtil.objectToString(FlightOrderSettlementInfos);
-        //封装成JsonArray数组
         JsonArray listOrderSettlementInfo =new JsonParser().parse(info).getAsJsonArray();
-        //推送的机票结算信息
-         JsonObject flightSettlementJson = listOrderSettlementInfo.get(0).getAsJsonObject();
-        vendor.pushSettlementData(employee,"flight",FlightOrderSettlementInfos,"cimccTMC","200428140254184788","cimccTMC");
-        //初始化查询结算的对象
-        SettlementBody settlementBody =SettlementBody.builder()
-                .accBalanceBatchNo(accBalanceBatchNo)
-                .orderNo(orderNo)
-                .companyOid("c7c1fd08-e2c7-4567-858e-b4f90be39f2d")
-                .recordId(recordId)
-                .size(10)
-                .page(1)
-                .build();
-        //查询结算数据
-        JsonObject settlementData = vendor.internalQuerySettlement(employee,"flight",settlementBody);
-        log.info("查询的结算数据:{}",settlementData);
-        //查询数据中的数据在推送的结算数据中不存在对比 以及jsonarrayz中的数据对比
-        //bookClerkEmployeeOid 订票人的OID 对比
-//        assert settlementData.get("bookClerkEmployeeOid").getAsString().equals(employee.getUserOID());
-//        //passengerEmployeeOid  乘机人是自己
-//        assert settlementData.get("passengerEmployeeOid").getAsString().equals(employee.getUserOID());
-//        //bookClerkDept   订票人部门对比以及乘客的部门对比
-//        assert flightSettlementJson.get("bookClerkDept").getAsJsonArray().toString().equals(settlementData.get("bookClerkDept").getAsJsonArray().toString());
-//        assert flightSettlementJson.get("passengerDept").getAsJsonArray().toString().equals(settlementData.get("passengerDept").getAsJsonArray().toString());
-//        //进行数据对比
-//        //字段关系映射表 加这个是因为推数据的字段参数和查询出来的字段参数不一致,所以加上这个关系映射表
-//        HashMap<String,String> mapping = new HashMap<>();
-//        mapping.put("orderType","payType");
-//        assert GsonUtil.compareJsonObject(flightSettlementJson,settlementData,mapping);
+        System.out.println(listOrderSettlementInfo);
+        JsonObject object = vendor.pushSettlementData(employee,"flight",FlightOrderSettlementInfos,"cimccTMC","200428140254184788","cimccTMC");
+        System.out.println(object);
     }
 
     @Test(description = "火车结算费用推送-预定-自己订票-自己乘坐-未改签-未退票")
     public void trainSettlementDataTest2() throws Exception {
         //结算主键
         String recordId =String.valueOf(System.currentTimeMillis());
-        //批次号
-        String accBalanceBatchNo = "cimccTMC_200428140254184788_flight_"+UTCTime.getBeijingDay(0);
         //审批单号
         String approvalCode= "TA"+System.currentTimeMillis();
         //结算订单号
@@ -206,7 +177,7 @@ public class SettlementDataTest extends BaseTest {
         String bookClerkEmployeeId =String.valueOf(RandomNumber.getRandomNumber(1,1000));
         //部门
         ArrayList<String> dept =new ArrayList<>();
-        dept.add(employee.getDepartmentName());
+        dept.add("测试部门1");
         //生成10位数的车票编号
         String ticketNo = RandomNumber.getUUID(10);
         TrainBaseSettlement trainBaseSettlement =TrainBaseSettlement.builder()

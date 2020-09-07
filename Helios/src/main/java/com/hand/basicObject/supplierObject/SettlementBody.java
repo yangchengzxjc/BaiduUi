@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(toBuilder = true)
 public class SettlementBody {
     //批次 消费商约定的应结账期的标示。用于客户统计最终的应付明细。批次生成逻辑：supplierCode_corpId_产品_结算开始日期
     //

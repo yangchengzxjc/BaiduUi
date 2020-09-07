@@ -94,8 +94,8 @@ public class EmployeeManage extends BaseTest {
         String message = object.get("message").getAsString();
         String errorCode = object.get("errorCode").getAsString();
         log.info(message+errorCode);
-//        Assert.assertEquals(message,"工号不能为空");
-//        Assert.assertEquals(errorCode,"6040008");
+        Assert.assertEquals(message,"工号长度不允许超过20位");
+        Assert.assertEquals(errorCode,"6040021");
     }
 
     @Test(description = "编辑员工-正常编辑-修改了邮箱,手机号以及生日")

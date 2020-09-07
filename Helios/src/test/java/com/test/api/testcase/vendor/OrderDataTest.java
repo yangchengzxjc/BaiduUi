@@ -13,7 +13,7 @@ import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelPassengerInfo;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
-import com.test.api.method.InfraStructure;
+import com.test.api.method.Infra.EmployeeMethod.InfraStructure;
 import com.test.api.method.Vendor;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;

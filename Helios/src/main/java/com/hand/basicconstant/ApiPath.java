@@ -13,7 +13,7 @@ public class ApiPath {
         //    获取账套
         //获取租户信息
         public static final String GETTENANTINFO = "/api/tenant/getById";
-        public static final String GETSET_OF_BOOKS ="/api/setOfBooks/query/dto";
+        public static final String GET_SET_OF_BOOKS ="/api/setOfBooks/query/dto";
         //    获取租户信息
         public static final String GETCOMPANIES ="/api/my/companies";
         //        获取可用表单列表
@@ -195,6 +195,8 @@ public class ApiPath {
         public static final String GET_EMPLOYEE_EXPAND = "/api/custom/values/form";
         //获取员工扩展字段的的表单名称
         public static final String GET_EMPLOYEE_EXPAND_form = "/api/custom/forms/by/form/code";
+        //获取员工所有扩展字段（禁用&启用）
+        public static final String GET_EMPLOYEE_CUSTOM_FORM = "/api/custom/forms/%s/simple";
         //系统值列表
         public static final String System_CUSTOMENUMATIONTYPE = "/api/v2/custom/enumerations";
         //搜索用户

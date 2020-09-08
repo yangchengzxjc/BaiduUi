@@ -13,7 +13,7 @@ import java.util.List;
 public class HotelOrderInfoEntity {
 
     //订单基本信息
-    private HotelBaseOrder hotelBaseOrder;
+    private HotelBaseOrder hotelOrderBase;
     //订单超标信息
     private List<HotelExceedInfo> hotelOrderExceedInfos;
     //订单入住信息

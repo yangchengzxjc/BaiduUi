@@ -66,7 +66,12 @@ public class Vendor {
      * @return
      */
     public JsonObject internalQuerySettlement(Employee employee, String type, SettlementBody settlementBody) throws HttpStatusException {
-        return vendorApi.internalGetSettlementData(employee,type,settlementBody).getAsJsonObject("body").get("list").getAsJsonArray().get(0).getAsJsonObject();
+        JsonObject respons = vendorApi.internalGetSettlementData(employee,type,settlementBody);
+        JsonObject orderData =new JsonObject();
+        if(respons.get("success").getAsBoolean()){
+            orderData = respons.getAsJsonObject("body").get("list").getAsJsonArray().get(0).getAsJsonObject();
+        }
+        return orderData;
     }
 
     /**
@@ -78,6 +83,11 @@ public class Vendor {
      * @throws HttpStatusException
      */
     public JsonObject queryOrderData(Employee employee,String orderType,SettlementBody settlementBody) throws HttpStatusException {
-        return vendorApi.queryInternalOrderData(employee,orderType,settlementBody);
+        JsonObject respons = vendorApi.queryInternalOrderData(employee,orderType,settlementBody);
+        JsonObject orderData =new JsonObject();
+        if(respons.get("success").getAsBoolean()){
+            orderData = respons.getAsJsonObject("body").get("list").getAsJsonArray().get(0).getAsJsonObject();
+        }
+        return orderData;
     }
 }

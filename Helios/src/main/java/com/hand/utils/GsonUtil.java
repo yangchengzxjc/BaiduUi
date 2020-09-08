@@ -215,30 +215,30 @@ public class GsonUtil {
         Iterator<String> iterator2 = object1.keySet().iterator();
         while(iterator2.hasNext()){
             String name = iterator2.next();
-            if (object1.get(name) instanceof JsonArray && object2.get(name) instanceof JsonArray) {
-                if(!compareJsonArray(object1.getAsJsonArray(name),object2.getAsJsonArray(name),mapping)){
+            try {
+                if (object1.get(name) instanceof JsonArray && object2.get(name) instanceof JsonArray) {
+                    if(!compareJsonArray(object1.getAsJsonArray(name),object2.getAsJsonArray(name),mapping)){
 
-                    arrayList.add(false);
+                        arrayList.add(false);
+                    }
+                    continue;
                 }
-                continue;
-            }
-            if(object1.get(name) instanceof JsonObject && object2.get(name) instanceof  JsonObject){
-                if(!compareJsonObject(object1.getAsJsonObject(name),object2.getAsJsonObject(name),mapping)){
-                    arrayList.add(false);
+                if(object1.get(name) instanceof JsonObject && object2.get(name) instanceof  JsonObject){
+                    if(!compareJsonObject(object1.getAsJsonObject(name),object2.getAsJsonObject(name),mapping)){
+                        arrayList.add(false);
+                    }
+                    continue;
                 }
-                continue;
-            }
-            if(object1.get(name).isJsonArray() && !object2.get(name).isJsonArray()){
-                log.info("不一样的字段为:{}",name);
-                arrayList.add(false);
-                continue;
-            }
-            if(object1.get(name).isJsonObject() && !object2.get(name).isJsonObject()){
-                arrayList.add(false);
-                log.info("类型不一样的字段为:{},",name);
-                continue;
-            }
-            try{
+                if(object1.get(name).isJsonArray() && !object2.get(name).isJsonArray()){
+                    log.info("不一样的字段为:{}",name);
+                    arrayList.add(false);
+                    continue;
+                }
+                if(object1.get(name).isJsonObject() && !object2.get(name).isJsonObject()){
+                    arrayList.add(false);
+                    log.info("类型不一样的字段为:{},",name);
+                    continue;
+                }
                 if(!object1.get(name).isJsonNull() && object2.get(name).isJsonNull()){
                     log.info("数据不一致的字段名:{},value1:{},value2:null",name,object1.get(name));
                     arrayList.add(false);
@@ -264,9 +264,17 @@ public class GsonUtil {
                 //判断映射表是否存在此映射关系   如果存在的话 就继续判断
                 try{
                     if(!mapping.get(name).equals("")){
-                        if(!object1.get(name).getAsString().equals(object2.get(mapping.get(name)).getAsString())){
-                            log.info("映射数据不一致的字段名:{},value1:{},value2:{}",name,object1.get(name),object2.get(mapping.get(name)));
-                            arrayList.add(false);
+                        if(object1.get(name).isJsonObject() && object2.get(mapping.get(name)).isJsonObject()){
+                            if(!compareJsonObject(object1.getAsJsonObject(name),object2.getAsJsonObject(mapping.get(name)),mapping)){
+                                arrayList.add(false);
+                            }
+                        }else if (object1.get(name).isJsonArray()&& object2.get(mapping.get(name)).isJsonArray()) {
+                            if(!compareJsonArray(object1.getAsJsonArray(name),object2.getAsJsonArray(mapping.get(name)),mapping)){
+                                arrayList.add(false);
+                            }
+                        }else if(!object1.get(name).getAsString().equals(object2.get(mapping.get(name)).getAsString())){
+                                log.info("映射数据不一致的字段名:{},value1:{},value2:{}",name,object1.get(name),object2.get(mapping.get(name)));
+                                arrayList.add(false);
                         }
                     }else{
                         log.info("无法判断此字段,请手动检查,查不到的key为:{}",name);

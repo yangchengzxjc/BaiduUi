@@ -106,7 +106,6 @@ public class VendorApi extends BaseRequest{
     public JsonObject pushOrderData(Employee employee,String orderType,JsonObject orderBody,String appName,String corpId,String tmcPassword) throws HttpStatusException {
         String url = employee.getEnvironment().getZhenxuanOpenURL()+ String.format(ApiPath.PUSHTMCORDERDATA,orderType);
         String res = doPost(url,getHeaderSignature(appName,corpId),null,orderBody.toString(),null,employee);
-        log.info("头信息:{}",getHeaderSignature(appName,corpId));
         return new JsonParser().parse(res).getAsJsonObject();
     }
 

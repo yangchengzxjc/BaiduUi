@@ -1,15 +1,16 @@
 package com.test.api.testcase.vendor;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicObject.supplierObject.TrainOrderInfo.*;
 import com.hand.basicObject.supplierObject.airOrderInfo.*;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelBaseOrder;
-import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelExceedInfo;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelOrderInfoEntity;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelPassengerInfo;
+import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
@@ -23,6 +24,7 @@ import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @Author peng.zhang
@@ -54,12 +56,12 @@ public class OrderDataTest extends BaseTest {
         HotelBaseOrder hotelBaseOrder = HotelBaseOrder.builder()
                 .orderType("B")
                 .orderNo(orderNo)
-                .supplierName("")
+                .supplierName("中集商旅")
                 .supplierCode("cimccTMC")
                 .approvalCode("TA"+System.currentTimeMillis())
                 .orderStatusName("已提交")
                 .orderStatusCode("Submitted")
-                .tenantCode(employee.getTenantCode())
+                .tenantCode(employee.getTenantId())
                 .tenantName(employee.getTenantName())
                 .employeeId(employee.getEmployeeID())
                 .bookerDepartments(bookerDepartments)
@@ -85,6 +87,8 @@ public class OrderDataTest extends BaseTest {
                 .contactEmail(employee.getEmail())
                 .hotelType("AGR")
                 .hotelName("爱丽丝酒店")
+                .hotelPhone("010-123456")
+                .hotelAddress("上海梅川路25弄")
                 .hotelStar(3)
                 .startTime(UTCTime.getBeijingTime(3,0))
                 .endTime(UTCTime.getBeijingDate(5)+" 12:00:00")
@@ -119,12 +123,32 @@ public class OrderDataTest extends BaseTest {
         ArrayList<HotelPassengerInfo> hotelPassengerInfos =new ArrayList<>();
         hotelPassengerInfos.add(hotelPassengerInfo);
         HotelOrderInfoEntity hotelOrderInfoEntity = HotelOrderInfoEntity.builder()
-                .hotelBaseOrder(hotelBaseOrder)
+                .hotelOrderBase(hotelBaseOrder)
                 .hotelOrderPassengerInfos(hotelPassengerInfos)
                 .build();
+        //推送的数据封装成一个json字符串
+        String hotelOrderData =GsonUtil.objectToString(hotelOrderInfoEntity);
+        //转成jsonobject对象
+        JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
         //订单推送
-        JsonObject info=vendor.pushOrderData(employee,"hotel",hotelOrderInfoEntity,"cimccTMC","200428140254184788","");
-        log.info("推送的数据响应:{}",info);
+        vendor.pushOrderData(employee,"hotel",hotelOrderInfoEntity,"cimccTMC","200428140254184788","");
+        SettlementBody settlementBody = SettlementBody.builder()
+                .companyOid(employee.getCompanyOID())
+                .orderNo(orderNo)
+                .page(1)
+                .size(10)
+                .build();
+        //查询订单数据
+        JsonObject  hotelOrder = vendor.queryOrderData(employee,"hotel",settlementBody);
+        log.info("hotel order Data:{}",hotelOrder);
+        //进行数据对比
+        HashMap<String,String> mapping =new HashMap<>();
+        mapping.put("hotelOrderPassengerInfos","hotelPassengerInfo");
+        mapping.put("employeeId","preEmployeeId");
+        mapping.put("hotelOrderBase","hotelBaseOrder");
+        mapping.put(employee.getDepartmentName(),"产品三组");
+        //进行数据对比
+        assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);
     }
 
     @Test(description = "火车票1人预定,不改签-不退票")
@@ -142,12 +166,12 @@ public class OrderDataTest extends BaseTest {
                 .orderType("B")
                 .orderNo(orderNo)
                 .originalOrderNum("")
-                .supplierName("")
+                .supplierName("中集商旅")
                 .supplierCode("cimccTMC")
                 .approvalCode("TA"+System.currentTimeMillis())
                 .orderStatusName("已出票")
                 .orderStatusCode("TD")
-                .tenantCode(employee.getTenantCode())
+                .tenantCode(employee.getTenantId())
                 .tenantName(employee.getTenantName())
                 .employeeNum(employee.getEmployeeID())
                 .employeeName(employee.getFullName())
@@ -253,9 +277,12 @@ public class OrderDataTest extends BaseTest {
                 .trainOrderSequenceInfos(trainSequenceInfos)
                 .trainOrderPassengerInfos(trainPassengerInfos)
                 .build();
-        //订单推送
-        JsonObject info=vendor.pushOrderData(employee,"train",trainOrderInfoEntity,"cimccTMC","200428140254184788","");
-        log.info("推送的数据响应:{}",info);
+        //推送的数据封装成一个json字符串
+        String hotelOrderData =GsonUtil.objectToString(trainOrderInfoEntity);
+        //转成jsonobject对象
+        JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
+        //火车订单推送
+        vendor.pushOrderData(employee,"train",trainOrderInfoEntity,"cimccTMC","200428140254184788","");
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)
@@ -265,6 +292,30 @@ public class OrderDataTest extends BaseTest {
         //查询订单数据
         JsonObject  trainOrder = vendor.queryOrderData(employee,"train",settlementBody);
         log.info("train order Data:{}",trainOrder);
+        //映射关系
+        HashMap<String,String> mapping= new HashMap<>();
+        mapping.put("trainOrderBase","trainBaseOrder");
+        mapping.put("employeeNum","preEmployeeNum");
+        mapping.put("employeeName","preEmployeeName");
+        mapping.put("trainOrderTicketInfos","trainTicketInfo");
+        mapping.put("trainOrderSequenceInfos","trainSequenceInfo");
+        mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
+        mapping.put("dCityName","dcityName");
+        mapping.put("dCityCode","dcityCode");
+        mapping.put("dStationName","dstationName");
+        mapping.put("aCityName","acityName");
+        mapping.put("aCityCode","acityCode");
+        mapping.put("aStationName","astationName");
+        mapping.put("nationlityName","nationalityName");
+        assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
+        //校验预订人的
+        assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
+        //trainSequenceInfo 中的trainType
+        String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
+        String trainType=vendor.trainTypeMapping(trainNum);
+        assert trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainType").getAsString().equals(trainType);
+        //trainPassengerInfo 中的乘客oid 对比
+        assert trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
     }
 
     @Test(description = "机票订单-单程-月结-不改签-不退票")
@@ -291,13 +342,12 @@ public class OrderDataTest extends BaseTest {
         AirBaseOrder airBaseOrder = AirBaseOrder.builder()
                 .orderType("B")
                 .orderNo(orderNo)
-                .originalOrderNo("")
-                .supplierName("")
+                .supplierName("中集商旅")
                 .supplierCode("cimccTMC")
                 .approvalCode("TA"+System.currentTimeMillis())
                 .orderStatus("已出票")
                 .orderStatusCode("S")
-                .tenantCode(employee.getTenantCode())
+                .tenantCode(employee.getTenantId())
                 .tenantName(employee.getTenantName())
                 .employeeId(employee.getEmployeeID())
                 .supplierAccount("")
@@ -327,6 +377,7 @@ public class OrderDataTest extends BaseTest {
         AirTicketInfo airTicketInfo = AirTicketInfo.builder()
                 .ticketKey(trainElectronic)
                 .passengerNo("1")
+                .finalTicketTime(UTCTime.getBeijingTime(-10,1))
                 .passengerType("AUT")
                 .ticketPNR(RandomNumber.getUUID(5))
                 .ticketNo(ticketNo)
@@ -345,7 +396,7 @@ public class OrderDataTest extends BaseTest {
                 .rerNotes("起飞前24小时免费")
                 .refNotes("起飞前24小时免费")
                 .endNotes("")
-                .yClassStandardPrice("1500")
+                .yClassStandardPrice("1500.00")
                 .build();
         ArrayList<AirTicketInfo> airTicketInfos =new ArrayList<>();
         airTicketInfos.add(airTicketInfo);
@@ -373,7 +424,7 @@ public class OrderDataTest extends BaseTest {
                 .stopCity("")
                 .airPort("")
                 .stopTime("")
-                .flightTime("")
+                .flightTime("3h")
                 .tpm(1345)
                 .craftType("空客320")
                 .build();
@@ -459,9 +510,12 @@ public class OrderDataTest extends BaseTest {
                 .airTicketPrint(airTicketPrints)
                 .airInsurance(airInsurances)
                 .build();
+        //推送的数据封装成一个json字符串
+        String hotelOrderData =GsonUtil.objectToString(airOrderInfoEntity);
+        //转成jsonobject对象
+        JsonObject flightOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
         //订单推送
-        JsonObject info=vendor.pushOrderData(employee,"flight",airOrderInfoEntity,"cimccTMC","200428140254184788","");
-        log.info("推送的数据响应:{}",info);
+        vendor.pushOrderData(employee,"flight",airOrderInfoEntity,"cimccTMC","200428140254184788","");
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)
@@ -470,6 +524,26 @@ public class OrderDataTest extends BaseTest {
                 .build();
         //查询订单数据
         JsonObject  trainOrder = vendor.queryOrderData(employee,"flight",settlementBody);
-        log.info("train order Data:{}",trainOrder);
+        log.info("flight order Data:{}",trainOrder);
+        //先对比需要删除的数据
+        assert trainOrder.getAsJsonObject("airBaseOrder").get("flightWay").getAsString().equals(flightOrderDataObject.getAsJsonObject("airBaseOrder").get("flightWay").getAsString());
+        assert trainOrder.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString().equals(flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString());
+        assert trainOrder.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("tpm").getAsString().equals(flightOrderDataObject.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("rpm").getAsString());
+        //先删除航程类型字段 因为单程映射会重复 删除完后单独比较   协议价  里程数
+        flightOrderDataObject.getAsJsonObject("airBaseOrder").remove("flightWay");
+        flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().remove("isPolicy");
+        flightOrderDataObject.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().remove("tpm");
+        //不需要检查的字段为 机票保险中的ticketKey
+        flightOrderDataObject.getAsJsonArray("airInsurance").get(0).getAsJsonObject().remove("ticketKey");
+        //映射数据
+        HashMap<String,String> mapping =new HashMap<>();
+        mapping.put("S","BS");
+        mapping.put("N","国内航班");
+        mapping.put("yClassStandardPrice","yclassStandardPrice");
+        mapping.put("flight","flightNo");
+        mapping.put("employeeId","preEmployeeId");
+        assert GsonUtil.compareJsonObject(flightOrderDataObject,trainOrder,mapping);
+        //对比预订人的oid
+        assert trainOrder.getAsJsonObject("airBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
     }
 }

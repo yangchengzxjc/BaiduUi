@@ -246,7 +246,7 @@ public class GsonUtil {
                     continue;
                 }
                 if(!object1.get(name).getAsString().equals(object2.get(name).getAsString())){
-                    //判断如果字段的值不一样  就去映射表去找一下映射关系
+                    //判断如果字段的值不一样  再去映射表去找一下映射关系
                     if(mapping.get(object1.get(name).getAsString())!=null){
                         //
                         if(!mapping.get(object1.get(name).getAsString()).equals(object2.get(name).getAsString())){
@@ -254,6 +254,7 @@ public class GsonUtil {
                             arrayList.add(false);
                         }
                     }else{
+                        //映射表中未找到此映射关系 字段不一致
                         log.info("数据不一致的字段名:{},value1:{},value2:{}",name,object1.get(name),object2.get(name));
                         arrayList.add(false);
                     }
@@ -272,6 +273,11 @@ public class GsonUtil {
                             if(!compareJsonArray(object1.getAsJsonArray(name),object2.getAsJsonArray(mapping.get(name)),mapping)){
                                 arrayList.add(false);
                             }
+                            //判断映射中是否存在jsonNull
+                        }else if(!object1.get(name).isJsonNull() && object2.get(mapping.get(name)).isJsonNull()){
+                            log.info("数据不一致的字段名:{},value1:{},value2:null",name,object1.get(name));
+                            arrayList.add(false);
+
                         }else if(!object1.get(name).getAsString().equals(object2.get(mapping.get(name)).getAsString())){
                                 log.info("映射数据不一致的字段名:{},value1:{},value2:{}",name,object1.get(name),object2.get(mapping.get(name)));
                                 arrayList.add(false);

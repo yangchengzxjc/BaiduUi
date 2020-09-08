@@ -8,6 +8,7 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.utils.GsonUtil;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  * @Date 2020/8/26
  * @Version 1.0
  **/
+@Slf4j
 public class Vendor {
 
     private VendorApi vendorApi;
@@ -89,5 +91,33 @@ public class Vendor {
             orderData = respons.getAsJsonObject("body").get("list").getAsJsonArray().get(0).getAsJsonObject();
         }
         return orderData;
+    }
+
+    public String trainTypeMapping(String trainNum){
+        StringBuffer  newTrainNum=new StringBuffer(trainNum);
+        char  keyword=newTrainNum.charAt(0);
+        log.info("keyword:{}",keyword);
+        String trainType="";
+        switch (keyword){
+            case 'G':
+                trainType="高铁";
+                break;
+            case 'D':
+                trainType="动车";
+                break;
+            case 'T':
+                trainType = "特快";
+                break;
+            case 'K':
+                trainType = "快车";
+                break;
+            case 'C':
+                trainType ="城际铁路";
+                break;
+            case ' ':
+                trainType= "未知车型";
+                break;
+        }
+        return trainType;
     }
 }

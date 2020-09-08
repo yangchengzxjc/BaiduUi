@@ -215,31 +215,32 @@ public class GsonUtil {
         Iterator<String> iterator2 = object1.keySet().iterator();
         while(iterator2.hasNext()){
             String name = iterator2.next();
-            if (object1.get(name) instanceof JsonArray) {
+            if (object1.get(name) instanceof JsonArray && object2.get(name) instanceof JsonArray) {
                 if(!compareJsonArray(object1.getAsJsonArray(name),object2.getAsJsonArray(name),mapping)){
+
                     arrayList.add(false);
                 }
                 continue;
             }
-            if(object1.get(name) instanceof JsonObject){
+            if(object1.get(name) instanceof JsonObject && object2.get(name) instanceof  JsonObject){
                 if(!compareJsonObject(object1.getAsJsonObject(name),object2.getAsJsonObject(name),mapping)){
                     arrayList.add(false);
                 }
                 continue;
             }
             if(object1.get(name).isJsonArray() && !object2.get(name).isJsonArray()){
+                log.info("不一样的字段为:{}",name);
                 arrayList.add(false);
-                System.out.println(name);
                 continue;
             }
             if(object1.get(name).isJsonObject() && !object2.get(name).isJsonObject()){
                 arrayList.add(false);
-                log.info("类型不一样的字段为:{}",object1.get(name));
+                log.info("类型不一样的字段为:{},",name);
                 continue;
             }
             try{
                 if(!object1.get(name).isJsonNull() && object2.get(name).isJsonNull()){
-                    System.out.println("数据不一致的字段名:{}"+name+"value1:{}"+object1.get(name)+"value2:null");
+                    log.info("数据不一致的字段名:{},value1:{},value2:null",name,object1.get(name));
                     arrayList.add(false);
                     //如果出现了此判断就跳出这一层的循环  不需要在进行判断了
                     continue;

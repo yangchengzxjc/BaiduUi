@@ -307,6 +307,7 @@ public class OrderDataTest extends BaseTest {
         mapping.put("aCityCode","acityCode");
         mapping.put("aStationName","astationName");
         mapping.put("nationlityName","nationalityName");
+        mapping.put(employee.getDepartmentName(),"产品三部");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //校验预订人的
         assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
@@ -542,6 +543,7 @@ public class OrderDataTest extends BaseTest {
         mapping.put("yClassStandardPrice","yclassStandardPrice");
         mapping.put("flight","flightNo");
         mapping.put("employeeId","preEmployeeId");
+        mapping.put(employee.getDepartmentName(),"产品三部");
         assert GsonUtil.compareJsonObject(flightOrderDataObject,trainOrder,mapping);
         //对比预订人的oid
         assert trainOrder.getAsJsonObject("airBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());

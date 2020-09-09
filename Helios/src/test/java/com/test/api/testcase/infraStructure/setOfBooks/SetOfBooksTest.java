@@ -3,10 +3,10 @@ package com.test.api.testcase.infraStructure.setOfBooks;
 import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.SetOfBooks;
+import com.hand.basicObject.infrastructure.setOfBooks.SetOfBooks;
 import com.hand.utils.RandomNumber;
 import com.test.BaseTest;
-import com.test.api.method.SetOfBooksDefine;
+import com.test.api.method.Infra.SetOfBooksMethod.SetOfBooksDefine;
 import com.test.api.method.Infra.SetOfBooksMethod.SetOfBooksPage;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
@@ -29,6 +29,7 @@ public class SetOfBooksTest extends BaseTest {
         setOfBooksDefine = new SetOfBooksDefine();
         setOfBooksPage = new SetOfBooksPage();
         setOfBooks = new SetOfBooks();
+
     }
 
     @Test(description = "测试获取会计期数据接口")
@@ -50,7 +51,7 @@ public class SetOfBooksTest extends BaseTest {
 
     @Test(description = "正常新建账套")
     public void addSetOfBooksTest01() throws HttpStatusException {
-        JsonObject object = setOfBooksPage.addSetOfBooks(employee, true, "新增", "add");
+        JsonObject object = setOfBooksPage.addSetOfBooks(employee,setOfBooks, true, "新增", "add");
         String setOfBooksName = object.get("setOfBooksName").getAsString();
         String setOfBooksCode = object.get("setOfBooksCode").getAsString();
         log.info("新增的账套名称为：" + setOfBooksName);
@@ -61,7 +62,7 @@ public class SetOfBooksTest extends BaseTest {
 
     @Test(description = "异常新建账套，账套code不符合编码规则，包含中文")
     public void addSetOfBooksTest02() throws HttpStatusException {
-        JsonObject object = setOfBooksPage.addSetOfBooks(employee, true, "新增", "中文");
+        JsonObject object = setOfBooksPage.addSetOfBooks(employee,setOfBooks, true, "新增", "中文");
         String message = object.get("message").getAsString();
         log.info("获取到的message信息：" + message);
         String errorCode = object.get("errorCode").getAsString();
@@ -73,7 +74,7 @@ public class SetOfBooksTest extends BaseTest {
     @Test(description = "正常编辑账套")
     public void editSetOfBooksTest01() throws HttpStatusException {
         //不传账套code和name，默认取到第一条账套数据的code和name
-        JsonObject object = setOfBooksDefine.getSetOfBooksDetail(employee, "", "");
+        JsonObject object = setOfBooksDefine.getSetOfBooksDetail(employee, "", "","set-of-books");
         String setOfBooksName = object.get("setOfBooksName").getAsString();
         String setOfBooksCode = object.get("setOfBooksCode").getAsString();
         String updateSetOfBooksName = "测试修改" + RandomNumber.getTimeNumber();
@@ -82,14 +83,14 @@ public class SetOfBooksTest extends BaseTest {
         String updateAccountSetId = object.get("accountSetId").getAsString();
         String updateCurrencyCode = object.get("functionalCurrencyCode").getAsString();
         //将取到的账套code和name传递给编辑账套方法
-        JsonObject editObject = setOfBooksPage.editSetOfBooks(employee, setOfBooks, setOfBooksCode, setOfBooksName, updateSetOfBooksCode, updateSetOfBooksName, updatePeriodSetCode, updateAccountSetId, updateCurrencyCode);
+        JsonObject editObject = setOfBooksPage.editSetOfBooks(employee, setOfBooks, setOfBooksCode, setOfBooksName, updateSetOfBooksCode, updateSetOfBooksName, updatePeriodSetCode, updateAccountSetId, updateCurrencyCode,"set-of-books");
         String editSetOfBooksName = editObject.get("setOfBooksName").getAsString();
         Assert.assertEquals(editSetOfBooksName, setOfBooks.getSetOfBooksName());
     }
 
     @Test(description = "异常编辑账套-修改账套code")
     public void editSetOfBooksTest02() throws HttpStatusException {
-        JsonObject object = setOfBooksDefine.getSetOfBooksDetail(employee, "", "");
+        JsonObject object = setOfBooksDefine.getSetOfBooksDetail(employee, "", "","set-of-books");
         String setOfBooksName = object.get("setOfBooksName").getAsString();
         String setOfBooksCode = object.get("setOfBooksCode").getAsString();
         String updateSetOfBooksName = object.get("setOfBooksName").getAsString();
@@ -98,7 +99,7 @@ public class SetOfBooksTest extends BaseTest {
         String updateAccountSetId = object.get("accountSetId").getAsString();
         String updateCurrencyCode = object.get("functionalCurrencyCode").getAsString();
         //将取到的账套code和name传递给编辑账套方法
-        JsonObject editObject = setOfBooksPage.editSetOfBooks(employee, setOfBooks, setOfBooksCode, setOfBooksName, updateSetOfBooksCode, updateSetOfBooksName, updatePeriodSetCode, updateAccountSetId, updateCurrencyCode);
+        JsonObject editObject = setOfBooksPage.editSetOfBooks(employee, setOfBooks, setOfBooksCode, setOfBooksName, updateSetOfBooksCode, updateSetOfBooksName, updatePeriodSetCode, updateAccountSetId, updateCurrencyCode,"set-of-books");
         String message = editObject.get("message").getAsString();
         log.info("获取到的message信息：" + message);
         String errorCode = editObject.get("errorCode").getAsString();

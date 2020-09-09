@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.InfraEmployee;
+import com.hand.basicObject.infrastructure.employee.InfraEmployee;
 import com.hand.basicObject.supplierObject.UserCardInfoEntity;
 import com.hand.basicconstant.ApiPath;
 import com.hand.basicconstant.HeaderKey;
@@ -185,21 +185,34 @@ public class InfraStructureApi extends BaseRequest{
      * @param employee
      * @param customEnumerationOID
      */
-    public JsonObject getEnumerationVDetail(Employee employee,String customEnumerationOID) throws HttpStatusException {
+    public JsonObject getEnumerationDetail(Employee employee,String customEnumerationOID) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl()+ String.format(ApiPath.ENUMERATION_DETAIL,customEnumerationOID);
-        Map<String,String> urlParam=new HashMap<>();
-        String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
+//        Map<String,String> urlParam=new HashMap<>();
+        String res = doGet(url,getHeader(employee.getAccessToken()),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
     /**
-     * 获取员工扩展字段
+     * 获取员工所有扩展字段
      * @param employee
      * @param formOID
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray getEmployeeExpandValue(Employee employee,String formOID) throws HttpStatusException {
+    public JsonObject getEmployeeExpandValue(Employee employee,String formOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + String.format(ApiPath.GET_EMPLOYEE_CUSTOM_FORM,formOID);
+        String res = doGet(url,getHeader(employee.getAccessToken()),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 获取当前启用的人员扩展字段
+     * @param employee
+     * @param formOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getEmployeeExpandValues(Employee employee,String formOID) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl()+ApiPath.GET_EMPLOYEE_EXPAND;
         Map<String,String> urlParam=new HashMap<>();
         urlParam.put("formOID",formOID);

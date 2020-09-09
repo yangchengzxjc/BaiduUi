@@ -4,9 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.SetOfBooks;
+import com.hand.basicObject.infrastructure.setOfBooks.SetOfBooks;
 import com.hand.utils.RandomNumber;
-import com.test.api.method.SetOfBooksDefine;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -25,8 +24,7 @@ public class SetOfBooksPage {
      * @param setOfBooksCode
      * @throws HttpStatusException
      */
-    public JsonObject addSetOfBooks(Employee employee,boolean enabled, String setOfBooksName, String setOfBooksCode) throws HttpStatusException{
-        SetOfBooks setOfBooks = new SetOfBooks();
+    public JsonObject addSetOfBooks(Employee employee,SetOfBooks setOfBooks, boolean enabled, String setOfBooksName, String setOfBooksCode) throws HttpStatusException{
         setOfBooks.setEnabled(enabled);
         setOfBooks.setSetOfBooksName(setOfBooksName + RandomNumber.getTimeNumber());
         setOfBooks.setSetOfBooksCode(setOfBooksCode + RandomNumber.getTimeNumber());
@@ -45,9 +43,9 @@ public class SetOfBooksPage {
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject editSetOfBooks(Employee employee,SetOfBooks setOfBooks,String setOfBooksCode,String setOfBooksName,String updateSetOfBooksCode,String updateSetOfBooksName,String updatePeriodSetCode,String updateAccountSetId,String updateCurrencyCode) throws HttpStatusException {
+    public JsonObject editSetOfBooks(Employee employee,SetOfBooks setOfBooks,String setOfBooksCode,String setOfBooksName,String updateSetOfBooksCode,String updateSetOfBooksName,String updatePeriodSetCode,String updateAccountSetId,String updateCurrencyCode,String key) throws HttpStatusException {
 //        SetOfBooks setOfBooks = new SetOfBooks();
-        JsonObject setOfBooksInfo = setOfBooksDefine.getSetOfBooksDetail(employee,setOfBooksCode,setOfBooksName);
+        JsonObject setOfBooksInfo = setOfBooksDefine.getSetOfBooksDetail(employee,setOfBooksCode,setOfBooksName,key);
         setOfBooks.setSetOfBooksName(updateSetOfBooksName);
         setOfBooks.setSetOfBooksCode(updateSetOfBooksCode);
         setOfBooks.setPeriodSetCode(updatePeriodSetCode);

@@ -1,4 +1,4 @@
-package com.hand.basicObject;
+package com.hand.basicObject.infrastructure.company;
 
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;

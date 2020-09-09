@@ -21,7 +21,7 @@ public class ReimbStandardApi  extends BaseRequest {
     * @ throws HttpStatusException
      */
     public JsonArray getSetOfBooks (Employee employee) throws HttpStatusException {
-        String url = employee.getEnvironment().getUrl()+ ApiPath.GETSET_OF_BOOKS;
+        String url = employee.getEnvironment().getUrl()+ ApiPath.GET_SET_OF_BOOKS;
         HashMap<String, String> mapParams1 = new HashMap<>();
         mapParams1.put("roleType", "TENANT");
         mapParams1.put("enabled", "true");

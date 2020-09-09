@@ -9,6 +9,7 @@ import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
 import com.test.api.method.Infra.EmployeeMethod.EmployeeManagePage;
+import com.test.api.method.InfraStructure;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -27,6 +28,7 @@ public class EmployeeManage extends BaseTest {
     private Employee employee;
     private EmployeeManagePage employeeManagePage;
     private InfraEmployee infraEmployee;
+    private InfraStructure infraStructure;
     //人员入参
     private String fullName = "接口新建"+ UTCTime.getBeijingTime(0,0);
     private String employeeID = String.valueOf(RandomNumber.getRandomNumber());
@@ -40,7 +42,7 @@ public class EmployeeManage extends BaseTest {
     private String position = "测试工程师";
     private String duty = "测试";
     private String rank = "技术经理";
-    private String errorEmployeeID = String.valueOf(RandomNumber.getTimeNumber(15));
+    private String errorEmployeeID = RandomNumber.getTimeNumber(15);
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
@@ -48,27 +50,7 @@ public class EmployeeManage extends BaseTest {
         employee=getEmployee(phoneNumber,pwd,env);
         employeeManagePage =new EmployeeManagePage();
         infraEmployee = new InfraEmployee();
-    }
-
-    @Test(description = "获取人员扩展字段详细")
-    public void getEmployeeFiledDetail() throws HttpStatusException {
-        JsonArray filedDetail = employeeManagePage.getEmployeeFiledDetail(employee);
-        JsonObject filedDetail01 = filedDetail.get(0).getAsJsonObject();
-        log.info("扩展字段1中的数据：" + filedDetail01);
-        String filedOid = filedDetail01.get("fieldOID").getAsString();
-        log.info("扩展字段1中的fieldOid为：" + filedOid);
-    }
-
-    @Test(description = "获取人员扩展字段自定义值列表的oid")
-    public void getEmployeeFiledCustomDetail() throws HttpStatusException {
-        String filedOid = employeeManagePage.getEmployeeFiledCustomEnumerationOID(employee,1);
-        log.info("扩展字段自定义值列表的customEnumerationOID：" + filedOid);
-    }
-
-    @Test(description = "获取人员扩展字段自定义值列表的value")
-    public void getEmployeeFieldCustomValue() throws HttpStatusException {
-        String customValue = employeeManagePage.getEmployeeFiledCustomEnumerationValue(employee,0,1);
-        log.info("获取到的自定义值列表value值为：" + customValue);
+        infraStructure = new InfraStructure();
     }
 
     @Test(description = "新增员工正常流程")

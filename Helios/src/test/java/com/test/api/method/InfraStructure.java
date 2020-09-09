@@ -68,15 +68,34 @@ public class InfraStructure {
     }
 
     /**
-     * 获取员工扩展字段启用的数据
+     * 根据systemSequence参数获取第n个扩展字段的详细字段信息
      * @param employee
+     * @param systemSequence  第n个扩展字段的详细字段信息
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray getEmployeeExpandFormDetails(Employee employee) throws HttpStatusException {
+    public JsonObject getEmployeeFiledDetails(Employee employee,int systemSequence) throws HttpStatusException {
         JsonArray employeeExpandFormDetail = infraStructureApi.getEmployeeExpandValues(employee,getEmployeeExpandFormOid(employee)).getAsJsonArray();
         log.info("获取到的员工扩展字段数据：" + employeeExpandFormDetail);
-        return employeeExpandFormDetail;
+        JsonObject employeeFiledDetail = employeeExpandFormDetail.get(systemSequence).getAsJsonObject();
+        log.info("获取到的第 " + systemSequence + " 个扩展字段的段值字段为：" + employeeFiledDetail);
+        return employeeFiledDetail;
+    }
+
+    /**
+     * 获取人员扩展字段里自定义值列表dataSource里的oid，用于查询该值列表里的值列表项数据
+     * @param employee
+     * @param customNumber  扩展字段序号，数组0开始
+     * @return
+     * @throws HttpStatusException
+     */
+    public String getEmployeeFiledCustomEnumerationOID(Employee employee,int customNumber) throws HttpStatusException {
+        JsonObject employeeFiledCustomDetail = getEmployeeFiledDetails(employee,customNumber).getAsJsonObject();
+        String filedDataSource = employeeFiledCustomDetail.get("dataSource").getAsString();
+        //截取dataSource里的customEnumerationOID
+        String filedOid = filedDataSource.substring(25,61);
+        log.info("扩展字段自定义值列表的customEnumerationOID：" + filedOid);
+        return filedOid;
     }
 
     /**
@@ -91,6 +110,21 @@ public class InfraStructure {
         JsonArray customEnumerationValues = customEnumerationDetail.get("values").getAsJsonArray();
         log.info("获取到的员工扩展字段自定义值列表的values数据：" + customEnumerationValues);
         return customEnumerationValues;
+    }
+
+    /**
+     * 根据人员扩展字段中自定义值列表的oid获取值列表value
+     * @param employee
+     * @param customNumber  扩展字段序号
+     * @param valueNumber   值列表value序号
+     * @return
+     * @throws HttpStatusException
+     */
+    public String getEmployeeFiledCustomEnumerationValue(Employee employee, int customNumber, int valueNumber) throws HttpStatusException {
+        JsonArray employeeFiledCustomEnumerationValues = getEmployeeFiledCustomEnumerationValueDetail(employee,getEmployeeFiledCustomEnumerationOID(employee,customNumber));
+        JsonObject customEnumerationValues = employeeFiledCustomEnumerationValues.get(valueNumber).getAsJsonObject();
+        String customEnumerationValue = customEnumerationValues.get("value").getAsString();
+        return customEnumerationValue;
     }
 
     /**

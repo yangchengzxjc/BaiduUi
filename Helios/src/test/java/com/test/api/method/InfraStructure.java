@@ -1,4 +1,4 @@
-package com.test.api.method.Infra.EmployeeMethod;
+package com.test.api.method;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

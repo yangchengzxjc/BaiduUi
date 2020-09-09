@@ -9,8 +9,7 @@ import com.hand.basicObject.infrastructure.employee.InfraEmployee;
 import com.hand.basicObject.infrastructure.employee.InfraJob;
 import com.hand.basicObject.supplierObject.UserCardInfoEntity;
 import com.hand.basicconstant.CardType;
-import com.hand.utils.RandomNumber;
-import com.hand.utils.UTCTime;
+import com.test.api.method.InfraStructure;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;

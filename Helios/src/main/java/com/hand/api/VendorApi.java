@@ -11,6 +11,7 @@ import com.hand.utils.Md5Util;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author peng.zhang
@@ -131,5 +132,27 @@ public class VendorApi extends BaseRequest{
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
+    /**
+     * 查询国内国际 两舱设置
+     * @param employee 新增的员工
+     * @param companyOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject queryBookClass(Employee employee,String companyOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ApiPath.QUERYBOOKCLASS;
+        Map<String, String> datas = new HashMap<>();
+        datas.put("companyOID",companyOID);
+        String res = doGet(url,getHeader(employee.getAccessToken()),datas,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    public JsonObject queryBookClass(Employee employee) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ApiPath.QUERYBOOKCLASS;
+        Map<String, String> datas = new HashMap<>();
+        datas.put("companyOID",employee.getCompanyOID());
+        String res = doGet(url,getHeader(employee.getAccessToken()),datas,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
 
 }

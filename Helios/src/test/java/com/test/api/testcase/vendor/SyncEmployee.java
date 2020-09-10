@@ -9,14 +9,18 @@ import com.hand.basicconstant.CardType;
 import com.test.BaseTest;
 import com.test.api.method.Infra.EmployeeMethod.EmployeeManagePage;
 import com.test.api.method.InfraStructure;
+import com.test.api.method.Vendor;
 import org.testng.Assert;
 import org.testng.annotations.*;
+
+import java.security.PrivateKey;
 
 public class SyncEmployee extends BaseTest {
     private Employee employee;
     private EmployeeManagePage employeeManagePage;
     private InfraStructure infraStructure;
     private InfraEmployee infraEmployee;
+    private Vendor vendor;
 
 
     @BeforeClass
@@ -26,13 +30,15 @@ public class SyncEmployee extends BaseTest {
         employeeManagePage =new EmployeeManagePage();
         infraStructure =new InfraStructure();
         infraEmployee = new InfraEmployee();
+        vendor =new Vendor();
     }
 
     @Test(description = "新增员正常流程,")
     public void addEmployeeTest01() throws HttpStatusException {
         EmployeeDTO employeeDTO = new EmployeeDTO();
-        JsonObject empObject = employeeManagePage.addEmployee(employee, "","","","","","","甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
+        JsonObject empObject = employeeManagePage.addEmployee(employee, "测试接口新建Q17","","M0017","M0017@163.COM","人员类型01","","甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
         String userOID=empObject.get("userOID").getAsString();
+        JsonObject bookClass = vendor.queryBookClass(employee);
         JsonObject userCardInfo=employeeManagePage.addUserCard(employee,userOID,CardType.CHINA_ID,"身份证名字",true);
         if (empObject.get("status").toString().equals("1001")) {
             employeeDTO.setStatus("1");
@@ -61,6 +67,15 @@ public class SyncEmployee extends BaseTest {
         employeeDTO.setNationality(null);
         employeeDTO.setGender(empObject.get("genderCode").toString());
         employeeDTO.setRankName(empObject.get("rank").toString());
+        employeeDTO.setIsBookClass(bookClass.get("isBookClass").toString());
+        employeeDTO.setIntlBookClassBlock(bookClass.get("intlBookClassBlock").toString());
+        employeeDTO.setTenantId(employee.getTenantId());
+        employeeDTO.setCompanyId(empObject.get("companyOID").toString());
+        employeeDTO.setCompanyOID(empObject.get("companyOID").toString());
+        employeeDTO.setCompanyCode(empObject.get("companyOID").toString());
+
+
+
     }
 
     @Test(description = "离职员工正常流程")

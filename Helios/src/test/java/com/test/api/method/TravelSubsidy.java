@@ -9,7 +9,6 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.TravelSubsidyConfig;
 import com.hand.utils.GsonUtil;
-import com.sun.javafx.runtime.async.AbstractRemoteResource;
 import lombok.extern.slf4j.Slf4j;
 
 /**

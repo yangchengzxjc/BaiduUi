@@ -191,6 +191,8 @@ public class ApiPath {
         public static final String ENUMERATION_DETAIL = "/api/custom/enumerations/%s";
         //根据值列表的类型查询系统值列表的详情
         public static final String QUERY_ENUMERATION_DETAIL="/api/custom/enumeration/system/by/type/condition";
+        //根据部门OID 查询部门详情
+        public static final String SEARCH_DEPARTMENT_DETAILS="/api/departments/%s";
         //获取员工扩展字段
         public static final String GET_EMPLOYEE_EXPAND = "/api/custom/values/form";
         //获取员工扩展字段的的表单名称
@@ -281,6 +283,8 @@ public class ApiPath {
         public static final String  PUSHTMCORDERDATA = "/data/api/openapi/%s/order/push";
         // 火车 机票 酒店 订单数据内部查询
         public static final String QUERYORDERDATA = "/vendor-data-service/api/open/internal/%s/order";
+        //查询国内 国际两舱设置
+        public static final String QUERYBOOKCLASS = "/vendor-info-service/api/company/bookClass";
     }
 
 

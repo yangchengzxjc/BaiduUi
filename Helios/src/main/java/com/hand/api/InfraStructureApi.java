@@ -371,4 +371,14 @@ public class InfraStructureApi extends BaseRequest{
         String res = doPost(url,getHeader(employee.getAccessToken(), HeaderKey.PERSION_MANAGE, ResourceId.EMPLOYEE_MANAGE),map,new JsonObject().toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
+
+    /**
+     * 根据部门oid 查询 部门详情
+     * @return
+     */
+    public JsonObject searchDepartmentDetail(Employee employee,String departmentOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+String.format(ApiPath.SEARCH_DEPARTMENT_DETAILS,departmentOID);
+        String res = doGet(url,getHeader(employee.getAccessToken()),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
 }

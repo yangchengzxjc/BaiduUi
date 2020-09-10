@@ -318,10 +318,10 @@ public class InfraStructure {
     /**
      * 新增证件信息
      * @param employee
+     * @param userCardInfoEntity
      */
     public JsonObject addUserCardInfo(Employee employee,UserCardInfoEntity userCardInfoEntity) throws HttpStatusException {
-        JsonObject cardInfo = infraStructureApi.addUserCardInfo(employee,userCardInfoEntity);
-        return cardInfo;
+        return infraStructureApi.addUserCardInfo(employee,userCardInfoEntity);
     }
 
     /**

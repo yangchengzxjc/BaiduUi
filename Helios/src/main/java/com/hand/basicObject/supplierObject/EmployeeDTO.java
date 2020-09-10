@@ -40,6 +40,8 @@ public class EmployeeDTO {
     private String intlBookClassBlock;
     //租户id
     private String tenantId;
+    //公司ID
+    private String companyId;
     //公司OID
     private String companyOID;
     //公司code

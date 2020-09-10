@@ -120,4 +120,8 @@ public class Vendor {
         }
         return trainType;
     }
+
+    public JsonObject queryBookClass(Employee employee) throws HttpStatusException {
+        return vendorApi.queryBookClass(employee);
+    }
 }

@@ -142,7 +142,6 @@ public class InfraStructureApi extends BaseRequest{
         }catch (NullPointerException e){
             log.info("员工的手机号为空");
         }
-
         if(infraEmployee.getFullName() ==null){
             employeeInfo.addProperty("fullName","11101");
         }else{
@@ -192,18 +191,18 @@ public class InfraStructureApi extends BaseRequest{
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
-    /**
-     * 获取员工所有扩展字段
-     * @param employee
-     * @param formOID
-     * @return
-     * @throws HttpStatusException
-     */
-    public JsonObject getEmployeeExpandValue(Employee employee,String formOID) throws HttpStatusException {
-        String url = employee.getEnvironment().getUrl() + String.format(ApiPath.GET_EMPLOYEE_CUSTOM_FORM,formOID);
-        String res = doGet(url,getHeader(employee.getAccessToken()),null,employee);
-        return new JsonParser().parse(res).getAsJsonObject();
-    }
+//    /**
+//     * 获取员工所有扩展字段
+//     * @param employee
+//     * @param formOID
+//     * @return
+//     * @throws HttpStatusException
+//     */
+//    public JsonObject getEmployeeExpandValue(Employee employee,String formOID) throws HttpStatusException {
+//        String url = employee.getEnvironment().getUrl() + String.format(ApiPath.GET_EMPLOYEE_CUSTOM_FORM,formOID);
+//        String res = doGet(url,getHeader(employee.getAccessToken()),null,employee);
+//        return new JsonParser().parse(res).getAsJsonObject();
+//    }
 
     /**
      * 获取当前启用的人员扩展字段

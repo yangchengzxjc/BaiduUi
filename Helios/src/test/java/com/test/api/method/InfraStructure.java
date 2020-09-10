@@ -6,13 +6,12 @@ import com.google.gson.JsonParser;
 import com.hand.api.InfraStructureApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.infrastructure.employee.EmployeeExtendedFields;
+import com.hand.basicObject.infrastructure.employee.EmployeeExtendComponent;
 import com.hand.basicObject.infrastructure.employee.InfraEmployee;
 import com.hand.basicObject.infrastructure.employee.InfraJob;
 import com.hand.basicObject.supplierObject.UserCardInfoEntity;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +34,7 @@ public class InfraStructure {
      * 根据值列表的名称获取系统值列表的systemCustomEnumerationType   可以根据这个获取值列表的详情
      * @param employee
      * @param customEnumerationNameValue  比如：职务，级别，性别，人员类型等
-     * @return
+     * @return 返回这个值列表的type  例如：1001 是人员类型 1002 是职务 等
      * @throws HttpStatusException
      */
     public String getSystemCustomEnumerationType(Employee employee,String customEnumerationNameValue) throws HttpStatusException {
@@ -44,58 +43,64 @@ public class InfraStructure {
     }
 
     /**
-     * 获取员工扩展字段表单oid
+     * 获取员工扩展字段customFormValue   此方法可以为扩展字段没有配置并且有扩展字段但是没有值
      * @param employee
      * @throws HttpStatusException
      */
-    public String getEmployeeExpandFormOid(Employee employee) throws HttpStatusException {
+    public JsonArray getEmployeeExpand(Employee employee) throws HttpStatusException {
         String formOID = infraStructureApi.getEmployeeExpandFormOID(employee).get("formOID").getAsString();
-        log.info("获取到的员工扩展字段oid：" + formOID);
-        return formOID;
+        return infraStructureApi.getEmployeeExpandValues(employee,formOID);
     }
 
     /**
-     * 获取员工扩展字段所有数据
+     * 员工扩展字段有值必填
      * @param employee
+     * @param employeeExtendComponent
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray getEmployeeExpandFormDetail(Employee employee) throws HttpStatusException {
-        JsonObject employeeExpandOid = infraStructureApi.getEmployeeExpandValue(employee,getEmployeeExpandFormOid(employee));
-        JsonArray employeeExpandFormDetail = employeeExpandOid.get("customFormFields").getAsJsonArray();
-        log.info("获取到的员工扩展字段数据：" + employeeExpandFormDetail);
-        return employeeExpandFormDetail;
-    }
-
-    /**
-     * 根据systemSequence参数获取第n个扩展字段的详细字段信息
-     * @param employee
-     * @param systemSequence  第n个扩展字段的详细字段信息
-     * @return
-     * @throws HttpStatusException
-     */
-    public JsonObject getEmployeeFiledDetails(Employee employee,int systemSequence) throws HttpStatusException {
-        JsonArray employeeExpandFormDetail = infraStructureApi.getEmployeeExpandValues(employee,getEmployeeExpandFormOid(employee)).getAsJsonArray();
-        log.info("获取到的员工扩展字段数据：" + employeeExpandFormDetail);
-        JsonObject employeeFiledDetail = employeeExpandFormDetail.get(systemSequence).getAsJsonObject();
-        log.info("获取到的第 " + systemSequence + " 个扩展字段的段值字段为：" + employeeFiledDetail);
-        return employeeFiledDetail;
-    }
-
-    /**
-     * 获取人员扩展字段里自定义值列表dataSource里的oid，用于查询该值列表里的值列表项数据
-     * @param employee
-     * @param customNumber  扩展字段序号，数组0开始
-     * @return
-     * @throws HttpStatusException
-     */
-    public String getEmployeeFiledCustomEnumerationOID(Employee employee,int customNumber) throws HttpStatusException {
-        JsonObject employeeFiledCustomDetail = getEmployeeFiledDetails(employee,customNumber).getAsJsonObject();
-        String filedDataSource = employeeFiledCustomDetail.get("dataSource").getAsString();
-        //截取dataSource里的customEnumerationOID
-        String filedOid = filedDataSource.substring(25,61);
-        log.info("扩展字段自定义值列表的customEnumerationOID：" + filedOid);
-        return filedOid;
+    public JsonArray getEmployeeExpand(Employee employee,EmployeeExtendComponent employeeExtendComponent) throws HttpStatusException {
+        String formOID = infraStructureApi.getEmployeeExpandFormOID(employee).get("formOID").getAsString();
+        JsonArray customFormValue = infraStructureApi.getEmployeeExpandValues(employee,formOID);
+        for(int i=0;i<customFormValue.size();i++){
+            String name = customFormValue.get(i).getAsJsonObject().get("name").getAsString();
+            switch (name){
+                case "自定义列表":
+                    customFormValue.get(i).getAsJsonObject().addProperty("value",employeeExtendComponent.getCustList());
+                    break;
+                case "数字":
+                    customFormValue.get(i).getAsJsonObject().addProperty("value",employeeExtendComponent.getNumber());
+                    break;
+                case "单行输入框":
+                    customFormValue.get(i).getAsJsonObject().addProperty("value",employeeExtendComponent.getText());
+                    break;
+                case "多行输入框":
+                    customFormValue.get(i).getAsJsonObject().addProperty("value",employeeExtendComponent.getTextArea());
+                    break;
+                case "时间":
+                    customFormValue.get(i).getAsJsonObject().addProperty("value",employeeExtendComponent.getTime());
+                    break;
+                case "日期":
+                    customFormValue.get(i).getAsJsonObject().addProperty("value",employeeExtendComponent.getDate());
+                    break;
+                case "用车制度ID":
+                    customFormValue.get(i).getAsJsonObject().addProperty("value",employeeExtendComponent.getCarRuleId());
+                    break;
+                case "用车备注必填控制":
+                    customFormValue.get(i).getAsJsonObject().addProperty("value",employeeExtendComponent.getCarRemark());
+                    break;
+                case "员工驻地":
+                    customFormValue.get(i).getAsJsonObject().addProperty("value",employeeExtendComponent.getEmployeeResident());
+                    break;
+                case "默认成本中心项":
+                    customFormValue.get(i).getAsJsonObject().addProperty("value",employeeExtendComponent.getDefaultCostCenter());
+                    break;
+                case "员工户籍所在地":
+                    customFormValue.get(i).getAsJsonObject().addProperty("value",employeeExtendComponent.getEmployeeDomicile());
+                    break;
+            }
+        }
+        return customFormValue;
     }
 
     /**
@@ -110,21 +115,6 @@ public class InfraStructure {
         JsonArray customEnumerationValues = customEnumerationDetail.get("values").getAsJsonArray();
         log.info("获取到的员工扩展字段自定义值列表的values数据：" + customEnumerationValues);
         return customEnumerationValues;
-    }
-
-    /**
-     * 根据人员扩展字段中自定义值列表的oid获取值列表value
-     * @param employee
-     * @param customNumber  扩展字段序号
-     * @param valueNumber   值列表value序号
-     * @return
-     * @throws HttpStatusException
-     */
-    public String getEmployeeFiledCustomEnumerationValue(Employee employee, int customNumber, int valueNumber) throws HttpStatusException {
-        JsonArray employeeFiledCustomEnumerationValues = getEmployeeFiledCustomEnumerationValueDetail(employee,getEmployeeFiledCustomEnumerationOID(employee,customNumber));
-        JsonObject customEnumerationValues = employeeFiledCustomEnumerationValues.get(valueNumber).getAsJsonObject();
-        String customEnumerationValue = customEnumerationValues.get("value").getAsString();
-        return customEnumerationValue;
     }
 
     /**
@@ -155,24 +145,17 @@ public class InfraStructure {
          return new JsonParser().parse(GsonUtil.objectToString(infraJob)).getAsJsonArray();
     }
 
-    /**
-     * 员工扩展字段
-     * @param EmployeeExtendedFields
-     * @return
-     */
-    public JsonArray userFiledDTOs(ArrayList<EmployeeExtendedFields> EmployeeExtendedFields){
-        return new JsonParser().parse(GsonUtil.objectToString(EmployeeExtendedFields)).getAsJsonArray();
-    }
 
     /**
      * 新增员工
      * @param employee
      * @param infraEmployee
      * @param infraJobs
+     * @param customFormValue 员工扩展字段  员工扩展字段配置如果关闭配置的话则传一个空的JsonArray
      * @throws HttpStatusException
      */
-    public JsonObject addEmployee(Employee employee,InfraEmployee infraEmployee, ArrayList<InfraJob> infraJobs, ArrayList<EmployeeExtendedFields> customFormValues) throws HttpStatusException {
-        JsonObject employeeInfo = infraStructureApi.addEmployee(employee,infraEmployee,userJobsDTOs(infraJobs),userFiledDTOs(customFormValues));
+    public JsonObject addEmployee(Employee employee,InfraEmployee infraEmployee, ArrayList<InfraJob> infraJobs, JsonArray customFormValue) throws HttpStatusException {
+        JsonObject employeeInfo = infraStructureApi.addEmployee(employee,infraEmployee,userJobsDTOs(infraJobs),customFormValue);
         return employeeInfo;
     }
 

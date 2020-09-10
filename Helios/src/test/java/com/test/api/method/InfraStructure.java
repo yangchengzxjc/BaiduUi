@@ -1,6 +1,7 @@
 package com.test.api.method;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.api.InfraStructureApi;
@@ -12,10 +13,12 @@ import com.hand.basicObject.infrastructure.employee.InfraJob;
 import com.hand.basicObject.supplierObject.UserCardInfoEntity;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @Author peng.zhang
@@ -104,17 +107,67 @@ public class InfraStructure {
     }
 
     /**
-     * 根据customEnumerationOID获取自定义值列表的values数据
+     * 根据扩展字段名获取对应字段数据
      * @param employee
+     * @param fieldName  扩展字段名
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getEmployeeFiledDetails(Employee employee, String fieldName) throws HttpStatusException {
+        EmployeeExtendComponent component =new EmployeeExtendComponent();
+        JsonArray employeeExpandFormDetail = getEmployeeExpand(employee,component).getAsJsonArray();
+        log.info("获取到的员工扩展字段数据：" + employeeExpandFormDetail);
+        for (JsonElement element : employeeExpandFormDetail) {
+            String fieldNameValue = element.getAsJsonObject().get("fieldName").getAsString();
+            if (Objects.equals(fieldNameValue,fieldName)){
+                String asString = element.getAsJsonObject().get("fieldName").getAsString();
+                return element.getAsJsonObject();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 获取人员扩展字段里自定义值列表dataSource里的oid，用于查询该oid下的数据
+     * @param employee
+     * @param fieldName
      * @param customEnumerationOID
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray getEmployeeFiledCustomEnumerationValueDetail(Employee employee,String customEnumerationOID) throws HttpStatusException {
-        JsonObject customEnumerationDetail = infraStructureApi.getEnumerationDetail(employee,customEnumerationOID);
+    public String getEmployeeFiledCustomEnumerationOID(Employee employee,String fieldName,String customEnumerationOID) throws HttpStatusException {
+        JsonObject employeeFiledCustomDetail = getEmployeeFiledDetails(employee,fieldName).getAsJsonObject();
+        String filedDataSource = employeeFiledCustomDetail.get("dataSource").getAsString();
+        //String转json
+        JSONObject jsonObject = new JSONObject(new String(filedDataSource));
+        String filedDataOID = jsonObject.get(customEnumerationOID).toString();
+        //截取dataSource里的customEnumerationOID
+//        String filedOid = filedDataSource.substring(25,61);
+//        log.info("扩展字段自定义值列表的customEnumerationOID：" + filedOid);
+//        return filedOid;
+        return filedDataOID;
+    }
+
+    /**
+     * 根据customEnumerationOID获取自定义值列表的value数据
+     * @param employee
+     * @param fieldName
+     * @param customEnumerationOID
+     * @param messageKey
+     * @return
+     * @throws HttpStatusException
+     */
+    public String getEmployeeFiledCustomEnumerationValueDetail(Employee employee,String fieldName,String customEnumerationOID,String messageKey) throws HttpStatusException {
+        JsonObject customEnumerationDetail = infraStructureApi.getEnumerationDetail(employee,getEmployeeFiledCustomEnumerationOID(employee,fieldName,customEnumerationOID));
         JsonArray customEnumerationValues = customEnumerationDetail.get("values").getAsJsonArray();
-        log.info("获取到的员工扩展字段自定义值列表的values数据：" + customEnumerationValues);
-        return customEnumerationValues;
+        for (JsonElement element : customEnumerationValues) {
+            String fieldNameValue = element.getAsJsonObject().get("messageKey").getAsString();
+            if (Objects.equals(fieldNameValue,messageKey)){
+                String asString = element.getAsJsonObject().get("value").getAsString();
+                return asString;
+            }
+        }
+        return null;
     }
 
     /**

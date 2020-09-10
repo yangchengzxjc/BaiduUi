@@ -63,7 +63,7 @@ public class InfraStructure {
         String formOID = infraStructureApi.getEmployeeExpandFormOID(employee).get("formOID").getAsString();
         JsonArray customFormValue = infraStructureApi.getEmployeeExpandValues(employee,formOID);
         for(int i=0;i<customFormValue.size();i++){
-            String name = customFormValue.get(i).getAsJsonObject().get("name").getAsString();
+            String name = customFormValue.get(i).getAsJsonObject().get("fieldName").getAsString();
             switch (name){
                 case "自定义列表":
                     customFormValue.get(i).getAsJsonObject().addProperty("value",employeeExtendComponent.getCustList());

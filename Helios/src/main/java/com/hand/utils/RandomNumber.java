@@ -72,6 +72,11 @@ public class RandomNumber {
         return dateFormat.format(date);
     }
 
+    /**
+     * 根据时间戳生成任意的1-15的字符串
+     * @param length
+     * @return
+     */
     public static String getTimeNumber(int length){
         long timeNumber = System.currentTimeMillis()*getRandomNumber(10000,99999);
         String randoNumber =String.valueOf(timeNumber);

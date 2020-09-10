@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.infrastructure.employee.EmployeeExtendComponent;
 import com.hand.basicObject.infrastructure.employee.InfraEmployee;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
@@ -50,14 +51,14 @@ public class EmployeeManage extends BaseTest {
         infraEmployee = new InfraEmployee();
     }
 
-    @Test(description = "获取人员扩展字段详细")
-    public void getEmployeeFiledDetail() throws HttpStatusException {
-        JsonArray filedDetail = employeeManagePage.getEmployeeFiledDetail(employee);
-        JsonObject filedDetail01 = filedDetail.get(0).getAsJsonObject();
-        log.info("扩展字段1中的数据：" + filedDetail01);
-        String filedOid = filedDetail01.get("fieldOID").getAsString();
-        log.info("扩展字段1中的fieldOid为：" + filedOid);
-    }
+//    @Test(description = "获取人员扩展字段详细")
+//    public void getEmployeeFiledDetail() throws HttpStatusException {
+//        JsonArray filedDetail = employeeManagePage.getEmployeeFiledDetail(employee);
+//        JsonObject filedDetail01 = filedDetail.get(0).getAsJsonObject();
+//        log.info("扩展字段1中的数据：" + filedDetail01);
+//        String filedOid = filedDetail01.get("fieldOID").getAsString();
+//        log.info("扩展字段1中的fieldOid为：" + filedOid);
+//    }
 
     @Test(description = "获取人员扩展字段自定义值列表的oid")
     public void getEmployeeFiledCustomDetail() throws HttpStatusException {
@@ -73,7 +74,9 @@ public class EmployeeManage extends BaseTest {
 
     @Test(description = "新增员工正常流程")
     public void addEmployee01() throws HttpStatusException {
-        JsonObject object = employeeManagePage.addEmployee(employee,infraEmployee,fullName,mobile,employeeID,email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank);
+        //员工扩展字段
+        EmployeeExtendComponent component =new EmployeeExtendComponent();
+        JsonObject object = employeeManagePage.addEmployee(employee,fullName,mobile,employeeID,email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank,component);
         String name = object.get("fullName").getAsString();
         log.info("获取到的人员姓名为：" + name);
         Assert.assertEquals(name,infraEmployee.getFullName());
@@ -81,7 +84,9 @@ public class EmployeeManage extends BaseTest {
 
     @Test(description = "新增员工异常流程--工号为空")
     public void addEmployee02() throws HttpStatusException {
-        JsonObject object = employeeManagePage.addEmployee(employee,infraEmployee,fullName,mobile,"",email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank);
+        //员工扩展字段
+        EmployeeExtendComponent component =new EmployeeExtendComponent();
+        JsonObject object = employeeManagePage.addEmployee(employee,fullName,mobile,"",email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank,component);
         String message = object.get("message").getAsString();
         String errorCode = object.get("errorCode").getAsString();
         Assert.assertEquals(message,"工号不能为空");
@@ -90,7 +95,9 @@ public class EmployeeManage extends BaseTest {
 
     @Test(description = "新增员工异常流程--工号超20位")
     public void addEmployee03() throws HttpStatusException {
-        JsonObject object = employeeManagePage.addEmployee(employee,infraEmployee,fullName,mobile,"intere"+errorEmployeeID ,email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank);
+        //员工扩展字段
+        EmployeeExtendComponent component =new EmployeeExtendComponent();
+        JsonObject object = employeeManagePage.addEmployee(employee,fullName,mobile,"intere"+errorEmployeeID ,email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank,component);
         String message = object.get("message").getAsString();
         String errorCode = object.get("errorCode").getAsString();
         log.info(message+errorCode);

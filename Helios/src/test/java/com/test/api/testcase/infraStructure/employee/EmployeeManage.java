@@ -60,6 +60,7 @@ public class EmployeeManage extends BaseTest {
         EmployeeExtendComponent component =new EmployeeExtendComponent();
         component.setCustList("hong888");
         component.setText("1");
+        component.setDefaultCostCenter("测试成本中心项987");
         JsonObject object = employeeManagePage.addEmployee(employee,fullName,mobile,employeeID,email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank,component);
         String name = object.get("fullName").getAsString();
         log.info("获取到的人员姓名为：" + name);

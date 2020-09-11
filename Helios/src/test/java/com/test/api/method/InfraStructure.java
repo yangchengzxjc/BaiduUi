@@ -99,7 +99,10 @@ public class InfraStructure {
                     customFormValue.get(i).getAsJsonObject().addProperty("value",employeeExtendComponent.getEmployeeResident());
                     break;
                 case "默认成本中心项":
-                    customFormValue.get(i).getAsJsonObject().addProperty("value",employeeExtendComponent.getDefaultCostCenter());
+                    String dataSourceCostCenter = customFormValue.get(i).getAsJsonObject().get("dataSource").getAsString();
+                    String costCenterOID = new JsonParser().parse(dataSourceCostCenter).getAsJsonObject().get("costCenterOID").getAsString();
+                    String cosCenterCode = getCostCenterCode(employee,costCenterOID,employeeExtendComponent.getDefaultCostCenter());
+                    customFormValue.get(i).getAsJsonObject().addProperty("value",cosCenterCode);
                     break;
                 case "员工户籍所在地":
                     customFormValue.get(i).getAsJsonObject().addProperty("value",employeeExtendComponent.getEmployeeDomicile());
@@ -167,6 +170,25 @@ public class InfraStructure {
         }
         return customEnumerationValue;
     }
+
+    /**
+     * 员工扩展字段-成本中心
+     * @param employee
+     * @param costCenterOID
+     * @param costCenterName
+     * @return
+     * @throws HttpStatusException
+     */
+    public String getCostCenterCode(Employee employee,String costCenterOID,String costCenterName) throws HttpStatusException {
+       JsonArray defaultCostCenter = infraStructureApi.defautCostCenter(employee,costCenterOID);
+       if(GsonUtil.isNotEmpt(defaultCostCenter)){
+          return GsonUtil.getJsonValue(defaultCostCenter,"name",costCenterName,"code");
+       }else{
+           throw new RuntimeException("成本中心为空，请配置");
+       }
+
+    }
+
 
     /**
      * 员工岗位添加  可以有多个岗位直接add 一个或者多个infraJob对象进去即可

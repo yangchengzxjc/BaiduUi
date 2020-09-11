@@ -58,8 +58,8 @@ public class ApiPath {
         public static final String QueryExpenseLocation= "/amap/v3/assistant/inputtips";
         //查询城市组
         public static final String QUERYCITYGROUP = "/api/levels/my";
-//        查询源泉税类别
-        public static final String SOURCE_TAX ="/api/source/tax/category";
+        //新增员工获取默认的成本中心项
+        public static final String DEFAULTCOSTCENT ="api/cost/center/items/%s/all";
 
 //        报销单查询公司控件
         public static final String GET_COMPANIES ="/api/refactor/companies/user/setOfBooks";

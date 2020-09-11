@@ -381,4 +381,16 @@ public class InfraStructureApi extends BaseRequest{
         String res = doGet(url,getHeader(employee.getAccessToken()),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
+
+    /**
+     * 获取成本中心的值
+     * @param employee
+     * @param costCenterOID
+     * @throws HttpStatusException
+     */
+    public JsonArray defautCostCenter(Employee employee,String costCenterOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+String.format(ApiPath.DEFAULTCOSTCENT,costCenterOID);
+        String res = doGet(url,getHeader(employee.getAccessToken()),null,employee);
+        return new JsonParser().parse(res).getAsJsonArray();
+    }
 }

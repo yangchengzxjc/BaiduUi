@@ -31,10 +31,10 @@ public class EmployeeManage extends BaseTest {
     private InfraEmployee infraEmployee;
     private InfraStructure infraStructure;
     //人员入参
-    private String fullName = "接口新建"+ UTCTime.getBeijingTime(0,0);
+    private String fullName = "员工"+ RandomNumber.getTimeNumber(8);
     private String employeeID = String.valueOf(RandomNumber.getRandomNumber());
     private String mobile = "283666"+ RandomNumber.getRandomNumber();
-    private String email = String.format("zhang%s@hui.com",RandomNumber.getRandomNumber());
+    private String email = String.format("%s@hui.com",RandomNumber.getRandomNumber()+RandomNumber.getUUID(4));
     private String employeeTypeValueName = "技术";
     private String directManager = "懿测试宏";
     private String companyName = "甄滙测试宏公司（修改）测试修改";
@@ -60,6 +60,7 @@ public class EmployeeManage extends BaseTest {
         EmployeeExtendComponent component =new EmployeeExtendComponent();
         component.setCustList("hong888");
         component.setText("1");
+        component.setDefaultCostCenter("测试成本中心项987");
         JsonObject object = employeeManagePage.addEmployee(employee,fullName,mobile,employeeID,email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank,component);
         String name = object.get("fullName").getAsString();
         log.info("获取到的人员姓名为：" + name);

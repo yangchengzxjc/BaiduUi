@@ -10,7 +10,7 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.infrastructure.employee.EmployeeExtendComponent;
 import com.hand.basicObject.infrastructure.employee.InfraEmployee;
 import com.hand.basicObject.infrastructure.employee.InfraJob;
-import com.hand.basicObject.supplierObject.UserCardInfoEntity;
+import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoEntity;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
@@ -348,5 +348,16 @@ public class InfraStructure {
         return checkResult.get("checkResult").getAsString();
     }
 
+    /**
+     * 查询部门OID
+     * @param employee
+     * @param departmentOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject searchDepartmentDetail(Employee employee,String departmentOID) throws HttpStatusException {
+        JsonObject res = infraStructureApi.searchDepartmentDetail(employee,departmentOID);
+        return res;
+    }
 
 }

@@ -7,9 +7,11 @@ import com.hand.api.VendorApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SettlementBody;
+import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoDTO;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -121,7 +123,33 @@ public class Vendor {
         return trainType;
     }
 
+    /**
+     * 查询国际国内 两舱设置
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
     public JsonObject queryBookClass(Employee employee) throws HttpStatusException {
         return vendorApi.queryBookClass(employee);
+    }
+
+    /**
+     * 初始化用，新增一个证件
+     * @return
+     */
+    public void addUserCardInfoDTO(JsonObject userCardInfo){
+        ArrayList<UserCardInfoDTO> userCardInfos =new ArrayList<>();
+
+        UserCardInfoDTO userCardInfoDTO =UserCardInfoDTO.builder()
+                .cardNo(userCardInfo.get("cardNo").getAsString())
+                .cardType("")
+                .cardTypeName("")
+                .IDCardTimelimit("")
+                .firstName("")
+                .lastName("")
+                .build();
+
+
+
     }
 }

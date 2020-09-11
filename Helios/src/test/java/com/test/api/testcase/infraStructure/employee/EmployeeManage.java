@@ -58,9 +58,7 @@ public class EmployeeManage extends BaseTest {
     public void addEmployee01() throws HttpStatusException {
         //员工扩展字段
         EmployeeExtendComponent component =new EmployeeExtendComponent();
-        //获取自定义值列表配置的值
-        String customValue = infraStructure.getEmployeeFiledCustomEnumerationValueDetail(employee,"自定义列表","customEnumerationOID","test10");
-        component.setCustList(customValue);
+        component.setCustList("hong888");
         component.setText("1");
         JsonObject object = employeeManagePage.addEmployee(employee,fullName,mobile,employeeID,email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank,component);
         String name = object.get("fullName").getAsString();

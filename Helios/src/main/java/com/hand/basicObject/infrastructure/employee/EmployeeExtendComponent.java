@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EmployeeExtendComponent {
 
-    //自定义列表
+    //自定义列表   初始化的时候就直接使用界面上的列表的值
     private String custList;
     //数字
     private String number;

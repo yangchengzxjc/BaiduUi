@@ -10,6 +10,7 @@ import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
 import com.test.api.method.Infra.EmployeeMethod.EmployeeManagePage;
+import com.test.api.method.InfraStructure;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -28,6 +29,7 @@ public class EmployeeManage extends BaseTest {
     private Employee employee;
     private EmployeeManagePage employeeManagePage;
     private InfraEmployee infraEmployee;
+    private InfraStructure infraStructure;
     //人员入参
     private String fullName = "接口新建"+ UTCTime.getBeijingTime(0,0);
     private String employeeID = String.valueOf(RandomNumber.getRandomNumber());
@@ -45,17 +47,20 @@ public class EmployeeManage extends BaseTest {
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void beforeClass(@Optional("14082978888") String phoneNumber, @Optional("hly123") String pwd, @Optional("stage") String env){
+    public void beforeClass(@Optional("hong.liang@xnhly.com") String phoneNumber, @Optional("hly123") String pwd, @Optional("stage") String env){
         employee=getEmployee(phoneNumber,pwd,env);
         employeeManagePage =new EmployeeManagePage();
         infraEmployee = new InfraEmployee();
+        infraStructure = new InfraStructure();
     }
 
     @Test(description = "新增员工正常流程")
     public void addEmployee01() throws HttpStatusException {
         //员工扩展字段
         EmployeeExtendComponent component =new EmployeeExtendComponent();
-        component.setCustList("10");
+        //获取自定义值列表配置的值
+        String customValue = infraStructure.getEmployeeFiledCustomEnumerationValueDetail(employee,"自定义列表","customEnumerationOID","test10");
+        component.setCustList(customValue);
         component.setText("1");
         JsonObject object = employeeManagePage.addEmployee(employee,fullName,mobile,employeeID,email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank,component);
         String name = object.get("fullName").getAsString();

@@ -174,9 +174,10 @@ public class ExpenseReport {
      * @param expenseReportOID
      * @throws HttpStatusException
      */
-    public String expenseReportSubmitCheck(Employee employee,String expenseReportOID) throws HttpStatusException {
+    public JsonObject expenseReportSubmitCheck(Employee employee,String expenseReportOID) throws HttpStatusException {
+        reimbursementApi.validate(employee,expenseReportOID);
         return reimbursementApi.expenseReportSubmit(employee,getExpenseReportDetail(employee,expenseReportOID),false,"",expenseReportInvoice.
-                getInvoiceDetail(employee,expenseReportOID)).getAsString();
+                getInvoiceDetail(employee,expenseReportOID)).getAsJsonObject();
     }
 
     /**
@@ -197,6 +198,10 @@ public class ExpenseReport {
         }
         return submitSuccess;
     }
+
+//    public JsonObject expenseReportValidate(Employee employee,String expenseReportOID) throws HttpStatusException {
+//        reimbursementApi.validate(employee,expenseReportOID);
+//    }
 
     /**
      *  根据费用类型和费用的归属人以及导入几笔费用

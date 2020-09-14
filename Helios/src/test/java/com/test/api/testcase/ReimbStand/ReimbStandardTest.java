@@ -126,16 +126,6 @@ public class ReimbStandardTest extends BaseTest {
         String message =String.format("该费用超标啦 %s 自动化测试-报销标准 标准为：CNY 100.00，已使用：CNY 200.00，超标：CNY 100.00。",time);
         log.info("需要断言的:{}",message);
         assert expenseReport.expenseReportSubmitCheck(employee,expenseReportOID).toString().contains(message);
-//        JsonArray info= expenseReport.expenseReportSubmitCheck(employee, expenseReportOID).getAsJsonArray("checkResultList");
-//        boolean flag =false;
-//        for(int i=0;i<info.size();i++){
-//            log.info("message:{}",info.get(i).getAsJsonObject().get("message").getAsString());
-//            if(info.get(i).getAsJsonObject().get("message").getAsString().equals(message)){
-//                flag=true;
-//                log.info("循环中的flag：{}",flag);
-//            }
-//        }
-//        assert flag;
         expenseReport.expenseReportSubmit(employee,expenseReportOID);
         //删除规则
 //       reimbStandard.deleteReimbStandardRules(employee,rulesOid);

@@ -6,14 +6,13 @@ import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.infrastructure.employee.InfraEmployee;
-import com.hand.basicObject.supplierObject.UserCardInfoEntity;
+import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoEntity;
 import com.hand.basicconstant.ApiPath;
 import com.hand.basicconstant.HeaderKey;
 import com.hand.basicconstant.ResourceId;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;

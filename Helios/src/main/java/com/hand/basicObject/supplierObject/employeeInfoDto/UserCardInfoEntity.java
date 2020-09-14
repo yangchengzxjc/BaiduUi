@@ -1,4 +1,4 @@
-package com.hand.basicObject.supplierObject;
+package com.hand.basicObject.supplierObject.employeeInfoDto;
 
 import com.hand.basicconstant.CardType;
 import lombok.AllArgsConstructor;

@@ -81,8 +81,8 @@ public class SettlementDataTest extends BaseTest {
                 .accBalanceBatchNo(accBalanceBatchNo)
                 //订单号
                 .orderNo(orderNo)
-                .createTime(UTCTime.getBeijingTime(0,0))
-                .orderDate(UTCTime.getBeijingTime(0,0))
+                .createTime(UTCTime.getBeijingTime(0,0,0))
+                .orderDate(UTCTime.getBeijingTime(0,0,0))
                 .deductibleFee(new BigDecimal(0.00).setScale(2))
                 .nondeductibleFee(new BigDecimal(0.00).setScale(2))
                 .detailType("出票")
@@ -113,9 +113,9 @@ public class SettlementDataTest extends BaseTest {
                 .currency("CNY")
                 .sequence("1")
                 //当前时间5天之前起飞
-                .takeOffTime(UTCTime.getBeijingTime(-5,0))
+                .takeOffTime(UTCTime.getBeijingTime(-5,0,0))
                 //当前时间5天之前 3小时后到达
-                .arrivalTime(UTCTime.getBeijingTime(-5,3))
+                .arrivalTime(UTCTime.getBeijingTime(-5,3,0))
                 .dcityName("上海")
                 .dcityCode("SHA")
                 .acityName("北京")
@@ -147,7 +147,7 @@ public class SettlementDataTest extends BaseTest {
                 .printStatus("")
                 .costCenter1("综合管理部-文秘组")
                 //机票行程单打印时间为航班到达时间的1小时后
-                .printTime(UTCTime.getBeijingTime(-5,4))
+                .printTime(UTCTime.getBeijingTime(-5,4,0))
                 .build();
         FlightOrderSettlementInfos.add(flightOrderSettlementInfo);
         String info = GsonUtil.objectToString(FlightOrderSettlementInfos);
@@ -229,7 +229,7 @@ public class SettlementDataTest extends BaseTest {
                 .amount(ticketFee.add(insuranceFee).add(serviceFee))
                 .deductibleFee(new BigDecimal(0).setScale(2))
                 .payType("月结")
-                .lastUpdateTime(UTCTime.getBeijingTime(0,0))
+                .lastUpdateTime(UTCTime.getBeijingTime(0,0,0))
                 .orderType("月结火车票")
                 .bookClerkName(employee.getFullName())
                 .bookClerkEmployeeId(employee.getEmployeeID())
@@ -244,7 +244,7 @@ public class SettlementDataTest extends BaseTest {
                 .orderType("电子票")
                 .payType("月结")
                 //当前时间5天前预定
-                .bookerTime(UTCTime.getBeijingTime(-5,0))
+                .bookerTime(UTCTime.getBeijingTime(-5,0,0))
                 .refundStatus("")
                 .changeStatus("")
                 .orderCostCenter1("综合管理部-文秘组")
@@ -283,10 +283,10 @@ public class SettlementDataTest extends BaseTest {
                 .departureCity("西安")
                 .arrivalCity("北京")
                 //出发时间为当前时间的3天前
-                .departureTime(UTCTime.getBeijingTime(-3,0))
+                .departureTime(UTCTime.getBeijingTime(-3,0,0))
                 .departureStationName("西安北站")
                 //到达时间为出发时间的4小时后
-                .arriveTime(UTCTime.getBeijingTime(-3,4))
+                .arriveTime(UTCTime.getBeijingTime(-3,4,0))
                 .arriveStationName("北京西站")
                 .electronicOrderNo(RandomNumber.getUUID(10))
                 .ticketType("原车次")
@@ -393,8 +393,8 @@ public class SettlementDataTest extends BaseTest {
                 .approvalCode(approvalCode)
                 .batchNo(accBalanceBatchNo)
                 .orderNo(orderNo)
-                .createTime(UTCTime.getBeijingTime(0,0))
-                .orderDate(UTCTime.getBeijingTime(0,0))
+                .createTime(UTCTime.getBeijingTime(0,0,0))
+                .orderDate(UTCTime.getBeijingTime(0,0,0))
                 .detailType("O")
                 .hotelClass("N")
                 .payType("1")
@@ -413,7 +413,7 @@ public class SettlementDataTest extends BaseTest {
                 .variance(new BigDecimal(0).setScale(2))
                 .orderType("月结")
                 .hotelType("会员")
-                .startTime(UTCTime.getBeijingTime(0,0))
+                .startTime(UTCTime.getBeijingTime(0,0,0))
                 .endTime(UTCTime.getBeijingDate(5)+" 12:00:00")
                 .hotelName("全季酒店")
                 .hotelNameEN("")

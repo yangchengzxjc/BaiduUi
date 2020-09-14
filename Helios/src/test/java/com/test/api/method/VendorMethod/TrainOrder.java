@@ -3,9 +3,10 @@ package com.test.api.method.VendorMethod;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.TrainOrderInfo.*;
+import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import com.test.api.method.ExpenseReportComponent;
-import org.apache.poi.ss.formula.functions.T;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -16,6 +17,7 @@ import java.util.List;
  * @Date 2020/9/10
  * @Version 1.0
  **/
+@Slf4j
 public class TrainOrder {
     private ExpenseReportComponent component;
 
@@ -34,7 +36,7 @@ public class TrainOrder {
      * @param payType
      * @return
      */
-    public TrainBaseOrder setTrainBaseOrder(Employee employee,String orderStatusName,String orderType,String orderNo,String bookChannel,String bookType,String payType){
+    public TrainBaseOrder setTrainBaseOrder(Employee employee,BigDecimal totalAmount,String orderStatusName,String orderType,String orderNo,String bookChannel,String bookType,String payType){
         String paymentType ="";
         String accountType ="";
         if(bookType.equals("C")){
@@ -43,6 +45,12 @@ public class TrainOrder {
         }else{
             paymentType="N";
             accountType="P";
+        }
+        //原订单号
+        String originalOrderNum = "";
+        log.info("orderType:{}",orderType);
+        if(!orderType.equals("B")){
+            originalOrderNum = RandomNumber.getTimeNumber(14);
         }
         HashMap<String,String> orderStatusMapping =new HashMap<>();
         orderStatusMapping.put("未提交","N");
@@ -53,11 +61,17 @@ public class TrainOrder {
         orderStatusMapping.put("已购票","TD");
         orderStatusMapping.put("出票失败","TF");
         orderStatusMapping.put("已取消","C");
+        orderStatusMapping.put("退票处理中","P");
+        orderStatusMapping.put("退票成功","S");
+        orderStatusMapping.put("退票失败","F");
+        orderStatusMapping.put("改签处理中","P");
+        orderStatusMapping.put("改签成功","S");
+        orderStatusMapping.put("改签取消","C");
         //订单基本信息
         TrainBaseOrder trainBaseOrder = TrainBaseOrder.builder()
                 .orderType(orderType)
                 .orderNo(orderNo)
-                .originalOrderNum("")
+                .originalOrderNum(originalOrderNum)
                 .supplierName("中集商旅")
                 .supplierCode("cimccTMC")
                 .approvalCode("TA"+System.currentTimeMillis())
@@ -73,13 +87,13 @@ public class TrainOrder {
                 .bookChannel(bookChannel)
                 .bookType(bookType)
                 .payType(payType)
-                .createTime(UTCTime.getBeijingTime(0,0))
-                .payTime(UTCTime.getBeijingTime(0,0))
-                .successTime(UTCTime.getBeijingTime(0,0))
+                .createTime(UTCTime.getBeijingTime(0,0,0))
+                .payTime(UTCTime.getBeijingTime(0,0,1))
+                .successTime(UTCTime.getBeijingTime(0,0,2))
                 .paymentType(paymentType)
                 .accountType(accountType)
                 .currency("CNY")
-                .totalAmount(new BigDecimal(500).setScale(2))
+                .totalAmount(totalAmount)
                 .contactName(employee.getFullName())
                 .contactPhone(employee.getMobile())
                 .contactEmail(employee.getEmail())
@@ -172,18 +186,18 @@ public class TrainOrder {
      * @param passengerEmail   邮箱
      * @return
      */
-    public TrainPassengerInfo setTrainPassengerInfo(String orderNo, String passengerNo, String passengerName, String passagerNum, List<String> bookerDepartments,String departmentName,String departmentCode,String certificateNum,String passengerPhone,String passengerEmail){
+    public TrainPassengerInfo setTrainPassengerInfo(String orderNo, String passengerNo, String passengerAttribute,String passengerName, String passagerNum, List<String> bookerDepartments,String departmentName,String certificateNum,String passengerPhone,String passengerEmail){
         //订单乘客信息
         TrainPassengerInfo trainPassengerInfo = TrainPassengerInfo.builder()
                 .orderNo(orderNo)
                 .passengerNo(passengerNo)
                 .passengerType("AUD")
-                .passengerAttribute("I")
+                .passengerAttribute(passengerAttribute)
                 .passengerName(passengerName)
                 .passengerNum(passagerNum)
                 .passengerDepartments(bookerDepartments)
                 .departmentName(departmentName)
-                .departmentCode(departmentCode)
+//                .departmentCode(departmentCode)
                 .nationlityName("中国")
                 .certificateType("IDC")
                 .certificateNum(certificateNum)
@@ -207,7 +221,7 @@ public class TrainOrder {
      * @return
      * @throws HttpStatusException
      */
-    public TrainSequenceInfo setTrainSequenceInfo(Employee employee,String orderNo,String sequenceNo,String dCityName,String aCityName,String dStationName,String aStationName) throws HttpStatusException {
+    public TrainSequenceInfo setTrainSequenceInfo(Employee employee,String orderNo,String sequenceNo,String trainNum,String dCityName,String aCityName,String dStationName,String aStationName) throws HttpStatusException {
 
         String dCityCode = component.getCityCode(employee,dCityName);
         String aCityCode = component.getCityCode(employee,aCityName);
@@ -215,9 +229,9 @@ public class TrainOrder {
         TrainSequenceInfo trainSequenceInfo =TrainSequenceInfo.builder()
                 .orderNo(orderNo)
                 .sequenceNo(sequenceNo)
-                .trainNum("D123")
-                .departureTime(UTCTime.getBeijingTime(3,0))
-                .arriveTime(UTCTime.getBeijingTime(3,4))
+                .trainNum(trainNum)
+                .departureTime(UTCTime.getBeijingTime(3,0,0))
+                .arriveTime(UTCTime.getBeijingTime(3,4,0))
                 .dCityName(dCityName)
                 .dCityCode(dCityCode)
                 .dStationName(dStationName)
@@ -226,6 +240,32 @@ public class TrainOrder {
                 .aStationName(aStationName)
                 .build();
         return trainSequenceInfo;
+    }
+
+    /**
+     * 订单车车票信息
+     * @param orderNo  订单号
+     * @param passengerNo  乘客序号
+     * @param trainElectronic   电子客票号
+     * @param ticketPrice 车票票价
+     * @param seatNum 座位号
+     * @return
+     */
+    public TrainTicketInfo setTrainTicketInfo(String orderNo,String trainNum,String passengerNo,String trainElectronic,BigDecimal ticketPrice,String seatNum){
+        //订单车票信息
+        TrainTicketInfo trainTicketInfo = TrainTicketInfo.builder()
+                .orderNo(orderNo)
+                .passengerNo(passengerNo)
+                .sequenceNo("1")
+                .trainNum(trainNum)
+                .trainElectronic(trainElectronic)
+                .passengerType("AUD")
+                .ticketPrice(ticketPrice)
+                .servicePrice(new BigDecimal(20).setScale(2))
+                .seatNum(seatNum)
+                .seatType("209")
+                .build();
+        return trainTicketInfo;
     }
 
 }

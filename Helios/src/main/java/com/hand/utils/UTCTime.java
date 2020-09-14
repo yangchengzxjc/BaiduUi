@@ -50,9 +50,9 @@ public class UTCTime {
      * @param time 同上
      * @return
      */
-    public static String getBeijingTime(int day, int time){
+    public static String getBeijingTime(int day, int hours, int minutes){
         DateTimeFormatter fmt = DateTimeFormat.forPattern(BEIJING_FORMATTER_TIME);
-        DateTime Bejingtime = DateTime.now().plusDays(day).plusHours(time);
+        DateTime Bejingtime = DateTime.now().plusDays(day).plusHours(hours).plusMinutes(minutes);
         return fmt.print(Bejingtime);
     }
     /**

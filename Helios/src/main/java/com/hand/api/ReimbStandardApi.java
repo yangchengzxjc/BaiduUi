@@ -8,6 +8,7 @@ import com.hand.basicObject.Employee;
 import com.hand.basicconstant.ApiPath;
 import com.hand.basicconstant.ResourceId;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONArray;
 
 import java.util.HashMap;
 
@@ -132,7 +133,7 @@ public class ReimbStandardApi  extends BaseRequest {
                                                String message,
                                                JsonArray userGroups, JsonArray expenseTypes,JsonArray forms,
                                                JsonArray companys) throws HttpStatusException{
-        String url = employee.getEnvironment().getUrl()+ ApiPath.ADD_Reimb_Standard;
+        String url = employee.getEnvironment().getUrl()+ ApiPath.ADD_REIM_STANDARD;
         HashMap<String, String> mapParams3 = new HashMap<>();
         mapParams3.put("roleType", "TENANT");
         JsonObject body= new JsonObject();
@@ -199,7 +200,7 @@ public class ReimbStandardApi  extends BaseRequest {
      * @throws HttpStatusException
      */
     public void deleteReimbStandardRules(Employee employee, String rulesOid) throws HttpStatusException {
-        String url = employee.getEnvironment().getUrl() + String.format(ApiPath.DELETE_REIMB_STANDARD , rulesOid);
+        String url = employee.getEnvironment().getUrl() + String.format(ApiPath.DELETE_REIMB_STANDARD,rulesOid);
         HashMap<String, String> mapParams = new HashMap<>();
         mapParams.put("roleType", "TENANT");
        doPost(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,new JsonObject().toString(),null,employee);
@@ -272,6 +273,28 @@ public class ReimbStandardApi  extends BaseRequest {
         body1.addProperty("userAssociateType",1);
         String res = doPost(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,body1.toString(),null,employee);
         return res;
+
+    }
+
+    /**
+     * 查询报销标准规则
+     * @param employee
+     * @param ruleName
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getRules(Employee employee,String ruleName)throws HttpStatusException{
+        String url = employee.getEnvironment().getUrl() +ApiPath.QUERY_REIM_RULES;
+        HashMap<String,String> mapParams = new HashMap<>();
+        mapParams.put("roleType","TENANT");
+        mapParams.put("page","0");
+        mapParams.put("size","20");
+        mapParams.put("distLevelOrgIds","");
+        mapParams.put("expenseTypeIds","");
+        mapParams.put("businessType","1001");
+        mapParams.put("name",ruleName);
+        String res = doGet(url, getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA), mapParams, employee);
+        return new JsonParser().parse(res).getAsJsonArray();
 
     }
 }

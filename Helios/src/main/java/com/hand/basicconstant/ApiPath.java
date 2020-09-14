@@ -253,7 +253,7 @@ public class ApiPath {
         //差补表单详情
         public static final String FORM_DETAIL = "/api/custom/forms/%s/detail";
         //新建报销标准规则
-        public static final String ADD_Reimb_Standard = "/api/expense/standard/rule";
+        public static final String ADD_REIM_STANDARD = "/api/expense/standard/rule";
         //获取费用类型
         public static final String EXPENSE_TYPE = "/api/expense/type/by/setOfBooks";
         //获取启用公司
@@ -263,7 +263,7 @@ public class ApiPath {
         //获取单据类型
         public static final String FORM_TYPE = "/api/custom/forms/loan/reference";
         //删除报销标准
-        public static final String DELETE_REIMB_STANDARD = "/api/expense/standard/rule/delete";
+        public static final String DELETE_REIMB_STANDARD = "/api/expense/standard/rule/delete/%s";
         //消费商接口
         //机票,酒店,火车结算数据获取(从供应商)
         public static final String TMCDATA = "/data/api/openapi/%s/settlement";
@@ -285,6 +285,9 @@ public class ApiPath {
         public static final String QUERYORDERDATA = "/vendor-data-service/api/open/internal/%s/order";
         //查询国内 国际两舱设置
         public static final String QUERYBOOKCLASS = "/vendor-info-service/api/company/bookClass";
+        //报销标准规则查询
+        public static final String QUERY_REIM_RULES = "/api/expense/standard/rule/list";
+
     }
 
 

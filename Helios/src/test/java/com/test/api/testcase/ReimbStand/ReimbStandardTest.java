@@ -67,7 +67,7 @@ public class ReimbStandardTest extends BaseTest {
         log.info("companyList:{}",companyList);
     }
 
-    @Test(description = "报销标准")
+    @BeforeMethod(description = "报销标准")
     public void createRules()throws HttpStatusException{
         JsonArray userGroups = reimbStandard.userGroups(reimbStandard.getUserGroups(employee,"租户级  stage测试员"));
         JsonArray expenseType = reimbStandard.expenseType(reimbStandard.getExpenseType(employee,"自动化测试-报销标准"));
@@ -86,8 +86,6 @@ public class ReimbStandardTest extends BaseTest {
         String standardOid=item.get(0).getAsJsonObject().get("standardOID").getAsString();
         String items= reimbStandard.addItems(employee,standardOid,rulesOid, 100,userGroups,new JsonArray());
         log.info("items:{}",items);
-        //删除规则
-//        reimbStandard.deleteReimbStandardRules(employee,rulesOid);
     }
 
     @Test(priority = 1,description = "报销标准规则校验")
@@ -127,10 +125,19 @@ public class ReimbStandardTest extends BaseTest {
         log.info("需要断言的:{}",message);
         assert expenseReport.expenseReportSubmitCheck(employee,expenseReportOID).toString().contains(message);
         expenseReport.expenseReportSubmit(employee,expenseReportOID);
-        //删除规则
-//       reimbStandard.deleteReimbStandardRules(employee,rulesOid);
+        expenseReport.withdraw(employee,expenseReportOID);
+        expenseReport.removeInvoice(employee,expenseReportOID,invoiceOID);
+        expenseReportInvoice.deleteInvoice(employee,invoiceOID);
+        expenseReport.deleteExpenseReport(employee,expenseReportOID);
 
     }
 
-
+    @AfterMethod(description = "删除报销标准规则")
+    public void deleteRules() throws HttpStatusException{
+        JsonArray rules= reimbStandard.getRules(employee,"测试25");
+        String rulesOid=rules.get(0).getAsJsonObject().get("ruleOID").getAsString();
+        log.info(rulesOid);
+        //删除规则
+       reimbStandard.deleteReimbStandardRules(employee,rulesOid);
+    }
 }

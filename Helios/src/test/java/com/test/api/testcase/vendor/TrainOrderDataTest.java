@@ -612,4 +612,85 @@ public class TrainOrderDataTest extends BaseTest {
         assert getTrainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
     }
 
+    @Test(description = "火车票1人预定,不改签-不退票-超标-公司支付-月结")
+    public void trainOrderDataTest8() throws HttpStatusException {
+        //订单号
+        String orderNo = RandomNumber.getTimeNumber();
+        ArrayList<String> bookerDepartments =new ArrayList<>();
+        //车票价
+        BigDecimal ticketPrice =new BigDecimal(690).setScale(2);
+        //服务费
+        BigDecimal servicePrice = new BigDecimal(20).setScale(2);
+        BigDecimal totalAmount =ticketPrice.add(servicePrice);
+        //电子客票号
+        String trainElectronic = RandomNumber.getTimeNumber(10);
+        bookerDepartments.add(employee.getDepartmentName());
+        //订单基本信息
+        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已出票","B",orderNo,"Online-APP","C","COPAY");
+        //订单车票信息
+        TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic,ticketPrice,"05车07C");
+        ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
+        trainTicketInfos.add(trainTicketInfo);
+        //订单车次
+        TrainSequenceInfo trainSequenceInfo = trainOrder.setTrainSequenceInfo(employee,orderNo,"1","D1234","西安市","上海","西安北站","虹桥火车站");
+        ArrayList<TrainSequenceInfo> trainSequenceInfos =new ArrayList<>();
+        trainSequenceInfos.add(trainSequenceInfo);
+        //订单乘客信息
+        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
+        ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
+        trainPassengerInfos.add(trainPassengerInfo);
+        //订单超标
+        TrainExceedInfo trainExceedInfo =trainOrder.setExceedInfo(trainElectronic);
+        ArrayList<TrainExceedInfo> trainExceedInfos =new ArrayList<>();
+        trainExceedInfos.add(trainExceedInfo);
+
+        TrainOrderInfoEntity trainOrderInfoEntity = TrainOrderInfoEntity.builder()
+                .trainOrderBase(trainBaseOrder)
+                .trainOrderTicketInfos(trainTicketInfos)
+                .trainOrderSequenceInfos(trainSequenceInfos)
+                .trainOrderPassengerInfos(trainPassengerInfos)
+                .trainExceedInfos(trainExceedInfos)
+                .build();
+        //推送的数据封装成一个json字符串
+        String hotelOrderData =GsonUtil.objectToString(trainOrderInfoEntity);
+        //转成jsonobject对象
+        JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
+        //火车订单推送
+        vendor.pushOrderData(employee,"train",trainOrderInfoEntity,"cimccTMC","200428140254184788","");
+        SettlementBody settlementBody = SettlementBody.builder()
+                .companyOid(employee.getCompanyOID())
+                .orderNo(orderNo)
+                .page(1)
+                .size(10)
+                .build();
+        //查询订单数据
+        JsonObject trainOrder = vendor.queryOrderData(employee,"train",settlementBody);
+        log.info("train order Data:{}",trainOrder);
+        //映射关系
+        HashMap<String,String> mapping= new HashMap<>();
+        mapping.put("trainOrderBase","trainBaseOrder");
+        mapping.put("employeeNum","preEmployeeNum");
+        mapping.put("employeeName","preEmployeeName");
+        mapping.put("trainOrderTicketInfos","trainTicketInfo");
+        mapping.put("trainOrderSequenceInfos","trainSequenceInfo");
+        mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
+        mapping.put("dCityName","dcityName");
+        mapping.put("dCityCode","dcityCode");
+        mapping.put("dStationName","dstationName");
+        mapping.put("aCityName","acityName");
+        mapping.put("aCityCode","acityCode");
+        mapping.put("aStationName","astationName");
+        mapping.put("nationlityName","nationalityName");
+        mapping.put(employee.getDepartmentName(),"产品三部");
+        assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
+        //校验预订人的
+        assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
+        //trainSequenceInfo 中的trainType
+        String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
+        String trainType=vendor.trainTypeMapping(trainNum);
+        assert trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainType").getAsString().equals(trainType);
+        //trainPassengerInfo 中的乘客oid 对比
+        assert trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+    }
+
 }

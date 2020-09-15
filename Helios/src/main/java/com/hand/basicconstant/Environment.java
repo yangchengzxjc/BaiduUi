@@ -13,7 +13,7 @@ import lombok.Getter;
 @Getter
 public enum Environment {
     UAT("uat", "https://uat.huilianyi.com","https://zhenxuanuat.huilianyi.com/open"),
-    STAGE("stage", "http://apistage.huilianyi.com","https://zhenxuanstage.huilianyi.com/open"),
+    STAGE("stage", "http://stage.huilianyi.com","https://zhenxuanstage.huilianyi.com/open"),
     CONSOLE("console", "https://console.huilianyi.com","https://zhenxuan.huilianyi.com/open"),
     CONSOLE_TC("console-tc", "https://console-tc.huilianyi.com","");
 

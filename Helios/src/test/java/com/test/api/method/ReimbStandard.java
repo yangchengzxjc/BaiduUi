@@ -179,4 +179,17 @@ public class ReimbStandard {
         return items;
     }
 
+    /**
+     *
+     * @param employee
+     * @param ruleName
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getRules(Employee employee,String ruleName)throws HttpStatusException{
+        JsonArray rulesList = new JsonArray();
+        rulesList =reimbStandardRules.getRules(employee,ruleName);
+        return  rulesList;
+    }
+
 }

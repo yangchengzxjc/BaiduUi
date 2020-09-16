@@ -356,10 +356,10 @@ public class FlightOrderDataTest extends BaseTest {
         AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),employee.getPhoneNumber(),employee.getEmail());
         ArrayList<AirPassengerInfo> airPassengerInfos =new ArrayList<>();
         airPassengerInfos.add((airPassengerInfo));
-        // 改签
-        AirChangeInfo airChangeInfo =flightOrder.setAirChangeInfo(orderNo);
-        ArrayList<AirChangeInfo> airChangeInfos = new ArrayList<>();
-        airChangeInfos.add(airChangeInfo);
+        // 退票
+        AirRefundInfo airRefundInfo =flightOrder.setAirRefundInfo(orderNo);
+        ArrayList<AirRefundInfo> airRefundInfos = new ArrayList<>();
+        airRefundInfos.add(airRefundInfo);
         //行程单打印以及配送信息
         AirTicketPrint airTicketPrint = flightOrder.setAirTicketPrint(ticketKey,ticketNo,employee.getFullName());
         ArrayList<AirTicketPrint> airTicketPrints =new ArrayList<>();
@@ -376,6 +376,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .airPassengerInfo(airPassengerInfos)
                 .airTicketPrint(airTicketPrints)
                 .airInsurance(airInsurances)
+                .airRefundInfo(airRefundInfos)
                 .build();
         //推送的数据封装成一个json字符串
         String hotelOrderData =GsonUtil.objectToString(airOrderInfoEntity);
@@ -485,6 +486,8 @@ public class FlightOrderDataTest extends BaseTest {
         airPassengerInfos.add((airPassengerInfo));
         // 改签
         AirChangeInfo airChangeInfo =flightOrder.setAirChangeInfo(orderNo);
+        ArrayList<AirChangeInfo> airChangeInfos =new ArrayList<>();
+        airChangeInfos.add(airChangeInfo);
         //行程单打印以及配送信息
         AirTicketPrint airTicketPrint = flightOrder.setAirTicketPrint(ticketKey,ticketNo,employee.getFullName());
         ArrayList<AirTicketPrint> airTicketPrints =new ArrayList<>();
@@ -501,6 +504,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .airPassengerInfo(airPassengerInfos)
                 .airTicketPrint(airTicketPrints)
                 .airInsurance(airInsurances)
+                .airChangeInfo(airChangeInfos)
                 .build();
         //推送的数据封装成一个json字符串
         String hotelOrderData =GsonUtil.objectToString(airOrderInfoEntity);

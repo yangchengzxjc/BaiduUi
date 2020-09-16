@@ -217,6 +217,7 @@ public class GsonUtil {
             String name = iterator2.next();
             try {
                 if (object1.get(name) instanceof JsonArray && object2.get(name) instanceof JsonArray) {
+                    log.info("正在检查{}数组",name);
                     if(!compareJsonArray(object1.getAsJsonArray(name),object2.getAsJsonArray(name),mapping)){
 
                         arrayList.add(false);
@@ -224,6 +225,7 @@ public class GsonUtil {
                     continue;
                 }
                 if(object1.get(name) instanceof JsonObject && object2.get(name) instanceof  JsonObject){
+                    log.info("正在检查{}对象",name);
                     if(!compareJsonObject(object1.getAsJsonObject(name),object2.getAsJsonObject(name),mapping)){
                         arrayList.add(false);
                     }

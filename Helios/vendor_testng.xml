@@ -11,6 +11,9 @@
             <class name="com.test.api.testcase.vendor.TrainOrderDataTest"/>
             <class name="com.test.api.testcase.vendor.FlightOrderDataTest"/>
             <class name="com.test.api.testcase.vendor.HotelOrderDataTest"/>
+            <class name="com.test.api.testcase.vendor.TrainSettlementDataTest"/>
+            <class name="com.test.api.testcase.vendor.HotelOrderDataTest"/>
+            <class name="com.test.api.testcase.vendor.FlightOrderDataTest"/>
         </classes>
     </test>
 

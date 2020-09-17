@@ -181,6 +181,8 @@ public class ApiPath {
         public static final String ADD_EMPLOYEE = "/api/refactor/users/v2?roleType=TENANT";
         //证件新增 修改
         public static final String USERCARD="/api/contact/cards?roleType=TENANT";
+        //证件查询
+        public static final String QUERY_USER_CARD="/api/user/extra/all/%s";
         //员工离职
         public static final String LEAVE_EMPLOYEE = "/api/users/%s/set/leaving/date/%s";
         //员工重新入职

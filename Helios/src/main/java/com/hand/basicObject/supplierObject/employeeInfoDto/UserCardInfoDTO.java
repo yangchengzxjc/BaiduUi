@@ -6,8 +6,6 @@ import lombok.Data;
 
 
 @Data
-@AllArgsConstructor
-@Builder
 public class UserCardInfoDTO {
     //证件号码
     private String cardNo;

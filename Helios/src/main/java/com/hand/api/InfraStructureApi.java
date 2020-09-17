@@ -13,6 +13,8 @@ import com.hand.basicconstant.ResourceId;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.json.Json;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -340,6 +342,18 @@ public class InfraStructureApi extends BaseRequest{
         body.addProperty("userOID",userCardInfoEntity.getUserOID());
         String res = doPost(url,getHeader(employee.getAccessToken()),null,body.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 根据人员 查询证件
+     * @param employee
+     * @return
+     */
+    public JsonArray queryUserCard(Employee employee) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+String.format(ApiPath.QUERY_USER_CARD,employee.getUserOID());
+        String res = doGet(url,getHeader(employee.getAccessToken()),null,employee);
+        JsonArray userCard =  new JsonParser().parse(res).getAsJsonObject().get("contactCardDTOS").getAsJsonArray();
+        return userCard;
     }
 
     /**

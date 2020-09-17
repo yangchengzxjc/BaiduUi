@@ -10,6 +10,7 @@ import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoDTO;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,22 +135,26 @@ public class Vendor {
     }
 
     /**
-     * 初始化用，新增一个证件
-     * @return
+     * 根据查询出的证件List 封装成openApi中的证件对象
+     * @param userCardInfo
+     * @returnuserCardInfos
      */
-    public void addUserCardInfoDTO(JsonObject userCardInfo){
+    public ArrayList addUserCardInfoDTO(JsonArray userCardInfo){
+
         ArrayList<UserCardInfoDTO> userCardInfos =new ArrayList<>();
+        for (int i = 0; userCardInfo.size()>i ; i++) {
+            JsonObject jsb = userCardInfo.get(i).getAsJsonObject();
+            UserCardInfoDTO userCardInfoDTO = new UserCardInfoDTO();
+            userCardInfoDTO.setCardNo(jsb.get("originalCardNo").getAsString());
+            userCardInfoDTO.setCardType(jsb.get("cardType").getAsString());
+            userCardInfoDTO.setCardTypeName(jsb.get("cardTypeName").getAsString());
+            if (jsb.get("cardExpiredTime").isJsonNull()){}
+            else{ userCardInfoDTO.setIDCardTimelimit(jsb.get("cardExpiredTime").getAsString());}
+            userCardInfoDTO.setFirstName(jsb.get("firstName").getAsString());
+            userCardInfoDTO.setLastName(jsb.get("lastName").getAsString());
 
-        UserCardInfoDTO userCardInfoDTO =UserCardInfoDTO.builder()
-                .cardNo(userCardInfo.get("cardNo").getAsString())
-                .cardType("")
-                .cardTypeName("")
-                .IDCardTimelimit("")
-                .firstName("")
-                .lastName("")
-                .build();
-
-
-
+            userCardInfos.add(userCardInfoDTO);
+        }
+        return userCardInfos;
     }
 }

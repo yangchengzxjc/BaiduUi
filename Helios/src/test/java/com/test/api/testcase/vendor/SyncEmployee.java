@@ -1,20 +1,25 @@
 package com.test.api.testcase.vendor;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.infrastructure.employee.InfraEmployee;
 import com.hand.basicObject.supplierObject.employeeInfoDto.EmployeeDTO;
+import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoDTO;
 import com.hand.basicconstant.CardType;
 import com.hand.utils.GsonUtil;
 import com.test.BaseTest;
 import com.test.api.method.Infra.EmployeeMethod.EmployeeManagePage;
 import com.test.api.method.InfraStructure;
 import com.test.api.method.Vendor;
+import org.openqa.selenium.json.Json;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SyncEmployee extends BaseTest {
     private Employee employee;
@@ -37,16 +42,15 @@ public class SyncEmployee extends BaseTest {
     @Test(description = "新增员正常流程,")
     public void addEmployeeTest01() throws HttpStatusException {
         EmployeeDTO employeeDTO = new EmployeeDTO();
-        JsonObject empObject = employeeManagePage.addEmployee(employee, "测试接口新建Q29","","M0029","M0029@163.COM","人员类型01","","甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
+        JsonObject empObject = employeeManagePage.addEmployee(employee, "测试接口新建Q57","","M0057","M0057@163.COM","人员类型01","","甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
         String userOID=empObject.get("userOID").getAsString();
         JsonObject bookClass = vendor.queryBookClass(employee);
         JsonObject departCode = infraStructure.searchDepartmentDetail(employee,empObject.get("departmentOID").getAsString());
         JsonObject userCardInfo=employeeManagePage.addUserCard(employee,userOID,CardType.CHINA_ID,"身份证名字",true);//新增身份证 启用 名字：身份证名字
+        JsonArray userCardInfos = infraStructure.queryUserCard(employee);
+        ArrayList cardList =vendor.addUserCardInfoDTO(userCardInfos);
 
 
-
-
-        System.out.println(userCardInfo);
         if (empObject.get("status").toString().equals("1001")) {
             employeeDTO.setStatus("1");
             }
@@ -84,7 +88,7 @@ public class SyncEmployee extends BaseTest {
         employeeDTO.setDeptName(empObject.get("departmentName").getAsString());
         employeeDTO.setDeptPath(empObject.get("departmentPath").getAsString());
         employeeDTO.setDeptCustomCode(departCode.get("custDeptNumber").getAsString());
-
+        employeeDTO.setUserCardInfos(cardList);
         System.out.println(GsonUtil.objectToString(employeeDTO));
     }
 

@@ -360,4 +360,15 @@ public class InfraStructure {
         return res;
     }
 
+    /**
+     * 查询 人员证件
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray queryUserCard(Employee employee) throws HttpStatusException {
+        JsonArray json = infraStructureApi.queryUserCard(employee);
+        return json;
+    }
+
 }

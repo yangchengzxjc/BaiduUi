@@ -1,6 +1,7 @@
 package com.test.api.testcase.vendor;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;
@@ -14,6 +15,8 @@ import com.test.api.method.ApplicationMethod.TravelApplicationPage;
 import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportComponent;
 import com.test.api.method.TravelApplication;
+import com.test.api.method.Vendor;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
@@ -21,11 +24,13 @@ import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 
+
 /**
  * @Author peng.zhang
  * @Date 2020/8/4
  * @Version 1.0
  **/
+@Slf4j
 public class SyncApplicationTest extends BaseTest {
 
     private TravelApplication travelApplication;
@@ -34,7 +39,7 @@ public class SyncApplicationTest extends BaseTest {
     private ExpenseReportComponent expenseReportComponent;
     private ExpenseReport expenseReport;
     private TravelApplicationPage travelApplicationPage;
-
+    private Vendor vendor;
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
@@ -45,9 +50,10 @@ public class SyncApplicationTest extends BaseTest {
         expenseReportComponent = new ExpenseReportComponent();
         expenseReport =new ExpenseReport();
         travelApplicationPage =new TravelApplicationPage();
+        vendor =new Vendor();
     }
 
-    @Test(description = "消费商-中集供应商")
+    @Test(description = "消费商-中集供应商",groups = "D")
     public void vendorTest1() throws HttpStatusException {
         component.setDepartment(employee.getDepartmentOID());
         component.setStartDate(UTCTime.getNowUtcTime());
@@ -77,9 +83,13 @@ public class SyncApplicationTest extends BaseTest {
         travelApplication.addItinerary(employee,applicationOID,trainItineraries);
         //申请单提交
         travelApplication.submitApplication(employee,applicationOID,"");
+        // 获取申请单详情
+        JsonObject applicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
+        //获取到申请单中的行程信息
+        JsonArray flightItineraryInfo = travelApplication.getItinerary(employee,applicationOID,"FLIGHT");
     }
 
-    @Test(description = "消费商-大唐消费商")
+    @Test(description = "消费商-大唐消费商",groups = "C")
     public void vendorTest2() throws HttpStatusException {
 
         component.setDepartment(employee.getDepartmentOID());
@@ -99,4 +109,5 @@ public class SyncApplicationTest extends BaseTest {
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
         travelApplication.submitApplication(employee,applicationOID,"");
     }
+
 }

@@ -148,13 +148,42 @@ public class Vendor {
             userCardInfoDTO.setCardNo(jsb.get("originalCardNo").getAsString());
             userCardInfoDTO.setCardType(jsb.get("cardType").getAsString());
             userCardInfoDTO.setCardTypeName(jsb.get("cardTypeName").getAsString());
-            if (jsb.get("cardExpiredTime").isJsonNull()){}
-            else{ userCardInfoDTO.setIDCardTimelimit(jsb.get("cardExpiredTime").getAsString());}
+            if(jsb.get("cardExpiredTime").isJsonNull()){
+
+            }else{
+                userCardInfoDTO.setIDCardTimelimit(jsb.get("cardExpiredTime").getAsString());
+            }
             userCardInfoDTO.setFirstName(jsb.get("firstName").getAsString());
             userCardInfoDTO.setLastName(jsb.get("lastName").getAsString());
-
             userCardInfos.add(userCardInfoDTO);
         }
         return userCardInfos;
     }
+
+    /**
+     * 查询TMC 人员同步信息
+     * @param employee
+     * @param tmcChannel
+     * @param hlyUserMobile
+     * @throws HttpStatusException
+     */
+    public JsonObject getTMCUser(Employee employee,String tmcChannel,String hlyUserMobile) throws HttpStatusException {
+        return vendorApi.tmcUserInfo(employee,tmcChannel,hlyUserMobile);
+    }
+
+
+    /**
+     * 查询TMC 申请单同步信息
+     * @param employee
+     * @param tmcChannel   例：supplyUbtripService
+     * @param approvalNo  行程单号
+     * @throws HttpStatusException
+     */
+    public JsonObject getTMCPlan(Employee employee,String tmcChannel,String approvalNo) throws HttpStatusException {
+        return vendorApi.tmcPlanInfo(employee,tmcChannel,approvalNo);
+    }
+
+
+
+
 }

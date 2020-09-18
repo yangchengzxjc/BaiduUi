@@ -53,7 +53,7 @@ public class SyncApplicationTest extends BaseTest {
         vendor =new Vendor();
     }
 
-    @Test(description = "消费商-中集供应商",groups = "D")
+    @Test(description = "消费商-中集供应商")
     public void vendorTest1() throws HttpStatusException {
         component.setDepartment(employee.getDepartmentOID());
         component.setStartDate(UTCTime.getNowUtcTime());
@@ -85,11 +85,12 @@ public class SyncApplicationTest extends BaseTest {
         travelApplication.submitApplication(employee,applicationOID,"");
         // 获取申请单详情
         JsonObject applicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
-        //获取到申请单中的行程信息
+        //获取到申请单中的飞机行程信息
         JsonArray flightItineraryInfo = travelApplication.getItinerary(employee,applicationOID,"FLIGHT");
+        
     }
 
-    @Test(description = "消费商-大唐消费商",groups = "C")
+    @Test(description = "消费商-大唐消费商")
     public void vendorTest2() throws HttpStatusException {
 
         component.setDepartment(employee.getDepartmentOID());

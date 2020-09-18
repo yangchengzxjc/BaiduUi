@@ -155,4 +155,37 @@ public class VendorApi extends BaseRequest{
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
+    /**
+     * TMC 人员信息查询
+     * @param employee
+     * @param tmcChannel
+     * @param hlyUserMobile
+     * @return
+     */
+    public JsonObject tmcUserInfo(Employee employee,String tmcChannel,String hlyUserMobile) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ApiPath.TMCUSER;
+        Map<String, String> datas = new HashMap<>();
+        datas.put("tmcChannel",tmcChannel);
+        datas.put("hlyUserMobile",hlyUserMobile);
+        String res = doGet(url,getHeader(employee.getAccessToken()),datas,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * TMC 人员信息查询
+     * @param employee
+     * @param tmcChannel
+     * @param approvalNo
+     * @return
+     */
+    public JsonObject tmcPlanInfo(Employee employee,String tmcChannel,String approvalNo) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ApiPath.TMCAPPLICATION;
+        Map<String, String> datas = new HashMap<>();
+        datas.put("tmcChannel",tmcChannel);
+        datas.put("approvalNo",approvalNo);
+        String res = doGet(url,getHeader(employee.getAccessToken()),datas,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+
 }

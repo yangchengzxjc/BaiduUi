@@ -165,6 +165,16 @@ public class TravelApplication {
     }
 
     /**
+     * 获取申请单详情信息
+     * @param employee
+     * @param applicationOID
+     * @throws HttpStatusException
+     */
+    public JsonObject getApplicationDetail(Employee employee,String applicationOID) throws HttpStatusException {
+        return applicationApi.getApplicationDetail(employee,applicationOID);
+    }
+
+    /**
      *申请单提交检查
      * @param employee
      * @param applicationOID
@@ -229,6 +239,23 @@ public class TravelApplication {
     }
 
     /**
+     * 获取行程中的单条行程信息
+     * @param employee
+     * @param applicationOID
+     * @param itineraryType  行程类型  可传  "FLIGHT"  "TRAIN" "HOTEL"
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getItinerary(Employee employee,String applicationOID, String itineraryType) throws HttpStatusException {
+      JsonObject ItineraryInfo = applicationApi.getItinerarys(employee,applicationOID);
+      JsonArray itinerary = null;
+      if(ItineraryInfo.get(itineraryType)!=null) {
+          itinerary = ItineraryInfo.get(itineraryType).getAsJsonArray();
+      }
+      return itinerary;
+    }
+
+    /**
      * 申请单配置了自动生成预算费用  可使用此方法给申请单添加预算费用
      * @param employee
      * @param applicationOID
@@ -262,5 +289,4 @@ public class TravelApplication {
         JsonObject formDetail = reimbursementApi.getFormDetail(employee,applicationFormOID(employee,formName));
         return applicationApi.expenseApplication(employee,formDetail,component,budget);
     }
-
 }

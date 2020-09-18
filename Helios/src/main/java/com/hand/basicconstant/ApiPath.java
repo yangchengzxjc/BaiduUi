@@ -289,6 +289,10 @@ public class ApiPath {
         public static final String QUERYBOOKCLASS = "/vendor-info-service/api/company/bookClass";
         //报销标准规则查询
         public static final String QUERY_REIM_RULES = "/api/expense/standard/rule/list";
+        //tmc  人员信息查询
+        public static final String TMCUSER = "/vendor-sync-service/api/tmcRequest/user";
+        // tmc  申请单行程查询
+        public static final String TMCAPPLICATION = "/vendor-sync-service/api/tmcRequest/plan";
 
     }
 

@@ -5,7 +5,7 @@
     <parameter name="environment" value="${environment}"/>
     <parameter name="passWord" value="hly12345"/>
 
-    <test verbose="10" preserve-order="true" name="消费平台测试">
+    <test verbose="10" preserve-order="true" name="TMC订单结算数据对比">
         <parameter name="phoneNumber" value="${phoneNumber}"/>
         <classes>
             <class name="com.test.api.testcase.vendor.TrainOrderDataTest"/>

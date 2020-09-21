@@ -21,16 +21,16 @@ public class TrainSequenceInfo {
     //到达时间
     private String arriveTime;
     //出发城市名称
-    private String dCityName;
+    private String dcityName;
     //出发城市时间code
-    private String dCityCode;
+    private String dcityCode;
     //出发火车站名称
-    private String dStationName;
+    private String dstationName;
     //到达城市名称
-    private String aCityName;
+    private String acityName;
     //到达城市时间code
-    private String aCityCode;
+    private String acityCode;
     //到达火车站名称
-    private String aStationName;
+    private String astationName;
 
 }

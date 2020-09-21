@@ -8,7 +8,6 @@ import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicObject.supplierObject.TrainOrderInfo.*;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
-import com.hand.utils.UTCTime;
 import com.test.BaseTest;
 import com.test.api.method.InfraStructure;
 import com.test.api.method.Vendor;
@@ -60,7 +59,7 @@ public class TrainOrderDataTest extends BaseTest {
         String trainElectronic = RandomNumber.getTimeNumber(10);
         bookerDepartments.add(employee.getDepartmentName());
         //订单基本信息
-        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已出票","B",orderNo,"Online-APP","C","COPAY");
+        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已购票","B",orderNo,"Online-APP","C","COPAY");
         //订单车票信息
         TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic,ticketPrice,"05车07C");
         ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
@@ -102,14 +101,9 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("trainOrderTicketInfos","trainTicketInfo");
         mapping.put("trainOrderSequenceInfos","trainSequenceInfo");
         mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
-        mapping.put("dCityName","dcityName");
-        mapping.put("dCityCode","dcityCode");
-        mapping.put("dStationName","dstationName");
-        mapping.put("aCityName","acityName");
-        mapping.put("aCityCode","acityCode");
-        mapping.put("aStationName","astationName");
         mapping.put("nationlityName","nationalityName");
         mapping.put(employee.getDepartmentName(),"产品三部");
+        log.info("部门是：{}",employee.getDepartmentName());
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //校验预订人的
         assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
@@ -178,14 +172,8 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("trainOrderTicketInfos","trainTicketInfo");
         mapping.put("trainOrderSequenceInfos","trainSequenceInfo");
         mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
-        mapping.put("dCityName","dcityName");
-        mapping.put("dCityCode","dcityCode");
-        mapping.put("dStationName","dstationName");
-        mapping.put("aCityName","acityName");
-        mapping.put("aCityCode","acityCode");
-        mapping.put("aStationName","astationName");
         mapping.put("nationlityName","nationalityName");
-        mapping.put(employee.getDepartmentName(),"产品三部");
+        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //校验预订人的工号
         assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
@@ -262,14 +250,8 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("trainOrderTicketInfos","trainTicketInfo");
         mapping.put("trainOrderSequenceInfos","trainSequenceInfo");
         mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
-        mapping.put("dCityName","dcityName");
-        mapping.put("dCityCode","dcityCode");
-        mapping.put("dStationName","dstationName");
-        mapping.put("aCityName","acityName");
-        mapping.put("aCityCode","acityCode");
-        mapping.put("aStationName","astationName");
         mapping.put("nationlityName","nationalityName");
-        mapping.put(employee.getDepartmentName(),"产品三部");
+        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,getTrainOrder,mapping);
         //校验预订人的工号
         assert getTrainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
@@ -345,14 +327,8 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("trainOrderTicketInfos","trainTicketInfo");
         mapping.put("trainOrderSequenceInfos","trainSequenceInfo");
         mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
-        mapping.put("dCityName","dcityName");
-        mapping.put("dCityCode","dcityCode");
-        mapping.put("dStationName","dstationName");
-        mapping.put("aCityName","acityName");
-        mapping.put("aCityCode","acityCode");
-        mapping.put("aStationName","astationName");
         mapping.put("nationlityName","nationalityName");
-        mapping.put(employee.getDepartmentName(),"产品三部");
+        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //校验预订人的
         assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
@@ -426,14 +402,8 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("trainOrderTicketInfos","trainTicketInfo");
         mapping.put("trainOrderSequenceInfos","trainSequenceInfo");
         mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
-        mapping.put("dCityName","dcityName");
-        mapping.put("dCityCode","dcityCode");
-        mapping.put("dStationName","dstationName");
-        mapping.put("aCityName","acityName");
-        mapping.put("aCityCode","acityCode");
-        mapping.put("aStationName","astationName");
         mapping.put("nationlityName","nationalityName");
-        mapping.put(employee.getDepartmentName(),"产品三部");
+        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //校验预订人的
         assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
@@ -511,14 +481,8 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("trainOrderTicketInfos","trainTicketInfo");
         mapping.put("trainOrderSequenceInfos","trainSequenceInfo");
         mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
-        mapping.put("dCityName","dcityName");
-        mapping.put("dCityCode","dcityCode");
-        mapping.put("dStationName","dstationName");
-        mapping.put("aCityName","acityName");
-        mapping.put("aCityCode","acityCode");
-        mapping.put("aStationName","astationName");
         mapping.put("nationlityName","nationalityName");
-        mapping.put(employee.getDepartmentName(),"产品三部");
+        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //校验预订人的
         assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
@@ -593,14 +557,8 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("trainOrderTicketInfos","trainTicketInfo");
         mapping.put("trainOrderSequenceInfos","trainSequenceInfo");
         mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
-        mapping.put("dCityName","dcityName");
-        mapping.put("dCityCode","dcityCode");
-        mapping.put("dStationName","dstationName");
-        mapping.put("aCityName","acityName");
-        mapping.put("aCityCode","acityCode");
-        mapping.put("aStationName","astationName");
         mapping.put("nationlityName","nationalityName");
-        mapping.put(employee.getDepartmentName(),"产品三部");
+        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,getTrainOrder,mapping);
         //校验预订人的工号
         assert getTrainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
@@ -681,7 +639,7 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("aCityCode","acityCode");
         mapping.put("aStationName","astationName");
         mapping.put("nationlityName","nationalityName");
-        mapping.put(employee.getDepartmentName(),"产品三部");
+        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //校验预订人的
         assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());

@@ -1,4 +1,4 @@
-package com.hand.basicObject.supplierObject.syncApproval;
+package com.hand.basicObject.supplierObject.syncApproval.syncCtrip;
 
 /**
  * @Author peng.zhang

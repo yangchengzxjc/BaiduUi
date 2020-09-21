@@ -87,6 +87,7 @@ public class TrainOrder {
                 .bookChannel(bookChannel)
                 .bookType(bookType)
                 .payType(payType)
+                .costCenter("")
                 .createTime(UTCTime.getBeijingTime(0,0,0))
                 .payTime(UTCTime.getBeijingTime(0,0,1))
                 .successTime(UTCTime.getBeijingTime(0,0,2))
@@ -205,7 +206,7 @@ public class TrainOrder {
                 .passengerEmail(passengerEmail)
                 .passengerSex("M")
                 //成本中心
-                .passengerCostCenter("")
+                .passengerCostCenter("管理综合部")
                 .build();
         return trainPassengerInfo;
     }
@@ -232,12 +233,12 @@ public class TrainOrder {
                 .trainNum(trainNum)
                 .departureTime(UTCTime.getBeijingTime(3,0,0))
                 .arriveTime(UTCTime.getBeijingTime(3,4,0))
-                .dCityName(dCityName)
-                .dCityCode(dCityCode)
-                .dStationName(dStationName)
-                .aCityName(aCityName)
-                .aCityCode(aCityCode)
-                .aStationName(aStationName)
+                .dcityName(dCityName)
+                .dcityCode(dCityCode)
+                .dstationName(dStationName)
+                .acityName(aCityName)
+                .acityCode(aCityCode)
+                .astationName(aStationName)
                 .build();
         return trainSequenceInfo;
     }

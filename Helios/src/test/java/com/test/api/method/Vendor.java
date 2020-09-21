@@ -90,6 +90,7 @@ public class Vendor {
     public JsonObject queryOrderData(Employee employee,String orderType,SettlementBody settlementBody) throws HttpStatusException {
         JsonObject respons = vendorApi.queryInternalOrderData(employee,orderType,settlementBody);
         JsonObject orderData =new JsonObject();
+        log.info("数据安全:{}",respons);
         if(respons.get("success").getAsBoolean()){
             orderData = respons.getAsJsonObject("body").get("list").getAsJsonArray().get(0).getAsJsonObject();
         }
@@ -171,11 +172,10 @@ public class Vendor {
         return vendorApi.tmcUserInfo(employee,tmcChannel,hlyUserMobile);
     }
 
-
     /**
      * 查询TMC 申请单同步信息
      * @param employee
-     * @param tmcChannel   例：supplyUbtripService
+     * @param tmcChannel   例：supplyUbtripService优行   supplyCimccTMCService中集  supplyCtripService
      * @param approvalNo  行程单号
      * @throws HttpStatusException
      */

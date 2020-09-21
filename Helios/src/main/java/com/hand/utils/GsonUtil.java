@@ -252,12 +252,13 @@ public class GsonUtil {
                     if(mapping.get(object1.get(name).getAsString())!=null){
                         //
                         if(!mapping.get(object1.get(name).getAsString()).equals(object2.get(name).getAsString())){
-                            log.info("数据不一致的字段名:{},value1:{},value2:{}",name,object1.get(name),object2.get(name));
+
+                            log.info("映射表中存在,数据不一致的字段名:{},value1:{},value2:{}",name,object1.get(name),object2.get(name));
                             arrayList.add(false);
                         }
                     }else{
                         //映射表中未找到此映射关系 字段不一致
-                        log.info("数据不一致的字段名:{},value1:{},value2:{}",name,object1.get(name),object2.get(name));
+                        log.info("映射表中不存在,数据不一致的字段名:{},value1:{},value2:{}",name,object1.get(name),object2.get(name));
                         arrayList.add(false);
                     }
                 }

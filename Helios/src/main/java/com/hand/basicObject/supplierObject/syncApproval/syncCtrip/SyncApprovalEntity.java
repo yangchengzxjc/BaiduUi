@@ -1,4 +1,4 @@
-package com.hand.basicObject.supplierObject.syncApproval;
+package com.hand.basicObject.supplierObject.syncApproval.syncCtrip;
 
 import java.util.List;
 
@@ -21,5 +21,5 @@ public class SyncApprovalEntity {
     //酒店行程
     private List<HotelEndorsementDetail> HotelEndorsementDetails;
     //扩展字段列表
-    private List<ExtendFieldList> ExtendFieldList;
+    private List<com.hand.basicObject.supplierObject.syncApproval.syncCtrip.ExtendFieldList> ExtendFieldList;
 }

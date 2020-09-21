@@ -1,7 +1,9 @@
 package com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -11,8 +13,10 @@ import java.util.List;
  * @Date 2020/9/18
  * @Version 1.0
  **/
-@Builder(toBuilder = true)
+@Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TravelFlightItinerary {
     /*
         默认:0。
@@ -24,7 +28,7 @@ public class TravelFlightItinerary {
         管控时,审批单舱等级别不能低于订单舱等级别
      */
     private Integer seatClass;
-    private String discount;
+    private BigDecimal discount;
     //机票最大金额
     private BigDecimal ticketPrice;
     //1001 单程  1002  返程

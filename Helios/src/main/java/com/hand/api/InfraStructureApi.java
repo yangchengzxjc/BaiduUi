@@ -357,6 +357,18 @@ public class InfraStructureApi extends BaseRequest{
     }
 
     /**
+     * 根据人员 查询证件
+     * @param employee
+     * @return
+     */
+    public JsonArray queryUserCard(Employee employee,String userOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+String.format(ApiPath.QUERY_USER_CARD,userOID);
+        String res = doGet(url,getHeader(employee.getAccessToken()),null,employee);
+        JsonArray userCard =  new JsonParser().parse(res).getAsJsonObject().get("contactCardDTOS").getAsJsonArray();
+        return userCard;
+    }
+
+    /**
      * 员工离职
      * @param employee
      * @param userOID

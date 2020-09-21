@@ -1,5 +1,7 @@
 package com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity;
 
+import lombok.Data;
+
 import java.util.List;
 
 /**
@@ -7,7 +9,9 @@ import java.util.List;
  * @Date 2020/9/18
  * @Version 1.0
  **/
+@Data
 public class SyncEntity {
+
     //默认为1  审批状态 0为无效
     private Integer status;
     //租户Id

@@ -7,15 +7,12 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONArray;
 
 
 @Slf4j
 public class ReimbStandard {
     private ReimbStandardApi reimbStandardRules;
-    private ReimbStandard reimbStandard;
 
-    //    private TravelSubsidyConfigAPi reimbStandardRules;
     public ReimbStandard() {
         reimbStandardRules = new ReimbStandardApi();
     }
@@ -180,7 +177,7 @@ public class ReimbStandard {
     }
 
     /**
-     *
+     * 查询规则
      * @param employee
      * @param ruleName
      * @return
@@ -192,4 +189,7 @@ public class ReimbStandard {
         return  rulesList;
     }
 
+//    public String creatReimbSubmissionControlRuls(Employee employee)throws HttpStatusException{
+//        String rulesOid=reimbStandardRules
+//    }
 }

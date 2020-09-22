@@ -255,7 +255,7 @@ public class ApiPath {
         //差补表单详情
         public static final String FORM_DETAIL = "/api/custom/forms/%s/detail";
         //新建报销标准规则
-        public static final String ADD_REIM_STANDARD = "/api/expense/standard/rule";
+        public static final String ADD_REIMB_STANDARD = "/api/expense/standard/rule";
         //获取费用类型
         public static final String EXPENSE_TYPE = "/api/expense/type/by/setOfBooks";
         //获取启用公司
@@ -293,6 +293,8 @@ public class ApiPath {
         public static final String TMCUSER = "/vendor-sync-service/api/tmcRequest/user";
         // tmc  申请单行程查询
         public static final String TMCAPPLICATION = "/vendor-sync-service/api/tmcRequest/plan";
+        //获取报销单提交管控规则
+        public static final String GET_SUBMISSION_RULES = "/api/expense/standard/master/rule/%";
 
     }
 

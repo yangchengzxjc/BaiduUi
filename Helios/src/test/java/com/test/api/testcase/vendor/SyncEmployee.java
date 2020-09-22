@@ -1,19 +1,25 @@
 package com.test.api.testcase.vendor;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.infrastructure.employee.InfraEmployee;
-import com.hand.basicObject.supplierObject.EmployeeDTO;
+import com.hand.basicObject.supplierObject.employeeInfoDto.EmployeeDTO;
+import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoDTO;
 import com.hand.basicconstant.CardType;
+import com.hand.utils.GsonUtil;
 import com.test.BaseTest;
 import com.test.api.method.Infra.EmployeeMethod.EmployeeManagePage;
 import com.test.api.method.InfraStructure;
 import com.test.api.method.Vendor;
+import org.openqa.selenium.json.Json;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import java.security.PrivateKey;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SyncEmployee extends BaseTest {
     private Employee employee;
@@ -36,46 +42,54 @@ public class SyncEmployee extends BaseTest {
     @Test(description = "新增员正常流程,")
     public void addEmployeeTest01() throws HttpStatusException {
         EmployeeDTO employeeDTO = new EmployeeDTO();
-        JsonObject empObject = employeeManagePage.addEmployee(employee, "测试接口新建Q17","","M0017","M0017@163.COM","人员类型01","","甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
+        JsonObject empObject = employeeManagePage.addEmployee(employee, "测试接口新建Q57","","M0057","M0057@163.COM","人员类型01","","甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
         String userOID=empObject.get("userOID").getAsString();
         JsonObject bookClass = vendor.queryBookClass(employee);
-        JsonObject userCardInfo=employeeManagePage.addUserCard(employee,userOID,CardType.CHINA_ID,"身份证名字",true);
+        JsonObject departCode = infraStructure.searchDepartmentDetail(employee,empObject.get("departmentOID").getAsString());
+        JsonObject userCardInfo=employeeManagePage.addUserCard(employee,userOID,CardType.CHINA_ID,"身份证名字",true);//新增身份证 启用 名字：身份证名字
+        JsonArray userCardInfos = infraStructure.queryUserCard(employee);
+        ArrayList cardList =vendor.addUserCardInfoDTO(userCardInfos);
+
+
         if (empObject.get("status").toString().equals("1001")) {
             employeeDTO.setStatus("1");
             }
         else{
             employeeDTO.setStatus("0");
         }
-        employeeDTO.setFullName(empObject.get("fullName").toString());
-        employeeDTO.setEmployeeID(empObject.get("employeeID").toString());
-        employeeDTO.setMobile(empObject.get("mobile").toString());
-        employeeDTO.setEmail(empObject.get("email").toString());
+        employeeDTO.setFullName(empObject.get("fullName").getAsString());
+        employeeDTO.setEmployeeID(empObject.get("employeeID").getAsString());
+        employeeDTO.setMobile(empObject.get("mobile").getAsString());
+        employeeDTO.setEmail(empObject.get("email").getAsString());
         if (userCardInfo.get("lastName").toString() != null) {
-            employeeDTO.setName(userCardInfo.get("lastName").toString());
+            employeeDTO.setName(userCardInfo.get("lastName").getAsString());
         }
         else {
-            employeeDTO.setName(empObject.get("fullName").toString());//优先身份证名字 没有就取系统名字
+            employeeDTO.setName(empObject.get("fullName").getAsString());//优先身份证名字 没有就取系统名字
         }
         if (userCardInfo.get("cardType").toString().equals("102")){
-            employeeDTO.setEnFirstName(userCardInfo.get("firstName").toString());
-            employeeDTO.setEnLastName(userCardInfo.get("lastName").toString());
+            employeeDTO.setEnFirstName(userCardInfo.get("firstName").getAsString());
+            employeeDTO.setEnLastName(userCardInfo.get("lastName").getAsString());
         }
         else {
             employeeDTO.setEnFirstName(null);
             employeeDTO.setEnLastName(null);
         }
         employeeDTO.setNationality(null);
-        employeeDTO.setGender(empObject.get("genderCode").toString());
-        employeeDTO.setRankName(empObject.get("rank").toString());
-        employeeDTO.setIsBookClass(bookClass.get("isBookClass").toString());
-        employeeDTO.setIntlBookClassBlock(bookClass.get("intlBookClassBlock").toString());
+        employeeDTO.setGender(empObject.get("genderCode").getAsString());
+        employeeDTO.setRankName(empObject.get("rank").getAsString());
+        employeeDTO.setIsBookClass(bookClass.get("isBookClass").getAsString());
+        employeeDTO.setIntlBookClassBlock(bookClass.get("intlBookClassBlock").getAsString());
         employeeDTO.setTenantId(employee.getTenantId());
-        employeeDTO.setCompanyId(empObject.get("companyOID").toString());
-        employeeDTO.setCompanyOID(empObject.get("companyOID").toString());
-        employeeDTO.setCompanyCode(empObject.get("companyOID").toString());
-
-
-
+        employeeDTO.setCompanyId(empObject.get("companyOID").getAsString());
+        employeeDTO.setCompanyOID(empObject.get("companyOID").getAsString());
+        employeeDTO.setCompanyCode(empObject.get("companyOID").getAsString());
+        employeeDTO.setDeptCode(departCode.get("departmentCode").getAsString());
+        employeeDTO.setDeptName(empObject.get("departmentName").getAsString());
+        employeeDTO.setDeptPath(empObject.get("departmentPath").getAsString());
+        employeeDTO.setDeptCustomCode(departCode.get("custDeptNumber").getAsString());
+        employeeDTO.setUserCardInfos(cardList);
+        System.out.println(GsonUtil.objectToString(employeeDTO));
     }
 
     @Test(description = "离职员工正常流程")

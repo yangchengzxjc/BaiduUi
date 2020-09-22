@@ -32,6 +32,17 @@ public class UTCTime {
     }
 
     /**
+     * Utc时间转北京时间
+     * @param
+     * @return
+     */
+    public static String utcToBJtime(String utc){
+        DateTimeFormatter fmt = DateTimeFormat.forPattern(BEiJING_FORMATTER_PATTERN15);
+        DateTime date = DateTime.parse(utc);
+        return fmt.print(date);
+    }
+
+    /**
      * 返回北京时间   例如：  13:30
      * @param hour  0为当前小时
      * @param minute  0 为当前分钟
@@ -47,12 +58,12 @@ public class UTCTime {
     /**
      * 获取北京时间如果是当前时间  则 day  和time  传0  以此类推
      * @param day 当前时间0  明天+1,昨天-1
-     * @param time 同上
+     * @param hours 同上
      * @return
      */
-    public static String getBeijingTime(int day, int time){
+    public static String getBeijingTime(int day, int hours, int minutes){
         DateTimeFormatter fmt = DateTimeFormat.forPattern(BEIJING_FORMATTER_TIME);
-        DateTime Bejingtime = DateTime.now().plusDays(day).plusHours(time);
+        DateTime Bejingtime = DateTime.now().plusDays(day).plusHours(hours).plusMinutes(minutes);
         return fmt.print(Bejingtime);
     }
     /**

@@ -7,9 +7,12 @@ import com.hand.api.VendorApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SettlementBody;
+import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoDTO;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -87,6 +90,7 @@ public class Vendor {
     public JsonObject queryOrderData(Employee employee,String orderType,SettlementBody settlementBody) throws HttpStatusException {
         JsonObject respons = vendorApi.queryInternalOrderData(employee,orderType,settlementBody);
         JsonObject orderData =new JsonObject();
+        log.info("数据安全:{}",respons);
         if(respons.get("success").getAsBoolean()){
             orderData = respons.getAsJsonObject("body").get("list").getAsJsonArray().get(0).getAsJsonObject();
         }
@@ -121,7 +125,65 @@ public class Vendor {
         return trainType;
     }
 
+    /**
+     * 查询国际国内 两舱设置
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
     public JsonObject queryBookClass(Employee employee) throws HttpStatusException {
         return vendorApi.queryBookClass(employee);
     }
+
+    /**
+     * 根据查询出的证件List 封装成openApi中的证件对象
+     * @param userCardInfo
+     * @returnuserCardInfos
+     */
+    public ArrayList addUserCardInfoDTO(JsonArray userCardInfo){
+
+        ArrayList<UserCardInfoDTO> userCardInfos =new ArrayList<>();
+        for (int i = 0; userCardInfo.size()>i ; i++) {
+            JsonObject jsb = userCardInfo.get(i).getAsJsonObject();
+            UserCardInfoDTO userCardInfoDTO = new UserCardInfoDTO();
+            userCardInfoDTO.setCardNo(jsb.get("originalCardNo").getAsString());
+            userCardInfoDTO.setCardType(jsb.get("cardType").getAsString());
+            userCardInfoDTO.setCardTypeName(jsb.get("cardTypeName").getAsString());
+            if(jsb.get("cardExpiredTime").isJsonNull()){
+
+            }else{
+                userCardInfoDTO.setIDCardTimelimit(jsb.get("cardExpiredTime").getAsString());
+            }
+            userCardInfoDTO.setFirstName(jsb.get("firstName").getAsString());
+            userCardInfoDTO.setLastName(jsb.get("lastName").getAsString());
+            userCardInfos.add(userCardInfoDTO);
+        }
+        return userCardInfos;
+    }
+
+    /**
+     * 查询TMC 人员同步信息
+     * @param employee
+     * @param tmcChannel
+     * @param hlyUserMobile
+     * @throws HttpStatusException
+     */
+    public JsonObject getTMCUser(Employee employee,String tmcChannel,String hlyUserMobile) throws HttpStatusException {
+        return vendorApi.tmcUserInfo(employee,tmcChannel,hlyUserMobile);
+    }
+
+    /**
+     * 查询TMC 申请单同步信息
+     * @param employee
+     * @param tmcChannel   例：supplyUbtripService优行   supplyCimccTMCService中集  supplyCtripService
+     * @param approvalNo  行程单号
+     * @throws HttpStatusException
+     */
+    public JsonObject getTMCPlan(Employee employee,String tmcChannel,String approvalNo) throws HttpStatusException {
+        return vendorApi.tmcPlanInfo(employee,tmcChannel,approvalNo);
+    }
+
+
+
+
 }

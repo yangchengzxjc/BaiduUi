@@ -159,9 +159,9 @@ public class ReimbStandard {
      * @throws HttpStatusException
      */
     public JsonArray getItem(Employee employee,String rulesOid)throws HttpStatusException{
-        JsonArray item = new JsonArray();
-        item = reimbStandardRules.getItem(employee,rulesOid);
-        return  item;
+
+        return reimbStandardRules.getItem(employee,rulesOid);
+
     }
 
     /**
@@ -177,6 +177,19 @@ public class ReimbStandard {
     public String addItems(Employee employee,String standardOid,String rulesOid,Integer amount,JsonArray userGroups,JsonArray citys)throws HttpStatusException{
          String items = reimbStandardRules.addItems(employee,standardOid,rulesOid,amount,userGroups,citys);
         return items;
+    }
+
+    /**
+     *
+     * @param employee
+     * @param ruleName
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getRules(Employee employee,String ruleName)throws HttpStatusException{
+        JsonArray rulesList = new JsonArray();
+        rulesList =reimbStandardRules.getRules(employee,ruleName);
+        return  rulesList;
     }
 
 }

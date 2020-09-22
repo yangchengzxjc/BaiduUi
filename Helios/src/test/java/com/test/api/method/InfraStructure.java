@@ -10,7 +10,7 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.infrastructure.employee.EmployeeExtendComponent;
 import com.hand.basicObject.infrastructure.employee.InfraEmployee;
 import com.hand.basicObject.infrastructure.employee.InfraJob;
-import com.hand.basicObject.supplierObject.UserCardInfoEntity;
+import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoEntity;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
@@ -317,6 +317,17 @@ public class InfraStructure {
     }
 
     /**
+     * 直接根据userOID获取员工详情
+     * @param employee
+     * @param userOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getEmployeeDetail(Employee employee, String userOID) throws HttpStatusException {
+        return infraStructureApi.employeeDetail(employee,userOID);
+    }
+
+    /**
      * 新增证件信息
      * @param employee
      * @param userCardInfoEntity
@@ -348,5 +359,42 @@ public class InfraStructure {
         return checkResult.get("checkResult").getAsString();
     }
 
+    /**
+     * 查询部门OID
+     * @param employee
+     * @param departmentOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject searchDepartmentDetail(Employee employee,String departmentOID) throws HttpStatusException {
+        JsonObject res = infraStructureApi.searchDepartmentDetail(employee,departmentOID);
+        return res;
+    }
+
+    /**
+     * 查询本人人员证件
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray queryUserCard(Employee employee) throws HttpStatusException {
+        JsonArray json = infraStructureApi.queryUserCard(employee);
+        return json;
+    }
+
+    /**
+     * 查询其他人员证件
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject queryUserCard(Employee employee, String userOID,String cardTypeName) throws HttpStatusException {
+        JsonArray json = infraStructureApi.queryUserCard(employee,userOID);
+        JsonObject cardInfo = new JsonObject();
+        if(GsonUtil.isNotEmpt(json)){
+            cardInfo = GsonUtil.getJsonValue(json,"cardTypeName",cardTypeName);
+        }
+        return cardInfo;
+    }
 
 }

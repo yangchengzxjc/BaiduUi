@@ -4,10 +4,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hand.api.ReimbStandardApi;
 import com.hand.basicObject.FormComponent;
+import com.hand.basicObject.InvoiceComponent;
 import com.hand.basicObject.infrastructure.setOfBooks.SetOfBooks;
 import com.hand.utils.UTCTime;
 import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportComponent;
+import com.test.api.method.ExpenseReportInvoice;
 import com.test.api.method.Infra.SetOfBooksMethod.SetOfBooksDefine;
 import com.test.api.method.ReimbStandard;
 import com.hand.baseMethod.HttpStatusException;
@@ -25,6 +27,7 @@ public class ReimbStandardTest extends BaseTest {
     private SetOfBooksDefine setOfBooksDefine;
     private ExpenseReport expenseReport;
     private ExpenseReportComponent expenseReportComponent;
+    private ExpenseReportInvoice expenseReportInvoice;
 
 
     @BeforeClass
@@ -35,6 +38,7 @@ public class ReimbStandardTest extends BaseTest {
         reimbStandard =new ReimbStandard();
         expenseReport =new ExpenseReport();
         expenseReportComponent =new ExpenseReportComponent();
+        expenseReportInvoice =new ExpenseReportInvoice();
     }
 
     @Test(priority = 1,description = "用于测试调试使用")
@@ -63,10 +67,10 @@ public class ReimbStandardTest extends BaseTest {
         log.info("companyList:{}",companyList);
     }
 
-    @Test(priority = 2,description = "报销标准")
+    @BeforeMethod(description = "报销标准")
     public void createRules()throws HttpStatusException{
         JsonArray userGroups = reimbStandard.userGroups(reimbStandard.getUserGroups(employee,"租户级  stage测试员"));
-        JsonArray expenseType = reimbStandard.expenseType(reimbStandard.getExpenseType(employee,"摊销费用"));
+        JsonArray expenseType = reimbStandard.expenseType(reimbStandard.getExpenseType(employee,"自动化测试-报销标准"));
         //新建规则
         String rulesOid=reimbStandard.addReimbstandard(employee,"测试25","WARN","SET_OF_BOOK",
                 reimbStandard.getSetOfBookId(employee,"默认账套"),"SINGLE","SINGLE",
@@ -82,14 +86,13 @@ public class ReimbStandardTest extends BaseTest {
         String standardOid=item.get(0).getAsJsonObject().get("standardOID").getAsString();
         String items= reimbStandard.addItems(employee,standardOid,rulesOid, 100,userGroups,new JsonArray());
         log.info("items:{}",items);
-        //删除规则
-//        reimbStandard.deleteReimbStandardRules(employee,rulesOid);
     }
 
     @Test(priority = 1,description = "报销标准规则校验")
     public void checkRules()throws HttpStatusException{
         //新建报销单
         FormComponent component=new FormComponent();
+        InvoiceComponent invoiceComponent = new InvoiceComponent();
         component.setCompany(employee.getCompanyOID());
         component.setDepartment(employee.getDepartmentOID());
         component.setStartDate(UTCTime.getNowUtcTime());
@@ -104,6 +107,37 @@ public class ReimbStandardTest extends BaseTest {
         log.info(String.valueOf(component));
         String expenseReportOID =expenseReport.createExpenseReport(employee,"自动化测试-日常报销单",component).get("expenseReportOID");
         log.info(expenseReportOID);
+        //添加费用参与人员
+        JsonArray data =new JsonArray();
+        data.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"自动化测试-日常报销单"),"懿佳欢_stage"));
+        invoiceComponent.setParticipants(data.toString());
+        String cityCode =expenseReportComponent.getCityCode(employee,"西安市");
+        invoiceComponent.setCity(cityCode);
+        JsonObject startAndEndDate = new JsonObject();
+        startAndEndDate.addProperty("startDate",UTCTime.getNowStartUtcDate());
+        startAndEndDate.addProperty("endDate",UTCTime.getUTCDateEnd(2));
+        startAndEndDate.addProperty("duration",2);
+        invoiceComponent.setStartAndEndData(startAndEndDate.toString());
+        String invoiceOID = expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,"自动化测试-报销标准",expenseReportOID,200.00,new JsonArray()).get("invoiceOID");
+        log.info(invoiceOID);
+        String time =UTCTime.getBeijingDay(0);
+        String message =String.format("该费用超标啦 %s 自动化测试-报销标准 标准为：CNY 100.00，已使用：CNY 200.00，超标：CNY 100.00。",time);
+        log.info("需要断言的:{}",message);
+        assert expenseReport.expenseReportSubmitCheck(employee,expenseReportOID).toString().contains(message);
+        expenseReport.expenseReportSubmit(employee,expenseReportOID);
+        expenseReport.withdraw(employee,expenseReportOID);
+        expenseReport.removeInvoice(employee,expenseReportOID,invoiceOID);
+        expenseReportInvoice.deleteInvoice(employee,invoiceOID);
+        expenseReport.deleteExpenseReport(employee,expenseReportOID);
+
     }
 
+    @AfterMethod(description = "删除报销标准规则")
+    public void deleteRules() throws HttpStatusException{
+        JsonArray rules= reimbStandard.getRules(employee,"测试25");
+        String rulesOid=rules.get(0).getAsJsonObject().get("ruleOID").getAsString();
+        log.info(rulesOid);
+        //删除规则
+       reimbStandard.deleteReimbStandardRules(employee,rulesOid);
+    }
 }

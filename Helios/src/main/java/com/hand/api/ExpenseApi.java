@@ -378,7 +378,7 @@ public class ExpenseApi extends BaseRequest{
         body.addProperty("invoiceRequired",expenseTypeInfo.get("invoiceRequired").getAsBoolean());
         body.addProperty("amount",amount);
         //如果非人民币的汇率要加上汇率 使用equals会出现空指针,因为初始化的时候没有赋值。
-        if(!component.getCurrencyCode().equals("CNY")){
+        if(!body.get("currencyCode").getAsString().equals("CNY")){
             body.addProperty("actualCurrencyRate",component.getRate());
         }
         body.add("receiptList",receiptList);

@@ -5,11 +5,15 @@
     <parameter name="environment" value="${environment}"/>
     <parameter name="passWord" value="hly12345"/>
 
-    <test verbose="10" preserve-order="true" name="消费平台测试">
+    <test verbose="10" preserve-order="true" name="TMC订单结算数据对比">
         <parameter name="phoneNumber" value="${phoneNumber}"/>
         <classes>
-            <class name="com.test.api.testcase.vendor.SyncApplicationTest"/>
-            <class name="com.test.api.testcase.vendor.SyncEmployee"/>
+            <class name="com.test.api.testcase.vendor.TrainOrderDataTest"/>
+            <class name="com.test.api.testcase.vendor.FlightOrderDataTest"/>
+            <class name="com.test.api.testcase.vendor.HotelOrderDataTest"/>
+            <class name="com.test.api.testcase.vendor.TrainSettlementDataTest"/>
+            <class name="com.test.api.testcase.vendor.HotelOrderDataTest"/>
+            <class name="com.test.api.testcase.vendor.FlightOrderDataTest"/>
         </classes>
     </test>
 

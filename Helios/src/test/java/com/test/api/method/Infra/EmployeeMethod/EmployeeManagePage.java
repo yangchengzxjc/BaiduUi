@@ -7,7 +7,7 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.infrastructure.employee.EmployeeExtendComponent;
 import com.hand.basicObject.infrastructure.employee.InfraEmployee;
 import com.hand.basicObject.infrastructure.employee.InfraJob;
-import com.hand.basicObject.supplierObject.UserCardInfoEntity;
+import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoEntity;
 import com.hand.basicconstant.CardType;
 import com.test.api.method.InfraStructure;
 import lombok.extern.slf4j.Slf4j;
@@ -189,7 +189,7 @@ public class EmployeeManagePage {
 //    }
 
     /**
-     * 新增证件
+     * 新增证件  写死性别 男  生日 2020-07-29 失效日期 2020-07-29 证件号11223344 国籍 中国
      * @param employee
      * @param userOID
      * @param cardType

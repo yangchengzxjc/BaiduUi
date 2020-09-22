@@ -217,6 +217,7 @@ public class GsonUtil {
             String name = iterator2.next();
             try {
                 if (object1.get(name) instanceof JsonArray && object2.get(name) instanceof JsonArray) {
+                    log.info("正在检查{}数组",name);
                     if(!compareJsonArray(object1.getAsJsonArray(name),object2.getAsJsonArray(name),mapping)){
 
                         arrayList.add(false);
@@ -224,6 +225,7 @@ public class GsonUtil {
                     continue;
                 }
                 if(object1.get(name) instanceof JsonObject && object2.get(name) instanceof  JsonObject){
+                    log.info("正在检查{}对象",name);
                     if(!compareJsonObject(object1.getAsJsonObject(name),object2.getAsJsonObject(name),mapping)){
                         arrayList.add(false);
                     }
@@ -250,12 +252,13 @@ public class GsonUtil {
                     if(mapping.get(object1.get(name).getAsString())!=null){
                         //
                         if(!mapping.get(object1.get(name).getAsString()).equals(object2.get(name).getAsString())){
-                            log.info("数据不一致的字段名:{},value1:{},value2:{}",name,object1.get(name),object2.get(name));
+
+                            log.info("映射表中存在,数据不一致的字段名:{},value1:{},value2:{}",name,object1.get(name),object2.get(name));
                             arrayList.add(false);
                         }
                     }else{
                         //映射表中未找到此映射关系 字段不一致
-                        log.info("数据不一致的字段名:{},value1:{},value2:{}",name,object1.get(name),object2.get(name));
+                        log.info("映射表中不存在,数据不一致的字段名:{},value1:{},value2:{}",name,object1.get(name),object2.get(name));
                         arrayList.add(false);
                     }
                 }

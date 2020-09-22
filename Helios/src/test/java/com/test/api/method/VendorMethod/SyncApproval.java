@@ -40,7 +40,7 @@ public class SyncApproval {
     public TravelFlightItinerary setTravelFlight(JsonObject itinerary, FormComponent component){
         //舱等映射
         String seatClass ="";
-        if(itinerary.get(seatClass).isJsonNull()){
+        if(itinerary.get("seatClass").isJsonNull()){
             seatClass="未知";
         }else{
             seatClass =itinerary.get("seatClass").getAsString();
@@ -150,7 +150,7 @@ public class SyncApproval {
     }
 
     /**
-     * 初始化syncEntity 
+     * 初始化syncEntity
      * @param employee
      * @param component
      * @param bookClerk
@@ -178,6 +178,87 @@ public class SyncApproval {
         return syncEntity;
     }
 
+    /**
+     * 初始化酒店行程
+     * @param itinerary 酒店行程中的
+     * @return
+     */
+    public TravelHotelItinerary setTravelHotelItinerary(JsonObject itinerary){
+        TravelHotelItinerary travelHotelItinerary =new TravelHotelItinerary();
+        travelHotelItinerary.setCity(itinerary.get("cityName").getAsString());
+        travelHotelItinerary.setCityCode(itinerary.get("cityCode").getAsString());
+        travelHotelItinerary.setFromDate(UTCTime.utcToBJtime(itinerary.get("fromDate").getAsString())+" 00:00:00");
+        travelHotelItinerary.setLeaveDate(UTCTime.utcToBJtime(itinerary.get("leaveDate").getAsString())+" 00:00:00");
+        travelHotelItinerary.setMaxPrice(itinerary.get("maxPrice").getAsString());
+        if(!itinerary.get("minPrice").isJsonNull()){
+            travelHotelItinerary.setMinPrice(itinerary.get("minPrice").getAsString());
+        }
+        travelHotelItinerary.setRoomNumber(itinerary.get("roomNumber").getAsInt());
+        travelHotelItinerary.setCities(new ArrayList<>());
+        travelHotelItinerary.setCityCodes(new ArrayList<>());
+        travelHotelItinerary.setFloatDaysBegin(4);
+        return travelHotelItinerary;
+    }
 
-
+    /**
+     * 初始化火车行程
+     * @param itinerary
+     * @return
+     */
+    public TravelTrainItinerary setTravelTrainItinerary(JsonObject itinerary,FormComponent component){
+        String seatType="";
+        if(itinerary.get("seatClass").isJsonNull()){
+            seatType="未知";
+        }else{
+            seatType =itinerary.get("seatClass").getAsString();
+        }
+        HashMap<String,String> seatClassMapping = new HashMap<>();
+        seatClassMapping.put("硬座","201");
+        seatClassMapping.put("特等座","205");
+        seatClassMapping.put("一等座","207");
+        seatClassMapping.put("二等座","209");
+        seatClassMapping.put("商务座","221");
+        seatClassMapping.put("一等软座","301");
+        seatClassMapping.put("二等软座","302");
+        seatClassMapping.put("未知",null);
+        ArrayList<String> seatClass =new ArrayList<>();
+        seatClass.add(seatClassMapping.get(seatType));
+        TravelTrainItinerary travelTrainItinerary =new TravelTrainItinerary();
+        travelTrainItinerary.setItineraryType(itinerary.get("itineraryType").getAsInt());
+        travelTrainItinerary.setFromCity(itinerary.get("fromCity").getAsString());
+        travelTrainItinerary.setToCity(itinerary.get("toCity").getAsString());
+        travelTrainItinerary.setFromCityCode(itinerary.get("fromCityCode").getAsString());
+        travelTrainItinerary.setToCityCode(itinerary.get("toCityCode").getAsString());
+        ArrayList<String> fromCities =new ArrayList<>();
+        fromCities.add(itinerary.get("fromCity").getAsString());
+        travelTrainItinerary.setFromCities(fromCities);
+        ArrayList<String> toCities =new ArrayList<>();
+        toCities.add(itinerary.get("toCity").getAsString());
+        travelTrainItinerary.setToCities(toCities);
+        ArrayList<String> fromCitiesCode =new ArrayList<>();
+        fromCitiesCode.add(itinerary.get("fromCityCode").getAsString());
+        travelTrainItinerary.setFromCityCodes(fromCitiesCode);
+        ArrayList<String> toCityCodes =new ArrayList<>();
+        toCityCodes.add(itinerary.get("toCityCode").getAsString());
+        travelTrainItinerary.setToCities(toCityCodes);
+        travelTrainItinerary.setTicketPrice(itinerary.get("ticketPrice").getAsBigDecimal());
+        //判断下起飞开始结束时间是否存在
+        if(itinerary.get("takeOffBeginTime").isJsonNull()){
+            travelTrainItinerary.setTakeOffBeginTime(UTCTime.utcToBJtime(itinerary.get("startDate").getAsString())+" 00:00:00");
+        }else{
+            travelTrainItinerary.setTakeOffBeginTime(UTCTime.utcToBJtime(itinerary.get("takeOffBeginTime").getAsString()));
+        }
+        if(itinerary.get("takeOffEndTime").isJsonNull()){
+            travelTrainItinerary.setTakeOffBeginTime(UTCTime.utcToBJtime(component.getEndDate())+" 00:00:00");
+        }else{
+            travelTrainItinerary.setTakeOffBeginTime(UTCTime.utcToBJtime(itinerary.get("takeOffEndTime").getAsString()));
+        }
+        //初始化到达时间
+        travelTrainItinerary.setArrivalBeginTime(UTCTime.utcToBJtime(itinerary.get("startDate").getAsString())+" 00:00:00");
+        travelTrainItinerary.setArrivalEndTime(UTCTime.utcToBJtime(component.getEndDate())+" 00:00:00");
+        travelTrainItinerary.setSeatType(seatClass);
+        travelTrainItinerary.setFloatDaysBegin(4);
+        travelTrainItinerary.setFloatDaysEnd(4);
+        return travelTrainItinerary;
+    }
 }

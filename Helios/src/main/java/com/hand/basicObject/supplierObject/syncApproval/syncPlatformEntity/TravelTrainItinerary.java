@@ -11,7 +11,6 @@ import java.util.List;
  * @Date 2020/9/18
  * @Version 1.0
  **/
-@Builder
 @Data
 public class TravelTrainItinerary {
 

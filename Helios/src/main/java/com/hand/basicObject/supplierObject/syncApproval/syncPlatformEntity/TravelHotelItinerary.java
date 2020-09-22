@@ -10,7 +10,6 @@ import java.util.List;
  * @Date 2020/9/18
  * @Version 1.0
  **/
-@Builder
 @Data
 public class TravelHotelItinerary {
 
@@ -22,7 +21,7 @@ public class TravelHotelItinerary {
     private String leaveDate;
     private String maxPrice;
     private String minPrice;
-    private String roomNumber;
-    private String floatDaysBegin;
-    private String floatDaysEnd;
+    private Integer roomNumber;
+    private Integer floatDaysBegin;
+    private Integer floatDaysEnd;
 }

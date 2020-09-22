@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 /**
  * @Author peng.zhang
  * @Date 2020/7/7
@@ -16,33 +18,34 @@ import lombok.Setter;
 @NoArgsConstructor
 public class FlightItinerary {
     //飞机行程 是否往返  往返1002   单程1001
-    int itineraryType;
+    private Integer itineraryType;
     //出发城市
-    String fromCity;
+    private String fromCity;
     //到达城市
-    String toCity;
+    private String toCity;
     //出发时间   2020-07-06T16:00:00Z
-    String startDate;
+    private String startDate;
     //返回时间
-    String endDate;
+    private String endDate;
+    private BigDecimal ticketPrice;
     //供应商OID
-    String supplierOID;
-    //起飞时间
-    String takeOffBeginTime;
-    //落地时间
-    String takeOffEndTime;
-    //返回起飞时间
-    String arrivalBeginTime;
-    //返回落地时间
-    String arrivalEndTime;
+    private String supplierOID;
+//    //起飞时间   跟产品确认未使用  功能已经下掉
+//    String takeOffBeginTime;
+//    //落地时间
+//    String takeOffEndTime;
+//    //返回起飞时间
+//    String arrivalBeginTime;
+//    //返回落地时间
+//    String arrivalEndTime;
     //账户
-    String discount;
+    private BigDecimal discount;
     //舱等 经济舱、公务舱、头等舱、超级经济舱
-    String seatClass;
+    private String seatClass;
     //出发城市code
-    String fromCityCode;
+    private String fromCityCode;
     // 到达城市code
-    String toCityCode;
+    private String toCityCode;
 
 //    [
 //    {

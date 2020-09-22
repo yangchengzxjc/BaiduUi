@@ -13,6 +13,7 @@ import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportComponent;
 import com.test.api.method.TravelApplication;
 import com.test.api.method.Vendor;
+import com.test.api.method.VendorMethod.SyncApproval;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
@@ -33,6 +34,7 @@ public class SyncDTTripTmc extends BaseTest {
     private ExpenseReport expenseReport;
     private TravelApplicationPage travelApplicationPage;
     private Vendor vendor;
+    private SyncApproval syncApproval;
 
 
     @BeforeClass
@@ -44,16 +46,17 @@ public class SyncDTTripTmc extends BaseTest {
         expenseReport =new ExpenseReport();
         travelApplicationPage =new TravelApplicationPage();
         vendor =new Vendor();
+        syncApproval =new SyncApproval();
     }
 
 
     @Test(description = "消费商-大唐消费商")
     public void vendorTest2() throws HttpStatusException {
         FormComponent component =new FormComponent();
-        component.setCause("大唐消费申请单同步服务");
+        component.setCause("大唐TMC审批单同步数据校验");
         component.setDepartment(employee.getDepartmentOID());
-        component.setStartDate(UTCTime.getNowUtcTime());
-        component.setEndDate(UTCTime.getUtcTime(3,0));
+        component.setStartDate(UTCTime.getNowStartUtcDate());
+        component.setEndDate(UTCTime.getUTCDateEnd(5));
         //添加参与人员  参与人员的value 是一段json数组。
         JsonArray array = new JsonArray();
         array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-消费平台"),"懿消费商(xiao/feishang)"));
@@ -63,9 +66,10 @@ public class SyncDTTripTmc extends BaseTest {
         //添加飞机行程 供应商为大唐
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
         //单程机票无返回时间
-        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, SupplierOID.dttrip,"西安市","北京",null,UTCTime.getNowStartUtcDate());
+        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, SupplierOID.dttrip,"西安市","北京",null,component.getStartDate());
         flightItineraries.add(flightItinerary);
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
         travelApplication.submitApplication(employee,applicationOID,"");
+        
     }
 }

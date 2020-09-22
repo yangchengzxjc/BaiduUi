@@ -36,9 +36,9 @@ public class UTCTime {
      * @param
      * @return
      */
-    public static String utcToBJtime(String utc){
+    public static String utcToBJtime(String utc,int day){
         DateTimeFormatter fmt = DateTimeFormat.forPattern(BEiJING_FORMATTER_PATTERN15);
-        DateTime date = DateTime.parse(utc);
+        DateTime date = DateTime.parse(utc).plusDays(day);
         return fmt.print(date);
     }
 

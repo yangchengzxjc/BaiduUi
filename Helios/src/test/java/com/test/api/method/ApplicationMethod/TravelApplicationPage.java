@@ -4,9 +4,12 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.basicObject.itinerary.HotelItinerary;
+import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import com.test.api.method.ExpenseReportComponent;
 import com.test.api.method.TravelApplication;
+
+import java.math.BigDecimal;
 
 /**
  * @Author peng.zhang
@@ -35,7 +38,7 @@ public class TravelApplicationPage {
      * @return
      * @throws HttpStatusException
      */
-    public FlightItinerary addFlightItinerary(Employee employee, int itineraryType, String supplierOID, String fromCity, String toCity,String endDate,String startDate) throws HttpStatusException {
+    public FlightItinerary addFlightItinerary(Employee employee, Integer itineraryType, String supplierOID, String fromCity, String toCity,String endDate,String startDate) throws HttpStatusException {
         //添加差旅行程(目前支持飞机行程和酒店行程)
         FlightItinerary flightItinerary =new FlightItinerary();
         //如果是单程的话就不需要返回时间
@@ -44,16 +47,13 @@ public class TravelApplicationPage {
         }else{
             //如果是往返时间的话是跟申请单的控件的结束日期一致
             flightItinerary.setEndDate(endDate);
-            flightItinerary.setArrivalBeginTime(UTCTime.getTime(3,0));
-            flightItinerary.setArrivalEndTime(UTCTime.getTime(6,0));
         }
-        flightItinerary.setTakeOffBeginTime(UTCTime.getTime(3,0));
-        flightItinerary.setTakeOffEndTime(UTCTime.getTime(6,0));
         flightItinerary.setItineraryType(itineraryType);
-        flightItinerary.setDiscount("");
+        flightItinerary.setDiscount(new BigDecimal(8).setScale(1));
         flightItinerary.setFromCity(fromCity);
         flightItinerary.setToCity(toCity);
         flightItinerary.setStartDate(startDate);
+        flightItinerary.setTicketPrice(new BigDecimal(RandomNumber.getRandomNumber(900,1200)).setScale(2));
         flightItinerary.setFromCityCode(expenseReportComponent.getCityCode(employee,fromCity));
         flightItinerary.setToCityCode(expenseReportComponent.getCityCode(employee,toCity));
         flightItinerary.setSupplierOID(supplierOID);

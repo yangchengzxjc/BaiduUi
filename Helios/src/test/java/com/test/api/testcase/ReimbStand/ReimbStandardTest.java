@@ -56,7 +56,7 @@ public class ReimbStandardTest extends BaseTest {
     @Test(priority = 1,description = "查询某个账套的id")
     public void test2()throws HttpStatusException{
         setOfBooksDefine = new SetOfBooksDefine();
-       String A= setOfBooksDefine.getSetOfBooksId(employee,"DEFAULT_SOB","默认账套","");
+       String A= setOfBooksDefine.getSetOfBooksId(employee,"DEFAULT_SOB","默认账套","reimb-submission-control");
         log.info("账套id："+A);
 
     }
@@ -67,7 +67,7 @@ public class ReimbStandardTest extends BaseTest {
         log.info("companyList:{}",companyList);
     }
 
-    @BeforeMethod(description = "报销标准")
+    @BeforeMethod(description = "创建报销标准规则")
     public void createRules()throws HttpStatusException{
         JsonArray userGroups = reimbStandard.userGroups(reimbStandard.getUserGroups(employee,"租户级  stage测试员"));
         JsonArray expenseType = reimbStandard.expenseType(reimbStandard.getExpenseType(employee,"自动化测试-报销标准"));

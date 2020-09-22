@@ -8,7 +8,6 @@ import com.hand.basicObject.Employee;
 import com.hand.basicconstant.ApiPath;
 import com.hand.basicconstant.ResourceId;
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.JSONArray;
 
 import java.util.HashMap;
 
@@ -133,7 +132,7 @@ public class ReimbStandardApi  extends BaseRequest {
                                                String message,
                                                JsonArray userGroups, JsonArray expenseTypes,JsonArray forms,
                                                JsonArray companys) throws HttpStatusException{
-        String url = employee.getEnvironment().getUrl()+ ApiPath.ADD_REIM_STANDARD;
+        String url = employee.getEnvironment().getUrl()+ ApiPath.ADD_REIMB_STANDARD;
         HashMap<String, String> mapParams3 = new HashMap<>();
         mapParams3.put("roleType", "TENANT");
         JsonObject body= new JsonObject();

@@ -46,12 +46,13 @@ public class EmployeeManagePage {
         infraEmployee.setEmployeeID(employeeId);
         infraEmployee.setMobile(mobile);
         infraEmployee.setEmail(email);
+        //获取人员类型
         infraEmployee.setEmployeeTypeCode(infraStructure.getCustomEnumerationValue(employee,"人员类型",employeeTypeValueName));
         infraEmployee.setDirectManager(infraStructure.searchUser(employee,directManager));
         infraEmployee.setGenderCode(0);
         //获取人员类型
-        String employeeType = infraStructure.getCustomEnumerationValue(employee,"人员类型","业务");
-        infraEmployee.setEmployeeTypeCode(employeeType);
+//        String employeeType = infraStructure.getCustomEnumerationValue(employee,"人员类型","业务");
+//        infraEmployee.setEmployeeTypeCode(employeeType);
         log.info("新增的员工信息：{}",infraEmployee);
         ArrayList<InfraJob> infraJobArrayList = new ArrayList<>();
         Map<String,String> company =infraStructure.searchCompany(employee,companyName);

@@ -258,12 +258,13 @@ public class InfraStructureApi extends BaseRequest{
      */
     public JsonArray getUser(Employee employee, String kewWords) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl()+ApiPath.SEARCH_USER;
-        Map<String,String> urlParam=new HashMap<>();
-        urlParam.put("page","0");
-        urlParam.put("size","10");
-        urlParam.put("keyword",kewWords);
-        urlParam.put("keywordLable",kewWords);
-        String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
+        JsonObject body = new JsonObject();
+        body.addProperty("page","0");
+        body.addProperty("size","10");
+        body.addProperty("keyword",kewWords);
+        body.addProperty("sort","status");
+        body.addProperty("status","all");
+        String res = doPost(url,getHeader(employee.getAccessToken()),null,body.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonArray();
     }
 

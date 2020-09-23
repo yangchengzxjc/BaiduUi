@@ -89,12 +89,13 @@ public class ReimbSubmissionControlApi extends BaseRequest{
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray getRules(Employee employee, String rulesOid)throws HttpStatusException{
+    public String getRules(Employee employee, String rulesOid)throws HttpStatusException{
         String url = employee.getEnvironment().getUrl() + String.format(ApiPath.GET_SUBMISSION_RULES,rulesOid) ;
         HashMap<String,String> mapParams = new HashMap<>();
         mapParams.put("roleType","TENENT");
         String res=doGet(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,employee);
-        return new JsonParser().parse(res).getAsJsonArray();
+        return res;
+//        return new JsonParser().parse(res).getAsJsonArray();
 
     }
 

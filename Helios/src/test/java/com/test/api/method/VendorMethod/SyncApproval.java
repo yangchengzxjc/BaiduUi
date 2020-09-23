@@ -4,7 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.FormComponent;
 import com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity.*;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
@@ -55,45 +54,51 @@ public class SyncApproval {
         TravelFlightItinerary travelFlightItinerary = new TravelFlightItinerary();
         travelFlightItinerary.setSeatClass(seatClassMapping.get(seatClass));
         if(!itinerary.get("discount").isJsonNull()){
-            travelFlightItinerary.setDiscount(new BigDecimal(itinerary.get("discount").getAsInt()).setScale(1));
+            travelFlightItinerary.setDiscount(itinerary.get("discount").getAsInt());
         }
         if(!itinerary.get("ticketPrice").isJsonNull()){
-            travelFlightItinerary.setTicketPrice(new BigDecimal(itinerary.get("ticketPrice").getAsInt()).setScale(2));
+            travelFlightItinerary.setTicketPrice(new BigDecimal(itinerary.get("ticketPrice").getAsInt()).setScale(1));
         }
         travelFlightItinerary.setItineraryType(itinerary.get("itineraryType").getAsInt());
         travelFlightItinerary.setProductType(itinerary.get("productType").getAsInt());
-        travelFlightItinerary.setFromCity(itinerary.get("fromCity").getAsString());
-        travelFlightItinerary.setToCity(itinerary.get("toCity").getAsString());
-        travelFlightItinerary.setFromCityCode(itinerary.get("fromCityCode").getAsString());
-        travelFlightItinerary.setToCityCode(itinerary.get("toCityCode").getAsString());
+        String fromCity = itinerary.get("fromCity").getAsString();
+        String toCity = itinerary.get("toCity").getAsString();
+        String fromCityCode = itinerary.get("fromCityCode").getAsString();
+        String toCityCode = itinerary.get("toCityCode").getAsString();
+        travelFlightItinerary.setFromCity(fromCity);
+        travelFlightItinerary.setToCity(toCity);
+        travelFlightItinerary.setFromCityCode(fromCityCode);
+        travelFlightItinerary.setToCityCode(toCityCode);
         ArrayList<String> fromCities =new ArrayList<>();
-        fromCities.add(itinerary.get("fromCity").getAsString());
+        fromCities.add(fromCity);
         travelFlightItinerary.setFromCities(fromCities);
         ArrayList<String> toCities =new ArrayList<>();
-        toCities.add(itinerary.get("toCity").getAsString());
+        toCities.add(toCity);
         travelFlightItinerary.setToCities(toCities);
-        ArrayList<String> fromCitiesCode =new ArrayList<>();
-        fromCitiesCode.add(itinerary.get("fromCityCode").getAsString());
-        travelFlightItinerary.setFromCityCodes(fromCitiesCode);
+
+        ArrayList<String> fromCityCodes =new ArrayList<>();
+        fromCityCodes.add(fromCityCode);
+        travelFlightItinerary.setFromCityCodes(fromCityCodes);
         ArrayList<String> toCityCodes =new ArrayList<>();
-        toCityCodes.add(itinerary.get("toCityCode").getAsString());
-        travelFlightItinerary.setToCities(toCityCodes);
+        toCityCodes.add(toCityCode);
+        travelFlightItinerary.setToCityCodes(toCityCodes);
+
         //判断下起飞开始结束时间是否存在
-        travelFlightItinerary.setTakeOffBeginTime(UTCTime.utcToBJtime(itinerary.get("startDate").getAsString(),-(floatDays.get("start").getAsInt()))+" 00:00:00");
-        travelFlightItinerary.setArrivalBeginTime(UTCTime.utcToBJtime(itinerary.get("startDate").getAsString(),-(floatDays.get("start").getAsInt()))+" 00:00:00");
-        travelFlightItinerary.setTakeOffBegin(UTCTime.utcToBJtime(itinerary.get("startDate").getAsString(),-(floatDays.get("start").getAsInt())));
-        travelFlightItinerary.setArrivalBegin(UTCTime.utcToBJtime(itinerary.get("startDate").getAsString(),-(floatDays.get("start").getAsInt())));
+        travelFlightItinerary.setTakeOffBeginTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),-(floatDays.get("start").getAsInt()))+" 00:00:00");
+        travelFlightItinerary.setArrivalBeginTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),-(floatDays.get("start").getAsInt()))+" 00:00:00");
+        travelFlightItinerary.setTakeOffBegin(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),-(floatDays.get("start").getAsInt())));
+        travelFlightItinerary.setArrivalBegin(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),-(floatDays.get("start").getAsInt())));
         //单程的话 enddate为null   取值为startDate+浮动天数  如果为往返的话 endDate 有值  为endDate+浮动天数
         if(itinerary.get("itineraryType").getAsInt()==1001){
-            travelFlightItinerary.setTakeOffEndTime(UTCTime.utcToBJtime(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
-            travelFlightItinerary.setArrivalEndTime(UTCTime.utcToBJtime(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
-            travelFlightItinerary.setArrivalEnd(UTCTime.utcToBJtime(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt()));
-            travelFlightItinerary.setTakeOffEnd(UTCTime.utcToBJtime(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt()));
+            travelFlightItinerary.setTakeOffEndTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
+            travelFlightItinerary.setArrivalEndTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
+            travelFlightItinerary.setArrivalEnd(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt()));
+            travelFlightItinerary.setTakeOffEnd(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt()));
         }else{
-            travelFlightItinerary.setTakeOffEndTime(UTCTime.utcToBJtime(itinerary.get("endDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
-            travelFlightItinerary.setArrivalEndTime(UTCTime.utcToBJtime(itinerary.get("endDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
-            travelFlightItinerary.setArrivalEnd(UTCTime.utcToBJtime(itinerary.get("endDate").getAsString(),floatDays.get("start").getAsInt()));
-            travelFlightItinerary.setTakeOffEnd(UTCTime.utcToBJtime(itinerary.get("endDate").getAsString(),floatDays.get("start").getAsInt()));
+            travelFlightItinerary.setTakeOffEndTime(UTCTime.utcToBJDate(itinerary.get("endDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
+            travelFlightItinerary.setArrivalEndTime(UTCTime.utcToBJDate(itinerary.get("endDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
+            travelFlightItinerary.setArrivalEnd(UTCTime.utcToBJDate(itinerary.get("endDate").getAsString(),floatDays.get("start").getAsInt()));
+            travelFlightItinerary.setTakeOffEnd(UTCTime.utcToBJDate(itinerary.get("endDate").getAsString(),floatDays.get("start").getAsInt()));
         }
         travelFlightItinerary.setFloatDaysBegin(4);
         travelFlightItinerary.setFloatDaysEnd(4);
@@ -150,8 +155,6 @@ public class SyncApproval {
 
     /**
      * 初始化syncEntity
-     * @param employee
-     * @param component
      * @param bookClerk
      * @param applicationDetail
      * @param itinerary
@@ -161,15 +164,20 @@ public class SyncApproval {
      * @param travelTrainItineraries
      * @return
      */
-    public SyncEntity setSyncEntity(Employee employee,FormComponent component, BookClerk bookClerk, JsonObject applicationDetail, JsonObject itinerary, List<Participant> participants, List<TravelFlightItinerary> travelItineraries,List<TravelHotelItinerary> travelHotelItineraries,List<TravelTrainItinerary> travelTrainItineraries){
+    public SyncEntity setSyncEntity(BookClerk bookClerk, JsonObject applicationDetail, JsonObject itinerary, List<Participant> participants, List<TravelFlightItinerary> travelItineraries,List<TravelHotelItinerary> travelHotelItineraries,List<TravelTrainItinerary> travelTrainItineraries){
+        JsonArray customFormValues = applicationDetail.get("custFormValues").getAsJsonArray();
+        JsonObject costCenter = new JsonObject();
+        if(GsonUtil.isNotEmpt(customFormValues)){
+            costCenter = GsonUtil.getJsonValue(customFormValues,"fieldName","成本中心");
+        }
         SyncEntity syncEntity =new SyncEntity();
-        syncEntity.setTenantId(employee.getTenantId());
-        syncEntity.setCompanyId(employee.getCompanyOID());
+        syncEntity.setTenantId(applicationDetail.get("tenantId").getAsString());
+        syncEntity.setCompanyId(applicationDetail.get("companyOID").getAsString());
         syncEntity.setStatus(1);
         syncEntity.setBookClerk(bookClerk);
         syncEntity.setBusinessCode(applicationDetail.get("businessCode").getAsString());
         syncEntity.setApprovalCode(itinerary.get("approvalNum").getAsString());
-        syncEntity.setCostCenter1(component.getCostCenter());
+        syncEntity.setCostCenter1(costCenter.get("value").getAsString());
         syncEntity.setParticipantList(participants);
         syncEntity.setTravelFlightsList(travelItineraries);
         syncEntity.setTravelHotelsList(travelHotelItineraries);
@@ -186,8 +194,8 @@ public class SyncApproval {
         TravelHotelItinerary travelHotelItinerary =new TravelHotelItinerary();
         travelHotelItinerary.setCity(itinerary.get("cityName").getAsString());
         travelHotelItinerary.setCityCode(itinerary.get("cityCode").getAsString());
-        travelHotelItinerary.setFromDate(UTCTime.utcToBJtime(itinerary.get("fromDate").getAsString(),0)+" 00:00:00");
-        travelHotelItinerary.setLeaveDate(UTCTime.utcToBJtime(itinerary.get("leaveDate").getAsString(),0)+" 00:00:00");
+        travelHotelItinerary.setFromDate(UTCTime.utcToBJDate(itinerary.get("fromDate").getAsString(),0)+" 00:00:00");
+        travelHotelItinerary.setLeaveDate(UTCTime.utcToBJDate(itinerary.get("leaveDate").getAsString(),0)+" 00:00:00");
         travelHotelItinerary.setMaxPrice(itinerary.get("maxPrice").getAsString());
         if(!itinerary.get("minPrice").isJsonNull()){
             travelHotelItinerary.setMinPrice(itinerary.get("minPrice").getAsString());
@@ -243,18 +251,18 @@ public class SyncApproval {
         travelTrainItinerary.setTicketPrice(itinerary.get("ticketPrice").getAsBigDecimal());
         //判断下起飞开始结束时间是否存在
         if(itinerary.get("takeOffBeginTime").isJsonNull()){
-            travelTrainItinerary.setTakeOffBeginTime(UTCTime.utcToBJtime(itinerary.get("startDate").getAsString(),-(floatDays.get("start").getAsInt()))+" 00:00:00");
+            travelTrainItinerary.setTakeOffBeginTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),-(floatDays.get("start").getAsInt()))+" 00:00:00");
         }else{
-            travelTrainItinerary.setTakeOffBeginTime(UTCTime.utcToBJtime(itinerary.get("takeOffBeginTime").getAsString(),-(floatDays.get("start").getAsInt())));
+            travelTrainItinerary.setTakeOffBeginTime(UTCTime.utcToBJDate(itinerary.get("takeOffBeginTime").getAsString(),-(floatDays.get("start").getAsInt())));
         }
         if(itinerary.get("takeOffEndTime").isJsonNull()){
-            travelTrainItinerary.setTakeOffBeginTime(UTCTime.utcToBJtime(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
+            travelTrainItinerary.setTakeOffBeginTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
         }else{
-            travelTrainItinerary.setTakeOffBeginTime(UTCTime.utcToBJtime(itinerary.get("takeOffEndTime").getAsString(),floatDays.get("start").getAsInt()));
+            travelTrainItinerary.setTakeOffBeginTime(UTCTime.utcToBJDate(itinerary.get("takeOffEndTime").getAsString(),floatDays.get("start").getAsInt()));
         }
         //初始化到达时间
-        travelTrainItinerary.setArrivalBeginTime(UTCTime.utcToBJtime(itinerary.get("startDate").getAsString(),-(floatDays.get("start").getAsInt()))+" 00:00:00");
-        travelTrainItinerary.setArrivalEndTime(UTCTime.utcToBJtime(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
+        travelTrainItinerary.setArrivalBeginTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),-(floatDays.get("start").getAsInt()))+" 00:00:00");
+        travelTrainItinerary.setArrivalEndTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
         travelTrainItinerary.setSeatType(seatClass);
         travelTrainItinerary.setFloatDaysBegin(4);
         travelTrainItinerary.setFloatDaysEnd(4);

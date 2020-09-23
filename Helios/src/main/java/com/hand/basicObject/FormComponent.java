@@ -29,7 +29,7 @@ public class FormComponent {
     String custList;
     //多选值列表
     String moreCustList;
-    //成本中心
+    //成本中心    成本中心的名称
     String costCenter;
     //级联成本中心
     String associatCostCenter;

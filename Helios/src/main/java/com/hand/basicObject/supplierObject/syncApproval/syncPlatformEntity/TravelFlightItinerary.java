@@ -28,7 +28,7 @@ public class TravelFlightItinerary {
         管控时,审批单舱等级别不能低于订单舱等级别
      */
     private Integer seatClass;
-    private BigDecimal discount;
+    private Integer discount;
     //机票最大金额
     private BigDecimal ticketPrice;
     //1001 单程  1002  返程

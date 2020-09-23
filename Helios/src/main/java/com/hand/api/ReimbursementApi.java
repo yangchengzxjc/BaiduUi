@@ -498,9 +498,13 @@ public class ReimbursementApi extends BaseRequest {
                         data.addProperty("value", component.getAttachment().toString());
                         break;
                 case "成本中心":        //选择成本中心
-//                    data.addProperty("value", componentQueryApi.getCostCenterOIDItems(employee,new JsonParser().parse(data.get("dataSource").getAsString()).getAsJsonObject().
-//                            get("costCenterOID").getAsString()).get(costCenterItemOID).getAsJsonObject().get("costCenterItemOID").getAsString());
-                    data.addProperty("value",component.getCostCenter());
+                    String costCenterOID = new JsonParser().parse(data.get("dataSource").getAsString()).getAsJsonObject().get("costCenterOID").getAsString();
+                    JsonArray costCenter = componentQueryApi.getCostCenterOIDItems(employee,costCenterOID);
+                    String costCenterItemOID = "";
+                    if(GsonUtil.isNotEmpt(costCenter)){
+                        costCenterItemOID =GsonUtil.getJsonValue(costCenter,"name",component.getCostCenter(),"costCenterItemOID");
+                    }
+                    data.addProperty("value",costCenterItemOID);
                     break;
                 case "级联成本中心":
                     data.addProperty("value",component.getAssociatCostCenter());
@@ -720,8 +724,6 @@ public class ReimbursementApi extends BaseRequest {
                 case "参与人员":
                     //添加参与人员  参与人员的value 是一段json数组。 默认选择自己
                     JsonArray array = new JsonArray();
-                    ComponentQueryApi componentQueryApi = new ComponentQueryApi();
-//                    JsonArray participants = componentQueryApi.getSelectParticipant(employee,formdetal.get("formOID").getAsString(),employee.getFullName());
                     JsonObject participant =new JsonObject();
                     participant.addProperty("userOID",employee.getUserOID());
                     participant.addProperty("fullName",employee.getFullName());

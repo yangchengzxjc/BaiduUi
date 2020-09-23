@@ -203,15 +203,7 @@ public class ReimbStandardApi  extends BaseRequest {
         HashMap<String, String> mapParams = new HashMap<>();
         mapParams.put("roleType", "TENANT");
        doPost(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,new JsonObject().toString(),null,employee);
-//        return res;
-//        doPost(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,null,null,employee);
     }
-//    public void addControlItem(Employee employee,String rulesOid)throws HttpStatusException{
-//        String url =employee.getEnvironment().getUrl() + String.format(ApiPath.ADD_CONTROLITEM , rulesOid.split("\"")[1]);
-//        HashMap<String,String> mapParams = new HashMap<>();
-//        mapParams.put("roleType","TENENT");
-//
-//    }
 
     /**
      * 获取报销标准规则的管控信息
@@ -241,7 +233,6 @@ public class ReimbStandardApi  extends BaseRequest {
         mapParams.put("roleType","TENENT");
         String res=doGet(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,employee);
         return new JsonParser().parse(res).getAsJsonArray();
-
     }
 
     /**
@@ -272,7 +263,6 @@ public class ReimbStandardApi  extends BaseRequest {
         body1.addProperty("userAssociateType",1);
         String res = doPost(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,body1.toString(),null,employee);
         return res;
-
     }
 
     /**

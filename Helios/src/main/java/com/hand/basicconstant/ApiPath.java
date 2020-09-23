@@ -295,7 +295,10 @@ public class ApiPath {
         public static final String TMCAPPLICATION = "/vendor-sync-service/api/tmcRequest/plan";
         //获取报销单提交管控规则
         public static final String GET_SUBMISSION_RULES = "/api/expense/standard/master/rule/%s";
-
+        //新建提交管控规则管控项
+        public static final String ADD_SUBMISSION_ITEM = "/api/expense/submit/control/item/%s";
+        //获取提交管控规则管控项信息
+        public static final String GET_SUBMISSION_ITEM = "/api/expense/submit/control/items/%s";
     }
 
 

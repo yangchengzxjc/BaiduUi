@@ -15,7 +15,6 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-
 @Slf4j
 public class ReimbSubmissionControlTest extends BaseTest {
     private Employee employee;
@@ -38,19 +37,19 @@ public class ReimbSubmissionControlTest extends BaseTest {
 
     @Test(priority = 1,description = "创建报销单提交管控规则")
     public void creatRules() throws HttpStatusException {
-        String rulesOid =reimbSubmissionControl.addReimbSubmissionControl(employee,"报销单提交日期","WARN",
+        String rulesOid =reimbSubmissionControl.addReimbSubmissionControl(employee,"报销单提交日期1","WARN",
                 new JsonArray(),"费用消费日期不得超过报销单提交日期","SET_OF_BOOK",
                 setOfBooksDefine.getSetOfBooksId(employee,"DEFAULT_SOB","默认账套","reimb-submission-control"),
                 "默认账套",new JsonArray());
         log.info("规则oid：{}",rulesOid);
         //获取默认规则详情
-        String  rulesDetails=reimbSubmissionControl.getRules(employee,rulesOid);
-        log.info("规则默认详情：{}",rulesDetails);
+        String  rulesDetail=reimbSubmissionControl.getRules(employee,rulesOid);
+        log.info("规则默认详情：{}",rulesDetail);
         //新建管控项
-        
+        reimbSubmissionControl.addRulesItem(employee,rulesOid,1006,1004,1002,1001,20);
+        //查看管控项
+        JsonArray itemsDetails =new JsonArray();
+        itemsDetails=reimbSubmissionControl.getItems(employee,rulesOid);
+        log.info("管控项详情：{}",itemsDetails);
     }
-
-
-
-
 }

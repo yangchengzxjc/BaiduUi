@@ -10,6 +10,7 @@ import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoEntity;
 import com.hand.basicconstant.ApiPath;
 import com.hand.basicconstant.HeaderKey;
 import com.hand.basicconstant.ResourceId;
+import com.hand.basicconstant.TmcChannel;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
@@ -418,5 +419,26 @@ public class InfraStructureApi extends BaseRequest{
         String url = employee.getEnvironment().getUrl()+String.format(ApiPath.DEFAULTCOSTCENT,costCenterOID);
         String res = doGet(url,getHeader(employee.getAccessToken()),null,employee);
         return new JsonParser().parse(res).getAsJsonArray();
+    }
+
+    /**
+     * 开放平台 查询人员同步入参
+     * @param employee
+     * @param tmcChannel
+     * @param hlyUserMobile
+     * @param hlyUserID
+     * @throws HttpStatusException
+     */
+    public JsonObject queryUserSync(Employee employee,TmcChannel tmcChannel, String hlyUserMobile, String hlyUserID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ApiPath.QUERY_USER_SYNC;
+        Map<String,String> maps = new HashMap<>();
+        maps.put("tmcChannel",tmcChannel.getValue());
+        maps.put("hlyUserMobile",hlyUserMobile);
+        maps.put("hlyUserID",hlyUserID);
+        String res = doGet(url,getHeader(employee.getAccessToken()),maps,employee);
+        if (res == ""){
+            log.info("查询开放平台人员同步入参结果为空，请检查接口请求:"+"tmcChannel："+tmcChannel+"hlyUserMobile："+hlyUserMobile+"hlyUserID："+hlyUserID);
+        }
+        return new JsonParser().parse(res).getAsJsonObject();
     }
 }

@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;
+import com.hand.basicObject.supplierObject.employeeInfoDto.EmployeeDTO;
+import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoDTO;
 import com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity.*;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
@@ -259,5 +261,84 @@ public class SyncApproval {
         travelTrainItinerary.setFloatDaysBegin(4);
         travelTrainItinerary.setFloatDaysEnd(4);
         return travelTrainItinerary;
+    }
+
+    /**
+     * 根据查询出的证件List 封装成openApi中的证件对象
+     * @param userCardInfo
+     * @returnuserCardInfos
+     */
+    public ArrayList addUserCardInfoDTO(JsonArray userCardInfo){
+
+        ArrayList<UserCardInfoDTO> userCardInfos =new ArrayList<>();
+        for (int i = 0; userCardInfo.size()>i ; i++) {
+            JsonObject jsb = userCardInfo.get(i).getAsJsonObject();
+            UserCardInfoDTO userCardInfoDTO = new UserCardInfoDTO();
+            userCardInfoDTO.setCardNo(jsb.get("originalCardNo").getAsString());
+            userCardInfoDTO.setCardType(jsb.get("cardType").getAsString());
+            userCardInfoDTO.setCardTypeName(jsb.get("cardTypeName").getAsString());
+            if(jsb.get("cardExpiredTime").isJsonNull()){
+
+            }else{
+                userCardInfoDTO.setIDCardTimelimit(jsb.get("cardExpiredTime").getAsString());
+            }
+            userCardInfoDTO.setFirstName(jsb.get("firstName").getAsString());
+            userCardInfoDTO.setLastName(jsb.get("lastName").getAsString());
+            userCardInfos.add(userCardInfoDTO);
+        }
+        return userCardInfos;
+    }
+
+    /**
+     * 封装开发平台openApi 人员同步对象
+     * @param empObject
+     * @param userCardInfo
+     * @param departCode
+     * @param bookClass
+     * @param employee
+     * @param cardList
+     * @return employeeDTO
+     */
+    public EmployeeDTO addEmloyeeDTO(JsonObject empObject,JsonObject userCardInfo,JsonObject departCode,JsonObject bookClass,Employee employee,ArrayList cardList){
+        EmployeeDTO employeeDTO = new EmployeeDTO();
+        if (empObject.get("status").toString().equals("1001")) {
+            employeeDTO.setStatus("1");
+        }
+        else{
+            employeeDTO.setStatus("0");
+        }
+        employeeDTO.setFullName(empObject.get("fullName").getAsString());
+        employeeDTO.setEmployeeID(empObject.get("employeeID").getAsString());
+        employeeDTO.setMobile(empObject.get("mobile").getAsString());
+        employeeDTO.setEmail(empObject.get("email").getAsString());
+        if (userCardInfo.get("lastName").toString() != null) {
+            employeeDTO.setName(userCardInfo.get("lastName").getAsString());
+        }
+        else {
+            employeeDTO.setName(empObject.get("fullName").getAsString());//优先身份证名字 没有就取系统名字
+        }
+        if (userCardInfo.get("cardType").toString().equals("102")){
+            employeeDTO.setEnFirstName(userCardInfo.get("firstName").getAsString());
+            employeeDTO.setEnLastName(userCardInfo.get("lastName").getAsString());
+        }
+        else {
+            employeeDTO.setEnFirstName(null);
+            employeeDTO.setEnLastName(null);
+        }
+        employeeDTO.setNationality(null);
+        employeeDTO.setGender(empObject.get("genderCode").getAsString());
+        employeeDTO.setRankName(empObject.get("rank").getAsString());
+        employeeDTO.setIsBookClass(bookClass.get("isBookClass").getAsString());
+        employeeDTO.setIntlBookClassBlock(bookClass.get("intlBookClassBlock").getAsString());
+        employeeDTO.setTenantId(employee.getTenantId());
+        employeeDTO.setCompanyId(empObject.get("companyOID").getAsString());
+        employeeDTO.setCompanyOID(empObject.get("companyOID").getAsString());
+        employeeDTO.setCompanyCode(empObject.get("companyOID").getAsString());
+        employeeDTO.setDeptCode(departCode.get("departmentCode").getAsString());
+        employeeDTO.setDeptName(empObject.get("departmentName").getAsString());
+        employeeDTO.setDeptPath(empObject.get("departmentPath").getAsString());
+        employeeDTO.setDeptCustomCode(departCode.get("custDeptNumber").getAsString());
+        employeeDTO.setUserCardInfos(cardList);
+        return employeeDTO;
     }
 }

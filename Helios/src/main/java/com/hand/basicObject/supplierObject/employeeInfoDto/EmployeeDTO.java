@@ -14,7 +14,7 @@ import java.util.List;
 public class EmployeeDTO {
     //审批单状态
     private String status;
-    //汇联易系统员工名 fullName
+    //汇联易系统员工名
     private String fullName;
     //员工工号
     private String employeeID;

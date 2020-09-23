@@ -11,6 +11,7 @@ import com.hand.basicObject.infrastructure.employee.EmployeeExtendComponent;
 import com.hand.basicObject.infrastructure.employee.InfraEmployee;
 import com.hand.basicObject.infrastructure.employee.InfraJob;
 import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoEntity;
+import com.hand.basicconstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
@@ -395,6 +396,19 @@ public class InfraStructure {
             cardInfo = GsonUtil.getJsonValue(json,"cardTypeName",cardTypeName);
         }
         return cardInfo;
+    }
+
+    /**
+     * 开放平台 查询人员同步入参
+     * @param employee
+     * @param tmcChannel
+     * @param hlyUserMobile
+     * @param hlyUserID
+     * @throws HttpStatusException
+     */
+    public JsonObject queryUserSync(Employee employee, TmcChannel tmcChannel, String hlyUserMobile, String hlyUserID) throws HttpStatusException {
+        JsonObject jsb = infraStructureApi.queryUserSync(employee,tmcChannel,hlyUserMobile,hlyUserID);
+        return jsb;
     }
 
 }

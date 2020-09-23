@@ -4,7 +4,6 @@ import com.google.gson.JsonArray;
 import com.hand.api.ReimbSubmissionControlApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.sun.xml.internal.ws.handler.HandlerException;
 import com.test.BaseTest;
 import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportInvoice;
@@ -34,15 +33,21 @@ public class ReimbSubmissionControlTest extends BaseTest {
         employee=getEmployee(phoneNumber,pwd,env);
         reimbSubmissionControl =new ReimbSubmissionControl();
         reimbSubmissionControlApi =new ReimbSubmissionControlApi();
-
+        setOfBooksDefine=new SetOfBooksDefine();
     }
 
     @Test(priority = 1,description = "创建报销单提交管控规则")
     public void creatRules() throws HttpStatusException {
         String rulesOid =reimbSubmissionControl.addReimbSubmissionControl(employee,"报销单提交日期","WARN",
                 new JsonArray(),"费用消费日期不得超过报销单提交日期","SET_OF_BOOK",
-                "1089991868999208961",
+                setOfBooksDefine.getSetOfBooksId(employee,"DEFAULT_SOB","默认账套","reimb-submission-control"),
                 "默认账套",new JsonArray());
+        log.info("规则oid：{}",rulesOid);
+        //获取默认规则详情
+        String  rulesDetails=reimbSubmissionControl.getRules(employee,rulesOid);
+        log.info("规则默认详情：{}",rulesDetails);
+        //新建管控项
+        
     }
 
 

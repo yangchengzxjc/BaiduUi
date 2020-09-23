@@ -294,7 +294,9 @@ public class ApiPath {
         // tmc  申请单行程查询
         public static final String TMCAPPLICATION = "/vendor-sync-service/api/tmcRequest/plan";
         //获取报销单提交管控规则
-        public static final String GET_SUBMISSION_RULES = "/api/expense/standard/master/rule/%";
+        public static final String GET_SUBMISSION_RULES = "/api/expense/standard/master/rule/%s";
+        //开放平台查询 人员同步
+        public static final String QUERY_USER_SYNC="/vendor-sync-service/api/tmcRequest/user";
 
     }
 

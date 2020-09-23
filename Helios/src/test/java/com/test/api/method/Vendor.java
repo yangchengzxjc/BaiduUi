@@ -135,31 +135,7 @@ public class Vendor {
         return vendorApi.queryBookClass(employee);
     }
 
-    /**
-     * 根据查询出的证件List 封装成openApi中的证件对象
-     * @param userCardInfo
-     * @returnuserCardInfos
-     */
-    public ArrayList addUserCardInfoDTO(JsonArray userCardInfo){
 
-        ArrayList<UserCardInfoDTO> userCardInfos =new ArrayList<>();
-        for (int i = 0; userCardInfo.size()>i ; i++) {
-            JsonObject jsb = userCardInfo.get(i).getAsJsonObject();
-            UserCardInfoDTO userCardInfoDTO = new UserCardInfoDTO();
-            userCardInfoDTO.setCardNo(jsb.get("originalCardNo").getAsString());
-            userCardInfoDTO.setCardType(jsb.get("cardType").getAsString());
-            userCardInfoDTO.setCardTypeName(jsb.get("cardTypeName").getAsString());
-            if(jsb.get("cardExpiredTime").isJsonNull()){
-
-            }else{
-                userCardInfoDTO.setIDCardTimelimit(jsb.get("cardExpiredTime").getAsString());
-            }
-            userCardInfoDTO.setFirstName(jsb.get("firstName").getAsString());
-            userCardInfoDTO.setLastName(jsb.get("lastName").getAsString());
-            userCardInfos.add(userCardInfoDTO);
-        }
-        return userCardInfos;
-    }
 
     /**
      * 查询TMC 人员同步信息

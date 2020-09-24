@@ -6,12 +6,13 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.employeeInfoDto.EmployeeDTO;
 import com.hand.basicconstant.CardType;
+import com.hand.basicconstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import com.test.BaseTest;
 import com.test.api.method.Infra.EmployeeMethod.EmployeeManagePage;
 import com.test.api.method.InfraStructure;
 import com.test.api.method.Vendor;
-import com.test.api.method.VendorMethod.SyncApproval;
+import com.test.api.method.VendorMethod.SyncService;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class SyncEmployee extends BaseTest {
     private EmployeeManagePage employeeManagePage;
     private InfraStructure infraStructure;
     private Vendor vendor;
-    private SyncApproval syncApproval;
+    private SyncService syncService;
 
 
     @BeforeClass
@@ -32,21 +33,21 @@ public class SyncEmployee extends BaseTest {
         employeeManagePage =new EmployeeManagePage();
         infraStructure =new InfraStructure();
         vendor =new Vendor();
-        syncApproval =new SyncApproval();
+        syncService =new SyncService();
     }
 
     @Test(description = "新增员正常流程,")
     public void addEmployeeTest01() throws HttpStatusException, InterruptedException {
-        JsonObject empObject = employeeManagePage.addEmployee(employee, "测试接口新建Q70","","M0070","M0070@163.COM","人员类型01","","甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
+        JsonObject empObject = employeeManagePage.addEmployee(employee, "测试接口新建Q66","","M0066","M0066@163.COM","人员类型01","","甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
         String userOID=empObject.get("userOID").getAsString();
         JsonObject bookClass = vendor.queryBookClass(employee);
         JsonObject departCode = infraStructure.searchDepartmentDetail(employee,empObject.get("departmentOID").getAsString());
         Thread.sleep(10000);
         JsonObject userCardInfo=employeeManagePage.addUserCard(employee,userOID,CardType.CHINA_ID,"身份证名字",true);//新增身份证 启用 名字：身份证名字
         JsonArray userCardInfos = infraStructure.queryUserCard(employee,userOID);
-        ArrayList cardList = syncApproval.addUserCardInfoDTO(userCardInfos);
-        EmployeeDTO a = syncApproval.addEmployeeDTO(empObject,userCardInfo,departCode,bookClass,employee,cardList);
-//        JsonObject b =infraStructure.queryUserSync(employee,TmcChannel.DT,"","M0066");
+        ArrayList cardList = syncService.addUserCardInfoDTO(userCardInfos);
+        EmployeeDTO a = syncService.addEmloyeeDTO(empObject,userCardInfo,departCode,bookClass,employee,cardList);
+        JsonObject b =infraStructure.queryUserSync(employee,TmcChannel.DT,"","M0066");
 
         System.out.println(GsonUtil.objectToString(a));
     }

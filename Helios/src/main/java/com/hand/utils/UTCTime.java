@@ -31,14 +31,21 @@ public class UTCTime {
         return fmt.print(date);
     }
 
+
+
     /**
      * Utc时间转北京时间
-     * @param
+     * @param   "yyyy-MM-dd'T'16:00:00'Z'";  -> yyyy-MM-dd
      * @return
      */
-    public static String utcToBJtime(String utc,int day){
+    public static String utcToBJDate(String utc, int day){
+        DateTimeFormatter utcFmt = DateTimeFormat.forPattern(UTC_FORMATTER_PATTERN16);
+        // utc时间转北京时间+8
+        DateTime utcdate = DateTime.parse(utc).plusHours(8);
+        String beijingdate = utcFmt.print(utcdate);
+        //格式化为北京时间
         DateTimeFormatter fmt = DateTimeFormat.forPattern(BEiJING_FORMATTER_PATTERN15);
-        DateTime date = DateTime.parse(utc).plusDays(day);
+        DateTime date = DateTime.parse(beijingdate).plusDays(day);
         return fmt.print(date);
     }
 

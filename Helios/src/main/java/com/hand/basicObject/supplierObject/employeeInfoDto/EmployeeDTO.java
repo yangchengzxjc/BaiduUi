@@ -4,8 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
+
+/**
+ * 开放平台人员DTO
+ */
 
 @Data
 @AllArgsConstructor
@@ -30,7 +33,7 @@ public class EmployeeDTO {
     private String enLastName;
     //国籍
     private String nationality;
-    //性别
+    //性别 男：0  女：1  未知：2
     private String gender;
     //级别
     private String rankName;

@@ -80,7 +80,6 @@ public class InfraStructureApi extends BaseRequest{
         body.addProperty("birthday","2020-07-01");
         contactI18n1.addProperty("language","zh_cn");
         body.addProperty("entryTime","2020-07-01");
-        body.addProperty("gender","");
         contactI18n1.addProperty("value",infraEmployee.getFullName());
         contactI18n2.addProperty("language","en");
         contactI18n2.addProperty("value",infraEmployee.getFullName());
@@ -437,7 +436,7 @@ public class InfraStructureApi extends BaseRequest{
         maps.put("hlyUserID",hlyUserID);
         String res = doGet(url,getHeader(employee.getAccessToken()),maps,employee);
         if (res == ""){
-            log.info("查询开放平台人员同步入参结果为空，请检查接口请求:"+"tmcChannel："+tmcChannel+"hlyUserMobile："+hlyUserMobile+"hlyUserID："+hlyUserID);
+            log.info("查询开放平台人员同步入参结果为空，请检查接口请求:tmcChannel:{},hlyUserMobile:{},hlyUserID:{}",tmcChannel,hlyUserMobile,hlyUserID);
         }
         return new JsonParser().parse(res).getAsJsonObject();
     }

@@ -44,7 +44,7 @@ public class SyncEmployee extends BaseTest {
         JsonObject departCode = infraStructure.searchDepartmentDetail(employee,empObject.get("departmentOID").getAsString());
         Thread.sleep(10000);
         JsonObject userCardInfo=employeeManagePage.addUserCard(employee,userOID,CardType.CHINA_ID,"身份证名字",true);//新增身份证 启用 名字：身份证名字
-        JsonArray userCardInfos = infraStructure.queryUserCard(employee);
+        JsonArray userCardInfos = infraStructure.queryUserCard(employee,userOID);
         ArrayList cardList = syncService.addUserCardInfoDTO(userCardInfos);
         EmployeeDTO a = syncService.addEmloyeeDTO(empObject,userCardInfo,departCode,bookClass,employee,cardList);
         JsonObject b =infraStructure.queryUserSync(employee,TmcChannel.DT,"","M0066");

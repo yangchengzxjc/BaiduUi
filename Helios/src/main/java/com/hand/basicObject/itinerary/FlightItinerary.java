@@ -27,7 +27,7 @@ public class FlightItinerary {
     private String startDate;
     //返回时间
     private String endDate;
-    private BigDecimal ticketPrice;
+    private double ticketPrice;
     //供应商OID
     private String supplierOID;
 //    //起飞时间   跟产品确认未使用  功能已经下掉

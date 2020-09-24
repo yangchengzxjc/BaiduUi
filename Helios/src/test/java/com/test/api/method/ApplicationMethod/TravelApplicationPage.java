@@ -49,11 +49,11 @@ public class TravelApplicationPage {
             flightItinerary.setEndDate(endDate);
         }
         flightItinerary.setItineraryType(itineraryType);
-        flightItinerary.setDiscount(new BigDecimal(8).setScale(1));
+        flightItinerary.setDiscount(new BigDecimal("7"));
         flightItinerary.setFromCity(fromCity);
         flightItinerary.setToCity(toCity);
         flightItinerary.setStartDate(startDate);
-        flightItinerary.setTicketPrice(new BigDecimal(RandomNumber.getRandomNumber(900,1200)).setScale(2));
+        flightItinerary.setTicketPrice(Double.valueOf(RandomNumber.getRandomNumber(900,1200)));
         flightItinerary.setFromCityCode(expenseReportComponent.getCityCode(employee,fromCity));
         flightItinerary.setToCityCode(expenseReportComponent.getCityCode(employee,toCity));
         flightItinerary.setSupplierOID(supplierOID);

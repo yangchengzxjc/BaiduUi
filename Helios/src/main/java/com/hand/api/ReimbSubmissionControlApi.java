@@ -8,6 +8,7 @@ import com.hand.basicObject.Employee;
 import com.hand.basicconstant.ApiPath;
 import com.hand.basicconstant.ResourceId;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.math3.ml.distance.EarthMoversDistance;
 
 import java.util.HashMap;
 
@@ -137,5 +138,18 @@ public class ReimbSubmissionControlApi extends BaseRequest{
         mapParams.put("roleType","TENANT");
         String res=doGet(url,getHeader(employee.getAccessToken(),"reimb-submission-control",ResourceId.INFRA),mapParams,employee);
         return new JsonParser().parse(res).getAsJsonArray();
+    }
+
+    /**
+     * 规则删除
+     * @param employee
+     * @param rulesOid
+     * @throws HttpStatusException
+     */
+    public void deleteReimbSubmissionControlRules(Employee employee,String rulesOid) throws HttpStatusException{
+        String url = employee.getEnvironment().getUrl() + String.format(ApiPath.DELETE_REIMB_STANDARD,rulesOid);
+        HashMap<String,String> mapParams = new HashMap<>();
+        mapParams.put("roleType","TENANT");
+        doPost(url,getHeader(employee.getAccessToken(),"reimb-submission-control",ResourceId.INFRA),mapParams,new JsonObject().toString(),null,employee);
     }
 }

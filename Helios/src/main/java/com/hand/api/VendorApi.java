@@ -184,7 +184,7 @@ public class VendorApi extends BaseRequest{
         datas.put("tmcChannel",tmcChannel);
         datas.put("approvalNo",approvalNo);
         String res = doGet(url,getHeader(employee.getAccessToken()),datas,employee);
-        return new JsonParser().parse(res).getAsJsonObject();
+        return new JsonParser().parse(res).getAsJsonArray().get(0).getAsJsonObject();
     }
 
 

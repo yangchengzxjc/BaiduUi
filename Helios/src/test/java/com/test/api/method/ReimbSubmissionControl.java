@@ -63,9 +63,26 @@ public class ReimbSubmissionControl {
         return body;
     }
 
+    /**
+     * 获取规则管控项
+     * @param employee
+     * @param rulesOid
+     * @return
+     * @throws HttpStatusException
+     */
     public JsonArray getItems(Employee employee,String rulesOid)throws HttpStatusException{
         JsonArray items =new JsonArray();
         items = reimbSubmissionControl.getItems(employee,rulesOid);
         return items;
+    }
+
+    /**
+     * 规则删除
+     * @param employee
+     * @param rulesOid
+     * @throws HttpStatusException
+     */
+    public void deleteReimbSubmissionRules(Employee employee,String rulesOid) throws HttpStatusException{
+        reimbSubmissionControl.deleteReimbSubmissionControlRules(employee,rulesOid);
     }
 }

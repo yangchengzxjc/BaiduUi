@@ -1,7 +1,6 @@
 package com.test.api.method;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.hand.api.ReimbSubmissionControlApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
@@ -42,8 +41,48 @@ public class ReimbSubmissionControl {
      * @throws HttpStatusException
      */
     public String  getRules(Employee employee, String rulesOid)throws HttpStatusException{
-//        JsonObject getRulesDetails =new JsonObject();
         String getRulesDetails=reimbSubmissionControl.getRules(employee,rulesOid);
         return getRulesDetails;
+    }
+
+    /**
+     * 新增管控项
+     * @param employee
+     * @param rulesOid
+     * @param controlItem
+     * @param valueType
+     * @param controlCond
+     * @param mixedItem
+     * @param extendValue
+     * @return
+     * @throws HttpStatusException
+     */
+    public String addRulesItem(Employee employee,String rulesOid,int controlItem,int valueType,
+                               int controlCond,int mixedItem,int extendValue)throws HttpStatusException{
+        String body=reimbSubmissionControl.addRulesItems(employee,rulesOid,controlItem,valueType,controlCond,mixedItem,extendValue);
+        return body;
+    }
+
+    /**
+     * 获取规则管控项
+     * @param employee
+     * @param rulesOid
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getItems(Employee employee,String rulesOid)throws HttpStatusException{
+        JsonArray items =new JsonArray();
+        items = reimbSubmissionControl.getItems(employee,rulesOid);
+        return items;
+    }
+
+    /**
+     * 规则删除
+     * @param employee
+     * @param rulesOid
+     * @throws HttpStatusException
+     */
+    public void deleteReimbSubmissionRules(Employee employee,String rulesOid) throws HttpStatusException{
+        reimbSubmissionControl.deleteReimbSubmissionControlRules(employee,rulesOid);
     }
 }

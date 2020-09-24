@@ -21,11 +21,11 @@ import java.util.List;
  * @Date 2020/9/18
  * @Version 1.0
  **/
-public class SyncApproval {
+public class SyncService {
 
     private InfraStructure infraStructure;
 
-    public SyncApproval(){
+    public SyncService(){
         infraStructure = new InfraStructure();
     }
 

@@ -2,12 +2,9 @@ package com.test.api.testcase.vendor;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.infrastructure.employee.InfraEmployee;
 import com.hand.basicObject.supplierObject.employeeInfoDto.EmployeeDTO;
-import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoDTO;
 import com.hand.basicconstant.CardType;
 import com.hand.basicconstant.TmcChannel;
 import com.hand.utils.GsonUtil;
@@ -15,7 +12,7 @@ import com.test.BaseTest;
 import com.test.api.method.Infra.EmployeeMethod.EmployeeManagePage;
 import com.test.api.method.InfraStructure;
 import com.test.api.method.Vendor;
-import com.test.api.method.VendorMethod.SyncApproval;
+import com.test.api.method.VendorMethod.SyncService;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import java.util.ArrayList;
@@ -26,7 +23,7 @@ public class SyncEmployee extends BaseTest {
     private EmployeeManagePage employeeManagePage;
     private InfraStructure infraStructure;
     private Vendor vendor;
-    private SyncApproval syncApproval;
+    private SyncService syncService;
 
 
     @BeforeClass
@@ -36,7 +33,7 @@ public class SyncEmployee extends BaseTest {
         employeeManagePage =new EmployeeManagePage();
         infraStructure =new InfraStructure();
         vendor =new Vendor();
-        syncApproval =new SyncApproval();
+        syncService =new SyncService();
     }
 
     @Test(description = "新增员正常流程,")
@@ -48,8 +45,8 @@ public class SyncEmployee extends BaseTest {
         Thread.sleep(10000);
         JsonObject userCardInfo=employeeManagePage.addUserCard(employee,userOID,CardType.CHINA_ID,"身份证名字",true);//新增身份证 启用 名字：身份证名字
         JsonArray userCardInfos = infraStructure.queryUserCard(employee);
-        ArrayList cardList = syncApproval.addUserCardInfoDTO(userCardInfos);
-        EmployeeDTO a = syncApproval.addEmloyeeDTO(empObject,userCardInfo,departCode,bookClass,employee,cardList);
+        ArrayList cardList = syncService.addUserCardInfoDTO(userCardInfos);
+        EmployeeDTO a = syncService.addEmloyeeDTO(empObject,userCardInfo,departCode,bookClass,employee,cardList);
         JsonObject b =infraStructure.queryUserSync(employee,TmcChannel.DT,"","M0066");
 
         System.out.println(GsonUtil.objectToString(a));

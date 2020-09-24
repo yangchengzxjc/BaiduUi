@@ -10,6 +10,7 @@ import com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity.*;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
 import com.test.api.method.InfraStructure;
+import com.test.api.method.TravelApplication;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -166,7 +167,7 @@ public class SyncService {
      * @param travelTrainItineraries
      * @return
      */
-    public SyncEntity setSyncEntity(BookClerk bookClerk, JsonObject applicationDetail, JsonObject itinerary, List<Participant> participants, List<TravelFlightItinerary> travelItineraries,List<TravelHotelItinerary> travelHotelItineraries,List<TravelTrainItinerary> travelTrainItineraries){
+    public SyncEntity setSyncEntity(Employee employee, TravelApplication travelApplication,BookClerk bookClerk, JsonObject applicationDetail, JsonObject itinerary, List<Participant> participants, List<TravelFlightItinerary> travelItineraries, List<TravelHotelItinerary> travelHotelItineraries, List<TravelTrainItinerary> travelTrainItineraries) throws HttpStatusException {
         JsonArray customFormValues = applicationDetail.get("custFormValues").getAsJsonArray();
         JsonObject costCenter = new JsonObject();
         if(GsonUtil.isNotEmpt(customFormValues)){
@@ -178,7 +179,13 @@ public class SyncService {
         syncEntity.setStatus(1);
         syncEntity.setBookClerk(bookClerk);
         syncEntity.setBusinessCode(applicationDetail.get("businessCode").getAsString());
-        syncEntity.setApprovalCode(itinerary.get("approvalNum").getAsString());
+        if(itinerary.get("approvalNum").isJsonNull()){
+            //判断行程单号是否为空 为空则为审批单未审批通过 重新获取审批单行程详情
+            JsonObject filght = travelApplication.getItinerary(employee,applicationDetail.get("applicationOID").getAsString(),"FLIGHT").get(0).getAsJsonObject();
+            syncEntity.setApprovalCode(filght.get("approvalNum").getAsString());
+        }else{
+            syncEntity.setApprovalCode(itinerary.get("approvalNum").getAsString());
+        }
         syncEntity.setCostCenter1(costCenter.get("value").getAsString());
         syncEntity.setParticipantList(participants);
         syncEntity.setTravelFlightsList(travelItineraries);

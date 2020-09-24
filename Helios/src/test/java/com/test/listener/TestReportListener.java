@@ -122,7 +122,7 @@ public class TestReportListener implements IReporter{
             List<ReportInfo> listInfo = new ArrayList<ReportInfo>();
             int index = 0;
             for (ITestResult result : list) {
-                String testName = result.getTestContext().getCurrentXmlTest().getName();
+                String testName = result.getMethod().getMethodName();
                 if(index==0){
                     SimpleDateFormat formatter = new SimpleDateFormat ("yyyyMMddHHmmssSSS");
                     beginTime = formatter.format(new Date(result.getStartMillis()));

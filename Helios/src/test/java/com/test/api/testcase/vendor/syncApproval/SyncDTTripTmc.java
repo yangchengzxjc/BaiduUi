@@ -12,6 +12,7 @@ import com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity.Parti
 import com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity.SyncEntity;
 import com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity.TravelFlightItinerary;
 import com.hand.basicconstant.SupplierOID;
+import com.hand.basicconstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
@@ -48,6 +49,10 @@ public class SyncDTTripTmc extends BaseTest {
     private Vendor vendor;
     private SyncService syncService;
 
+    /**
+     * 申请单表单配置描述： 控件：成本中心  需在表单设置->表单管理中消费商管控中开启成本中心1， 选择系统字段 成本中心 OID
+     * 行程字段全部开启
+     */
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
@@ -61,8 +66,9 @@ public class SyncDTTripTmc extends BaseTest {
         syncService =new SyncService();
     }
 
+
     @Test(description = "消费商-大唐消费商单程-国内")
-    public void setSyncApprovalTest1() throws HttpStatusException {
+    public void dttSyncApprovalTest1() throws HttpStatusException {
         FormComponent component =new FormComponent();
         component.setCause("大唐TMC审批单同步数据校验");
         component.setDepartment(employee.getDepartmentOID());
@@ -103,11 +109,11 @@ public class SyncDTTripTmc extends BaseTest {
         TravelFlightItinerary travelFlightItinerary = syncService.setTravelFlight(filght,floatDay);
         ArrayList<TravelFlightItinerary> travelFlightItineraries = new ArrayList<>();
         travelFlightItineraries.add(travelFlightItinerary);
-        SyncEntity syncEntity = syncService.setSyncEntity(bookClerk,traveApplicationDetail,filght,participants,travelFlightItineraries,null,null);
+        SyncEntity syncEntity = syncService.setSyncEntity(employee,travelApplication,bookClerk,traveApplicationDetail,filght,participants,travelFlightItineraries,null,null);
         JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(syncEntity)).getAsJsonObject();
         log.info("封装的数据为：{}",syncEntityJson);
         //查询tmc 同步的数据
-        JsonObject tmcdata = vendor.getTMCPlan(employee,"supplyDttripTmcService",filght.get("approvalNum").getAsString());
+        JsonObject tmcdata = vendor.getTMCPlan(employee, TmcChannel.DT.getValue(),filght.get("approvalNum").getAsString());
         log.info("查询的数据为：{}",tmcdata);
         String tmcRequest = tmcdata.get("request").getAsString();
         String tmcResponse = tmcdata.get("response").getAsString();
@@ -117,7 +123,7 @@ public class SyncDTTripTmc extends BaseTest {
 
 
     @Test(description = "消费商-大唐消费商往返-国内")
-    public void setSyncApprovalTest2() throws HttpStatusException {
+    public void dttSyncApprovalTest2() throws HttpStatusException {
         FormComponent component =new FormComponent();
         component.setCause("大唐TMC审批单同步数据校验");
         component.setDepartment(employee.getDepartmentOID());
@@ -158,11 +164,11 @@ public class SyncDTTripTmc extends BaseTest {
         TravelFlightItinerary travelFlightItinerary = syncService.setTravelFlight(filght,floatDay);
         ArrayList<TravelFlightItinerary> travelFlightItineraries = new ArrayList<>();
         travelFlightItineraries.add(travelFlightItinerary);
-        SyncEntity syncEntity = syncService.setSyncEntity(bookClerk,traveApplicationDetail,filght,participants,travelFlightItineraries,null,null);
+        SyncEntity syncEntity = syncService.setSyncEntity(employee,travelApplication,bookClerk,traveApplicationDetail,filght,participants,travelFlightItineraries,null,null);
         JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(syncEntity)).getAsJsonObject();
         log.info("封装的数据为：{}",syncEntityJson);
         //查询tmc 同步的数据
-        JsonObject tmcdata = vendor.getTMCPlan(employee,"supplyDttripTmcService",filght.get("approvalNum").getAsString());
+        JsonObject tmcdata = vendor.getTMCPlan(employee,TmcChannel.DT.getValue(),filght.get("approvalNum").getAsString());
         log.info("查询的数据为：{}",tmcdata);
         String tmcRequest = tmcdata.get("request").getAsString();
         String tmcResponse = tmcdata.get("response").getAsString();

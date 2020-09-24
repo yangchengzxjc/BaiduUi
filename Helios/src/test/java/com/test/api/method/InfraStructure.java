@@ -373,15 +373,16 @@ public class InfraStructure {
     }
 
     /**
-     * 查询本人人员证件
+     * 查询  所有证件
      * @param employee
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray queryUserCard(Employee employee) throws HttpStatusException {
-        JsonArray json = infraStructureApi.queryUserCard(employee);
+    public JsonArray queryUserCard(Employee employee,String userOID) throws HttpStatusException {
+        JsonArray json = infraStructureApi.queryUserCard(employee,userOID);
         return json;
     }
+
 
     /**
      * 查询其他人员证件

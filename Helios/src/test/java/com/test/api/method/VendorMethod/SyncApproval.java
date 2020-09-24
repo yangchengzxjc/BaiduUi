@@ -112,7 +112,7 @@ public class SyncApproval {
         BookClerk bookClerk = new BookClerk();
         JsonObject card =new JsonObject();
         //获取身份证信息
-        JsonArray cardList = infraStructure.queryUserCard(employee);
+        JsonArray cardList = infraStructure.queryUserCard(employee,"");
         //获取用户基本信息
         JsonObject bookInfo = infraStructure.getUserDetail(employee,travelApplication.get("bookingClerkName").getAsString());
         if(GsonUtil.isNotEmpt(cardList)){
@@ -299,24 +299,14 @@ public class SyncApproval {
      * @param cardList
      * @return employeeDTO
      */
-    public EmployeeDTO addEmloyeeDTO(JsonObject empObject,JsonObject userCardInfo,JsonObject departCode,JsonObject bookClass,Employee employee,ArrayList cardList){
+    public EmployeeDTO addEmployeeDTO(JsonObject empObject, JsonObject userCardInfo, JsonObject departCode, JsonObject bookClass, Employee employee, ArrayList cardList){
         EmployeeDTO employeeDTO = new EmployeeDTO();
-        if (empObject.get("status").toString().equals("1001")) {
-            employeeDTO.setStatus("1");
-        }
-        else{
-            employeeDTO.setStatus("0");
-        }
+        employeeDTO.setStatus((empObject.get("status").toString().equals("1001"))?"1":"0");
         employeeDTO.setFullName(empObject.get("fullName").getAsString());
         employeeDTO.setEmployeeID(empObject.get("employeeID").getAsString());
         employeeDTO.setMobile(empObject.get("mobile").getAsString());
         employeeDTO.setEmail(empObject.get("email").getAsString());
-        if (userCardInfo.get("lastName").toString() != null) {
-            employeeDTO.setName(userCardInfo.get("lastName").getAsString());
-        }
-        else {
-            employeeDTO.setName(empObject.get("fullName").getAsString());//优先身份证名字 没有就取系统名字
-        }
+        employeeDTO.setName((userCardInfo.get("lastName").toString() != null)?userCardInfo.get("lastName").getAsString():empObject.get("fullName").getAsString());
         if (userCardInfo.get("cardType").toString().equals("102")){
             employeeDTO.setEnFirstName(userCardInfo.get("firstName").getAsString());
             employeeDTO.setEnLastName(userCardInfo.get("lastName").getAsString());

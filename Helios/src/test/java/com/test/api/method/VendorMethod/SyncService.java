@@ -93,18 +93,18 @@ public class SyncService {
         travelFlightItinerary.setArrivalBegin(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),-(floatDays.get("start").getAsInt())));
         //单程的话 enddate为null   取值为startDate+浮动天数  如果为往返的话 endDate 有值  为endDate+浮动天数
         if(itinerary.get("itineraryType").getAsInt()==1001){
-            travelFlightItinerary.setTakeOffEndTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
-            travelFlightItinerary.setArrivalEndTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
-            travelFlightItinerary.setArrivalEnd(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt()));
-            travelFlightItinerary.setTakeOffEnd(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt()));
+            travelFlightItinerary.setTakeOffEndTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("end").getAsInt())+" 00:00:00");
+            travelFlightItinerary.setArrivalEndTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("end").getAsInt())+" 00:00:00");
+            travelFlightItinerary.setArrivalEnd(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("end").getAsInt()));
+            travelFlightItinerary.setTakeOffEnd(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("end").getAsInt()));
         }else{
-            travelFlightItinerary.setTakeOffEndTime(UTCTime.utcToBJDate(itinerary.get("endDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
-            travelFlightItinerary.setArrivalEndTime(UTCTime.utcToBJDate(itinerary.get("endDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
-            travelFlightItinerary.setArrivalEnd(UTCTime.utcToBJDate(itinerary.get("endDate").getAsString(),floatDays.get("start").getAsInt()));
-            travelFlightItinerary.setTakeOffEnd(UTCTime.utcToBJDate(itinerary.get("endDate").getAsString(),floatDays.get("start").getAsInt()));
+            travelFlightItinerary.setTakeOffEndTime(UTCTime.utcToBJDate(itinerary.get("endDate").getAsString(),floatDays.get("end").getAsInt())+" 00:00:00");
+            travelFlightItinerary.setArrivalEndTime(UTCTime.utcToBJDate(itinerary.get("endDate").getAsString(),floatDays.get("end").getAsInt())+" 00:00:00");
+            travelFlightItinerary.setArrivalEnd(UTCTime.utcToBJDate(itinerary.get("endDate").getAsString(),floatDays.get("end").getAsInt()));
+            travelFlightItinerary.setTakeOffEnd(UTCTime.utcToBJDate(itinerary.get("endDate").getAsString(),floatDays.get("end").getAsInt()));
         }
-        travelFlightItinerary.setFloatDaysBegin(4);
-        travelFlightItinerary.setFloatDaysEnd(4);
+        travelFlightItinerary.setFloatDaysBegin(floatDays.get("start").getAsInt());
+        travelFlightItinerary.setFloatDaysEnd(floatDays.get("end").getAsInt());
         return travelFlightItinerary;
     }
 
@@ -119,8 +119,18 @@ public class SyncService {
         JsonObject card =new JsonObject();
         //获取身份证信息
         JsonArray cardList = infraStructure.queryUserCard(employee,"");
-        //获取用户基本信息
-        JsonObject bookInfo = infraStructure.getUserDetail(employee,travelApplication.get("bookingClerkName").getAsString());
+        //获取用户基本信
+        String bookUserOID ="";
+        try {
+            bookUserOID = travelApplication.get("bookingClerkOID").getAsString();
+        }catch (NullPointerException e) {
+            try {
+                bookUserOID = travelApplication.get("trainBookingClerkOID").getAsString();
+            } catch (NullPointerException e1) {
+                bookUserOID = travelApplication.get("hotelBookingClerkOID").getAsString();
+            }
+        }
+        JsonObject bookInfo = infraStructure.getEmployeeDetail(employee,bookUserOID);
         if(GsonUtil.isNotEmpt(cardList)){
             card = GsonUtil.getJsonValue(cardList,"cardTypeName","身份证");
         }
@@ -167,7 +177,7 @@ public class SyncService {
      * @param travelTrainItineraries
      * @return
      */
-    public SyncEntity setSyncEntity(Employee employee, TravelApplication travelApplication,BookClerk bookClerk, JsonObject applicationDetail, JsonObject itinerary, List<Participant> participants, List<TravelFlightItinerary> travelItineraries, List<TravelHotelItinerary> travelHotelItineraries, List<TravelTrainItinerary> travelTrainItineraries) throws HttpStatusException {
+    public SyncEntity setSyncEntity(Employee employee,String itineraryType,TravelApplication travelApplication,BookClerk bookClerk, JsonObject applicationDetail, JsonObject itinerary, List<Participant> participants, List<TravelFlightItinerary> travelItineraries, List<TravelHotelItinerary> travelHotelItineraries, List<TravelTrainItinerary> travelTrainItineraries) throws HttpStatusException {
         JsonArray customFormValues = applicationDetail.get("custFormValues").getAsJsonArray();
         JsonObject costCenter = new JsonObject();
         if(GsonUtil.isNotEmpt(customFormValues)){
@@ -179,12 +189,22 @@ public class SyncService {
         syncEntity.setStatus(1);
         syncEntity.setBookClerk(bookClerk);
         syncEntity.setBusinessCode(applicationDetail.get("businessCode").getAsString());
-        if(itinerary.get("approvalNum").isJsonNull()){
-            //判断行程单号是否为空 为空则为审批单未审批通过 重新获取审批单行程详情
-            JsonObject filght = travelApplication.getItinerary(employee,applicationDetail.get("applicationOID").getAsString(),"FLIGHT").get(0).getAsJsonObject();
-            syncEntity.setApprovalCode(filght.get("approvalNum").getAsString());
-        }else{
-            syncEntity.setApprovalCode(itinerary.get("approvalNum").getAsString());
+        try{
+            if(itinerary.get("approvalNum").isJsonNull()){
+                //判断行程单号是否为空 为空则为审批单未审批通过 重新获取审批单行程详情
+                JsonObject filght = travelApplication.getItinerary(employee,applicationDetail.get("applicationOID").getAsString(),itineraryType).get(0).getAsJsonObject();
+                syncEntity.setApprovalCode(filght.get("approvalNum").getAsString());
+            }else{
+                syncEntity.setApprovalCode(itinerary.get("approvalNum").getAsString());
+            }
+        }catch (NullPointerException e){
+            if(itinerary.get("approvalNumber").isJsonNull()){
+                //判断行程单号是否为空 为空则为审批单未审批通过 重新获取审批单行程详情
+                JsonObject filght = travelApplication.getItinerary(employee,applicationDetail.get("applicationOID").getAsString(),itineraryType).get(0).getAsJsonObject();
+                syncEntity.setApprovalCode(filght.get("approvalNumber").getAsString());
+            }else{
+                syncEntity.setApprovalCode(itinerary.get("approvalNumber").getAsString());
+            }
         }
         syncEntity.setCostCenter1(costCenter.get("value").getAsString());
         syncEntity.setParticipantList(participants);
@@ -199,12 +219,12 @@ public class SyncService {
      * @param itinerary 酒店行程中的
      * @return
      */
-    public TravelHotelItinerary setTravelHotelItinerary(JsonObject itinerary){
+    public TravelHotelItinerary setTravelHotelItinerary(JsonObject itinerary,JsonObject floatDays){
         TravelHotelItinerary travelHotelItinerary =new TravelHotelItinerary();
         travelHotelItinerary.setCity(itinerary.get("cityName").getAsString());
         travelHotelItinerary.setCityCode(itinerary.get("cityCode").getAsString());
-        travelHotelItinerary.setFromDate(UTCTime.utcToBJDate(itinerary.get("fromDate").getAsString(),0)+" 00:00:00");
-        travelHotelItinerary.setLeaveDate(UTCTime.utcToBJDate(itinerary.get("leaveDate").getAsString(),0)+" 00:00:00");
+        travelHotelItinerary.setFromDate(UTCTime.utcToBJDate(itinerary.get("fromDate").getAsString(),-(floatDays.get("start").getAsInt()))+" 00:00:00");
+        travelHotelItinerary.setLeaveDate(UTCTime.utcToBJDate(itinerary.get("leaveDate").getAsString(),floatDays.get("end").getAsInt())+" 00:00:00");
         travelHotelItinerary.setMaxPrice(itinerary.get("maxPrice").getAsString());
         if(!itinerary.get("minPrice").isJsonNull()){
             travelHotelItinerary.setMinPrice(itinerary.get("minPrice").getAsString());
@@ -212,7 +232,8 @@ public class SyncService {
         travelHotelItinerary.setRoomNumber(itinerary.get("roomNumber").getAsInt());
         travelHotelItinerary.setCities(new ArrayList<>());
         travelHotelItinerary.setCityCodes(new ArrayList<>());
-        travelHotelItinerary.setFloatDaysBegin(4);
+        travelHotelItinerary.setFloatDaysBegin(floatDays.get("start").getAsInt());
+        travelHotelItinerary.setFloatDaysEnd(floatDays.get("end").getAsInt());
         return travelHotelItinerary;
     }
 
@@ -240,7 +261,6 @@ public class SyncService {
         ArrayList<String> seatClass =new ArrayList<>();
         seatClass.add(seatClassMapping.get(seatType));
         TravelTrainItinerary travelTrainItinerary =new TravelTrainItinerary();
-        travelTrainItinerary.setItineraryType(itinerary.get("itineraryType").getAsInt());
         travelTrainItinerary.setFromCity(itinerary.get("fromCity").getAsString());
         travelTrainItinerary.setToCity(itinerary.get("toCity").getAsString());
         travelTrainItinerary.setFromCityCode(itinerary.get("fromCityCode").getAsString());
@@ -259,22 +279,14 @@ public class SyncService {
         travelTrainItinerary.setToCities(toCityCodes);
         travelTrainItinerary.setTicketPrice(itinerary.get("ticketPrice").getAsBigDecimal());
         //判断下起飞开始结束时间是否存在
-        if(itinerary.get("takeOffBeginTime").isJsonNull()){
-            travelTrainItinerary.setTakeOffBeginTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),-(floatDays.get("start").getAsInt()))+" 00:00:00");
-        }else{
-            travelTrainItinerary.setTakeOffBeginTime(UTCTime.utcToBJDate(itinerary.get("takeOffBeginTime").getAsString(),-(floatDays.get("start").getAsInt())));
-        }
-        if(itinerary.get("takeOffEndTime").isJsonNull()){
-            travelTrainItinerary.setTakeOffBeginTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
-        }else{
-            travelTrainItinerary.setTakeOffBeginTime(UTCTime.utcToBJDate(itinerary.get("takeOffEndTime").getAsString(),floatDays.get("start").getAsInt()));
-        }
+        travelTrainItinerary.setTakeOffBeginTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),-(floatDays.get("start").getAsInt()))+" 00:00:00");
+        travelTrainItinerary.setTakeOffEndTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("end").getAsInt())+" 00:00:00");
         //初始化到达时间
         travelTrainItinerary.setArrivalBeginTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),-(floatDays.get("start").getAsInt()))+" 00:00:00");
-        travelTrainItinerary.setArrivalEndTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
+        travelTrainItinerary.setArrivalEndTime(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("end").getAsInt())+" 00:00:00");
         travelTrainItinerary.setSeatType(seatClass);
-        travelTrainItinerary.setFloatDaysBegin(4);
-        travelTrainItinerary.setFloatDaysEnd(4);
+        travelTrainItinerary.setFloatDaysBegin(floatDays.get("start").getAsInt());
+        travelTrainItinerary.setFloatDaysEnd(floatDays.get("end").getAsInt());
         return travelTrainItinerary;
     }
 

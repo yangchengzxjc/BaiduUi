@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 /**
  * @Author peng.zhang
  * @Date 2020/7/9
@@ -11,18 +13,24 @@ import lombok.NoArgsConstructor;
  **/
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class TrainItinerary {
     //出发城市
-    String fromCity;
+    private String fromCity;
     //到达城市
-    String toCity;
+    private String toCity;
     //出发时间   2020-07-06T16:00:00Z
-    String startDate;
+    private String startDate;
     //供应商
-    String supplierOID;
+    private String supplierOID;
     //出发城市code
-    String fromCityCode;
+    private String fromCityCode;
     // 到达城市code
-    String toCityCode;
+    private String toCityCode;
+    //价格
+    private BigDecimal ticketPrice;
+    private String seatClassCode;
+    private String seatClass;
+
 
 }

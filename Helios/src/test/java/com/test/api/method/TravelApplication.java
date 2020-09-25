@@ -13,8 +13,10 @@ import com.hand.basicObject.FormComponent;
 import com.hand.basicObject.itinerary.HotelItinerary;
 import com.hand.basicObject.itinerary.TrainItinerary;
 import com.hand.utils.GsonUtil;
+import com.hand.utils.RandomNumber;
 import lombok.extern.slf4j.Slf4j;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -138,12 +140,54 @@ public class TravelApplication {
         JsonArray custFormValues = applicationDetail.get("custFormValues").getAsJsonArray();
         //检查申请单是否存预算费用 如果包含此字符串则预算费用为空
         String budgetExpense = getBudgetExpense(employee,applicationOID);
+        JsonObject budgetExpenseobject =new JsonParser().parse(budgetExpense).getAsJsonObject();
         log.info("获取的申请单的预算为:{}",budgetExpense);
-        if(budgetExpense.contains("\"amount\":0,")) {
-            //找到那个预算明细的控件  手动新建预算费用
+        //判断预算费用是否存在  如果预算费用的总费用为0的话说明没有预算费用  需要手动添加费用
+        BigDecimal amount = new BigDecimal(RandomNumber.getRandomNumber(300,1000));
+        if(budgetExpenseobject.get("amount").getAsBigDecimal().compareTo(new BigDecimal(0))==0){
+            //判断下手动添加的是否为空 为空的话 默认自动带出了预算费用
+            if(budgetDetail.equals("")){
+                BigDecimal allAmount =new BigDecimal(0);
+                for(int j=0;j<budgetExpenseobject.getAsJsonArray("budgetDetail").size();j++){
+                    //如果获取到的预算费用类型金额为零的话则修改费用金额
+                    JsonObject budgetDetaildto = budgetExpenseobject.getAsJsonArray("budgetDetail").get(j).getAsJsonObject();
+                    log.info("费用金额为：{}",budgetDetaildto.get("amount").getAsBigDecimal());
+                    if(budgetDetaildto.get("amount").getAsBigDecimal().compareTo(new BigDecimal(0.0).setScale(1))==0){
+                        budgetDetaildto.addProperty("amount",amount);
+                        log.info("添加的费用金额为：{}",amount);
+                        budgetDetaildto.addProperty("baseCurrencyAmount",amount);
+                    }
+                    allAmount = allAmount.add(budgetDetaildto.get("amount").getAsBigDecimal());
+                }
+                budgetExpenseobject.addProperty("amount",allAmount);
+                for (int i = 0; i < custFormValues.size(); i++) {
+                    if (custFormValues.get(i).getAsJsonObject().get("fieldName").getAsString().equals("预算明细")) {
+                        custFormValues.get(i).getAsJsonObject().addProperty("value",budgetExpenseobject.toString());
+                    }
+                }
+            }else{
+                for (int i = 0; i < custFormValues.size(); i++) {
+                    if (custFormValues.get(i).getAsJsonObject().get("fieldName").getAsString().equals("预算明细")) {
+                        custFormValues.get(i).getAsJsonObject().addProperty("value", budgetDetail);
+                    }
+                }
+            }
+        }else{
+            //如果不是零的话  就检查一下每一个费用的金额是否为零 如果有金额为零的话就自动修改金额 并手动重新添加预算费用
+            BigDecimal allAmount =new BigDecimal(0);
+            for(int j=0;j<budgetExpenseobject.getAsJsonArray("budgetDetail").size();j++){
+                //如果获取到的预算费用类型金额为零的话则修改费用金额
+                JsonObject budgetDetaildto = budgetExpenseobject.getAsJsonArray("budgetDetail").get(j).getAsJsonObject();
+                if(budgetDetaildto.get("amount").getAsBigDecimal().compareTo(new BigDecimal(0.0).setScale(1))==0){
+                    budgetDetaildto.addProperty("amount",amount);
+                    budgetDetaildto.addProperty("baseCurrencyAmount",amount);
+                }
+                allAmount = allAmount.add(budgetDetaildto.get("amount").getAsBigDecimal());
+            }
+            budgetExpenseobject.addProperty("amount",allAmount);
             for (int i = 0; i < custFormValues.size(); i++) {
                 if (custFormValues.get(i).getAsJsonObject().get("fieldName").getAsString().equals("预算明细")) {
-                    custFormValues.get(i).getAsJsonObject().addProperty("value", budgetDetail);
+                    custFormValues.get(i).getAsJsonObject().addProperty("value",budgetExpenseobject.toString());
                 }
             }
         }

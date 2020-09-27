@@ -2,6 +2,7 @@ package com.test.api.testcase.vendor;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.employeeInfoDto.EmployeeDTO;
@@ -16,6 +17,8 @@ import com.test.api.method.VendorMethod.SyncService;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class SyncEmployee extends BaseTest {
@@ -38,18 +41,26 @@ public class SyncEmployee extends BaseTest {
 
     @Test(description = "新增员正常流程,")
     public void addEmployeeTest01() throws HttpStatusException, InterruptedException {
-        JsonObject empObject = employeeManagePage.addEmployee(employee, "测试接口新建Q66","","M0066","M0066@163.COM","人员类型01","","甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
+        String a = "97";
+        String empID="M00"+a;
+        JsonObject empObject = employeeManagePage.addEmployee(employee, "测试接口新建Q"+a,"",empID,"M00"+a+"@163.COM","人员类型01","","甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
         String userOID=empObject.get("userOID").getAsString();
         JsonObject bookClass = vendor.queryBookClass(employee);
         JsonObject departCode = infraStructure.searchDepartmentDetail(employee,empObject.get("departmentOID").getAsString());
         Thread.sleep(10000);
-        JsonObject userCardInfo=employeeManagePage.addUserCard(employee,userOID,CardType.CHINA_ID,"身份证名字",true);//新增身份证 启用 名字：身份证名字
+//        JsonObject chinaID=employeeManagePage.addUserCard(employee,userOID,CardType.CHINA_ID,"","身份证名字",true);//新增身份证 启用 名字：身份证名字
+//        employeeManagePage.addUserCard(employee,userOID,CardType.PASSPORT,"护照名","护照姓",true);//新增护照 启用
+
         JsonArray userCardInfos = infraStructure.queryUserCard(employee,userOID);
         ArrayList cardList = syncService.addUserCardInfoDTO(userCardInfos);
-        EmployeeDTO a = syncService.addEmloyeeDTO(empObject,userCardInfo,departCode,bookClass,employee,cardList);
-        JsonObject b =infraStructure.queryUserSync(employee,TmcChannel.DT,"","M0066");
+        Thread.sleep(15000);
+        EmployeeDTO b = syncService.addEmployeeDTO(empObject,departCode,bookClass,employee,cardList);
+        JsonObject c =infraStructure.queryUserSync(employee,TmcChannel.DT,"",empID);
 
-        System.out.println(GsonUtil.objectToString(a));
+        System.out.println(GsonUtil.objectToString(b));
+        System.out.println(c);
+        HashMap<String, String> map = new HashMap();
+        assert GsonUtil.compareJsonObject(new JsonParser().parse(GsonUtil.objectToString(b)).getAsJsonObject(),c,map);
     }
 
     @Test(description = "离职员工正常流程")

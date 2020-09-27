@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public class EmployeeDTO {
     //审批单状态
-    private String status;
+    private Integer status;
     //汇联易系统员工名
     private String fullName;
     //员工工号

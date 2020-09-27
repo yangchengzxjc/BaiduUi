@@ -331,6 +331,7 @@ public class InfraStructureApi extends BaseRequest{
         JsonObject body = new JsonObject();
         body.addProperty("cardType",userCardInfoEntity.getCardType().getCardCode());
         body.addProperty("contactCardOID",userCardInfoEntity.getContactCardOID());
+        body.addProperty("firstName",userCardInfoEntity.getFirstName());
         body.addProperty("lastName",userCardInfoEntity.getLastName());
         body.addProperty("gender",userCardInfoEntity.getGender());
         body.addProperty("birthday",userCardInfoEntity.getBirthday());

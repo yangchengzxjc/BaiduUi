@@ -199,10 +199,11 @@ public class EmployeeManagePage {
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject addUserCard(Employee employee,String userOID, CardType cardType,String lastName,Boolean enable) throws HttpStatusException {
+    public JsonObject addUserCard(Employee employee,String userOID, CardType cardType,String firstName,String lastName,Boolean enable) throws HttpStatusException {
         UserCardInfoEntity userCardInfoEntity = new UserCardInfoEntity();
         userCardInfoEntity.setCardType(cardType);
         userCardInfoEntity.setContactCardOID(null);
+        userCardInfoEntity.setFirstName(firstName);
         userCardInfoEntity.setLastName(lastName);
         userCardInfoEntity.setGender("0");
         userCardInfoEntity.setBirthday("2020-07-29T10:25:11+08:00");

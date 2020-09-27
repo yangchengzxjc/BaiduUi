@@ -1,7 +1,9 @@
 package com.test.api.method.VendorMethod;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.employeeInfoDto.EmployeeDTO;
@@ -318,31 +320,35 @@ public class SyncService {
     /**
      * 封装开发平台openApi 人员同步对象
      * @param empObject
-     * @param userCardInfo
      * @param departCode
      * @param bookClass
      * @param employee
      * @param cardList
      * @return employeeDTO
      */
-    public EmployeeDTO addEmployeeDTO(JsonObject empObject, JsonObject userCardInfo, JsonObject departCode, JsonObject bookClass, Employee employee, ArrayList cardList){
+    public EmployeeDTO addEmployeeDTO(JsonObject empObject, JsonObject departCode, JsonObject bookClass, Employee employee, ArrayList cardList){
+        JsonArray cardLists = new JsonParser().parse(GsonUtil.objectToString(cardList)).getAsJsonArray();
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO.setStatus((empObject.get("status").getAsString().equals("1001"))?1:0);
-        employeeDTO.setFullName(userCardInfo.get("lastName").getAsString());//只新增了一个身份证，优先身份证>护照>fullName
+        employeeDTO.setFullName((GsonUtil.getJsonValue(cardLists,"cardType","101","lastName") != "")?
+                GsonUtil.getJsonValue(cardLists,"cardType","102","lastName"):
+                empObject.get("fullName").getAsString());
         employeeDTO.setEmployeeID(empObject.get("employeeID").getAsString());
         employeeDTO.setMobile(empObject.get("mobile").getAsString());
         employeeDTO.setEmail(empObject.get("email").getAsString());
-        employeeDTO.setName((userCardInfo.get("lastName").toString() != null)?userCardInfo.get("lastName").getAsString():empObject.get("fullName").getAsString());
-        if (userCardInfo.get("cardType").toString().equals("102")){
-            employeeDTO.setEnFirstName(userCardInfo.get("firstName").getAsString());
-            employeeDTO.setEnLastName(userCardInfo.get("lastName").getAsString());
+        employeeDTO.setName((GsonUtil.getJsonValue(cardLists,"cardType","101","lastName") != "")?
+                GsonUtil.getJsonValue(cardLists,"cardType","102","lastName"):
+                "");
+        if (GsonUtil.getJsonValue(cardLists,"cardType","102","lastName") != ""){
+            employeeDTO.setEnFirstName(GsonUtil.getJsonValue(cardLists,"cardType","102","firstName"));
+            employeeDTO.setEnLastName(GsonUtil.getJsonValue(cardLists,"cardType","102","lastName"));
         }
         else {
             employeeDTO.setEnFirstName(null);
             employeeDTO.setEnLastName(null);
         }
         employeeDTO.setNationality(null);
-        employeeDTO.setGender(empObject.get("genderCode").getAsString());
+        employeeDTO.setGender(empObject.get("genderCode").getAsString() == "1"?"F":"M");
         employeeDTO.setRankName(empObject.get("rank").getAsString());
         employeeDTO.setIsBookClass(bookClass.get("isBookClass").getAsString());
         employeeDTO.setIntlBookClassBlock(bookClass.get("intlBookClassBlock").getAsString());

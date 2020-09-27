@@ -115,10 +115,9 @@ public class SyncDTTripTmc extends BaseTest {
         //查询tmc 同步的数据
         JsonObject tmcdata = vendor.getTMCPlan(employee, TmcChannel.DT.getValue(),filght.get("approvalNum").getAsString());
         log.info("查询的数据为：{}",tmcdata);
-        String tmcRequest = tmcdata.get("request").getAsString();
-        String tmcResponse = tmcdata.get("response").getAsString();
-        JsonObject DttripTmcRequestData = new JsonParser().parse(tmcRequest).getAsJsonObject();
-        assert GsonUtil.compareJsonObject(syncEntityJson,DttripTmcRequestData,new HashMap<>());
+        JsonObject dttripTmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
+        JsonObject tmcResponse = tmcdata.getAsJsonObject("response");
+        assert GsonUtil.compareJsonObject(syncEntityJson,dttripTmcRequestData,new HashMap<>());
     }
 
 
@@ -170,10 +169,9 @@ public class SyncDTTripTmc extends BaseTest {
         //查询tmc 同步的数据
         JsonObject tmcdata = vendor.getTMCPlan(employee,TmcChannel.DT.getValue(),filght.get("approvalNum").getAsString());
         log.info("查询的数据为：{}",tmcdata);
-        String tmcRequest = tmcdata.get("request").getAsString();
-        String tmcResponse = tmcdata.get("response").getAsString();
-        JsonObject DttripTmcRequestData = new JsonParser().parse(tmcRequest).getAsJsonObject();
-        assert GsonUtil.compareJsonObject(syncEntityJson,DttripTmcRequestData,new HashMap<>());
+        JsonObject dttripTmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
+        JsonObject tmcResponse = tmcdata.getAsJsonObject("response");
+        assert GsonUtil.compareJsonObject(syncEntityJson,dttripTmcRequestData,new HashMap<>());
 
     }
 }

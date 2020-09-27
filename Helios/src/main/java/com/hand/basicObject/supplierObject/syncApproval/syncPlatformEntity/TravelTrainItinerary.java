@@ -14,7 +14,6 @@ import java.util.List;
 @Data
 public class TravelTrainItinerary {
 
-    private Integer itineraryType;
     private String fromCity;
     private String toCity;
     private String fromCityCode;

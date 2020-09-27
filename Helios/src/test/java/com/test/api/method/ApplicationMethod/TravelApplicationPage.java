@@ -4,12 +4,14 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.basicObject.itinerary.HotelItinerary;
+import com.hand.basicObject.itinerary.TrainItinerary;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import com.test.api.method.ExpenseReportComponent;
 import com.test.api.method.TravelApplication;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 
 /**
  * @Author peng.zhang
@@ -59,6 +61,26 @@ public class TravelApplicationPage {
         flightItinerary.setSupplierOID(supplierOID);
         flightItinerary.setSeatClass("经济舱");
         return flightItinerary;
+    }
+
+    public TrainItinerary setTrainItinerary(Employee employee,String fromCity,String toCity,String startDate,String supplierOID,String seatClass) throws HttpStatusException {
+        HashMap<String,String> setclassCode = new HashMap<>();
+        setclassCode.put("一等座","YDZ");
+        setclassCode.put("二等座","EDZ");
+        setclassCode.put("商务座","SWZ");
+        setclassCode.put("硬座","YZ");
+        setclassCode.put("软卧","RW");
+        TrainItinerary trainItinerary =new TrainItinerary();
+        trainItinerary.setFromCity(fromCity);
+        trainItinerary.setFromCityCode(expenseReportComponent.getCityCode(employee,fromCity));
+        trainItinerary.setStartDate(startDate);
+        trainItinerary.setToCity(toCity);
+        trainItinerary.setToCityCode(expenseReportComponent.getCityCode(employee,toCity));
+        trainItinerary.setSupplierOID(supplierOID);
+        trainItinerary.setTicketPrice(new BigDecimal(RandomNumber.getRandomNumber(400,700)).setScale(1));
+        trainItinerary.setSeatClass(seatClass);
+        trainItinerary.setSeatClassCode(setclassCode.get(seatClass));
+        return trainItinerary;
     }
 
 

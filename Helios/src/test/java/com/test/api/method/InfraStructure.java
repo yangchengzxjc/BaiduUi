@@ -408,7 +408,7 @@ public class InfraStructure {
      * @throws HttpStatusException
      */
     public JsonObject queryUserSync(Employee employee, TmcChannel tmcChannel, String hlyUserMobile, String hlyUserID) throws HttpStatusException {
-        JsonObject jsb = infraStructureApi.queryUserSync(employee,tmcChannel,hlyUserMobile,hlyUserID);
+        JsonObject jsb = infraStructureApi.queryUserSync(employee,tmcChannel,hlyUserMobile,hlyUserID).get(0).getAsJsonObject().get("tmcRequest").getAsJsonObject();
         return jsb;
     }
 

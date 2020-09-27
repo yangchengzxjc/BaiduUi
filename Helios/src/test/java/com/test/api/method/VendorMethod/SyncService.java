@@ -291,7 +291,6 @@ public class SyncService {
             UserCardInfoDTO userCardInfoDTO = new UserCardInfoDTO();
             userCardInfoDTO.setCardNo(jsb.get("originalCardNo").getAsString());
             userCardInfoDTO.setCardType(jsb.get("cardType").getAsString());
-            userCardInfoDTO.setCardTypeName(jsb.get("cardTypeName").getAsString());
             if(jsb.get("cardExpiredTime").isJsonNull()){
 
             }else{
@@ -314,10 +313,10 @@ public class SyncService {
      * @param cardList
      * @return employeeDTO
      */
-    public EmployeeDTO addEmloyeeDTO(JsonObject empObject, JsonObject userCardInfo, JsonObject departCode, JsonObject bookClass, Employee employee, ArrayList cardList){
+    public EmployeeDTO addEmployeeDTO(JsonObject empObject, JsonObject userCardInfo, JsonObject departCode, JsonObject bookClass, Employee employee, ArrayList cardList){
         EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setStatus((empObject.get("status").toString().equals("1001"))?"1":"0");
-        employeeDTO.setFullName(empObject.get("fullName").getAsString());
+        employeeDTO.setStatus((empObject.get("status").getAsString().equals("1001"))?1:0);
+        employeeDTO.setFullName(userCardInfo.get("lastName").getAsString());//只新增了一个身份证，优先身份证>护照>fullName
         employeeDTO.setEmployeeID(empObject.get("employeeID").getAsString());
         employeeDTO.setMobile(empObject.get("mobile").getAsString());
         employeeDTO.setEmail(empObject.get("email").getAsString());

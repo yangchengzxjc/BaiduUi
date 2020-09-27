@@ -428,7 +428,7 @@ public class InfraStructureApi extends BaseRequest{
      * @param hlyUserID
      * @throws HttpStatusException
      */
-    public JsonObject queryUserSync(Employee employee,TmcChannel tmcChannel, String hlyUserMobile, String hlyUserID) throws HttpStatusException {
+    public JsonArray queryUserSync(Employee employee,TmcChannel tmcChannel, String hlyUserMobile, String hlyUserID) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl()+ApiPath.QUERY_USER_SYNC;
         Map<String,String> maps = new HashMap<>();
         maps.put("tmcChannel",tmcChannel.getValue());
@@ -438,6 +438,6 @@ public class InfraStructureApi extends BaseRequest{
         if (res == ""){
             log.info("查询开放平台人员同步入参结果为空，请检查接口请求:tmcChannel:{},hlyUserMobile:{},hlyUserID:{}",tmcChannel,hlyUserMobile,hlyUserID);
         }
-        return new JsonParser().parse(res).getAsJsonObject();
+        return new JsonParser().parse(res).getAsJsonArray();
     }
 }

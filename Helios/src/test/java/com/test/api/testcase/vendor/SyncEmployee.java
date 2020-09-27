@@ -38,7 +38,9 @@ public class SyncEmployee extends BaseTest {
 
     @Test(description = "新增员正常流程,")
     public void addEmployeeTest01() throws HttpStatusException, InterruptedException {
-        JsonObject empObject = employeeManagePage.addEmployee(employee, "测试接口新建Q66","","M0066","M0066@163.COM","人员类型01","","甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
+        String a = "82";
+        String empID="M00"+a;
+        JsonObject empObject = employeeManagePage.addEmployee(employee, "测试接口新建Q"+a,"",empID,"M00"+a+"@163.COM","人员类型01","","甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
         String userOID=empObject.get("userOID").getAsString();
         JsonObject bookClass = vendor.queryBookClass(employee);
         JsonObject departCode = infraStructure.searchDepartmentDetail(employee,empObject.get("departmentOID").getAsString());
@@ -46,10 +48,12 @@ public class SyncEmployee extends BaseTest {
         JsonObject userCardInfo=employeeManagePage.addUserCard(employee,userOID,CardType.CHINA_ID,"身份证名字",true);//新增身份证 启用 名字：身份证名字
         JsonArray userCardInfos = infraStructure.queryUserCard(employee,userOID);
         ArrayList cardList = syncService.addUserCardInfoDTO(userCardInfos);
-        EmployeeDTO a = syncService.addEmloyeeDTO(empObject,userCardInfo,departCode,bookClass,employee,cardList);
-        JsonObject b =infraStructure.queryUserSync(employee,TmcChannel.DT,"","M0066");
+        Thread.sleep(15000);
+        EmployeeDTO b = syncService.addEmployeeDTO(empObject,userCardInfo,departCode,bookClass,employee,cardList);
+        JsonObject c =infraStructure.queryUserSync(employee,TmcChannel.DT,"",empID);
 
-        System.out.println(GsonUtil.objectToString(a));
+        System.out.println(GsonUtil.objectToString(b));
+        System.out.println(GsonUtil.objectToString(c));
     }
 
     @Test(description = "离职员工正常流程")

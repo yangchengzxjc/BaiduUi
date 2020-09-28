@@ -4,9 +4,10 @@
 
     <parameter name="environment" value="${environment}"/>
     <parameter name="passWord" value="hly123456"/>
-
     <test verbose="10" preserve-order="true" name="TMC订单结算数据对比">
-        <parameter name="phoneNumber" value="${phoneNumber}"/>
+        <parameter name="phoneNumber" value="yaliang.wang@cimc.com"/>
+        <parameter name="passWord" value="111111"/>
+        <parameter name="environment" value="stage"/>
         <classes>
             <class name="com.test.api.testcase.vendor.TrainOrderDataTest"/>
             <class name="com.test.api.testcase.vendor.FlightOrderDataTest"/>
@@ -18,7 +19,7 @@
     </test>
 
     <test verbose="10" preserve-order="true" name="TMC同步数据对比">
-        <parameter name="phoneNumber" value="${phoneNumber}"/>
+        <parameter name="phoneNumber" value="14082978000"/>
         <classes>
             <class name="com.test.api.testcase.vendor.syncApproval.SyncCimccTmc"/>
             <class name="com.test.api.testcase.vendor.syncApproval.SyncDTTripTmc"/>

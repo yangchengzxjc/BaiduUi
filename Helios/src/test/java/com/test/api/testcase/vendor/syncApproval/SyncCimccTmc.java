@@ -67,7 +67,7 @@ public class SyncCimccTmc extends BaseTest {
     @DataProvider(name = "TMC")
     public Object[][] tmcData() {
         return new Object[][]{
-                {"supplyCimccTMCService",SupplierOID.cimccTMC},
+                {TmcChannel.CIMCC.getTmcChannel(),TmcChannel.CIMCC.getSupplierOID()},
         };
     }
 
@@ -174,10 +174,10 @@ public class SyncCimccTmc extends BaseTest {
     @Test(description = "审批单同步-中集TMC-酒店行程",dataProvider = "TMC")
     public void cimccSyncApprovalTest3(String tmcChannel,String supplierOID) throws HttpStatusException, InterruptedException {
         FormComponent component =new FormComponent();
-        component.setCause("中集供应商同步测试");
+        component.setCause(tmcChannel+"供应商酒店同步测试");
         component.setDepartment(employee.getDepartmentOID());
-        component.setStartDate(UTCTime.getNowUtcTime());
-        component.setEndDate(UTCTime.getUtcTime(3,0));
+        component.setStartDate(UTCTime.getNowStartUtcDate());
+        component.setEndDate(UTCTime.getUTCDateEnd(5));
         component.setCostCenter("成本中心NO1");
         //添加参与人员  参与人员的value 是一段json数组。
         JsonArray array = new JsonArray();
@@ -188,7 +188,7 @@ public class SyncCimccTmc extends BaseTest {
         //初始化酒店行程  中集
         ArrayList<HotelItinerary> hotelItineraries =new ArrayList<>();
         //酒店行程  开始日期要跟申请单的表头一样
-        HotelItinerary hotelItinerary =new HotelItinerary("北京",1,UTCTime.getNowStartUtcDate(),UTCTime.getUtcStartDate(3),SupplierOID.cimccTMC,expenseReportComponent.getCityCode(employee,"北京"),new BigDecimal(400).setScale(1));
+        HotelItinerary hotelItinerary =new HotelItinerary("北京",1,component.getStartDate(),UTCTime.utcToBJDate(component.getEndDate(),-1)+"T16:00:00Z",supplierOID,expenseReportComponent.getCityCode(employee,"北京"),new BigDecimal(400).setScale(1));
         hotelItineraries.add(hotelItinerary);
         // 添加行程
         travelApplication.addItinerary(employee,applicationOID,hotelItineraries);
@@ -213,14 +213,14 @@ public class SyncCimccTmc extends BaseTest {
         JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(syncEntity)).getAsJsonObject();
         log.info("封装的数据为：{}",syncEntityJson);
         //查询tmc 同步的数据
-        JsonObject tmcdata = vendor.getTMCPlan(employee, TmcChannel.CIMCC.getTmcChannel(),hotel.get("approvalNumber").getAsString());
+        JsonObject tmcdata = vendor.getTMCPlan(employee,tmcChannel,hotel.get("approvalNumber").getAsString());
         log.info("查询的数据为：{}",tmcdata);
         JsonObject cimccTmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
         JsonObject tmcResponse = tmcdata.getAsJsonObject("response");
         assert GsonUtil.compareJsonObject(syncEntityJson,cimccTmcRequestData,new HashMap<>());
     }
 
-    @Test(description = "审批单同步-中集TMC-机票票往返-国内")
+    @Test(description = "审批单同步-中集TMC-机票票往返-国内",dataProvider = "TMC")
     public void cimccSyncApprovalTest4(String tmcChannel,String supplierOID) throws HttpStatusException {
         FormComponent component =new FormComponent();
         component.setCause(tmcChannel+"TMC审批单同步数据校验-往返");
@@ -237,7 +237,7 @@ public class SyncCimccTmc extends BaseTest {
         //添加飞机行程 供应商中集
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
         //单程机票无返回时间
-        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1002, supplierOID,"西安市","北京",UTCTime.utcToBJDate(component.getEndDate(),0)+"T16:00:00Z",component.getStartDate());
+        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1002, supplierOID,"西安市","北京",UTCTime.utcToBJDate(component.getEndDate(),-1)+"T16:00:00Z",component.getStartDate());
         flightItineraries.add(flightItinerary);
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
         travelApplication.submitApplication(employee,applicationOID,"");
@@ -271,7 +271,7 @@ public class SyncCimccTmc extends BaseTest {
         assert GsonUtil.compareJsonObject(syncEntityJson,cimccTmcRequestData,new HashMap<>());
     }
 
-    @Test(description = "审批单同步-中集TMC-机票票单程-火车-酒店在一个申请单")
+    @Test(description = "审批单同步-TMC-机票票单程-火车-酒店在一个申请单",dataProvider = "TMC")
     public void cimccSyncApprovalTest5(String tmcChannel,String supplierOID) throws HttpStatusException {
         FormComponent component =new FormComponent();
         component.setCause(tmcChannel+"TMC审批单同步数据校验");
@@ -292,7 +292,7 @@ public class SyncCimccTmc extends BaseTest {
         //初始化酒店行程  中集
         ArrayList<HotelItinerary> hotelItineraries =new ArrayList<>();
         //酒店行程  开始日期要跟申请单的表头一样
-        HotelItinerary hotelItinerary =new HotelItinerary("北京",1,UTCTime.getNowStartUtcDate(),UTCTime.getUtcStartDate(3),supplierOID,expenseReportComponent.getCityCode(employee,"北京"),new BigDecimal(400).setScale(1));
+        HotelItinerary hotelItinerary =new HotelItinerary("北京",1,component.getStartDate(),UTCTime.utcToBJDate(component.getEndDate(),-1)+"T16:00:00Z",supplierOID,expenseReportComponent.getCityCode(employee,"北京"),new BigDecimal(400).setScale(1));
         hotelItineraries.add(hotelItinerary);
         //初始化火车行程
         ArrayList<TrainItinerary> trainItineraries =new ArrayList<>();
@@ -351,6 +351,7 @@ public class SyncCimccTmc extends BaseTest {
         assert GsonUtil.compareJsonObject(syncEntityTrainJson,trainTmcdata.getAsJsonObject("tmcRequest"),new HashMap<>());
         assert GsonUtil.compareJsonObject(syncEntityHotelJson,hotelTmcdata.getAsJsonObject("tmcRequest"),new HashMap<>());
     }
+
 
     @Test(description = "审批单同步-中集TMC-机票票单程-多参与人-统一定票",dataProvider = "TMC")
     public void cimccSyncApprovalTest6(String tmcChannel,String supplierOID) throws HttpStatusException {

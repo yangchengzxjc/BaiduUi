@@ -138,7 +138,7 @@ public class SyncDTTripTmc extends BaseTest {
         //添加飞机行程 供应商为大唐
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
         //往返行程
-        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1002, SupplierOID.dttrip,"西安市","北京",UTCTime.utcToBJDate(component.getEndDate(),0)+"T16:00:00Z",component.getStartDate());
+        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1002, SupplierOID.dttrip,"西安市","北京",UTCTime.utcToBJDate(component.getEndDate(),-1)+"T16:00:00Z",component.getStartDate());
         flightItineraries.add(flightItinerary);
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
         travelApplication.submitApplication(employee,applicationOID,"");

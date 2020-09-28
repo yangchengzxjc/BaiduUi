@@ -432,7 +432,7 @@ public class InfraStructureApi extends BaseRequest{
     public JsonArray queryUserSync(Employee employee,TmcChannel tmcChannel, String hlyUserMobile, String hlyUserID) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl()+ApiPath.QUERY_USER_SYNC;
         Map<String,String> maps = new HashMap<>();
-        maps.put("tmcChannel",tmcChannel.getValue());
+        maps.put("tmcChannel",tmcChannel.getTmcChannel());
         maps.put("hlyUserMobile",hlyUserMobile);
         maps.put("hlyUserID",hlyUserID);
         String res = doGet(url,getHeader(employee.getAccessToken()),maps,employee);

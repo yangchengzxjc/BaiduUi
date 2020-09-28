@@ -11,6 +11,7 @@ import java.util.Properties;
  **/
 
 public class PropertyReader {
+
     private static Properties properties = new Properties();
     // 读取配置文件
     public static  Properties getProperties(String propertiesUrl) throws IOException {
@@ -18,11 +19,27 @@ public class PropertyReader {
         InputStreamReader inputStreamReader = new InputStreamReader( inputStream, BaseConstant.CHARSET_NAME );
         BufferedReader bufferedReader  = new  BufferedReader( inputStreamReader );
         properties.load( bufferedReader );
+        inputStream.close();
+        inputStreamReader.close();
+        bufferedReader.close();
         return properties;
     }
 
     // 根据配置文件中的key值得到对应的value值
     public static String getValue(String key) throws IOException{
         return properties.getProperty( key );
+    }
+
+    //根据key值修改
+    public static void writeValue(String key,String value,String propertiesUrl){
+        properties.setProperty(key, value);
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileOutputStream = new FileOutputStream(propertiesUrl);
+            properties.store(fileOutputStream, null);
+            fileOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

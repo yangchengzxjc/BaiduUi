@@ -113,7 +113,7 @@ public class SyncDTTripTmc extends BaseTest {
         JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(syncEntity)).getAsJsonObject();
         log.info("封装的数据为：{}",syncEntityJson);
         //查询tmc 同步的数据
-        JsonObject tmcdata = vendor.getTMCPlan(employee, TmcChannel.DT.getValue(),filght.get("approvalNum").getAsString());
+        JsonObject tmcdata = vendor.getTMCPlan(employee, TmcChannel.DT.getTmcChannel(),filght.get("approvalNum").getAsString());
         log.info("查询的数据为：{}",tmcdata);
         JsonObject dttripTmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
         JsonObject tmcResponse = tmcdata.getAsJsonObject("response");
@@ -167,7 +167,7 @@ public class SyncDTTripTmc extends BaseTest {
         JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(syncEntity)).getAsJsonObject();
         log.info("封装的数据为：{}",syncEntityJson);
         //查询tmc 同步的数据
-        JsonObject tmcdata = vendor.getTMCPlan(employee,TmcChannel.DT.getValue(),filght.get("approvalNum").getAsString());
+        JsonObject tmcdata = vendor.getTMCPlan(employee,TmcChannel.DT.getTmcChannel(),filght.get("approvalNum").getAsString());
         log.info("查询的数据为：{}",tmcdata);
         JsonObject dttripTmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
         JsonObject tmcResponse = tmcdata.getAsJsonObject("response");
@@ -224,7 +224,7 @@ public class SyncDTTripTmc extends BaseTest {
         JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(syncEntity)).getAsJsonObject();
         log.info("封装的数据为：{}",syncEntityJson);
         //查询tmc 同步的数据
-        JsonObject tmcdata = vendor.getTMCPlan(employee, TmcChannel.DT.getValue(),filght.get("approvalNum").getAsString());
+        JsonObject tmcdata = vendor.getTMCPlan(employee, TmcChannel.DT.getTmcChannel(),filght.get("approvalNum").getAsString());
         log.info("查询的数据为：{}",tmcdata);
         JsonObject dttripTmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
         JsonObject tmcResponse = tmcdata.getAsJsonObject("response");

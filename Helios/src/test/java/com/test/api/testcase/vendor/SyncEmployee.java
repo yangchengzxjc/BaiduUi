@@ -6,9 +6,11 @@ import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.employeeInfoDto.EmployeeDTO;
+import com.hand.basicconstant.BaseConstant;
 import com.hand.basicconstant.CardType;
 import com.hand.basicconstant.TmcChannel;
 import com.hand.utils.GsonUtil;
+import com.hand.utils.PropertyReader;
 import com.test.BaseTest;
 import com.test.api.method.Infra.EmployeeMethod.EmployeeManagePage;
 import com.test.api.method.InfraStructure;
@@ -16,6 +18,8 @@ import com.test.api.method.Vendor;
 import com.test.api.method.VendorMethod.SyncService;
 import org.testng.Assert;
 import org.testng.annotations.*;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,10 +44,13 @@ public class SyncEmployee extends BaseTest {
     }
 
     @Test(description = "新增员正常流程,")
-    public void addEmployeeTest01() throws HttpStatusException, InterruptedException {
-        String a = "97";
-        String empID="M00"+a;
-        JsonObject empObject = employeeManagePage.addEmployee(employee, "测试接口新建Q"+a,"",empID,"M00"+a+"@163.COM","人员类型01","","甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
+    public void addEmployeeTest01() throws HttpStatusException, InterruptedException, IOException {
+        //读取系统内置的一个自增数据
+        PropertyReader.getProperties(BaseConstant.CONFIGPATH);
+        String employeeID =PropertyReader.getValue("employeeID");
+        PropertyReader.writeValue("employeeID",String.valueOf(Integer.valueOf(employeeID)+1),BaseConstant.CONFIGPATH);
+        String empID="M00"+employeeID;
+        JsonObject empObject = employeeManagePage.addEmployee(employee, "测试接口新建Q"+employeeID,"",empID,empID+"@163.com","人员类型01","","甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
         String userOID=empObject.get("userOID").getAsString();
         JsonObject bookClass = vendor.queryBookClass(employee);
         JsonObject departCode = infraStructure.searchDepartmentDetail(employee,empObject.get("departmentOID").getAsString());

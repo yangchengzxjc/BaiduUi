@@ -96,19 +96,12 @@ public class ReimbStandardApi  extends BaseRequest {
      * @ return
      * @ throws HttpStatusException
      */
-    public JsonArray getFormTpye (Employee employee,String setOfBooksId) throws HttpStatusException {
-        String url = employee.getEnvironment().getUrl() + ApiPath.FORM_TYPE;
-        HashMap<String, String> mapParams3 = new HashMap<>();
-        mapParams3.put("roleType", "TENANT");
-        mapParams3.put("page", "0");
-        mapParams3.put("size", "10");
-        mapParams3.put("formTypeList", "3001");
-        mapParams3.put("formTypeList", "3002");
-        mapParams3.put("formTypeList", "3003");
-        mapParams3.put("setOfBooksId", setOfBooksId);
-        String res = doGet(url, getHeader(employee.getAccessToken()), mapParams3, employee);
+    public JsonArray getFormTpye (Employee employee,String setOfBooksId,String formName) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + String.format(ApiPath.FORM_TYPE,setOfBooksId,formName,formName);
+        String res = doGet(url, getHeader(employee.getAccessToken(),"reimbursement-standard"), null, employee);
         return new JsonParser().parse(res).getAsJsonArray();
     }
+
     private ReimbStandardApi reimbStandardApi;
     private Object JsonObject;
     /*

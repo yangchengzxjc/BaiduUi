@@ -32,8 +32,8 @@ public class ReimbStandard {
      * @ userGroupsName 人员组名称
      * @ return
      */
-    public JsonObject getUserGroups(Employee employee,String userGroupsName) throws HttpStatusException {
-        JsonArray userGroupsList = reimbStandardRules.getUserGroups(employee, getSetOfBookId(employee, "默认账套"));
+    public JsonObject getUserGroups(Employee employee,String userGroupsName,String setOfBooksId) throws HttpStatusException {
+        JsonArray userGroupsList = reimbStandardRules.getUserGroups(employee, setOfBooksId);
         JsonObject userGroups;
         userGroups = GsonUtil.getJsonValue(userGroupsList,"name",userGroupsName);
         log.info("userList,{}",userGroupsList);
@@ -47,8 +47,8 @@ public class ReimbStandard {
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject getExpenseType(Employee employee,String expenseTypeName)throws HttpStatusException{
-        JsonArray expenseTypeList = reimbStandardRules.getExpenseType(employee,getSetOfBookId(employee,"默认账套"));
+    public JsonObject getExpenseType(Employee employee,String expenseTypeName,String setOfBooksId)throws HttpStatusException{
+        JsonArray expenseTypeList = reimbStandardRules.getExpenseType(employee,setOfBooksId);
         JsonObject expenseType;
         expenseType = GsonUtil.getJsonValue(expenseTypeList,"name",expenseTypeName);
 //        for (int i =0;i<expenseTypeList.size();i++){
@@ -59,6 +59,31 @@ public class ReimbStandard {
         return expenseType;
     }
 
+    /**
+     * 获取单据类型
+     * @param employee
+     * @param formName
+     * @param setOfBooksId
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getFormType(Employee employee,String formName,String setOfBooksId)throws HttpStatusException{
+        JsonArray formTypeList = reimbStandardRules.getFormTpye(employee,setOfBooksId,formName);
+        log.info("formList:{}",formTypeList);
+        JsonObject formType = new JsonObject();
+        if(GsonUtil.isNotEmpt(formTypeList)){
+            formType = GsonUtil.getJsonValue(formTypeList,"formName",formName);
+        }
+        log.info("获取表单：{}",formType);
+        return formType;
+    }
+
+    public JsonObject getCompany(Employee employee,String companys,String setOfBooksId)throws HttpStatusException{
+        JsonArray companyList = reimbStandardRules.getEnabledCompany(employee,setOfBooksId);
+        JsonObject company;
+        company = GsonUtil.getJsonValue(companyList,"name",companys);
+        return company;
+    }
     /**
      * 新增报销标准规则
      * @param employee
@@ -117,10 +142,23 @@ public class ReimbStandard {
      * @param expenseType
      * @return
      */
-    public JsonArray expenseType(JsonObject ... expenseType){
+    public JsonArray expenseTypes(JsonObject ... expenseType){
         JsonArray array = new JsonArray();
         for (int i=0;i<expenseType.length;i++){
             array.add(expenseType[i]);
+        }
+        return array;
+    }
+
+    /**
+     * 单据类型
+     * @param formType
+     * @return
+     */
+    public JsonArray formTypes(JsonObject ... formType){
+        JsonArray array  = new JsonArray();
+        for (int i=0;i<formType.length;i++){
+            array.add(formType[i]);
         }
         return array;
     }

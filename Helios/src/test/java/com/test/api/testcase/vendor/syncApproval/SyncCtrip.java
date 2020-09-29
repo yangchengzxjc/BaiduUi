@@ -1,10 +1,13 @@
 package com.test.api.testcase.vendor.syncApproval;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;
 import com.hand.basicObject.itinerary.FlightItinerary;
+import com.hand.basicObject.supplierObject.syncApproval.syncCtrip.ExtendFieldList;
 import com.hand.basicconstant.SupplierOID;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
@@ -13,12 +16,15 @@ import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportComponent;
 import com.test.api.method.TravelApplication;
 import com.test.api.method.Vendor;
+import com.test.api.method.VendorMethod.SyncService;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
+
+import static java.lang.Thread.sleep;
 
 /**
  * @Author peng.zhang
@@ -33,6 +39,7 @@ public class SyncCtrip extends BaseTest {
     private ExpenseReport expenseReport;
     private TravelApplicationPage travelApplicationPage;
     private Vendor vendor;
+    private SyncService syncService;
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
@@ -42,6 +49,7 @@ public class SyncCtrip extends BaseTest {
         expenseReportComponent = new ExpenseReportComponent();
         expenseReport =new ExpenseReport();
         travelApplicationPage =new TravelApplicationPage();
+        syncService = new SyncService();
         vendor =new Vendor();
     }
 
@@ -50,8 +58,9 @@ public class SyncCtrip extends BaseTest {
         FormComponent component =new FormComponent();
         component.setCause("携程机票单据同步服务");
         component.setDepartment(employee.getDepartmentOID());
-        component.setStartDate(UTCTime.getNowUtcTime());
-        component.setEndDate(UTCTime.getUtcTime(3,0));
+        component.setStartDate(UTCTime.getNowStartUtcDate());
+        component.setEndDate(UTCTime.getUTCDateEnd(5));
+        component.setCostCenter("成本中心NO1");
         //添加参与人员  参与人员的value 是一段json数组。
         JsonArray array = new JsonArray();
         array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-消费平台"),"懿消费商(xiao/feishang)"));
@@ -65,5 +74,18 @@ public class SyncCtrip extends BaseTest {
         flightItineraries.add(flightItinerary);
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
         travelApplication.submitApplication(employee,applicationOID,"");
+        try {
+            sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        JsonObject filght = travelApplication.getItinerary(employee,applicationOID,"FLIGHT").get(0).getAsJsonObject();
+        //获取审批单中的travelApplication
+        JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
+        String CostCenter = travelApplication.getCostCenterCustom(employee,"差旅申请单-消费平台").get("costCenterCustom");
+        String CostCenter1 = new JsonParser().parse(CostCenter).getAsJsonObject().getAsJsonObject("costCenter1").get("value").getAsString();
+        //初始化扩展字段
+        ExtendFieldList extendFieldList = syncService.setExtendFieldList("CostCenter1",CostCenter1);
+        //机票初始化机票
     }
 }

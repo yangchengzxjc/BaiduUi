@@ -263,7 +263,7 @@ public class ApiPath {
         //获取人员组
         public static final String USER_GROUPS = "/api/user/groups/search";
         //获取单据类型
-        public static final String FORM_TYPE = "/api/custom/forms/loan/reference";
+        public static final String FORM_TYPE = "/api/custom/forms/loan/reference?roleType=TENANT&page=0&size=10&formTypeList=3001&formTypeList=3002&formTypeList=3003&setOfBooksId=%s&keyword=%s&keywordLable=%s";
         //删除报销标准
         public static final String DELETE_REIMB_STANDARD = "/api/expense/standard/rule/delete/%s";
         //消费商接口

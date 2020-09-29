@@ -7,6 +7,8 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;
 import com.hand.basicconstant.ApiPath;
+import com.hand.basicconstant.HeaderKey;
+import com.hand.basicconstant.ResourceId;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
@@ -291,6 +293,21 @@ public class ApplicationApi extends BaseRequest{
         HashMap<String,String> map = new HashMap<>();
         map.put("applicationOID",applicationOID);
         String res= doGet(url,getHeader(employee.getAccessToken()),map,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 获取表单中的消费商配置
+     * @param employee
+     * @param formOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getFormVendorControl(Employee employee,String formOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+String.format(ApiPath.GETFORMVENDORCONTROL,formOID);
+        Map<String,String> maps = new HashMap<>();
+        maps.put("roleType","TENANT");
+        String res = doGet(url,getHeader(employee.getAccessToken(), HeaderKey.FORM_CONFIG, ResourceId.FORM_CONFIG),maps,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 

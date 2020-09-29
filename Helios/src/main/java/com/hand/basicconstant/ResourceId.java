@@ -24,4 +24,6 @@ public class ResourceId {
     public static final String SUBSIDY_RULE="660013000400";
     //员工管理
     public static final String EMPLOYEE_MANAGE = "64000500";
+    //表单管理
+    public static final String FORM_CONFIG = "66001000";
 }

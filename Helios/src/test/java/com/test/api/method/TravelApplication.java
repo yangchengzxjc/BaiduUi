@@ -333,4 +333,22 @@ public class TravelApplication {
         JsonObject formDetail = reimbursementApi.getFormDetail(employee,applicationFormOID(employee,formName));
         return applicationApi.expenseApplication(employee,formDetail,component,budget);
     }
+
+    /**
+     * 获取表单汇总消费商管控的成本中心以及其他配置
+     * @param employee
+     * @param formName
+     * @return
+     * @throws HttpStatusException
+     */
+    public HashMap<String, String> getCostCenterCustom(Employee employee, String formName) throws HttpStatusException {
+        JsonObject  config = applicationApi.getFormVendorControl(employee,applicationFormOID(employee,formName));
+        HashMap<String,String> configmap = new HashMap<>();
+        configmap.put("costCenterCustom",config.get("costCenterCustom").getAsString());
+        configmap.put("controlFieldsHotel",config.get("controlFieldsHotel").getAsString());
+        configmap.put("controlFieldsTrain",config.get("controlFieldsTrain").getAsString());
+        configmap.put("controlFieldsFlight",config.get("controlFieldsFlight").getAsString());
+        return configmap;
+    }
+
 }

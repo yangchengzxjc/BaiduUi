@@ -301,6 +301,8 @@ public class ApiPath {
         public static final String ADD_SUBMISSION_ITEM = "/api/expense/submit/control/item/%s";
         //获取提交管控规则管控项信息
         public static final String GET_SUBMISSION_ITEM = "/api/expense/submit/control/items/%s";
+        //获取表单消费商管控
+        public static final String GETFORMVENDORCONTROL = "/api/custom/forms/property/travel/configuration/%s";
 
     }
 

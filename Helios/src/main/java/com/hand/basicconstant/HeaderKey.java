@@ -11,4 +11,6 @@ public class HeaderKey {
     public static final String SUBSIDT_RULE ="subsidy-rule";
     //员工管理
     public static final String PERSION_MANAGE = "person-manage";
+    //表单管理
+    public static final String FORM_CONFIG = "form-list";
 }

@@ -1,5 +1,8 @@
 package com.hand.basicObject.supplierObject.syncApproval.syncCtrip;
 
+import lombok.Data;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -7,6 +10,7 @@ import java.util.List;
  * @Date 2020/9/17
  * @Version 1.0
  **/
+@Data
 public class FlightEndorsementDetail {
 
     //出发城市的code
@@ -21,13 +25,14 @@ public class FlightEndorsementDetail {
     //出发时间
     private String DepartDate;
     //
-    private String DepartFloatDays;
+    private Integer DepartFloatDays;
 
     private String DepartBeginDate;
     private String DepartEndDate;
     private List<String> FromCities;
     private List<String> ToCities;
     private Integer ProductType;
+    private BigDecimal Price;
     private List<Object> PassengerList;
     private Integer ReturnFloatDays;
     private String ReturnBeginDate;

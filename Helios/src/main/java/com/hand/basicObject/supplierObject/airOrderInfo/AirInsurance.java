@@ -1,6 +1,7 @@
 package com.hand.basicObject.supplierObject.airOrderInfo;
 
 import lombok.Builder;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
  * @Version 1.0
  **/
 @Builder(toBuilder = true)
+@Data
 public class AirInsurance {
     private String ticketKey;
     private String sequence;

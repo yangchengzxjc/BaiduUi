@@ -1,5 +1,7 @@
 package com.hand.basicObject.supplierObject.syncApproval.syncCtrip;
 
+import lombok.Data;
+
 import java.util.List;
 
 /**
@@ -7,6 +9,7 @@ import java.util.List;
  * @Date 2020/9/17
  * @Version 1.0
  **/
+@Data
 public class TrainEndorsementDetail {
 
     //出发城市的code

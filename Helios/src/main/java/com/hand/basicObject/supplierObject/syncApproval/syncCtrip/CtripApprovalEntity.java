@@ -1,5 +1,7 @@
 package com.hand.basicObject.supplierObject.syncApproval.syncCtrip;
 
+import lombok.Data;
+
 import java.util.List;
 
 /**
@@ -7,9 +9,10 @@ import java.util.List;
  * @Date 2020/9/17
  * @Version 1.0
  **/
-public class SyncApprovalEntity {
+@Data
+public class CtripApprovalEntity {
     //status
-    private String Status;
+    private Integer Status;
     //审批后的行程单号
     private String ApprovalNumber;
     //员工工号

@@ -8,6 +8,7 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.employeeInfoDto.EmployeeDTO;
 import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoDTO;
+import com.hand.basicObject.supplierObject.syncApproval.syncCtrip.*;
 import com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity.*;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
@@ -194,8 +195,8 @@ public class SyncService {
         try{
             if(itinerary.get("approvalNum").isJsonNull()){
                 //判断行程单号是否为空 为空则为审批单未审批通过 重新获取审批单行程详情
-                JsonObject filght = travelApplication.getItinerary(employee,applicationDetail.get("applicationOID").getAsString(),itineraryType).get(0).getAsJsonObject();
-                syncEntity.setApprovalCode(filght.get("approvalNum").getAsString());
+                JsonObject newItinerary = travelApplication.getItinerary(employee,applicationDetail.get("applicationOID").getAsString(),itineraryType).get(0).getAsJsonObject();
+                syncEntity.setApprovalCode(newItinerary.get("approvalNum").getAsString());
             }else{
                 syncEntity.setApprovalCode(itinerary.get("approvalNum").getAsString());
             }
@@ -362,5 +363,102 @@ public class SyncService {
         employeeDTO.setDeptCustomCode(departCode.get("custDeptNumber").getAsString());
         employeeDTO.setUserCardInfos(cardList);
         return employeeDTO;
+    }
+
+    /**
+     * 初始化携程同步实体
+     * @return
+     */
+    public CtripApprovalEntity setCtripApprovalEntity(JsonObject applicationDetail, JsonObject itinerary, ArrayList<ExtendFieldList> extendFieldLists, ArrayList<FlightEndorsementDetail> flightEndorsementDetails, ArrayList<HotelEndorsementDetail> hotelEndorsementDetails, ArrayList<TrainEndorsementDetail> trainEndorsementDetails){
+        CtripApprovalEntity ctripApprovalEntity =new CtripApprovalEntity();
+        ctripApprovalEntity.setEmployeeID(applicationDetail.get("applicant").getAsJsonObject().get("employeeID").getAsString());
+        ctripApprovalEntity.setStatus(1);
+        try{
+            if(!itinerary.get("approvalNum").isJsonNull()){
+                ctripApprovalEntity.setApprovalNumber(itinerary.get("approvalNum").getAsString());
+            }
+        }catch (NullPointerException e){
+            if(!itinerary.get("approvalNumber").isJsonNull()){
+                ctripApprovalEntity.setApprovalNumber(itinerary.get("approvalNumber").getAsString());
+            }
+        }
+        ctripApprovalEntity.setExtendFieldList(extendFieldLists);
+        ctripApprovalEntity.setFlightEndorsementDetails(flightEndorsementDetails);
+        ctripApprovalEntity.setHotelEndorsementDetails(hotelEndorsementDetails);
+        ctripApprovalEntity.setTrainEndorsementDetails(trainEndorsementDetails);
+        return ctripApprovalEntity;
+    }
+
+    /**
+     *  初始化机票 行程
+     * @return
+     */
+    public FlightEndorsementDetail setFlightEndorsementDetail(JsonObject itinerary,JsonObject floatDays,ArrayList<Object> passagesList){
+        //舱等映射
+        String seatClass ="";
+        if(itinerary.get("seatClass").isJsonNull()){
+            seatClass="未知";
+        }else{
+            seatClass =itinerary.get("seatClass").getAsString();
+        }
+        HashMap<String,Integer> seatClassMapping = new HashMap<>();
+        seatClassMapping.put("未知",0);
+        seatClassMapping.put("头等舱",1);
+        seatClassMapping.put("公务舱",2);
+        seatClassMapping.put("经济舱",3);
+        seatClassMapping.put("超级经济舱",4);
+        FlightEndorsementDetail flightEndorsementDetail = new FlightEndorsementDetail();
+        String fromCity = itinerary.get("fromCity").getAsString();
+        String toCity = itinerary.get("toCity").getAsString();
+        String fromCityCode = itinerary.get("fromCityCode").getAsString();
+        String toCityCode = itinerary.get("toCityCode").getAsString();
+        ArrayList<String> fromCities =new ArrayList<>();
+        fromCities.add(fromCity);
+
+        ArrayList<String> toCities =new ArrayList<>();
+        toCities.add(toCity);
+        flightEndorsementDetail.setToCities(toCities);
+
+        ArrayList<String> toCityCodes =new ArrayList<>();
+        toCityCodes.add(toCityCode);
+
+        ArrayList<String> fromCityCodes =new ArrayList<>();
+        fromCityCodes.add(fromCityCode);
+        flightEndorsementDetail.setFromCities(fromCities);
+        flightEndorsementDetail.setToCities(toCities);
+        flightEndorsementDetail.setFromCitiesCode(fromCityCodes);
+        flightEndorsementDetail.setToCitiesCode(toCityCodes);
+        flightEndorsementDetail.setCurrency(2);
+        flightEndorsementDetail.setFlightWay(1);
+        flightEndorsementDetail.setDepartDate(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),0)+" 00:00:00");
+        flightEndorsementDetail.setDepartBeginDate(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),-(floatDays.get("start").getAsInt()))+" 00:00:00");
+        flightEndorsementDetail.setDepartEndDate(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
+        flightEndorsementDetail.setDepartFloatDays(floatDays.get("start").getAsInt());
+        flightEndorsementDetail.setPassengerList(passagesList);
+        flightEndorsementDetail.setProductType(1);
+        flightEndorsementDetail.setPrice(itinerary.get("ticketPrice").getAsBigDecimal());
+        flightEndorsementDetail.setSeatClass(seatClassMapping.get(seatClass));
+        flightEndorsementDetail.setReturnBeginDate(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),-(floatDays.get("start").getAsInt()))+" 00:00:00");
+        flightEndorsementDetail.setReturnEndDate(UTCTime.utcToBJDate(itinerary.get("startDate").getAsString(),floatDays.get("start").getAsInt())+" 00:00:00");
+        flightEndorsementDetail.setReturnFloatDays(floatDays.get("end").getAsInt());
+        flightEndorsementDetail.setTravelerCount(passagesList.size());
+        return flightEndorsementDetail;
+    }
+
+    /**
+     * 扩展字段
+     * @return
+     */
+    public ExtendFieldList setExtendFieldList(String fieldName,String value){
+        ExtendFieldList extendFieldList =new ExtendFieldList();
+        extendFieldList.setFieldName(fieldName);
+        extendFieldList.setFieldType("String");
+        extendFieldList.setFieldType(value);
+        return extendFieldList;
+    }
+
+    public HotelEndorsementDetail setHotelEndorsementDetail(){
+        HotelEndorsementDetail hotelEndorsementDetail = new HotelEndorsementDetail();
+        return hotelEndorsementDetail;
     }
 }

@@ -13,6 +13,7 @@ import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
 import com.test.api.method.InfraStructure;
 import com.test.api.method.TravelApplication;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import java.util.List;
  * @Date 2020/9/18
  * @Version 1.0
  **/
+@Slf4j
 public class SyncService {
 
     private InfraStructure infraStructure;
@@ -195,6 +197,7 @@ public class SyncService {
             if(itinerary.get("approvalNum").isJsonNull()){
                 //判断行程单号是否为空 为空则为审批单未审批通过 重新获取审批单行程详情
                 JsonObject newItinerary = travelApplication.getItinerary(employee,applicationDetail.get("applicationOID").getAsString(),itineraryType).get(0).getAsJsonObject();
+                log.info("最新的行程信息：{}",newItinerary);
                 syncEntity.setApprovalCode(newItinerary.get("approvalNum").getAsString());
             }else{
                 syncEntity.setApprovalCode(itinerary.get("approvalNum").getAsString());

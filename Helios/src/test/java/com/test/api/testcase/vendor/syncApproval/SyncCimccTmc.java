@@ -15,11 +15,8 @@ import com.hand.basicconstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
+import com.test.api.method.*;
 import com.test.api.method.ApplicationMethod.TravelApplicationPage;
-import com.test.api.method.ExpenseReport;
-import com.test.api.method.ExpenseReportComponent;
-import com.test.api.method.TravelApplication;
-import com.test.api.method.Vendor;
 import com.test.api.method.VendorMethod.SyncService;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
@@ -45,6 +42,7 @@ public class SyncCimccTmc extends BaseTest {
     private TravelApplicationPage travelApplicationPage;
     private Vendor vendor;
     private SyncService syncService;
+    private Approve approve;
 
     /**
      * 申请单表单配置描述： 控件：成本中心  需在表单设置->表单管理中消费商管控中开启成本中心1， 选择系统字段 成本中心 OID
@@ -62,6 +60,7 @@ public class SyncCimccTmc extends BaseTest {
         travelApplicationPage =new TravelApplicationPage();
         vendor =new Vendor();
         syncService =new SyncService();
+        approve =new Approve();
     }
 
     @DataProvider(name = "TMC")
@@ -72,7 +71,7 @@ public class SyncCimccTmc extends BaseTest {
     }
 
     @Test(description = "审批单同步-TMC-机票票单程-国内",dataProvider = "TMC")
-    public void cimccSyncApprovalTest1(String tmcChannel,String supplierOID) throws HttpStatusException {
+    public void cimccSyncApprovalTest1(String tmcChannel,String supplierOID) throws HttpStatusException, InterruptedException {
         FormComponent component =new FormComponent();
         component.setCause(tmcChannel+"审批单同步数据校验");
         component.setDepartment(employee.getDepartmentOID());
@@ -92,35 +91,37 @@ public class SyncCimccTmc extends BaseTest {
         flightItineraries.add(flightItinerary);
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
         travelApplication.submitApplication(employee,applicationOID,"");
-        //获取大唐机票行程详情
-        try {
-            sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        //审批单审批
+        if(approve.approveal(employee,applicationOID,1001)!=1){
+            throw new RuntimeException("审批单审批失败");
+        }else{
+            sleep(1000);
+            //获取大唐机票行程详情
+            JsonObject filght = travelApplication.getItinerary(employee,applicationOID,"FLIGHT").get(0).getAsJsonObject();
+            //获取审批单中的travelApplication
+            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
+            BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
+            //只有一个参与人
+            Participant participant = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
+            ArrayList<Participant> participants =new ArrayList<>();
+            participants.add(participant);
+            JsonObject floatDay = new JsonObject();
+            floatDay.addProperty("start",4);
+            floatDay.addProperty("end",4);
+            TravelFlightItinerary travelFlightItinerary = syncService.setTravelFlight(filght,floatDay);
+            ArrayList<TravelFlightItinerary> travelFlightItineraries = new ArrayList<>();
+            travelFlightItineraries.add(travelFlightItinerary);
+            SyncEntity syncEntity = syncService.setSyncEntity(employee,"FLIGHT",travelApplication,bookClerk,traveApplicationDetail,filght,participants,travelFlightItineraries,null,null);
+            JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(syncEntity)).getAsJsonObject();
+            log.info("封装的数据为：{}",syncEntityJson);
+            //查询tmc 同步的数据
+            JsonObject tmcdata = vendor.getTMCPlan(employee, tmcChannel,filght.get("approvalNum").getAsString());
+            log.info("查询的数据为：{}",tmcdata);
+            JsonObject cimccTmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
+            JsonObject tmcResponse = tmcdata.getAsJsonObject("response");
+            assert GsonUtil.compareJsonObject(syncEntityJson,cimccTmcRequestData,new HashMap<>());
         }
-        JsonObject filght = travelApplication.getItinerary(employee,applicationOID,"FLIGHT").get(0).getAsJsonObject();
-        //获取审批单中的travelApplication
-        JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
-        BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
-        //只有一个参与人
-        Participant participant = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
-        ArrayList<Participant> participants =new ArrayList<>();
-        participants.add(participant);
-        JsonObject floatDay = new JsonObject();
-        floatDay.addProperty("start",4);
-        floatDay.addProperty("end",4);
-        TravelFlightItinerary travelFlightItinerary = syncService.setTravelFlight(filght,floatDay);
-        ArrayList<TravelFlightItinerary> travelFlightItineraries = new ArrayList<>();
-        travelFlightItineraries.add(travelFlightItinerary);
-        SyncEntity syncEntity = syncService.setSyncEntity(employee,"FLIGHT",travelApplication,bookClerk,traveApplicationDetail,filght,participants,travelFlightItineraries,null,null);
-        JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(syncEntity)).getAsJsonObject();
-        log.info("封装的数据为：{}",syncEntityJson);
-        //查询tmc 同步的数据
-        JsonObject tmcdata = vendor.getTMCPlan(employee, tmcChannel,filght.get("approvalNum").getAsString());
-        log.info("查询的数据为：{}",tmcdata);
-        JsonObject cimccTmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
-        JsonObject tmcResponse = tmcdata.getAsJsonObject("response");
-        assert GsonUtil.compareJsonObject(syncEntityJson,cimccTmcRequestData,new HashMap<>());
+
     }
 
     @Test(description = "审批单同步-中集TMC-火车行程",dataProvider = "TMC")
@@ -145,30 +146,35 @@ public class SyncCimccTmc extends BaseTest {
         travelApplication.addItinerary(employee,applicationOID,trainItineraries);
         //申请单提交
         travelApplication.submitApplication(employee,applicationOID,"");
-        sleep(6000);
-        JsonObject train = travelApplication.getItinerary(employee,applicationOID,"TRAIN").get(0).getAsJsonObject();
-        //获取审批单中的travelApplication
-        JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
-        BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
-        //只有一个参与人
-        Participant participant = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
-        ArrayList<Participant> participants =new ArrayList<>();
-        participants.add(participant);
-        JsonObject floatDay = new JsonObject();
-        floatDay.addProperty("start",4);
-        floatDay.addProperty("end",4);
-        TravelTrainItinerary travelTrainItinerary = syncService.setTravelTrainItinerary(train,floatDay);
-        ArrayList<TravelTrainItinerary> travelTrainItineraries =new ArrayList<>();
-        travelTrainItineraries.add(travelTrainItinerary);
-        SyncEntity syncEntity = syncService.setSyncEntity(employee,"TRAIN",travelApplication,bookClerk,traveApplicationDetail,train,participants,null,null,travelTrainItineraries);
-        JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(syncEntity)).getAsJsonObject();
-        log.info("封装的数据为：{}",syncEntityJson);
-        //查询tmc 同步的数据
-        JsonObject tmcdata = vendor.getTMCPlan(employee,tmcChannel,train.get("approvalNum").getAsString());
-        log.info("查询的数据为：{}",tmcdata);
-        JsonObject cimccTmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
-        JsonObject tmcResponse = tmcdata.getAsJsonObject("response");
-        assert GsonUtil.compareJsonObject(syncEntityJson,cimccTmcRequestData,new HashMap<>());
+        int successNum = approve.approveal(employee,applicationOID,1001);
+        if(successNum!=1){
+            throw new RuntimeException("审批单审批失败");
+        }else{
+            sleep(1000);
+            JsonObject train = travelApplication.getItinerary(employee,applicationOID,"TRAIN").get(0).getAsJsonObject();
+            //获取审批单中的travelApplication
+            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
+            BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
+            //只有一个参与人
+            Participant participant = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
+            ArrayList<Participant> participants =new ArrayList<>();
+            participants.add(participant);
+            JsonObject floatDay = new JsonObject();
+            floatDay.addProperty("start",4);
+            floatDay.addProperty("end",4);
+            TravelTrainItinerary travelTrainItinerary = syncService.setTravelTrainItinerary(train,floatDay);
+            ArrayList<TravelTrainItinerary> travelTrainItineraries =new ArrayList<>();
+            travelTrainItineraries.add(travelTrainItinerary);
+            SyncEntity syncEntity = syncService.setSyncEntity(employee,"TRAIN",travelApplication,bookClerk,traveApplicationDetail,train,participants,null,null,travelTrainItineraries);
+            JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(syncEntity)).getAsJsonObject();
+            log.info("封装的数据为：{}",syncEntityJson);
+            //查询tmc 同步的数据
+            JsonObject tmcdata = vendor.getTMCPlan(employee,tmcChannel,train.get("approvalNum").getAsString());
+            log.info("查询的数据为：{}",tmcdata);
+            JsonObject cimccTmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
+            JsonObject tmcResponse = tmcdata.getAsJsonObject("response");
+            assert GsonUtil.compareJsonObject(syncEntityJson,cimccTmcRequestData,new HashMap<>());
+        }
     }
 
     @Test(description = "审批单同步-中集TMC-酒店行程",dataProvider = "TMC")
@@ -194,30 +200,35 @@ public class SyncCimccTmc extends BaseTest {
         travelApplication.addItinerary(employee,applicationOID,hotelItineraries);
         //申请单提交
         travelApplication.submitApplication(employee,applicationOID,"");
-        sleep(5000);
-        JsonObject hotel = travelApplication.getItinerary(employee,applicationOID,"HOTEL").get(0).getAsJsonObject();
-        //获取审批单中的travelApplication
-        JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
-        BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
-        //只有一个参与人
-        Participant participant = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
-        ArrayList<Participant> participants =new ArrayList<>();
-        participants.add(participant);
-        JsonObject floatDay = new JsonObject();
-        floatDay.addProperty("start",4);
-        floatDay.addProperty("end",4);
-        TravelHotelItinerary travelHotelItinerary = syncService.setTravelHotelItinerary(hotel,floatDay);
-        ArrayList<TravelHotelItinerary> travelHotelItineraries =new ArrayList<>();
-        travelHotelItineraries.add(travelHotelItinerary);
-        SyncEntity syncEntity = syncService.setSyncEntity(employee,"HOTEL",travelApplication,bookClerk,traveApplicationDetail,hotel,participants,null,travelHotelItineraries,null);
-        JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(syncEntity)).getAsJsonObject();
-        log.info("封装的数据为：{}",syncEntityJson);
-        //查询tmc 同步的数据
-        JsonObject tmcdata = vendor.getTMCPlan(employee,tmcChannel,hotel.get("approvalNumber").getAsString());
-        log.info("查询的数据为：{}",tmcdata);
-        JsonObject cimccTmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
-        JsonObject tmcResponse = tmcdata.getAsJsonObject("response");
-        assert GsonUtil.compareJsonObject(syncEntityJson,cimccTmcRequestData,new HashMap<>());
+        int successNum = approve.approveal(employee,applicationOID,1001);
+        if(successNum !=1){
+            throw new RuntimeException("审批单审批失败");
+        }else{
+            sleep(1000);
+            JsonObject hotel = travelApplication.getItinerary(employee,applicationOID,"HOTEL").get(0).getAsJsonObject();
+            //获取审批单中的travelApplication
+            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
+            BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
+            //只有一个参与人
+            Participant participant = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
+            ArrayList<Participant> participants =new ArrayList<>();
+            participants.add(participant);
+            JsonObject floatDay = new JsonObject();
+            floatDay.addProperty("start",4);
+            floatDay.addProperty("end",4);
+            TravelHotelItinerary travelHotelItinerary = syncService.setTravelHotelItinerary(hotel,floatDay);
+            ArrayList<TravelHotelItinerary> travelHotelItineraries =new ArrayList<>();
+            travelHotelItineraries.add(travelHotelItinerary);
+            SyncEntity syncEntity = syncService.setSyncEntity(employee,"HOTEL",travelApplication,bookClerk,traveApplicationDetail,hotel,participants,null,travelHotelItineraries,null);
+            JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(syncEntity)).getAsJsonObject();
+            log.info("封装的数据为：{}",syncEntityJson);
+            //查询tmc 同步的数据
+            JsonObject tmcdata = vendor.getTMCPlan(employee,tmcChannel,hotel.get("approvalNumber").getAsString());
+            log.info("查询的数据为：{}",tmcdata);
+            JsonObject cimccTmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
+            JsonObject tmcResponse = tmcdata.getAsJsonObject("response");
+            assert GsonUtil.compareJsonObject(syncEntityJson,cimccTmcRequestData,new HashMap<>());
+        }
     }
 
     @Test(description = "审批单同步-中集TMC-机票票往返-国内",dataProvider = "TMC")
@@ -241,34 +252,40 @@ public class SyncCimccTmc extends BaseTest {
         flightItineraries.add(flightItinerary);
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
         travelApplication.submitApplication(employee,applicationOID,"");
-        try {
-            sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        int successNum = approve.approveal(employee,applicationOID,1001);
+        if(successNum != 1){
+            throw new RuntimeException("审批单未审批通过");
+        }else{
+            try {
+                sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            JsonObject filght = travelApplication.getItinerary(employee,applicationOID,"FLIGHT").get(0).getAsJsonObject();
+            //获取审批单中的travelApplication
+            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
+            BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
+            //只有一个参与人
+            Participant participant = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
+            ArrayList<Participant> participants =new ArrayList<>();
+            participants.add(participant);
+            JsonObject floatDay = new JsonObject();
+            floatDay.addProperty("start",4);
+            floatDay.addProperty("end",4);
+            TravelFlightItinerary travelFlightItinerary = syncService.setTravelFlight(filght,floatDay);
+            ArrayList<TravelFlightItinerary> travelFlightItineraries = new ArrayList<>();
+            travelFlightItineraries.add(travelFlightItinerary);
+            SyncEntity syncEntity = syncService.setSyncEntity(employee,"FLIGHT",travelApplication,bookClerk,traveApplicationDetail,filght,participants,travelFlightItineraries,null,null);
+            JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(syncEntity)).getAsJsonObject();
+            log.info("封装的数据为：{}",syncEntityJson);
+            //查询tmc 同步的数据
+            JsonObject tmcdata = vendor.getTMCPlan(employee,tmcChannel,filght.get("approvalNum").getAsString());
+            log.info("查询的数据为：{}",tmcdata);
+            JsonObject cimccTmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
+            JsonObject tmcResponse = tmcdata.getAsJsonObject("response");
+            assert GsonUtil.compareJsonObject(syncEntityJson,cimccTmcRequestData,new HashMap<>());
         }
-        JsonObject filght = travelApplication.getItinerary(employee,applicationOID,"FLIGHT").get(0).getAsJsonObject();
-        //获取审批单中的travelApplication
-        JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
-        BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
-        //只有一个参与人
-        Participant participant = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
-        ArrayList<Participant> participants =new ArrayList<>();
-        participants.add(participant);
-        JsonObject floatDay = new JsonObject();
-        floatDay.addProperty("start",4);
-        floatDay.addProperty("end",4);
-        TravelFlightItinerary travelFlightItinerary = syncService.setTravelFlight(filght,floatDay);
-        ArrayList<TravelFlightItinerary> travelFlightItineraries = new ArrayList<>();
-        travelFlightItineraries.add(travelFlightItinerary);
-        SyncEntity syncEntity = syncService.setSyncEntity(employee,"FLIGHT",travelApplication,bookClerk,traveApplicationDetail,filght,participants,travelFlightItineraries,null,null);
-        JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(syncEntity)).getAsJsonObject();
-        log.info("封装的数据为：{}",syncEntityJson);
-        //查询tmc 同步的数据
-        JsonObject tmcdata = vendor.getTMCPlan(employee,tmcChannel,filght.get("approvalNum").getAsString());
-        log.info("查询的数据为：{}",tmcdata);
-        JsonObject cimccTmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
-        JsonObject tmcResponse = tmcdata.getAsJsonObject("response");
-        assert GsonUtil.compareJsonObject(syncEntityJson,cimccTmcRequestData,new HashMap<>());
+
     }
 
     @Test(description = "审批单同步-TMC-机票票单程-火车-酒店在一个申请单",dataProvider = "TMC")
@@ -302,54 +319,60 @@ public class SyncCimccTmc extends BaseTest {
         travelApplication.addItinerary(employee,applicationOID,hotelItineraries);
         travelApplication.addItinerary(employee,applicationOID,trainItineraries);
         travelApplication.submitApplication(employee,applicationOID,"");
-        //获取行程详情
-        try{
-            sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        int successNum = approve.approveal(employee,applicationOID,1001);
+        if(successNum != 1){
+            throw new RuntimeException("审批单未通过");
+        }else{
+            //获取行程详情
+            try{
+                sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            JsonObject filght = travelApplication.getItinerary(employee,applicationOID,"FLIGHT").get(0).getAsJsonObject();
+            JsonObject hotel = travelApplication.getItinerary(employee,applicationOID,"HOTEL").get(0).getAsJsonObject();
+            JsonObject train = travelApplication.getItinerary(employee,applicationOID,"TRAIN").get(0).getAsJsonObject();
+            //获取审批单中的travelApplication
+            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
+            BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
+            //只有一个参与人
+            Participant participant = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
+            ArrayList<Participant> participants =new ArrayList<>();
+            participants.add(participant);
+            JsonObject floatDay = new JsonObject();
+            floatDay.addProperty("start",4);
+            floatDay.addProperty("end",4);
+            //飞机行程
+            TravelFlightItinerary travelFlightItinerary = syncService.setTravelFlight(filght,floatDay);
+            ArrayList<TravelFlightItinerary> travelFlightItineraries = new ArrayList<>();
+            travelFlightItineraries.add(travelFlightItinerary);
+            //酒店行程
+            TravelHotelItinerary travelHotelItinerary = syncService.setTravelHotelItinerary(hotel,floatDay);
+            ArrayList<TravelHotelItinerary> travelHotelItineraries = new ArrayList<>();
+            travelHotelItineraries.add(travelHotelItinerary);
+            //火车行程
+            TravelTrainItinerary travelTrainItinerary = syncService.setTravelTrainItinerary(train,floatDay);
+            ArrayList<TravelTrainItinerary> travelTrainItineraries =new ArrayList<>();
+            travelTrainItineraries.add(travelTrainItinerary);
+            SyncEntity syncEntityFlight = syncService.setSyncEntity(employee,"FLIGHT",travelApplication,bookClerk,traveApplicationDetail,filght,participants,travelFlightItineraries,null,null);
+            SyncEntity syncEntityHotel = syncService.setSyncEntity(employee,"HOTEL",travelApplication,bookClerk,traveApplicationDetail,hotel,participants,null,travelHotelItineraries,null);
+            SyncEntity syncEntityTrain = syncService.setSyncEntity(employee,"TRAIN",travelApplication,bookClerk,traveApplicationDetail,train,participants,null,null,travelTrainItineraries);
+            JsonObject syncEntityFlightJson = new JsonParser().parse(GsonUtil.objectToString(syncEntityFlight)).getAsJsonObject();
+            JsonObject syncEntityTrainJson = new JsonParser().parse(GsonUtil.objectToString(syncEntityTrain)).getAsJsonObject();
+            JsonObject syncEntityHotelJson = new JsonParser().parse(GsonUtil.objectToString(syncEntityHotel)).getAsJsonObject();
+            log.info("封装的数据为：{}",syncEntityFlightJson);
+            //查询tmc 同步的数据
+            JsonObject flightTmcdata = vendor.getTMCPlan(employee,tmcChannel,filght.get("approvalNum").getAsString());
+            JsonObject trainTmcdata = vendor.getTMCPlan(employee, tmcChannel,train.get("approvalNum").getAsString());
+            JsonObject hotelTmcdata = vendor.getTMCPlan(employee, tmcChannel,hotel.get("approvalNumber").getAsString());
+            log.info("查询的数据为：{}",flightTmcdata);
+            JsonObject cimccTmcRequestData1 = flightTmcdata.getAsJsonObject("tmcRequest");
+            JsonObject tmcResponse = flightTmcdata.getAsJsonObject("response");
+            assert GsonUtil.compareJsonObject(syncEntityFlightJson,cimccTmcRequestData1,new HashMap<>());
+            assert GsonUtil.compareJsonObject(syncEntityTrainJson,trainTmcdata.getAsJsonObject("tmcRequest"),new HashMap<>());
+            assert GsonUtil.compareJsonObject(syncEntityHotelJson,hotelTmcdata.getAsJsonObject("tmcRequest"),new HashMap<>());
         }
-        JsonObject filght = travelApplication.getItinerary(employee,applicationOID,"FLIGHT").get(0).getAsJsonObject();
-        JsonObject hotel = travelApplication.getItinerary(employee,applicationOID,"HOTEL").get(0).getAsJsonObject();
-        JsonObject train = travelApplication.getItinerary(employee,applicationOID,"TRAIN").get(0).getAsJsonObject();
-        //获取审批单中的travelApplication
-        JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
-        BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
-        //只有一个参与人
-        Participant participant = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
-        ArrayList<Participant> participants =new ArrayList<>();
-        participants.add(participant);
-        JsonObject floatDay = new JsonObject();
-        floatDay.addProperty("start",4);
-        floatDay.addProperty("end",4);
-        //飞机行程
-        TravelFlightItinerary travelFlightItinerary = syncService.setTravelFlight(filght,floatDay);
-        ArrayList<TravelFlightItinerary> travelFlightItineraries = new ArrayList<>();
-        travelFlightItineraries.add(travelFlightItinerary);
-        //酒店行程
-        TravelHotelItinerary travelHotelItinerary = syncService.setTravelHotelItinerary(hotel,floatDay);
-        ArrayList<TravelHotelItinerary> travelHotelItineraries = new ArrayList<>();
-        travelHotelItineraries.add(travelHotelItinerary);
-        //火车行程
-        TravelTrainItinerary travelTrainItinerary = syncService.setTravelTrainItinerary(train,floatDay);
-        ArrayList<TravelTrainItinerary> travelTrainItineraries =new ArrayList<>();
-        travelTrainItineraries.add(travelTrainItinerary);
-        SyncEntity syncEntityFlight = syncService.setSyncEntity(employee,"FLIGHT",travelApplication,bookClerk,traveApplicationDetail,filght,participants,travelFlightItineraries,null,null);
-        SyncEntity syncEntityHotel = syncService.setSyncEntity(employee,"HOTEL",travelApplication,bookClerk,traveApplicationDetail,hotel,participants,null,travelHotelItineraries,null);
-        SyncEntity syncEntityTrain = syncService.setSyncEntity(employee,"TRAIN",travelApplication,bookClerk,traveApplicationDetail,train,participants,null,null,travelTrainItineraries);
-        JsonObject syncEntityFlightJson = new JsonParser().parse(GsonUtil.objectToString(syncEntityFlight)).getAsJsonObject();
-        JsonObject syncEntityTrainJson = new JsonParser().parse(GsonUtil.objectToString(syncEntityTrain)).getAsJsonObject();
-        JsonObject syncEntityHotelJson = new JsonParser().parse(GsonUtil.objectToString(syncEntityHotel)).getAsJsonObject();
-        log.info("封装的数据为：{}",syncEntityFlightJson);
-        //查询tmc 同步的数据
-        JsonObject flightTmcdata = vendor.getTMCPlan(employee,tmcChannel,filght.get("approvalNum").getAsString());
-        JsonObject trainTmcdata = vendor.getTMCPlan(employee, tmcChannel,train.get("approvalNum").getAsString());
-        JsonObject hotelTmcdata = vendor.getTMCPlan(employee, tmcChannel,hotel.get("approvalNumber").getAsString());
-        log.info("查询的数据为：{}",flightTmcdata);
-        JsonObject cimccTmcRequestData1 = flightTmcdata.getAsJsonObject("tmcRequest");
-        JsonObject tmcResponse = flightTmcdata.getAsJsonObject("response");
-        assert GsonUtil.compareJsonObject(syncEntityFlightJson,cimccTmcRequestData1,new HashMap<>());
-        assert GsonUtil.compareJsonObject(syncEntityTrainJson,trainTmcdata.getAsJsonObject("tmcRequest"),new HashMap<>());
-        assert GsonUtil.compareJsonObject(syncEntityHotelJson,hotelTmcdata.getAsJsonObject("tmcRequest"),new HashMap<>());
+
     }
 
 
@@ -375,36 +398,41 @@ public class SyncCimccTmc extends BaseTest {
         flightItineraries.add(flightItinerary);
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
         travelApplication.submitApplication(employee,applicationOID,"");
-        //获取大唐机票行程详情
-        try {
-            sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        int successNum = approve.approveal(employee,applicationOID,1001);
+        if(successNum !=1){
+            throw new RuntimeException("审批单未通过");
+        }else{
+            //获取大唐机票行程详情
+            try {
+                sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            JsonObject filght = travelApplication.getItinerary(employee,applicationOID,"FLIGHT").get(0).getAsJsonObject();
+            //获取审批单中的travelApplication
+            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
+            BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
+            //只有一个参与人
+            Participant participant2 = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(1).getAsJsonObject());
+            Participant participant1 = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
+            ArrayList<Participant> participants =new ArrayList<>();
+            participants.add(participant2);
+            participants.add(participant1);
+            JsonObject floatDay = new JsonObject();
+            floatDay.addProperty("start",4);
+            floatDay.addProperty("end",4);
+            TravelFlightItinerary travelFlightItinerary = syncService.setTravelFlight(filght,floatDay);
+            ArrayList<TravelFlightItinerary> travelFlightItineraries = new ArrayList<>();
+            travelFlightItineraries.add(travelFlightItinerary);
+            SyncEntity syncEntity = syncService.setSyncEntity(employee,"FLIGHT",travelApplication,bookClerk,traveApplicationDetail,filght,participants,travelFlightItineraries,null,null);
+            JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(syncEntity)).getAsJsonObject();
+            log.info("封装的数据为：{}",syncEntityJson);
+            //查询tmc 同步的数据
+            JsonObject tmcdata = vendor.getTMCPlan(employee,tmcChannel,filght.get("approvalNum").getAsString());
+            log.info("查询的数据为：{}",tmcdata);
+            JsonObject cimccTmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
+            JsonObject tmcResponse = tmcdata.getAsJsonObject("response");
+            assert GsonUtil.compareJsonObject(syncEntityJson,cimccTmcRequestData,new HashMap<>());
         }
-        JsonObject filght = travelApplication.getItinerary(employee,applicationOID,"FLIGHT").get(0).getAsJsonObject();
-        //获取审批单中的travelApplication
-        JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
-        BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
-        //只有一个参与人
-        Participant participant2 = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(1).getAsJsonObject());
-        Participant participant1 = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
-        ArrayList<Participant> participants =new ArrayList<>();
-        participants.add(participant2);
-        participants.add(participant1);
-        JsonObject floatDay = new JsonObject();
-        floatDay.addProperty("start",4);
-        floatDay.addProperty("end",4);
-        TravelFlightItinerary travelFlightItinerary = syncService.setTravelFlight(filght,floatDay);
-        ArrayList<TravelFlightItinerary> travelFlightItineraries = new ArrayList<>();
-        travelFlightItineraries.add(travelFlightItinerary);
-        SyncEntity syncEntity = syncService.setSyncEntity(employee,"FLIGHT",travelApplication,bookClerk,traveApplicationDetail,filght,participants,travelFlightItineraries,null,null);
-        JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(syncEntity)).getAsJsonObject();
-        log.info("封装的数据为：{}",syncEntityJson);
-        //查询tmc 同步的数据
-        JsonObject tmcdata = vendor.getTMCPlan(employee,tmcChannel,filght.get("approvalNum").getAsString());
-        log.info("查询的数据为：{}",tmcdata);
-        JsonObject cimccTmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
-        JsonObject tmcResponse = tmcdata.getAsJsonObject("response");
-        assert GsonUtil.compareJsonObject(syncEntityJson,cimccTmcRequestData,new HashMap<>());
     }
 }

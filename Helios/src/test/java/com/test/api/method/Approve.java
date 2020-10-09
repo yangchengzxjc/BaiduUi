@@ -28,14 +28,25 @@ public class Approve {
     }
 
     /**
-     * 单据审批
+     * 单据审批 -审批人是自己
      * @param employee
      * @param reportOID
-     * @param entityType
+     * @param entityType 表示单据类型   1001：申请单    1002：表示报销单
      * @throws HttpStatusException
      */
-    public void approveal(Employee employee,String reportOID,int entityType) throws HttpStatusException {
-        approveApi.ReportApproval(employee,reportOID,entityType);
+    public int approveal(Employee employee,String reportOID,int entityType) throws HttpStatusException {
+        return approveApi.reportApproval(employee,employee.getUserOID(),reportOID,entityType).get("successNum").getAsInt();
+    }
+
+    /**
+     * 单据审批 -审批人是任何人
+     * @param employee
+     * @param reportOID
+     * @param entityType 表示单据类型   1001：申请单    1002：表示报销单
+     * @throws HttpStatusException
+     */
+    public int approveal(Employee employee,String approveOID, String reportOID,int entityType) throws HttpStatusException {
+        return approveApi.reportApproval(employee,approveOID,reportOID,entityType).get("successNum").getAsInt();
     }
 
 }

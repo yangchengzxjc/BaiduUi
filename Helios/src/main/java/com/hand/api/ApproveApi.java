@@ -58,14 +58,14 @@ public class ApproveApi extends BaseRequest{
      * @return
      * @throws HttpStatusException
      */
-    public  JsonObject ReportApproval(Employee employee, String  expenseReportOID, int entityType) throws HttpStatusException {
+    public  JsonObject reportApproval(Employee employee,String approverOID, String expenseReportOID, int entityType) throws HttpStatusException {
         JsonObject responseEntity=null;
         String url=employee.getEnvironment().getUrl()+ ApiPath.EXPENSEREPORT_APPROVAL;
         JsonObject jsonObject=new JsonObject();
         JsonArray entities=new JsonArray();
         JsonObject entitie =new JsonObject();
         entitie.addProperty("entityOID",expenseReportOID);
-        entitie.addProperty("approverOID",employee.getUserOID());
+        entitie.addProperty("approverOID",approverOID);
         entitie.addProperty("entityType",entityType);
         entities.add(entitie);
         jsonObject.add("entities",entities);
@@ -74,8 +74,6 @@ public class ApproveApi extends BaseRequest{
         responseEntity=new JsonParser().parse(res).getAsJsonObject();
         return  responseEntity;
     }
-
-
 }
 
 

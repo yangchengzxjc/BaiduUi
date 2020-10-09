@@ -33,7 +33,7 @@ public class FlightEndorsementDetail {
     private List<String> ToCities;
     private Integer ProductType;
     private BigDecimal Price;
-    private List<Object> PassengerList;
+    private List<Passenger> PassengerList;
     private Integer ReturnFloatDays;
     private String ReturnBeginDate;
     private String ReturnEndDate;

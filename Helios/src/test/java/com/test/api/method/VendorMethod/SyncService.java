@@ -1,6 +1,5 @@
 package com.test.api.method.VendorMethod;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -393,7 +392,7 @@ public class SyncService {
      *  初始化机票 行程
      * @return
      */
-    public FlightEndorsementDetail setFlightEndorsementDetail(JsonObject itinerary,JsonObject floatDays,ArrayList<Object> passagesList){
+    public FlightEndorsementDetail setFlightEndorsementDetail(JsonObject itinerary,JsonObject floatDays,ArrayList<Passenger> passagesList){
         //舱等映射
         String seatClass ="";
         if(itinerary.get("seatClass").isJsonNull()){
@@ -460,5 +459,19 @@ public class SyncService {
     public HotelEndorsementDetail setHotelEndorsementDetail(){
         HotelEndorsementDetail hotelEndorsementDetail = new HotelEndorsementDetail();
         return hotelEndorsementDetail;
+    }
+
+    /**
+     * 携程初始化乘客信息
+     * @param employee
+     * @param applicationParticipant
+     * @return
+     * @throws HttpStatusException
+     */
+    public Passenger setPassenger(Employee employee,JsonObject applicationParticipant) throws HttpStatusException {
+        Passenger passenger =new Passenger();
+        JsonObject bookInfo = infraStructure.getEmployeeDetail(employee,applicationParticipant.get("participantOID").getAsString());
+        passenger.setName(bookInfo.get("fullName").getAsString());
+        return passenger;
     }
 }

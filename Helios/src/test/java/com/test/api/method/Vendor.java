@@ -90,7 +90,6 @@ public class Vendor {
     public JsonObject queryOrderData(Employee employee,String orderType,SettlementBody settlementBody) throws HttpStatusException {
         JsonObject respons = vendorApi.queryInternalOrderData(employee,orderType,settlementBody);
         JsonObject orderData =new JsonObject();
-        log.info("数据安全:{}",respons);
         if(respons.get("success").getAsBoolean()){
             orderData = respons.getAsJsonObject("body").get("list").getAsJsonArray().get(0).getAsJsonObject();
         }

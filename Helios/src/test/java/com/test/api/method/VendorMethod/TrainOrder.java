@@ -74,7 +74,7 @@ public class TrainOrder {
                 .originalOrderNum(originalOrderNum)
                 .supplierName("中集商旅")
                 .supplierCode("cimccTMC")
-                .approvalCode("TA"+System.currentTimeMillis())
+                .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-T")
                 .orderStatusName(orderStatusName)
                 .orderStatusCode(orderStatusMapping.get(orderStatusName))
                 .tenantCode(employee.getTenantId())

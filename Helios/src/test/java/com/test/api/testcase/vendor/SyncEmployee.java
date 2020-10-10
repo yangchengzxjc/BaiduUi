@@ -31,25 +31,27 @@ public class SyncEmployee extends BaseTest {
     private InfraStructure infraStructure;
     private Vendor vendor;
     private SyncService syncService;
-
+    private String  employeeID;
+    private String empID;
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void beforeClass(@Optional("14082978000") String phoneNumber, @Optional("hly123456") String pwd, @Optional("stage") String env){
+    public void beforeClass(@Optional("14082978000") String phoneNumber, @Optional("hly123456") String pwd, @Optional("stage") String env) throws IOException {
         employee=getEmployee(phoneNumber,pwd,env);
         employeeManagePage =new EmployeeManagePage();
         infraStructure =new InfraStructure();
         vendor =new Vendor();
         syncService =new SyncService();
-    }
-
-    @Test(description = "新增员正常流程,")
-    public void addEmployeeTest01() throws HttpStatusException, InterruptedException, IOException {
         //读取系统内置的一个自增数据
         PropertyReader.getProperties(BaseConstant.CONFIGPATH);
-        String employeeID =PropertyReader.getValue("employeeID");
+        employeeID =PropertyReader.getValue("employeeID");
+        empID="M00"+employeeID;
         PropertyReader.writeValue("employeeID",String.valueOf(Integer.valueOf(employeeID)+1),BaseConstant.CONFIGPATH);
-        String empID="M00"+employeeID;
+    }
+
+    @Test(description = "新增员正常流程,校验同步数据是否正确")
+    public void addEmployeeTest01() throws HttpStatusException, InterruptedException {
+
         JsonObject empObject = employeeManagePage.addEmployee(employee, "测试接口新建Q"+employeeID,"",empID,empID+"@163.com","人员类型01","","甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
         String userOID=empObject.get("userOID").getAsString();
         JsonObject bookClass = vendor.queryBookClass(employee);
@@ -60,7 +62,7 @@ public class SyncEmployee extends BaseTest {
 
         JsonArray userCardInfos = infraStructure.queryUserCard(employee,userOID);
         ArrayList cardList = syncService.addUserCardInfoDTO(userCardInfos);
-        Thread.sleep(15000);
+        Thread.sleep(20000);
         EmployeeDTO b = syncService.addEmployeeDTO(empObject,departCode,bookClass,employee,cardList);
         JsonObject c =infraStructure.queryUserSync(employee,TmcChannel.DT,"",empID);
 
@@ -71,30 +73,34 @@ public class SyncEmployee extends BaseTest {
     }
 
     @Test(description = "离职员工正常流程")
-    public void deleteEmployeeTest02() throws HttpStatusException {
+    public void deleteEmployeeTest02() throws HttpStatusException, InterruptedException {
+
         //判断员工是否在职
-        if(infraStructure.getUserDetail(employee,"zhang58062@hui.com").get("status").getAsInt() != 1001){
+        if(infraStructure.getUserDetail(employee,empID+"@163.com").get("status").getAsInt() != 1001){
             //员工入职
-            infraStructure.rehire(employee,"zhang58062@hui.com");
+            infraStructure.rehire(employee,empID+"@163.com");
         }
         //员工离职
-        int statusCode = infraStructure.leaveEmployee(employee,"zhang58062@hui.com");
+        int statusCode = infraStructure.leaveEmployee(employee,empID+"@163.com");
         Assert.assertEquals(200,statusCode);
         //获取离职员工的status   1003 是离职状态
-        int status = infraStructure.getUserDetail(employee,"zhang58062@hui.com").get("status").getAsInt();
+        int status = infraStructure.getUserDetail(employee,empID+"@163.com").get("status").getAsInt();
         //对离职员工做一个断言
         Assert.assertEquals(1003,status);
+        Thread.sleep(10000);
+        JsonObject userSync =infraStructure.queryUserSync(employee,TmcChannel.DT,"",empID);
+
     }
 
     @Test(description = "员工重新入职")
     public void rehireTest03() throws HttpStatusException {
         //先判断员工是否是离职的状态
-        if(infraStructure.getUserDetail(employee,"zhang58062@hui.com").get("status").getAsInt() != 1003){
-            infraStructure.leaveEmployee(employee,"zhang58062@hui.com");
+        if(infraStructure.getUserDetail(employee,empID+"@163.com").get("status").getAsInt() != 1003){
+            infraStructure.leaveEmployee(employee,empID+"@163.com");
         }
         //员工再次入职
-        infraStructure.rehire(employee,"zhang58062@hui.com");
-        int status = infraStructure.getUserDetail(employee,"zhang58062@hui.com").get("status").getAsInt();
+        infraStructure.rehire(employee,empID+"@163.com");
+        int status = infraStructure.getUserDetail(employee,empID+"@163.com").get("status").getAsInt();
         //对离职员工做一个断言
         Assert.assertEquals(1001,status);
     }

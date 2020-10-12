@@ -6,17 +6,19 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum TmcChannel {
-    DT("DT","supplyDTTripTmcService","9c7207b5-7807-42b0-86f9-3db6ccb723f6"),
-    CIMCC("CIMCC","supplyCimccTMCService","8afc4c9e-a7ea-4de6-ab60-70669a5b91e8"),
-    FY("FY","supplyFyAirTMCService",""),
-    CTRIP("Ctrip","supplyCtripService",""),
-    ZLS("ZLS","supplyOnTheWayTMCService","");
+    DT("DT","supplyDTTripTmcService","9c7207b5-7807-42b0-86f9-3db6ccb723f6","",""),
+    CIMCC("CIMCC","supplyCimccTMCService","8afc4c9e-a7ea-4de6-ab60-70669a5b91e8","cimccTMC","中集商旅"),
+    FY("FY","supplyFyAirTMCService","","",""),
+    CTRIP("Ctrip","supplyCtripService","","",""),
+    ZLS("ZLS","supplyOnTheWayTMCService","","","");
 
 
 
     private String name;
     private String tmcChannel;
     private String supplierOID;
+    private String supplierCode;
+    private String supplierName;
 
 
 

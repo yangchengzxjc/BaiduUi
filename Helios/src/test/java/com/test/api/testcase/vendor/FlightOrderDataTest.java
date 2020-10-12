@@ -129,10 +129,8 @@ public class FlightOrderDataTest extends BaseTest {
                 .airTicketPrint(airTicketPrints)
                 .airInsurance(airInsurances)
                 .build();
-        //推送的数据封装成一个json字符串
-        String hotelOrderData =GsonUtil.objectToString(airOrderInfoEntity);
         //转成jsonobject对象
-        JsonObject flightOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
+        JsonObject flightOrderDataObject =new JsonParser().parse(GsonUtil.objectToString(airOrderInfoEntity)).getAsJsonObject();
         //订单推送
         vendor.pushOrderData(employee,"flight",airOrderInfoEntity,"cimccTMC","200428140254184788","");
         SettlementBody settlementBody = SettlementBody.builder()
@@ -163,7 +161,7 @@ public class FlightOrderDataTest extends BaseTest {
         mapping.put("employeeId","preEmployeeId");
         mapping.put(employee.getDepartmentName(),"产品三部");
         assert GsonUtil.compareJsonObject(flightOrderDataObject,flightOrderData,mapping);
-        //对比预订人的oid
+        //对比预订人的oid 推送数据未推送此字段单独来比较
         assert flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
     }
 

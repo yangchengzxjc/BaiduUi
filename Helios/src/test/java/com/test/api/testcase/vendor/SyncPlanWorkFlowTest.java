@@ -7,12 +7,13 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;
 import com.hand.basicObject.itinerary.FlightItinerary;
+import com.hand.basicObject.itinerary.HotelItinerary;
 import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicObject.supplierObject.airOrderInfo.*;
-import com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity.BookClerk;
-import com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity.Participant;
-import com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity.SyncEntity;
-import com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity.TravelFlightItinerary;
+import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelBaseOrder;
+import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelOrderInfoEntity;
+import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelPassengerInfo;
+import com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity.*;
 import com.hand.basicconstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
@@ -21,6 +22,7 @@ import com.test.BaseTest;
 import com.test.api.method.*;
 import com.test.api.method.ApplicationMethod.TravelApplicationPage;
 import com.test.api.method.VendorMethod.FlightOrder;
+import com.test.api.method.VendorMethod.HotelOrder;
 import com.test.api.method.VendorMethod.SyncService;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
@@ -49,6 +51,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
     private Approve approve;
     private InfraStructure infraStructure;
     private FlightOrder flightOrder;
+    private HotelOrder hotelOrder;
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
@@ -63,6 +66,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
         approve =new Approve();
         infraStructure =new InfraStructure();
         flightOrder =new FlightOrder();
+        hotelOrder = new HotelOrder();
     }
 
     @DataProvider(name = "TMC")
@@ -209,6 +213,102 @@ public class SyncPlanWorkFlowTest extends BaseTest {
             assert GsonUtil.compareJsonObject(flightOrderDataObject,flightOrderData,mapping);
             //对比预订人的oid 推送数据未推送此字段单独来比较
             assert flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
+            //结算数据对比
+        }
+    }
+
+    @Test(description = "审批单同步-中集TMC-酒店行程",dataProvider = "TMC")
+    public void cimccSyncApprovalTest3(String tmcChannel,String supplierOID,String supplierName,String supplierCode) throws HttpStatusException, InterruptedException {
+        FormComponent component =new FormComponent();
+        component.setCause(tmcChannel+"供应商酒店同步测试");
+        component.setDepartment(employee.getDepartmentOID());
+        component.setStartDate(UTCTime.getNowStartUtcDate());
+        component.setEndDate(UTCTime.getUTCDateEnd(5));
+        component.setCostCenter("成本中心NO1");
+        //添加参与人员  参与人员的value 是一段json数组。
+        JsonArray array = new JsonArray();
+        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-消费平台"),"懿消费商(xiao/feishang)"));
+        component.setParticipant(array.toString());
+//        创建申请单
+        String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
+        //初始化酒店行程  中集
+        ArrayList<HotelItinerary> hotelItineraries =new ArrayList<>();
+        //酒店行程  开始日期要跟申请单的表头一样
+        HotelItinerary hotelItinerary =new HotelItinerary("北京",1,component.getStartDate(),UTCTime.utcToBJDate(component.getEndDate(),-1)+"T16:00:00Z",supplierOID,expenseReportComponent.getCityCode(employee,"北京"),new BigDecimal(400).setScale(1));
+        hotelItineraries.add(hotelItinerary);
+        // 添加行程
+        travelApplication.addItinerary(employee,applicationOID,hotelItineraries);
+        //申请单提交
+        travelApplication.submitApplication(employee,applicationOID,"");
+        int successNum = approve.approveal(employee,applicationOID,1001);
+        if(successNum !=1){
+            throw new RuntimeException("审批单审批失败");
+        }else{
+            sleep(1000);
+            JsonObject hotel = travelApplication.getItinerary(employee,applicationOID,"HOTEL").get(0).getAsJsonObject();
+            //获取审批单中的travelApplication
+            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
+            BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
+            //只有一个参与人
+            Participant participant = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
+            ArrayList<Participant> participants =new ArrayList<>();
+            participants.add(participant);
+            JsonObject floatDay = new JsonObject();
+            floatDay.addProperty("start",4);
+            floatDay.addProperty("end",4);
+            TravelHotelItinerary travelHotelItinerary = syncService.setTravelHotelItinerary(hotel,floatDay);
+            ArrayList<TravelHotelItinerary> travelHotelItineraries =new ArrayList<>();
+            travelHotelItineraries.add(travelHotelItinerary);
+            SyncEntity syncEntity = syncService.setSyncEntity(employee,"HOTEL",travelApplication,bookClerk,traveApplicationDetail,hotel,participants,null,travelHotelItineraries,null);
+            JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(syncEntity)).getAsJsonObject();
+            log.info("封装的数据为：{}",syncEntityJson);
+            //查询tmc 同步的数据
+            JsonObject tmcdata = vendor.getTMCPlan(employee,tmcChannel,hotel.get("approvalNumber").getAsString());
+            log.info("查询的数据为：{}",tmcdata);
+            JsonObject tmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
+            JsonObject tmcResponse = tmcdata.getAsJsonObject("response");
+            //酒店订单基本信息
+            ArrayList<String> bookerDepartments =new ArrayList<>();
+            bookerDepartments.add(traveApplicationDetail.getAsJsonObject("applicant").get("departmentName").getAsString());
+            //订单号
+            String orderNo = RandomNumber.getTimeNumber();
+            HotelBaseOrder hotelBaseOrder =hotelOrder.setHotelBaseOrder(employee,"B",orderNo,supplierName,supplierCode,tmcRequestData,traveApplicationDetail.getAsJsonObject("applicant"));
+            //乘客信息
+            JsonObject participantObject = tmcRequestData.getAsJsonArray("participantList").get(0).getAsJsonObject();
+            HotelPassengerInfo hotelPassengerInfo =hotelOrder.setHotelPassengerInfo(orderNo,"1","I",participantObject.get("name").getAsString(),participantObject.get("employeeID").getAsString(),traveApplicationDetail.getAsJsonObject("applicant").get("departmentName").getAsString(),bookerDepartments);
+            ArrayList<HotelPassengerInfo> hotelPassengerInfos =new ArrayList<>();
+            hotelPassengerInfos.add(hotelPassengerInfo);
+            HotelOrderInfoEntity hotelOrderInfoEntity = HotelOrderInfoEntity.builder()
+                    .hotelOrderBase(hotelBaseOrder)
+                    .hotelOrderPassengerInfos(hotelPassengerInfos)
+                    .build();
+            //推送的数据封装成一个json字符串
+            String hotelOrderData = GsonUtil.objectToString(hotelOrderInfoEntity);
+            //转成jsonobject对象
+            JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
+            //订单推送
+            vendor.pushOrderData(employee,"hotel",hotelOrderInfoEntity,"cimccTMC","200428140254184788","");
+            SettlementBody settlementBody = SettlementBody.builder()
+                    .companyOid(employee.getCompanyOID())
+                    .orderNo(orderNo)
+                    .page(1)
+                    .size(10)
+                    .build();
+            //查询订单数据
+            JsonObject  hotelOrder = vendor.queryOrderData(employee,"hotel",settlementBody);
+            log.info("hotel order Data:{}",hotelOrder);
+            //进行数据对比
+            HashMap<String,String> mapping =new HashMap<>();
+            mapping.put("hotelOrderPassengerInfos","hotelPassengerInfo");
+            mapping.put("employeeId","preEmployeeId");
+            mapping.put("hotelOrderBase","hotelBaseOrder");
+            //进行部门对比   部门可能开启全路径 映射的话不好处理也不好对比  这块单独对比
+            assert hotelOrderDataObject.getAsJsonObject("hotelOrderBase").getAsJsonArray("bookerDepartments").contains(hotelOrder.getAsJsonObject("hotelOrderBase").getAsJsonArray("bookerDepartments"));
+            assert hotelOrderDataObject.getAsJsonObject("hotelOrderBase").get("departmentName").getAsString().contains(hotelOrder.getAsJsonObject("hotelOrderBase").get("departmentName").getAsString());
+            assert hotelOrderDataObject.getAsJsonArray("hotelOrderPassengerInfos").get(0).getAsJsonObject().get("departmentName").getAsString().contains(hotelOrder.getAsJsonArray("hotelOrderPassengerInfos").get(0).getAsJsonObject().get("departmentName").getAsString());
+            assert hotelOrderDataObject.getAsJsonArray("hotelOrderPassengerInfos").get(0).getAsJsonObject().getAsJsonArray("passengerDepartments").contains(hotelOrder.getAsJsonArray("hotelOrderPassengerInfos").get(0).getAsJsonObject().getAsJsonArray("passengerDepartments"));
+            //进行数据对比
+            assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);
         }
     }
 }

@@ -17,8 +17,8 @@ public class UTCTime {
     private static final String UTC_FORMATTER_PATTERN15  = "yyyy-MM-dd'T'15:59:59'Z'";
     private static final String BEiJING_FORMATTER_PATTERN15  = "yyyy-MM-dd";
     private static final String BEIJING_FORMATTER_TIME = "yyyy-MM-dd HH:mm:ss";
-    private static final String BEIJING_TIME = "HH:mm";
     private static final String BEIJING_TIME2 = "yyyyMMdd";
+    private static final String time = "HH:mm:ss";
 
     /**
      * 返回北京时间的任意日期
@@ -49,6 +49,20 @@ public class UTCTime {
         return fmt.print(date);
     }
 
+
+    /**
+     * Utc时间转北京时间
+     * @param   "yyyy-MM-dd'T'16:00:00'Z'";  -> yyyy-MM-dd
+     * @return
+     */
+    public static String BJDateMdy(String beijing, int day){
+        //格式化为北京时间
+        DateTimeFormatter fmt = DateTimeFormat.forPattern(BEiJING_FORMATTER_PATTERN15);
+        DateTime date = DateTime.parse(beijing).plusDays(day);
+        return fmt.print(date);
+    }
+
+
     /**
      * 返回北京时间   例如：  13:30
      * @param hour  0为当前小时
@@ -56,7 +70,7 @@ public class UTCTime {
      * @return
      */
     public static String getTime(int hour,int minute){
-        DateTimeFormatter fmt = DateTimeFormat.forPattern(BEIJING_TIME);
+        DateTimeFormatter fmt = DateTimeFormat.forPattern(time);
         DateTime time = DateTime.now().plusHours(hour).plusMinutes(minute);
         return fmt.print(time);
     }
@@ -106,6 +120,7 @@ public class UTCTime {
         DateTime date = DateTime.now(DateTimeZone.UTC).plusDays(-1);
         return fmt.print(date);
     }
+
 
     /**
      * 获取当前的北京时间   格式为：20200828   用于消费计算费用生成批次

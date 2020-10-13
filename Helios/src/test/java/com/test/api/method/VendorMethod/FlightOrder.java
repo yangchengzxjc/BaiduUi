@@ -1,10 +1,15 @@
 package com.test.api.method.VendorMethod;
 
+import com.google.gson.JsonObject;
+import com.hand.baseMethod.HttpStatusException;
+import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.airOrderInfo.*;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
+import com.test.api.method.InfraStructure;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -13,6 +18,7 @@ import java.util.List;
  * @Version 1.0
  **/
 public class FlightOrder {
+
 
     /**
      * 航程信息
@@ -28,7 +34,7 @@ public class FlightOrder {
                 .airLineCode("MU")
                 .airLineName("上海东方航空公司")
                 .takeoffTime(UTCTime.getBeijingTime(-5, 0, 0))
-                .arrivalTime(UTCTime.getBeijingTime(-5, 2, 0))
+                .arrivalTime(UTCTime.getBeijingTime(-5, 2, 10))
                 .classType("Y")
                 .subClass("A")
                 .dcityName("西安")
@@ -45,6 +51,64 @@ public class FlightOrder {
                 .airPort("")
                 .stopTime("")
                 .flightTime("3h")
+                .tpm(1345)
+                .craftType("空客320")
+                .build();
+        return airFlightInfo;
+    }
+
+    /**
+     * 航程信息
+     * @param orderNo
+     * @return
+     */
+    public AirFlightInfo setAirFlightInfo(String orderNo,JsonObject travelFlight) {
+        //航程信息
+        HashMap<String,String> airport =new HashMap<>();
+        airport.put("西安市","西安咸阳国际机场");
+        airport.put("北京","首都国际机场");
+        airport.put("上海","上海虹桥国际机场");
+        airport.put("南京市","南京禄口国际机场");
+        //机场映射
+        HashMap<String,String> airportCode = new HashMap<>();
+        airportCode.put("西安咸阳国际机场","XIY");
+        airportCode.put("首都国际机场","PEK");
+        airportCode.put("上海虹桥国际机场","SHA");
+        airportCode.put("南京禄口国际机场","NKG");
+        //舱位映射
+        HashMap<Integer,String> classType = new HashMap<>();
+        classType.put(3,"Y");
+        classType.put(1,"F");
+        classType.put(2,"C");
+        classType.put(0,"未知");
+        classType.put(4,"SY");
+        //航程中的起飞时间为审批单同步的起飞时间 到达时间为2小时后
+        String takeoffTime = UTCTime.BJDateMdy(travelFlight.get("takeOffBegin").getAsString(),4)+" "+UTCTime.getTime(0,0);
+        String arrivalTime = UTCTime.BJDateMdy(travelFlight.get("arrivalEnd").getAsString(),-4)+" "+UTCTime.getTime(2,30);
+        AirFlightInfo airFlightInfo = AirFlightInfo.builder()
+                .orderNo(orderNo)
+                .sequence("1")
+                .flight("MU2160")
+                .airLineCode("MU")
+                .airLineName("上海东方航空公司")
+                .takeoffTime(takeoffTime)
+                .arrivalTime(arrivalTime)
+                .classType(classType.get(travelFlight.get("seatClass").getAsInt()))
+                .subClass("A")
+                .dcityName(travelFlight.get("fromCity").getAsString())
+                .dcityCode(travelFlight.get("fromCityCode").getAsString())
+                .dportName(airport.get(travelFlight.get("fromCity").getAsString()))
+                .dportCode(airportCode.get(airport.get(travelFlight.get("fromCity").getAsString())))
+                .dairportName("T3航站楼")
+                .acityName(travelFlight.get("toCity").getAsString())
+                .acityCode(travelFlight.get("toCityCode").getAsString())
+                .aportName(airport.get(travelFlight.get("toCity").getAsString()))
+                .aportCode(airportCode.get(airport.get(travelFlight.get("toCity").getAsString())))
+                .aairportName("T2航站楼")
+                .stopCity("")
+                .airPort("")
+                .stopTime("")
+                .flightTime("2h30m")
                 .tpm(1345)
                 .craftType("空客320")
                 .build();
@@ -166,7 +230,7 @@ public class FlightOrder {
                 .ticketNo(ticketNo)
                 .passengerName(passengerName)
                 .printNo(RandomNumber.getTimeNumber(7))
-                .printTime(UTCTime.getBeijingTime(-5,6,0))
+                .printTime(UTCTime.getBeijingTime(1,6,0))
                 .expressNo(RandomNumber.getTimeNumber(12))
                 .expressCompany("中通快递")
                 .expressFee(new BigDecimal(0).setScale(2))
@@ -209,9 +273,63 @@ public class FlightOrder {
                 .subClass("A")
                 .rerNotes("起飞前24小时免费")
                 .refNotes("起飞前24小时免费")
-                .endNotes("")
+                .endNotes("起飞前24小时免费")
                 .yClassStandardPrice("1000.00")
                 .build();
         return airTicketInfo;
+    }
+
+    /**
+     * 飞机基本订单
+     * @param employee
+     * @param orderType
+     * @param orderNo
+     * @param supplierName
+     * @param supplierCode
+     * @param tmcdata   审批单同步信息
+     * @param amount
+     */
+    public AirBaseOrder setAirBaseOrder(Employee employee,String orderType, String orderNo, String supplierName, String supplierCode,JsonObject tmcdata, JsonObject applicat,BigDecimal amount){
+        //订单基本信息
+        HashMap<Integer,String> flightWay = new HashMap<>();
+        flightWay.put(1001,"S");
+        flightWay.put(1002,"R");
+        AirBaseOrder airBaseOrder = AirBaseOrder.builder()
+                .orderType(orderType)
+                .orderNo(orderNo)
+                .supplierName(supplierName)
+                .supplierCode(supplierCode)
+                .approvalCode(tmcdata.get("approvalCode").getAsString())
+                .orderStatus("已出票")
+                .orderStatusCode("S")
+                //这块数据取值待定。
+                .tenantCode(tmcdata.get("tenantId").getAsString())
+                .tenantName(employee.getTenantName())
+                .employeeId(tmcdata.getAsJsonObject("bookClerk").get("employeeID").getAsString())
+                .supplierAccount("")
+                .preEmployName(tmcdata.getAsJsonObject("bookClerk").get("name").getAsString())
+                .companyOid(tmcdata.get("companyId").getAsString())
+                //取值待定
+                .companyName(applicat.get("companyName").getAsString())
+                .companyCode(employee.getCompanyCode())
+                .departmentName(applicat.get("departmentName").getAsString())
+                .departmentOid(applicat.get("departmentOID").getAsString())
+                .bookChannel("Online-API")
+                .bookType("C")
+                .payType("COPAY")
+                .createTime(UTCTime.getBeijingTime(0,0,0))
+                .payTime(UTCTime.getBeijingTime(0,0,2))
+                .successTime(UTCTime.getBeijingTime(0,0,4))
+                .flightClass("N")
+                .flightWay(flightWay.get(tmcdata.getAsJsonArray("travelFlightsList").get(0).getAsJsonObject().get("itineraryType").getAsInt()))
+                .paymentType("M")
+                .accountType("C")
+                .currency("CNY")
+                .amount(amount)
+                .contactName(tmcdata.getAsJsonObject("bookClerk").get("name").getAsString())
+                .contactPhone(tmcdata.getAsJsonObject("bookClerk").get("mobile").getAsString())
+                .contactEmail(employee.getEmail())
+                .build();
+        return airBaseOrder;
     }
 }

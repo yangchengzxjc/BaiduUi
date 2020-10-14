@@ -93,6 +93,7 @@ public class TrainOrder {
                 .successTime(UTCTime.getBeijingTime(0,0,2))
                 .paymentType(paymentType)
                 .accountType(accountType)
+                .costCenter("成本中心1")
                 .currency("CNY")
                 .totalAmount(totalAmount)
                 .contactName(employee.getFullName())

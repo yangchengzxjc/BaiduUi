@@ -290,7 +290,7 @@ public class GsonUtil {
                         arrayList.add(false);
                     }
                 }catch (NullPointerException e1){
-                    log.info("映射表中无此映射,请添加映射关系再试");
+                    log.info("映射表中无此映射,请添加映射关系再试,字段为:{}",name);
                     arrayList.add(false);
                 }
             }

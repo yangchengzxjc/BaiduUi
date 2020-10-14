@@ -498,6 +498,7 @@ public class HotelOrderDataTest extends BaseTest {
         mapping.put("hotelOrderPassengerInfos","hotelPassengerInfo");
         mapping.put("employeeId","preEmployeeId");
         mapping.put("hotelOrderBase","hotelBaseOrder");
+        mapping.put("hotelOrderExceedInfos","hotelExceedInfo");
         mapping.put(employee.getDepartmentName(),"产品三组");
         //进行数据对比
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);

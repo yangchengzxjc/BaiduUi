@@ -60,6 +60,31 @@ public class HotelOrder {
                 .passengerName(passengerName)
                 .passengerNum(passengerNum)
                 .departmentName(departmentName)
+                .passengerCostCenter("成本中心1")
+                .passengerDepartments(passengerDepartments)
+                .build();
+        return hotelPassengerInfo;
+    }
+
+    /**
+     * 订单乘客信息
+     * @param orderNo
+     * @param passengerNo
+     * @param passengerAttribute
+     * @param departmentName
+     * @param passengerDepartments
+     * @return
+     */
+    public HotelPassengerInfo setHotelPassengerInfo(String orderNo, String passengerNo, String passengerAttribute, String passengerName,
+                                                    String passengerNum,String passengerCostCenter ,String departmentName, List<String> passengerDepartments) {
+        HotelPassengerInfo hotelPassengerInfo = HotelPassengerInfo.builder()
+                .orderNo(orderNo)
+                .passengerNo(passengerNo)
+                .passengerAttribute(passengerAttribute)
+                .passengerName(passengerName)
+                .passengerNum(passengerNum)
+                .departmentName(departmentName)
+                .passengerCostCenter(passengerCostCenter)
                 .passengerDepartments(passengerDepartments)
                 .build();
         return hotelPassengerInfo;
@@ -114,6 +139,7 @@ public class HotelOrder {
                 .accountType("C")
                 .balanceType("P")
                 .guaranteeType("N")
+                .costCenter1(tmcdata.get("costCenter1").getAsString())
                 .currency("CNY")
                 .totalAmount(new BigDecimal(1000).setScale(2))
                 .contactName(tmcdata.getAsJsonObject("bookClerk").get("name").getAsString())

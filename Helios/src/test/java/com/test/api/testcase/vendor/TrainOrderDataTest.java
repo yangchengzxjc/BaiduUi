@@ -102,7 +102,7 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("trainOrderSequenceInfos","trainSequenceInfo");
         mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
         mapping.put("nationlityName","nationalityName");
-        mapping.put(employee.getDepartmentName(),"产品三部");
+        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //校验预订人的
         assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());

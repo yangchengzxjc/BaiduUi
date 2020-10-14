@@ -1,5 +1,6 @@
 package com.test.api.method.VendorMethod;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelBaseOrder;
@@ -7,6 +8,8 @@ import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelExceedInfo;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelPassengerInfo;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -71,14 +74,19 @@ public class HotelOrder {
      * @param supplierCode
      * @param tmcdata
      * @param applicat
-     * @param city
-     * @param passengerName
-     * @param cityCode 城市code
      * @return
      */
-    public HotelBaseOrder setHotelBaseOrder(Employee employee,String orderType, String orderNo, String supplierName, String supplierCode, JsonObject tmcdata,JsonObject applicat,String city,String passengerName,String cityCode){
+    public HotelBaseOrder setHotelBaseOrder(Employee employee,String orderType, String orderNo, String supplierName, String supplierCode, JsonObject tmcdata,JsonObject applicat){
+        JsonObject travelHotel =tmcdata.getAsJsonArray("travelHotelsList").get(0).getAsJsonObject();
+        JsonArray participantList =tmcdata.getAsJsonArray("participantList");
+        StringBuffer passengerName = new StringBuffer();
+        for(int i=0;i<participantList.size();i++){
+            passengerName.append(participantList.get(i).getAsJsonObject().get("name").getAsString()+",");
+        }
         ArrayList<String> bookerDepartments = new ArrayList<>();
         bookerDepartments.add(applicat.get("departmentName").getAsString());
+        String startTime = UTCTime.BJDateMdy(travelHotel.get("fromDate").getAsString().split("\\s+")[1],travelHotel.get("floatDaysBegin").getAsInt())+" "+UTCTime.getTime(0,0);
+        String endTime = UTCTime.BJDateMdy(travelHotel.get("leaveDate").getAsString().split("\\s+")[1],-(travelHotel.get("floatDaysBegin").getAsInt()))+" 11:59:59";
         HotelBaseOrder hotelBaseOrder = HotelBaseOrder.builder()
                 .orderType(orderType)
                 .orderNo(orderNo)
@@ -116,16 +124,16 @@ public class HotelOrder {
                 .hotelPhone("010-123456")
                 .hotelAddress("上海梅川路25弄")
                 .hotelStar(3)
-                .startTime(UTCTime.getBeijingTime(3,0,0))
-                .endTime(UTCTime.getBeijingDate(5)+" 12:00:00")
+                .startTime(startTime)
+                .endTime(endTime)
                 .lastCancelTime(UTCTime.getBeijingTime(2,0,0))
-                .cityName(city)
-                .cityHeliosCode(cityCode)
+                .cityName(travelHotel.get("city").getAsString())
+                .cityHeliosCode(travelHotel.get("cityCode").getAsString())
                 //为字符串  多个乘客使用,隔开
-                .passengerName(passengerName)
+                .passengerName(passengerName.deleteCharAt(passengerName.lastIndexOf(",")).toString())
                 .roomName("商务套房")
                 .roomQuantity(1)
-                .roomDays(5)
+                .roomDays(Days.daysBetween(new DateTime(UTCTime.BJDateMdy(travelHotel.get("fromDate").getAsString().split("\\s+")[1],travelHotel.get("floatDaysBegin").getAsInt())),new DateTime(UTCTime.BJDateMdy(travelHotel.get("leaveDate").getAsString().split("\\s+")[1],-(travelHotel.get("floatDaysBegin").getAsInt())))).getDays())
                 .variance(new BigDecimal(0).setScale(2))
                 .build();
         return hotelBaseOrder;

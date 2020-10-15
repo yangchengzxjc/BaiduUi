@@ -143,14 +143,15 @@ public class FlightOrder {
                 .passengerAttribute(passengerAttribute)
                 .passengerName(passengerName)
                 .passengerNum(passengerNum)
-                .passengerDepartments(bookerDepartments)
                 .departmentName(departmentName)
+                .departmentCode("")
                 .nationlityName("中国")
                 .certificateType("IDC")
                 .certificateNum("610"+System.currentTimeMillis())
                 .passengerPhone(passengerPhone)
                 .passengerEmail(passengerEmail)
                 .passengerSex("M")
+                .passengerCostCenter("管理综合部1")
                 .passengerDepartments(bookerDepartments)
                 .build();
         return airPassengerInfo;
@@ -162,27 +163,34 @@ public class FlightOrder {
      * @param passengerNo
      * @return
      */
-    public AirPassengerInfo setAirPassengerInfo(Employee employee,String orderNo, String passengerNo,JsonObject participant,JsonObject applicant) throws HttpStatusException {
+    public AirPassengerInfo setAirPassengerInfo(Employee employee,String orderNo, String passengerNo,JsonObject tmcRequestData,JsonObject applicationParticipant) throws HttpStatusException {
+        JsonObject tmcParticipant = tmcRequestData.getAsJsonArray("participantList").get(0).getAsJsonObject();
+        //查询乘机人的信息
+        JsonObject participantInfo = infraStructure.getEmployeeDetail(employee,applicationParticipant.get("participantOID").getAsString());
         //乘机人信息
         ArrayList<String> bookerDepartments =new ArrayList<>();
-        bookerDepartments.add(applicant.get("departmentName").getAsString());
+        bookerDepartments.add(participantInfo.get("departmentName").getAsString());
         //身份证信息
-        JsonObject cardInfo = infraStructure.queryUserCard(employee,applicant.get("userOID").getAsString(),"身份证");
+        JsonObject cardInfo = infraStructure.queryUserCard(employee,applicationParticipant.get("participantOID").getAsString(),"身份证");
+        //查询部门code
+        String deptCode = infraStructure.getDeptCode(employee,participantInfo.get("departmentOID").getAsString());
         AirPassengerInfo airPassengerInfo = AirPassengerInfo.builder()
                 .orderNo(orderNo)
                 .passengerNo(passengerNo)
                 .passengerType("AUT")
                 .passengerAttribute("I")
-                .passengerName(participant.get("name").getAsString())
-                .passengerNum(participant.get("employeeID").getAsString())
+                .passengerName(tmcParticipant.get("name").getAsString())
+                .passengerNum(tmcParticipant.get("employeeID").getAsString())
                 .passengerDepartments(bookerDepartments)
-                .departmentName(applicant.get("departmentName").getAsString())
+                .departmentName(participantInfo.get("departmentName").getAsString())
+                .departmentCode(deptCode)
                 .nationlityName("中国")
                 .certificateType("IDC")
                 .certificateNum(cardInfo.get("originalCardNo").getAsString())
-                .passengerPhone(participant.get("mobile").getAsString())
-                .passengerEmail(participant.get("email").getAsString())
-                .passengerSex(participant.get("gender").getAsString())
+                .passengerPhone(tmcParticipant.get("mobile").getAsString())
+                .passengerEmail(tmcParticipant.get("email").getAsString())
+                .passengerSex(tmcParticipant.get("gender").getAsString())
+                .passengerCostCenter(tmcRequestData.get("costCenter1").getAsString())
                 .build();
         return airPassengerInfo;
     }

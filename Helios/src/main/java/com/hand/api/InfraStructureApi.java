@@ -441,4 +441,19 @@ public class InfraStructureApi extends BaseRequest{
         }
         return new JsonParser().parse(res).getAsJsonArray();
     }
+
+    /**
+     * 部门管理- 部门详情
+     * @param employee
+     * @param departmentOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject departmentDetail(Employee employee,String departmentOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+String.format(ApiPath.DepartmentDetail,departmentOID);
+        HashMap<String,String> map = new HashMap<>();
+        map.put("roleType","TENANT");
+        String res = doGet(url,getHeader(employee.getAccessToken(),HeaderKey.DepManager,ResourceId.DepartManage),map,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
 }

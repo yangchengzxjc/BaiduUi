@@ -9,6 +9,7 @@ import com.hand.utils.UTCTime;
 import com.test.api.method.InfraStructure;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +20,11 @@ import java.util.List;
  **/
 public class FlightOrder {
 
+    private InfraStructure infraStructure;
+
+    public FlightOrder(){
+        infraStructure = new InfraStructure();
+    }
 
     /**
      * 航程信息
@@ -146,6 +152,37 @@ public class FlightOrder {
                 .passengerEmail(passengerEmail)
                 .passengerSex("M")
                 .passengerDepartments(bookerDepartments)
+                .build();
+        return airPassengerInfo;
+    }
+
+    /**
+     * 乘机人信息
+     * @param orderNo
+     * @param passengerNo
+     * @return
+     */
+    public AirPassengerInfo setAirPassengerInfo(Employee employee,String orderNo, String passengerNo,JsonObject participant,JsonObject applicant) throws HttpStatusException {
+        //乘机人信息
+        ArrayList<String> bookerDepartments =new ArrayList<>();
+        bookerDepartments.add(applicant.get("departmentName").getAsString());
+        //身份证信息
+        JsonObject cardInfo = infraStructure.queryUserCard(employee,applicant.get("userOID").getAsString(),"身份证");
+        AirPassengerInfo airPassengerInfo = AirPassengerInfo.builder()
+                .orderNo(orderNo)
+                .passengerNo(passengerNo)
+                .passengerType("AUT")
+                .passengerAttribute("I")
+                .passengerName(participant.get("name").getAsString())
+                .passengerNum(participant.get("employeeID").getAsString())
+                .passengerDepartments(bookerDepartments)
+                .departmentName(applicant.get("departmentName").getAsString())
+                .nationlityName("中国")
+                .certificateType("IDC")
+                .certificateNum(cardInfo.get("originalCardNo").getAsString())
+                .passengerPhone(participant.get("mobile").getAsString())
+                .passengerEmail(participant.get("email").getAsString())
+                .passengerSex(participant.get("gender").getAsString())
                 .build();
         return airPassengerInfo;
     }

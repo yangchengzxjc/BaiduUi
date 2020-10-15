@@ -1,5 +1,6 @@
 package com.test.api.method.VendorMethod;
 
+import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.TrainOrderInfo.*;
@@ -9,6 +10,7 @@ import com.test.api.method.ExpenseReportComponent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -105,6 +107,57 @@ public class TrainOrder {
     }
 
     /**
+     * 火车订单基本信息
+     * @param employee
+     * @param orderType
+     * @param orderNo
+     * @return
+     */
+    public TrainBaseOrder setTrainBaseOrder(Employee employee, String supplierName,String supplierCode, BigDecimal totalAmount,String orderType, String orderNo, JsonObject tmcData,JsonObject applicant){
+        //原订单号
+        String originalOrderNum = "";
+        if(!orderType.equals("B")){
+            originalOrderNum = RandomNumber.getTimeNumber(14);
+        }
+        ArrayList<String> bookerDepartments = new ArrayList<>();
+        bookerDepartments.add(applicant.get("departmentName").getAsString());
+        //订单基本信息
+        TrainBaseOrder trainBaseOrder = TrainBaseOrder.builder()
+                .orderType(orderType)
+                .orderNo(orderNo)
+                .originalOrderNum(originalOrderNum)
+                .supplierName(supplierName)
+                .supplierCode(supplierCode)
+                .approvalCode(tmcData.get("approvalCode").getAsString())
+                .orderStatusName("已购票")
+                .orderStatusCode("TD")
+                .tenantCode(tmcData.get("tenantId").getAsString())
+                .tenantName(employee.getTenantName())
+                .employeeNum(tmcData.getAsJsonObject("bookClerk").get("employeeID").getAsString())
+                .employeeName(tmcData.getAsJsonObject("bookClerk").get("name").getAsString())
+                .companyName(applicant.get("companyName").getAsString())
+                .companyCode(employee.getCompanyCode())
+                .departmentName(applicant.get("departmentName").getAsString())
+                .bookChannel("Online-APP")
+                .bookType("C")
+                .payType("ALIPAY")
+                .createTime(UTCTime.getBeijingTime(0,0,0))
+                .payTime(UTCTime.getBeijingTime(0,0,1))
+                .successTime(UTCTime.getBeijingTime(0,0,1))
+                .paymentType("M")
+                .accountType("C")
+                .costCenter(tmcData.get("costCenter1").getAsString())
+                .currency("CNY")
+                .totalAmount(totalAmount)
+                .contactName(tmcData.getAsJsonObject("bookClerk").get("name").getAsString())
+                .contactPhone(tmcData.getAsJsonObject("bookClerk").get("mobile").getAsString())
+                .contactEmail(employee.getEmail())
+                .remark(tmcData.get("remark").getAsString())
+                .build();
+        return trainBaseOrder;
+    }
+
+    /**
      * 火车订单改签信息
      * @param orderNo 订单号
      * @param changeReason 改签信息
@@ -188,7 +241,7 @@ public class TrainOrder {
      * @param passengerEmail   邮箱
      * @return
      */
-    public TrainPassengerInfo setTrainPassengerInfo(String orderNo, String passengerNo, String passengerAttribute,String passengerName, String passagerNum, List<String> bookerDepartments,String departmentName,String certificateNum,String passengerPhone,String passengerEmail){
+    public TrainPassengerInfo setTrainPassengerInfo(String orderNo, String passengerNo, String passengerAttribute,String passengerName, String passagerNum, List<String> bookerDepartments,String departmentName,String departmentCode,String certificateNum,String passengerPhone,String passengerEmail){
         //订单乘客信息
         TrainPassengerInfo trainPassengerInfo = TrainPassengerInfo.builder()
                 .orderNo(orderNo)
@@ -199,7 +252,43 @@ public class TrainOrder {
                 .passengerNum(passagerNum)
                 .passengerDepartments(bookerDepartments)
                 .departmentName(departmentName)
-//                .departmentCode(departmentCode)
+                .departmentCode(departmentCode)
+                .nationlityName("中国")
+                .certificateType("IDC")
+                .certificateNum(certificateNum)
+                .passengerPhone(passengerPhone)
+                .passengerEmail(passengerEmail)
+                .passengerSex("M")
+                //成本中心
+                .passengerCostCenter("管理综合部")
+                .build();
+        return trainPassengerInfo;
+    }
+
+    /**订单乘客信息
+     * @param orderNo  订单号
+     * @param passengerNo  乘客序号
+     * @param passengerName  乘客姓名
+     * @param passagerNum  乘客工号
+     * @param bookerDepartments  乘客部门
+     * @param departmentName 乘客部门名称
+     * @param certificateNum 身份证号码
+     * @param passengerPhone   手机号
+     * @param passengerEmail   邮箱
+     * @return
+     */
+    public TrainPassengerInfo setTrainPassengerInfo(String orderNo, String passengerNo, List<String> bookerDepartments,String departmentName){
+        //订单乘客信息
+        TrainPassengerInfo trainPassengerInfo = TrainPassengerInfo.builder()
+                .orderNo(orderNo)
+                .passengerNo(passengerNo)
+                .passengerType("AUD")
+                .passengerAttribute(passengerAttribute)
+                .passengerName(passengerName)
+                .passengerNum(passagerNum)
+                .passengerDepartments(bookerDepartments)
+                .departmentName(departmentName)
+                .departmentCode(departmentCode)
                 .nationlityName("中国")
                 .certificateType("IDC")
                 .certificateNum(certificateNum)
@@ -224,7 +313,6 @@ public class TrainOrder {
      * @throws HttpStatusException
      */
     public TrainSequenceInfo setTrainSequenceInfo(Employee employee,String orderNo,String sequenceNo,String trainNum,String dCityName,String aCityName,String dStationName,String aStationName) throws HttpStatusException {
-
         String dCityCode = component.getCityCode(employee,dCityName);
         String aCityCode = component.getCityCode(employee,aCityName);
         //订单车次
@@ -240,6 +328,39 @@ public class TrainOrder {
                 .acityName(aCityName)
                 .acityCode(aCityCode)
                 .astationName(aStationName)
+                .build();
+        return trainSequenceInfo;
+    }
+
+    /**
+     * 火车订单信息
+     * @param orderNo
+     * @param sequenceNo
+     * @return
+     * @throws HttpStatusException
+     */
+    public TrainSequenceInfo setTrainSequenceInfo(String orderNo,String sequenceNo,JsonObject tmcData) throws HttpStatusException {
+        HashMap<String,String> station = new HashMap<>();
+        station.put("西安市","西安北站");
+        station.put("上海","上海虹桥火车站");
+        station.put("深圳","深圳火车站");
+        station.put("北京","北京西站");
+        JsonObject travelTrain = tmcData.getAsJsonArray("travelTrainsList").get(0).getAsJsonObject();
+        String startTime = UTCTime.BJDateMdy(travelTrain.get("fromDate").getAsString().split("\\s+")[1],travelTrain.get("floatDaysBegin").getAsInt())+" "+UTCTime.getTime(0,0);
+        String endTime = UTCTime.BJDateMdy(travelTrain.get("leaveDate").getAsString().split("\\s+")[1],-(travelTrain.get("floatDaysBegin").getAsInt()))+" "+UTCTime.getTime(2,30);
+        //订单车次
+        TrainSequenceInfo trainSequenceInfo =TrainSequenceInfo.builder()
+                .orderNo(orderNo)
+                .sequenceNo(sequenceNo)
+                .trainNum("D1234")
+                .departureTime(startTime)
+                .arriveTime(endTime)
+                .dcityName(tmcData.get("fromCity").getAsString())
+                .dcityCode(tmcData.get("fromCityCode").getAsString())
+                .dstationName(station.get(tmcData.get("fromCity").getAsString()))
+                .acityName(tmcData.get("toCity").getAsString())
+                .acityCode(tmcData.get("toCityCode").getAsString())
+                .astationName(station.get(tmcData.get("toCity").getAsString()))
                 .build();
         return trainSequenceInfo;
     }

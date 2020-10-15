@@ -13,4 +13,6 @@ public class HeaderKey {
     public static final String PERSION_MANAGE = "person-manage";
     //表单管理
     public static final String FORM_CONFIG = "form-list";
+    //部门管理
+    public static final String DepManager = "department-management";
 }

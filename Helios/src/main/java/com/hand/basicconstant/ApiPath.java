@@ -303,7 +303,8 @@ public class ApiPath {
         public static final String GET_SUBMISSION_ITEM = "/api/expense/submit/control/items/%s";
         //获取表单消费商管控
         public static final String GETFORMVENDORCONTROL = "/api/custom/forms/property/travel/configuration/%s";
-
-    }
+        //部门管理查询部门详情的接口
+        public static final String DepartmentDetail = "/api/departments/%s";
+}
 
 

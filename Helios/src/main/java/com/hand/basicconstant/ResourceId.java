@@ -26,4 +26,6 @@ public class ResourceId {
     public static final String EMPLOYEE_MANAGE = "64000500";
     //表单管理
     public static final String FORM_CONFIG = "66001000";
+    //部门管理
+    public static final String DepartManage= "640002000400";
 }

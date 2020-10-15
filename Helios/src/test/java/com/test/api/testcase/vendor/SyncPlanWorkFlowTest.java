@@ -8,7 +8,12 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;
 import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.basicObject.itinerary.HotelItinerary;
+import com.hand.basicObject.itinerary.TrainItinerary;
 import com.hand.basicObject.supplierObject.SettlementBody;
+import com.hand.basicObject.supplierObject.TrainOrderInfo.TrainBaseOrder;
+import com.hand.basicObject.supplierObject.TrainOrderInfo.TrainPassengerInfo;
+import com.hand.basicObject.supplierObject.TrainOrderInfo.TrainSequenceInfo;
+import com.hand.basicObject.supplierObject.TrainOrderInfo.TrainTicketInfo;
 import com.hand.basicObject.supplierObject.airOrderInfo.*;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelBaseOrder;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelOrderInfoEntity;
@@ -24,6 +29,7 @@ import com.test.api.method.ApplicationMethod.TravelApplicationPage;
 import com.test.api.method.VendorMethod.FlightOrder;
 import com.test.api.method.VendorMethod.HotelOrder;
 import com.test.api.method.VendorMethod.SyncService;
+import com.test.api.method.VendorMethod.TrainOrder;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
 
@@ -52,6 +58,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
     private InfraStructure infraStructure;
     private FlightOrder flightOrder;
     private HotelOrder hotelOrder;
+    private TrainOrder trainOrder;
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
@@ -67,6 +74,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
         infraStructure =new InfraStructure();
         flightOrder =new FlightOrder();
         hotelOrder = new HotelOrder();
+        trainOrder = new TrainOrder();
     }
 
     @DataProvider(name = "TMC")
@@ -78,7 +86,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
     }
 
     @Test(description = "机票同步服务工作流",dataProvider = "TMC")
-    public void flightWorkFlowTest1(String tmcChannel,String supplierOID,String supplierName,String supplierCode) throws HttpStatusException, InterruptedException {
+    public void workFlowTest1(String tmcChannel,String supplierOID,String supplierName,String supplierCode) throws HttpStatusException, InterruptedException {
         FormComponent component =new FormComponent();
         component.setCause(tmcChannel+"审批单同步数据校验");
         component.setDepartment(employee.getDepartmentOID());
@@ -124,7 +132,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
             //查询tmc 同步的数据
             JsonObject tmcdata = vendor.getTMCPlan(employee, tmcChannel,filght.get("approvalNum").getAsString());
             log.info("查询的数据为：{}",tmcdata);
-            JsonObject TmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
+            JsonObject tmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
             JsonObject tmcResponse = tmcdata.getAsJsonObject("response");
             //订单号
             String orderNo = RandomNumber.getTimeNumber();
@@ -145,23 +153,22 @@ public class SyncPlanWorkFlowTest extends BaseTest {
             String ticketNo = RandomNumber.getTimeNumber(13);
             BigDecimal amount = ticketPrice.add(oilFee).add(tax).add(serverFee);
             //订单基本数据
-            AirBaseOrder airBaseOrder = flightOrder.setAirBaseOrder(employee,"B",orderNo,supplierName,supplierCode,TmcRequestData,traveApplicationDetail.getAsJsonObject("applicant"),amount);
+            AirBaseOrder airBaseOrder = flightOrder.setAirBaseOrder(employee,"B",orderNo,supplierName,supplierCode,tmcRequestData,traveApplicationDetail.getAsJsonObject("applicant"),amount);
             // 机票信息
             AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,ticketPrice,oilFee,tax,serverFee);
             ArrayList<AirTicketInfo> airTicketInfos =new ArrayList<>();
             airTicketInfos.add(airTicketInfo);
             //航程信息
-            AirFlightInfo airFlightInfo = flightOrder.setAirFlightInfo(orderNo,TmcRequestData.getAsJsonArray("travelFlightsList").get(0).getAsJsonObject());
+            AirFlightInfo airFlightInfo = flightOrder.setAirFlightInfo(orderNo,tmcRequestData.getAsJsonArray("travelFlightsList").get(0).getAsJsonObject());
             ArrayList<AirFlightInfo> airFlightInfos =new ArrayList<>();
             airFlightInfos.add(airFlightInfo);
             //乘机人信息
             //审批单中的乘客信息
-            JsonObject participantObject = TmcRequestData.getAsJsonArray("participantList").get(0).getAsJsonObject();
-            AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",participantObject.get("name").getAsString(),participantObject.get("employeeID").getAsString(),bookerDepartments,traveApplicationDetail.getAsJsonObject("applicant").get("departmentName").getAsString(),participantObject.get("mobile").getAsString(),traveApplicationDetail.getAsJsonObject("applicant").get("email").getAsString());
+            AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(employee,orderNo,"1",tmcRequestData,traveApplicationDetail.getAsJsonArray("applicationParticipants").get(0).getAsJsonObject());
             ArrayList<AirPassengerInfo> airPassengerInfos = new ArrayList<>();
             airPassengerInfos.add((airPassengerInfo));
             //行程单打印以及配送信息
-            AirTicketPrint airTicketPrint = flightOrder.setAirTicketPrint(ticketKey,ticketNo,TmcRequestData.getAsJsonArray("participantList").get(0).getAsJsonObject().get("name").getAsString());
+            AirTicketPrint airTicketPrint = flightOrder.setAirTicketPrint(ticketKey,ticketNo,tmcRequestData.getAsJsonArray("participantList").get(0).getAsJsonObject().get("name").getAsString());
             ArrayList<AirTicketPrint> airTicketPrints =new ArrayList<>();
             airTicketPrints.add(airTicketPrint);
             //保险信息
@@ -218,7 +225,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
     }
 
     @Test(description = "审批单同步-中集TMC-酒店行程",dataProvider = "TMC")
-    public void cimccSyncApprovalTest3(String tmcChannel,String supplierOID,String supplierName,String supplierCode) throws HttpStatusException, InterruptedException {
+    public void workFlowTest2(String tmcChannel,String supplierOID,String supplierName,String supplierCode) throws HttpStatusException, InterruptedException {
         FormComponent component =new FormComponent();
         component.setCause(tmcChannel+"供应商酒店同步测试");
         component.setDepartment(employee.getDepartmentOID());
@@ -274,8 +281,8 @@ public class SyncPlanWorkFlowTest extends BaseTest {
             String orderNo = RandomNumber.getTimeNumber();
             HotelBaseOrder hotelBaseOrder =hotelOrder.setHotelBaseOrder(employee,"B",orderNo,supplierName,supplierCode,tmcRequestData,traveApplicationDetail.getAsJsonObject("applicant"));
             //乘客信息
-            JsonObject participantObject = tmcRequestData.getAsJsonArray("participantList").get(0).getAsJsonObject();
-            HotelPassengerInfo hotelPassengerInfo =hotelOrder.setHotelPassengerInfo(orderNo,"1","I",participantObject.get("name").getAsString(),participantObject.get("employeeID").getAsString(),traveApplicationDetail.getAsJsonObject("applicant").get("departmentName").getAsString(),bookerDepartments);
+            JsonObject participantObject = traveApplicationDetail.getAsJsonArray("applicationParticipants").get(0).getAsJsonObject();
+            HotelPassengerInfo hotelPassengerInfo =hotelOrder.setHotelPassengerInfo(employee,orderNo,"1",tmcRequestData,participantObject);
             ArrayList<HotelPassengerInfo> hotelPassengerInfos =new ArrayList<>();
             hotelPassengerInfos.add(hotelPassengerInfo);
             HotelOrderInfoEntity hotelOrderInfoEntity = HotelOrderInfoEntity.builder()
@@ -311,4 +318,85 @@ public class SyncPlanWorkFlowTest extends BaseTest {
             assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);
         }
     }
+
+
+    @Test(description = "审批单同步-中集TMC-火车行程",dataProvider = "TMC")
+    public void workFlowTest3(String tmcChannel,String supplierOID,String supplierName,String supplierCode) throws HttpStatusException, InterruptedException {
+        FormComponent component =new FormComponent();
+        component.setCause(tmcChannel+"火车供应商同步测试");
+        component.setDepartment(employee.getDepartmentOID());
+        component.setStartDate(UTCTime.getNowStartUtcDate());
+        component.setEndDate(UTCTime.getUTCDateEnd(7));
+        component.setCostCenter("成本中心NO1");
+        //添加参与人员  参与人员的value 是一段json数组。
+        JsonArray array = new JsonArray();
+        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-消费平台"),"懿消费商(xiao/feishang)"));
+        component.setParticipant(array.toString());
+        //创建申请单
+        String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
+        //初始化火车行程
+        ArrayList<TrainItinerary> trainItineraries =new ArrayList<>();
+        TrainItinerary trainItinerary = travelApplicationPage.setTrainItinerary(employee,"深圳","上海",component.getStartDate(),supplierOID,"二等座");
+        trainItineraries.add(trainItinerary);
+        // 添加行程
+        travelApplication.addItinerary(employee,applicationOID,trainItineraries);
+        //申请单提交
+        travelApplication.submitApplication(employee,applicationOID,"");
+        int successNum = approve.approveal(employee,applicationOID,1001);
+        if(successNum!=1){
+            throw new RuntimeException("审批单审批失败");
+        }else{
+            sleep(1000);
+            JsonObject train = travelApplication.getItinerary(employee,applicationOID,"TRAIN").get(0).getAsJsonObject();
+            //获取审批单中的travelApplication
+            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
+            BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
+            //只有一个参与人
+            Participant participant = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
+            ArrayList<Participant> participants =new ArrayList<>();
+            participants.add(participant);
+            JsonObject floatDay = new JsonObject();
+            floatDay.addProperty("start",4);
+            floatDay.addProperty("end",4);
+            TravelTrainItinerary travelTrainItinerary = syncService.setTravelTrainItinerary(train,floatDay);
+            ArrayList<TravelTrainItinerary> travelTrainItineraries =new ArrayList<>();
+            travelTrainItineraries.add(travelTrainItinerary);
+            SyncEntity syncEntity = syncService.setSyncEntity(employee,"TRAIN",travelApplication,bookClerk,traveApplicationDetail,train,participants,null,null,travelTrainItineraries);
+            JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(syncEntity)).getAsJsonObject();
+            log.info("封装的数据为：{}",syncEntityJson);
+            //查询tmc 同步的数据
+            JsonObject tmcdata = vendor.getTMCPlan(employee,tmcChannel,train.get("approvalNum").getAsString());
+            log.info("查询的数据为：{}",tmcdata);
+            JsonObject tmcRequestData = tmcdata.getAsJsonObject("tmcRequest");
+            JsonObject tmcResponse = tmcdata.getAsJsonObject("response");
+            //订单号
+            String orderNo = RandomNumber.getTimeNumber();
+            ArrayList<String> bookerDepartments =new ArrayList<>();
+            //车票价
+            BigDecimal ticketPrice =new BigDecimal(690).setScale(2);
+            //服务费
+            BigDecimal servicePrice = new BigDecimal(20).setScale(2);
+            BigDecimal totalAmount =ticketPrice.add(servicePrice);
+            //电子客票号
+            String trainElectronic = RandomNumber.getTimeNumber(10);
+            bookerDepartments.add(employee.getDepartmentName());
+            //火车订单基本信息
+            TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,supplierName,supplierCode,totalAmount,"B",orderNo,tmcRequestData,traveApplicationDetail.getAsJsonObject("applicant"));
+            //订单车票信息
+            TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic,ticketPrice,"05车07C");
+            ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
+            trainTicketInfos.add(trainTicketInfo);
+            //订单车次
+            TrainSequenceInfo trainSequenceInfo = trainOrder.setTrainSequenceInfo(orderNo,"1",tmcRequestData);
+            ArrayList<TrainSequenceInfo> trainSequenceInfos =new ArrayList<>();
+            trainSequenceInfos.add(trainSequenceInfo);
+            //订单乘客信息
+            JsonObject applicationParticipant = traveApplicationDetail.getAsJsonArray("applicationParticipants").get(0).getAsJsonObject();
+            TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(employee,orderNo,"1",tmcRequestData,applicationParticipant);
+            ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
+            trainPassengerInfos.add(trainPassengerInfo);
+        }
+    }
+
+
 }

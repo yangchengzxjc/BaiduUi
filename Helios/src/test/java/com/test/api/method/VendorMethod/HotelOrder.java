@@ -2,12 +2,14 @@ package com.test.api.method.VendorMethod;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelBaseOrder;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelExceedInfo;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelPassengerInfo;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
+import com.test.api.method.InfraStructure;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
@@ -21,7 +23,11 @@ import java.util.List;
  * @Version 1.0
  **/
 public class HotelOrder {
+    private InfraStructure infraStructure;
 
+    public HotelOrder(){
+        infraStructure =new InfraStructure();
+    }
 
     /**
      * 酒店订单超标
@@ -70,22 +76,26 @@ public class HotelOrder {
      * 订单乘客信息
      * @param orderNo
      * @param passengerNo
-     * @param passengerAttribute
-     * @param departmentName
-     * @param passengerDepartments
      * @return
      */
-    public HotelPassengerInfo setHotelPassengerInfo(String orderNo, String passengerNo, String passengerAttribute, String passengerName,
-                                                    String passengerNum,String passengerCostCenter ,String departmentName, List<String> passengerDepartments) {
+    public HotelPassengerInfo setHotelPassengerInfo(Employee employee,String orderNo, String passengerNo,JsonObject tmcRequestData,JsonObject applicationParticipant) throws HttpStatusException {
+        JsonObject tmcParticipant = tmcRequestData.getAsJsonArray("participantList").get(0).getAsJsonObject();
+        //查询乘机人的信息
+        JsonObject participantInfo = infraStructure.getEmployeeDetail(employee,applicationParticipant.get("participantOID").getAsString());
+        ArrayList<String> bookerDepartments =new ArrayList<>();
+        bookerDepartments.add(participantInfo.get("departmentName").getAsString());
+        //查询部门code
+        String deptCode = infraStructure.getDeptCode(employee,applicationParticipant.get("departmentOID").getAsString());
         HotelPassengerInfo hotelPassengerInfo = HotelPassengerInfo.builder()
                 .orderNo(orderNo)
                 .passengerNo(passengerNo)
-                .passengerAttribute(passengerAttribute)
-                .passengerName(passengerName)
-                .passengerNum(passengerNum)
-                .departmentName(departmentName)
-                .passengerCostCenter(passengerCostCenter)
-                .passengerDepartments(passengerDepartments)
+                .passengerAttribute("I")
+                .passengerName(tmcParticipant.get("name").getAsString())
+                .passengerNum(tmcParticipant.get("employeeID").getAsString())
+                .departmentCode(deptCode)
+                .departmentName(participantInfo.get("departmentName").getAsString())
+                .passengerCostCenter(tmcRequestData.get("costCenter1").getAsString())
+                .passengerDepartments(bookerDepartments)
                 .build();
         return hotelPassengerInfo;
     }

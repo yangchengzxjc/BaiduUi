@@ -7,6 +7,7 @@ import com.hand.basicObject.supplierObject.TrainOrderInfo.*;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import com.test.api.method.ExpenseReportComponent;
+import com.test.api.method.InfraStructure;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
@@ -22,9 +23,11 @@ import java.util.List;
 @Slf4j
 public class TrainOrder {
     private ExpenseReportComponent component;
+    private InfraStructure infraStructure;
 
     public TrainOrder(){
         component = new ExpenseReportComponent();
+        infraStructure = new InfraStructure();
     }
 
     /**
@@ -268,35 +271,39 @@ public class TrainOrder {
     /**订单乘客信息
      * @param orderNo  订单号
      * @param passengerNo  乘客序号
-     * @param passengerName  乘客姓名
-     * @param passagerNum  乘客工号
-     * @param bookerDepartments  乘客部门
-     * @param departmentName 乘客部门名称
-     * @param certificateNum 身份证号码
-     * @param passengerPhone   手机号
-     * @param passengerEmail   邮箱
+     *
      * @return
      */
-    public TrainPassengerInfo setTrainPassengerInfo(String orderNo, String passengerNo, List<String> bookerDepartments,String departmentName){
+    public TrainPassengerInfo setTrainPassengerInfo(Employee employee,String orderNo, String passengerNo,JsonObject tmcRequestData,JsonObject applicationParticipant) throws HttpStatusException {
+        JsonObject tmcParticipant = tmcRequestData.getAsJsonArray("participantList").get(0).getAsJsonObject();
         //订单乘客信息
+        //乘机人信息
+        JsonObject participantInfo = infraStructure.getEmployeeDetail(employee,applicationParticipant.get("participantOID").getAsString());
+        //乘机人信息
+        ArrayList<String> bookerDepartments =new ArrayList<>();
+        bookerDepartments.add(participantInfo.get("departmentName").getAsString());
+        //身份证信息
+        JsonObject cardInfo = infraStructure.queryUserCard(employee,applicationParticipant.get("participantOID").getAsString(),"身份证");
+        //部门code
+        String deptCode = infraStructure.getDeptCode(employee,participantInfo.get("departmentOID").getAsString());
         TrainPassengerInfo trainPassengerInfo = TrainPassengerInfo.builder()
                 .orderNo(orderNo)
                 .passengerNo(passengerNo)
                 .passengerType("AUD")
-                .passengerAttribute(passengerAttribute)
-                .passengerName(passengerName)
-                .passengerNum(passagerNum)
+                .passengerAttribute("I")
+                .passengerName(tmcParticipant.get("name").getAsString())
+                .passengerNum(tmcParticipant.get("employeeID").getAsString())
                 .passengerDepartments(bookerDepartments)
-                .departmentName(departmentName)
-                .departmentCode(departmentCode)
+                .departmentName(participantInfo.get("departmentName").getAsString())
+                .departmentCode(deptCode)
                 .nationlityName("中国")
                 .certificateType("IDC")
-                .certificateNum(certificateNum)
-                .passengerPhone(passengerPhone)
-                .passengerEmail(passengerEmail)
-                .passengerSex("M")
+                .certificateNum(cardInfo.get("originalCardNo").getAsString())
+                .passengerPhone(tmcParticipant.get("mobile").getAsString())
+                .passengerEmail(tmcParticipant.get("email").getAsString())
+                .passengerSex(tmcParticipant.get("gender").getAsString())
                 //成本中心
-                .passengerCostCenter("管理综合部")
+                .passengerCostCenter(tmcRequestData.get("costCenter1").getAsString())
                 .build();
         return trainPassengerInfo;
     }

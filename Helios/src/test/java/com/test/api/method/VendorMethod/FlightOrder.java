@@ -55,8 +55,8 @@ public class FlightOrder {
                 .aairportName("T2航站楼")
                 .stopCity("")
                 .airPort("")
-                .stopTime("")
-                .flightTime("3h")
+                .stopTime(0)
+                .flightTime(3)
                 .tpm(1345)
                 .craftType("空客320")
                 .build();
@@ -113,8 +113,8 @@ public class FlightOrder {
                 .aairportName("T2航站楼")
                 .stopCity("")
                 .airPort("")
-                .stopTime("")
-                .flightTime("2h30m")
+                .stopTime(0)
+                .flightTime(2)
                 .tpm(1345)
                 .craftType("空客320")
                 .build();

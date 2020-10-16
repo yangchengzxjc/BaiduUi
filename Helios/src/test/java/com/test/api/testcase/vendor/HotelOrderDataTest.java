@@ -131,6 +131,7 @@ public class HotelOrderDataTest extends BaseTest {
         mapping.put("hotelOrderPassengerInfos","hotelPassengerInfo");
         mapping.put("employeeId","preEmployeeId");
         mapping.put("hotelOrderBase","hotelBaseOrder");
+        mapping.put("costCenter1","costCenter");
         mapping.put(employee.getDepartmentName(),"产品三组");
         //进行数据对比
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);
@@ -228,6 +229,7 @@ public class HotelOrderDataTest extends BaseTest {
         mapping.put("hotelOrderPassengerInfos","hotelPassengerInfo");
         mapping.put("employeeId","preEmployeeId");
         mapping.put("hotelOrderBase","hotelBaseOrder");
+        mapping.put("costCenter1","costCenter");
         mapping.put(employee.getDepartmentName(),"产品三组");
         //进行数据对比
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);
@@ -316,6 +318,7 @@ public class HotelOrderDataTest extends BaseTest {
         HashMap<String,String> mapping =new HashMap<>();
         mapping.put("hotelOrderPassengerInfos","hotelPassengerInfo");
         mapping.put("employeeId","preEmployeeId");
+        mapping.put("costCenter1","costCenter");
         mapping.put("hotelOrderBase","hotelBaseOrder");
         mapping.put(employee.getDepartmentName(),"产品三组");
         //进行数据对比
@@ -404,6 +407,7 @@ public class HotelOrderDataTest extends BaseTest {
         HashMap<String,String> mapping =new HashMap<>();
         mapping.put("hotelOrderPassengerInfos","hotelPassengerInfo");
         mapping.put("employeeId","preEmployeeId");
+        mapping.put("costCenter1","costCenter");
         mapping.put("hotelOrderBase","hotelBaseOrder");
         mapping.put(employee.getDepartmentName(),"产品三组");
         //进行数据对比
@@ -499,6 +503,7 @@ public class HotelOrderDataTest extends BaseTest {
         mapping.put("employeeId","preEmployeeId");
         mapping.put("hotelOrderBase","hotelBaseOrder");
         mapping.put("hotelOrderExceedInfos","hotelExceedInfo");
+        mapping.put("costCenter1","costCenter");
         mapping.put(employee.getDepartmentName(),"产品三组");
         //进行数据对比
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);

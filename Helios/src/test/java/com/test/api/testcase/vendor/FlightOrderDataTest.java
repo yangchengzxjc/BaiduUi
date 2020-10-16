@@ -85,6 +85,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .companyCode(employee.getCompanyCode())
                 .departmentName(employee.getDepartmentName())
                 .departmentOid(employee.getDepartmentOID())
+                .departmentCode("")
                 .bookChannel("Online-API")
                 .bookType("C")
                 .payType("COPAY")
@@ -95,11 +96,13 @@ public class FlightOrderDataTest extends BaseTest {
                 .flightWay("S")
                 .paymentType("M")
                 .accountType("C")
+                .costCenter("管理综合部")
                 .currency("CNY")
                 .amount(amount)
                 .contactName(employee.getFullName())
                 .contactPhone(employee.getMobile())
                 .contactEmail(employee.getEmail())
+                .remark("备注")
                 .build();
         // 机票信息
         AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,ticketPrice,oilFee,tax,serverFee);
@@ -110,7 +113,7 @@ public class FlightOrderDataTest extends BaseTest {
         ArrayList<AirFlightInfo> airFlightInfos =new ArrayList<>();
         airFlightInfos.add(airFlightInfo);
         //乘机人信息
-        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),employee.getPhoneNumber(),employee.getEmail());
+        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),employee.getMobile(),employee.getEmail());
         ArrayList<AirPassengerInfo> airPassengerInfos =new ArrayList<>();
         airPassengerInfos.add((airPassengerInfo));
         //行程单打印以及配送信息
@@ -132,8 +135,9 @@ public class FlightOrderDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject flightOrderDataObject =new JsonParser().parse(GsonUtil.objectToString(airOrderInfoEntity)).getAsJsonObject();
         //订单推送
-        vendor.pushOrderData(employee,"flight",airOrderInfoEntity,"cimccTMC","200428140254184788","");
-        SettlementBody settlementBody = SettlementBody.builder()
+       JsonObject flightOrderDataPush = vendor.pushOrderData(employee,"flight",airOrderInfoEntity,"cimccTMC","200428140254184788","");
+       log.info("推送的响应数据：{}",flightOrderDataPush);
+       SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)
                 .page(1)
@@ -145,7 +149,7 @@ public class FlightOrderDataTest extends BaseTest {
         //先对比需要删除的数据
         assert flightOrderData.getAsJsonObject("airBaseOrder").get("flightWay").getAsString().equals(flightOrderDataObject.getAsJsonObject("airBaseOrder").get("flightWay").getAsString());
         assert flightOrderData.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString().equals(flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString());
-        assert flightOrderData.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("tpm").getAsString().equals(flightOrderDataObject.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("rpm").getAsString());
+        assert flightOrderData.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("tpm").getAsString().equals(String.valueOf(flightOrderDataObject.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("tpm").getAsInt())+".00");
         //先删除航程类型字段 因为单程映射会重复 删除完后单独比较   协议价  里程数
         flightOrderDataObject.getAsJsonObject("airBaseOrder").remove("flightWay");
         flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().remove("isPolicy");
@@ -159,7 +163,7 @@ public class FlightOrderDataTest extends BaseTest {
         mapping.put("yClassStandardPrice","yclassStandardPrice");
         mapping.put("flight","flightNo");
         mapping.put("employeeId","preEmployeeId");
-        mapping.put(employee.getDepartmentName(),"产品三部");
+        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(flightOrderDataObject,flightOrderData,mapping);
         //对比预订人的oid 推送数据未推送此字段单独来比较
         assert flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());

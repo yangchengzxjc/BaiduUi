@@ -160,6 +160,7 @@ public class HotelOrder {
                 .contactName(tmcdata.getAsJsonObject("bookClerk").get("name").getAsString())
                 .contactPhone(tmcdata.getAsJsonObject("bookClerk").get("mobile").getAsString())
                 .contactEmail(employee.getEmail())
+                .remark(tmcdata.get("remark").getAsString())
                 .hotelType("AGR")
                 .hotelName("爱丽丝酒店")
                 .hotelPhone("010-123456")

@@ -106,7 +106,7 @@ public class TrainOrder {
                 .contactName(employee.getFullName())
                 .contactPhone(employee.getMobile())
                 .contactEmail(employee.getEmail())
-                .remark("")
+                .remark("备注")
                 .build();
         return trainBaseOrder;
     }

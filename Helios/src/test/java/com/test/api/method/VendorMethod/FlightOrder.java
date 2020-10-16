@@ -374,6 +374,7 @@ public class FlightOrder {
                 .contactName(tmcdata.getAsJsonObject("bookClerk").get("name").getAsString())
                 .contactPhone(tmcdata.getAsJsonObject("bookClerk").get("mobile").getAsString())
                 .contactEmail(employee.getEmail())
+                .remark(tmcdata.get("remark").getAsString())
                 .build();
         return airBaseOrder;
     }

@@ -227,6 +227,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .contactName(employee.getFullName())
                 .contactPhone(employee.getMobile())
                 .contactEmail(employee.getEmail())
+                .remark("备注")
                 .build();
         // 机票信息
         AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,ticketPrice,oilFee,tax,serverFee);
@@ -352,6 +353,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .contactName(employee.getFullName())
                 .contactPhone(employee.getMobile())
                 .contactEmail(employee.getEmail())
+                .remark("备注")
                 .build();
         // 机票信息
         AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,ticketPrice,oilFee,tax,serverFee);
@@ -483,6 +485,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .contactName(employee.getFullName())
                 .contactPhone(employee.getMobile())
                 .contactEmail(employee.getEmail())
+                .remark("备注")
                 .build();
         // 机票信息
         AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,ticketPrice,oilFee,tax,serverFee);
@@ -617,6 +620,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .contactName(employee.getFullName())
                 .contactPhone(employee.getMobile())
                 .contactEmail(employee.getEmail())
+                .remark("备注")
                 .build();
         // 机票信息
         AirTicketInfo airTicketInfo1 = flightOrder.setAirTicketInfo(ticketNo1,"1",ticketNo1,ticketPrice,oilFee,tax,serverFee);

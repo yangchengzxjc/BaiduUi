@@ -58,7 +58,7 @@ public class HotelOrder {
      * @return
      */
     public HotelPassengerInfo setHotelPassengerInfo(String orderNo, String passengerNo, String passengerAttribute, String passengerName,
-                                                    String passengerNum, String departmentName, List<String> passengerDepartments) {
+                                                    String passengerNum, String departmentName, String deptCode,List<String> passengerDepartments) {
         HotelPassengerInfo hotelPassengerInfo = HotelPassengerInfo.builder()
                 .orderNo(orderNo)
                 .passengerNo(passengerNo)
@@ -66,6 +66,7 @@ public class HotelOrder {
                 .passengerName(passengerName)
                 .passengerNum(passengerNum)
                 .departmentName(departmentName)
+                .departmentCode(deptCode)
                 .passengerCostCenter("成本中心1")
                 .passengerDepartments(passengerDepartments)
                 .build();
@@ -111,7 +112,7 @@ public class HotelOrder {
      * @param applicat
      * @return
      */
-    public HotelBaseOrder setHotelBaseOrder(Employee employee,String orderType, String orderNo, String supplierName, String supplierCode, JsonObject tmcdata,JsonObject applicat){
+    public HotelBaseOrder setHotelBaseOrder(Employee employee,String orderType, String orderNo, String supplierName, String supplierCode, JsonObject tmcdata,JsonObject applicat) throws HttpStatusException {
         JsonObject travelHotel =tmcdata.getAsJsonArray("travelHotelsList").get(0).getAsJsonObject();
         JsonArray participantList =tmcdata.getAsJsonArray("participantList");
         StringBuffer passengerName = new StringBuffer();
@@ -122,6 +123,9 @@ public class HotelOrder {
         bookerDepartments.add(applicat.get("departmentName").getAsString());
         String startTime = UTCTime.BJDateMdy(travelHotel.get("fromDate").getAsString().split("\\s+")[1],travelHotel.get("floatDaysBegin").getAsInt())+" "+UTCTime.getTime(0,0);
         String endTime = UTCTime.BJDateMdy(travelHotel.get("leaveDate").getAsString().split("\\s+")[1],-(travelHotel.get("floatDaysBegin").getAsInt()))+" 11:59:59";
+        JsonObject bookClerk = infraStructure.getUserDetail(employee,tmcdata.getAsJsonObject("bookClerk").get("employeeID").getAsString());
+        //部门code
+        String deptCode = infraStructure.getDeptCode(employee,bookClerk.get("departmentOID").getAsString());
         HotelBaseOrder hotelBaseOrder = HotelBaseOrder.builder()
                 .orderType(orderType)
                 .orderNo(orderNo)
@@ -138,6 +142,7 @@ public class HotelOrder {
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
                 .departmentName(applicat.get("departmentName").getAsString())
+                .departmentCode(deptCode)
                 .bookChannel("Online-APP")
                 .bookType("C")
                 .payType("COPAY")

@@ -41,7 +41,7 @@ public class TrainOrder {
      * @param payType
      * @return
      */
-    public TrainBaseOrder setTrainBaseOrder(Employee employee,BigDecimal totalAmount,String orderStatusName,String orderType,String orderNo,String bookChannel,String bookType,String payType){
+    public TrainBaseOrder setTrainBaseOrder(Employee employee,BigDecimal totalAmount,String orderStatusName,String orderType,String orderNo,String bookChannel,String bookType,String payType) throws HttpStatusException {
         String paymentType ="";
         String accountType ="";
         if(bookType.equals("C")){
@@ -72,6 +72,7 @@ public class TrainOrder {
         orderStatusMapping.put("改签处理中","P");
         orderStatusMapping.put("改签成功","S");
         orderStatusMapping.put("改签取消","C");
+        String deptCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
         //订单基本信息
         TrainBaseOrder trainBaseOrder = TrainBaseOrder.builder()
                 .orderType(orderType)
@@ -89,6 +90,7 @@ public class TrainOrder {
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
                 .departmentName(employee.getDepartmentName())
+                .departmentCode(deptCode)
                 .bookChannel(bookChannel)
                 .bookType(bookType)
                 .payType(payType)
@@ -116,7 +118,7 @@ public class TrainOrder {
      * @param orderNo
      * @return
      */
-    public TrainBaseOrder setTrainBaseOrder(Employee employee, String supplierName,String supplierCode, BigDecimal totalAmount,String orderType, String orderNo, JsonObject tmcData,JsonObject applicant){
+    public TrainBaseOrder setTrainBaseOrder(Employee employee, String supplierName,String supplierCode, BigDecimal totalAmount,String orderType, String orderNo, JsonObject tmcData,JsonObject applicant) throws HttpStatusException {
         //原订单号
         String originalOrderNum = "";
         if(!orderType.equals("B")){
@@ -124,6 +126,9 @@ public class TrainOrder {
         }
         ArrayList<String> bookerDepartments = new ArrayList<>();
         bookerDepartments.add(applicant.get("departmentName").getAsString());
+        JsonObject bookClerk = infraStructure.getUserDetail(employee,tmcData.getAsJsonObject("bookClerk").get("employeeID").getAsString());
+        //部门code
+        String deptCode = infraStructure.getDeptCode(employee,bookClerk.get("departmentOID").getAsString());
         //订单基本信息
         TrainBaseOrder trainBaseOrder = TrainBaseOrder.builder()
                 .orderType(orderType)
@@ -141,6 +146,7 @@ public class TrainOrder {
                 .companyName(applicant.get("companyName").getAsString())
                 .companyCode(employee.getCompanyCode())
                 .departmentName(applicant.get("departmentName").getAsString())
+                .departmentCode(deptCode)
                 .bookChannel("Online-APP")
                 .bookType("C")
                 .payType("ALIPAY")

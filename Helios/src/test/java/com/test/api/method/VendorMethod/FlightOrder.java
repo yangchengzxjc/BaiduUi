@@ -134,7 +134,7 @@ public class FlightOrder {
      * @param passengerEmail
      * @return
      */
-    public AirPassengerInfo setAirPassengerInfo(String orderNo, String passengerNo, String passengerAttribute, String passengerName, String passengerNum, List<String> bookerDepartments,String departmentName,String passengerPhone,String passengerEmail){
+    public AirPassengerInfo setAirPassengerInfo(String orderNo, String passengerNo, String passengerAttribute, String passengerName, String passengerNum, List<String> bookerDepartments,String departmentName,String deptCode,String passengerPhone,String passengerEmail){
         //乘机人信息
         AirPassengerInfo airPassengerInfo = AirPassengerInfo.builder()
                 .orderNo(orderNo)
@@ -144,7 +144,7 @@ public class FlightOrder {
                 .passengerName(passengerName)
                 .passengerNum(passengerNum)
                 .departmentName(departmentName)
-                .departmentCode("")
+                .departmentCode(deptCode)
                 .nationlityName("中国")
                 .certificateType("IDC")
                 .certificateNum("610"+System.currentTimeMillis())

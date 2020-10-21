@@ -320,6 +320,29 @@ public class InfraStructureApi extends BaseRequest{
     }
 
     /**
+     * 按部门名称搜索部门，只有部门关联了公司，按公司搜索才生效
+     * @param employee
+     * @param deptCode
+     * @param companyOID
+     * @param departmentName
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray searchDepartment(Employee employee,String deptCode,String companyOID,String departmentName) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ApiPath.SEARCH_DEPARTMENT;
+        Map<String,String> urlParam=new HashMap<>();
+        urlParam.put("needVirtual","true");
+        urlParam.put("page","0");
+        urlParam.put("size","10");
+        urlParam.put("name",departmentName);
+        urlParam.put("deptCode",deptCode);
+        urlParam.put("companyOID",companyOID);
+        urlParam.put("deptCodeLable",deptCode);
+        String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
+        return new JsonParser().parse(res).getAsJsonArray();
+    }
+
+    /**
      * 新增证件信息
      * @param employee
      * @param userCardInfoEntity

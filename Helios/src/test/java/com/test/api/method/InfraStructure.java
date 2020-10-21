@@ -289,6 +289,30 @@ public class InfraStructure {
     }
 
     /**
+     * 按部门名称搜索部门，只有部门关联了公司，按公司搜索才生效
+     * @param employee
+     * @param deptCode
+     * @param companyOID
+     * @param departmentName
+     * @return
+     * @throws HttpStatusException
+     */
+    public  Map<String,String> searchDepartment(Employee employee,String deptCode,String companyOID,String departmentName) throws HttpStatusException {
+        HashMap<String,String> map =new HashMap<>();
+        JsonArray departmentList = infraStructureApi.searchDepartment(employee,deptCode,companyOID,departmentName);
+        //判断搜索的部门为空的情况
+        if(GsonUtil.isNotEmpt(departmentList)){
+            JsonObject object =departmentList.get(0).getAsJsonObject();
+            //从搜索部门的响应中获取到部门id以及部门path
+            map.put("departmentId",object.get("departmentId").getAsString());
+            map.put("departmentPath",object.get("path").getAsString());
+        }else{
+            log.info("搜索的部门为空,请检查入参");
+        }
+        return map;
+    }
+
+    /**
      * 在员工列表获取员工的userOID
      * @param employee
      * @param keyWords

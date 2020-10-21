@@ -48,6 +48,11 @@ public class EmployeeManage extends BaseTest {
     private String errorEmployeeID = RandomNumber.getTimeNumber(15);
     private String errorFullName = RandomNumber.getTimeNumber(15)+RandomNumber.getTimeNumber(15)+RandomNumber.getTimeNumber(15)+RandomNumber.getTimeNumber(15)+RandomNumber.getTimeNumber(15)+RandomNumber.getTimeNumber(15)+RandomNumber.getTimeNumber(15);
     private String editEmployeeID;
+    private String companyNameMultiplePosts ="stage测试08";
+    private String departmentNameMultiplePosts="20200310072121测试";
+    private String departmentCodeMultiplePosts="";//20200310072121top
+    private String positionMultiplePosts="非主岗工程师";
+    private String errorCompanyNameMultiplePosts ="1230";
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
@@ -139,6 +144,59 @@ public class EmployeeManage extends BaseTest {
         String errorCode = object.get("errorCode").getAsString();
         Assert.assertEquals(message,"姓名长度不允许超过100位");
         Assert.assertEquals(errorCode,"6040022");
+    }
+
+    @Test(description = "正常新增多岗")
+    public void addEmployee07() throws HttpStatusException {
+        //员工扩展字段
+        EmployeeExtendComponent component =new EmployeeExtendComponent();
+        component.setCustList("hong888");
+        component.setText("1");
+        component.setDefaultCostCenter("测试成本中心项987");
+        JsonObject object = employeeManagePage.addEmployeeMultiplePosts(employee,fullName,mobile,employeeID,email,employeeTypeValueName,directManager,companyName,companyNameMultiplePosts,departmentName,departmentNameMultiplePosts,departmentCode,departmentCodeMultiplePosts,position,positionMultiplePosts,duty,rank,true,false,component);
+        String name = object.get("fullName").getAsString();
+        log.info("获取到的人员姓名为：" + name);
+        Assert.assertEquals(name,fullName);
+    }
+
+    @Test(description = "异常新增多岗-同一个公司下2个主岗")
+    public void addEmployee08() throws HttpStatusException {
+        //员工扩展字段
+        EmployeeExtendComponent component =new EmployeeExtendComponent();
+        component.setCustList("hong888");
+        component.setText("1");
+        component.setDefaultCostCenter("测试成本中心项987");
+        JsonObject object = employeeManagePage.addEmployeeMultiplePosts(employee,fullName,mobile,employeeID,email,employeeTypeValueName,directManager,companyName,companyName,departmentName,departmentName,departmentCode,departmentCode,position,position,duty,rank,true,true,component);
+        String message = object.get("message").getAsString();
+        String errorCode = object.get("errorCode").getAsString();
+        Assert.assertEquals(message,"同一用户公司不能设置多条主岗位");
+        Assert.assertEquals(errorCode,"6040031");
+    }
+
+    @Test(description = "异常新增多岗-部门-公司-职位相同")
+    public void addEmployee09() throws HttpStatusException {
+        //员工扩展字段
+        EmployeeExtendComponent component =new EmployeeExtendComponent();
+        component.setCustList("hong888");
+        component.setText("1");
+        component.setDefaultCostCenter("测试成本中心项987");
+        JsonObject object = employeeManagePage.addEmployeeMultiplePosts(employee,fullName,mobile,employeeID,email,employeeTypeValueName,directManager,companyName,companyName,departmentName,departmentName,departmentCode,departmentCode,position,position,duty,rank,true,false,component);
+        String errorCode = object.get("errorCode").getAsString();
+        Assert.assertEquals(errorCode,"6040029");
+    }
+
+    @Test(description = "异常新增多岗-岗位跨账套")
+    public void addEmployee010() throws HttpStatusException {
+        //员工扩展字段
+        EmployeeExtendComponent component =new EmployeeExtendComponent();
+        component.setCustList("hong888");
+        component.setText("1");
+        component.setDefaultCostCenter("测试成本中心项987");
+        JsonObject object = employeeManagePage.addEmployeeMultiplePosts(employee,fullName,mobile,employeeID,email,employeeTypeValueName,directManager,companyName,errorCompanyNameMultiplePosts,departmentName,departmentName,departmentCode,departmentCode,position,position,duty,rank,true,false,component);
+        String message = object.get("message").getAsString();
+        String errorCode = object.get("errorCode").getAsString();
+        Assert.assertEquals(message,"用户岗位只允许同一账套下公司");
+        Assert.assertEquals(errorCode,"6040034");
     }
 
     @Test(description = "编辑员工-正常编辑-修改了邮箱,手机号以及生日")

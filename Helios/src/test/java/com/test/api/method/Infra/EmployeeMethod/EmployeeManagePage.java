@@ -128,6 +128,88 @@ public class EmployeeManagePage {
         return employeeInfo;
     }
 
+    /***
+     * 新增人员，创建多岗
+     * @param employee
+     * @param fullName
+     * @param mobile
+     * @param employeeId
+     * @param email
+     * @param employeeTypeValueName
+     * @param directManager
+     * @param companyName
+     * @param companyNameMultiplePosts
+     * @param departmentName
+     * @param departmentNameMultiplePosts
+     * @param departmentCode
+     * @param departmentCodeMultiplePosts
+     * @param position
+     * @param positionMultiplePosts
+     * @param duty
+     * @param rank
+     * @param companyMainPosition
+     * @param companyMainPositions
+     * @param component
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject addEmployeeMultiplePosts(Employee employee,String fullName,String mobile,String employeeId,
+                                  String email,String employeeTypeValueName,String directManager, String companyName, String companyNameMultiplePosts,
+                                  String departmentName,String departmentNameMultiplePosts,String departmentCode,String departmentCodeMultiplePosts,
+                                  String position,String positionMultiplePosts,String duty,String rank,boolean companyMainPosition,boolean companyMainPositions,
+                                  EmployeeExtendComponent component) throws HttpStatusException {
+        InfraEmployee infraEmployee =new InfraEmployee();
+        //邮箱不set的话会有默认值输入
+        infraEmployee.setFullName(fullName);
+        infraEmployee.setEmployeeID(employeeId);
+        infraEmployee.setMobile(mobile);
+        infraEmployee.setEmail(email);
+        //获取人员类型
+        infraEmployee.setEmployeeTypeCode(infraStructure.getCustomEnumerationValue(employee,"人员类型",employeeTypeValueName));
+        infraEmployee.setDirectManager(infraStructure.searchUser(employee,directManager));
+        infraEmployee.setGenderCode(0);
+        log.info("新增的员工信息：{}",infraEmployee);
+        ArrayList<InfraJob> infraJobArrayList = new ArrayList<>();
+        Map<String,String> company =infraStructure.searchCompany(employee,companyName);
+        Map<String,String> department = infraStructure.searchDepartment(employee,departmentCode,company.get("companyOID"));
+        Map<String,String> companyMultiplePosts =infraStructure.searchCompany(employee,companyNameMultiplePosts);
+        Map<String,String> departmentMultiplePosts = infraStructure.searchDepartment(employee,departmentCodeMultiplePosts,"",departmentNameMultiplePosts);
+        //初始化岗位信息
+        InfraJob infraJob  = new InfraJob();
+        infraJob.setCompanyName(companyName);
+        infraJob.setCompanyId(company.get("companyId"));
+        infraJob.setDepartmentName(departmentName);
+        infraJob.setDepartmentId(department.get("departmentId"));
+        infraJob.setDepartmentPath(department.get("departmentPath"));
+        infraJob.setDuty(duty);
+        infraJob.setDutyCode(infraStructure.getCustomEnumerationValue(employee,"职务",duty));
+        infraJob.setRank(rank);
+        infraJob.setRankCode(infraStructure.getCustomEnumerationValue(employee,"级别",rank));
+        infraJob.setPosition(position);
+        infraJob.setCompanyMainPosition(companyMainPosition);
+        infraJob.setUni_id(company.get("companyId")+department.get("departmentId")+position);
+        infraJob.set_index(0);
+        InfraJob infraJobs  = new InfraJob();
+        infraJobs.setCompanyName(companyNameMultiplePosts);
+        infraJobs.setCompanyId(companyMultiplePosts.get("companyId"));
+        infraJobs.setDepartmentName(departmentNameMultiplePosts);
+        infraJobs.setDepartmentId(departmentMultiplePosts.get("departmentId"));
+        infraJobs.setDepartmentPath(departmentMultiplePosts.get("departmentPath"));
+        infraJobs.setDuty(duty);
+        infraJobs.setDutyCode(infraStructure.getCustomEnumerationValue(employee,"职务",duty));
+        infraJobs.setRank(rank);
+        infraJobs.setRankCode(infraStructure.getCustomEnumerationValue(employee,"级别",rank));
+        infraJobs.setPosition(positionMultiplePosts);
+        infraJobs.setCompanyMainPosition(companyMainPositions);
+        infraJobs.setUni_id(companyMultiplePosts.get("companyId")+departmentMultiplePosts.get("departmentId")+positionMultiplePosts);
+        infraJobs.set_index(1);
+        infraJobArrayList.add(infraJob);
+        infraJobArrayList.add(infraJobs);
+        //获取员工扩展字段
+        JsonObject employeeInfo = infraStructure.addEmployee(employee,infraEmployee,infraJobArrayList,infraStructure.getEmployeeExpand(employee,component));
+        return employeeInfo;
+    }
+
     /**
      * 编辑员工 只编辑员工个个人信息  岗位以及其他字段不可编辑
      * @param employee

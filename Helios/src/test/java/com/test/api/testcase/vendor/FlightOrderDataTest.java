@@ -66,6 +66,7 @@ public class FlightOrderDataTest extends BaseTest {
         //票号
         String ticketNo = RandomNumber.getTimeNumber(13);
         BigDecimal amount = ticketPrice.add(oilFee).add(tax).add(serverFee);
+        String depoCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
         //订单基本信息
         AirBaseOrder airBaseOrder = AirBaseOrder.builder()
                 .orderType("B")
@@ -85,6 +86,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .companyCode(employee.getCompanyCode())
                 .departmentName(employee.getDepartmentName())
                 .departmentOid(employee.getDepartmentOID())
+                .departmentCode(depoCode)
                 .bookChannel("Online-API")
                 .bookType("C")
                 .payType("COPAY")
@@ -95,11 +97,13 @@ public class FlightOrderDataTest extends BaseTest {
                 .flightWay("S")
                 .paymentType("M")
                 .accountType("C")
+                .costCenter("管理综合部")
                 .currency("CNY")
                 .amount(amount)
                 .contactName(employee.getFullName())
                 .contactPhone(employee.getMobile())
                 .contactEmail(employee.getEmail())
+                .remark("备注")
                 .build();
         // 机票信息
         AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,ticketPrice,oilFee,tax,serverFee);
@@ -110,7 +114,7 @@ public class FlightOrderDataTest extends BaseTest {
         ArrayList<AirFlightInfo> airFlightInfos =new ArrayList<>();
         airFlightInfos.add(airFlightInfo);
         //乘机人信息
-        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),employee.getPhoneNumber(),employee.getEmail());
+        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),depoCode,employee.getMobile(),employee.getEmail());
         ArrayList<AirPassengerInfo> airPassengerInfos =new ArrayList<>();
         airPassengerInfos.add((airPassengerInfo));
         //行程单打印以及配送信息
@@ -132,8 +136,9 @@ public class FlightOrderDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject flightOrderDataObject =new JsonParser().parse(GsonUtil.objectToString(airOrderInfoEntity)).getAsJsonObject();
         //订单推送
-        vendor.pushOrderData(employee,"flight",airOrderInfoEntity,"cimccTMC","200428140254184788","");
-        SettlementBody settlementBody = SettlementBody.builder()
+       JsonObject flightOrderDataPush = vendor.pushOrderData(employee,"flight",airOrderInfoEntity,"cimccTMC","200428140254184788","");
+       log.info("推送的响应数据：{}",flightOrderDataPush);
+       SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)
                 .page(1)
@@ -145,7 +150,7 @@ public class FlightOrderDataTest extends BaseTest {
         //先对比需要删除的数据
         assert flightOrderData.getAsJsonObject("airBaseOrder").get("flightWay").getAsString().equals(flightOrderDataObject.getAsJsonObject("airBaseOrder").get("flightWay").getAsString());
         assert flightOrderData.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString().equals(flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString());
-        assert flightOrderData.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("tpm").getAsString().equals(flightOrderDataObject.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("rpm").getAsString());
+        assert flightOrderData.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("tpm").getAsString().equals(String.valueOf(flightOrderDataObject.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("tpm").getAsInt())+".00");
         //先删除航程类型字段 因为单程映射会重复 删除完后单独比较   协议价  里程数
         flightOrderDataObject.getAsJsonObject("airBaseOrder").remove("flightWay");
         flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().remove("isPolicy");
@@ -159,7 +164,7 @@ public class FlightOrderDataTest extends BaseTest {
         mapping.put("yClassStandardPrice","yclassStandardPrice");
         mapping.put("flight","flightNo");
         mapping.put("employeeId","preEmployeeId");
-        mapping.put(employee.getDepartmentName(),"产品三部");
+        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(flightOrderDataObject,flightOrderData,mapping);
         //对比预订人的oid 推送数据未推送此字段单独来比较
         assert flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
@@ -185,6 +190,7 @@ public class FlightOrderDataTest extends BaseTest {
         //票号
         String ticketNo = RandomNumber.getTimeNumber(13);
         BigDecimal amount = ticketPrice.add(oilFee).add(tax).add(serverFee);
+        String depoCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
         //订单基本信息
         AirBaseOrder airBaseOrder = AirBaseOrder.builder()
                 .orderType("C")
@@ -203,6 +209,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
                 .departmentName(employee.getDepartmentName())
+                .departmentCode(depoCode)
                 .departmentOid(employee.getDepartmentOID())
                 .bookChannel("Online-API")
                 .bookType("P")
@@ -214,11 +221,13 @@ public class FlightOrderDataTest extends BaseTest {
                 .flightWay("S")
                 .paymentType("N")
                 .accountType("P")
+                .costCenter("管理综合部")
                 .currency("CNY")
                 .amount(amount)
                 .contactName(employee.getFullName())
                 .contactPhone(employee.getMobile())
                 .contactEmail(employee.getEmail())
+                .remark("备注")
                 .build();
         // 机票信息
         AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,ticketPrice,oilFee,tax,serverFee);
@@ -229,7 +238,7 @@ public class FlightOrderDataTest extends BaseTest {
         ArrayList<AirFlightInfo> airFlightInfos =new ArrayList<>();
         airFlightInfos.add(airFlightInfo);
         //乘机人信息
-        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),employee.getPhoneNumber(),employee.getEmail());
+        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),depoCode,employee.getPhoneNumber(),employee.getEmail());
         ArrayList<AirPassengerInfo> airPassengerInfos =new ArrayList<>();
         airPassengerInfos.add((airPassengerInfo));
         //行程单打印以及配送信息
@@ -305,6 +314,7 @@ public class FlightOrderDataTest extends BaseTest {
         bookerDepartments.add(employee.getDepartmentName());
         //票号
         String ticketNo = RandomNumber.getTimeNumber(13);
+        String depoCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
         BigDecimal amount = ticketPrice.add(oilFee).add(tax).add(serverFee);
         //订单基本信息
         AirBaseOrder airBaseOrder = AirBaseOrder.builder()
@@ -325,6 +335,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
                 .departmentName(employee.getDepartmentName())
+                .departmentCode(depoCode)
                 .departmentOid(employee.getDepartmentOID())
                 .bookChannel("Online-API")
                 .bookType("C")
@@ -336,11 +347,13 @@ public class FlightOrderDataTest extends BaseTest {
                 .flightWay("S")
                 .paymentType("M")
                 .accountType("C")
+                .costCenter("管理综合部")
                 .currency("CNY")
                 .amount(amount)
                 .contactName(employee.getFullName())
                 .contactPhone(employee.getMobile())
                 .contactEmail(employee.getEmail())
+                .remark("备注")
                 .build();
         // 机票信息
         AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,ticketPrice,oilFee,tax,serverFee);
@@ -351,7 +364,7 @@ public class FlightOrderDataTest extends BaseTest {
         ArrayList<AirFlightInfo> airFlightInfos =new ArrayList<>();
         airFlightInfos.add(airFlightInfo);
         //乘机人信息
-        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),employee.getPhoneNumber(),employee.getEmail());
+        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),depoCode,employee.getPhoneNumber(),employee.getEmail());
         ArrayList<AirPassengerInfo> airPassengerInfos =new ArrayList<>();
         airPassengerInfos.add((airPassengerInfo));
         // 退票
@@ -433,6 +446,7 @@ public class FlightOrderDataTest extends BaseTest {
         bookerDepartments.add(employee.getDepartmentName());
         //票号
         String ticketNo = RandomNumber.getTimeNumber(13);
+        String depoCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
         BigDecimal amount = ticketPrice.add(oilFee).add(tax).add(serverFee);
         //订单基本信息
         AirBaseOrder airBaseOrder = AirBaseOrder.builder()
@@ -453,6 +467,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
                 .departmentName(employee.getDepartmentName())
+                .departmentCode(depoCode)
                 .departmentOid(employee.getDepartmentOID())
                 .bookChannel("Online-API")
                 .bookType("C")
@@ -464,11 +479,13 @@ public class FlightOrderDataTest extends BaseTest {
                 .flightWay("S")
                 .paymentType("M")
                 .accountType("C")
+                .costCenter("管理综合部")
                 .currency("CNY")
                 .amount(amount)
                 .contactName(employee.getFullName())
                 .contactPhone(employee.getMobile())
                 .contactEmail(employee.getEmail())
+                .remark("备注")
                 .build();
         // 机票信息
         AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,ticketPrice,oilFee,tax,serverFee);
@@ -479,7 +496,7 @@ public class FlightOrderDataTest extends BaseTest {
         ArrayList<AirFlightInfo> airFlightInfos =new ArrayList<>();
         airFlightInfos.add(airFlightInfo);
         //乘机人信息
-        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),employee.getPhoneNumber(),employee.getEmail());
+        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),depoCode,employee.getPhoneNumber(),employee.getEmail());
         ArrayList<AirPassengerInfo> airPassengerInfos =new ArrayList<>();
         airPassengerInfos.add((airPassengerInfo));
         // 改签
@@ -564,6 +581,7 @@ public class FlightOrderDataTest extends BaseTest {
         String ticketNo1 = RandomNumber.getTimeNumber(13);
         String ticketNo2 = RandomNumber.getTimeNumber(13);
         String ticketNo3 = RandomNumber.getTimeNumber(13);
+        String depoCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
         BigDecimal amount = ticketPrice.add(oilFee).add(tax).add(serverFee);
         BigDecimal toalAmount = amount.multiply(new BigDecimal(3)).setScale(2);
         //订单基本信息
@@ -584,6 +602,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
                 .departmentName(employee.getDepartmentName())
+                .departmentCode(depoCode)
                 .departmentOid(employee.getDepartmentOID())
                 .bookChannel("Online-API")
                 .bookType("C")
@@ -595,11 +614,13 @@ public class FlightOrderDataTest extends BaseTest {
                 .flightWay("S")
                 .paymentType("M")
                 .accountType("C")
+                .costCenter("管理综合部")
                 .currency("CNY")
                 .amount(toalAmount)
                 .contactName(employee.getFullName())
                 .contactPhone(employee.getMobile())
                 .contactEmail(employee.getEmail())
+                .remark("备注")
                 .build();
         // 机票信息
         AirTicketInfo airTicketInfo1 = flightOrder.setAirTicketInfo(ticketNo1,"1",ticketNo1,ticketPrice,oilFee,tax,serverFee);
@@ -614,9 +635,9 @@ public class FlightOrderDataTest extends BaseTest {
         ArrayList<AirFlightInfo> airFlightInfos =new ArrayList<>();
         airFlightInfos.add(airFlightInfo);
         //乘机人信息
-        AirPassengerInfo airPassengerInfo1 = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),employee.getPhoneNumber(),employee.getEmail());
-        AirPassengerInfo airPassengerInfo2 = flightOrder.setAirPassengerInfo(orderNo,"2","I",employeeInfo1.get("fullName").getAsString(),employeeInfo2.get("employeeID").getAsString(),bookerDepartments,employeeInfo1.get("departmentPath").getAsString(),employeeInfo1.get("mobile").getAsString(),employeeInfo1.get("email").getAsString());
-        AirPassengerInfo airPassengerInfo3 = flightOrder.setAirPassengerInfo(orderNo,"3","I",employeeInfo2.get("fullName").getAsString(),employeeInfo2.get("employeeID").getAsString(),bookerDepartments,employeeInfo2.get("departmentPath").getAsString(),employeeInfo2.get("mobile").getAsString(),employeeInfo2.get("email").getAsString());
+        AirPassengerInfo airPassengerInfo1 = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),depoCode,employee.getPhoneNumber(),employee.getEmail());
+        AirPassengerInfo airPassengerInfo2 = flightOrder.setAirPassengerInfo(orderNo,"2","I",employeeInfo1.get("fullName").getAsString(),employeeInfo2.get("employeeID").getAsString(),bookerDepartments,employeeInfo1.get("departmentName").getAsString(),employeeInfo1.get("departmentCode").getAsString(),employeeInfo1.get("mobile").getAsString(),employeeInfo1.get("email").getAsString());
+        AirPassengerInfo airPassengerInfo3 = flightOrder.setAirPassengerInfo(orderNo,"3","I",employeeInfo2.get("fullName").getAsString(),employeeInfo2.get("employeeID").getAsString(),bookerDepartments,employeeInfo2.get("departmentName").getAsString(),employeeInfo2.get("departmentCode").getAsString(),employeeInfo2.get("mobile").getAsString(),employeeInfo2.get("email").getAsString());
         ArrayList<AirPassengerInfo> airPassengerInfos =new ArrayList<>();
         airPassengerInfos.add((airPassengerInfo1));
         airPassengerInfos.add((airPassengerInfo2));

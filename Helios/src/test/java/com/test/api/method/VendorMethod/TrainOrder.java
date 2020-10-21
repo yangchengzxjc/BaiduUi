@@ -1,14 +1,17 @@
 package com.test.api.method.VendorMethod;
 
+import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.TrainOrderInfo.*;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import com.test.api.method.ExpenseReportComponent;
+import com.test.api.method.InfraStructure;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,9 +23,11 @@ import java.util.List;
 @Slf4j
 public class TrainOrder {
     private ExpenseReportComponent component;
+    private InfraStructure infraStructure;
 
     public TrainOrder(){
         component = new ExpenseReportComponent();
+        infraStructure = new InfraStructure();
     }
 
     /**
@@ -36,7 +41,7 @@ public class TrainOrder {
      * @param payType
      * @return
      */
-    public TrainBaseOrder setTrainBaseOrder(Employee employee,BigDecimal totalAmount,String orderStatusName,String orderType,String orderNo,String bookChannel,String bookType,String payType){
+    public TrainBaseOrder setTrainBaseOrder(Employee employee,BigDecimal totalAmount,String orderStatusName,String orderType,String orderNo,String bookChannel,String bookType,String payType) throws HttpStatusException {
         String paymentType ="";
         String accountType ="";
         if(bookType.equals("C")){
@@ -67,6 +72,7 @@ public class TrainOrder {
         orderStatusMapping.put("改签处理中","P");
         orderStatusMapping.put("改签成功","S");
         orderStatusMapping.put("改签取消","C");
+        String deptCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
         //订单基本信息
         TrainBaseOrder trainBaseOrder = TrainBaseOrder.builder()
                 .orderType(orderType)
@@ -84,6 +90,7 @@ public class TrainOrder {
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
                 .departmentName(employee.getDepartmentName())
+                .departmentCode(deptCode)
                 .bookChannel(bookChannel)
                 .bookType(bookType)
                 .payType(payType)
@@ -99,7 +106,62 @@ public class TrainOrder {
                 .contactName(employee.getFullName())
                 .contactPhone(employee.getMobile())
                 .contactEmail(employee.getEmail())
-                .remark("")
+                .remark("备注")
+                .build();
+        return trainBaseOrder;
+    }
+
+    /**
+     * 火车订单基本信息
+     * @param employee
+     * @param orderType
+     * @param orderNo
+     * @return
+     */
+    public TrainBaseOrder setTrainBaseOrder(Employee employee, String supplierName,String supplierCode, BigDecimal totalAmount,String orderType, String orderNo, JsonObject tmcData,JsonObject applicant) throws HttpStatusException {
+        //原订单号
+        String originalOrderNum = "";
+        if(!orderType.equals("B")){
+            originalOrderNum = RandomNumber.getTimeNumber(14);
+        }
+        ArrayList<String> bookerDepartments = new ArrayList<>();
+        bookerDepartments.add(applicant.get("departmentName").getAsString());
+        JsonObject bookClerk = infraStructure.getUserDetail(employee,tmcData.getAsJsonObject("bookClerk").get("employeeID").getAsString());
+        //部门code
+        String deptCode = infraStructure.getDeptCode(employee,bookClerk.get("departmentOID").getAsString());
+        //订单基本信息
+        TrainBaseOrder trainBaseOrder = TrainBaseOrder.builder()
+                .orderType(orderType)
+                .orderNo(orderNo)
+                .originalOrderNum(originalOrderNum)
+                .supplierName(supplierName)
+                .supplierCode(supplierCode)
+                .approvalCode(tmcData.get("approvalCode").getAsString())
+                .orderStatusName("已购票")
+                .orderStatusCode("TD")
+                .tenantCode(tmcData.get("tenantId").getAsString())
+                .tenantName(employee.getTenantName())
+                .employeeNum(tmcData.getAsJsonObject("bookClerk").get("employeeID").getAsString())
+                .employeeName(tmcData.getAsJsonObject("bookClerk").get("name").getAsString())
+                .companyName(applicant.get("companyName").getAsString())
+                .companyCode(employee.getCompanyCode())
+                .departmentName(applicant.get("departmentName").getAsString())
+                .departmentCode(deptCode)
+                .bookChannel("Online-APP")
+                .bookType("C")
+                .payType("ALIPAY")
+                .createTime(UTCTime.getBeijingTime(0,0,0))
+                .payTime(UTCTime.getBeijingTime(0,0,1))
+                .successTime(UTCTime.getBeijingTime(0,0,1))
+                .paymentType("M")
+                .accountType("C")
+                .costCenter(tmcData.get("costCenter1").getAsString())
+                .currency("CNY")
+                .totalAmount(totalAmount)
+                .contactName(tmcData.getAsJsonObject("bookClerk").get("name").getAsString())
+                .contactPhone(tmcData.getAsJsonObject("bookClerk").get("mobile").getAsString())
+                .contactEmail(employee.getEmail())
+                .remark(tmcData.get("remark").getAsString())
                 .build();
         return trainBaseOrder;
     }
@@ -188,7 +250,7 @@ public class TrainOrder {
      * @param passengerEmail   邮箱
      * @return
      */
-    public TrainPassengerInfo setTrainPassengerInfo(String orderNo, String passengerNo, String passengerAttribute,String passengerName, String passagerNum, List<String> bookerDepartments,String departmentName,String certificateNum,String passengerPhone,String passengerEmail){
+    public TrainPassengerInfo setTrainPassengerInfo(String orderNo, String passengerNo, String passengerAttribute,String passengerName, String passagerNum, List<String> bookerDepartments,String departmentName,String departmentCode,String certificateNum,String passengerPhone,String passengerEmail){
         //订单乘客信息
         TrainPassengerInfo trainPassengerInfo = TrainPassengerInfo.builder()
                 .orderNo(orderNo)
@@ -199,7 +261,7 @@ public class TrainOrder {
                 .passengerNum(passagerNum)
                 .passengerDepartments(bookerDepartments)
                 .departmentName(departmentName)
-//                .departmentCode(departmentCode)
+                .departmentCode(departmentCode)
                 .nationlityName("中国")
                 .certificateType("IDC")
                 .certificateNum(certificateNum)
@@ -208,6 +270,46 @@ public class TrainOrder {
                 .passengerSex("M")
                 //成本中心
                 .passengerCostCenter("管理综合部")
+                .build();
+        return trainPassengerInfo;
+    }
+
+    /**订单乘客信息
+     * @param orderNo  订单号
+     * @param passengerNo  乘客序号
+     *
+     * @return
+     */
+    public TrainPassengerInfo setTrainPassengerInfo(Employee employee,String orderNo, String passengerNo,JsonObject tmcRequestData,JsonObject applicationParticipant) throws HttpStatusException {
+        JsonObject tmcParticipant = tmcRequestData.getAsJsonArray("participantList").get(0).getAsJsonObject();
+        //订单乘客信息
+        //乘机人信息
+        JsonObject participantInfo = infraStructure.getEmployeeDetail(employee,applicationParticipant.get("participantOID").getAsString());
+        //乘机人信息
+        ArrayList<String> bookerDepartments =new ArrayList<>();
+        bookerDepartments.add(participantInfo.get("departmentName").getAsString());
+        //身份证信息
+        JsonObject cardInfo = infraStructure.queryUserCard(employee,applicationParticipant.get("participantOID").getAsString(),"身份证");
+        //部门code
+        String deptCode = infraStructure.getDeptCode(employee,participantInfo.get("departmentOID").getAsString());
+        TrainPassengerInfo trainPassengerInfo = TrainPassengerInfo.builder()
+                .orderNo(orderNo)
+                .passengerNo(passengerNo)
+                .passengerType("AUD")
+                .passengerAttribute("I")
+                .passengerName(tmcParticipant.get("name").getAsString())
+                .passengerNum(tmcParticipant.get("employeeID").getAsString())
+                .passengerDepartments(bookerDepartments)
+                .departmentName(participantInfo.get("departmentName").getAsString())
+                .departmentCode(deptCode)
+                .nationlityName("中国")
+                .certificateType("IDC")
+                .certificateNum(cardInfo.get("originalCardNo").getAsString())
+                .passengerPhone(tmcParticipant.get("mobile").getAsString())
+                .passengerEmail(tmcParticipant.get("email").getAsString())
+                .passengerSex(tmcParticipant.get("gender").getAsString())
+                //成本中心
+                .passengerCostCenter(tmcRequestData.get("costCenter1").getAsString())
                 .build();
         return trainPassengerInfo;
     }
@@ -224,7 +326,6 @@ public class TrainOrder {
      * @throws HttpStatusException
      */
     public TrainSequenceInfo setTrainSequenceInfo(Employee employee,String orderNo,String sequenceNo,String trainNum,String dCityName,String aCityName,String dStationName,String aStationName) throws HttpStatusException {
-
         String dCityCode = component.getCityCode(employee,dCityName);
         String aCityCode = component.getCityCode(employee,aCityName);
         //订单车次
@@ -240,6 +341,39 @@ public class TrainOrder {
                 .acityName(aCityName)
                 .acityCode(aCityCode)
                 .astationName(aStationName)
+                .build();
+        return trainSequenceInfo;
+    }
+
+    /**
+     * 火车订单信息
+     * @param orderNo
+     * @param sequenceNo
+     * @return
+     * @throws HttpStatusException
+     */
+    public TrainSequenceInfo setTrainSequenceInfo(String orderNo,String sequenceNo,JsonObject tmcData) throws HttpStatusException {
+        HashMap<String,String> station = new HashMap<>();
+        station.put("西安市","西安北站");
+        station.put("上海","上海虹桥火车站");
+        station.put("深圳","深圳火车站");
+        station.put("北京","北京西站");
+        JsonObject travelTrain = tmcData.getAsJsonArray("travelTrainsList").get(0).getAsJsonObject();
+        String startTime = UTCTime.BJDateMdy(travelTrain.get("fromDate").getAsString().split("\\s+")[1],travelTrain.get("floatDaysBegin").getAsInt())+" "+UTCTime.getTime(0,0);
+        String endTime = UTCTime.BJDateMdy(travelTrain.get("leaveDate").getAsString().split("\\s+")[1],-(travelTrain.get("floatDaysBegin").getAsInt()))+" "+UTCTime.getTime(2,30);
+        //订单车次
+        TrainSequenceInfo trainSequenceInfo =TrainSequenceInfo.builder()
+                .orderNo(orderNo)
+                .sequenceNo(sequenceNo)
+                .trainNum("D1234")
+                .departureTime(startTime)
+                .arriveTime(endTime)
+                .dcityName(tmcData.get("fromCity").getAsString())
+                .dcityCode(tmcData.get("fromCityCode").getAsString())
+                .dstationName(station.get(tmcData.get("fromCity").getAsString()))
+                .acityName(tmcData.get("toCity").getAsString())
+                .acityCode(tmcData.get("toCityCode").getAsString())
+                .astationName(station.get(tmcData.get("toCity").getAsString()))
                 .build();
         return trainSequenceInfo;
     }

@@ -412,4 +412,15 @@ public class InfraStructure {
         return jsb;
     }
 
+    /**
+     * 根据部门oid  查询出部门的code
+     * @param employee
+     * @param deptOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public String getDeptCode(Employee employee,String deptOID) throws HttpStatusException {
+        return infraStructureApi.departmentDetail(employee,deptOID).get("departmentCode").getAsString();
+    }
+
 }

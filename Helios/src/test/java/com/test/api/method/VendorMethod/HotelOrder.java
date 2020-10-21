@@ -2,12 +2,14 @@ package com.test.api.method.VendorMethod;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelBaseOrder;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelExceedInfo;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelPassengerInfo;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
+import com.test.api.method.InfraStructure;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
@@ -21,7 +23,11 @@ import java.util.List;
  * @Version 1.0
  **/
 public class HotelOrder {
+    private InfraStructure infraStructure;
 
+    public HotelOrder(){
+        infraStructure =new InfraStructure();
+    }
 
     /**
      * 酒店订单超标
@@ -52,7 +58,7 @@ public class HotelOrder {
      * @return
      */
     public HotelPassengerInfo setHotelPassengerInfo(String orderNo, String passengerNo, String passengerAttribute, String passengerName,
-                                                    String passengerNum, String departmentName, List<String> passengerDepartments) {
+                                                    String passengerNum, String departmentName, String deptCode,List<String> passengerDepartments) {
         HotelPassengerInfo hotelPassengerInfo = HotelPassengerInfo.builder()
                 .orderNo(orderNo)
                 .passengerNo(passengerNo)
@@ -60,6 +66,7 @@ public class HotelOrder {
                 .passengerName(passengerName)
                 .passengerNum(passengerNum)
                 .departmentName(departmentName)
+                .departmentCode(deptCode)
                 .passengerCostCenter("成本中心1")
                 .passengerDepartments(passengerDepartments)
                 .build();
@@ -70,22 +77,26 @@ public class HotelOrder {
      * 订单乘客信息
      * @param orderNo
      * @param passengerNo
-     * @param passengerAttribute
-     * @param departmentName
-     * @param passengerDepartments
      * @return
      */
-    public HotelPassengerInfo setHotelPassengerInfo(String orderNo, String passengerNo, String passengerAttribute, String passengerName,
-                                                    String passengerNum,String passengerCostCenter ,String departmentName, List<String> passengerDepartments) {
+    public HotelPassengerInfo setHotelPassengerInfo(Employee employee,String orderNo, String passengerNo,JsonObject tmcRequestData,JsonObject applicationParticipant) throws HttpStatusException {
+        JsonObject tmcParticipant = tmcRequestData.getAsJsonArray("participantList").get(0).getAsJsonObject();
+        //查询乘机人的信息
+        JsonObject participantInfo = infraStructure.getEmployeeDetail(employee,applicationParticipant.get("participantOID").getAsString());
+        ArrayList<String> bookerDepartments =new ArrayList<>();
+        bookerDepartments.add(participantInfo.get("departmentName").getAsString());
+        //查询部门code
+        String deptCode = infraStructure.getDeptCode(employee,applicationParticipant.get("departmentOID").getAsString());
         HotelPassengerInfo hotelPassengerInfo = HotelPassengerInfo.builder()
                 .orderNo(orderNo)
                 .passengerNo(passengerNo)
-                .passengerAttribute(passengerAttribute)
-                .passengerName(passengerName)
-                .passengerNum(passengerNum)
-                .departmentName(departmentName)
-                .passengerCostCenter(passengerCostCenter)
-                .passengerDepartments(passengerDepartments)
+                .passengerAttribute("I")
+                .passengerName(tmcParticipant.get("name").getAsString())
+                .passengerNum(tmcParticipant.get("employeeID").getAsString())
+                .departmentCode(deptCode)
+                .departmentName(participantInfo.get("departmentName").getAsString())
+                .passengerCostCenter(tmcRequestData.get("costCenter1").getAsString())
+                .passengerDepartments(bookerDepartments)
                 .build();
         return hotelPassengerInfo;
     }
@@ -101,7 +112,7 @@ public class HotelOrder {
      * @param applicat
      * @return
      */
-    public HotelBaseOrder setHotelBaseOrder(Employee employee,String orderType, String orderNo, String supplierName, String supplierCode, JsonObject tmcdata,JsonObject applicat){
+    public HotelBaseOrder setHotelBaseOrder(Employee employee,String orderType, String orderNo, String supplierName, String supplierCode, JsonObject tmcdata,JsonObject applicat) throws HttpStatusException {
         JsonObject travelHotel =tmcdata.getAsJsonArray("travelHotelsList").get(0).getAsJsonObject();
         JsonArray participantList =tmcdata.getAsJsonArray("participantList");
         StringBuffer passengerName = new StringBuffer();
@@ -112,6 +123,9 @@ public class HotelOrder {
         bookerDepartments.add(applicat.get("departmentName").getAsString());
         String startTime = UTCTime.BJDateMdy(travelHotel.get("fromDate").getAsString().split("\\s+")[1],travelHotel.get("floatDaysBegin").getAsInt())+" "+UTCTime.getTime(0,0);
         String endTime = UTCTime.BJDateMdy(travelHotel.get("leaveDate").getAsString().split("\\s+")[1],-(travelHotel.get("floatDaysBegin").getAsInt()))+" 11:59:59";
+        JsonObject bookClerk = infraStructure.getUserDetail(employee,tmcdata.getAsJsonObject("bookClerk").get("employeeID").getAsString());
+        //部门code
+        String deptCode = infraStructure.getDeptCode(employee,bookClerk.get("departmentOID").getAsString());
         HotelBaseOrder hotelBaseOrder = HotelBaseOrder.builder()
                 .orderType(orderType)
                 .orderNo(orderNo)
@@ -128,6 +142,7 @@ public class HotelOrder {
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
                 .departmentName(applicat.get("departmentName").getAsString())
+                .departmentCode(deptCode)
                 .bookChannel("Online-APP")
                 .bookType("C")
                 .payType("COPAY")
@@ -145,6 +160,7 @@ public class HotelOrder {
                 .contactName(tmcdata.getAsJsonObject("bookClerk").get("name").getAsString())
                 .contactPhone(tmcdata.getAsJsonObject("bookClerk").get("mobile").getAsString())
                 .contactEmail(employee.getEmail())
+                .remark(tmcdata.get("remark").getAsString())
                 .hotelType("AGR")
                 .hotelName("爱丽丝酒店")
                 .hotelPhone("010-123456")

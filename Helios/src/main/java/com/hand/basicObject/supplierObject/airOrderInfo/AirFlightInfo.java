@@ -55,9 +55,9 @@ public class AirFlightInfo {
     //经停机场名称
     private String airPort;
     //经停时长(单位：分钟)
-    private String stopTime;
+    private Integer stopTime;
     //飞行时长
-    private String flightTime;
+    private Integer flightTime;
     //里程数
     private Integer tpm;
     //机型

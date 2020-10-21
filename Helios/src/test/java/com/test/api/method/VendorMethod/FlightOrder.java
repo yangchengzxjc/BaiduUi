@@ -9,6 +9,7 @@ import com.hand.utils.UTCTime;
 import com.test.api.method.InfraStructure;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +20,11 @@ import java.util.List;
  **/
 public class FlightOrder {
 
+    private InfraStructure infraStructure;
+
+    public FlightOrder(){
+        infraStructure = new InfraStructure();
+    }
 
     /**
      * 航程信息
@@ -49,8 +55,8 @@ public class FlightOrder {
                 .aairportName("T2航站楼")
                 .stopCity("")
                 .airPort("")
-                .stopTime("")
-                .flightTime("3h")
+                .stopTime(0)
+                .flightTime(3)
                 .tpm(1345)
                 .craftType("空客320")
                 .build();
@@ -107,8 +113,8 @@ public class FlightOrder {
                 .aairportName("T2航站楼")
                 .stopCity("")
                 .airPort("")
-                .stopTime("")
-                .flightTime("2h30m")
+                .stopTime(0)
+                .flightTime(2)
                 .tpm(1345)
                 .craftType("空客320")
                 .build();
@@ -128,7 +134,7 @@ public class FlightOrder {
      * @param passengerEmail
      * @return
      */
-    public AirPassengerInfo setAirPassengerInfo(String orderNo, String passengerNo, String passengerAttribute, String passengerName, String passengerNum, List<String> bookerDepartments,String departmentName,String passengerPhone,String passengerEmail){
+    public AirPassengerInfo setAirPassengerInfo(String orderNo, String passengerNo, String passengerAttribute, String passengerName, String passengerNum, List<String> bookerDepartments,String departmentName,String deptCode,String passengerPhone,String passengerEmail){
         //乘机人信息
         AirPassengerInfo airPassengerInfo = AirPassengerInfo.builder()
                 .orderNo(orderNo)
@@ -137,15 +143,54 @@ public class FlightOrder {
                 .passengerAttribute(passengerAttribute)
                 .passengerName(passengerName)
                 .passengerNum(passengerNum)
-                .passengerDepartments(bookerDepartments)
                 .departmentName(departmentName)
+                .departmentCode(deptCode)
                 .nationlityName("中国")
                 .certificateType("IDC")
                 .certificateNum("610"+System.currentTimeMillis())
                 .passengerPhone(passengerPhone)
                 .passengerEmail(passengerEmail)
                 .passengerSex("M")
+                .passengerCostCenter("管理综合部1")
                 .passengerDepartments(bookerDepartments)
+                .build();
+        return airPassengerInfo;
+    }
+
+    /**
+     * 乘机人信息
+     * @param orderNo
+     * @param passengerNo
+     * @return
+     */
+    public AirPassengerInfo setAirPassengerInfo(Employee employee,String orderNo, String passengerNo,JsonObject tmcRequestData,JsonObject applicationParticipant) throws HttpStatusException {
+        JsonObject tmcParticipant = tmcRequestData.getAsJsonArray("participantList").get(0).getAsJsonObject();
+        //查询乘机人的信息
+        JsonObject participantInfo = infraStructure.getEmployeeDetail(employee,applicationParticipant.get("participantOID").getAsString());
+        //乘机人信息
+        ArrayList<String> bookerDepartments =new ArrayList<>();
+        bookerDepartments.add(participantInfo.get("departmentName").getAsString());
+        //身份证信息
+        JsonObject cardInfo = infraStructure.queryUserCard(employee,applicationParticipant.get("participantOID").getAsString(),"身份证");
+        //查询部门code
+        String deptCode = infraStructure.getDeptCode(employee,participantInfo.get("departmentOID").getAsString());
+        AirPassengerInfo airPassengerInfo = AirPassengerInfo.builder()
+                .orderNo(orderNo)
+                .passengerNo(passengerNo)
+                .passengerType("AUT")
+                .passengerAttribute("I")
+                .passengerName(tmcParticipant.get("name").getAsString())
+                .passengerNum(tmcParticipant.get("employeeID").getAsString())
+                .passengerDepartments(bookerDepartments)
+                .departmentName(participantInfo.get("departmentName").getAsString())
+                .departmentCode(deptCode)
+                .nationlityName("中国")
+                .certificateType("IDC")
+                .certificateNum(cardInfo.get("originalCardNo").getAsString())
+                .passengerPhone(tmcParticipant.get("mobile").getAsString())
+                .passengerEmail(tmcParticipant.get("email").getAsString())
+                .passengerSex(tmcParticipant.get("gender").getAsString())
+                .passengerCostCenter(tmcRequestData.get("costCenter1").getAsString())
                 .build();
         return airPassengerInfo;
     }
@@ -329,6 +374,7 @@ public class FlightOrder {
                 .contactName(tmcdata.getAsJsonObject("bookClerk").get("name").getAsString())
                 .contactPhone(tmcdata.getAsJsonObject("bookClerk").get("mobile").getAsString())
                 .contactEmail(employee.getEmail())
+                .remark(tmcdata.get("remark").getAsString())
                 .build();
         return airBaseOrder;
     }

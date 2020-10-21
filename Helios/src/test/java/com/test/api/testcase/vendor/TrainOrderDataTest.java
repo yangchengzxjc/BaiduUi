@@ -69,7 +69,9 @@ public class TrainOrderDataTest extends BaseTest {
         ArrayList<TrainSequenceInfo> trainSequenceInfos =new ArrayList<>();
         trainSequenceInfos.add(trainSequenceInfo);
         //订单乘客信息
-        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
+        //查询部门code
+        String deptCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
+        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
         ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
         trainPassengerInfos.add(trainPassengerInfo);
         TrainOrderInfoEntity trainOrderInfoEntity = TrainOrderInfoEntity.builder()
@@ -139,7 +141,9 @@ public class TrainOrderDataTest extends BaseTest {
         ArrayList<TrainSequenceInfo> trainSequenceInfos =new ArrayList<>();
         trainSequenceInfos.add(trainSequenceInfo);
         //订单乘客信息
-        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
+        //查询部门code
+        String deptCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
+        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
         ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
         trainPassengerInfos.add(trainPassengerInfo);
         TrainOrderInfoEntity trainOrderInfoEntity = TrainOrderInfoEntity.builder()
@@ -215,8 +219,11 @@ public class TrainOrderDataTest extends BaseTest {
         ArrayList<TrainSequenceInfo> trainSequenceInfos =new ArrayList<>();
         trainSequenceInfos.add(trainSequenceInfo);
         //订单乘客信息
-        TrainPassengerInfo trainPassengerInfo1 =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
-        TrainPassengerInfo trainPassengerInfo2 =trainOrder.setTrainPassengerInfo(orderNo,"2","I",employeeInfo.get("fullName").getAsString(),employeeInfo.get("employeeID").getAsString(),bookerDepartments,employeeInfo.get("departmentPath").getAsString(),"62301599468129501",employeeInfo.get("mobile").getAsString(),employeeInfo.get("email").getAsString());
+        //查询部门code
+        String deptCode1 = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
+        TrainPassengerInfo trainPassengerInfo1 =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),deptCode1,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
+        String deptCode2 = infraStructure.getDeptCode(employee,employeeInfo.get("departmentOID").getAsString());
+        TrainPassengerInfo trainPassengerInfo2 =trainOrder.setTrainPassengerInfo(orderNo,"2","I",employeeInfo.get("fullName").getAsString(),employeeInfo.get("employeeID").getAsString(),bookerDepartments,employeeInfo.get("departmentPath").getAsString(),deptCode2,"62301599468129501",employeeInfo.get("mobile").getAsString(),employeeInfo.get("email").getAsString());
         ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
         trainPassengerInfos.add(trainPassengerInfo1);
         trainPassengerInfos.add(trainPassengerInfo2);
@@ -288,7 +295,8 @@ public class TrainOrderDataTest extends BaseTest {
         ArrayList<TrainSequenceInfo> trainSequenceInfos =new ArrayList<>();
         trainSequenceInfos.add(trainSequenceInfo);
         //订单乘客信息
-        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
+        String deptCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
+        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
         ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
         trainPassengerInfos.add(trainPassengerInfo);
         //订单改签
@@ -363,7 +371,9 @@ public class TrainOrderDataTest extends BaseTest {
         ArrayList<TrainSequenceInfo> trainSequenceInfos =new ArrayList<>();
         trainSequenceInfos.add(trainSequenceInfo);
         //订单乘客信息
-        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
+        //订单乘客信息
+        String deptCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
+        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
         ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
         trainPassengerInfos.add(trainPassengerInfo);
         //订单退票
@@ -438,7 +448,8 @@ public class TrainOrderDataTest extends BaseTest {
         ArrayList<TrainSequenceInfo> trainSequenceInfos =new ArrayList<>();
         trainSequenceInfos.add(trainSequenceInfo);
         //订单乘客信息
-        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
+        String deptCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
+        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
         ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
         trainPassengerInfos.add(trainPassengerInfo);
         //订单改签
@@ -522,8 +533,9 @@ public class TrainOrderDataTest extends BaseTest {
         ArrayList<TrainSequenceInfo> trainSequenceInfos =new ArrayList<>();
         trainSequenceInfos.add(trainSequenceInfo);
         //订单乘客信息
-        TrainPassengerInfo trainPassengerInfo1 =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
-        TrainPassengerInfo trainPassengerInfo2 =trainOrder.setTrainPassengerInfo(orderNo,"2","O","小张同学","",new ArrayList<>(),"","62301599468129501","18292035567","");
+        String deptCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
+        TrainPassengerInfo trainPassengerInfo1 =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
+        TrainPassengerInfo trainPassengerInfo2 =trainOrder.setTrainPassengerInfo(orderNo,"2","O","小张同学","",new ArrayList<>(),"","","62301599468129501","18292035567","");
         ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
         trainPassengerInfos.add(trainPassengerInfo1);
         trainPassengerInfos.add(trainPassengerInfo2);
@@ -593,7 +605,8 @@ public class TrainOrderDataTest extends BaseTest {
         ArrayList<TrainSequenceInfo> trainSequenceInfos =new ArrayList<>();
         trainSequenceInfos.add(trainSequenceInfo);
         //订单乘客信息
-        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
+        String deptCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
+        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
         ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
         trainPassengerInfos.add(trainPassengerInfo);
         //订单超标

@@ -49,8 +49,8 @@ public class SyncEmployee extends BaseTest {
         PropertyReader.writeValue("employeeID",String.valueOf(Integer.valueOf(employeeID)+1),BaseConstant.CONFIGPATH);
     }
 
-    @Test(description = "新增员正常流程,校验同步数据是否正确")
-    public void addEmployeeTest01() throws HttpStatusException, InterruptedException {
+    @Test(description = "新增员正常流程,校验同步数据是否正确,返回一个新增员工对象")
+    public EmployeeDTO addEmployeeTest01() throws HttpStatusException, InterruptedException {
 
         JsonObject empObject = employeeManagePage.addEmployee(employee, "测试接口新建Q"+employeeID,"",empID,empID+"@163.com","人员类型01","","甄滙消费商测试公司1","测试部门A","0002","测试接口新建","职务01","级别A");
         String userOID=empObject.get("userOID").getAsString();
@@ -70,16 +70,12 @@ public class SyncEmployee extends BaseTest {
         System.out.println(c);
         HashMap<String, String> map = new HashMap();
         assert GsonUtil.compareJsonObject(new JsonParser().parse(GsonUtil.objectToString(b)).getAsJsonObject(),c,map);
+        return b;
     }
 
     @Test(description = "离职员工正常流程")
     public void deleteEmployeeTest02() throws HttpStatusException, InterruptedException {
 
-        //判断员工是否在职
-        if(infraStructure.getUserDetail(employee,empID+"@163.com").get("status").getAsInt() != 1001){
-            //员工入职
-            infraStructure.rehire(employee,empID+"@163.com");
-        }
         //员工离职
         int statusCode = infraStructure.leaveEmployee(employee,empID+"@163.com");
         Assert.assertEquals(200,statusCode);
@@ -87,13 +83,19 @@ public class SyncEmployee extends BaseTest {
         int status = infraStructure.getUserDetail(employee,empID+"@163.com").get("status").getAsInt();
         //对离职员工做一个断言
         Assert.assertEquals(1003,status);
+        EmployeeDTO newUser = addEmployeeTest01();
+        if (status == 1003){
+            newUser.setStatus(0);
+        }
         Thread.sleep(10000);
         JsonObject userSync =infraStructure.queryUserSync(employee,TmcChannel.DT,"",empID);
+        HashMap<String, String> map = new HashMap();
+        assert GsonUtil.compareJsonObject(new JsonParser().parse(GsonUtil.objectToString(newUser)).getAsJsonObject(),userSync,map);
 
     }
 
     @Test(description = "员工重新入职")
-    public void rehireTest03() throws HttpStatusException {
+    public void rehireTest03() throws HttpStatusException, InterruptedException {
         //先判断员工是否是离职的状态
         if(infraStructure.getUserDetail(employee,empID+"@163.com").get("status").getAsInt() != 1003){
             infraStructure.leaveEmployee(employee,empID+"@163.com");
@@ -103,6 +105,11 @@ public class SyncEmployee extends BaseTest {
         int status = infraStructure.getUserDetail(employee,empID+"@163.com").get("status").getAsInt();
         //对离职员工做一个断言
         Assert.assertEquals(1001,status);
+        EmployeeDTO rehireUser = addEmployeeTest01();
+        Thread.sleep(10000);
+        JsonObject userSync =infraStructure.queryUserSync(employee,TmcChannel.DT,"",empID);
+        HashMap<String, String> map = new HashMap();
+        assert GsonUtil.compareJsonObject(new JsonParser().parse(GsonUtil.objectToString(rehireUser)).getAsJsonObject(),userSync,map);
     }
 
 }

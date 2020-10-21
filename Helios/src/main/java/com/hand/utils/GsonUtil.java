@@ -304,7 +304,7 @@ public class GsonUtil {
      * @param array2
      * @return
      */
-    public static boolean compareJsonArray(JsonArray array1, JsonArray array2,HashMap mapping){
+    public static boolean compareJsonArray(JsonArray array1, JsonArray array2,HashMap<String,String> mapping){
         ArrayList<Boolean> arrayList = new ArrayList<>();
         for(int i=0;i<array1.size();i++){
             if(array1.get(i).isJsonObject()){

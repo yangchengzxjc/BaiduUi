@@ -174,9 +174,17 @@ public class FlightSettlementDataTest extends BaseTest {
         log.info("查询的结算数据:{}",settlementData);
         //查询数据中的数据在推送的结算数据中不存在对比 以及jsonarrayz中的数据对比
         //bookClerkEmployeeOid 订票人的OID 对比
-        assert settlementData.get("bookClerkEmployeeOid").getAsString().equals(employee.getUserOID());
-        //passengerEmployeeOid  乘机人是自己
-//        assert settlementData.get("passengerEmployeeOid").getAsString().equals(employee.getUserOID());
+        if(settlementData.get("bookClerkEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            assert settlementData.get("bookClerkEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
+        if(settlementData.get("passengerEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            //passengerEmployeeOid  乘机人是自己
+            assert settlementData.get("passengerEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
 //        //bookClerkDept   订票人部门对比以及乘客的部门对比
         assert flightSettlementJson.get("bookClerkDept").getAsJsonArray().toString().equals(settlementData.get("bookClerkDept").getAsJsonArray().toString());
         assert flightSettlementJson.get("passengerDept").getAsJsonArray().toString().equals(settlementData.get("passengerDept").getAsJsonArray().toString());
@@ -312,9 +320,17 @@ public class FlightSettlementDataTest extends BaseTest {
         log.info("查询的结算数据:{}",settlementData);
         //查询数据中的数据在推送的结算数据中不存在对比 以及jsonarrayz中的数据对比
         //bookClerkEmployeeOid 订票人的OID 对比
-        assert settlementData.get("bookClerkEmployeeOid").getAsString().equals(employee.getUserOID());
-        //passengerEmployeeOid  乘机人是自己
-        assert settlementData.get("passengerEmployeeOid").getAsString().equals(employee.getUserOID());
+        if(settlementData.get("bookClerkEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            assert settlementData.get("bookClerkEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
+        if(settlementData.get("passengerEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            //passengerEmployeeOid  乘机人是自己
+            assert settlementData.get("passengerEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
         //bookClerkDept   订票人部门对比以及乘客的部门对比
         assert flightSettlementJson.get("bookClerkDept").getAsJsonArray().toString().equals(settlementData.get("bookClerkDept").getAsJsonArray().toString());
         assert flightSettlementJson.get("passengerDept").getAsJsonArray().toString().equals(settlementData.get("passengerDept").getAsJsonArray().toString());
@@ -452,9 +468,17 @@ public class FlightSettlementDataTest extends BaseTest {
         log.info("查询的结算数据:{}",settlementData);
         //查询数据中的数据在推送的结算数据中不存在对比 以及jsonarrayz中的数据对比
         //bookClerkEmployeeOid 订票人的OID 对比
-        assert settlementData.get("bookClerkEmployeeOid").getAsString().equals(employee.getUserOID());
-        //passengerEmployeeOid  乘机人是自己
-        assert settlementData.get("passengerEmployeeOid").getAsString().equals(employee.getUserOID());
+        if(settlementData.get("bookClerkEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            assert settlementData.get("bookClerkEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
+        if(settlementData.get("passengerEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            //passengerEmployeeOid  乘机人是自己
+            assert settlementData.get("passengerEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
         //bookClerkDept   订票人部门对比以及乘客的部门对比
         assert flightSettlementJson.get("bookClerkDept").getAsJsonArray().toString().equals(settlementData.get("bookClerkDept").getAsJsonArray().toString());
         assert flightSettlementJson.get("passengerDept").getAsJsonArray().toString().equals(settlementData.get("passengerDept").getAsJsonArray().toString());

@@ -73,7 +73,7 @@ public class HotelSettlementDataTest extends BaseTest {
                 .supplierCode("cimccTMC")
                 .corpId("200428140254184788")
                 .companyName(employee.getCompanyName())
-                .companyCode("1404")
+                .companyCode(employee.getCompanyCode())
                 .companyOid(employee.getCompanyOID())
                 .tenantCode(employee.getTenantCode())
                 .tenantName(employee.getTenantName())
@@ -90,6 +90,7 @@ public class HotelSettlementDataTest extends BaseTest {
                 //房间夜间数
                 .quantity("5")
                 //房费总额
+                .roomQuantity(1)
                 .roomTotalRate(roomTotalRate)
                 .price(new BigDecimal(200).setScale(2))
                 .serviceFee(serviceFee)
@@ -107,6 +108,7 @@ public class HotelSettlementDataTest extends BaseTest {
                 .roomName("商务大床房")
                 .cityName("上海")
                 .star("3")
+                .meals(false)
                 .bookClerkName(employee.getFullName())
                 .bookClerkEmployeeId(employee.getEmployeeID())
                 .bookClerkDepts(dept)
@@ -119,7 +121,8 @@ public class HotelSettlementDataTest extends BaseTest {
         String hotelOrderData = GsonUtil.objectToString(hotelOrderSettlementInfo);
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
-        vendor.pushSettlementData(employee,"hotel",hotelOrderSettlementInfos,"cimccTMC","200428140254184788","cimccTMC");
+        JsonObject settlementDatas = vendor.pushSettlementData(employee,"hotel",hotelOrderSettlementInfos,"cimccTMC","200428140254184788","cimccTMC");
+        log.info("推送的结算数:{}",settlementDatas);
         //查询推送的结算数据
         //初始化查询结算的对象
         SettlementBody settlementBody =SettlementBody.builder()
@@ -131,14 +134,21 @@ public class HotelSettlementDataTest extends BaseTest {
                 .page(1)
                 .build();
         JsonObject internalQuerySettlement = vendor.internalQuerySettlement(employee,"hotel",settlementBody);
-        log.info("查询的酒店结算数据:{}",internalQuerySettlement);
-        //进行入住旅客数据对比
+        log.info("response:{}",internalQuerySettlement);
         HashMap<String,String> mapping =new HashMap<>();
-        assert GsonUtil.compareJsonArray(hotelOrderDataObject.getAsJsonArray("passengerList"),internalQuerySettlement.getAsJsonArray("passengerList"),mapping);
+        //预订人和入住人的oid 的比对
+        if(internalQuerySettlement.get("bookClerkEmployeeOid").isJsonNull()) {
+            assert false;
+        }else{
+            assert internalQuerySettlement.get("bookClerkEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
+        if(internalQuerySettlement.getAsJsonArray("passengerList").get(0).getAsJsonObject().get("passengerEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            assert internalQuerySettlement.getAsJsonArray("passengerList").get(0).getAsJsonObject().get("passengerEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
         //进行酒店结算信息对比
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,internalQuerySettlement,mapping);
-        //对比预订人部门数据
-        assert GsonUtil.compareJsonArray(hotelOrderDataObject.getAsJsonArray("bookClerkDepts"),internalQuerySettlement.getAsJsonArray("bookClerkDepts"),mapping);
     }
 
     @Test(description = "酒店结算数据 - 俩人预定一间房")
@@ -235,11 +245,19 @@ public class HotelSettlementDataTest extends BaseTest {
         log.info("查询的酒店结算数据:{}",internalQuerySettlement);
         //进行入住旅客数据对比
         HashMap<String,String> mapping =new HashMap<>();
-        assert GsonUtil.compareJsonArray(hotelOrderDataObject.getAsJsonArray("passengerList"),internalQuerySettlement.getAsJsonArray("passengerList"),mapping);
+        //预订人和入住人的oid 的比对
+        if(internalQuerySettlement.get("bookClerkEmployeeOid").isJsonNull()) {
+            assert false;
+        }else{
+            assert internalQuerySettlement.get("bookClerkEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
+        if(internalQuerySettlement.getAsJsonArray("passengerList").get(0).getAsJsonObject().get("passengerEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            assert internalQuerySettlement.getAsJsonArray("passengerList").get(0).getAsJsonObject().get("passengerEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
         //进行酒店结算信息对比
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,internalQuerySettlement,mapping);
-        //对比预订人部门数据
-        assert GsonUtil.compareJsonArray(hotelOrderDataObject.getAsJsonArray("bookClerkDepts"),internalQuerySettlement.getAsJsonArray("bookClerkDepts"),mapping);
     }
 
     @Test(description = "酒店结算数据 -订单取消")
@@ -334,10 +352,18 @@ public class HotelSettlementDataTest extends BaseTest {
         log.info("查询的酒店结算数据:{}",internalQuerySettlement);
         //进行入住旅客数据对比
         HashMap<String,String> mapping =new HashMap<>();
-        assert GsonUtil.compareJsonArray(hotelOrderDataObject.getAsJsonArray("passengerList"),internalQuerySettlement.getAsJsonArray("passengerList"),mapping);
+        //预订人和入住人的oid 的比对
+        if(internalQuerySettlement.get("bookClerkEmployeeOid").isJsonNull()) {
+            assert false;
+        }else{
+            assert internalQuerySettlement.get("bookClerkEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
+        if(internalQuerySettlement.getAsJsonArray("passengerList").get(0).getAsJsonObject().get("passengerEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            assert internalQuerySettlement.getAsJsonArray("passengerList").get(0).getAsJsonObject().get("passengerEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
         //进行酒店结算信息对比
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,internalQuerySettlement,mapping);
-        //对比预订人部门数据
-        assert GsonUtil.compareJsonArray(hotelOrderDataObject.getAsJsonArray("bookClerkDepts"),internalQuerySettlement.getAsJsonArray("bookClerkDepts"),mapping);
     }
 }

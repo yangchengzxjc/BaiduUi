@@ -91,6 +91,7 @@ public class TrainSettlementDataTest extends BaseTest {
                 //实际应收
                 .amount(ticketFee.add(insuranceFee).add(serviceFee))
                 .deductibleFee(new BigDecimal(0).setScale(2))
+                .nondeductibleFee(ticketFee.add(insuranceFee).add(serviceFee))
                 .payType("月结")
                 .lastUpdateTime(UTCTime.getBeijingTime(0,0,0))
                 .orderType("月结火车票")
@@ -197,8 +198,17 @@ public class TrainSettlementDataTest extends BaseTest {
         mapping.put("月结","1");
         mapping.put("现付火车票","N");
         mapping.put("trainPassengerInfos","trainPassengerInfo");
-        //对比passengerInfo中的passengerOid
-//        assert trainOrderDataObject.getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(bookClerkEmployeeOid);
+        //对比bookClerkEmployeeOid和passengerOid
+        if(internalQuerySettlement.getAsJsonObject("trainBaseSettlement").get("bookClerkEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            assert internalQuerySettlement.getAsJsonObject("trainBaseSettlement").get("bookClerkEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
+        if(internalQuerySettlement.getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert internalQuerySettlement.getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        }
         //数据对比
         assert GsonUtil.compareJsonObject(trainOrderDataObject,internalQuerySettlement,mapping);
     }
@@ -248,6 +258,7 @@ public class TrainSettlementDataTest extends BaseTest {
                 //实际应收(包含改签服务费)
                 .amount(ticketFee.add(insuranceFee).add(serviceFee).add(new BigDecimal(20)))
                 .deductibleFee(new BigDecimal(0).setScale(2))
+                .nondeductibleFee(ticketFee.add(insuranceFee).add(serviceFee).add(new BigDecimal(20)))
                 .payType("月结")
                 .lastUpdateTime(UTCTime.getBeijingTime(0,0,0))
                 .orderType("月结火车票")
@@ -357,8 +368,17 @@ public class TrainSettlementDataTest extends BaseTest {
         mapping.put("现付火车票","N");
         mapping.put("trainPassengerInfos","trainPassengerInfo");
         //对比passengerInfo中的passengerOid
-//        assert trainOrderDataObject.getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(bookClerkEmployeeOid);
         //数据对比
+        if(internalQuerySettlement.getAsJsonObject("trainBaseSettlement").get("bookClerkEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            assert internalQuerySettlement.getAsJsonObject("trainBaseSettlement").get("bookClerkEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
+        if(internalQuerySettlement.getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert internalQuerySettlement.getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        }
         assert GsonUtil.compareJsonObject(trainOrderDataObject,internalQuerySettlement,mapping);
     }
 
@@ -406,6 +426,7 @@ public class TrainSettlementDataTest extends BaseTest {
                 //实际应收(包含改签服务费)
                 .amount(ticketFee.add(insuranceFee).add(serviceFee).add(new BigDecimal(20)))
                 .deductibleFee(new BigDecimal(0).setScale(2))
+                .nondeductibleFee(ticketFee.add(insuranceFee).add(serviceFee).add(new BigDecimal(20)))
                 .payType("月结")
                 .lastUpdateTime(UTCTime.getBeijingTime(0,0,0))
                 .orderType("月结火车票")
@@ -515,7 +536,16 @@ public class TrainSettlementDataTest extends BaseTest {
         mapping.put("现付火车票","N");
         mapping.put("trainPassengerInfos","trainPassengerInfo");
         //对比passengerInfo中的passengerOid
-//        assert trainOrderDataObject.getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(bookClerkEmployeeOid);
+        if(internalQuerySettlement.getAsJsonObject("trainBaseSettlement").get("bookClerkEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            assert internalQuerySettlement.getAsJsonObject("trainBaseSettlement").get("bookClerkEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
+        if(internalQuerySettlement.getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert internalQuerySettlement.getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        }
         //数据对比
         assert GsonUtil.compareJsonObject(trainOrderDataObject,internalQuerySettlement,mapping);
     }

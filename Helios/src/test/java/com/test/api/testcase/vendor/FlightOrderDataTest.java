@@ -744,4 +744,140 @@ public class FlightOrderDataTest extends BaseTest {
             assert flightOrderData.getAsJsonArray("airPassengerInfo").get(1).getAsJsonObject().get("passengerOid").getAsString().equals(employeeInfo2.get("userOID").getAsString());
         }
     }
+
+    @Test(description = "机票订单-单程-公司支付-月结-不改签-不退票-超标")
+    public void flightOrderDataTest6() throws HttpStatusException {
+        //订单号
+        String orderNo = RandomNumber.getTimeNumber();
+        ArrayList<String> bookerDepartments =new ArrayList<>();
+        bookerDepartments.add(employee.getDepartmentName());
+        //机票价格
+        BigDecimal ticketPrice =new BigDecimal(1000).setScale(2);
+        //燃油费
+        BigDecimal oilFee = new BigDecimal(50).setScale(2);
+        //基建费
+        BigDecimal tax =new BigDecimal(20).setScale(2);
+        //服务费
+        BigDecimal serverFee = new BigDecimal(20).setScale(2);
+        //电子客票号
+        String ticketKey = RandomNumber.getTimeNumber(10);
+        bookerDepartments.add(employee.getDepartmentName());
+        //票号
+        String ticketNo = RandomNumber.getTimeNumber(13);
+        BigDecimal amount = ticketPrice.add(oilFee).add(tax).add(serverFee);
+        String depoCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
+        //订单基本信息
+        AirBaseOrder airBaseOrder = AirBaseOrder.builder()
+                .orderType("B")
+                .orderNo(orderNo)
+                .supplierName("中集商旅")
+                .supplierCode("cimccTMC")
+                .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-A")
+                .orderStatus("已出票")
+                .orderStatusCode("S")
+                .tenantCode(employee.getTenantId())
+                .tenantName(employee.getTenantName())
+                .employeeId(employee.getEmployeeID())
+                .supplierAccount("")
+                .preEmployName(employee.getFullName())
+                .companyOid(employee.getCompanyOID())
+                .companyName(employee.getCompanyName())
+                .companyCode(employee.getCompanyCode())
+                .departmentName(employee.getDepartmentName())
+                .departmentOid(employee.getDepartmentOID())
+                .departmentCode(depoCode)
+                .bookChannel("Online-API")
+                .bookType("C")
+                .payType("COPAY")
+                .createTime(UTCTime.getBeijingTime(-10,0,0))
+                .payTime(UTCTime.getBeijingTime(-10,0,0))
+                .successTime(UTCTime.getBeijingTime(-10,0,0))
+                .flightClass("N")
+                .flightWay("S")
+                .paymentType("M")
+                .accountType("C")
+                .costCenter("管理综合部")
+                .currency("CNY")
+                .amount(amount)
+                .contactName(employee.getFullName())
+                .contactPhone(employee.getMobile())
+                .contactEmail(employee.getEmail())
+                .remark("备注")
+                .build();
+        // 机票信息
+        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,"已使用",ticketPrice,oilFee,tax,serverFee);
+        ArrayList<AirTicketInfo> airTicketInfos =new ArrayList<>();
+        airTicketInfos.add(airTicketInfo);
+        //航程信息
+        AirFlightInfo airFlightInfo = flightOrder.setAirFlightInfo(orderNo);
+        ArrayList<AirFlightInfo> airFlightInfos =new ArrayList<>();
+        airFlightInfos.add(airFlightInfo);
+        //乘机人信息
+        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),depoCode,employee.getMobile(),employee.getEmail());
+        ArrayList<AirPassengerInfo> airPassengerInfos =new ArrayList<>();
+        airPassengerInfos.add((airPassengerInfo));
+        //行程单打印以及配送信息
+        AirTicketPrint airTicketPrint = flightOrder.setAirTicketPrint(ticketKey,ticketNo,employee.getFullName());
+        ArrayList<AirTicketPrint> airTicketPrints =new ArrayList<>();
+        airTicketPrints.add(airTicketPrint);
+        //保险信息
+        AirInsurance airInsurance = flightOrder.setAirInsurance(ticketKey,"1",1);
+        ArrayList<AirInsurance> airInsurances =new ArrayList<>();
+        airInsurances.add(airInsurance);
+        AirExceedInfo airExceedInfo = flightOrder.setAirExceedInfo(ticketKey,ticketNo);
+        ArrayList<AirExceedInfo> airExceedInfos =new ArrayList<>();
+        airExceedInfos.add(airExceedInfo);
+
+        AirOrderInfoEntity airOrderInfoEntity =AirOrderInfoEntity.builder()
+                .airBaseOrder(airBaseOrder)
+                .airTicketInfo(airTicketInfos)
+                .airFlightInfo(airFlightInfos)
+                .airPassengerInfo(airPassengerInfos)
+                .airTicketPrint(airTicketPrints)
+                .airInsurance(airInsurances)
+                .airExceedInfo(airExceedInfos)
+                .build();
+        //转成jsonobject对象
+        JsonObject flightOrderDataObject =new JsonParser().parse(GsonUtil.objectToString(airOrderInfoEntity)).getAsJsonObject();
+        //订单推送
+        JsonObject flightOrderDataPush = vendor.pushOrderData(employee,"flight",airOrderInfoEntity,"cimccTMC","200428140254184788","");
+        SettlementBody settlementBody = SettlementBody.builder()
+                .companyOid(employee.getCompanyOID())
+                .orderNo(orderNo)
+                .page(1)
+                .size(10)
+                .build();
+        //查询订单数据
+        JsonObject  flightOrderData = vendor.queryOrderData(employee,"flight",settlementBody);
+        log.info("flight order Data:{}",flightOrderData);
+        //先对比需要删除的数据
+        assert flightOrderData.getAsJsonObject("airBaseOrder").get("flightWay").getAsString().equals(flightOrderDataObject.getAsJsonObject("airBaseOrder").get("flightWay").getAsString());
+        assert flightOrderData.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString().equals(flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString());
+
+        //先删除航程类型字段 因为单程映射会重复 删除完后单独比较   协议价  里程数
+        flightOrderDataObject.getAsJsonObject("airBaseOrder").remove("flightWay");
+        flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().remove("isPolicy");
+        //映射数据
+        HashMap<String,String> mapping =new HashMap<>();
+        mapping.put("S","BS");
+        mapping.put("N","国内航班");
+        mapping.put("yClassStandardPrice","yclassStandardPrice");
+        mapping.put("flight","flightNo");
+        mapping.put("employeeId","preEmployeeId");
+        mapping.put(employee.getDepartmentName(),"产品三组");
+        assert GsonUtil.compareJsonObject(flightOrderDataObject,flightOrderData,mapping);
+        //对比预订人的oid 推送数据未推送此字段单独来比较
+        if(flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            assert flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
+        //对比第一个人的oid
+        if(flightOrderData.getAsJsonArray("airPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert flightOrderData.getAsJsonArray("airPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        }
+
+    }
 }

@@ -382,4 +382,28 @@ public class FlightOrder {
                 .build();
         return airBaseOrder;
     }
+
+    /**
+     * 机票订单超标信息
+     * @param ticketKey
+     * @param ticketNo
+     * @return
+     */
+    public AirExceedInfo setAirExceedInfo(String ticketKey,String ticketNo){
+        AirExceedInfo airExceedInfo = AirExceedInfo.builder()
+                .ticketKey(ticketKey)
+                .ticketNo(ticketNo)
+                .violationContentCode("RDCFH")
+                .violationContentName("低价优先")
+                .violationReasonCode("yykq")
+                .violationReasonName("低价原因")
+                .lowFlight("MU1254")
+                .lowClass("Y")
+                .lowPrice(new BigDecimal(500).setScale(2))
+                .lowRate(new BigDecimal(7))
+                .lowDTime("22:00:00")
+                .build();
+        return airExceedInfo;
+
+    }
 }

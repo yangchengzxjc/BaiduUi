@@ -52,7 +52,7 @@ public class TrainOrder {
             accountType="P";
         }
         //原订单号
-        String originalOrderNum = "";
+        String originalOrderNum = null;
         log.info("orderType:{}",orderType);
         if(!orderType.equals("B")){
             originalOrderNum = RandomNumber.getTimeNumber(14);
@@ -233,7 +233,7 @@ public class TrainOrder {
                 .violationContentCode("A1234")
                 .violationContentName("基准价超标")
                 .violationReasonCode("B1234")
-                .violationReasonName("机场选择")
+                .violationReasonName("时间选择")
                 .build();
         return trainExceedInfo;
     }

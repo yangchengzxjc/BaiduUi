@@ -106,14 +106,21 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("nationlityName","nationalityName");
         mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
-        //校验预订人的
-        assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
         //trainSequenceInfo 中的trainType
         String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
         String trainType=vendor.trainTypeMapping(trainNum);
         assert trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainType").getAsString().equals(trainType);
-        //trainPassengerInfo 中的乘客oid 对比
-        assert trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        //校验预订人的oid 和乘客的oid
+        if(trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
+        if(trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        }
     }
 
 
@@ -131,7 +138,7 @@ public class TrainOrderDataTest extends BaseTest {
         String trainElectronic = RandomNumber.getTimeNumber(10);
         bookerDepartments.add(employee.getDepartmentName());
         //订单基本信息
-        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已出票","B",orderNo,"Online-APP","P","ALIPAY");
+        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已购票","B",orderNo,"Online-APP","P","ALIPAY");
         //订单车票信息
         TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic,"",ticketPrice,"05车07C");
         ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
@@ -178,14 +185,21 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("nationlityName","nationalityName");
         mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
-        //校验预订人的工号
-        assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
         //trainSequenceInfo 中的trainType
         String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
         String trainType=vendor.trainTypeMapping(trainNum);
         assert trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainType").getAsString().equals(trainType);
-        //trainPassengerInfo 中的乘客oid 对比
-        assert trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        //校验预订人的oid 和乘客的oid
+        if(trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
+        if(trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        }
     }
 
     @Test(description = "火车票-一人预定多人车票-不改签-不退票-因公-公司账户-月结")
@@ -207,7 +221,7 @@ public class TrainOrderDataTest extends BaseTest {
         JsonObject employeeInfo = infraStructure.getUserDetail(employee,"01399315");
         bookerDepartments.add(employee.getDepartmentName());
         //订单基本信息
-        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已出票","B",orderNo,"Online-APP","C","COPAY");
+        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已购票","B",orderNo,"Online-APP","C","COPAY");
         //订单车票信息 两张车票
         TrainTicketInfo trainTicketInfo1 = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic1,"",ticketPrice,"05车07C");
         TrainTicketInfo trainTicketInfo2 = trainOrder.setTrainTicketInfo(orderNo,"D1234","2",trainElectronic2,"",ticketPrice,"05车07B");
@@ -238,7 +252,8 @@ public class TrainOrderDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
         //火车订单推送
-        vendor.pushOrderData(employee,"train",trainOrderInfoEntity,"cimccTMC","200428140254184788","");
+        JsonObject trainO = vendor.pushOrderData(employee,"train",trainOrderInfoEntity,"cimccTMC","200428140254184788","");
+        log.info("火车推送的响应：{}",trainO);
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)
@@ -246,8 +261,8 @@ public class TrainOrderDataTest extends BaseTest {
                 .size(10)
                 .build();
         //查询订单数据
-        JsonObject getTrainOrder = vendor.queryOrderData(employee,"train",settlementBody);
-        log.info("train order Data:{}",getTrainOrder);
+        JsonObject trainOrder = vendor.queryOrderData(employee,"train",settlementBody);
+        log.info("train order Data:{}",trainOrder);
         //映射关系
         HashMap<String,String> mapping= new HashMap<>();
         mapping.put("trainOrderBase","trainBaseOrder");
@@ -258,17 +273,29 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
         mapping.put("nationlityName","nationalityName");
         mapping.put(employee.getDepartmentName(),"产品三组");
-        assert GsonUtil.compareJsonObject(hotelOrderDataObject,getTrainOrder,mapping);
-        //校验预订人的工号
-        assert getTrainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
+        assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //trainSequenceInfo 中的trainType
-        String trainNum = getTrainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
+        String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
         String trainType=vendor.trainTypeMapping(trainNum);
-        assert getTrainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainType").getAsString().equals(trainType);
+        assert trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainType").getAsString().equals(trainType);
+        //校验订票人的oid
+        if(trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
         //trainPassengerInfo 中的乘客oid 对比
-        assert getTrainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        if(trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        }
         //乘客2号校验
-        assert getTrainOrder.getAsJsonArray("trainPassengerInfo").get(1).getAsJsonObject().get("passengerOid").getAsString().equals(employeeInfo.get("userOID").getAsString());
+        if(trainOrder.getAsJsonArray("trainPassengerInfo").get(1).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else {
+            assert trainOrder.getAsJsonArray("trainPassengerInfo").get(1).getAsJsonObject().get("passengerOid").getAsString().equals(employeeInfo.get("userOID").getAsString());
+        }
     }
 
     @Test(description = "火车票1人预定,改签-公司支付-月结")
@@ -345,14 +372,22 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("aStationName","astationName");
         mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
-        //校验预订人的
-        assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
+
         //trainSequenceInfo 中的trainType
         String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
         String trainType=vendor.trainTypeMapping(trainNum);
         assert trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainType").getAsString().equals(trainType);
-        //trainPassengerInfo 中的乘客oid 对比
-        assert trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        //校验预订人的oid 和乘客的oid
+        if(trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
+        if(trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        }
     }
 
     @Test(description = "火车票1人预定-订单退票（退票订单）-公司支付-月结")
@@ -423,14 +458,21 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("trainOrderRefundInfos","trainRefundInfo");
         mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
-        //校验预订人的
-        assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
         //trainSequenceInfo 中的trainType
         String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
         String trainType=vendor.trainTypeMapping(trainNum);
         assert trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainType").getAsString().equals(trainType);
-        //trainPassengerInfo 中的乘客oid 对比
-        assert trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        //校验预订人的oid 和乘客的oid
+        if(trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
+        if(trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        }
     }
 
     @Test(description = "火车票1人预定-订单改签-订单退票-公司支付-月结")
@@ -504,14 +546,21 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("nationlityName","nationalityName");
         mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
-        //校验预订人的
-        assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
         //trainSequenceInfo 中的trainType
         String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
         String trainType=vendor.trainTypeMapping(trainNum);
         assert trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainType").getAsString().equals(trainType);
-        //trainPassengerInfo 中的乘客oid 对比
-        assert trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        //校验预订人的oid 和乘客的oid
+        if(trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
+        if(trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        }
     }
 
     @Test(description = "火车票-一人预定多人车票(一个人为外部人员)-不改签-不退票-因公-公司账户-月结")
@@ -531,7 +580,7 @@ public class TrainOrderDataTest extends BaseTest {
         String trainElectronic2 = RandomNumber.getTimeNumber(10);
         bookerDepartments.add(employee.getDepartmentName());
         //订单基本信息
-        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已出票","B",orderNo,"Online-APP","C","COPAY");
+        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已购票","B",orderNo,"Online-APP","C","COPAY");
         //订单车票信息 两张车票
         TrainTicketInfo trainTicketInfo1 = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic1,"",ticketPrice,"05车07C");
         TrainTicketInfo trainTicketInfo2 = trainOrder.setTrainTicketInfo(orderNo,"D1234","2",trainElectronic2,"",ticketPrice,"05车07B");
@@ -544,8 +593,10 @@ public class TrainOrderDataTest extends BaseTest {
         trainSequenceInfos.add(trainSequenceInfo);
         //订单乘客信息
         String deptCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
+        ArrayList<String> depaList = new ArrayList<>();
+        depaList.add("");
         TrainPassengerInfo trainPassengerInfo1 =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
-        TrainPassengerInfo trainPassengerInfo2 =trainOrder.setTrainPassengerInfo(orderNo,"2","O","小张同学","",new ArrayList<>(),"","","62301599468129501","18292035567","");
+        TrainPassengerInfo trainPassengerInfo2 =trainOrder.setTrainPassengerInfo(orderNo,"2","O","小张同学","",depaList,"","","62301599468129501","18292035567","");
         ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
         trainPassengerInfos.add(trainPassengerInfo1);
         trainPassengerInfos.add(trainPassengerInfo2);
@@ -568,8 +619,8 @@ public class TrainOrderDataTest extends BaseTest {
                 .size(10)
                 .build();
         //查询订单数据
-        JsonObject getTrainOrder = vendor.queryOrderData(employee,"train",settlementBody);
-        log.info("train order Data:{}",getTrainOrder);
+        JsonObject trainOrder = vendor.queryOrderData(employee,"train",settlementBody);
+        log.info("train order Data:{}",trainOrder);
         //映射关系
         HashMap<String,String> mapping= new HashMap<>();
         mapping.put("trainOrderBase","trainBaseOrder");
@@ -580,15 +631,22 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
         mapping.put("nationlityName","nationalityName");
         mapping.put(employee.getDepartmentName(),"产品三组");
-        assert GsonUtil.compareJsonObject(hotelOrderDataObject,getTrainOrder,mapping);
-        //校验预订人的工号
-        assert getTrainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
+        assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //trainSequenceInfo 中的trainType
-        String trainNum = getTrainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
+        String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
         String trainType=vendor.trainTypeMapping(trainNum);
-        assert getTrainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainType").getAsString().equals(trainType);
-        //trainPassengerInfo 中的乘客oid 对比
-        assert getTrainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        assert trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainType").getAsString().equals(trainType);
+        //校验预订人的oid 和乘客的oid
+        if(trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
+        if(trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        }
     }
 
     @Test(description = "火车票1人预定,不改签-不退票-超标-公司支付-月结")
@@ -605,7 +663,7 @@ public class TrainOrderDataTest extends BaseTest {
         String trainElectronic = RandomNumber.getTimeNumber(10);
         bookerDepartments.add(employee.getDepartmentName());
         //订单基本信息
-        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已出票","B",orderNo,"Online-APP","C","COPAY");
+        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已购票","B",orderNo,"Online-APP","C","COPAY");
         //订单车票信息
         TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic,"",ticketPrice,"05车07C");
         ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
@@ -663,14 +721,21 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("nationlityName","nationalityName");
         mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
-        //校验预订人的
-        assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
         //trainSequenceInfo 中的trainType
         String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
         String trainType=vendor.trainTypeMapping(trainNum);
         assert trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainType").getAsString().equals(trainType);
-        //trainPassengerInfo 中的乘客oid 对比
-        assert trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        //校验预订人的oid 和乘客的oid
+        if(trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").isJsonNull()){
+            assert false;
+        }else{
+            assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
+        }
+        if(trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        }
     }
 
 }

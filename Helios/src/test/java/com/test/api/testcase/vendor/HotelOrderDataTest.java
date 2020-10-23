@@ -254,11 +254,25 @@ public class HotelOrderDataTest extends BaseTest {
         }else{
             assert hotelOrder.getAsJsonObject("hotelBaseOrder").get("preEmployeeOId").getAsString().equals(employee.getUserOID());
         }
+        //验证第一位乘客oid
         if(hotelOrder.getAsJsonArray("hotelPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
             assert false;
         }else{
             assert hotelOrder.getAsJsonArray("hotelPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
         }
+        //验证第二个乘客oid
+        if(hotelOrder.getAsJsonArray("hotelPassengerInfo").get(1).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert hotelOrder.getAsJsonArray("hotelPassengerInfo").get(1).getAsJsonObject().get("passengerOid").getAsString().equals(employeeInfo1.get("userOID").getAsString());
+        }
+        //验证第三个乘客
+        if(hotelOrder.getAsJsonArray("hotelPassengerInfo").get(2).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert hotelOrder.getAsJsonArray("hotelPassengerInfo").get(2).getAsJsonObject().get("passengerOid").getAsString().equals(employeeInfo2.get("userOID").getAsString());
+        }
+
     }
 
     @Test(description = "酒店订单-1人预定-订单取消-公司支付-未超标")

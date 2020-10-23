@@ -168,11 +168,13 @@ public class FlightOrderDataTest extends BaseTest {
         }else{
             assert flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
         }
+        //对比第一个人的oid
         if(flightOrderData.getAsJsonArray("airPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
             assert false;
         }else{
             assert flightOrderData.getAsJsonArray("airPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
         }
+
     }
 
     @Test(description = "机票订单-单程-因私-不改签-不退票")
@@ -644,9 +646,10 @@ public class FlightOrderDataTest extends BaseTest {
                 .remark("备注")
                 .build();
         // 机票信息
-        AirTicketInfo airTicketInfo1 = flightOrder.setAirTicketInfo(ticketNo1,"1",ticketNo1,"已使用",ticketPrice,oilFee,tax,serverFee);
-        AirTicketInfo airTicketInfo2 = flightOrder.setAirTicketInfo(ticketNo2,"2",ticketNo2,"已使用",ticketPrice,oilFee,tax,serverFee);
         AirTicketInfo airTicketInfo3 = flightOrder.setAirTicketInfo(ticketNo3,"3",ticketNo3,"已使用",ticketPrice,oilFee,tax,serverFee);
+        AirTicketInfo airTicketInfo2 = flightOrder.setAirTicketInfo(ticketNo2,"2",ticketNo2,"已使用",ticketPrice,oilFee,tax,serverFee);
+        AirTicketInfo airTicketInfo1 = flightOrder.setAirTicketInfo(ticketNo1,"1",ticketNo1,"已使用",ticketPrice,oilFee,tax,serverFee);
+
         ArrayList<AirTicketInfo> airTicketInfos =new ArrayList<>();
         airTicketInfos.add(airTicketInfo1);
         airTicketInfos.add(airTicketInfo2);
@@ -722,12 +725,23 @@ public class FlightOrderDataTest extends BaseTest {
         }else{
             assert flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
         }
+        //对比乘客中的一个人oid
         if(flightOrderData.getAsJsonArray("airPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
             assert false;
         }else{
             assert flightOrderData.getAsJsonArray("airPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
         }
+        //对比乘客中的第二个人
+        if(flightOrderData.getAsJsonArray("airPassengerInfo").get(1).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert flightOrderData.getAsJsonArray("airPassengerInfo").get(1).getAsJsonObject().get("passengerOid").getAsString().equals(employeeInfo1.get("userOID").getAsString());
+        }
+        //对比乘客中的第三个人
+        if(flightOrderData.getAsJsonArray("airPassengerInfo").get(1).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert flightOrderData.getAsJsonArray("airPassengerInfo").get(1).getAsJsonObject().get("passengerOid").getAsString().equals(employeeInfo2.get("userOID").getAsString());
+        }
     }
-
-
 }

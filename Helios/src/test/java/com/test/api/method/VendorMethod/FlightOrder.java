@@ -289,13 +289,14 @@ public class FlightOrder {
      * @param ticketKey
      * @param passengerNo  乘客编号
      * @param ticketNo  订单号
+     * @param preTicketNum  改签上一次票号  改签特有的
      * @param ticketPrice 票价
      * @param oilFee 油费
      * @param tax  基建
      * @param serverFee
      * @return
      */
-    public AirTicketInfo setAirTicketInfo(String ticketKey,String passengerNo,String ticketNo,String ticketStatusName,BigDecimal ticketPrice,BigDecimal oilFee,BigDecimal tax,BigDecimal serverFee){
+    public AirTicketInfo setAirTicketInfo(String ticketKey,String passengerNo,String ticketNo,String preTicketNum,String ticketStatusName,BigDecimal ticketPrice,BigDecimal oilFee,BigDecimal tax,BigDecimal serverFee){
         // 机票信息
         HashMap<String,String> status =new HashMap<>();
         status.put("已使用","USED");
@@ -308,6 +309,8 @@ public class FlightOrder {
                 .passengerType("AUT")
                 .ticketPNR(RandomNumber.getUUID(5))
                 .ticketNo(ticketNo)
+                .preTicketNum(preTicketNum)
+                .originalNum(preTicketNum)
                 .ticketStatusName(ticketStatusName)
                 .ticketStatusCode(status.get(ticketStatusName))
                 .isPolicy("N")
@@ -400,8 +403,8 @@ public class FlightOrder {
                 .lowFlight("MU1254")
                 .lowClass("Y")
                 .lowPrice(new BigDecimal(500).setScale(2))
-                .lowRate(new BigDecimal(7))
-                .lowDTime("22:00:00")
+                .lowRate(new BigDecimal(7).setScale(2))
+                .lowDTime(UTCTime.getBeijingDate(0)+" 22:00:00")
                 .build();
         return airExceedInfo;
 

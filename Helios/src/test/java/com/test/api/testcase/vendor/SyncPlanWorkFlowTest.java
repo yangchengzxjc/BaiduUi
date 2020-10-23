@@ -155,7 +155,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
             //订单基本数据
             AirBaseOrder airBaseOrder = flightOrder.setAirBaseOrder(employee,"B",orderNo,supplierName,supplierCode,tmcRequestData,traveApplicationDetail.getAsJsonObject("applicant"),amount);
             // 机票信息
-            AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,"已使用",ticketPrice,oilFee,tax,serverFee);
+            AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,null,"已使用",ticketPrice,oilFee,tax,serverFee);
             ArrayList<AirTicketInfo> airTicketInfos =new ArrayList<>();
             airTicketInfos.add(airTicketInfo);
             //航程信息

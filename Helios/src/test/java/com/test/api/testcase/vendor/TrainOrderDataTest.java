@@ -519,6 +519,7 @@ public class TrainOrderDataTest extends BaseTest {
                 .trainOrderSequenceInfos(trainSequenceInfos)
                 .trainOrderPassengerInfos(trainPassengerInfos)
                 .trainOrderRefundInfos(trainRefundInfos)
+                .trainOrderChangeInfos(trainChangeInfos)
                 .build();
         //推送的数据封装成一个json字符串
         String hotelOrderData =GsonUtil.objectToString(trainOrderInfoEntity);
@@ -544,6 +545,14 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("trainOrderSequenceInfos","trainSequenceInfo");
         mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
         mapping.put("nationlityName","nationalityName");
+        mapping.put("dCityName","dcityName");
+        mapping.put("dCityCode","dcityCode");
+        mapping.put("aCityName","acityName");
+        mapping.put("aCityCode","acityCode");
+        mapping.put("dStationName","dstationName");
+        mapping.put("aStationName","astationName");
+        mapping.put("trainOrderChangeInfos","trainChangeInfo");
+        mapping.put("trainOrderRefundInfos","trainRefundInfo");
         mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //trainSequenceInfo 中的trainType
@@ -720,6 +729,7 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("aStationName","astationName");
         mapping.put("nationlityName","nationalityName");
         mapping.put(employee.getDepartmentName(),"产品三组");
+        mapping.put("trainExceedInfos","trainExceedInfo");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //trainSequenceInfo 中的trainType
         String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();

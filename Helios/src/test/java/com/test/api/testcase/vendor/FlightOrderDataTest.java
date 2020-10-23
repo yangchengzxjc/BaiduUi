@@ -106,7 +106,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .remark("备注")
                 .build();
         // 机票信息
-        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,"已使用",ticketPrice,oilFee,tax,serverFee);
+        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,null,"已使用",ticketPrice,oilFee,tax,serverFee);
         ArrayList<AirTicketInfo> airTicketInfos =new ArrayList<>();
         airTicketInfos.add(airTicketInfo);
         //航程信息
@@ -237,7 +237,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .remark("备注")
                 .build();
         // 机票信息
-        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,"已使用",ticketPrice,oilFee,tax,serverFee);
+        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,null,"已使用",ticketPrice,oilFee,tax,serverFee);
         ArrayList<AirTicketInfo> airTicketInfos =new ArrayList<>();
         airTicketInfos.add(airTicketInfo);
         //航程信息
@@ -368,7 +368,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .remark("备注")
                 .build();
         // 机票信息
-        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,"已退票",ticketPrice,oilFee,tax,serverFee);
+        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,null,"已退票",ticketPrice,oilFee,tax,serverFee);
         ArrayList<AirTicketInfo> airTicketInfos =new ArrayList<>();
         airTicketInfos.add(airTicketInfo);
         //航程信息
@@ -463,6 +463,8 @@ public class FlightOrderDataTest extends BaseTest {
         bookerDepartments.add(employee.getDepartmentName());
         //票号
         String ticketNo = RandomNumber.getTimeNumber(13);
+        //改签前票号
+        String preTicketNum = RandomNumber.getTimeNumber(13);
         String depoCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
         BigDecimal amount = ticketPrice.add(oilFee).add(tax).add(serverFee);
         //订单基本信息
@@ -505,7 +507,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .remark("备注")
                 .build();
         // 机票信息
-        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,"已改签",ticketPrice,oilFee,tax,serverFee);
+        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,preTicketNum,"已改签",ticketPrice,oilFee,tax,serverFee);
         ArrayList<AirTicketInfo> airTicketInfos =new ArrayList<>();
         airTicketInfos.add(airTicketInfo);
         //航程信息
@@ -646,9 +648,9 @@ public class FlightOrderDataTest extends BaseTest {
                 .remark("备注")
                 .build();
         // 机票信息
-        AirTicketInfo airTicketInfo3 = flightOrder.setAirTicketInfo(ticketNo3,"3",ticketNo3,"已使用",ticketPrice,oilFee,tax,serverFee);
-        AirTicketInfo airTicketInfo2 = flightOrder.setAirTicketInfo(ticketNo2,"2",ticketNo2,"已使用",ticketPrice,oilFee,tax,serverFee);
-        AirTicketInfo airTicketInfo1 = flightOrder.setAirTicketInfo(ticketNo1,"1",ticketNo1,"已使用",ticketPrice,oilFee,tax,serverFee);
+        AirTicketInfo airTicketInfo3 = flightOrder.setAirTicketInfo(ticketNo3,"3",ticketNo3,null,"已使用",ticketPrice,oilFee,tax,serverFee);
+        AirTicketInfo airTicketInfo2 = flightOrder.setAirTicketInfo(ticketNo2,"2",ticketNo2,null,"已使用",ticketPrice,oilFee,tax,serverFee);
+        AirTicketInfo airTicketInfo1 = flightOrder.setAirTicketInfo(ticketNo1,"1",ticketNo1,null,"已使用",ticketPrice,oilFee,tax,serverFee);
 
         ArrayList<AirTicketInfo> airTicketInfos =new ArrayList<>();
         airTicketInfos.add(airTicketInfo1);
@@ -805,7 +807,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .remark("备注")
                 .build();
         // 机票信息
-        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,"已使用",ticketPrice,oilFee,tax,serverFee);
+        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,null,"已使用",ticketPrice,oilFee,tax,serverFee);
         ArrayList<AirTicketInfo> airTicketInfos =new ArrayList<>();
         airTicketInfos.add(airTicketInfo);
         //航程信息
@@ -824,6 +826,7 @@ public class FlightOrderDataTest extends BaseTest {
         AirInsurance airInsurance = flightOrder.setAirInsurance(ticketKey,"1",1);
         ArrayList<AirInsurance> airInsurances =new ArrayList<>();
         airInsurances.add(airInsurance);
+        //超标信息
         AirExceedInfo airExceedInfo = flightOrder.setAirExceedInfo(ticketKey,ticketNo);
         ArrayList<AirExceedInfo> airExceedInfos =new ArrayList<>();
         airExceedInfos.add(airExceedInfo);

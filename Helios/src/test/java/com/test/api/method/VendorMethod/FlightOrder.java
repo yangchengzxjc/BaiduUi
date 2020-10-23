@@ -295,8 +295,12 @@ public class FlightOrder {
      * @param serverFee
      * @return
      */
-    public AirTicketInfo setAirTicketInfo(String ticketKey,String passengerNo,String ticketNo,BigDecimal ticketPrice,BigDecimal oilFee,BigDecimal tax,BigDecimal serverFee){
+    public AirTicketInfo setAirTicketInfo(String ticketKey,String passengerNo,String ticketNo,String ticketStatusName,BigDecimal ticketPrice,BigDecimal oilFee,BigDecimal tax,BigDecimal serverFee){
         // 机票信息
+        HashMap<String,String> status =new HashMap<>();
+        status.put("已使用","USED");
+        status.put("已退票","REFUNDED");
+        status.put("已改签","EXCHANGEd");
         AirTicketInfo airTicketInfo = AirTicketInfo.builder()
                 .ticketKey(ticketKey)
                 .passengerNo(passengerNo)
@@ -304,8 +308,8 @@ public class FlightOrder {
                 .passengerType("AUT")
                 .ticketPNR(RandomNumber.getUUID(5))
                 .ticketNo(ticketNo)
-                .ticketStatusName("已使用")
-                .ticketStatusCode("USED")
+                .ticketStatusName(ticketStatusName)
+                .ticketStatusCode(status.get(ticketStatusName))
                 .isPolicy("N")
                 .ticketPrice(ticketPrice)
                 .variance(new BigDecimal(0).setScale(2))

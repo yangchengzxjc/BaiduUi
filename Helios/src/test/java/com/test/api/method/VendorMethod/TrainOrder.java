@@ -216,7 +216,7 @@ public class TrainOrder {
                 .refundReason("时间原因导致必须退款")
                 .refundMethod("")
                 .refundFee(refundFee)
-                .refundRate(new BigDecimal(20))
+                .refundRate(new BigDecimal(20).setScale(2))
                 .refundServiceFee(new BigDecimal(10).setScale(2))
                 .build();
         return trainRefundInfo;

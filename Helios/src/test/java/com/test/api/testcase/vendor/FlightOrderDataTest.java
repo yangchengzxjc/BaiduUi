@@ -106,7 +106,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .remark("备注")
                 .build();
         // 机票信息
-        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,ticketPrice,oilFee,tax,serverFee);
+        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,"已使用",ticketPrice,oilFee,tax,serverFee);
         ArrayList<AirTicketInfo> airTicketInfos =new ArrayList<>();
         airTicketInfos.add(airTicketInfo);
         //航程信息
@@ -149,11 +149,10 @@ public class FlightOrderDataTest extends BaseTest {
         //先对比需要删除的数据
         assert flightOrderData.getAsJsonObject("airBaseOrder").get("flightWay").getAsString().equals(flightOrderDataObject.getAsJsonObject("airBaseOrder").get("flightWay").getAsString());
         assert flightOrderData.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString().equals(flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString());
-        assert flightOrderData.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("tpm").getAsString().equals(String.valueOf(flightOrderDataObject.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("tpm").getAsInt())+".00");
+
         //先删除航程类型字段 因为单程映射会重复 删除完后单独比较   协议价  里程数
         flightOrderDataObject.getAsJsonObject("airBaseOrder").remove("flightWay");
         flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().remove("isPolicy");
-        flightOrderDataObject.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().remove("tpm");
         //映射数据
         HashMap<String,String> mapping =new HashMap<>();
         mapping.put("S","BS");
@@ -236,7 +235,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .remark("备注")
                 .build();
         // 机票信息
-        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,ticketPrice,oilFee,tax,serverFee);
+        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,"已使用",ticketPrice,oilFee,tax,serverFee);
         ArrayList<AirTicketInfo> airTicketInfos =new ArrayList<>();
         airTicketInfos.add(airTicketInfo);
         //航程信息
@@ -281,11 +280,9 @@ public class FlightOrderDataTest extends BaseTest {
         //先对比需要删除的数据
         assert flightOrderData.getAsJsonObject("airBaseOrder").get("flightWay").getAsString().equals(flightOrderDataObject.getAsJsonObject("airBaseOrder").get("flightWay").getAsString());
         assert flightOrderData.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString().equals(flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString());
-        assert flightOrderData.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("tpm").getAsString().equals(flightOrderDataObject.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("rpm").getAsString());
         //先删除航程类型字段 因为单程映射会重复 删除完后单独比较   协议价  里程数
         flightOrderDataObject.getAsJsonObject("airBaseOrder").remove("flightWay");
         flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().remove("isPolicy");
-        flightOrderDataObject.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().remove("tpm");
         //映射数据
         HashMap<String,String> mapping =new HashMap<>();
         mapping.put("S","BS");
@@ -337,7 +334,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .supplierName("中集商旅")
                 .supplierCode("cimccTMC")
                 .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-A")
-                .orderStatus("已出票")
+                .orderStatus("退票成功")
                 .orderStatusCode("S")
                 .tenantCode(employee.getTenantId())
                 .tenantName(employee.getTenantName())
@@ -369,7 +366,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .remark("备注")
                 .build();
         // 机票信息
-        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,ticketPrice,oilFee,tax,serverFee);
+        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,"已退票",ticketPrice,oilFee,tax,serverFee);
         ArrayList<AirTicketInfo> airTicketInfos =new ArrayList<>();
         airTicketInfos.add(airTicketInfo);
         //航程信息
@@ -420,19 +417,17 @@ public class FlightOrderDataTest extends BaseTest {
         //先对比需要删除的数据
         assert flightOrderData.getAsJsonObject("airBaseOrder").get("flightWay").getAsString().equals(flightOrderDataObject.getAsJsonObject("airBaseOrder").get("flightWay").getAsString());
         assert flightOrderData.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString().equals(flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString());
-        assert flightOrderData.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("tpm").getAsString().equals(flightOrderDataObject.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("rpm").getAsString());
         //先删除航程类型字段 因为单程映射会重复 删除完后单独比较   协议价  里程数
         flightOrderDataObject.getAsJsonObject("airBaseOrder").remove("flightWay");
         flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().remove("isPolicy");
-        flightOrderDataObject.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().remove("tpm");
         //映射数据
         HashMap<String,String> mapping =new HashMap<>();
-        mapping.put("S","BS");
+        mapping.put("S","RS");
         mapping.put("N","国内航班");
         mapping.put("yClassStandardPrice","yclassStandardPrice");
         mapping.put("flight","flightNo");
         mapping.put("employeeId","preEmployeeId");
-        mapping.put(employee.getDepartmentName(),"产品三部");
+        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(flightOrderDataObject,flightOrderData,mapping);
         //对比预订人的oid
         if(flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").isJsonNull()){
@@ -470,13 +465,13 @@ public class FlightOrderDataTest extends BaseTest {
         BigDecimal amount = ticketPrice.add(oilFee).add(tax).add(serverFee);
         //订单基本信息
         AirBaseOrder airBaseOrder = AirBaseOrder.builder()
-                .orderType("B")
+                .orderType("C")
                 .orderNo(orderNo)
                 .originalOrderNo(RandomNumber.getTimeNumber(14))
                 .supplierName("中集商旅")
                 .supplierCode("cimccTMC")
                 .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-A")
-                .orderStatus("已出票")
+                .orderStatus("改签成功")
                 .orderStatusCode("S")
                 .tenantCode(employee.getTenantId())
                 .tenantName(employee.getTenantName())
@@ -508,7 +503,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .remark("备注")
                 .build();
         // 机票信息
-        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,ticketPrice,oilFee,tax,serverFee);
+        AirTicketInfo airTicketInfo = flightOrder.setAirTicketInfo(ticketKey,"1",ticketNo,"已改签",ticketPrice,oilFee,tax,serverFee);
         ArrayList<AirTicketInfo> airTicketInfos =new ArrayList<>();
         airTicketInfos.add(airTicketInfo);
         //航程信息
@@ -531,7 +526,6 @@ public class FlightOrderDataTest extends BaseTest {
         AirInsurance airInsurance = flightOrder.setAirInsurance(ticketKey,"1",1);
         ArrayList<AirInsurance> airInsurances =new ArrayList<>();
         airInsurances.add(airInsurance);
-
         AirOrderInfoEntity airOrderInfoEntity =AirOrderInfoEntity.builder()
                 .airBaseOrder(airBaseOrder)
                 .airTicketInfo(airTicketInfos)
@@ -559,19 +553,17 @@ public class FlightOrderDataTest extends BaseTest {
         //先对比需要删除的数据
         assert flightOrderData.getAsJsonObject("airBaseOrder").get("flightWay").getAsString().equals(flightOrderDataObject.getAsJsonObject("airBaseOrder").get("flightWay").getAsString());
         assert flightOrderData.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString().equals(flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString());
-        assert flightOrderData.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("tpm").getAsString().equals(flightOrderDataObject.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("rpm").getAsString());
         //先删除航程类型字段 因为单程映射会重复 删除完后单独比较   协议价  里程数
         flightOrderDataObject.getAsJsonObject("airBaseOrder").remove("flightWay");
         flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().remove("isPolicy");
-        flightOrderDataObject.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().remove("tpm");
         //映射数据
         HashMap<String,String> mapping =new HashMap<>();
-        mapping.put("S","BS");
+        mapping.put("S","CS");
         mapping.put("N","国内航班");
         mapping.put("yClassStandardPrice","yclassStandardPrice");
         mapping.put("flight","flightNo");
         mapping.put("employeeId","preEmployeeId");
-        mapping.put(employee.getDepartmentName(),"产品三部");
+        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(flightOrderDataObject,flightOrderData,mapping);
         //对比预订人的oid
         if(flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").isJsonNull()){
@@ -595,6 +587,8 @@ public class FlightOrderDataTest extends BaseTest {
         //获取一个员工的信息
         JsonObject employeeInfo1 = infraStructure.getUserDetail(employee,"01399315");
         JsonObject employeeInfo2 = infraStructure.getUserDetail(employee,"01363468");
+        String deptCode1 = infraStructure.getDeptCode(employee,employeeInfo1.get("departmentOID").getAsString());
+        String deptCode2 = infraStructure.getDeptCode(employee,employeeInfo2.get("departmentOID").getAsString());
         //机票价格
         BigDecimal ticketPrice =new BigDecimal(1000).setScale(2);
         //燃油费
@@ -650,9 +644,9 @@ public class FlightOrderDataTest extends BaseTest {
                 .remark("备注")
                 .build();
         // 机票信息
-        AirTicketInfo airTicketInfo1 = flightOrder.setAirTicketInfo(ticketNo1,"1",ticketNo1,ticketPrice,oilFee,tax,serverFee);
-        AirTicketInfo airTicketInfo2 = flightOrder.setAirTicketInfo(ticketNo2,"2",ticketNo2,ticketPrice,oilFee,tax,serverFee);
-        AirTicketInfo airTicketInfo3 = flightOrder.setAirTicketInfo(ticketNo3,"3",ticketNo3,ticketPrice,oilFee,tax,serverFee);
+        AirTicketInfo airTicketInfo1 = flightOrder.setAirTicketInfo(ticketNo1,"1",ticketNo1,"已使用",ticketPrice,oilFee,tax,serverFee);
+        AirTicketInfo airTicketInfo2 = flightOrder.setAirTicketInfo(ticketNo2,"2",ticketNo2,"已使用",ticketPrice,oilFee,tax,serverFee);
+        AirTicketInfo airTicketInfo3 = flightOrder.setAirTicketInfo(ticketNo3,"3",ticketNo3,"已使用",ticketPrice,oilFee,tax,serverFee);
         ArrayList<AirTicketInfo> airTicketInfos =new ArrayList<>();
         airTicketInfos.add(airTicketInfo1);
         airTicketInfos.add(airTicketInfo2);
@@ -663,8 +657,8 @@ public class FlightOrderDataTest extends BaseTest {
         airFlightInfos.add(airFlightInfo);
         //乘机人信息
         AirPassengerInfo airPassengerInfo1 = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),depoCode,employee.getPhoneNumber(),employee.getEmail());
-        AirPassengerInfo airPassengerInfo2 = flightOrder.setAirPassengerInfo(orderNo,"2","I",employeeInfo1.get("fullName").getAsString(),employeeInfo1.get("employeeID").getAsString(),bookerDepartments,employeeInfo1.get("departmentName").getAsString(),employeeInfo1.get("departmentCode").getAsString(),employeeInfo1.get("mobile").getAsString(),employeeInfo1.get("email").getAsString());
-        AirPassengerInfo airPassengerInfo3 = flightOrder.setAirPassengerInfo(orderNo,"3","I",employeeInfo2.get("fullName").getAsString(),employeeInfo2.get("employeeID").getAsString(),bookerDepartments,employeeInfo2.get("departmentName").getAsString(),employeeInfo2.get("departmentCode").getAsString(),employeeInfo2.get("mobile").getAsString(),employeeInfo2.get("email").getAsString());
+        AirPassengerInfo airPassengerInfo2 = flightOrder.setAirPassengerInfo(orderNo,"2","I",employeeInfo1.get("fullName").getAsString(),employeeInfo1.get("employeeID").getAsString(),bookerDepartments,employeeInfo1.get("departmentName").getAsString(),deptCode1,employeeInfo1.get("mobile").getAsString(),employeeInfo1.get("email").getAsString());
+        AirPassengerInfo airPassengerInfo3 = flightOrder.setAirPassengerInfo(orderNo,"3","I",employeeInfo2.get("fullName").getAsString(),employeeInfo2.get("employeeID").getAsString(),bookerDepartments,employeeInfo2.get("departmentName").getAsString(),deptCode2,employeeInfo2.get("mobile").getAsString(),employeeInfo2.get("email").getAsString());
         ArrayList<AirPassengerInfo> airPassengerInfos =new ArrayList<>();
         airPassengerInfos.add((airPassengerInfo1));
         airPassengerInfos.add((airPassengerInfo2));
@@ -711,11 +705,9 @@ public class FlightOrderDataTest extends BaseTest {
         //先对比需要删除的数据
         assert flightOrderData.getAsJsonObject("airBaseOrder").get("flightWay").getAsString().equals(flightOrderDataObject.getAsJsonObject("airBaseOrder").get("flightWay").getAsString());
         assert flightOrderData.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString().equals(flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString());
-        assert flightOrderData.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("tpm").getAsString().equals(flightOrderDataObject.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().get("rpm").getAsString());
         //先删除航程类型字段 因为单程映射会重复 删除完后单独比较   协议价  里程数
         flightOrderDataObject.getAsJsonObject("airBaseOrder").remove("flightWay");
         flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().remove("isPolicy");
-        flightOrderDataObject.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().remove("tpm");
         //映射数据
         HashMap<String,String> mapping =new HashMap<>();
         mapping.put("S","BS");

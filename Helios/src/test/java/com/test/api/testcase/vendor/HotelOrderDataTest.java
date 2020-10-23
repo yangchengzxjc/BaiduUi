@@ -138,7 +138,18 @@ public class HotelOrderDataTest extends BaseTest {
         mapping.put(employee.getDepartmentName(),"产品三组");
         //进行数据对比
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);
+        if(hotelOrder.getAsJsonObject("hotelBaseOrder").get("preEmployeeOId").isJsonNull()){
+            assert false;
+        }else{
+            assert hotelOrder.getAsJsonObject("hotelBaseOrder").get("preEmployeeOId").getAsString().equals(employee.getUserOID());
+        }
+        if(hotelOrder.getAsJsonArray("hotelPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert hotelOrder.getAsJsonArray("hotelPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        }
     }
+
 
     @Test(description = "酒店订单-1统一预定多人的俩男一女两间房-已提交状态-公司支付-未超标")
     public void hotelOrderDataTest2() throws HttpStatusException {
@@ -150,10 +161,11 @@ public class HotelOrderDataTest extends BaseTest {
         JsonObject employeeInfo1 = infraStructure.getUserDetail(employee,"01399315");
         JsonObject employeeInfo2 = infraStructure.getUserDetail(employee,"01363468");
         String depoCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
+        String deptCode1 = infraStructure.getDeptCode(employee,employeeInfo1.get("departmentOID").getAsString());
+        String deptCode2 = infraStructure.getDeptCode(employee,employeeInfo2.get("departmentOID").getAsString());
         HotelBaseOrder hotelBaseOrder = HotelBaseOrder.builder()
                 .orderType("B")
                 .orderNo(orderNo)
-                .originalOrderNum("")
                 .supplierName("中集商旅")
                 .supplierCode("cimccTMC")
                 .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-H")
@@ -203,8 +215,8 @@ public class HotelOrderDataTest extends BaseTest {
                 .variance(new BigDecimal(0).setScale(2))
                 .build();
         HotelPassengerInfo hotelPassengerInfo1 =hotelOrder.setHotelPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),employee.getDepartmentName(),depoCode,bookerDepartments);
-        HotelPassengerInfo hotelPassengerInfo2 = hotelOrder.setHotelPassengerInfo(orderNo,"2","I",employeeInfo1.get("fullName").getAsString(),employeeInfo1.get("employeeID").getAsString(),employeeInfo1.get("departmentName").getAsString(),employeeInfo1.get("departmentCode").getAsString(),bookerDepartments);
-        HotelPassengerInfo hotelPassengerInfo3 = hotelOrder.setHotelPassengerInfo(orderNo,"3","I",employeeInfo2.get("fullName").getAsString(),employeeInfo2.get("employeeID").getAsString(),employeeInfo2.get("departmentName").getAsString(),employeeInfo2.get("departmentCode").getAsString(),bookerDepartments);
+        HotelPassengerInfo hotelPassengerInfo2 = hotelOrder.setHotelPassengerInfo(orderNo,"2","I",employeeInfo1.get("fullName").getAsString(),employeeInfo1.get("employeeID").getAsString(),employeeInfo1.get("departmentName").getAsString(),deptCode1,bookerDepartments);
+        HotelPassengerInfo hotelPassengerInfo3 = hotelOrder.setHotelPassengerInfo(orderNo,"3","I",employeeInfo2.get("fullName").getAsString(),employeeInfo2.get("employeeID").getAsString(),employeeInfo2.get("departmentName").getAsString(),deptCode2,bookerDepartments);
         ArrayList<HotelPassengerInfo> hotelPassengerInfos =new ArrayList<>();
         hotelPassengerInfos.add(hotelPassengerInfo1);
         hotelPassengerInfos.add(hotelPassengerInfo2);
@@ -213,7 +225,6 @@ public class HotelOrderDataTest extends BaseTest {
                 .hotelOrderBase(hotelBaseOrder)
                 .hotelOrderPassengerInfos(hotelPassengerInfos)
                 .build();
-
         //推送的数据封装成一个json字符串
         String hotelOrderData = GsonUtil.objectToString(hotelOrderInfoEntity);
         //转成jsonobject对象
@@ -238,6 +249,16 @@ public class HotelOrderDataTest extends BaseTest {
         mapping.put(employee.getDepartmentName(),"产品三组");
         //进行数据对比
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);
+        if(hotelOrder.getAsJsonObject("hotelBaseOrder").get("preEmployeeOId").isJsonNull()){
+            assert false;
+        }else{
+            assert hotelOrder.getAsJsonObject("hotelBaseOrder").get("preEmployeeOId").getAsString().equals(employee.getUserOID());
+        }
+        if(hotelOrder.getAsJsonArray("hotelPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert hotelOrder.getAsJsonArray("hotelPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        }
     }
 
     @Test(description = "酒店订单-1人预定-订单取消-公司支付-未超标")
@@ -331,6 +352,16 @@ public class HotelOrderDataTest extends BaseTest {
         mapping.put(employee.getDepartmentName(),"产品三组");
         //进行数据对比
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);
+        if(hotelOrder.getAsJsonObject("hotelBaseOrder").get("preEmployeeOId").isJsonNull()){
+            assert false;
+        }else{
+            assert hotelOrder.getAsJsonObject("hotelBaseOrder").get("preEmployeeOId").getAsString().equals(employee.getUserOID());
+        }
+        if(hotelOrder.getAsJsonArray("hotelPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert hotelOrder.getAsJsonArray("hotelPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        }
     }
 
     @Test(description = "酒店订单-员工1人预定--因私-未超标")
@@ -423,6 +454,16 @@ public class HotelOrderDataTest extends BaseTest {
         mapping.put(employee.getDepartmentName(),"产品三组");
         //进行数据对比
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);
+        if(hotelOrder.getAsJsonObject("hotelBaseOrder").get("preEmployeeOId").isJsonNull()){
+            assert false;
+        }else{
+            assert hotelOrder.getAsJsonObject("hotelBaseOrder").get("preEmployeeOId").getAsString().equals(employee.getUserOID());
+        }
+        if(hotelOrder.getAsJsonArray("hotelPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+            assert false;
+        }else{
+            assert hotelOrder.getAsJsonArray("hotelPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+        }
     }
 
 

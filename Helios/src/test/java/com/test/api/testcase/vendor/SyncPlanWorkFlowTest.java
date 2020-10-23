@@ -383,7 +383,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
             //火车订单基本信息
             TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,supplierName,supplierCode,totalAmount,"B",orderNo,tmcRequestData,traveApplicationDetail.getAsJsonObject("applicant"));
             //订单车票信息
-            TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic,ticketPrice,"05车07C");
+            TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic,"",ticketPrice,"05车07C");
             ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
             trainTicketInfos.add(trainTicketInfo);
             //订单车次

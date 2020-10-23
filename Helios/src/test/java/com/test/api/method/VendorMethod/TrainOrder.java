@@ -387,7 +387,7 @@ public class TrainOrder {
      * @param seatNum 座位号
      * @return
      */
-    public TrainTicketInfo setTrainTicketInfo(String orderNo,String trainNum,String passengerNo,String trainElectronic,BigDecimal ticketPrice,String seatNum){
+    public TrainTicketInfo setTrainTicketInfo(String orderNo,String trainNum,String passengerNo,String trainElectronic,String preTrainElectronic,BigDecimal ticketPrice,String seatNum){
         //订单车票信息
         TrainTicketInfo trainTicketInfo = TrainTicketInfo.builder()
                 .orderNo(orderNo)
@@ -395,6 +395,7 @@ public class TrainOrder {
                 .sequenceNo("1")
                 .trainNum(trainNum)
                 .trainElectronic(trainElectronic)
+                .preTrainElectronic(preTrainElectronic)
                 .passengerType("AUD")
                 .ticketPrice(ticketPrice)
                 .servicePrice(new BigDecimal(20).setScale(2))

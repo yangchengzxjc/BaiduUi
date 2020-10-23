@@ -61,7 +61,7 @@ public class TrainOrderDataTest extends BaseTest {
         //订单基本信息
         TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已购票","B",orderNo,"Online-APP","C","COPAY");
         //订单车票信息
-        TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic,ticketPrice,"05车07C");
+        TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic,"",ticketPrice,"05车07C");
         ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
         trainTicketInfos.add(trainTicketInfo);
         //订单车次
@@ -133,7 +133,7 @@ public class TrainOrderDataTest extends BaseTest {
         //订单基本信息
         TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已出票","B",orderNo,"Online-APP","P","ALIPAY");
         //订单车票信息
-        TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic,ticketPrice,"05车07C");
+        TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic,"",ticketPrice,"05车07C");
         ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
         trainTicketInfos.add(trainTicketInfo);
         //订单车次
@@ -209,8 +209,8 @@ public class TrainOrderDataTest extends BaseTest {
         //订单基本信息
         TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已出票","B",orderNo,"Online-APP","C","COPAY");
         //订单车票信息 两张车票
-        TrainTicketInfo trainTicketInfo1 = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic1,ticketPrice,"05车07C");
-        TrainTicketInfo trainTicketInfo2 = trainOrder.setTrainTicketInfo(orderNo,"D1234","2",trainElectronic2,ticketPrice,"05车07B");
+        TrainTicketInfo trainTicketInfo1 = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic1,"",ticketPrice,"05车07C");
+        TrainTicketInfo trainTicketInfo2 = trainOrder.setTrainTicketInfo(orderNo,"D1234","2",trainElectronic2,"",ticketPrice,"05车07B");
         ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
         trainTicketInfos.add(trainTicketInfo1);
         trainTicketInfos.add(trainTicketInfo2);
@@ -283,11 +283,12 @@ public class TrainOrderDataTest extends BaseTest {
         BigDecimal totalAmount =ticketPrice.add(servicePrice);
         //电子客票号
         String trainElectronic = RandomNumber.getTimeNumber(10);
+        String preTrainElectronic = RandomNumber.getTimeNumber(10);
         bookerDepartments.add(employee.getDepartmentName());
         //订单基本信息
         TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"改签成功","C",orderNo,"Online-APP","C","COPAY");
         //订单车票信息
-        TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"G1234","1",trainElectronic,ticketPrice,"05车07C");
+        TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"G1234","1",trainElectronic,preTrainElectronic,ticketPrice,"05车07C");
         ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
         trainTicketInfos.add(trainTicketInfo);
         //订单车次
@@ -370,7 +371,7 @@ public class TrainOrderDataTest extends BaseTest {
         //订单基本信息
         TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"退票成功","R",orderNo,"Online-APP","C","COPAY");
         //订单车票信息
-        TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"G1234","1",trainElectronic,ticketPrice,"05车07C");
+        TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"G1234","1",trainElectronic,"",ticketPrice,"05车07C");
         ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
         trainTicketInfos.add(trainTicketInfo);
         //订单车次
@@ -444,11 +445,12 @@ public class TrainOrderDataTest extends BaseTest {
         BigDecimal totalAmount = new BigDecimal(-690).setScale(2);
         //电子客票号
         String trainElectronic = RandomNumber.getTimeNumber(10);
+        String preTrainElectronic = RandomNumber.getTimeNumber(10);
         bookerDepartments.add(employee.getDepartmentName());
         //订单基本信息
         TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"退票成功","R",orderNo,"Online-APP","C","COPAY");
         //订单车票信息
-        TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"G1234","1",trainElectronic,ticketPrice,"05车07C");
+        TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"G1234","1",trainElectronic,preTrainElectronic,ticketPrice,"05车07C");
         ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
         trainTicketInfos.add(trainTicketInfo);
         //订单车次
@@ -531,8 +533,8 @@ public class TrainOrderDataTest extends BaseTest {
         //订单基本信息
         TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已出票","B",orderNo,"Online-APP","C","COPAY");
         //订单车票信息 两张车票
-        TrainTicketInfo trainTicketInfo1 = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic1,ticketPrice,"05车07C");
-        TrainTicketInfo trainTicketInfo2 = trainOrder.setTrainTicketInfo(orderNo,"D1234","2",trainElectronic2,ticketPrice,"05车07B");
+        TrainTicketInfo trainTicketInfo1 = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic1,"",ticketPrice,"05车07C");
+        TrainTicketInfo trainTicketInfo2 = trainOrder.setTrainTicketInfo(orderNo,"D1234","2",trainElectronic2,"",ticketPrice,"05车07B");
         ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
         trainTicketInfos.add(trainTicketInfo1);
         trainTicketInfos.add(trainTicketInfo2);
@@ -605,7 +607,7 @@ public class TrainOrderDataTest extends BaseTest {
         //订单基本信息
         TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已出票","B",orderNo,"Online-APP","C","COPAY");
         //订单车票信息
-        TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic,ticketPrice,"05车07C");
+        TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic,"",ticketPrice,"05车07C");
         ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
         trainTicketInfos.add(trainTicketInfo);
         //订单车次

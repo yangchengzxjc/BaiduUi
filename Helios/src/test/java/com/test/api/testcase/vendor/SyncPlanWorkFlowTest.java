@@ -80,7 +80,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
     @DataProvider(name = "TMC")
     public Object[][] tmcData() {
         return new Object[][]{
-                {TmcChannel.CIMCC.getTmcChannel(),TmcChannel.CIMCC.getSupplierOID(),TmcChannel.CIMCC.getSupplierName(),TmcChannel.CIMCC.getSupplierCode(),""},
+                {TmcChannel.CIMCC.getTmcChannel(),TmcChannel.CIMCC.getSupplierOID(),TmcChannel.CIMCC.getSupplierName(),TmcChannel.CIMCC.getSupplierCode()},
 
         };
     }

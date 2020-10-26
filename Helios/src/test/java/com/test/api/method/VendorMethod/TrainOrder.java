@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.TrainOrderInfo.*;
+import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import com.test.api.method.ExpenseReportComponent;
@@ -89,7 +90,7 @@ public class TrainOrder {
                 .employeeName(employee.getFullName())
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
-                .departmentName(employee.getDepartmentName())
+                .departmentName(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()))
                 .departmentCode(deptCode)
                 .bookChannel(bookChannel)
                 .bookType(bookType)

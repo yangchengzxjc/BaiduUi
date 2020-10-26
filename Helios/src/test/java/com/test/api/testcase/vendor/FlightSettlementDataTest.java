@@ -68,7 +68,7 @@ public class FlightSettlementDataTest extends BaseTest {
         BigDecimal serviceFee =new BigDecimal(20).setScale(2);
         //部门
         ArrayList<String> dept =new ArrayList<>();
-        dept.add(employee.getDepartmentName());
+        dept.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         FlightOrderSettlementInfo flightOrderSettlementInfo =FlightOrderSettlementInfo.builder()
                 //结算信息的主键
                 .recordId(recordId)
@@ -159,7 +159,8 @@ public class FlightSettlementDataTest extends BaseTest {
         JsonArray listOrderSettlementInfo =new JsonParser().parse(info).getAsJsonArray();
         //推送的机票结算信息
         JsonObject flightSettlementJson = listOrderSettlementInfo.get(0).getAsJsonObject();
-        vendor.pushSettlementData(employee,"flight",FlightOrderSettlementInfos,"cimccTMC","200428140254184788","cimccTMC");
+        JsonObject response = vendor.pushSettlementData(employee,"flight",FlightOrderSettlementInfos,"cimccTMC","200428140254184788","cimccTMC");
+        log.info("推送的响应数据:{}",response);
         //初始化查询结算的对象
         SettlementBody settlementBody =SettlementBody.builder()
                 .accBalanceBatchNo(accBalanceBatchNo)
@@ -217,7 +218,7 @@ public class FlightSettlementDataTest extends BaseTest {
         BigDecimal serviceFee =new BigDecimal(20).setScale(2);
         //部门
         ArrayList<String> dept =new ArrayList<>();
-        dept.add(employee.getDepartmentName());
+        dept.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         FlightOrderSettlementInfo flightOrderSettlementInfo1 =FlightOrderSettlementInfo.builder()
                 //结算信息的主键
                 .recordId(recordId1)
@@ -365,7 +366,7 @@ public class FlightSettlementDataTest extends BaseTest {
         BigDecimal amount = new BigDecimal(-850).setScale(2);
         //部门
         ArrayList<String> dept =new ArrayList<>();
-        dept.add(employee.getDepartmentName());
+        dept.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         FlightOrderSettlementInfo flightOrderSettlementInfo1 =FlightOrderSettlementInfo.builder()
                 //结算信息的主键
                 .recordId(recordId1)

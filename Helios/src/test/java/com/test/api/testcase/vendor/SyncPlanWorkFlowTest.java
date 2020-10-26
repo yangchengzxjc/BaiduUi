@@ -10,10 +10,7 @@ import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.basicObject.itinerary.HotelItinerary;
 import com.hand.basicObject.itinerary.TrainItinerary;
 import com.hand.basicObject.supplierObject.SettlementBody;
-import com.hand.basicObject.supplierObject.TrainOrderInfo.TrainBaseOrder;
-import com.hand.basicObject.supplierObject.TrainOrderInfo.TrainPassengerInfo;
-import com.hand.basicObject.supplierObject.TrainOrderInfo.TrainSequenceInfo;
-import com.hand.basicObject.supplierObject.TrainOrderInfo.TrainTicketInfo;
+import com.hand.basicObject.supplierObject.TrainOrderInfo.*;
 import com.hand.basicObject.supplierObject.airOrderInfo.*;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelBaseOrder;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelOrderInfoEntity;
@@ -219,8 +216,17 @@ public class SyncPlanWorkFlowTest extends BaseTest {
             mapping.put(employee.getDepartmentName(),"产品三部");
             assert GsonUtil.compareJsonObject(flightOrderDataObject,flightOrderData,mapping);
             //对比预订人的oid 推送数据未推送此字段单独来比较
-            assert flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
-            //结算数据对比
+            if(flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").isJsonNull()){
+                assert false;
+            }else{
+                assert flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
+            }
+            //对比第一个人的oid
+            if(flightOrderData.getAsJsonArray("airPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+                assert false;
+            }else{
+                assert flightOrderData.getAsJsonArray("airPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+            }
         }
     }
 
@@ -316,6 +322,16 @@ public class SyncPlanWorkFlowTest extends BaseTest {
             assert hotelOrderDataObject.getAsJsonArray("hotelOrderPassengerInfos").get(0).getAsJsonObject().getAsJsonArray("passengerDepartments").contains(hotelOrder.getAsJsonArray("hotelOrderPassengerInfos").get(0).getAsJsonObject().getAsJsonArray("passengerDepartments"));
             //进行数据对比
             assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);
+            if(hotelOrder.getAsJsonObject("hotelBaseOrder").get("preEmployeeOId").isJsonNull()){
+                assert false;
+            }else{
+                assert hotelOrder.getAsJsonObject("hotelBaseOrder").get("preEmployeeOId").getAsString().equals(employee.getUserOID());
+            }
+            if(hotelOrder.getAsJsonArray("hotelPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+                assert false;
+            }else{
+                assert hotelOrder.getAsJsonArray("hotelPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+            }
         }
     }
 
@@ -395,8 +411,53 @@ public class SyncPlanWorkFlowTest extends BaseTest {
             TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(employee,orderNo,"1",tmcRequestData,applicationParticipant);
             ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
             trainPassengerInfos.add(trainPassengerInfo);
+            TrainOrderInfoEntity trainOrderInfoEntity = TrainOrderInfoEntity.builder()
+                    .trainOrderBase(trainBaseOrder)
+                    .trainOrderTicketInfos(trainTicketInfos)
+                    .trainOrderSequenceInfos(trainSequenceInfos)
+                    .trainOrderPassengerInfos(trainPassengerInfos)
+                    .build();
+            //推送的数据封装成一个json字符串
+            String hotelOrderData =GsonUtil.objectToString(trainOrderInfoEntity);
+            //转成jsonobject对象
+            JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
+            //火车订单推送
+            vendor.pushOrderData(employee,"train",trainOrderInfoEntity,"cimccTMC","200428140254184788","");
+            SettlementBody settlementBody = SettlementBody.builder()
+                    .companyOid(employee.getCompanyOID())
+                    .orderNo(orderNo)
+                    .page(1)
+                    .size(10)
+                    .build();
+            //查询订单数据
+            JsonObject trainOrder = vendor.queryOrderData(employee,"train",settlementBody);
+            log.info("train order Data:{}",trainOrder);
+            //映射关系
+            HashMap<String,String> mapping= new HashMap<>();
+            mapping.put("trainOrderBase","trainBaseOrder");
+            mapping.put("employeeNum","preEmployeeNum");
+            mapping.put("employeeName","preEmployeeName");
+            mapping.put("trainOrderTicketInfos","trainTicketInfo");
+            mapping.put("trainOrderSequenceInfos","trainSequenceInfo");
+            mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
+            mapping.put("nationlityName","nationalityName");
+            mapping.put(employee.getDepartmentName(),"产品三组");
+            assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
+            //trainSequenceInfo 中的trainType
+            String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
+            String trainType=vendor.trainTypeMapping(trainNum);
+            assert trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainType").getAsString().equals(trainType);
+            //校验预订人的oid 和乘客的oid
+            if(trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").isJsonNull()){
+                assert false;
+            }else{
+                assert trainOrder.getAsJsonObject("trainBaseOrder").get("preEmployeeOid").getAsString().equals(employee.getUserOID());
+            }
+            if(trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").isJsonNull()){
+                assert false;
+            }else{
+                assert trainOrder.getAsJsonArray("trainPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
+            }
         }
     }
-
-
 }

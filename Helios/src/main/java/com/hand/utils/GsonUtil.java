@@ -290,7 +290,7 @@ public class GsonUtil {
                         arrayList.add(false);
                     }
                 }catch (NullPointerException e1){
-                    log.info("映射表中无此映射,请添加映射关系再试,字段为:{}",name);
+                    log.info("映射表中无此映射,请检查是否添加映射关系再试,字段为:{}",name);
                     arrayList.add(false);
                 }
             }
@@ -319,5 +319,22 @@ public class GsonUtil {
         return arrayList.size()==0;
     }
 
+    /**
+     * 针对于部门全路径的拆分为部门  如果是部门名称 则返回部门,如果是部门全路径则返回最后一个子部门
+     * @param dapartmentPath
+     */
+    public static String getDepartmentFromPath(String dapartmentPath){
+        int count=0;
+        for(int i=0;i<dapartmentPath.length();i++){
+            if(dapartmentPath.charAt(i)== '|'){
+                count++;
+            }
+        }
+        if(count==0){
+            return dapartmentPath;
+        }else{
+            return dapartmentPath.split("\\|")[count];
+        }
+    }
 
 }

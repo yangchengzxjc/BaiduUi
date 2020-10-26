@@ -16,7 +16,6 @@ import com.test.BaseTest;
 import com.test.api.method.InfraStructure;
 import com.test.api.method.Vendor;
 import com.test.api.method.VendorMethod.HotelOrder;
-import com.test.api.method.VendorMethod.TrainOrder;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
@@ -54,7 +53,7 @@ public class HotelOrderDataTest extends BaseTest {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         String depoCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
         HotelBaseOrder hotelBaseOrder = HotelBaseOrder.builder()
                 .orderType("B")
@@ -71,7 +70,7 @@ public class HotelOrderDataTest extends BaseTest {
                 .employeeName(employee.getFullName())
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
-                .departmentName(employee.getDepartmentName())
+                .departmentName(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()))
                 .departmentCode(depoCode)
                 .bookChannel("Online-APP")
                 .bookType("C")
@@ -107,7 +106,7 @@ public class HotelOrderDataTest extends BaseTest {
                 .roomDays(5)
                 .variance(new BigDecimal(0).setScale(2))
                 .build();
-        HotelPassengerInfo hotelPassengerInfo =hotelOrder.setHotelPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),employee.getDepartmentName(),depoCode,bookerDepartments);
+        HotelPassengerInfo hotelPassengerInfo =hotelOrder.setHotelPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),depoCode,bookerDepartments);
         ArrayList<HotelPassengerInfo> hotelPassengerInfos =new ArrayList<>();
         hotelPassengerInfos.add(hotelPassengerInfo);
         HotelOrderInfoEntity hotelOrderInfoEntity = HotelOrderInfoEntity.builder()
@@ -135,7 +134,6 @@ public class HotelOrderDataTest extends BaseTest {
         mapping.put("employeeId","preEmployeeId");
         mapping.put("hotelOrderBase","hotelBaseOrder");
         mapping.put("costCenter1","costCenter");
-        mapping.put(employee.getDepartmentName(),"产品三组");
         //进行数据对比
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);
         if(hotelOrder.getAsJsonObject("hotelBaseOrder").get("preEmployeeOId").isJsonNull()){
@@ -156,7 +154,7 @@ public class HotelOrderDataTest extends BaseTest {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //获取一个员工的信息
         JsonObject employeeInfo1 = infraStructure.getUserDetail(employee,"01399315");
         JsonObject employeeInfo2 = infraStructure.getUserDetail(employee,"01363468");
@@ -178,7 +176,7 @@ public class HotelOrderDataTest extends BaseTest {
                 .employeeName(employee.getFullName())
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
-                .departmentName(employee.getDepartmentName())
+                .departmentName(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()))
                 .departmentCode(depoCode)
                 .bookChannel("Online-APP")
                 .bookType("C")
@@ -214,9 +212,9 @@ public class HotelOrderDataTest extends BaseTest {
                 .roomDays(5)
                 .variance(new BigDecimal(0).setScale(2))
                 .build();
-        HotelPassengerInfo hotelPassengerInfo1 =hotelOrder.setHotelPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),employee.getDepartmentName(),depoCode,bookerDepartments);
-        HotelPassengerInfo hotelPassengerInfo2 = hotelOrder.setHotelPassengerInfo(orderNo,"2","I",employeeInfo1.get("fullName").getAsString(),employeeInfo1.get("employeeID").getAsString(),employeeInfo1.get("departmentName").getAsString(),deptCode1,bookerDepartments);
-        HotelPassengerInfo hotelPassengerInfo3 = hotelOrder.setHotelPassengerInfo(orderNo,"3","I",employeeInfo2.get("fullName").getAsString(),employeeInfo2.get("employeeID").getAsString(),employeeInfo2.get("departmentName").getAsString(),deptCode2,bookerDepartments);
+        HotelPassengerInfo hotelPassengerInfo1 =hotelOrder.setHotelPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),depoCode,bookerDepartments);
+        HotelPassengerInfo hotelPassengerInfo2 = hotelOrder.setHotelPassengerInfo(orderNo,"2","I",employeeInfo1.get("fullName").getAsString(),employeeInfo1.get("employeeID").getAsString(),GsonUtil.getDepartmentFromPath(employeeInfo1.get("departmentName").getAsString()),deptCode1,bookerDepartments);
+        HotelPassengerInfo hotelPassengerInfo3 = hotelOrder.setHotelPassengerInfo(orderNo,"3","I",employeeInfo2.get("fullName").getAsString(),employeeInfo2.get("employeeID").getAsString(),GsonUtil.getDepartmentFromPath(employeeInfo2.get("departmentName").getAsString()),deptCode2,bookerDepartments);
         ArrayList<HotelPassengerInfo> hotelPassengerInfos =new ArrayList<>();
         hotelPassengerInfos.add(hotelPassengerInfo1);
         hotelPassengerInfos.add(hotelPassengerInfo2);
@@ -246,7 +244,6 @@ public class HotelOrderDataTest extends BaseTest {
         mapping.put("employeeId","preEmployeeId");
         mapping.put("hotelOrderBase","hotelBaseOrder");
         mapping.put("costCenter1","costCenter");
-        mapping.put(employee.getDepartmentName(),"产品三组");
         //进行数据对比
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);
         if(hotelOrder.getAsJsonObject("hotelBaseOrder").get("preEmployeeOId").isJsonNull()){
@@ -281,7 +278,7 @@ public class HotelOrderDataTest extends BaseTest {
         String orderNo = RandomNumber.getTimeNumber(14);
         String originalOrderNum = RandomNumber.getTimeNumber(14);
         ArrayList<String> bookerDepartments =new ArrayList<>();
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         String depoCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
         HotelBaseOrder hotelBaseOrder = HotelBaseOrder.builder()
                 .orderType("R")
@@ -299,7 +296,7 @@ public class HotelOrderDataTest extends BaseTest {
                 .employeeName(employee.getFullName())
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
-                .departmentName(employee.getDepartmentName())
+                .departmentName(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()))
                 .departmentCode(depoCode)
                 .bookChannel("Online-APP")
                 .bookType("C")
@@ -335,7 +332,7 @@ public class HotelOrderDataTest extends BaseTest {
                 .roomDays(5)
                 .variance(new BigDecimal(0).setScale(2))
                 .build();
-        HotelPassengerInfo hotelPassengerInfo =hotelOrder.setHotelPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),employee.getDepartmentName(),depoCode,bookerDepartments);
+        HotelPassengerInfo hotelPassengerInfo =hotelOrder.setHotelPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),depoCode,bookerDepartments);
         ArrayList<HotelPassengerInfo> hotelPassengerInfos =new ArrayList<>();
         hotelPassengerInfos.add(hotelPassengerInfo);
         HotelOrderInfoEntity hotelOrderInfoEntity = HotelOrderInfoEntity.builder()
@@ -363,7 +360,6 @@ public class HotelOrderDataTest extends BaseTest {
         mapping.put("employeeId","preEmployeeId");
         mapping.put("costCenter1","costCenter");
         mapping.put("hotelOrderBase","hotelBaseOrder");
-        mapping.put(employee.getDepartmentName(),"产品三组");
         //进行数据对比
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);
         if(hotelOrder.getAsJsonObject("hotelBaseOrder").get("preEmployeeOId").isJsonNull()){
@@ -383,7 +379,7 @@ public class HotelOrderDataTest extends BaseTest {
         //订单号
         String orderNo = RandomNumber.getTimeNumber(14);
         ArrayList<String> bookerDepartments =new ArrayList<>();
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         String depoCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
         HotelBaseOrder hotelBaseOrder = HotelBaseOrder.builder()
                 .orderType("B")
@@ -401,7 +397,7 @@ public class HotelOrderDataTest extends BaseTest {
                 .employeeName(employee.getFullName())
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
-                .departmentName(employee.getDepartmentName())
+                .departmentName(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()))
                 .departmentCode(depoCode)
                 .bookChannel("Online-APP")
                 .bookType("P")
@@ -437,7 +433,7 @@ public class HotelOrderDataTest extends BaseTest {
                 .roomDays(5)
                 .variance(new BigDecimal(0).setScale(2))
                 .build();
-        HotelPassengerInfo hotelPassengerInfo =hotelOrder.setHotelPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),employee.getDepartmentName(),depoCode,bookerDepartments);
+        HotelPassengerInfo hotelPassengerInfo =hotelOrder.setHotelPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),depoCode,bookerDepartments);
         ArrayList<HotelPassengerInfo> hotelPassengerInfos =new ArrayList<>();
         hotelPassengerInfos.add(hotelPassengerInfo);
         HotelOrderInfoEntity hotelOrderInfoEntity = HotelOrderInfoEntity.builder()
@@ -465,7 +461,6 @@ public class HotelOrderDataTest extends BaseTest {
         mapping.put("employeeId","preEmployeeId");
         mapping.put("costCenter1","costCenter");
         mapping.put("hotelOrderBase","hotelBaseOrder");
-        mapping.put(employee.getDepartmentName(),"产品三组");
         //进行数据对比
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);
         if(hotelOrder.getAsJsonObject("hotelBaseOrder").get("preEmployeeOId").isJsonNull()){
@@ -486,7 +481,7 @@ public class HotelOrderDataTest extends BaseTest {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         String depoCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
         HotelBaseOrder hotelBaseOrder = HotelBaseOrder.builder()
                 .orderType("B")
@@ -503,7 +498,7 @@ public class HotelOrderDataTest extends BaseTest {
                 .employeeName(employee.getFullName())
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
-                .departmentName(employee.getDepartmentName())
+                .departmentName(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()))
                 .bookChannel("Online-APP")
                 .bookType("C")
                 .payType("COPAY")
@@ -538,7 +533,7 @@ public class HotelOrderDataTest extends BaseTest {
                 .roomDays(5)
                 .variance(new BigDecimal(0).setScale(2))
                 .build();
-        HotelPassengerInfo hotelPassengerInfo =hotelOrder.setHotelPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),employee.getDepartmentName(),depoCode,bookerDepartments);
+        HotelPassengerInfo hotelPassengerInfo =hotelOrder.setHotelPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),depoCode,bookerDepartments);
         ArrayList<HotelPassengerInfo> hotelPassengerInfos =new ArrayList<>();
         hotelPassengerInfos.add(hotelPassengerInfo);
         //订单超标
@@ -572,7 +567,6 @@ public class HotelOrderDataTest extends BaseTest {
         mapping.put("hotelOrderBase","hotelBaseOrder");
         mapping.put("hotelOrderExceedInfos","hotelExceedInfo");
         mapping.put("costCenter1","costCenter");
-        mapping.put(employee.getDepartmentName(),"产品三组");
         //进行数据对比
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);
     }

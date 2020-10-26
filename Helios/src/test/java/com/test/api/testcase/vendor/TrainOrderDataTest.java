@@ -57,7 +57,7 @@ public class TrainOrderDataTest extends BaseTest {
         BigDecimal totalAmount =ticketPrice.add(servicePrice);
         //电子客票号
         String trainElectronic = RandomNumber.getTimeNumber(10);
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //订单基本信息
         TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已购票","B",orderNo,"Online-APP","C","COPAY");
         //订单车票信息
@@ -71,7 +71,7 @@ public class TrainOrderDataTest extends BaseTest {
         //订单乘客信息
         //查询部门code
         String deptCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
-        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
+        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
         ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
         trainPassengerInfos.add(trainPassengerInfo);
         TrainOrderInfoEntity trainOrderInfoEntity = TrainOrderInfoEntity.builder()
@@ -104,7 +104,6 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("trainOrderSequenceInfos","trainSequenceInfo");
         mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
         mapping.put("nationlityName","nationalityName");
-        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //trainSequenceInfo 中的trainType
         String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
@@ -136,7 +135,7 @@ public class TrainOrderDataTest extends BaseTest {
         BigDecimal totalAmount =ticketPrice.add(servicePrice);
         //电子客票号
         String trainElectronic = RandomNumber.getTimeNumber(10);
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //订单基本信息
         TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已购票","B",orderNo,"Online-APP","P","ALIPAY");
         //订单车票信息
@@ -150,7 +149,7 @@ public class TrainOrderDataTest extends BaseTest {
         //订单乘客信息
         //查询部门code
         String deptCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
-        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
+        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
         ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
         trainPassengerInfos.add(trainPassengerInfo);
         TrainOrderInfoEntity trainOrderInfoEntity = TrainOrderInfoEntity.builder()
@@ -183,7 +182,6 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("trainOrderSequenceInfos","trainSequenceInfo");
         mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
         mapping.put("nationlityName","nationalityName");
-        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //trainSequenceInfo 中的trainType
         String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
@@ -219,7 +217,7 @@ public class TrainOrderDataTest extends BaseTest {
         String trainElectronic2 = RandomNumber.getTimeNumber(10);
         //获取一个员工的信息
         JsonObject employeeInfo = infraStructure.getUserDetail(employee,"01399315");
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //订单基本信息
         TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已购票","B",orderNo,"Online-APP","C","COPAY");
         //订单车票信息 两张车票
@@ -235,9 +233,9 @@ public class TrainOrderDataTest extends BaseTest {
         //订单乘客信息
         //查询部门code
         String deptCode1 = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
-        TrainPassengerInfo trainPassengerInfo1 =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),deptCode1,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
+        TrainPassengerInfo trainPassengerInfo1 =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),deptCode1,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
         String deptCode2 = infraStructure.getDeptCode(employee,employeeInfo.get("departmentOID").getAsString());
-        TrainPassengerInfo trainPassengerInfo2 =trainOrder.setTrainPassengerInfo(orderNo,"2","I",employeeInfo.get("fullName").getAsString(),employeeInfo.get("employeeID").getAsString(),bookerDepartments,employeeInfo.get("departmentPath").getAsString(),deptCode2,"62301599468129501",employeeInfo.get("mobile").getAsString(),employeeInfo.get("email").getAsString());
+        TrainPassengerInfo trainPassengerInfo2 =trainOrder.setTrainPassengerInfo(orderNo,"2","I",employeeInfo.get("fullName").getAsString(),employeeInfo.get("employeeID").getAsString(),bookerDepartments,GsonUtil.getDepartmentFromPath(employeeInfo.get("departmentName").getAsString()),deptCode2,"62301599468129501",employeeInfo.get("mobile").getAsString(),employeeInfo.get("email").getAsString());
         ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
         trainPassengerInfos.add(trainPassengerInfo1);
         trainPassengerInfos.add(trainPassengerInfo2);
@@ -272,7 +270,6 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("trainOrderSequenceInfos","trainSequenceInfo");
         mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
         mapping.put("nationlityName","nationalityName");
-        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //trainSequenceInfo 中的trainType
         String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
@@ -311,7 +308,7 @@ public class TrainOrderDataTest extends BaseTest {
         //电子客票号
         String trainElectronic = RandomNumber.getTimeNumber(10);
         String preTrainElectronic = RandomNumber.getTimeNumber(10);
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //订单基本信息
         TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"改签成功","C",orderNo,"Online-APP","C","COPAY");
         //订单车票信息
@@ -324,7 +321,7 @@ public class TrainOrderDataTest extends BaseTest {
         trainSequenceInfos.add(trainSequenceInfo);
         //订单乘客信息
         String deptCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
-        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
+        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
         ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
         trainPassengerInfos.add(trainPassengerInfo);
         //订单改签
@@ -370,9 +367,7 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("aCityCode","acityCode");
         mapping.put("dStationName","dstationName");
         mapping.put("aStationName","astationName");
-        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
-
         //trainSequenceInfo 中的trainType
         String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
         String trainType=vendor.trainTypeMapping(trainNum);
@@ -402,7 +397,7 @@ public class TrainOrderDataTest extends BaseTest {
         BigDecimal totalAmount = ticketPrice.add(servicePrice);
         //电子客票号
         String trainElectronic = RandomNumber.getTimeNumber(10);
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //订单基本信息
         TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"退票成功","R",orderNo,"Online-APP","C","COPAY");
         //订单车票信息
@@ -414,9 +409,8 @@ public class TrainOrderDataTest extends BaseTest {
         ArrayList<TrainSequenceInfo> trainSequenceInfos =new ArrayList<>();
         trainSequenceInfos.add(trainSequenceInfo);
         //订单乘客信息
-        //订单乘客信息
         String deptCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
-        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
+        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
         ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
         trainPassengerInfos.add(trainPassengerInfo);
         //订单退票
@@ -456,7 +450,6 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
         mapping.put("nationlityName","nationalityName");
         mapping.put("trainOrderRefundInfos","trainRefundInfo");
-        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //trainSequenceInfo 中的trainType
         String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
@@ -488,7 +481,7 @@ public class TrainOrderDataTest extends BaseTest {
         //电子客票号
         String trainElectronic = RandomNumber.getTimeNumber(10);
         String preTrainElectronic = RandomNumber.getTimeNumber(10);
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //订单基本信息
         TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"退票成功","R",orderNo,"Online-APP","C","COPAY");
         //订单车票信息
@@ -501,7 +494,7 @@ public class TrainOrderDataTest extends BaseTest {
         trainSequenceInfos.add(trainSequenceInfo);
         //订单乘客信息
         String deptCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
-        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
+        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
         ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
         trainPassengerInfos.add(trainPassengerInfo);
         //订单改签
@@ -553,7 +546,6 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("aStationName","astationName");
         mapping.put("trainOrderChangeInfos","trainChangeInfo");
         mapping.put("trainOrderRefundInfos","trainRefundInfo");
-        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //trainSequenceInfo 中的trainType
         String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
@@ -587,7 +579,7 @@ public class TrainOrderDataTest extends BaseTest {
         String trainElectronic1 = RandomNumber.getTimeNumber(10);
         //电子客票号2
         String trainElectronic2 = RandomNumber.getTimeNumber(10);
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //订单基本信息
         TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已购票","B",orderNo,"Online-APP","C","COPAY");
         //订单车票信息 两张车票
@@ -604,7 +596,7 @@ public class TrainOrderDataTest extends BaseTest {
         String deptCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
         ArrayList<String> depaList = new ArrayList<>();
         depaList.add("");
-        TrainPassengerInfo trainPassengerInfo1 =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
+        TrainPassengerInfo trainPassengerInfo1 =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
         TrainPassengerInfo trainPassengerInfo2 =trainOrder.setTrainPassengerInfo(orderNo,"2","O","小张同学","",depaList,"","","62301599468129501","18292035567","");
         ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
         trainPassengerInfos.add(trainPassengerInfo1);
@@ -639,7 +631,6 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("trainOrderSequenceInfos","trainSequenceInfo");
         mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
         mapping.put("nationlityName","nationalityName");
-        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //trainSequenceInfo 中的trainType
         String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();
@@ -670,7 +661,7 @@ public class TrainOrderDataTest extends BaseTest {
         BigDecimal totalAmount =ticketPrice.add(servicePrice);
         //电子客票号
         String trainElectronic = RandomNumber.getTimeNumber(10);
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //订单基本信息
         TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已购票","B",orderNo,"Online-APP","C","COPAY");
         //订单车票信息
@@ -683,7 +674,7 @@ public class TrainOrderDataTest extends BaseTest {
         trainSequenceInfos.add(trainSequenceInfo);
         //订单乘客信息
         String deptCode = infraStructure.getDeptCode(employee,employee.getDepartmentOID());
-        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
+        TrainPassengerInfo trainPassengerInfo =trainOrder.setTrainPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),deptCode,"6101599468129501",employee.getPhoneNumber(),employee.getEmail());
         ArrayList<TrainPassengerInfo> trainPassengerInfos =new ArrayList<>();
         trainPassengerInfos.add(trainPassengerInfo);
         //订单超标
@@ -728,7 +719,6 @@ public class TrainOrderDataTest extends BaseTest {
         mapping.put("aCityCode","acityCode");
         mapping.put("aStationName","astationName");
         mapping.put("nationlityName","nationalityName");
-        mapping.put(employee.getDepartmentName(),"产品三组");
         mapping.put("trainExceedInfos","trainExceedInfo");
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
         //trainSequenceInfo 中的trainType

@@ -51,7 +51,7 @@ public class FlightOrderDataTest extends BaseTest {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //机票价格
         BigDecimal ticketPrice =new BigDecimal(1000).setScale(2);
         //燃油费
@@ -84,7 +84,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .companyOid(employee.getCompanyOID())
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
-                .departmentName(employee.getDepartmentName())
+                .departmentName(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()))
                 .departmentOid(employee.getDepartmentOID())
                 .departmentCode(depoCode)
                 .bookChannel("Online-API")
@@ -114,7 +114,7 @@ public class FlightOrderDataTest extends BaseTest {
         ArrayList<AirFlightInfo> airFlightInfos =new ArrayList<>();
         airFlightInfos.add(airFlightInfo);
         //乘机人信息
-        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),depoCode,employee.getMobile(),employee.getEmail());
+        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),depoCode,employee.getMobile(),employee.getEmail());
         ArrayList<AirPassengerInfo> airPassengerInfos =new ArrayList<>();
         airPassengerInfos.add((airPassengerInfo));
         //行程单打印以及配送信息
@@ -160,7 +160,6 @@ public class FlightOrderDataTest extends BaseTest {
         mapping.put("yClassStandardPrice","yclassStandardPrice");
         mapping.put("flight","flightNo");
         mapping.put("employeeId","preEmployeeId");
-        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(flightOrderDataObject,flightOrderData,mapping);
         //对比预订人的oid 推送数据未推送此字段单独来比较
         if(flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").isJsonNull()){
@@ -182,7 +181,7 @@ public class FlightOrderDataTest extends BaseTest {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //机票价格
         BigDecimal ticketPrice =new BigDecimal(1000).setScale(2);
         //燃油费
@@ -215,7 +214,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .companyOid(employee.getCompanyOID())
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
-                .departmentName(employee.getDepartmentName())
+                .departmentName(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()))
                 .departmentCode(depoCode)
                 .departmentOid(employee.getDepartmentOID())
                 .bookChannel("Online-API")
@@ -245,7 +244,7 @@ public class FlightOrderDataTest extends BaseTest {
         ArrayList<AirFlightInfo> airFlightInfos =new ArrayList<>();
         airFlightInfos.add(airFlightInfo);
         //乘机人信息
-        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),depoCode,employee.getPhoneNumber(),employee.getEmail());
+        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),depoCode,employee.getPhoneNumber(),employee.getEmail());
         ArrayList<AirPassengerInfo> airPassengerInfos =new ArrayList<>();
         airPassengerInfos.add((airPassengerInfo));
         //行程单打印以及配送信息
@@ -292,7 +291,6 @@ public class FlightOrderDataTest extends BaseTest {
         mapping.put("yClassStandardPrice","yclassStandardPrice");
         mapping.put("flight","flightNo");
         mapping.put("employeeId","preEmployeeId");
-        mapping.put(employee.getDepartmentName(),"产品三部");
         assert GsonUtil.compareJsonObject(flightOrderDataObject,flightOrderData,mapping);
         //对比预订人的oid
         if(flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").isJsonNull()){
@@ -312,7 +310,7 @@ public class FlightOrderDataTest extends BaseTest {
         //订单号
         String orderNo = RandomNumber.getTimeNumber(14);
         ArrayList<String> bookerDepartments =new ArrayList<>();
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //机票价格
         BigDecimal ticketPrice =new BigDecimal(1000).setScale(2);
         //燃油费
@@ -346,7 +344,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .companyOid(employee.getCompanyOID())
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
-                .departmentName(employee.getDepartmentName())
+                .departmentName(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()))
                 .departmentCode(depoCode)
                 .departmentOid(employee.getDepartmentOID())
                 .bookChannel("Online-API")
@@ -376,7 +374,7 @@ public class FlightOrderDataTest extends BaseTest {
         ArrayList<AirFlightInfo> airFlightInfos =new ArrayList<>();
         airFlightInfos.add(airFlightInfo);
         //乘机人信息
-        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),depoCode,employee.getPhoneNumber(),employee.getEmail());
+        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),depoCode,employee.getPhoneNumber(),employee.getEmail());
         ArrayList<AirPassengerInfo> airPassengerInfos =new ArrayList<>();
         airPassengerInfos.add((airPassengerInfo));
         // 退票
@@ -429,7 +427,6 @@ public class FlightOrderDataTest extends BaseTest {
         mapping.put("yClassStandardPrice","yclassStandardPrice");
         mapping.put("flight","flightNo");
         mapping.put("employeeId","preEmployeeId");
-        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(flightOrderDataObject,flightOrderData,mapping);
         //对比预订人的oid
         if(flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").isJsonNull()){
@@ -449,7 +446,7 @@ public class FlightOrderDataTest extends BaseTest {
         //订单号
         String orderNo = RandomNumber.getTimeNumber(14);
         ArrayList<String> bookerDepartments =new ArrayList<>();
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //机票价格
         BigDecimal ticketPrice =new BigDecimal(1000).setScale(2);
         //燃油费
@@ -485,7 +482,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .companyOid(employee.getCompanyOID())
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
-                .departmentName(employee.getDepartmentName())
+                .departmentName(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()))
                 .departmentCode(depoCode)
                 .departmentOid(employee.getDepartmentOID())
                 .bookChannel("Online-API")
@@ -515,7 +512,7 @@ public class FlightOrderDataTest extends BaseTest {
         ArrayList<AirFlightInfo> airFlightInfos =new ArrayList<>();
         airFlightInfos.add(airFlightInfo);
         //乘机人信息
-        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),depoCode,employee.getPhoneNumber(),employee.getEmail());
+        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),depoCode,employee.getPhoneNumber(),employee.getEmail());
         ArrayList<AirPassengerInfo> airPassengerInfos =new ArrayList<>();
         airPassengerInfos.add((airPassengerInfo));
         // 改签
@@ -567,7 +564,6 @@ public class FlightOrderDataTest extends BaseTest {
         mapping.put("yClassStandardPrice","yclassStandardPrice");
         mapping.put("flight","flightNo");
         mapping.put("employeeId","preEmployeeId");
-        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(flightOrderDataObject,flightOrderData,mapping);
         //对比预订人的oid
         if(flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").isJsonNull()){
@@ -587,7 +583,7 @@ public class FlightOrderDataTest extends BaseTest {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //获取一个员工的信息
         JsonObject employeeInfo1 = infraStructure.getUserDetail(employee,"01399315");
         JsonObject employeeInfo2 = infraStructure.getUserDetail(employee,"01363468");
@@ -626,7 +622,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .companyOid(employee.getCompanyOID())
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
-                .departmentName(employee.getDepartmentName())
+                .departmentName(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()))
                 .departmentCode(depoCode)
                 .departmentOid(employee.getDepartmentOID())
                 .bookChannel("Online-API")
@@ -661,9 +657,9 @@ public class FlightOrderDataTest extends BaseTest {
         ArrayList<AirFlightInfo> airFlightInfos =new ArrayList<>();
         airFlightInfos.add(airFlightInfo);
         //乘机人信息
-        AirPassengerInfo airPassengerInfo1 = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),depoCode,employee.getPhoneNumber(),employee.getEmail());
-        AirPassengerInfo airPassengerInfo2 = flightOrder.setAirPassengerInfo(orderNo,"2","I",employeeInfo1.get("fullName").getAsString(),employeeInfo1.get("employeeID").getAsString(),bookerDepartments,employeeInfo1.get("departmentName").getAsString(),deptCode1,employeeInfo1.get("mobile").getAsString(),employeeInfo1.get("email").getAsString());
-        AirPassengerInfo airPassengerInfo3 = flightOrder.setAirPassengerInfo(orderNo,"3","I",employeeInfo2.get("fullName").getAsString(),employeeInfo2.get("employeeID").getAsString(),bookerDepartments,employeeInfo2.get("departmentName").getAsString(),deptCode2,employeeInfo2.get("mobile").getAsString(),employeeInfo2.get("email").getAsString());
+        AirPassengerInfo airPassengerInfo1 = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),depoCode,employee.getPhoneNumber(),employee.getEmail());
+        AirPassengerInfo airPassengerInfo2 = flightOrder.setAirPassengerInfo(orderNo,"2","I",employeeInfo1.get("fullName").getAsString(),employeeInfo1.get("employeeID").getAsString(),bookerDepartments,GsonUtil.getDepartmentFromPath(employeeInfo1.get("departmentName").getAsString()),deptCode1,employeeInfo1.get("mobile").getAsString(),employeeInfo1.get("email").getAsString());
+        AirPassengerInfo airPassengerInfo3 = flightOrder.setAirPassengerInfo(orderNo,"3","I",employeeInfo2.get("fullName").getAsString(),employeeInfo2.get("employeeID").getAsString(),bookerDepartments,GsonUtil.getDepartmentFromPath(employeeInfo2.get("departmentName").getAsString()),deptCode2,employeeInfo2.get("mobile").getAsString(),employeeInfo2.get("email").getAsString());
         ArrayList<AirPassengerInfo> airPassengerInfos =new ArrayList<>();
         airPassengerInfos.add((airPassengerInfo1));
         airPassengerInfos.add((airPassengerInfo2));
@@ -720,7 +716,6 @@ public class FlightOrderDataTest extends BaseTest {
         mapping.put("yClassStandardPrice","yclassStandardPrice");
         mapping.put("flight","flightNo");
         mapping.put("employeeId","preEmployeeId");
-        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(flightOrderDataObject,flightOrderData,mapping);
         if(flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").isJsonNull()){
             assert false;
@@ -752,7 +747,7 @@ public class FlightOrderDataTest extends BaseTest {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
-        bookerDepartments.add(employee.getDepartmentName());
+        bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //机票价格
         BigDecimal ticketPrice =new BigDecimal(1000).setScale(2);
         //燃油费
@@ -785,7 +780,7 @@ public class FlightOrderDataTest extends BaseTest {
                 .companyOid(employee.getCompanyOID())
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
-                .departmentName(employee.getDepartmentName())
+                .departmentName(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()))
                 .departmentOid(employee.getDepartmentOID())
                 .departmentCode(depoCode)
                 .bookChannel("Online-API")
@@ -815,7 +810,7 @@ public class FlightOrderDataTest extends BaseTest {
         ArrayList<AirFlightInfo> airFlightInfos =new ArrayList<>();
         airFlightInfos.add(airFlightInfo);
         //乘机人信息
-        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,employee.getDepartmentName(),depoCode,employee.getMobile(),employee.getEmail());
+        AirPassengerInfo airPassengerInfo = flightOrder.setAirPassengerInfo(orderNo,"1","I",employee.getFullName(),employee.getEmployeeID(),bookerDepartments,GsonUtil.getDepartmentFromPath(employee.getDepartmentName()),depoCode,employee.getMobile(),employee.getEmail());
         ArrayList<AirPassengerInfo> airPassengerInfos =new ArrayList<>();
         airPassengerInfos.add((airPassengerInfo));
         //行程单打印以及配送信息
@@ -867,7 +862,6 @@ public class FlightOrderDataTest extends BaseTest {
         mapping.put("yClassStandardPrice","yclassStandardPrice");
         mapping.put("flight","flightNo");
         mapping.put("employeeId","preEmployeeId");
-        mapping.put(employee.getDepartmentName(),"产品三组");
         assert GsonUtil.compareJsonObject(flightOrderDataObject,flightOrderData,mapping);
         //对比预订人的oid 推送数据未推送此字段单独来比较
         if(flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").isJsonNull()){

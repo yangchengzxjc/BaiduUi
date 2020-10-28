@@ -1,14 +1,9 @@
-package com.test.api.testcase.vendor;
+package com.test.api.testcase.vendor.settlementData;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SettlementBody;
-import com.hand.basicObject.supplierObject.flightOrderSettlementInfo.FlightOrderSettlementInfo;
-import com.hand.basicObject.supplierObject.hotelOrderSettlementInfo.HotelOrderSettlementInfo;
-import com.hand.basicObject.supplierObject.hotelOrderSettlementInfo.PassengerInfo;
 import com.hand.basicObject.supplierObject.trainSettlementInfo.*;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;

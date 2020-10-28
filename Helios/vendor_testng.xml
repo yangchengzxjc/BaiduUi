@@ -9,12 +9,12 @@
         <parameter name="passWord" value="111111"/>
         <parameter name="environment" value="stage"/>
         <classes>
-            <class name="com.test.api.testcase.vendor.TrainOrderDataTest"/>
-            <class name="com.test.api.testcase.vendor.TrainSettlementDataTest"/>
-            <class name="com.test.api.testcase.vendor.FlightOrderDataTest"/>
-            <class name="com.test.api.testcase.vendor.FlightSettlementDataTest"/>
-            <class name="com.test.api.testcase.vendor.HotelOrderDataTest"/>
-            <class name="com.test.api.testcase.vendor.HotelSettlementDataTest"/>
+            <class name="com.test.api.testcase.vendor.orderData.TrainOrderDataTest"/>
+            <class name="com.test.api.testcase.vendor.settlementData.TrainSettlementDataTest"/>
+            <class name="com.test.api.testcase.vendor.orderData.FlightOrderDataTest"/>
+            <class name="com.test.api.testcase.vendor.settlementData.FlightSettlementDataTest"/>
+            <class name="com.test.api.testcase.vendor.orderData.HotelOrderDataTest"/>
+            <class name="com.test.api.testcase.vendor.settlementData.HotelSettlementDataTest"/>
         </classes>
     </test>
 

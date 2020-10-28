@@ -1,4 +1,4 @@
-package com.test.api.testcase.vendor;
+package com.test.api.testcase.vendor.orderData;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

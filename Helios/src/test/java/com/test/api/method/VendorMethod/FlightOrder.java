@@ -239,16 +239,16 @@ public class FlightOrder {
 
     /**
      * 保险信息
-     * @param ticketKey
+     * @param employeeName
      * @param sequence
      * @param insuaranceQuantity
      * @return
      */
-    public AirInsurance setAirInsurance(String ticketKey,String sequence,Integer insuaranceQuantity){
+    public AirInsurance setAirInsurance(String employeeName,String sequence,Integer insuaranceQuantity){
 
         //保险信息
         AirInsurance airInsurance = AirInsurance.builder()
-                .ticketKey(ticketKey)
+                .ticketKey(employeeName)
                 .sequence(sequence)
                 .insuranceFee(new BigDecimal(50).setScale(2))
                 .insuranceStatus("P")

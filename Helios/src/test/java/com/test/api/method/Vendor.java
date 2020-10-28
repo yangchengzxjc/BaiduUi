@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import com.hand.api.VendorApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.supplierObject.SSOBody;
 import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoDTO;
 import com.hand.utils.GsonUtil;
@@ -64,6 +65,23 @@ public class Vendor {
         //转化为 JsonObject
         JsonObject orderData =new JsonParser().parse(orderString).getAsJsonObject();
         return vendorApi.pushOrderData(employee,orderType,orderData,appName,corpId,passWord);
+    }
+
+    /**
+     * sso 单点登录
+     * @param employee
+     * @param object
+     * @param appName
+     * @param corpId
+     * @param passWord
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject ssoLogin(Employee employee, SSOBody object,String appName, String corpId) throws HttpStatusException {
+        String orderString =GsonUtil.objectToString(object);
+        //转化为 JsonObject
+        JsonObject requestBody =new JsonParser().parse(orderString).getAsJsonObject();
+        return vendorApi.vendorSSO(employee,requestBody,appName,corpId);
     }
 
     /**

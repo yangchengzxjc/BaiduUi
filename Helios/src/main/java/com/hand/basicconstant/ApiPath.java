@@ -305,6 +305,8 @@ public class ApiPath {
         public static final String GETFORMVENDORCONTROL = "/api/custom/forms/property/travel/configuration/%s";
         //部门管理查询部门详情的接口
         public static final String DepartmentDetail = "/api/departments/%s";
+        //平台sso登录
+        public static final String SSOLOGIN = "/sso";
 }
 
 

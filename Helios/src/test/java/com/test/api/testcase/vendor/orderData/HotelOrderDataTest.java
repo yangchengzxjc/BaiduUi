@@ -1,4 +1,4 @@
-package com.test.api.testcase.vendor;
+package com.test.api.testcase.vendor.orderData;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -360,6 +360,7 @@ public class HotelOrderDataTest extends BaseTest {
         mapping.put("employeeId","preEmployeeId");
         mapping.put("costCenter1","costCenter");
         mapping.put("hotelOrderBase","hotelBaseOrder");
+        mapping.put("originalOrderNum","originalOrderNo");
         //进行数据对比
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);
         if(hotelOrder.getAsJsonObject("hotelBaseOrder").get("preEmployeeOId").isJsonNull()){

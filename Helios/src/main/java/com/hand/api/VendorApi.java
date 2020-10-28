@@ -187,5 +187,18 @@ public class VendorApi extends BaseRequest{
         return new JsonParser().parse(res).getAsJsonArray().get(0).getAsJsonObject();
     }
 
-
+    /**
+     * sso  单点登录
+     * @param employee
+     * @param body
+     * @param appName
+     * @param corpId
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject vendorSSO(Employee employee,JsonObject body,String appName,String corpId) throws HttpStatusException {
+        String url = employee.getEnvironment().getZhenxuanOpenURL()+ApiPath.SSOLOGIN;
+        String res = doPost(url,getHeaderSignature(appName,corpId),null,body.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
 }

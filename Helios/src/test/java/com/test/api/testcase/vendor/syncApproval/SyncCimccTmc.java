@@ -95,9 +95,10 @@ public class SyncCimccTmc extends BaseTest {
         if(approve.approveal(employee,applicationOID,1001)!=1){
             throw new RuntimeException("审批单审批失败");
         }else{
-            sleep(1000);
-            //获取大唐机票行程详情
+            sleep(3000);
+            //获取机票行程详情
             JsonObject filght = travelApplication.getItinerary(employee,applicationOID,"FLIGHT").get(0).getAsJsonObject();
+            log.info("机票行程:{}",filght);
             //获取审批单中的travelApplication
             JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
             BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
@@ -150,7 +151,7 @@ public class SyncCimccTmc extends BaseTest {
         if(successNum!=1){
             throw new RuntimeException("审批单审批失败");
         }else{
-            sleep(1000);
+            sleep(3000);
             JsonObject train = travelApplication.getItinerary(employee,applicationOID,"TRAIN").get(0).getAsJsonObject();
             //获取审批单中的travelApplication
             JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
@@ -204,7 +205,7 @@ public class SyncCimccTmc extends BaseTest {
         if(successNum !=1){
             throw new RuntimeException("审批单审批失败");
         }else{
-            sleep(1000);
+            sleep(4000);
             JsonObject hotel = travelApplication.getItinerary(employee,applicationOID,"HOTEL").get(0).getAsJsonObject();
             //获取审批单中的travelApplication
             JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
@@ -257,7 +258,7 @@ public class SyncCimccTmc extends BaseTest {
             throw new RuntimeException("审批单未审批通过");
         }else{
             try {
-                sleep(1000);
+                sleep(4000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

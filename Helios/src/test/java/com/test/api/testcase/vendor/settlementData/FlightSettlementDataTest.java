@@ -1,4 +1,4 @@
-package com.test.api.testcase.vendor;
+package com.test.api.testcase.vendor.settlementData;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

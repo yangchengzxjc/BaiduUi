@@ -341,7 +341,7 @@ public class SyncService {
         employeeDTO.setEmail(empObject.get("email").getAsString());
         employeeDTO.setName((GsonUtil.getJsonValue(cardLists,"cardType","101","lastName") != "")?
                 GsonUtil.getJsonValue(cardLists,"cardType","102","lastName"):
-                "");
+                empObject.get("fullName").getAsString());
         if (GsonUtil.getJsonValue(cardLists,"cardType","102","lastName") != ""){
             employeeDTO.setEnFirstName(GsonUtil.getJsonValue(cardLists,"cardType","102","firstName"));
             employeeDTO.setEnLastName(GsonUtil.getJsonValue(cardLists,"cardType","102","lastName"));

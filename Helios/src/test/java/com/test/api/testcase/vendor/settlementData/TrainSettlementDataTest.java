@@ -41,8 +41,8 @@ public class TrainSettlementDataTest extends BaseTest {
         infraStructure =new InfraStructure();
     }
 
-    @Test(description = "火车结算费用推送-预定-自己订票-自己乘坐-未改签-未退票")
-    public void trainSettlementDataTest1() throws Exception {
+    @Test(description = "火车结算费用推送-预定-自己订票-自己乘坐-未改签-未退票",dataProvider = "TMC")
+    public void trainSettlementDataTest1(String appName,String corpId,String signature) throws Exception {
         //结算主键
         String recordId =String.valueOf(System.currentTimeMillis());
         //批次号
@@ -172,7 +172,7 @@ public class TrainSettlementDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject trainOrderDataObject =new JsonParser().parse(trainOrderData).getAsJsonObject();
         //推送的结算数据
-        vendor.pushSettlementData(employee,"train",trainSettlementInfos,"cimccTMC","200428140254184788","cimccTMC");
+        vendor.pushSettlementData(employee,"train",trainSettlementInfos,appName,corpId,signature);
         //查询推送的结算数据
         //初始化查询结算的对象
         SettlementBody settlementBody =SettlementBody.builder()
@@ -208,8 +208,8 @@ public class TrainSettlementDataTest extends BaseTest {
         assert GsonUtil.compareJsonObject(trainOrderDataObject,internalQuerySettlement,mapping);
     }
 
-    @Test(description = "火车结算费用推送-预定-自己订票-自己乘坐-改签")
-    public void trainSettlementDataTest2() throws Exception {
+    @Test(description = "火车结算费用推送-预定-自己订票-自己乘坐-改签",dataProvider = "TMC")
+    public void trainSettlementDataTest2(String appName,String corpId,String signature) throws Exception {
         //结算主键
         String recordId =String.valueOf(System.currentTimeMillis());
         //批次号
@@ -341,7 +341,7 @@ public class TrainSettlementDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject trainOrderDataObject =new JsonParser().parse(trainOrderData).getAsJsonObject();
         //推送的结算数据
-        vendor.pushSettlementData(employee,"train",trainSettlementInfos,"cimccTMC","200428140254184788","cimccTMC");
+        vendor.pushSettlementData(employee,"train",trainSettlementInfos,appName,corpId,signature);
         //查询推送的结算数据
         //初始化查询结算的对象
         SettlementBody settlementBody =SettlementBody.builder()
@@ -377,8 +377,8 @@ public class TrainSettlementDataTest extends BaseTest {
         assert GsonUtil.compareJsonObject(trainOrderDataObject,internalQuerySettlement,mapping);
     }
 
-    @Test(description = "火车结算费用推送-预定-自己订票-自己乘坐-退票")
-    public void trainSettlementDataTest3() throws Exception {
+    @Test(description = "火车结算费用推送-预定-自己订票-自己乘坐-退票",dataProvider = "TMC")
+    public void trainSettlementDataTest3(String appName,String corpId,String signature) throws Exception {
         //结算主键
         String recordId =String.valueOf(System.currentTimeMillis());
         //批次号
@@ -509,7 +509,7 @@ public class TrainSettlementDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject trainOrderDataObject =new JsonParser().parse(trainOrderData).getAsJsonObject();
         //推送的结算数据
-        vendor.pushSettlementData(employee,"train",trainSettlementInfos,"cimccTMC","200428140254184788","cimccTMC");
+        vendor.pushSettlementData(employee,"train",trainSettlementInfos,appName,corpId,signature);
         //查询推送的结算数据
         //初始化查询结算的对象
         SettlementBody settlementBody =SettlementBody.builder()

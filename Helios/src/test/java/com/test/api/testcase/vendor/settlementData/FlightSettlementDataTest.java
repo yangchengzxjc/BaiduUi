@@ -7,6 +7,7 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicObject.supplierObject.flightOrderSettlementInfo.FlightOrderSettlementInfo;
+import com.hand.basicconstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
@@ -14,10 +15,7 @@ import com.test.BaseTest;
 import com.test.api.method.InfraStructure;
 import com.test.api.method.Vendor;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -33,7 +31,6 @@ public class FlightSettlementDataTest extends BaseTest {
 
     private Employee employee;
     private Vendor vendor;
-    private InfraStructure infraStructure;
 
     /**
      *  目前还存在俩个bug 一个是preEmployeeOid   和后收服务费字段
@@ -47,11 +44,18 @@ public class FlightSettlementDataTest extends BaseTest {
     public void init(@Optional("yaliang.wang@cimc.com") String phoneNumber, @Optional("111111") String pwd, @Optional("stage") String env){
         employee =getEmployee(phoneNumber,pwd,env);
         vendor =new Vendor();
-        infraStructure =new InfraStructure();
     }
 
-    @Test(description = "机票结算费用数据对比-订票人和乘机人都是自己-1人未退票-不改签")
-    public void flightSettlementDataTest1() throws HttpStatusException {
+    @DataProvider(name = "TMC")
+    public Object[][] tmcData() {
+        return new Object[][]{
+                {TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
+        };
+    }
+
+
+    @Test(description = "机票结算费用数据对比-订票人和乘机人都是自己-1人未退票-不改签",dataProvider = "TMC")
+    public void flightSettlementDataTest1(String appName,String corpId,String signature) throws HttpStatusException {
         ArrayList<FlightOrderSettlementInfo> FlightOrderSettlementInfos =new ArrayList<>();
         //初始化机票结算信息
         //结算信息的主键
@@ -159,7 +163,7 @@ public class FlightSettlementDataTest extends BaseTest {
         JsonArray listOrderSettlementInfo =new JsonParser().parse(info).getAsJsonArray();
         //推送的机票结算信息
         JsonObject flightSettlementJson = listOrderSettlementInfo.get(0).getAsJsonObject();
-        JsonObject response = vendor.pushSettlementData(employee,"flight",FlightOrderSettlementInfos,"cimccTMC","200428140254184788","cimccTMC");
+        JsonObject response = vendor.pushSettlementData(employee,"flight",FlightOrderSettlementInfos,appName,corpId,signature);
         log.info("推送的响应数据:{}",response);
         //初始化查询结算的对象
         SettlementBody settlementBody =SettlementBody.builder()
@@ -175,6 +179,16 @@ public class FlightSettlementDataTest extends BaseTest {
         log.info("查询的结算数据:{}",settlementData);
         //查询数据中的数据在推送的结算数据中不存在对比 以及jsonarrayz中的数据对比
         //bookClerkEmployeeOid 订票人的OID 对比
+//        //bookClerkDept   订票人部门对比以及乘客的部门对比
+        assert flightSettlementJson.get("bookClerkDept").getAsJsonArray().toString().equals(settlementData.get("bookClerkDept").getAsJsonArray().toString());
+        assert flightSettlementJson.get("passengerDept").getAsJsonArray().toString().equals(settlementData.get("passengerDept").getAsJsonArray().toString());
+        //进行数据对比
+        //字段关系映射表 加这个是因为推数据的字段参数和查询出来的字段参数不一致,所以加上这个关系映射表
+        HashMap<String,String> mapping = new HashMap<>();
+        mapping.put("orderType","payType");
+        mapping.put("acityCode","heliosacityCode");
+        mapping.put("dcityCode","heliosdcityCode");
+        assert GsonUtil.compareJsonObject(flightSettlementJson,settlementData,mapping);
         if(settlementData.get("bookClerkEmployeeOid").isJsonNull()){
             assert false;
         }else{
@@ -186,20 +200,10 @@ public class FlightSettlementDataTest extends BaseTest {
             //passengerEmployeeOid  乘机人是自己
             assert settlementData.get("passengerEmployeeOid").getAsString().equals(employee.getUserOID());
         }
-//        //bookClerkDept   订票人部门对比以及乘客的部门对比
-        assert flightSettlementJson.get("bookClerkDept").getAsJsonArray().toString().equals(settlementData.get("bookClerkDept").getAsJsonArray().toString());
-        assert flightSettlementJson.get("passengerDept").getAsJsonArray().toString().equals(settlementData.get("passengerDept").getAsJsonArray().toString());
-        //进行数据对比
-        //字段关系映射表 加这个是因为推数据的字段参数和查询出来的字段参数不一致,所以加上这个关系映射表
-        HashMap<String,String> mapping = new HashMap<>();
-        mapping.put("orderType","payType");
-        mapping.put("acityCode","heliosacityCode");
-        mapping.put("dcityCode","heliosdcityCode");
-        assert GsonUtil.compareJsonObject(flightSettlementJson,settlementData,mapping);
     }
 
-    @Test(description = "机票结算费用数据对比--1人改签-未退票")
-    public void flightSettlementDataTest2() throws HttpStatusException {
+    @Test(description = "机票结算费用数据对比--1人改签-未退票",dataProvider = "TMC")
+    public void flightSettlementDataTest2(String appName,String corpId,String signature) throws HttpStatusException {
         ArrayList<FlightOrderSettlementInfo> FlightOrderSettlementInfos =new ArrayList<>();
         //初始化机票结算信息
         //结算信息的主键
@@ -308,7 +312,7 @@ public class FlightSettlementDataTest extends BaseTest {
         JsonArray listOrderSettlementInfo =new JsonParser().parse(info).getAsJsonArray();
         //推送的机票结算信息
         JsonObject flightSettlementJson = listOrderSettlementInfo.get(0).getAsJsonObject();
-        vendor.pushSettlementData(employee,"flight",FlightOrderSettlementInfos,"cimccTMC","200428140254184788","cimccTMC");
+        vendor.pushSettlementData(employee,"flight",FlightOrderSettlementInfos,appName,corpId,signature);
         //初始化查询结算的对象
         SettlementBody settlementBody =SettlementBody.builder()
                 .accBalanceBatchNo(accBalanceBatchNo)
@@ -344,8 +348,8 @@ public class FlightSettlementDataTest extends BaseTest {
         assert GsonUtil.compareJsonObject(flightSettlementJson,settlementData,mapping);
     }
 
-    @Test(description = "机票结算费用数据对比--1退票")
-    public void flightSettlementDataTest3() throws HttpStatusException {
+    @Test(description = "机票结算费用数据对比--1退票",dataProvider = "TMC")
+    public void flightSettlementDataTest3(String appName,String corpId,String signature) throws HttpStatusException {
         ArrayList<FlightOrderSettlementInfo> FlightOrderSettlementInfos =new ArrayList<>();
         //初始化机票结算信息
         //结算信息的主键
@@ -456,7 +460,7 @@ public class FlightSettlementDataTest extends BaseTest {
         JsonArray listOrderSettlementInfo =new JsonParser().parse(info).getAsJsonArray();
         //推送的机票结算信息
         JsonObject flightSettlementJson = listOrderSettlementInfo.get(0).getAsJsonObject();
-        vendor.pushSettlementData(employee,"flight",FlightOrderSettlementInfos,"cimccTMC","200428140254184788","cimccTMC");
+        vendor.pushSettlementData(employee,"flight",FlightOrderSettlementInfos,appName,corpId,signature);
         //初始化查询结算的对象
         SettlementBody settlementBody =SettlementBody.builder()
                 .accBalanceBatchNo(accBalanceBatchNo)

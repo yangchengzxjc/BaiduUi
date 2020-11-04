@@ -9,6 +9,7 @@ import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelBaseOrder;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelExceedInfo;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelOrderInfoEntity;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelPassengerInfo;
+import com.hand.basicconstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
@@ -17,10 +18,7 @@ import com.test.api.method.InfraStructure;
 import com.test.api.method.Vendor;
 import com.test.api.method.VendorMethod.HotelOrder;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -48,8 +46,15 @@ public class HotelOrderDataTest extends BaseTest {
         infraStructure = new InfraStructure();
     }
 
-    @Test(description = "酒店订单-1人预定-已提交状态-公司支付-未超标")
-    public void hotelOrderDataTest1() throws HttpStatusException {
+    @DataProvider(name = "TMC")
+    public Object[][] tmcData() {
+        return new Object[][]{
+                {TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
+        };
+    }
+
+    @Test(description = "酒店订单-1人预定-已提交状态-公司支付-未超标",dataProvider = "TMC")
+    public void hotelOrderDataTest1(String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -118,7 +123,7 @@ public class HotelOrderDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
         //订单推送
-        vendor.pushOrderData(employee,"hotel",hotelOrderInfoEntity,"cimccTMC","200428140254184788","");
+        vendor.pushOrderData(employee,"hotel",hotelOrderInfoEntity,appName,corpId,signature);
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)
@@ -149,8 +154,8 @@ public class HotelOrderDataTest extends BaseTest {
     }
 
 
-    @Test(description = "酒店订单-1统一预定多人的俩男一女两间房-已提交状态-公司支付-未超标")
-    public void hotelOrderDataTest2() throws HttpStatusException {
+    @Test(description = "酒店订单-1统一预定多人的俩男一女两间房-已提交状态-公司支付-未超标",dataProvider = "TMC")
+    public void hotelOrderDataTest2(String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -228,7 +233,7 @@ public class HotelOrderDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
         //订单推送
-        vendor.pushOrderData(employee,"hotel",hotelOrderInfoEntity,"cimccTMC","200428140254184788","");
+        vendor.pushOrderData(employee,"hotel",hotelOrderInfoEntity,appName,corpId,signature);
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)
@@ -272,8 +277,8 @@ public class HotelOrderDataTest extends BaseTest {
 
     }
 
-    @Test(description = "酒店订单-1人预定-订单取消-公司支付-未超标")
-    public void hotelOrderDataTest3() throws HttpStatusException {
+    @Test(description = "酒店订单-1人预定-订单取消-公司支付-未超标",dataProvider = "TMC")
+    public void hotelOrderDataTest3(String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber(14);
         String originalOrderNum = RandomNumber.getTimeNumber(14);
@@ -344,7 +349,7 @@ public class HotelOrderDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
         //订单推送
-        vendor.pushOrderData(employee,"hotel",hotelOrderInfoEntity,"cimccTMC","200428140254184788","");
+        vendor.pushOrderData(employee,"hotel",hotelOrderInfoEntity,appName,corpId,signature);
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)
@@ -375,8 +380,8 @@ public class HotelOrderDataTest extends BaseTest {
         }
     }
 
-    @Test(description = "酒店订单-员工1人预定--因私-未超标")
-    public void hotelOrderDataTest4() throws HttpStatusException {
+    @Test(description = "酒店订单-员工1人预定--因私-未超标",dataProvider = "TMC")
+    public void hotelOrderDataTest4(String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber(14);
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -446,7 +451,7 @@ public class HotelOrderDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
         //订单推送
-        vendor.pushOrderData(employee,"hotel",hotelOrderInfoEntity,"cimccTMC","200428140254184788","");
+        vendor.pushOrderData(employee,"hotel",hotelOrderInfoEntity,appName,corpId,signature);
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)
@@ -477,8 +482,8 @@ public class HotelOrderDataTest extends BaseTest {
     }
 
 
-    @Test(description = "酒店订单-1人预定-超标-公司支付")
-    public void hotelOrderDataTest6() throws HttpStatusException {
+    @Test(description = "酒店订单-1人预定-超标-公司支付",dataProvider = "TMC")
+    public void hotelOrderDataTest6(String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -551,7 +556,7 @@ public class HotelOrderDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
         //订单推送
-        vendor.pushOrderData(employee,"hotel",hotelOrderInfoEntity,"cimccTMC","200428140254184788","");
+        vendor.pushOrderData(employee,"hotel",hotelOrderInfoEntity,appName,corpId,signature);
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)
@@ -572,8 +577,8 @@ public class HotelOrderDataTest extends BaseTest {
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,hotelOrder,mapping);
     }
 
-    @Test(description = "酒店订单-1人预定-已提交状态-混合支付-未超标")
-    public void hotelOrderDataTest7() throws HttpStatusException {
+    @Test(description = "酒店订单-1人预定-已提交状态-混合支付-未超标",dataProvider = "TMC")
+    public void hotelOrderDataTest7(String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -644,7 +649,7 @@ public class HotelOrderDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
         //订单推送
-        vendor.pushOrderData(employee,"hotel",hotelOrderInfoEntity,"cimccTMC","200428140254184788","");
+        vendor.pushOrderData(employee,"hotel",hotelOrderInfoEntity,appName,corpId,signature);
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)

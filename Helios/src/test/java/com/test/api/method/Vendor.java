@@ -37,14 +37,28 @@ public class Vendor {
      * @param object  机票  酒店  火车等结算对象
      * @param appName  汇联易消费商注册的应用名称
      * @param corpId  消费商开通的公司Id
-     * @param passWord
      * @return
      * @throws HttpStatusException
      */
-    public <T> JsonObject pushSettlementData(Employee employee, String type, List<T> object, String appName, String corpId, String passWord) throws HttpStatusException {
+    public <T> JsonObject pushSettlementData(Employee employee, String type, List<T> object, String appName, String corpId, String signature) throws HttpStatusException {
         String info =GsonUtil.objectToString(object);
         JsonArray listOrderSettlementInfo =new JsonParser().parse(info).getAsJsonArray();
-        return vendorApi.pushSettlementData(employee,type,listOrderSettlementInfo,appName,corpId);
+        return vendorApi.pushSettlementData(employee,type,listOrderSettlementInfo,appName,corpId,signature);
+    }
+
+    /**
+     *  tmc 直接使用Json数据推送
+     * @param employee
+     * @param type
+     * @param listOrderSettlementInfo
+     * @param appName
+     * @param corpId
+     * @param signature
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject pushSettlementData(Employee employee, String type, JsonObject listOrderSettlementInfo, String appName, String corpId,String signature) throws HttpStatusException {
+        return vendorApi.pushSettlementData(employee,type,listOrderSettlementInfo,appName,corpId,signature);
     }
 
     /**
@@ -54,17 +68,31 @@ public class Vendor {
      * @param object  订单对象
      * @param appName
      * @param corpId
-     * @param passWord
      * @param <T>
      * @return
      * @throws HttpStatusException
      */
-    public <T> JsonObject pushOrderData(Employee employee,String orderType,T object, String appName, String corpId,String passWord) throws HttpStatusException {
+    public <T> JsonObject pushOrderData(Employee employee,String orderType,T object, String appName, String corpId,String signature) throws HttpStatusException {
         //将数据序列化为JSON 字符串
         String orderString =GsonUtil.objectToString(object);
         //转化为 JsonObject
         JsonObject orderData =new JsonParser().parse(orderString).getAsJsonObject();
-        return vendorApi.pushOrderData(employee,orderType,orderData,appName,corpId,passWord);
+        return vendorApi.pushOrderData(employee,orderType,orderData,appName,corpId,signature);
+    }
+
+    /**
+     * tmc订单推送  -  直接使用提供的json 数据进行推送数据
+     * @param employee
+     * @param orderType
+     * @param orderData   订单对象
+     * @param appName
+     * @param corpId
+     * @param signature   签名
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject pushOrderData(Employee employee,String orderType,JsonObject orderData, String appName, String corpId,String signature) throws HttpStatusException {
+        return vendorApi.pushOrderData(employee,orderType,orderData,appName,corpId,signature);
     }
 
     /**
@@ -73,15 +101,14 @@ public class Vendor {
      * @param object
      * @param appName
      * @param corpId
-     * @param passWord
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject ssoLogin(Employee employee, SSOBody object,String appName, String corpId) throws HttpStatusException {
+    public JsonObject ssoLogin(Employee employee, SSOBody object,String appName, String corpId,String signature) throws HttpStatusException {
         String orderString =GsonUtil.objectToString(object);
         //转化为 JsonObject
         JsonObject requestBody =new JsonParser().parse(orderString).getAsJsonObject();
-        return vendorApi.vendorSSO(employee,requestBody,appName,corpId);
+        return vendorApi.vendorSSO(employee,requestBody,appName,corpId,signature);
     }
 
     /**

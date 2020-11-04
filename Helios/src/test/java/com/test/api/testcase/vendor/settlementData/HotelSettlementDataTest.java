@@ -6,6 +6,7 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicObject.supplierObject.hotelOrderSettlementInfo.HotelOrderSettlementInfo;
 import com.hand.basicObject.supplierObject.hotelOrderSettlementInfo.PassengerInfo;
+import com.hand.basicconstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
@@ -13,10 +14,7 @@ import com.test.BaseTest;
 import com.test.api.method.InfraStructure;
 import com.test.api.method.Vendor;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -42,8 +40,16 @@ public class HotelSettlementDataTest extends BaseTest {
         infraStructure =new InfraStructure();
     }
 
+    @DataProvider(name = "TMC")
+    public Object[][] tmcData() {
+        return new Object[][]{
+                {TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
+        };
+    }
+
+
     @Test(description = "酒店结算数据 - 1人1间房")
-    public void hotelSettlementDataTest1() throws Exception {
+    public void hotelSettlementDataTest1(String appName,String corpId,String signature) throws Exception {
         //结算主键
         String recordId =String.valueOf(System.currentTimeMillis());
         //批次号
@@ -121,7 +127,7 @@ public class HotelSettlementDataTest extends BaseTest {
         String hotelOrderData = GsonUtil.objectToString(hotelOrderSettlementInfo);
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
-        JsonObject settlementDatas = vendor.pushSettlementData(employee,"hotel",hotelOrderSettlementInfos,"cimccTMC","200428140254184788","cimccTMC");
+        JsonObject settlementDatas = vendor.pushSettlementData(employee,"hotel",hotelOrderSettlementInfos,appName,corpId,signature);
         log.info("推送的结算数:{}",settlementDatas);
         //查询推送的结算数据
         //初始化查询结算的对象
@@ -151,8 +157,8 @@ public class HotelSettlementDataTest extends BaseTest {
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,internalQuerySettlement,mapping);
     }
 
-    @Test(description = "酒店结算数据 - 俩人预定一间房")
-    public void hotelSettlementDataTest2() throws Exception {
+    @Test(description = "酒店结算数据 - 俩人预定一间房",dataProvider = "TMC")
+    public void hotelSettlementDataTest2(String appName,String corpId,String signature) throws Exception {
         //员工信息
         JsonObject employeeInfo1 = infraStructure.getUserDetail(employee,"01399315");
         //结算主键
@@ -230,7 +236,7 @@ public class HotelSettlementDataTest extends BaseTest {
         String hotelOrderData = GsonUtil.objectToString(hotelOrderSettlementInfo);
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
-        vendor.pushSettlementData(employee,"hotel",hotelOrderSettlementInfos,"cimccTMC","200428140254184788","cimccTMC");
+        vendor.pushSettlementData(employee,"hotel",hotelOrderSettlementInfos,appName,corpId,signature);
         //查询推送的结算数据
         //初始化查询结算的对象
         SettlementBody settlementBody =SettlementBody.builder()
@@ -260,8 +266,8 @@ public class HotelSettlementDataTest extends BaseTest {
         assert GsonUtil.compareJsonObject(hotelOrderDataObject,internalQuerySettlement,mapping);
     }
 
-    @Test(description = "酒店结算数据 -订单取消")
-    public void hotelSettlementDataTest3() throws Exception {
+    @Test(description = "酒店结算数据 -订单取消",dataProvider = "TMC")
+    public void hotelSettlementDataTest3(String appName,String corpId,String signature) throws Exception {
         //结算主键
         String recordId =String.valueOf(System.currentTimeMillis());
         //批次号
@@ -337,7 +343,7 @@ public class HotelSettlementDataTest extends BaseTest {
         String hotelOrderData = GsonUtil.objectToString(hotelOrderSettlementInfo);
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
-        vendor.pushSettlementData(employee,"hotel",hotelOrderSettlementInfos,"cimccTMC","200428140254184788","cimccTMC");
+        vendor.pushSettlementData(employee,"hotel",hotelOrderSettlementInfos,appName,corpId,signature);
         //查询推送的结算数据
         //初始化查询结算的对象
         SettlementBody settlementBody =SettlementBody.builder()

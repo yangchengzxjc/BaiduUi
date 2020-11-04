@@ -41,7 +41,7 @@ public class VendorSSOTest extends BaseTest {
                 .initPage("HotelSearch")
                 .orderNumber("")
                 .build();
-        JsonObject response = vendor.ssoLogin(employee,ssoBody,"cimccTMC","200428140254184788");
+        JsonObject response = vendor.ssoLogin(employee,ssoBody,"cimccTMC","200428140254184788","");
         log.info("单点登录的响应:{}",response);
     }
 }

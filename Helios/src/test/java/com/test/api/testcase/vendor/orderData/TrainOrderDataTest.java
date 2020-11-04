@@ -6,6 +6,7 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicObject.supplierObject.TrainOrderInfo.*;
+import com.hand.basicconstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
 import com.test.BaseTest;
@@ -13,10 +14,7 @@ import com.test.api.method.InfraStructure;
 import com.test.api.method.Vendor;
 import com.test.api.method.VendorMethod.TrainOrder;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -45,8 +43,15 @@ public class TrainOrderDataTest extends BaseTest {
         infraStructure = new InfraStructure();
     }
 
-    @Test(description = "火车票1人预定,不改签-不退票-公司支付-月结")
-    public void trainOrderDataTest1() throws HttpStatusException {
+    @DataProvider(name = "TMC")
+    public Object[][] tmcData() {
+        return new Object[][]{
+                {TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
+        };
+    }
+
+    @Test(description = "火车票1人预定,不改签-不退票-公司支付-月结",dataProvider = "TMC")
+    public void trainOrderDataTest1(String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -85,7 +90,7 @@ public class TrainOrderDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
         //火车订单推送
-        vendor.pushOrderData(employee,"train",trainOrderInfoEntity,"cimccTMC","200428140254184788","");
+        vendor.pushOrderData(employee,"train",trainOrderInfoEntity,appName,corpId,signature);
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)
@@ -123,8 +128,8 @@ public class TrainOrderDataTest extends BaseTest {
     }
 
 
-    @Test(description = "火车票1人预定,不改签-不退票-因私-个人支付宝支付-现付")
-    public void trainOrderDataTest2() throws HttpStatusException {
+    @Test(description = "火车票1人预定,不改签-不退票-因私-个人支付宝支付-现付",dataProvider = "TMC")
+    public void trainOrderDataTest2(String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -163,7 +168,7 @@ public class TrainOrderDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
         //火车订单推送
-        vendor.pushOrderData(employee,"train",trainOrderInfoEntity,"cimccTMC","200428140254184788","");
+        vendor.pushOrderData(employee,"train",trainOrderInfoEntity,appName,corpId,signature);
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)
@@ -200,8 +205,8 @@ public class TrainOrderDataTest extends BaseTest {
         }
     }
 
-    @Test(description = "火车票-一人预定多人车票-不改签-不退票-因公-公司账户-月结")
-    public void trainOrderDataTest3() throws HttpStatusException {
+    @Test(description = "火车票-一人预定多人车票-不改签-不退票-因公-公司账户-月结",dataProvider = "TMC")
+    public void trainOrderDataTest3(String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -250,7 +255,7 @@ public class TrainOrderDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
         //火车订单推送
-        JsonObject trainO = vendor.pushOrderData(employee,"train",trainOrderInfoEntity,"cimccTMC","200428140254184788","");
+        JsonObject trainO = vendor.pushOrderData(employee,"train",trainOrderInfoEntity,appName,corpId,signature);
         log.info("火车推送的响应：{}",trainO);
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
@@ -295,8 +300,8 @@ public class TrainOrderDataTest extends BaseTest {
         }
     }
 
-    @Test(description = "火车票1人预定,改签-公司支付-月结")
-    public void trainOrderDataTest4() throws HttpStatusException {
+    @Test(description = "火车票1人预定,改签-公司支付-月结",dataProvider = "TMC")
+    public void trainOrderDataTest4(String appName,String corpId,String signature) throws HttpStatusException {
         //原订单号
         String orderNo = RandomNumber.getTimeNumber(14);
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -341,7 +346,7 @@ public class TrainOrderDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
         //火车订单推送
-        vendor.pushOrderData(employee,"train",trainOrderInfoEntity,"cimccTMC","200428140254184788","");
+        vendor.pushOrderData(employee,"train",trainOrderInfoEntity,appName,corpId,signature);
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)
@@ -385,8 +390,8 @@ public class TrainOrderDataTest extends BaseTest {
         }
     }
 
-    @Test(description = "火车票1人预定-订单退票（退票订单）-公司支付-月结")
-    public void trainOrderDataTest5() throws HttpStatusException {
+    @Test(description = "火车票1人预定-订单退票（退票订单）-公司支付-月结",dataProvider = "TMC")
+    public void trainOrderDataTest5(String appName,String corpId,String signature) throws HttpStatusException {
         //原订单号
         String orderNo = RandomNumber.getTimeNumber(14);
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -430,7 +435,7 @@ public class TrainOrderDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
         //火车订单推送
-        vendor.pushOrderData(employee,"train",trainOrderInfoEntity,"cimccTMC","200428140254184788","");
+        vendor.pushOrderData(employee,"train",trainOrderInfoEntity,appName,corpId,signature);
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)
@@ -468,8 +473,8 @@ public class TrainOrderDataTest extends BaseTest {
         }
     }
 
-    @Test(description = "火车票1人预定-订单改签-订单退票-公司支付-月结")
-    public void trainOrderDataTest6() throws HttpStatusException {
+    @Test(description = "火车票1人预定-订单改签-订单退票-公司支付-月结",dataProvider = "TMC")
+    public void trainOrderDataTest6(String appName,String corpId,String signature) throws HttpStatusException {
         //原订单号
         String orderNo = RandomNumber.getTimeNumber(14);
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -519,7 +524,7 @@ public class TrainOrderDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
         //火车订单推送
-        vendor.pushOrderData(employee,"train",trainOrderInfoEntity,"cimccTMC","200428140254184788","");
+        vendor.pushOrderData(employee,"train",trainOrderInfoEntity,appName,corpId,signature);
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)
@@ -564,8 +569,8 @@ public class TrainOrderDataTest extends BaseTest {
         }
     }
 
-    @Test(description = "火车票-一人预定多人车票(一个人为外部人员)-不改签-不退票-因公-公司账户-月结")
-    public void trainOrderDataTest7() throws HttpStatusException {
+    @Test(description = "火车票-一人预定多人车票(一个人为外部人员)-不改签-不退票-因公-公司账户-月结",dataProvider = "TMC")
+    public void trainOrderDataTest7(String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -612,7 +617,7 @@ public class TrainOrderDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
         //火车订单推送
-        vendor.pushOrderData(employee,"train",trainOrderInfoEntity,"cimccTMC","200428140254184788","");
+        vendor.pushOrderData(employee,"train",trainOrderInfoEntity,appName,corpId,signature);
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)
@@ -649,8 +654,8 @@ public class TrainOrderDataTest extends BaseTest {
         }
     }
 
-    @Test(description = "火车票1人预定,不改签-不退票-超标-公司支付-月结")
-    public void trainOrderDataTest8() throws HttpStatusException {
+    @Test(description = "火车票1人预定,不改签-不退票-超标-公司支付-月结",dataProvider = "TMC")
+    public void trainOrderDataTest8(String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -694,7 +699,7 @@ public class TrainOrderDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
         //火车订单推送
-        vendor.pushOrderData(employee,"train",trainOrderInfoEntity,"cimccTMC","200428140254184788","");
+        vendor.pushOrderData(employee,"train",trainOrderInfoEntity,appName,corpId,signature);
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)

@@ -77,13 +77,13 @@ public class SyncPlanWorkFlowTest extends BaseTest {
     @DataProvider(name = "TMC")
     public Object[][] tmcData() {
         return new Object[][]{
-                {TmcChannel.CIMCC.getTmcChannel(),TmcChannel.CIMCC.getSupplierOID(),TmcChannel.CIMCC.getSupplierName(),TmcChannel.CIMCC.getSupplierCode()},
+                {TmcChannel.CIMCC.getTmcChannel(),TmcChannel.CIMCC.getSupplierOID(),TmcChannel.CIMCC.getSupplierName(),TmcChannel.CIMCC.getSupplierCode(),TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
 
         };
     }
 
     @Test(description = "机票同步服务工作流",dataProvider = "TMC")
-    public void workFlowTest1(String tmcChannel,String supplierOID,String supplierName,String supplierCode) throws HttpStatusException, InterruptedException {
+    public void workFlowTest1(String tmcChannel,String supplierOID,String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException, InterruptedException {
         FormComponent component =new FormComponent();
         component.setCause(tmcChannel+"审批单同步数据校验");
         component.setDepartment(employee.getDepartmentOID());
@@ -186,7 +186,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
             //转成jsonobject对象
             JsonObject flightOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
             //订单推送
-            vendor.pushOrderData(employee,"flight",airOrderInfoEntity,"cimccTMC","200428140254184788","");
+            vendor.pushOrderData(employee,"flight",airOrderInfoEntity,appName,corpId,signature);
             SettlementBody settlementBody = SettlementBody.builder()
                     .companyOid(employee.getCompanyOID())
                     .orderNo(orderNo)
@@ -231,7 +231,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
     }
 
     @Test(description = "审批单同步-中集TMC-酒店行程",dataProvider = "TMC")
-    public void workFlowTest2(String tmcChannel,String supplierOID,String supplierName,String supplierCode) throws HttpStatusException, InterruptedException {
+    public void workFlowTest2(String tmcChannel,String supplierOID,String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException, InterruptedException {
         FormComponent component =new FormComponent();
         component.setCause(tmcChannel+"供应商酒店同步测试");
         component.setDepartment(employee.getDepartmentOID());
@@ -300,7 +300,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
             //转成jsonobject对象
             JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
             //订单推送
-            vendor.pushOrderData(employee,"hotel",hotelOrderInfoEntity,"cimccTMC","200428140254184788","");
+            vendor.pushOrderData(employee,"hotel",hotelOrderInfoEntity,appName,corpId,signature);
             SettlementBody settlementBody = SettlementBody.builder()
                     .companyOid(employee.getCompanyOID())
                     .orderNo(orderNo)
@@ -337,7 +337,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
 
 
     @Test(description = "审批单同步-中集TMC-火车行程",dataProvider = "TMC")
-    public void workFlowTest3(String tmcChannel,String supplierOID,String supplierName,String supplierCode) throws HttpStatusException, InterruptedException {
+    public void workFlowTest3(String tmcChannel,String supplierOID,String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException, InterruptedException {
         FormComponent component =new FormComponent();
         component.setCause(tmcChannel+"火车供应商同步测试");
         component.setDepartment(employee.getDepartmentOID());
@@ -422,7 +422,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
             //转成jsonobject对象
             JsonObject hotelOrderDataObject =new JsonParser().parse(hotelOrderData).getAsJsonObject();
             //火车订单推送
-            vendor.pushOrderData(employee,"train",trainOrderInfoEntity,"cimccTMC","200428140254184788","");
+            vendor.pushOrderData(employee,"train",trainOrderInfoEntity,appName,corpId,signature);
             SettlementBody settlementBody = SettlementBody.builder()
                     .companyOid(employee.getCompanyOID())
                     .orderNo(orderNo)

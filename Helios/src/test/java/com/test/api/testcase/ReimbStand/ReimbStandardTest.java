@@ -118,7 +118,7 @@ public class ReimbStandardTest extends BaseTest {
        reimbStandard.deleteReimbStandardRules(employee,rulesOid);
     }
 
-    @Test(priority = 1,description = "周期管控规则编辑")
+    @Test(description = "周期管控规则编辑")
     public void Test04()throws HttpStatusException{
         setOfBooksDefine = new SetOfBooksDefine();
         //获取账套id
@@ -137,6 +137,7 @@ public class ReimbStandardTest extends BaseTest {
     @Test(description = "删除周期管控规则")
     public void Test05()throws HttpStatusException{
         JsonArray periodRules=reimbStandard.getRules(employee,"周期管控-编辑01");
+        log.info("periodRules:{}",periodRules);
         String periodRulesOid=periodRules.get(0).getAsJsonObject().get("ruleOID").getAsString();
         log.info(periodRulesOid);
         //删除规则

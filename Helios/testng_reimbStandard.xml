@@ -4,7 +4,7 @@
 
     <parameter name="environment" value="${environment}"/>
     <parameter name="phoneNumber" value="${phoneNumber}"/>
-    <parameter name="passWord" value="${passWord}"/>
+    <parameter name="passWord" value="hly12345"/>
 
     <test verbose="10" preserve-order="true" name="报销标准测试">
         <classes>

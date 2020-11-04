@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicObject.supplierObject.trainSettlementInfo.*;
+import com.hand.basicconstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
@@ -12,10 +13,7 @@ import com.test.BaseTest;
 import com.test.api.method.InfraStructure;
 import com.test.api.method.Vendor;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -39,6 +37,13 @@ public class TrainSettlementDataTest extends BaseTest {
         employee =getEmployee(phoneNumber,pwd,env);
         vendor =new Vendor();
         infraStructure =new InfraStructure();
+    }
+
+    @DataProvider(name = "TMC")
+    public Object[][] tmcData() {
+        return new Object[][]{
+                {TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
+        };
     }
 
     @Test(description = "火车结算费用推送-预定-自己订票-自己乘坐-未改签-未退票",dataProvider = "TMC")

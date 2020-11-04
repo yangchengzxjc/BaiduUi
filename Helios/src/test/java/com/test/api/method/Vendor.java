@@ -9,6 +9,7 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SSOBody;
 import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoDTO;
+import com.hand.utils.DocumnetUtil;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
@@ -204,7 +205,14 @@ public class Vendor {
         return vendorApi.tmcPlanInfo(employee,tmcChannel,approvalNo);
     }
 
-
-
+    /**
+     * 读取模板数据
+     * @param path  读取数据的路径 建议相对路径
+     * @return
+     */
+    public JsonObject getVendorData(String path){
+        String  vendorData = DocumnetUtil.fileReader(path);
+        return new JsonParser().parse(vendorData.trim()).getAsJsonObject();
+    }
 
 }

@@ -235,8 +235,8 @@ public class SyncService {
             travelHotelItinerary.setMinPrice(itinerary.get("minPrice").getAsString());
         }
         travelHotelItinerary.setRoomNumber(itinerary.get("roomNumber").getAsInt());
-        travelHotelItinerary.setCities(new ArrayList<>());
-        travelHotelItinerary.setCityCodes(new ArrayList<>());
+        travelHotelItinerary.setCities(new ArrayList<String>());
+        travelHotelItinerary.setCityCodes(new ArrayList<String>());
         travelHotelItinerary.setFloatDaysBegin(floatDays.get("start").getAsInt());
         travelHotelItinerary.setFloatDaysEnd(floatDays.get("end").getAsInt());
         return travelHotelItinerary;

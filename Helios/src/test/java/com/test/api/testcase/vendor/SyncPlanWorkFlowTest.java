@@ -441,7 +441,6 @@ public class SyncPlanWorkFlowTest extends BaseTest {
             mapping.put("trainOrderSequenceInfos","trainSequenceInfo");
             mapping.put("trainOrderPassengerInfos","trainPassengerInfo");
             mapping.put("nationlityName","nationalityName");
-            mapping.put(employee.getDepartmentName(),"产品三组");
             assert GsonUtil.compareJsonObject(hotelOrderDataObject,trainOrder,mapping);
             //trainSequenceInfo 中的trainType
             String trainNum = trainOrder.getAsJsonArray("trainSequenceInfo").get(0).getAsJsonObject().get("trainNum").getAsString();

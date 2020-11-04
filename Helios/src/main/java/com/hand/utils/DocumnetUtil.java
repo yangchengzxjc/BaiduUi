@@ -68,6 +68,48 @@ public class DocumnetUtil {
     }
 
     /**
+     * 读取文件  重载的方法   直接读取整个文件内容
+     * @param fileName   文件名称
+     * @return
+     */
+    public static String fileReader(String fileName){
+
+        FileReader reader = null;
+        BufferedReader input=null;
+        //单线程下这里是应用StringBuilder 效率更高
+        StringBuilder result = new StringBuilder();
+        //先判断读取的文件是否存在
+        File file =new File(fileName);
+        if(file.exists()){
+            try {
+                reader = new FileReader(fileName);
+                input =new BufferedReader(reader);
+                String text = input.readLine();
+                while (text!=null){
+                    result.append(text);
+                    text =input.readLine();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }finally {
+                try {
+                    if(reader!=null){
+                        reader.close();
+                    }
+                    if(input!=null){
+                        input.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }else{
+            throw new RuntimeException("文件不存在");
+        }
+        return result.toString();
+    }
+
+    /**
      * 写文件操作
      * @param fileName
      * @param data   需要写的数据

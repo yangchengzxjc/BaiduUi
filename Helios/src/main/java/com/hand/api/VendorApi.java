@@ -26,7 +26,7 @@ public class VendorApi extends BaseRequest{
      *  商旅TMC 用户调用请求头 （包含签名）
      * @return
      */
-    public HashMap<String,String> getHeaderSignature(String appName,String corpId,String signature){
+    public HashMap<String,String> setHeaderSignature(String appName, String corpId, String signature){
         HashMap<String, String> headersdatas = new HashMap<>();
         headersdatas.put("appName",appName);
         headersdatas.put("corpId",corpId);
@@ -70,7 +70,7 @@ public class VendorApi extends BaseRequest{
         if(settlementType.equals("train")){
             body.add("trainSettlementInfos",listOrderSettlementInfo);
         }
-        String res = doPost(url,getHeaderSignature(appName,corpId,signature),null,body.toString(),null,employee);
+        String res = doPost(url, setHeaderSignature(appName,corpId,signature),null,body.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
@@ -84,8 +84,8 @@ public class VendorApi extends BaseRequest{
      */
     public JsonObject pushSettlementData(Employee employee,String settlementType,JsonObject listOrderSettlementInfo,String appName,String corpId,String signature) throws HttpStatusException {
         String url = employee.getEnvironment().getZhenxuanOpenURL()+ String.format(ApiPath.PUSHTMCSEETLEMRNTDATA,settlementType);
-        log.info("请求头:{}",getHeaderSignature(appName,corpId,signature));
-        String res = doPost(url,getHeaderSignature(appName,corpId,signature),null,listOrderSettlementInfo.toString(),null,employee);
+        log.info("请求头:{}", setHeaderSignature(appName,corpId,signature));
+        String res = doPost(url, setHeaderSignature(appName,corpId,signature),null,listOrderSettlementInfo.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
@@ -122,7 +122,7 @@ public class VendorApi extends BaseRequest{
      */
     public JsonObject pushOrderData(Employee employee,String orderType,JsonObject orderBody,String appName,String corpId,String signature) throws HttpStatusException {
         String url = employee.getEnvironment().getZhenxuanOpenURL()+ String.format(ApiPath.PUSHTMCORDERDATA,orderType);
-        String res = doPost(url,getHeaderSignature(appName,corpId,signature),null,orderBody.toString(),null,employee);
+        String res = doPost(url, setHeaderSignature(appName,corpId,signature),null,orderBody.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
@@ -214,7 +214,7 @@ public class VendorApi extends BaseRequest{
      */
     public JsonObject vendorSSO(Employee employee,JsonObject body,String appName,String corpId,String signature) throws HttpStatusException {
         String url = employee.getEnvironment().getZhenxuanOpenURL()+ApiPath.SSOLOGIN;
-        String res = doPost(url,getHeaderSignature(appName,corpId,signature),null,body.toString(),null,employee);
+        String res = doPost(url, setHeaderSignature(appName,corpId,signature),null,body.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 }

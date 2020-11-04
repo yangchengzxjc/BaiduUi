@@ -36,14 +36,14 @@ public class ReimbStandardTest extends BaseTest {
         expenseReportInvoice =new ExpenseReportInvoice();
     }
 
-    @Test(priority = 1,description = "用于测试调试使用")
+    @Test(description = "用于测试调试使用")
     @Parameters({"phoneNumber", "passWord", "environment"})
     public void login(@Optional("14082978625") String phoneNumber, @Optional("hly12345") String pwd, @Optional("stage") String env){
         log.info("token1:{}",employee.getAccessToken());
     }
 
     @Test(description = "创建报销标准规则")
-    public void createRules()throws HttpStatusException{
+    public void Test01()throws HttpStatusException{
         setOfBooksDefine = new SetOfBooksDefine();
         //获取账套id
         String setOfBooksId= setOfBooksDefine.getSetOfBooksId(employee,"DEFAULT_SOB","默认账套","reimbursement-standard");
@@ -66,24 +66,8 @@ public class ReimbStandardTest extends BaseTest {
         log.info("items:{}",items);
     }
 
-    @Test(priority = 1,description = "周期管控规则编辑")
-    public void editPeriodRules()throws HttpStatusException{
-        setOfBooksDefine = new SetOfBooksDefine();
-        //获取账套id
-        String setOfBooksId= setOfBooksDefine.getSetOfBooksId(employee,"DEFAULT_SOB","默认账套","reimbursement-standard");
-        JsonArray userGroups = reimbStandard.userGroups(reimbStandard.getUserGroups(employee,"租户级  stage测试员",setOfBooksId));
-        JsonArray expenseType = reimbStandard.expenseTypes(reimbStandard.getExpenseType(employee,"自动化测试-报销标准", setOfBooksId));
-        JsonArray formType = reimbStandard.formTypes(reimbStandard.getFormType(employee,"自动化测试-日常报销单",setOfBooksId));
-        JsonArray company = reimbStandard.companyGroups(reimbStandard.getCompany(employee,"甄滙_STAGE_TestCompany",setOfBooksId));
-        //新建规则
-        String rulesOid = reimbStandard.addReimbstandard(employee,"周期管控-编辑01","WARN","SET_OF_BOOK",
-                reimbStandard.getSetOfBookId(employee,"默认账套"),"DAY","PERIOD",
-                "周期管控规则编辑",userGroups,expenseType,formType,company);
-        log.info("ruleOID:{}",rulesOid);
-    }
-
-    @Test(priority = 1,description = "报销标准规则校验")
-    public void checkRules()throws HttpStatusException{
+    @Test(description = "报销标准规则校验")
+    public void Test02()throws HttpStatusException{
         //新建报销单
         FormComponent component=new FormComponent();
         InvoiceComponent invoiceComponent = new InvoiceComponent();
@@ -123,11 +107,10 @@ public class ReimbStandardTest extends BaseTest {
         expenseReport.removeInvoice(employee,expenseReportOID,invoiceOID);
         expenseReportInvoice.deleteInvoice(employee,invoiceOID);
         expenseReport.deleteExpenseReport(employee,expenseReportOID);
-
     }
 
-    @Test(description = "删除报销标准规则")
-    public void deleteRules() throws HttpStatusException{
+    @Test(description = "删除单条报销标准规则")
+    public void Test03() throws HttpStatusException{
         JsonArray rules= reimbStandard.getRules(employee,"测试25");
         String rulesOid=rules.get(0).getAsJsonObject().get("ruleOID").getAsString();
         log.info(rulesOid);
@@ -135,5 +118,28 @@ public class ReimbStandardTest extends BaseTest {
        reimbStandard.deleteReimbStandardRules(employee,rulesOid);
     }
 
+    @Test(priority = 1,description = "周期管控规则编辑")
+    public void Test04()throws HttpStatusException{
+        setOfBooksDefine = new SetOfBooksDefine();
+        //获取账套id
+        String setOfBooksId= setOfBooksDefine.getSetOfBooksId(employee,"DEFAULT_SOB","默认账套","reimbursement-standard");
+        JsonArray userGroups = reimbStandard.userGroups(reimbStandard.getUserGroups(employee,"租户级  stage测试员",setOfBooksId));
+        JsonArray expenseType = reimbStandard.expenseTypes(reimbStandard.getExpenseType(employee,"自动化测试-报销标准", setOfBooksId));
+        JsonArray formType = reimbStandard.formTypes(reimbStandard.getFormType(employee,"自动化测试-日常报销单",setOfBooksId));
+        JsonArray company = reimbStandard.companyGroups(reimbStandard.getCompany(employee,"甄滙_STAGE_TestCompany",setOfBooksId));
+        //新建规则
+        String rulesOid = reimbStandard.addReimbstandard(employee,"周期管控-编辑01","WARN","SET_OF_BOOK",
+                reimbStandard.getSetOfBookId(employee,"默认账套"),"DAY","PERIOD",
+                "周期管控规则编辑",userGroups,expenseType,formType,company);
+        log.info("ruleOID:{}",rulesOid);
+    }
 
+    @Test(description = "删除周期管控规则")
+    public void Test05()throws HttpStatusException{
+        JsonArray periodRules=reimbStandard.getRules(employee,"周期管控-编辑01");
+        String periodRulesOid=periodRules.get(0).getAsJsonObject().get("ruleOID").getAsString();
+        log.info(periodRulesOid);
+        //删除规则
+        reimbStandard.deleteReimbStandardRules(employee,periodRulesOid);
+    }
 }

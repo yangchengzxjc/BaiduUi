@@ -109,8 +109,6 @@ public class ReimbSubmissionControlTest extends BaseTest {
     public void deleteRules() throws HttpStatusException{
         //删除规则
         reimbSubmissionControl.deleteReimbSubmissionRules(employee,getrulesOid.get("rulesOid"));
-        //shanchu
-        //哈哈哈哈哈哈哈哈哈哈或或或或或或或或或或或或或或或或
-        //hahhhhffdddddd
+
     }
 }

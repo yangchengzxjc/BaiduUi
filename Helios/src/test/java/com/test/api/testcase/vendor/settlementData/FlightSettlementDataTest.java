@@ -49,19 +49,19 @@ public class FlightSettlementDataTest extends BaseTest {
     @DataProvider(name = "TMC")
     public Object[][] tmcData() {
         return new Object[][]{
-                {TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
+                {TmcChannel.CIMCC.getSupplierCode(),TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
         };
     }
 
 
     @Test(description = "机票结算费用数据对比-订票人和乘机人都是自己-1人未退票-不改签",dataProvider = "TMC")
-    public void flightSettlementDataTest1(String appName,String corpId,String signature) throws HttpStatusException {
+    public void flightSettlementDataTest1(String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         ArrayList<FlightOrderSettlementInfo> FlightOrderSettlementInfos =new ArrayList<>();
         //初始化机票结算信息
         //结算信息的主键
         String recordId = String.valueOf(System.currentTimeMillis());
         //批次号
-        String accBalanceBatchNo ="cimccTMC_200428140254184788_flight_"+ UTCTime.getBeijingDay(0);
+        String accBalanceBatchNo =supplierCode+"_"+corpId+"_flight_"+ UTCTime.getBeijingDay(0);
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         //机票金额
@@ -77,8 +77,8 @@ public class FlightSettlementDataTest extends BaseTest {
                 //结算信息的主键
                 .recordId(recordId)
                 .supplierName("")
-                .supplierCode("cimccTMC")
-                .corpId("200428140254184788")
+                .supplierCode(supplierCode)
+                .corpId(corpId)
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
                 .companyOid(employee.getCompanyOID())
@@ -203,13 +203,13 @@ public class FlightSettlementDataTest extends BaseTest {
     }
 
     @Test(description = "机票结算费用数据对比--1人改签-未退票",dataProvider = "TMC")
-    public void flightSettlementDataTest2(String appName,String corpId,String signature) throws HttpStatusException {
+    public void flightSettlementDataTest2(String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         ArrayList<FlightOrderSettlementInfo> FlightOrderSettlementInfos =new ArrayList<>();
         //初始化机票结算信息
         //结算信息的主键
         String recordId1 = RandomNumber.getTimeNumber(8);
         //批次号
-        String accBalanceBatchNo ="cimccTMC_200428140254184788_flight_"+ UTCTime.getBeijingDay(0);
+        String accBalanceBatchNo =supplierCode+"_"+corpId+"_flight_"+ UTCTime.getBeijingDay(0);
         //订单号
         String orderNo = RandomNumber.getTimeNumber(14);
         //改签原票号
@@ -227,8 +227,8 @@ public class FlightSettlementDataTest extends BaseTest {
                 //结算信息的主键
                 .recordId(recordId1)
                 .supplierName("")
-                .supplierCode("cimccTMC")
-                .corpId("200428140254184788")
+                .supplierCode(supplierCode)
+                .corpId(corpId)
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
                 .companyOid(employee.getCompanyOID())
@@ -349,13 +349,13 @@ public class FlightSettlementDataTest extends BaseTest {
     }
 
     @Test(description = "机票结算费用数据对比--1退票",dataProvider = "TMC")
-    public void flightSettlementDataTest3(String appName,String corpId,String signature) throws HttpStatusException {
+    public void flightSettlementDataTest3(String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         ArrayList<FlightOrderSettlementInfo> FlightOrderSettlementInfos =new ArrayList<>();
         //初始化机票结算信息
         //结算信息的主键
         String recordId1 = RandomNumber.getTimeNumber(8);
         //批次号
-        String accBalanceBatchNo ="cimccTMC_200428140254184788_flight_"+ UTCTime.getBeijingDay(0);
+        String accBalanceBatchNo =supplierCode+"_"+corpId+"_flight_"+ UTCTime.getBeijingDay(0);
         //订单号
         String orderNo = RandomNumber.getTimeNumber(14);
         //改签原票号
@@ -375,8 +375,8 @@ public class FlightSettlementDataTest extends BaseTest {
                 //结算信息的主键
                 .recordId(recordId1)
                 .supplierName("")
-                .supplierCode("cimccTMC")
-                .corpId("200428140254184788")
+                .supplierCode(supplierCode)
+                .corpId(corpId)
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
                 .companyOid(employee.getCompanyOID())

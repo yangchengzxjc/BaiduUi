@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder(toBuilder=true)
 public class FlightOrderSettlementInfo {
-
+    //77个参数
     //结算明细主键	  此条结算信息的唯一标识
     private String recordId;
     // 供应商名称 否必填

@@ -12,7 +12,7 @@ public enum TmcChannel {
     FY("FY","supplyFyAirTMCService","","","","","",""),
     CTRIP("Ctrip","supplyCtripService","","","","","",""),
     ZLS("ZLS","supplyOnTheWayTMCService","","","","","",""),
-    AMEX("amex","","","","","amex","200428140254184795","3055d656f9feed61f69b368787762d05");
+    AMEX("amex","","","amex","","amex","200428140254184795","3055d656f9feed61f69b368787762d05");
 
 
 

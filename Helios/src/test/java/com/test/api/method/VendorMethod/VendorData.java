@@ -1,6 +1,7 @@
 package com.test.api.method.VendorMethod;
 
 import com.google.gson.JsonObject;
+import com.hand.basicObject.Employee;
 import com.test.api.method.Vendor;
 
 /**
@@ -21,8 +22,11 @@ public class VendorData {
      * @param
      * @return
      */
-    public JsonObject setSettlementData(JsonObject readVendorData,String appName){
-//        readVendorData.addProperty("");
+    public JsonObject setSettlementData(Employee employee,JsonObject readVendorData, String appName,String corpId){
+
+        readVendorData.addProperty("supplierCode",appName);
+        readVendorData.addProperty("corpId",corpId);
+
         return readVendorData;
     }
 }

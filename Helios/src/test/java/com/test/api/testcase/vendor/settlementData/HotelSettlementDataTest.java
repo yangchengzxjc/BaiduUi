@@ -43,17 +43,17 @@ public class HotelSettlementDataTest extends BaseTest {
     @DataProvider(name = "TMC")
     public Object[][] tmcData() {
         return new Object[][]{
-                {TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
+                {TmcChannel.CIMCC.getSupplierCode(),TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
         };
     }
 
 
     @Test(description = "酒店结算数据 - 1人1间房")
-    public void hotelSettlementDataTest1(String appName,String corpId,String signature) throws Exception {
+    public void hotelSettlementDataTest1(String supplierCode,String appName,String corpId,String signature) throws Exception {
         //结算主键
         String recordId =String.valueOf(System.currentTimeMillis());
         //批次号
-        String accBalanceBatchNo = "cimccTMC_200428140254184788_flight_"+ UTCTime.getBeijingDay(0);
+        String accBalanceBatchNo = supplierCode+"_"+corpId+"_hotel_"+ UTCTime.getBeijingDay(0);
         //审批单号
         String approvalCode= "TA"+System.currentTimeMillis();
         //结算订单号
@@ -76,8 +76,8 @@ public class HotelSettlementDataTest extends BaseTest {
         HotelOrderSettlementInfo hotelOrderSettlementInfo=HotelOrderSettlementInfo.builder()
                 .recordId(recordId)
                 .supplierName("")
-                .supplierCode("cimccTMC")
-                .corpId("200428140254184788")
+                .supplierCode(supplierCode)
+                .corpId(corpId)
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
                 .companyOid(employee.getCompanyOID())
@@ -158,13 +158,13 @@ public class HotelSettlementDataTest extends BaseTest {
     }
 
     @Test(description = "酒店结算数据 - 俩人预定一间房",dataProvider = "TMC")
-    public void hotelSettlementDataTest2(String appName,String corpId,String signature) throws Exception {
+    public void hotelSettlementDataTest2(String supplierCode,String appName,String corpId,String signature) throws Exception {
         //员工信息
         JsonObject employeeInfo1 = infraStructure.getUserDetail(employee,"01399315");
         //结算主键
         String recordId =String.valueOf(System.currentTimeMillis());
         //批次号
-        String accBalanceBatchNo = "cimccTMC_200428140254184788_flight_"+ UTCTime.getBeijingDay(0);
+        String accBalanceBatchNo = supplierCode+"_"+corpId+"_hotel_"+ UTCTime.getBeijingDay(0);
         //审批单号
         String approvalCode= "TA"+System.currentTimeMillis();
         //结算订单号
@@ -187,8 +187,8 @@ public class HotelSettlementDataTest extends BaseTest {
         HotelOrderSettlementInfo hotelOrderSettlementInfo=HotelOrderSettlementInfo.builder()
                 .recordId(recordId)
                 .supplierName("")
-                .supplierCode("cimccTMC")
-                .corpId("200428140254184788")
+                .supplierCode(supplierCode)
+                .corpId(corpId)
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
                 .companyOid(employee.getCompanyOID())
@@ -267,11 +267,11 @@ public class HotelSettlementDataTest extends BaseTest {
     }
 
     @Test(description = "酒店结算数据 -订单取消",dataProvider = "TMC")
-    public void hotelSettlementDataTest3(String appName,String corpId,String signature) throws Exception {
+    public void hotelSettlementDataTest3(String supplierCode,String appName,String corpId,String signature) throws Exception {
         //结算主键
         String recordId =String.valueOf(System.currentTimeMillis());
         //批次号
-        String accBalanceBatchNo = "cimccTMC_200428140254184788_flight_"+ UTCTime.getBeijingDay(0);
+        String accBalanceBatchNo = supplierCode+"_"+corpId+"_hotel_"+ UTCTime.getBeijingDay(0);
         //审批单号
         String approvalCode= "TA"+System.currentTimeMillis();
         //结算订单号
@@ -294,8 +294,8 @@ public class HotelSettlementDataTest extends BaseTest {
         HotelOrderSettlementInfo hotelOrderSettlementInfo=HotelOrderSettlementInfo.builder()
                 .recordId(recordId)
                 .supplierName("")
-                .supplierCode("cimccTMC")
-                .corpId("200428140254184788")
+                .supplierCode(supplierCode)
+                .corpId(corpId)
                 .companyName(employee.getCompanyName())
                 .companyCode(employee.getCompanyCode())
                 .companyOid(employee.getCompanyOID())

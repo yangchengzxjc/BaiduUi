@@ -42,10 +42,10 @@ public class EmployeeInfoApi extends BaseRequest {
      * @param employee
      * @throws HttpStatusException
      */
-    public JsonObject getTenantInfo(Employee employee) throws HttpStatusException {
+    public JsonObject getTenantInfo(Employee employee,String tenantId) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.GETTENANTINFO;
         HashMap<String,String> map = new HashMap<>();
-        map.put("tenantId",employee.getTenantId());
+        map.put("tenantId",tenantId);
         String res = doGet(url, getHeader(employee.getAccessToken()), map, employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }

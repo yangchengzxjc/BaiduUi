@@ -15,4 +15,6 @@ public class HeaderKey {
     public static final String FORM_CONFIG = "form-list";
     //部门管理
     public static final String DepManager = "department-management";
+    //公司定义
+    public static final String Company = "company-maintain";
 }

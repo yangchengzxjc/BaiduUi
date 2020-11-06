@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.hand.api.EmployeeInfoApi;
 import com.hand.api.InfraStructureApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
@@ -445,6 +446,29 @@ public class InfraStructure {
      */
     public String getDeptCode(Employee employee,String deptOID) throws HttpStatusException {
         return infraStructureApi.departmentDetail(employee,deptOID).get("departmentCode").getAsString();
+    }
+
+    /**
+     *  获取租户相关信息  包括租户的name 和租户的code
+     * @param employee
+     * @param tenantId
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getTenantInfo(Employee employee,String tenantId) throws HttpStatusException {
+        EmployeeInfoApi employeeInfoApi =new EmployeeInfoApi();
+        return employeeInfoApi.getTenantInfo(employee,tenantId);
+    }
+
+    /**
+     * 根据员工的companyId  返回公司的code
+     * @param employee
+     * @param companyId
+     * @return
+     * @throws HttpStatusException
+     */
+    public String getCompanyCode(Employee employee,String companyId) throws HttpStatusException {
+        return infraStructureApi.companyDetail(employee,companyId).get("companyCode").getAsString();
     }
 
 }

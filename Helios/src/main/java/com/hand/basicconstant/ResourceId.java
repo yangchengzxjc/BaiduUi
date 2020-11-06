@@ -28,4 +28,6 @@ public class ResourceId {
     public static final String FORM_CONFIG = "66001000";
     //部门管理
     public static final String DepartManage= "640002000400";
+    //公司定义的详情
+    public static final String COMPANY = "640002000300";
 }

@@ -47,7 +47,7 @@ public class EmployeeAccount{
         employee.setEmail(jsonObject.get("email").getAsString());
         //获取当前用户的租户信息
         try{
-            JsonObject tenantInfo = employeeInfoApi.getTenantInfo(employee);
+            JsonObject tenantInfo = employeeInfoApi.getTenantInfo(employee,employee.getTenantId());
             employee.setTenantCode(tenantInfo.get("tenantCode").getAsString());
             employee.setTenantName(tenantInfo.get("tenantName").getAsString());
             //获取当前登录人的公司信息

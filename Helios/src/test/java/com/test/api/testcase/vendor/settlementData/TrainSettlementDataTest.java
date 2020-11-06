@@ -121,7 +121,8 @@ public class TrainSettlementDataTest extends BaseTest {
                 .passengerName(employee.getFullName())
                 //乘客工号
                 .passengerCode(employee.getEmployeeID())
-                .ticketName(employee.getFullName())
+//                .ticketName(employee.getFullName())
+                .ticketName("小张")
                 .passengerCostCenter1("综合管理部-文秘组")
                 .tripPurpose("项目技术支持")
                 .departments(dept)
@@ -177,7 +178,8 @@ public class TrainSettlementDataTest extends BaseTest {
         //转成jsonobject对象
         JsonObject trainOrderDataObject =new JsonParser().parse(trainOrderData).getAsJsonObject();
         //推送的结算数据
-        vendor.pushSettlementData(employee,"train",trainSettlementInfos,appName,corpId,signature);
+        JsonObject response = vendor.pushSettlementData(employee,"train",trainSettlementInfos,appName,corpId,signature);
+        log.info("response:{}",response);
         //查询推送的结算数据
         //初始化查询结算的对象
         SettlementBody settlementBody =SettlementBody.builder()

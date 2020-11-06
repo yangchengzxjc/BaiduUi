@@ -15,7 +15,6 @@ public enum TmcChannel {
     AMEX("amex","","","amex","","amex","200428140254184795","3055d656f9feed61f69b368787762d05");
 
 
-
     private String name;
     private String tmcChannel;
     private String supplierOID;

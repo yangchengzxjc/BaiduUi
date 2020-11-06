@@ -11,6 +11,8 @@ import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoDTO;
 import com.hand.utils.DocumnetUtil;
 import com.hand.utils.GsonUtil;
+import com.hand.utils.RandomNumber;
+import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 
@@ -207,12 +209,42 @@ public class Vendor {
 
     /**
      * 读取模板数据
-     * @param path  读取数据的路径 建议相对路径
+     * @param path  读取数据的路径 建议相对路径   读取到的数据进行 订单号和批次号的重新输入 以及更换订票人的fullname和工号。
      * @return
      */
-    public JsonObject getVendorData(String path){
+    public JsonObject getFlightSettlementData(Employee employee, String path, String corpId, String supplierCode){
         String  vendorData = DocumnetUtil.fileReader(path);
-        return new JsonParser().parse(vendorData.trim()).getAsJsonObject();
+        JsonObject vendorObject = new JsonParser().parse(vendorData).getAsJsonObject();
+        String orderNo = RandomNumber.getTimeNumber();
+        vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("accBalanceBatchNo",supplierCode+"_"+corpId+"_flight_"+ UTCTime.getBeijingDay(0));
+        vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("bookClerkName",employee.getFullName());
+        vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("bookClerkEmployeeId",employee.getEmployeeID());
+        vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("passengerName",employee.getFullName());
+        vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("passengerEmployeeId",employee.getFullName());
+        vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("orderNo",orderNo);
+        return vendorObject;
     }
 
+    /**
+     *  读取火车结算数据 并修改预订人的工号信息
+     * @param employee
+     * @param path
+     * @param corpId
+     * @param supplierCode
+     * @return
+     */
+    public JsonObject getTrainSettlementData(Employee employee, String path, String corpId, String supplierCode){
+        String  vendorData = DocumnetUtil.fileReader(path);
+        JsonObject vendorObject = new JsonParser().parse(vendorData).getAsJsonObject();
+        String orderNo = RandomNumber.getTimeNumber();
+        vendorObject.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().getAsJsonObject("trainBaseSettlement").addProperty("accBalanceBatchNo",supplierCode+"_"+corpId+"_flight_"+ UTCTime.getBeijingDay(0));
+        vendorObject.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().getAsJsonObject("trainBaseSettlement").addProperty("bookClerkName",employee.getFullName());
+        vendorObject.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().getAsJsonObject("trainBaseSettlement").addProperty("bookClerkEmployeeId",employee.getEmployeeID());
+        vendorObject.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().addProperty("passengerName",employee.getFullName());
+        vendorObject.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().addProperty("passengerCode",employee.getFullName());
+        vendorObject.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().getAsJsonObject("trainBaseSettlement").addProperty("orderNo",orderNo);
+        vendorObject.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().getAsJsonObject("trainBaseOrder").addProperty("orderNo",orderNo);
+        vendorObject.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().getAsJsonArray("trainPassengerTicketCorrelations").get(0).getAsJsonObject().addProperty("orderNo",orderNo);
+        return vendorObject;
+    }
 }

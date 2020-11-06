@@ -1,5 +1,6 @@
 package com.test.api.method.VendorMethod;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
@@ -38,12 +39,12 @@ public class VendorData {
      * @param
      * @return
      */
-    public JsonObject setSettlementData(Employee employee,JsonObject settlement, String appName,String corpId) throws HttpStatusException {
+    public JsonObject setFlightSettlementData(Employee employee, JsonObject settlement, String appName, String corpId) throws HttpStatusException {
         JsonObject settlementInfo = settlement.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject();
         //根据员工的工号 查询订票人的信息
-        JsonObject employeeInfo = infraStructure.getUserDetail(employee,employee.getEmployeeID());
+        JsonObject employeeInfo = infraStructure.getUserDetail(employee,settlementInfo.get("bookClerkEmployeeId").getAsString());
         //根据工号查询乘客的信息
-        String passengerEmployeeOid = infraStructure.getUserDetail(employee,employee.getEmployeeID()).get("userOID").getAsString();
+        String passengerEmployeeOid = infraStructure.getUserDetail(employee,settlementInfo.get("passengerEmployeeId").getAsString()).get("userOID").getAsString();
         String tenantId = employeeInfo.getAsJsonArray("userJobsDTOs").get(0).getAsJsonObject().get("tenantId").getAsString();
         String companyName = employeeInfo.get("companyName").getAsString();
         String companyOID = employeeInfo.get("companyOID").getAsString();
@@ -61,8 +62,52 @@ public class VendorData {
         settlementInfo.addProperty("tenantName",tenantName);
         settlementInfo.addProperty("companyName",companyName);
         settlementInfo.addProperty("companyCode",companyCode);
+        settlementInfo.addProperty("bookClerkEmployeeOid",employeeInfo.get("userOID").getAsString());
         settlementInfo.addProperty("passengerEmployeeOid",passengerEmployeeOid);
-        settlement.add("flightSettlementList",settlementInfo);
+        settlement.getAsJsonArray("flightSettlementList").add(settlementInfo);
         return settlement;
+    }
+
+
+    /**
+     * 初始化读取到的结算数据
+     * @param
+     * @return
+     */
+    public JsonObject setTrainSettlementData(Employee employee,JsonObject settlement, String appName,String corpId) throws HttpStatusException {
+        JsonObject settlementInfo = settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject();
+        //根据员工的工号 查询订票人的信息
+        JsonObject employeeInfo = infraStructure.getUserDetail(employee,settlementInfo.getAsJsonObject("trainBaseSettlement").get("bookClerkEmployeeId").getAsString());
+        //根据工号查询乘客的信息
+        String passengerEmployeeOid = infraStructure.getUserDetail(employee,settlementInfo.getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().get("passengerCode").getAsString()).get("userOID").getAsString();
+        String tenantId = employeeInfo.getAsJsonArray("userJobsDTOs").get(0).getAsJsonObject().get("tenantId").getAsString();
+        String companyName = employeeInfo.get("companyName").getAsString();
+        String companyOID = employeeInfo.get("companyOID").getAsString();
+        String companyId = employeeInfo.getAsJsonArray("userJobsDTOs").get(0).getAsJsonObject().get("companyId").getAsString();
+        //获取公司code
+        String companyCode = infraStructure.getCompanyCode(employee,companyId);
+        //获取该员工所在的租户信息
+        JsonObject tentantInfo = infraStructure.getTenantInfo(employee,tenantId);
+        String tenantName = tentantInfo.get("tenantName").getAsString();
+        String tenantCode = tentantInfo.get("tenantCode").getAsString();
+
+        JsonObject trainBaseSettlement = settlementInfo.get("trainBaseSettlement").getAsJsonObject();
+        trainBaseSettlement.addProperty("supplierCode",appName);
+        trainBaseSettlement.addProperty("corpId",corpId);
+        trainBaseSettlement.addProperty("companyOid",companyOID);
+        trainBaseSettlement.addProperty("tenantCode",tenantCode);
+        trainBaseSettlement.addProperty("tenantName",tenantName);
+        trainBaseSettlement.addProperty("companyName",companyName);
+        trainBaseSettlement.addProperty("companyCode",companyCode);
+        trainBaseSettlement.addProperty("bookClerkEmployeeOid",employeeInfo.get("userOID").getAsString());
+        settlementInfo.add("trainBaseSettlement",trainBaseSettlement);
+        //
+        JsonArray trainPassengerInfos = settlementInfo.getAsJsonArray("trainPassengerInfos");
+        trainPassengerInfos.get(0).getAsJsonObject().addProperty("passengerOid",passengerEmployeeOid);
+        settlementInfo.add("trainPassengerInfos",trainPassengerInfos);
+        settlement.getAsJsonArray("trainSettlementInfos").add(settlementInfo);
+        return settlement;
+
+
     }
 }

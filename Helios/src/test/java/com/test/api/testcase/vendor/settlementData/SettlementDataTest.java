@@ -44,16 +44,21 @@ public class SettlementDataTest extends BaseTest {
 
     /**
      *  需要提供测试账号租户 和corpId  相对应起来，这样里面后台逻辑落库数据才能测试  否则会出现签名错误或者book user not found
+     *  1.supplierCode  appName corpId signature 以及tmc 模板数据的路径来自数据驱动,路径使用相对路径
+     *  总的逻辑是：先读取提供的模板数据 然后更改模板数据中bookClerkName,bookClerkEmployeeId 以及passengerName 和 passengerEmployeeId  目的是为了校验nebula后台逻辑
+     *  订单号orderNo和批次号防止推送的数据重复  所以修改下订单号和批次号
+     *  后台逻辑生成的tentantId  tentantCode 等数据校采用的是员工的的实际租户和公司 进行校验
      *
      */
     @Test(description = "用于真实的供应商的机票结算数据进行推数据落库测试",dataProvider = "TMC")
     public void settlementDataTest1(String supplierCode,String appName,String corpId,String signature,String path) throws HttpStatusException {
+        //  读取模板数据 并修改订票人和乘客的name 和 code(工号)其他数据不做修改
         JsonObject vendorData = vendor.getFlightSettlementData(employee,path,corpId,supplierCode);
         log.info("vendorData:{}",vendorData);
-          //推送结算数据
+          //推送结算数据  模板数据推送
         JsonObject pushData = vendor.pushSettlementData(employee,"flight",vendorData,appName,corpId,signature);
         log.info("是否成功:{}",pushData);
-        //拼装数据（因为有些数据是后台逻辑查询的)
+        //拼装数据（因为有些数据是后台逻辑查询的)添加了一下不必传的字段数据和后台逻辑生成的字段。这块拼装的数据是直接在模板数据中添加的
         JsonObject settlementObject = mVendorData.setFlightSettlementData(employee,vendorData,appName,corpId);
         log.info("拼装的数据:{}",settlementObject);
         //内部接口查询的数据
@@ -64,12 +69,14 @@ public class SettlementDataTest extends BaseTest {
                 .size(10)
                 .page(1)
                 .build();
+        //内部接口查询出来的数据
         JsonObject internalQuerySettlement = vendor.internalQuerySettlement(employee,"flight",settlementBody);
         log.info("查询的机票结算数据:{}",internalQuerySettlement);
         HashMap<String,String> mapping = new HashMap<>();
         mapping.put("orderType","payType");
         mapping.put("acityCode","heliosacityCode");
         mapping.put("dcityCode","heliosdcityCode");
+        //对比数据直接采用拼装的数据作为参照数据和内部接口查询的数据进行对比
         assert GsonUtil.compareJsonObject(settlementObject,internalQuerySettlement,mapping);
     }
 

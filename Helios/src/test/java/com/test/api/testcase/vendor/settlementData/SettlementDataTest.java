@@ -48,6 +48,7 @@ public class SettlementDataTest extends BaseTest {
      *  总的逻辑是：先读取提供的模板数据 然后更改模板数据中bookClerkName,bookClerkEmployeeId 以及passengerName 和 passengerEmployeeId  目的是为了校验nebula后台逻辑
      *  订单号orderNo和批次号防止推送的数据重复  所以修改下订单号和批次号
      *  后台逻辑生成的tentantId  tentantCode 等数据校采用的是员工的的实际租户和公司 进行校验
+     *  heliosacityCode 汇联易城市代码 stage 和生产如果未维护此代码的话 则落地后汇联易城市代码为null
      *
      */
     @Test(description = "用于真实的供应商的机票结算数据进行推数据落库测试",dataProvider = "TMC")

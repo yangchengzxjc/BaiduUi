@@ -14,6 +14,7 @@ public class AirChangeInfo {
 
     //关联的订单号
     private String orderNo;
+    private String ticketKey;
     //改签需付金额
     private BigDecimal changeAmount;
     //改签类型

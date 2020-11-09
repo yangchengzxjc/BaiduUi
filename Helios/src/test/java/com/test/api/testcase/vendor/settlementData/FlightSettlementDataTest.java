@@ -212,6 +212,8 @@ public class FlightSettlementDataTest extends BaseTest {
         String accBalanceBatchNo =supplierCode+"_"+corpId+"_flight_"+ UTCTime.getBeijingDay(0);
         //订单号
         String orderNo = RandomNumber.getTimeNumber(14);
+        //原订单号
+        String originalOrderNo = RandomNumber.getTimeNumber(14);
         //改签原票号
         String firstTicketNo = RandomNumber.getTimeNumber(13);
         //机票金额
@@ -239,6 +241,7 @@ public class FlightSettlementDataTest extends BaseTest {
                 .accBalanceBatchNo(accBalanceBatchNo)
                 //订单号
                 .orderNo(orderNo)
+                .originalOrderNo(originalOrderNo)
                 .createTime(UTCTime.getBeijingTime(-1,0,0))
                 .orderDate(UTCTime.getBeijingTime(-5,0,0))
                 .deductibleFee(new BigDecimal(0.00).setScale(2))
@@ -323,6 +326,14 @@ public class FlightSettlementDataTest extends BaseTest {
         //查询结算数据
         JsonObject settlementData = vendor.internalQuerySettlement(employee,"flight",settlementBody);
         log.info("查询的结算数据:{}",settlementData);
+
+        //进行数据对比
+        //字段关系映射表 加这个是因为推数据的字段参数和查询出来的字段参数不一致,所以加上这个关系映射表
+        HashMap<String,String> mapping = new HashMap<>();
+        mapping.put("orderType","payType");
+        mapping.put("acityCode","heliosacityCode");
+        mapping.put("dcityCode","heliosdcityCode");
+        assert GsonUtil.compareJsonObject(flightSettlementJson,settlementData,mapping);
         //查询数据中的数据在推送的结算数据中不存在对比 以及jsonarrayz中的数据对比
         //bookClerkEmployeeOid 订票人的OID 对比
         if(settlementData.get("bookClerkEmployeeOid").isJsonNull()){
@@ -339,13 +350,6 @@ public class FlightSettlementDataTest extends BaseTest {
         //bookClerkDept   订票人部门对比以及乘客的部门对比
         assert flightSettlementJson.get("bookClerkDept").getAsJsonArray().toString().equals(settlementData.get("bookClerkDept").getAsJsonArray().toString());
         assert flightSettlementJson.get("passengerDept").getAsJsonArray().toString().equals(settlementData.get("passengerDept").getAsJsonArray().toString());
-        //进行数据对比
-        //字段关系映射表 加这个是因为推数据的字段参数和查询出来的字段参数不一致,所以加上这个关系映射表
-        HashMap<String,String> mapping = new HashMap<>();
-        mapping.put("orderType","payType");
-        mapping.put("acityCode","heliosacityCode");
-        mapping.put("dcityCode","heliosdcityCode");
-        assert GsonUtil.compareJsonObject(flightSettlementJson,settlementData,mapping);
     }
 
     @Test(description = "机票结算费用数据对比--1退票",dataProvider = "TMC")
@@ -358,6 +362,8 @@ public class FlightSettlementDataTest extends BaseTest {
         String accBalanceBatchNo =supplierCode+"_"+corpId+"_flight_"+ UTCTime.getBeijingDay(0);
         //订单号
         String orderNo = RandomNumber.getTimeNumber(14);
+        //原单号
+        String originalOrderNo = RandomNumber.getTimeNumber(14);
         //改签原票号
         String firstTicketNo = RandomNumber.getTimeNumber(13);
         //机票金额
@@ -387,6 +393,7 @@ public class FlightSettlementDataTest extends BaseTest {
                 .accBalanceBatchNo(accBalanceBatchNo)
                 //订单号
                 .orderNo(orderNo)
+                .originalOrderNo(originalOrderNo)
                 .createTime(UTCTime.getBeijingTime(-1,0,0))
                 .orderDate(UTCTime.getBeijingTime(-5,0,0))
                 .deductibleFee(new BigDecimal(0.00).setScale(2))

@@ -29,7 +29,7 @@ public class SettlementDataTest extends BaseTest {
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void init(@Optional("17767542345") String phoneNumber, @Optional("glf12345") String pwd, @Optional("stage") String env){
+    public void init(@Optional("15023489123") String phoneNumber, @Optional("a11111") String pwd, @Optional("stage") String env){
         employee =getEmployee(phoneNumber,pwd,env);
         vendor =new Vendor();
         mVendorData =new VendorData();
@@ -38,7 +38,7 @@ public class SettlementDataTest extends BaseTest {
     @DataProvider(name = "TMC")
     public Object[][] tmcData() {
         return new Object[][]{
-                {TmcChannel.AMEX.getSupplierCode(),TmcChannel.AMEX.getCorpId(),TmcChannel.AMEX.getSigniture(), OrderSettlementDataPath.settlementUseData},
+                {TmcChannel.AMEX.getSupplierCode(),TmcChannel.AMEX.getAppName(),TmcChannel.AMEX.getCorpId(),TmcChannel.AMEX.getSigniture(), OrderSettlementDataPath.settlementChangeData},
         };
     }
 
@@ -78,7 +78,7 @@ public class SettlementDataTest extends BaseTest {
         mapping.put("acityCode","heliosacityCode");
         mapping.put("dcityCode","heliosdcityCode");
         //对比数据直接采用拼装的数据作为参照数据和内部接口查询的数据进行对比
-        assert GsonUtil.compareJsonObject(settlementObject,internalQuerySettlement,mapping);
+        assert GsonUtil.compareJsonObject(settlementObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject(),internalQuerySettlement,mapping);
     }
 
     /**
@@ -93,7 +93,7 @@ public class SettlementDataTest extends BaseTest {
         JsonObject pushData = vendor.pushSettlementData(employee,"flight",vendorData,appName,corpId,signature);
         log.info("是否成功:{}",pushData);
         //拼装数据（因为有些数据是后台逻辑查询的)
-        JsonObject settlementObject = mVendorData.setFlightSettlementData(employee,vendorData,appName,corpId);
+        JsonObject settlementObject = mVendorData.setTrainSettlementData(employee,vendorData,appName,corpId);
         log.info("拼装的数据:{}",settlementObject);
         //内部接口查询的数据
         SettlementBody settlementBody =SettlementBody.builder()

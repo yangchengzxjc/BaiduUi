@@ -14,6 +14,7 @@ public class AirRefundInfo {
 
     //关联的订单号
     private String orderNo;
+    private String ticketKey;
     //退款金额
     private BigDecimal refundAmount;
     //退款类型   预留字段

@@ -43,6 +43,8 @@ public class FlightOrderSettlementInfo {
     private String accBalanceBatchNo;
     //订单号
     private String orderNo;
+    //原单号
+    private String originalOrderNo;
     //结算数据生成时间
     private String createTime;
     //预定日期

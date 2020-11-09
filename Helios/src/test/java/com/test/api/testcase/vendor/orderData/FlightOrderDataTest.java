@@ -47,12 +47,12 @@ public class FlightOrderDataTest extends BaseTest {
     @DataProvider(name = "TMC")
     public Object[][] tmcData() {
         return new Object[][]{
-                {TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
+                {TmcChannel.CIMCC.getSupplierCode(),TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
         };
     }
 
     @Test(description = "机票订单-单程-公司支付-月结-不改签-不退票",dataProvider = "TMC")
-    public void flightOrderDataTest1(String appName,String corpId,String signature) throws HttpStatusException {
+    public void flightOrderDataTest1(String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -76,22 +76,23 @@ public class FlightOrderDataTest extends BaseTest {
         AirBaseOrder airBaseOrder = AirBaseOrder.builder()
                 .orderType("B")
                 .orderNo(orderNo)
-                .supplierName("中集商旅")
-                .supplierCode("cimccTMC")
+                .tripId("")
+//                .supplierName("中集商旅")
+//                .supplierCode(supplierCode)
                 .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-A")
                 .orderStatus("已出票")
                 .orderStatusCode("S")
-                .tenantCode(employee.getTenantId())
-                .tenantName(employee.getTenantName())
+//                .tenantCode(employee.getTenantId())
+//                .tenantName(employee.getTenantName())
                 .employeeId(employee.getEmployeeID())
                 .supplierAccount("")
                 .preEmployName(employee.getFullName())
-                .companyOid(employee.getCompanyOID())
-                .companyName(employee.getCompanyName())
-                .companyCode(employee.getCompanyCode())
-                .departmentName(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()))
-                .departmentOid(employee.getDepartmentOID())
-                .departmentCode(depoCode)
+//                .companyOid(employee.getCompanyOID())
+//                .companyName(employee.getCompanyName())
+//                .companyCode(employee.getCompanyCode())
+//                .departmentName(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()))
+//                .departmentOid(employee.getDepartmentOID())
+//                .departmentCode(depoCode)
                 .bookChannel("Online-API")
                 .bookType("C")
                 .payType("COPAY")
@@ -182,7 +183,7 @@ public class FlightOrderDataTest extends BaseTest {
     }
 
     @Test(description = "机票订单-单程-因私-不改签-不退票",dataProvider = "TMC")
-    public void flightOrderDataTest2(String appName,String corpId,String signature) throws HttpStatusException {
+    public void flightOrderDataTest2(String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -206,8 +207,9 @@ public class FlightOrderDataTest extends BaseTest {
         AirBaseOrder airBaseOrder = AirBaseOrder.builder()
                 .orderType("C")
                 .orderNo(orderNo)
+                .tripId("")
                 .supplierName("中集商旅")
-                .supplierCode("cimccTMC")
+                .supplierCode(supplierCode)
                 .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-A")
                 .orderStatus("已出票")
                 .orderStatusCode("S")
@@ -311,7 +313,7 @@ public class FlightOrderDataTest extends BaseTest {
     }
 
     @Test(description = "机票订单-单程-公司支付-月结-一人退票",dataProvider = "TMC")
-    public void flightOrderDataTest4(String appName,String corpId,String signature) throws HttpStatusException {
+    public void flightOrderDataTest4(String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber(14);
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -335,9 +337,10 @@ public class FlightOrderDataTest extends BaseTest {
         AirBaseOrder airBaseOrder = AirBaseOrder.builder()
                 .orderType("R")
                 .orderNo(orderNo)
+                .tripId("")
                 .originalOrderNo(RandomNumber.getTimeNumber(14))
                 .supplierName("中集商旅")
-                .supplierCode("cimccTMC")
+                .supplierCode(supplierCode)
                 .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-A")
                 .orderStatus("退票成功")
                 .orderStatusCode("S")
@@ -447,7 +450,7 @@ public class FlightOrderDataTest extends BaseTest {
     }
 
     @Test(description = "机票订单-单程-公司支付-月结-一人改签",dataProvider = "TMC")
-    public void flightOrderDataTest3(String appName,String corpId,String signature) throws HttpStatusException {
+    public void flightOrderDataTest3(String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber(14);
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -473,9 +476,10 @@ public class FlightOrderDataTest extends BaseTest {
         AirBaseOrder airBaseOrder = AirBaseOrder.builder()
                 .orderType("C")
                 .orderNo(orderNo)
+                .tripId("")
                 .originalOrderNo(RandomNumber.getTimeNumber(14))
                 .supplierName("中集商旅")
-                .supplierCode("cimccTMC")
+                .supplierCode(supplierCode)
                 .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-A")
                 .orderStatus("改签成功")
                 .orderStatusCode("S")
@@ -584,7 +588,7 @@ public class FlightOrderDataTest extends BaseTest {
     }
 
     @Test(description = "机票订单-多人订票-公司支付-月结-不改签-不退票",dataProvider = "TMC")
-    public void flightOrderDataTest5(String appName,String corpId,String signature) throws HttpStatusException {
+    public void flightOrderDataTest5(String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -614,8 +618,9 @@ public class FlightOrderDataTest extends BaseTest {
         AirBaseOrder airBaseOrder = AirBaseOrder.builder()
                 .orderType("B")
                 .orderNo(orderNo)
+                .tripId("")
                 .supplierName("中集商旅")
-                .supplierCode("cimccTMC")
+                .supplierCode(supplierCode)
                 .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-A")
                 .orderStatus("已出票")
                 .orderStatusCode("S")
@@ -748,7 +753,7 @@ public class FlightOrderDataTest extends BaseTest {
     }
 
     @Test(description = "机票订单-单程-公司支付-月结-不改签-不退票-超标",dataProvider = "TMC")
-    public void flightOrderDataTest6(String appName,String corpId,String signature) throws HttpStatusException {
+    public void flightOrderDataTest6(String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -772,8 +777,9 @@ public class FlightOrderDataTest extends BaseTest {
         AirBaseOrder airBaseOrder = AirBaseOrder.builder()
                 .orderType("B")
                 .orderNo(orderNo)
+                .tripId("")
                 .supplierName("中集商旅")
-                .supplierCode("cimccTMC")
+                .supplierCode(supplierCode)
                 .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-A")
                 .orderStatus("已出票")
                 .orderStatusCode("S")

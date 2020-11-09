@@ -127,7 +127,7 @@ public class FlightOrderDataTest extends BaseTest {
         ArrayList<AirTicketPrint> airTicketPrints =new ArrayList<>();
         airTicketPrints.add(airTicketPrint);
         //保险信息
-        AirInsurance airInsurance = flightOrder.setAirInsurance(employee.getFullName(),"1",1);
+        AirInsurance airInsurance = flightOrder.setAirInsurance(ticketKey,"1",1);
         ArrayList<AirInsurance> airInsurances =new ArrayList<>();
         airInsurances.add(airInsurance);
         AirOrderInfoEntity airOrderInfoEntity =AirOrderInfoEntity.builder()
@@ -165,7 +165,6 @@ public class FlightOrderDataTest extends BaseTest {
         mapping.put("yClassStandardPrice","yclassStandardPrice");
         mapping.put("flight","flightNo");
         mapping.put("employeeId","preEmployeeId");
-        mapping.put("remark","remarks");
         assert GsonUtil.compareJsonObject(flightOrderDataObject,flightOrderData,mapping);
         //对比预订人的oid 推送数据未推送此字段单独来比较
         if(flightOrderData.getAsJsonObject("airBaseOrder").get("preEmployeeOid").isJsonNull()){

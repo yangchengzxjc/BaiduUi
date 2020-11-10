@@ -200,6 +200,8 @@ public class TrainSettlementDataTest extends BaseTest {
         mapping.put("月结","1");
         mapping.put("现付火车票","N");
         mapping.put("trainPassengerInfos","trainPassengerInfo");
+        //数据对比
+        assert GsonUtil.compareJsonObject(trainOrderDataObject,internalQuerySettlement,mapping);
         //对比bookClerkEmployeeOid和passengerOid
         if(internalQuerySettlement.getAsJsonObject("trainBaseSettlement").get("bookClerkEmployeeOid").isJsonNull()){
             assert false;
@@ -211,8 +213,6 @@ public class TrainSettlementDataTest extends BaseTest {
         }else{
             assert internalQuerySettlement.getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
         }
-        //数据对比
-        assert GsonUtil.compareJsonObject(trainOrderDataObject,internalQuerySettlement,mapping);
     }
 
     @Test(description = "火车结算费用推送-预定-自己订票-自己乘坐-改签",dataProvider = "TMC")
@@ -369,6 +369,8 @@ public class TrainSettlementDataTest extends BaseTest {
         mapping.put("月结","1");
         mapping.put("现付火车票","N");
         mapping.put("trainPassengerInfos","trainPassengerInfo");
+
+        assert GsonUtil.compareJsonObject(trainOrderDataObject,internalQuerySettlement,mapping);
         //对比passengerInfo中的passengerOid
         //数据对比
         if(internalQuerySettlement.getAsJsonObject("trainBaseSettlement").get("bookClerkEmployeeOid").isJsonNull()){
@@ -381,7 +383,6 @@ public class TrainSettlementDataTest extends BaseTest {
         }else{
             assert internalQuerySettlement.getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
         }
-        assert GsonUtil.compareJsonObject(trainOrderDataObject,internalQuerySettlement,mapping);
     }
 
     @Test(description = "火车结算费用推送-预定-自己订票-自己乘坐-退票",dataProvider = "TMC")

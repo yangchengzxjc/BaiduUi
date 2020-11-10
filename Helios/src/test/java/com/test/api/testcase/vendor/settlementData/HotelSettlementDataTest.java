@@ -48,7 +48,7 @@ public class HotelSettlementDataTest extends BaseTest {
     }
 
 
-    @Test(description = "酒店结算数据 - 1人1间房")
+    @Test(description = "酒店结算数据 - 1人1间房",dataProvider = "TMC")
     public void hotelSettlementDataTest1(String supplierCode,String appName,String corpId,String signature) throws Exception {
         //结算主键
         String recordId =String.valueOf(System.currentTimeMillis());
@@ -142,6 +142,9 @@ public class HotelSettlementDataTest extends BaseTest {
         JsonObject internalQuerySettlement = vendor.internalQuerySettlement(employee,"hotel",settlementBody);
         log.info("response:{}",internalQuerySettlement);
         HashMap<String,String> mapping =new HashMap<>();
+
+        //进行酒店结算信息对比
+        assert GsonUtil.compareJsonObject(hotelOrderDataObject,internalQuerySettlement,mapping);
         //预订人和入住人的oid 的比对
         if(internalQuerySettlement.get("bookClerkEmployeeOid").isJsonNull()) {
             assert false;
@@ -153,8 +156,6 @@ public class HotelSettlementDataTest extends BaseTest {
         }else{
             assert internalQuerySettlement.getAsJsonArray("passengerList").get(0).getAsJsonObject().get("passengerEmployeeOid").getAsString().equals(employee.getUserOID());
         }
-        //进行酒店结算信息对比
-        assert GsonUtil.compareJsonObject(hotelOrderDataObject,internalQuerySettlement,mapping);
     }
 
     @Test(description = "酒店结算数据 - 俩人预定一间房",dataProvider = "TMC")
@@ -251,6 +252,9 @@ public class HotelSettlementDataTest extends BaseTest {
         log.info("查询的酒店结算数据:{}",internalQuerySettlement);
         //进行入住旅客数据对比
         HashMap<String,String> mapping =new HashMap<>();
+
+        //进行酒店结算信息对比
+        assert GsonUtil.compareJsonObject(hotelOrderDataObject,internalQuerySettlement,mapping);
         //预订人和入住人的oid 的比对
         if(internalQuerySettlement.get("bookClerkEmployeeOid").isJsonNull()) {
             assert false;
@@ -262,8 +266,6 @@ public class HotelSettlementDataTest extends BaseTest {
         }else{
             assert internalQuerySettlement.getAsJsonArray("passengerList").get(0).getAsJsonObject().get("passengerEmployeeOid").getAsString().equals(employee.getUserOID());
         }
-        //进行酒店结算信息对比
-        assert GsonUtil.compareJsonObject(hotelOrderDataObject,internalQuerySettlement,mapping);
     }
 
     @Test(description = "酒店结算数据 -订单取消",dataProvider = "TMC")
@@ -358,6 +360,8 @@ public class HotelSettlementDataTest extends BaseTest {
         log.info("查询的酒店结算数据:{}",internalQuerySettlement);
         //进行入住旅客数据对比
         HashMap<String,String> mapping =new HashMap<>();
+        //进行酒店结算信息对比
+        assert GsonUtil.compareJsonObject(hotelOrderDataObject,internalQuerySettlement,mapping);
         //预订人和入住人的oid 的比对
         if(internalQuerySettlement.get("bookClerkEmployeeOid").isJsonNull()) {
             assert false;
@@ -369,7 +373,5 @@ public class HotelSettlementDataTest extends BaseTest {
         }else{
             assert internalQuerySettlement.getAsJsonArray("passengerList").get(0).getAsJsonObject().get("passengerEmployeeOid").getAsString().equals(employee.getUserOID());
         }
-        //进行酒店结算信息对比
-        assert GsonUtil.compareJsonObject(hotelOrderDataObject,internalQuerySettlement,mapping);
     }
 }

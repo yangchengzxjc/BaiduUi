@@ -49,12 +49,12 @@ public class HotelOrderDataTest extends BaseTest {
     @DataProvider(name = "TMC")
     public Object[][] tmcData() {
         return new Object[][]{
-                {TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
+                {TmcChannel.CIMCC.getSupplierName(),TmcChannel.CIMCC.getSupplierCode(),TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
         };
     }
 
     @Test(description = "酒店订单-1人预定-已提交状态-公司支付-未超标",dataProvider = "TMC")
-    public void hotelOrderDataTest1(String appName,String corpId,String signature) throws HttpStatusException {
+    public void hotelOrderDataTest1(String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -63,8 +63,8 @@ public class HotelOrderDataTest extends BaseTest {
         HotelBaseOrder hotelBaseOrder = HotelBaseOrder.builder()
                 .orderType("B")
                 .orderNo(orderNo)
-                .supplierName("中集商旅")
-                .supplierCode("cimccTMC")
+                .supplierName(supplierName)
+                .supplierCode(supplierCode)
                 .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-H")
                 .orderStatusName("已提交")
                 .orderStatusCode("Submitted")
@@ -155,7 +155,7 @@ public class HotelOrderDataTest extends BaseTest {
 
 
     @Test(description = "酒店订单-1统一预定多人的俩男一女两间房-已提交状态-公司支付-未超标",dataProvider = "TMC")
-    public void hotelOrderDataTest2(String appName,String corpId,String signature) throws HttpStatusException {
+    public void hotelOrderDataTest2(String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -169,8 +169,8 @@ public class HotelOrderDataTest extends BaseTest {
         HotelBaseOrder hotelBaseOrder = HotelBaseOrder.builder()
                 .orderType("B")
                 .orderNo(orderNo)
-                .supplierName("中集商旅")
-                .supplierCode("cimccTMC")
+                .supplierName(supplierName)
+                .supplierCode(supplierCode)
                 .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-H")
                 .orderStatusName("已提交")
                 .orderStatusCode("Submitted")
@@ -278,7 +278,7 @@ public class HotelOrderDataTest extends BaseTest {
     }
 
     @Test(description = "酒店订单-1人预定-订单取消-公司支付-未超标",dataProvider = "TMC")
-    public void hotelOrderDataTest3(String appName,String corpId,String signature) throws HttpStatusException {
+    public void hotelOrderDataTest3(String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber(14);
         String originalOrderNum = RandomNumber.getTimeNumber(14);
@@ -289,8 +289,8 @@ public class HotelOrderDataTest extends BaseTest {
                 .orderType("R")
                 .orderNo(orderNo)
                 .originalOrderNum(originalOrderNum)
-                .supplierName("中集商旅")
-                .supplierCode("cimccTMC")
+                .supplierName(supplierName)
+                .supplierCode(supplierCode)
                 .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-H")
                 .orderStatusName("已取消")
                 .orderStatusCode("Cancelled")
@@ -381,7 +381,7 @@ public class HotelOrderDataTest extends BaseTest {
     }
 
     @Test(description = "酒店订单-员工1人预定--因私-未超标",dataProvider = "TMC")
-    public void hotelOrderDataTest4(String appName,String corpId,String signature) throws HttpStatusException {
+    public void hotelOrderDataTest4(String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber(14);
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -390,9 +390,8 @@ public class HotelOrderDataTest extends BaseTest {
         HotelBaseOrder hotelBaseOrder = HotelBaseOrder.builder()
                 .orderType("B")
                 .orderNo(orderNo)
-                .originalOrderNum("")
-                .supplierName("中集商旅")
-                .supplierCode("cimccTMC")
+                .supplierName(supplierName)
+                .supplierCode(supplierCode)
                 .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-H")
                 .orderStatusName("已提交")
                 .orderStatusCode("Submitted")
@@ -483,7 +482,7 @@ public class HotelOrderDataTest extends BaseTest {
 
 
     @Test(description = "酒店订单-1人预定-超标-公司支付",dataProvider = "TMC")
-    public void hotelOrderDataTest6(String appName,String corpId,String signature) throws HttpStatusException {
+    public void hotelOrderDataTest6(String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -492,8 +491,8 @@ public class HotelOrderDataTest extends BaseTest {
         HotelBaseOrder hotelBaseOrder = HotelBaseOrder.builder()
                 .orderType("B")
                 .orderNo(orderNo)
-                .supplierName("中集商旅")
-                .supplierCode("cimccTMC")
+                .supplierName(supplierName)
+                .supplierCode(supplierCode)
                 .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-H")
                 .orderStatusName("已提交")
                 .orderStatusCode("Submitted")
@@ -578,7 +577,7 @@ public class HotelOrderDataTest extends BaseTest {
     }
 
     @Test(description = "酒店订单-1人预定-已提交状态-混合支付-未超标",dataProvider = "TMC")
-    public void hotelOrderDataTest7(String appName,String corpId,String signature) throws HttpStatusException {
+    public void hotelOrderDataTest7(String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -587,8 +586,8 @@ public class HotelOrderDataTest extends BaseTest {
         HotelBaseOrder hotelBaseOrder = HotelBaseOrder.builder()
                 .orderType("B")
                 .orderNo(orderNo)
-                .supplierName("中集商旅")
-                .supplierCode("cimccTMC")
+                .supplierName(supplierName)
+                .supplierCode(supplierCode)
                 .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-H")
                 .orderStatusName("已提交")
                 .orderStatusCode("Submitted")

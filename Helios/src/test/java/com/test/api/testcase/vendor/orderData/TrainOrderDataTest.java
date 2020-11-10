@@ -46,12 +46,12 @@ public class TrainOrderDataTest extends BaseTest {
     @DataProvider(name = "TMC")
     public Object[][] tmcData() {
         return new Object[][]{
-                {TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
+                {TmcChannel.CIMCC.getSupplierName(),TmcChannel.CIMCC.getSupplierCode(),TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
         };
     }
 
     @Test(description = "火车票1人预定,不改签-不退票-公司支付-月结",dataProvider = "TMC")
-    public void trainOrderDataTest1(String appName,String corpId,String signature) throws HttpStatusException {
+    public void trainOrderDataTest1(String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -64,7 +64,7 @@ public class TrainOrderDataTest extends BaseTest {
         String trainElectronic = RandomNumber.getTimeNumber(10);
         bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //订单基本信息
-        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已购票","B",orderNo,"Online-APP","C","COPAY");
+        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(supplierName,supplierCode,employee,totalAmount,"已购票","B",orderNo,"Online-APP","C","COPAY");
         //订单车票信息
         TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic,"",ticketPrice,"05车07C");
         ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
@@ -129,7 +129,7 @@ public class TrainOrderDataTest extends BaseTest {
 
 
     @Test(description = "火车票1人预定,不改签-不退票-因私-个人支付宝支付-现付",dataProvider = "TMC")
-    public void trainOrderDataTest2(String appName,String corpId,String signature) throws HttpStatusException {
+    public void trainOrderDataTest2(String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -142,7 +142,7 @@ public class TrainOrderDataTest extends BaseTest {
         String trainElectronic = RandomNumber.getTimeNumber(10);
         bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //订单基本信息
-        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已购票","B",orderNo,"Online-APP","P","ALIPAY");
+        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(supplierName,supplierCode,employee,totalAmount,"已购票","B",orderNo,"Online-APP","P","ALIPAY");
         //订单车票信息
         TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic,"",ticketPrice,"05车07C");
         ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
@@ -206,7 +206,7 @@ public class TrainOrderDataTest extends BaseTest {
     }
 
     @Test(description = "火车票-一人预定多人车票-不改签-不退票-因公-公司账户-月结",dataProvider = "TMC")
-    public void trainOrderDataTest3(String appName,String corpId,String signature) throws HttpStatusException {
+    public void trainOrderDataTest3(String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -224,7 +224,7 @@ public class TrainOrderDataTest extends BaseTest {
         JsonObject employeeInfo = infraStructure.getUserDetail(employee,"01399315");
         bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //订单基本信息
-        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已购票","B",orderNo,"Online-APP","C","COPAY");
+        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(supplierName,supplierCode,employee,totalAmount,"已购票","B",orderNo,"Online-APP","C","COPAY");
         //订单车票信息 两张车票
         TrainTicketInfo trainTicketInfo1 = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic1,"",ticketPrice,"05车07C");
         TrainTicketInfo trainTicketInfo2 = trainOrder.setTrainTicketInfo(orderNo,"D1234","2",trainElectronic2,"",ticketPrice,"05车07B");
@@ -301,7 +301,7 @@ public class TrainOrderDataTest extends BaseTest {
     }
 
     @Test(description = "火车票1人预定,改签-公司支付-月结",dataProvider = "TMC")
-    public void trainOrderDataTest4(String appName,String corpId,String signature) throws HttpStatusException {
+    public void trainOrderDataTest4(String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //原订单号
         String orderNo = RandomNumber.getTimeNumber(14);
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -315,7 +315,7 @@ public class TrainOrderDataTest extends BaseTest {
         String preTrainElectronic = RandomNumber.getTimeNumber(10);
         bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //订单基本信息
-        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"改签成功","C",orderNo,"Online-APP","C","COPAY");
+        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(supplierName,supplierCode,employee,totalAmount,"改签成功","C",orderNo,"Online-APP","C","COPAY");
         //订单车票信息
         TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"G1234","1",trainElectronic,preTrainElectronic,ticketPrice,"05车07C");
         ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
@@ -391,7 +391,7 @@ public class TrainOrderDataTest extends BaseTest {
     }
 
     @Test(description = "火车票1人预定-订单退票（退票订单）-公司支付-月结",dataProvider = "TMC")
-    public void trainOrderDataTest5(String appName,String corpId,String signature) throws HttpStatusException {
+    public void trainOrderDataTest5(String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //原订单号
         String orderNo = RandomNumber.getTimeNumber(14);
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -404,7 +404,7 @@ public class TrainOrderDataTest extends BaseTest {
         String trainElectronic = RandomNumber.getTimeNumber(10);
         bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //订单基本信息
-        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"退票成功","R",orderNo,"Online-APP","C","COPAY");
+        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(supplierName,supplierCode,employee,totalAmount,"退票成功","R",orderNo,"Online-APP","C","COPAY");
         //订单车票信息
         TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"G1234","1",trainElectronic,"",ticketPrice,"05车07C");
         ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
@@ -474,7 +474,7 @@ public class TrainOrderDataTest extends BaseTest {
     }
 
     @Test(description = "火车票1人预定-订单改签-订单退票-公司支付-月结",dataProvider = "TMC")
-    public void trainOrderDataTest6(String appName,String corpId,String signature) throws HttpStatusException {
+    public void trainOrderDataTest6(String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //原订单号
         String orderNo = RandomNumber.getTimeNumber(14);
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -488,7 +488,7 @@ public class TrainOrderDataTest extends BaseTest {
         String preTrainElectronic = RandomNumber.getTimeNumber(10);
         bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //订单基本信息
-        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"退票成功","R",orderNo,"Online-APP","C","COPAY");
+        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(supplierName,supplierCode,employee,totalAmount,"退票成功","R",orderNo,"Online-APP","C","COPAY");
         //订单车票信息
         TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"G1234","1",trainElectronic,preTrainElectronic,ticketPrice,"05车07C");
         ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();
@@ -570,7 +570,7 @@ public class TrainOrderDataTest extends BaseTest {
     }
 
     @Test(description = "火车票-一人预定多人车票(一个人为外部人员)-不改签-不退票-因公-公司账户-月结",dataProvider = "TMC")
-    public void trainOrderDataTest7(String appName,String corpId,String signature) throws HttpStatusException {
+    public void trainOrderDataTest7(String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -586,7 +586,7 @@ public class TrainOrderDataTest extends BaseTest {
         String trainElectronic2 = RandomNumber.getTimeNumber(10);
         bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //订单基本信息
-        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已购票","B",orderNo,"Online-APP","C","COPAY");
+        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(supplierName,supplierCode,employee,totalAmount,"已购票","B",orderNo,"Online-APP","C","COPAY");
         //订单车票信息 两张车票
         TrainTicketInfo trainTicketInfo1 = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic1,"",ticketPrice,"05车07C");
         TrainTicketInfo trainTicketInfo2 = trainOrder.setTrainTicketInfo(orderNo,"D1234","2",trainElectronic2,"",ticketPrice,"05车07B");
@@ -655,7 +655,7 @@ public class TrainOrderDataTest extends BaseTest {
     }
 
     @Test(description = "火车票1人预定,不改签-不退票-超标-公司支付-月结",dataProvider = "TMC")
-    public void trainOrderDataTest8(String appName,String corpId,String signature) throws HttpStatusException {
+    public void trainOrderDataTest8(String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         //订单号
         String orderNo = RandomNumber.getTimeNumber();
         ArrayList<String> bookerDepartments =new ArrayList<>();
@@ -668,7 +668,7 @@ public class TrainOrderDataTest extends BaseTest {
         String trainElectronic = RandomNumber.getTimeNumber(10);
         bookerDepartments.add(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()));
         //订单基本信息
-        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(employee,totalAmount,"已购票","B",orderNo,"Online-APP","C","COPAY");
+        TrainBaseOrder trainBaseOrder =trainOrder.setTrainBaseOrder(supplierName,supplierCode,employee,totalAmount,"已购票","B",orderNo,"Online-APP","C","COPAY");
         //订单车票信息
         TrainTicketInfo trainTicketInfo = trainOrder.setTrainTicketInfo(orderNo,"D1234","1",trainElectronic,"",ticketPrice,"05车07C");
         ArrayList<TrainTicketInfo> trainTicketInfos =new ArrayList<>();

@@ -42,7 +42,7 @@ public class TrainOrder {
      * @param payType
      * @return
      */
-    public TrainBaseOrder setTrainBaseOrder(Employee employee,BigDecimal totalAmount,String orderStatusName,String orderType,String orderNo,String bookChannel,String bookType,String payType) throws HttpStatusException {
+    public TrainBaseOrder setTrainBaseOrder(String supplierName,String supplierCode,Employee employee,BigDecimal totalAmount,String orderStatusName,String orderType,String orderNo,String bookChannel,String bookType,String payType) throws HttpStatusException {
         String paymentType ="";
         String accountType ="";
         if(bookType.equals("C")){
@@ -79,8 +79,8 @@ public class TrainOrder {
                 .orderType(orderType)
                 .orderNo(orderNo)
                 .originalOrderNum(originalOrderNum)
-                .supplierName("中集商旅")
-                .supplierCode("cimccTMC")
+                .supplierName(supplierName)
+                .supplierCode(supplierCode)
                 .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-T")
                 .orderStatusName(orderStatusName)
                 .orderStatusCode(orderStatusMapping.get(orderStatusName))

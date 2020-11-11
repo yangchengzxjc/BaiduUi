@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Builder(toBuilder = true)
 @Data
 public class AirInsurance {
-    private String ticketKey;
+    private String employeeName;
     private String sequence;
     //总保费
     private BigDecimal insuranceFee;

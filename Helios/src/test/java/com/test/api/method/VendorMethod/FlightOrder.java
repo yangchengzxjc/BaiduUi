@@ -248,7 +248,7 @@ public class FlightOrder {
 
         //保险信息
         AirInsurance airInsurance = AirInsurance.builder()
-                .ticketKey(employeeName)
+                .employeeName(employeeName)
                 .sequence(sequence)
                 .insuranceFee(new BigDecimal(50).setScale(2))
                 .insuranceStatus("P")

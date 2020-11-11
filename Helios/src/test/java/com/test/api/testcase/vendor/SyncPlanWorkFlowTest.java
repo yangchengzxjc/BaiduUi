@@ -169,8 +169,8 @@ public class SyncPlanWorkFlowTest extends BaseTest {
             ArrayList<AirTicketPrint> airTicketPrints =new ArrayList<>();
             airTicketPrints.add(airTicketPrint);
             //保险信息
-            AirInsurance airInsurance = flightOrder.setAirInsurance(ticketKey,"1",1);
-            ArrayList<AirInsurance> airInsurances =new ArrayList<>();
+            AirInsurance airInsurance = flightOrder.setAirInsurance(airPassengerInfo.getPassengerName(),"1",1);
+            ArrayList<AirInsurance> airInsurances = new ArrayList<>();
             airInsurances.add(airInsurance);
             //机票订单数据封装
             AirOrderInfoEntity airOrderInfoEntity =AirOrderInfoEntity.builder()
@@ -230,7 +230,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
         }
     }
 
-    @Test(description = "审批单同步-中集TMC-酒店行程",dataProvider = "TMC")
+    @Test(description = "审批单同步-中集TMC-酒店订单行程",dataProvider = "TMC")
     public void workFlowTest2(String tmcChannel,String supplierOID,String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException, InterruptedException {
         FormComponent component =new FormComponent();
         component.setCause(tmcChannel+"供应商酒店同步测试");

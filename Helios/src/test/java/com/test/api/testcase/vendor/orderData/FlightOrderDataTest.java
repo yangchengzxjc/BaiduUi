@@ -78,21 +78,21 @@ public class FlightOrderDataTest extends BaseTest {
                 .orderNo(orderNo)
                 .tripId("")
                 .supplierName(supplierName)
-//                .supplierCode(supplierCode)
+                .supplierCode(supplierCode)
                 .approvalCode("TA"+RandomNumber.getTimeNumber(8)+"-1"+"-A")
                 .orderStatus("已出票")
                 .orderStatusCode("S")
-//                .tenantCode(employee.getTenantId())
-//                .tenantName(employee.getTenantName())
+                .tenantCode(employee.getTenantId())
+                .tenantName(employee.getTenantName())
                 .employeeId(employee.getEmployeeID())
                 .supplierAccount("")
                 .preEmployName(employee.getFullName())
-//                .companyOid(employee.getCompanyOID())
-//                .companyName(employee.getCompanyName())
-//                .companyCode(employee.getCompanyCode())
-//                .departmentName(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()))
-//                .departmentOid(employee.getDepartmentOID())
-//                .departmentCode(depoCode)
+                .companyOid(employee.getCompanyOID())
+                .companyName(employee.getCompanyName())
+                .companyCode(employee.getCompanyCode())
+                .departmentName(GsonUtil.getDepartmentFromPath(employee.getDepartmentName()))
+                .departmentOid(employee.getDepartmentOID())
+                .departmentCode(depoCode)
                 .bookChannel("Online-API")
                 .bookType("C")
                 .payType("COPAY")
@@ -128,7 +128,7 @@ public class FlightOrderDataTest extends BaseTest {
         ArrayList<AirTicketPrint> airTicketPrints =new ArrayList<>();
         airTicketPrints.add(airTicketPrint);
         //保险信息
-        AirInsurance airInsurance = flightOrder.setAirInsurance(ticketKey,"1",1);
+        AirInsurance airInsurance = flightOrder.setAirInsurance(employee.getFullName(),"1",1);
         ArrayList<AirInsurance> airInsurances =new ArrayList<>();
         airInsurances.add(airInsurance);
         AirOrderInfoEntity airOrderInfoEntity =AirOrderInfoEntity.builder()
@@ -155,7 +155,6 @@ public class FlightOrderDataTest extends BaseTest {
         //先对比需要删除的数据
         assert flightOrderData.getAsJsonObject("airBaseOrder").get("flightWay").getAsString().equals(flightOrderDataObject.getAsJsonObject("airBaseOrder").get("flightWay").getAsString());
         assert flightOrderData.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString().equals(flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().get("isPolicy").getAsString());
-
         //先删除航程类型字段 因为单程映射会重复 删除完后单独比较   协议价  里程数
         flightOrderDataObject.getAsJsonObject("airBaseOrder").remove("flightWay");
         flightOrderDataObject.getAsJsonArray("airTicketInfo").get(0).getAsJsonObject().remove("isPolicy");
@@ -179,7 +178,6 @@ public class FlightOrderDataTest extends BaseTest {
         }else{
             assert flightOrderData.getAsJsonArray("airPassengerInfo").get(0).getAsJsonObject().get("passengerOid").getAsString().equals(employee.getUserOID());
         }
-
     }
 
     @Test(description = "机票订单-单程-因私-不改签-不退票",dataProvider = "TMC")

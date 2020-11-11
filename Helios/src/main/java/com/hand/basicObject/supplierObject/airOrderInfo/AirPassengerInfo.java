@@ -1,6 +1,7 @@
 package com.hand.basicObject.supplierObject.airOrderInfo;
 
 import lombok.Builder;
+import lombok.Data;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * @Version 1.0
  **/
 @Builder(toBuilder = true)
+@Data
 public class AirPassengerInfo {
 
     //乘客关联的订单号

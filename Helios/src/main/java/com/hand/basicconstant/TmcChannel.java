@@ -33,5 +33,4 @@ public enum TmcChannel {
         }
         return DT;
     }
-
 }

@@ -42,12 +42,12 @@ public class TrainSettlementDataTest extends BaseTest {
     @DataProvider(name = "TMC")
     public Object[][] tmcData() {
         return new Object[][]{
-                {TmcChannel.CIMCC.getSupplierCode(),TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
+                {TmcChannel.CIMCC.getSupplierName(),TmcChannel.CIMCC.getSupplierCode(),TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
         };
     }
 
     @Test(description = "火车结算费用推送-预定-自己订票-自己乘坐-未改签-未退票",dataProvider = "TMC")
-    public void trainSettlementDataTest1(String supplierCode,String appName,String corpId,String signature) throws Exception {
+    public void trainSettlementDataTest1(String supplierName,String supplierCode,String appName,String corpId,String signature) throws Exception {
         //结算主键
         String recordId =String.valueOf(System.currentTimeMillis());
         //批次号
@@ -71,7 +71,7 @@ public class TrainSettlementDataTest extends BaseTest {
         String ticketNo = RandomNumber.getUUID(10);
         TrainBaseSettlement trainBaseSettlement =TrainBaseSettlement.builder()
                 .recordId(recordId)
-                .supplierName("")
+                .supplierName(supplierName)
                 .supplierCode(supplierCode)
                 .approvalCode(approvalCode)
                 .accBalanceBatchNo(accBalanceBatchNo)
@@ -216,7 +216,7 @@ public class TrainSettlementDataTest extends BaseTest {
     }
 
     @Test(description = "火车结算费用推送-预定-自己订票-自己乘坐-改签",dataProvider = "TMC")
-    public void trainSettlementDataTest2(String supplierCode,String appName,String corpId,String signature) throws Exception {
+    public void trainSettlementDataTest2(String supplierName,String supplierCode,String appName,String corpId,String signature) throws Exception {
         //结算主键
         String recordId =String.valueOf(System.currentTimeMillis());
         //批次号
@@ -240,7 +240,7 @@ public class TrainSettlementDataTest extends BaseTest {
         String ticketNo = RandomNumber.getUUID(10);
         TrainBaseSettlement trainBaseSettlement =TrainBaseSettlement.builder()
                 .recordId(recordId)
-                .supplierName("")
+                .supplierName(supplierName)
                 .supplierCode(supplierCode)
                 .approvalCode(approvalCode)
                 .accBalanceBatchNo(accBalanceBatchNo)
@@ -386,7 +386,7 @@ public class TrainSettlementDataTest extends BaseTest {
     }
 
     @Test(description = "火车结算费用推送-预定-自己订票-自己乘坐-退票",dataProvider = "TMC")
-    public void trainSettlementDataTest3(String supplierCode,String appName,String corpId,String signature) throws Exception {
+    public void trainSettlementDataTest3(String supplierName,String supplierCode,String appName,String corpId,String signature) throws Exception {
         //结算主键
         String recordId =String.valueOf(System.currentTimeMillis());
         //批次号
@@ -410,7 +410,7 @@ public class TrainSettlementDataTest extends BaseTest {
         String ticketNo = RandomNumber.getUUID(10);
         TrainBaseSettlement trainBaseSettlement =TrainBaseSettlement.builder()
                 .recordId(recordId)
-                .supplierName("")
+                .supplierName(supplierName)
                 .supplierCode(supplierCode)
                 .approvalCode(approvalCode)
                 .accBalanceBatchNo(accBalanceBatchNo)
@@ -552,5 +552,4 @@ public class TrainSettlementDataTest extends BaseTest {
         //数据对比
         assert GsonUtil.compareJsonObject(trainOrderDataObject,internalQuerySettlement,mapping);
     }
-
 }

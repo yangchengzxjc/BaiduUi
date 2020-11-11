@@ -43,13 +43,13 @@ public class HotelSettlementDataTest extends BaseTest {
     @DataProvider(name = "TMC")
     public Object[][] tmcData() {
         return new Object[][]{
-                {TmcChannel.CIMCC.getSupplierCode(),TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
+                {TmcChannel.CIMCC.getSupplierName(),TmcChannel.CIMCC.getSupplierCode(),TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
         };
     }
 
 
     @Test(description = "酒店结算数据 - 1人1间房",dataProvider = "TMC")
-    public void hotelSettlementDataTest1(String supplierCode,String appName,String corpId,String signature) throws Exception {
+    public void hotelSettlementDataTest1(String supplierName,String supplierCode,String appName,String corpId,String signature) throws Exception {
         //结算主键
         String recordId =String.valueOf(System.currentTimeMillis());
         //批次号
@@ -75,7 +75,7 @@ public class HotelSettlementDataTest extends BaseTest {
         passengerInfos.add(passengerInfo);
         HotelOrderSettlementInfo hotelOrderSettlementInfo=HotelOrderSettlementInfo.builder()
                 .recordId(recordId)
-                .supplierName("")
+                .supplierName(supplierName)
                 .supplierCode(supplierCode)
                 .corpId(corpId)
                 .companyName(employee.getCompanyName())
@@ -159,7 +159,7 @@ public class HotelSettlementDataTest extends BaseTest {
     }
 
     @Test(description = "酒店结算数据 - 俩人预定一间房",dataProvider = "TMC")
-    public void hotelSettlementDataTest2(String supplierCode,String appName,String corpId,String signature) throws Exception {
+    public void hotelSettlementDataTest2(String supplierName,String supplierCode,String appName,String corpId,String signature) throws Exception {
         //员工信息
         JsonObject employeeInfo1 = infraStructure.getUserDetail(employee,"01399315");
         //结算主键
@@ -187,7 +187,7 @@ public class HotelSettlementDataTest extends BaseTest {
         passengerInfos.add(passengerInfo);
         HotelOrderSettlementInfo hotelOrderSettlementInfo=HotelOrderSettlementInfo.builder()
                 .recordId(recordId)
-                .supplierName("")
+                .supplierName(supplierName)
                 .supplierCode(supplierCode)
                 .corpId(corpId)
                 .companyName(employee.getCompanyName())
@@ -269,7 +269,7 @@ public class HotelSettlementDataTest extends BaseTest {
     }
 
     @Test(description = "酒店结算数据 -订单取消",dataProvider = "TMC")
-    public void hotelSettlementDataTest3(String supplierCode,String appName,String corpId,String signature) throws Exception {
+    public void hotelSettlementDataTest3(String supplierName,String supplierCode,String appName,String corpId,String signature) throws Exception {
         //结算主键
         String recordId =String.valueOf(System.currentTimeMillis());
         //批次号
@@ -295,7 +295,7 @@ public class HotelSettlementDataTest extends BaseTest {
         passengerInfos.add(passengerInfo);
         HotelOrderSettlementInfo hotelOrderSettlementInfo=HotelOrderSettlementInfo.builder()
                 .recordId(recordId)
-                .supplierName("")
+                .supplierName(supplierName)
                 .supplierCode(supplierCode)
                 .corpId(corpId)
                 .companyName(employee.getCompanyName())

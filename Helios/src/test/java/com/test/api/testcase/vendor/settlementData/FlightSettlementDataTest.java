@@ -49,13 +49,13 @@ public class FlightSettlementDataTest extends BaseTest {
     @DataProvider(name = "TMC")
     public Object[][] tmcData() {
         return new Object[][]{
-                {TmcChannel.CIMCC.getSupplierCode(),TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
+                {TmcChannel.CIMCC.getSupplierName(),TmcChannel.CIMCC.getSupplierCode(),TmcChannel.CIMCC.getAppName(),TmcChannel.CIMCC.getCorpId(),TmcChannel.CIMCC.getSigniture()},
         };
     }
 
 
     @Test(description = "机票结算费用数据对比-订票人和乘机人都是自己-1人未退票-不改签",dataProvider = "TMC")
-    public void flightSettlementDataTest1(String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
+    public void flightSettlementDataTest1(String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         ArrayList<FlightOrderSettlementInfo> FlightOrderSettlementInfos =new ArrayList<>();
         //初始化机票结算信息
         //结算信息的主键
@@ -76,7 +76,7 @@ public class FlightSettlementDataTest extends BaseTest {
         FlightOrderSettlementInfo flightOrderSettlementInfo =FlightOrderSettlementInfo.builder()
                 //结算信息的主键
                 .recordId(recordId)
-                .supplierName("")
+                .supplierName(supplierName)
                 .supplierCode(supplierCode)
                 .corpId(corpId)
                 .companyName(employee.getCompanyName())
@@ -203,7 +203,7 @@ public class FlightSettlementDataTest extends BaseTest {
     }
 
     @Test(description = "机票结算费用数据对比--1人改签-未退票",dataProvider = "TMC")
-    public void flightSettlementDataTest2(String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
+    public void flightSettlementDataTest2(String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         ArrayList<FlightOrderSettlementInfo> FlightOrderSettlementInfos =new ArrayList<>();
         //初始化机票结算信息
         //结算信息的主键
@@ -228,7 +228,7 @@ public class FlightSettlementDataTest extends BaseTest {
         FlightOrderSettlementInfo flightOrderSettlementInfo1 =FlightOrderSettlementInfo.builder()
                 //结算信息的主键
                 .recordId(recordId1)
-                .supplierName("")
+                .supplierName(supplierName)
                 .supplierCode(supplierCode)
                 .corpId(corpId)
                 .companyName(employee.getCompanyName())
@@ -353,7 +353,7 @@ public class FlightSettlementDataTest extends BaseTest {
     }
 
     @Test(description = "机票结算费用数据对比--1退票",dataProvider = "TMC")
-    public void flightSettlementDataTest3(String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
+    public void flightSettlementDataTest3(String supplierName,String supplierCode,String appName,String corpId,String signature) throws HttpStatusException {
         ArrayList<FlightOrderSettlementInfo> FlightOrderSettlementInfos =new ArrayList<>();
         //初始化机票结算信息
         //结算信息的主键
@@ -380,7 +380,7 @@ public class FlightSettlementDataTest extends BaseTest {
         FlightOrderSettlementInfo flightOrderSettlementInfo1 =FlightOrderSettlementInfo.builder()
                 //结算信息的主键
                 .recordId(recordId1)
-                .supplierName("")
+                .supplierName(supplierName)
                 .supplierCode(supplierCode)
                 .corpId(corpId)
                 .companyName(employee.getCompanyName())

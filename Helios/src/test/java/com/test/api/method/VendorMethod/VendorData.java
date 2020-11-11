@@ -6,12 +6,14 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.test.api.method.InfraStructure;
 import com.test.api.method.Vendor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @Author peng.zhang
  * @Date 2020/11/4
  * @Version 1.0
  **/
+@Slf4j
 public class VendorData {
 
     private Vendor vendor;
@@ -37,31 +39,36 @@ public class VendorData {
      * @param
      * @return
      */
-    public JsonObject setFlightSettlementData(Employee employee, String type,JsonObject settlement, String supplierCode, String corpId) throws HttpStatusException {
+    public JsonObject setSettlementData(Employee employee, String type, JsonObject settlement, String supplierName,String supplierCode, String corpId) throws HttpStatusException {
 
         JsonObject settlementInfo = new JsonObject();
         JsonObject employeeInfo =new JsonObject();
         String passengerEmployeeOid="";
         JsonArray trainPassengerInfos = new JsonArray();
-        if(type.equals("flight")){
-            settlementInfo = settlement.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject();
-            //根据员工的工号 查询订票人的信息
-            employeeInfo = infraStructure.getUserDetail(employee,settlementInfo.get("bookClerkEmployeeId").getAsString());
-            //根据工号查询乘客的信息
-            passengerEmployeeOid = infraStructure.getUserDetail(employee,settlementInfo.get("passengerEmployeeId").getAsString()).get("userOID").getAsString();
-        }else if(type.equals("train")){
-            settlementInfo = settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().get("trainBaseSettlement").getAsJsonObject();
-            //根据员工的工号 查询订票人的信息
-            employeeInfo = infraStructure.getUserDetail(employee,settlementInfo.getAsJsonObject("trainBaseSettlement").get("bookClerkEmployeeId").getAsString());
-            //根据工号查询乘客的信息
-            passengerEmployeeOid = infraStructure.getUserDetail(employee,settlementInfo.getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().get("passengerCode").getAsString()).get("userOID").getAsString();
-            trainPassengerInfos = settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().getAsJsonArray("trainPassengerInfos");
-        }else if(type.equals("hotel")){
-            settlementInfo = settlement.getAsJsonArray("hotelSettlementList").get(0).getAsJsonObject();
-            //根据员工的工号 查询订票人的信息
-            employeeInfo = infraStructure.getUserDetail(employee,settlementInfo.get("bookClerkEmployeeId").getAsString());
-            //根据工号查询乘客的信息
-            passengerEmployeeOid = infraStructure.getUserDetail(employee,settlementInfo.getAsJsonArray("passengerList").get(0).getAsJsonObject().get("passengerEmployeeId").getAsString()).get("userOID").getAsString();
+        switch (type) {
+            case "flight":
+                settlementInfo = settlement.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject();
+                //根据员工的工号 查询订票人的信息
+                employeeInfo = infraStructure.getUserDetail(employee, settlementInfo.get("bookClerkEmployeeId").getAsString());
+                //根据工号查询乘客的信息
+                passengerEmployeeOid = infraStructure.getUserDetail(employee, settlementInfo.get("passengerEmployeeId").getAsString()).get("userOID").getAsString();
+                break;
+            case "train":
+                settlementInfo = settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().get("trainBaseSettlement").getAsJsonObject();
+                //根据员工的工号 查询订票人的信息
+                employeeInfo = infraStructure.getUserDetail(employee, settlementInfo.get("bookClerkEmployeeId").getAsString());
+                //根据工号查询乘客的信息
+                passengerEmployeeOid = infraStructure.getUserDetail(employee, settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().get("passengerCode").getAsString()).get("userOID").getAsString();
+                trainPassengerInfos = settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().getAsJsonArray("trainPassengerInfos");
+                break;
+            case "hotel":
+                settlementInfo = settlement.getAsJsonArray("hotelSettlementList").get(0).getAsJsonObject();
+                //根据员工的工号 查询订票人的信息
+                employeeInfo = infraStructure.getUserDetail(employee, settlementInfo.get("bookClerkEmployeeId").getAsString());
+                //根据工号查询乘客的信息
+                log.info("员工信息:{}",settlementInfo.getAsJsonArray("passengerList").get(0).getAsJsonObject().get("passengerEmployeeId").getAsString());
+                passengerEmployeeOid = infraStructure.getUserDetail(employee, settlementInfo.getAsJsonArray("passengerList").get(0).getAsJsonObject().get("passengerEmployeeId").getAsString()).get("userOID").getAsString();
+                break;
         }
         String tenantId = employeeInfo.getAsJsonArray("userJobsDTOs").get(0).getAsJsonObject().get("tenantId").getAsString();
         String companyName = employeeInfo.get("companyName").getAsString();
@@ -74,6 +81,7 @@ public class VendorData {
         String tenantName = tentantInfo.get("tenantName").getAsString();
         String tenantCode = tentantInfo.get("tenantCode").getAsString();
         settlementInfo.addProperty("supplierCode",supplierCode);
+        settlementInfo.addProperty("supplierName",supplierName);
         settlementInfo.addProperty("corpId",corpId);
         settlementInfo.addProperty("companyOid",companyOID);
         settlementInfo.addProperty("tenantCode",tenantCode);
@@ -81,20 +89,21 @@ public class VendorData {
         settlementInfo.addProperty("companyName",companyName);
         settlementInfo.addProperty("companyCode",companyCode);
         settlementInfo.addProperty("bookClerkEmployeeOid",employeeInfo.get("userOID").getAsString());
-        if(type.equals("flight")){
-            settlementInfo.addProperty("passengerEmployeeOid",passengerEmployeeOid);
-        }else if(type.equals("train")){
-            trainPassengerInfos.get(0).getAsJsonObject().addProperty("passengerOid",passengerEmployeeOid);
-        }else if(type.equals("hotel")){
-            settlementInfo.getAsJsonArray("passengerList").get(0).getAsJsonObject().addProperty("passengerEmployeeOid",passengerEmployeeOid);
+        switch (type) {
+            case "flight":
+                settlementInfo.addProperty("passengerEmployeeOid", passengerEmployeeOid);
+                break;
+            case "train":
+                trainPassengerInfos.get(0).getAsJsonObject().addProperty("passengerOid", passengerEmployeeOid);
+                break;
+            case "hotel":
+                settlementInfo.getAsJsonArray("passengerList").get(0).getAsJsonObject().addProperty("passengerEmployeeOid", passengerEmployeeOid);
+                settlementInfo.addProperty("tenantId",tenantId);
+                break;
         }
-        if(type.equals("flight")){
-            settlement.getAsJsonArray("flightSettlementList").add(settlementInfo);
-        }else if(type.equals("train")){
-            settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().add("trainBaseSettlement",settlementInfo);
-            settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().add("trainPassengerInfos",trainPassengerInfos);
-        }else if(type.equals("hotel")){
-            settlement.getAsJsonArray("hotelSettlementList").add(settlementInfo);
+        if(type.equals("train")){
+            settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().add("trainBaseSettlement", settlementInfo);
+            settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().add("trainPassengerInfos", trainPassengerInfos);
         }
         return settlement;
     }

@@ -37,12 +37,32 @@ public class VendorData {
      * @param
      * @return
      */
-    public JsonObject setFlightSettlementData(Employee employee, JsonObject settlement, String supplierCode, String corpId) throws HttpStatusException {
-        JsonObject settlementInfo = settlement.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject();
-        //根据员工的工号 查询订票人的信息
-        JsonObject employeeInfo = infraStructure.getUserDetail(employee,settlementInfo.get("bookClerkEmployeeId").getAsString());
-        //根据工号查询乘客的信息
-        String passengerEmployeeOid = infraStructure.getUserDetail(employee,settlementInfo.get("passengerEmployeeId").getAsString()).get("userOID").getAsString();
+    public JsonObject setFlightSettlementData(Employee employee, String type,JsonObject settlement, String supplierCode, String corpId) throws HttpStatusException {
+
+        JsonObject settlementInfo = new JsonObject();
+        JsonObject employeeInfo =new JsonObject();
+        String passengerEmployeeOid="";
+        JsonArray trainPassengerInfos = new JsonArray();
+        if(type.equals("flight")){
+            settlementInfo = settlement.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject();
+            //根据员工的工号 查询订票人的信息
+            employeeInfo = infraStructure.getUserDetail(employee,settlementInfo.get("bookClerkEmployeeId").getAsString());
+            //根据工号查询乘客的信息
+            passengerEmployeeOid = infraStructure.getUserDetail(employee,settlementInfo.get("passengerEmployeeId").getAsString()).get("userOID").getAsString();
+        }else if(type.equals("train")){
+            settlementInfo = settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().get("trainBaseSettlement").getAsJsonObject();
+            //根据员工的工号 查询订票人的信息
+            employeeInfo = infraStructure.getUserDetail(employee,settlementInfo.getAsJsonObject("trainBaseSettlement").get("bookClerkEmployeeId").getAsString());
+            //根据工号查询乘客的信息
+            passengerEmployeeOid = infraStructure.getUserDetail(employee,settlementInfo.getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().get("passengerCode").getAsString()).get("userOID").getAsString();
+            trainPassengerInfos = settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().getAsJsonArray("trainPassengerInfos");
+        }else if(type.equals("hotel")){
+            settlementInfo = settlement.getAsJsonArray("hotelSettlementList").get(0).getAsJsonObject();
+            //根据员工的工号 查询订票人的信息
+            employeeInfo = infraStructure.getUserDetail(employee,settlementInfo.get("bookClerkEmployeeId").getAsString());
+            //根据工号查询乘客的信息
+            passengerEmployeeOid = infraStructure.getUserDetail(employee,settlementInfo.getAsJsonArray("passengerList").get(0).getAsJsonObject().get("passengerEmployeeId").getAsString()).get("userOID").getAsString();
+        }
         String tenantId = employeeInfo.getAsJsonArray("userJobsDTOs").get(0).getAsJsonObject().get("tenantId").getAsString();
         String companyName = employeeInfo.get("companyName").getAsString();
         String companyOID = employeeInfo.get("companyOID").getAsString();
@@ -61,51 +81,63 @@ public class VendorData {
         settlementInfo.addProperty("companyName",companyName);
         settlementInfo.addProperty("companyCode",companyCode);
         settlementInfo.addProperty("bookClerkEmployeeOid",employeeInfo.get("userOID").getAsString());
-        settlementInfo.addProperty("passengerEmployeeOid",passengerEmployeeOid);
-        settlement.getAsJsonArray("flightSettlementList").add(settlementInfo);
+        if(type.equals("flight")){
+            settlementInfo.addProperty("passengerEmployeeOid",passengerEmployeeOid);
+        }else if(type.equals("train")){
+            trainPassengerInfos.get(0).getAsJsonObject().addProperty("passengerOid",passengerEmployeeOid);
+        }else if(type.equals("hotel")){
+            settlementInfo.getAsJsonArray("passengerList").get(0).getAsJsonObject().addProperty("passengerEmployeeOid",passengerEmployeeOid);
+        }
+        if(type.equals("flight")){
+            settlement.getAsJsonArray("flightSettlementList").add(settlementInfo);
+        }else if(type.equals("train")){
+            settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().add("trainBaseSettlement",settlementInfo);
+            settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().add("trainPassengerInfos",trainPassengerInfos);
+        }else if(type.equals("hotel")){
+            settlement.getAsJsonArray("hotelSettlementList").add(settlementInfo);
+        }
         return settlement;
     }
 
 
-    /**
-     * 初始化读取到的结算数据
-     * @param
-     * @return
-     */
-    public JsonObject setTrainSettlementData(Employee employee,JsonObject settlement, String supplierName,String corpId) throws HttpStatusException {
-        JsonObject settlementInfo = settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject();
-        //根据员工的工号 查询订票人的信息
-        JsonObject employeeInfo = infraStructure.getUserDetail(employee,settlementInfo.getAsJsonObject("trainBaseSettlement").get("bookClerkEmployeeId").getAsString());
-        //根据工号查询乘客的信息
-        String passengerEmployeeOid = infraStructure.getUserDetail(employee,settlementInfo.getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().get("passengerCode").getAsString()).get("userOID").getAsString();
-        String tenantId = employeeInfo.getAsJsonArray("userJobsDTOs").get(0).getAsJsonObject().get("tenantId").getAsString();
-        String companyName = employeeInfo.get("companyName").getAsString();
-        String companyOID = employeeInfo.get("companyOID").getAsString();
-        String companyId = employeeInfo.getAsJsonArray("userJobsDTOs").get(0).getAsJsonObject().get("companyId").getAsString();
-        //获取公司code
-        String companyCode = infraStructure.getCompanyCode(employee,companyId);
-        //获取该员工所在的租户信息
-        JsonObject tentantInfo = infraStructure.getTenantInfo(employee,tenantId);
-        String tenantName = tentantInfo.get("tenantName").getAsString();
-        String tenantCode = tentantInfo.get("tenantCode").getAsString();
-
-        JsonObject trainBaseSettlement = settlementInfo.get("trainBaseSettlement").getAsJsonObject();
-        trainBaseSettlement.addProperty("supplierCode",supplierName);
-        trainBaseSettlement.addProperty("corpId",corpId);
-        trainBaseSettlement.addProperty("companyOid",companyOID);
-        trainBaseSettlement.addProperty("tenantCode",tenantCode);
-        trainBaseSettlement.addProperty("tenantName",tenantName);
-        trainBaseSettlement.addProperty("companyName",companyName);
-        trainBaseSettlement.addProperty("companyCode",companyCode);
-        trainBaseSettlement.addProperty("bookClerkEmployeeOid",employeeInfo.get("userOID").getAsString());
-        settlementInfo.add("trainBaseSettlement",trainBaseSettlement);
-        //火车结算数据的乘客相关信息
-        JsonArray trainPassengerInfos = settlementInfo.getAsJsonArray("trainPassengerInfos");
-        trainPassengerInfos.get(0).getAsJsonObject().addProperty("passengerOid",passengerEmployeeOid);
-        settlementInfo.add("trainPassengerInfos",trainPassengerInfos);
-        settlement.getAsJsonArray("trainSettlementInfos").add(settlementInfo);
-        return settlement;
-    }
+//    /**
+//     * 初始化读取到的结算数据
+//     * @param
+//     * @return
+//     */
+//    public JsonObject setTrainSettlementData(Employee employee,JsonObject settlement, String supplierName,String corpId) throws HttpStatusException {
+//        JsonObject settlementInfo = settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject();
+//        //根据员工的工号 查询订票人的信息
+//        JsonObject employeeInfo = infraStructure.getUserDetail(employee,settlementInfo.getAsJsonObject("trainBaseSettlement").get("bookClerkEmployeeId").getAsString());
+//        //根据工号查询乘客的信息
+//        String passengerEmployeeOid = infraStructure.getUserDetail(employee,settlementInfo.getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().get("passengerCode").getAsString()).get("userOID").getAsString();
+//        String tenantId = employeeInfo.getAsJsonArray("userJobsDTOs").get(0).getAsJsonObject().get("tenantId").getAsString();
+//        String companyName = employeeInfo.get("companyName").getAsString();
+//        String companyOID = employeeInfo.get("companyOID").getAsString();
+//        String companyId = employeeInfo.getAsJsonArray("userJobsDTOs").get(0).getAsJsonObject().get("companyId").getAsString();
+//        //获取公司code
+//        String companyCode = infraStructure.getCompanyCode(employee,companyId);
+//        //获取该员工所在的租户信息
+//        JsonObject tentantInfo = infraStructure.getTenantInfo(employee,tenantId);
+//        String tenantName = tentantInfo.get("tenantName").getAsString();
+//        String tenantCode = tentantInfo.get("tenantCode").getAsString();
+//        JsonObject trainBaseSettlement = settlementInfo.get("trainBaseSettlement").getAsJsonObject();
+//        trainBaseSettlement.addProperty("supplierCode",supplierName);
+//        trainBaseSettlement.addProperty("corpId",corpId);
+//        trainBaseSettlement.addProperty("companyOid",companyOID);
+//        trainBaseSettlement.addProperty("tenantCode",tenantCode);
+//        trainBaseSettlement.addProperty("tenantName",tenantName);
+//        trainBaseSettlement.addProperty("companyName",companyName);
+//        trainBaseSettlement.addProperty("companyCode",companyCode);
+//        trainBaseSettlement.addProperty("bookClerkEmployeeOid",employeeInfo.get("userOID").getAsString());
+//        settlementInfo.add("trainBaseSettlement",trainBaseSettlement);
+//        //火车结算数据的乘客相关信息
+//        JsonArray trainPassengerInfos = settlementInfo.getAsJsonArray("trainPassengerInfos");
+//        trainPassengerInfos.get(0).getAsJsonObject().addProperty("passengerOid",passengerEmployeeOid);
+//        settlementInfo.add("trainPassengerInfos",trainPassengerInfos);
+//        settlement.getAsJsonArray("trainSettlementInfos").add(settlementInfo);
+//        return settlement;
+//    }
 
     /**
      * 机票订单组装数据
@@ -116,11 +148,37 @@ public class VendorData {
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject setFlightOrderData(Employee employee,JsonObject orderData,String supplierName,String supplierCode) throws HttpStatusException {
-        JsonObject airBaseOrder = orderData.getAsJsonObject("airBaseOrder");
-        JsonArray airPassengerInfo = orderData.getAsJsonArray("airPassengerInfo");
-        //根据员工的工号 查询订票人的信息
-        JsonObject employeeInfo = infraStructure.getUserDetail(employee,airBaseOrder.get("preEmployeeId").getAsString());
+    public JsonObject setOrderData(Employee employee,JsonObject orderData,String type,String supplierName,String supplierCode) throws HttpStatusException {
+        JsonObject baseOrder =new JsonObject();
+        JsonArray passengerInfo = new JsonArray();
+        JsonObject employeeInfo = new JsonObject();
+        JsonObject passagerInfos = new JsonObject();
+        switch (type) {
+            case "fight":
+                baseOrder = orderData.getAsJsonObject("airBaseOrder");
+                passengerInfo = orderData.getAsJsonArray("airPassengerInfo");
+                //查找预定人的信息
+                employeeInfo = infraStructure.getUserDetail(employee, baseOrder.get("preEmployeeId").getAsString());
+                //根据工号查询乘客的信息
+                passagerInfos = infraStructure.getUserDetail(employee, passengerInfo.get(0).getAsJsonObject().get("passengerNum").getAsString());
+                break;
+            case "train":
+                baseOrder = orderData.getAsJsonObject("trainOrderBase");
+                passengerInfo = orderData.getAsJsonArray("trainOrderPassengerInfos");
+                //根据员工的工号 查询订票人的信息
+                employeeInfo = infraStructure.getUserDetail(employee, baseOrder.get("employeeNum").getAsString());
+                //根据工号查询乘客的信息
+                passagerInfos = infraStructure.getUserDetail(employee, passengerInfo.get(0).getAsJsonObject().get("passengerNum").getAsString());
+                break;
+            case "hotel":
+                baseOrder = orderData.getAsJsonObject("hotelOrderBase");
+                passengerInfo = orderData.getAsJsonArray("hotelOrderPassengerInfos");
+                //根据员工的工号 查询订票人的信息
+                employeeInfo = infraStructure.getUserDetail(employee, baseOrder.get("employeeId").getAsString());
+                //根据工号查询乘客的信息
+                passagerInfos = infraStructure.getUserDetail(employee, passengerInfo.get(0).getAsJsonObject().get("passengerNum").getAsString());
+                break;
+        }
         String tenantId = employeeInfo.getAsJsonArray("userJobsDTOs").get(0).getAsJsonObject().get("tenantId").getAsString();
         String companyName = employeeInfo.get("companyName").getAsString();
         String companyOID = employeeInfo.get("companyOID").getAsString();
@@ -133,81 +191,46 @@ public class VendorData {
         JsonObject tentantInfo = infraStructure.getTenantInfo(employee,tenantId);
         String tenantName = tentantInfo.get("tenantName").getAsString();
         String tenantCode = tentantInfo.get("tenantCode").getAsString();
-        //根据工号查询乘客的信息
-        JsonObject passagerInfo = infraStructure.getUserDetail(employee,airPassengerInfo.get(0).getAsJsonObject().get("passengerNum").getAsString());
-        String passengerEmployeeOid = passagerInfo.get("userOID").getAsString();
-        String passagerDepartmentName = passagerInfo.get("departmentName").getAsString();
-        String passagerDepartmentOID = passagerInfo.get("departmentOID").getAsString();
+        String passengerEmployeeOid = passagerInfos.get("userOID").getAsString();
+        String passagerDepartmentName = passagerInfos.get("departmentName").getAsString();
+        String passagerDepartmentOID = passagerInfos.get("departmentOID").getAsString();
         String passagerDepartmentCode = infraStructure.getDeptCode(employee,passagerDepartmentOID);
         //组装数据
-        airBaseOrder.addProperty("tenantCode",tenantCode);
-        airBaseOrder.addProperty("tenantName",tenantName);
-        airBaseOrder.addProperty("companyName",companyName);
-        airBaseOrder.addProperty("companyCode",companyCode);
-        airBaseOrder.addProperty("companyOid",companyOID);
-        airBaseOrder.addProperty("departmentName",departmentName);
-        airBaseOrder.addProperty("departmentCode",departmentCode);
-        airBaseOrder.addProperty("departmentOid",departmentOID);
-        airBaseOrder.addProperty("supplierName",supplierName);
-        airBaseOrder.addProperty("supplierCode",supplierCode);
-        airBaseOrder.addProperty("preEmployeeOid",employeeInfo.get("userOID").getAsString());
-        airPassengerInfo.get(0).getAsJsonObject().addProperty("departmentCode",passagerDepartmentCode);
-        airPassengerInfo.get(0).getAsJsonObject().addProperty("departmentName",passagerDepartmentName);
-        airPassengerInfo.get(0).getAsJsonObject().addProperty("passengerOid",passengerEmployeeOid);
-        orderData.add("airBaseOrder",airBaseOrder);
-        orderData.add("airPassengerInfo",airPassengerInfo);
-        return orderData;
-    }
+        baseOrder.addProperty("tenantCode",tenantCode);
+        baseOrder.addProperty("tenantName",tenantName);
+        baseOrder.addProperty("companyName",companyName);
+        baseOrder.addProperty("companyCode",companyCode);
+        baseOrder.addProperty("companyOid",companyOID);
+        baseOrder.addProperty("departmentName",departmentName);
+        baseOrder.addProperty("departmentCode",departmentCode);
+        baseOrder.addProperty("departmentOid",departmentOID);
+        baseOrder.addProperty("supplierName",supplierName);
+        baseOrder.addProperty("supplierCode",supplierCode);
+        if(type.equals("flight")){
+            baseOrder.addProperty("preEmployeeOid",employeeInfo.get("userOID").getAsString());
+        }else if(type.equals("train")){
+            baseOrder.addProperty("preEmployeeOid",employeeInfo.get("userOID").getAsString());
+        }else if(type.equals("hotel")){
+            baseOrder.addProperty("preEmployeeOId",employeeInfo.get("userOID").getAsString());
+        }
 
-    /**
-     *  火车订单数据组装
-     * @param employee
-     * @param orderData
-     * @param supplierName
-     * @param supplierCode
-     * @return
-     * @throws HttpStatusException
-     */
-    public JsonObject setTrainOrderData(Employee employee,JsonObject orderData,String supplierName,String supplierCode) throws HttpStatusException {
-        JsonObject trainOrderBase = orderData.getAsJsonObject("trainOrderBase");
-        JsonArray trainOrderPassengerInfos = orderData.getAsJsonArray("trainOrderPassengerInfos");
-        //根据员工的工号 查询订票人的信息
-        JsonObject employeeInfo = infraStructure.getUserDetail(employee,trainOrderBase.get("employeeNum").getAsString());
-        String tenantId = employeeInfo.getAsJsonArray("userJobsDTOs").get(0).getAsJsonObject().get("tenantId").getAsString();
-        String companyName = employeeInfo.get("companyName").getAsString();
-        String companyOID = employeeInfo.get("companyOID").getAsString();
-        String companyId = employeeInfo.getAsJsonArray("userJobsDTOs").get(0).getAsJsonObject().get("companyId").getAsString();
-        String departmentOID = employeeInfo.get("departmentOID").getAsString();
-        String departmentName = employeeInfo.get("departmentName").getAsString();
-        String departmentCode = infraStructure.getDeptCode(employee,departmentOID);
-        String companyCode = infraStructure.getCompanyCode(employee,companyId);
-        //获取该员工所在的租户信息
-        JsonObject tentantInfo = infraStructure.getTenantInfo(employee,tenantId);
-        String tenantName = tentantInfo.get("tenantName").getAsString();
-        String tenantCode = tentantInfo.get("tenantCode").getAsString();
-        //根据工号查询乘客的信息
-        JsonObject passagerInfo = infraStructure.getUserDetail(employee,trainOrderPassengerInfos.get(0).getAsJsonObject().get("passengerNum").getAsString());
-        String passengerEmployeeOid = passagerInfo.get("userOID").getAsString();
-        String passagerDepartmentName = passagerInfo.get("departmentName").getAsString();
-        String passagerDepartmentOID = passagerInfo.get("departmentOID").getAsString();
-        String passagerDepartmentCode = infraStructure.getDeptCode(employee,passagerDepartmentOID);
-        //组装数据
-        trainOrderBase.addProperty("tenantCode",tenantCode);
-        trainOrderBase.addProperty("tenantName",tenantName);
-        trainOrderBase.addProperty("companyName",companyName);
-        trainOrderBase.addProperty("companyCode",companyCode);
-        trainOrderBase.addProperty("companyOid",companyOID);
-        trainOrderBase.addProperty("departmentName",departmentName);
-        trainOrderBase.addProperty("departmentCode",departmentCode);
-        trainOrderBase.addProperty("departmentOid",departmentOID);
-        trainOrderBase.addProperty("supplierName",supplierName);
-        trainOrderBase.addProperty("supplierCode",supplierCode);
-        trainOrderBase.addProperty("preEmployeeOid",employeeInfo.get("userOID").getAsString());
-        trainOrderPassengerInfos.get(0).getAsJsonObject().addProperty("departmentCode",passagerDepartmentCode);
-        trainOrderPassengerInfos.get(0).getAsJsonObject().addProperty("departmentName",passagerDepartmentName);
-        trainOrderPassengerInfos.get(0).getAsJsonObject().addProperty("passengerOid",passengerEmployeeOid);
-        orderData.add("airBaseOrder",trainOrderBase);
-        orderData.add("airPassengerInfo",trainOrderPassengerInfos);
+        passengerInfo.get(0).getAsJsonObject().addProperty("departmentCode",passagerDepartmentCode);
+        passengerInfo.get(0).getAsJsonObject().addProperty("departmentName",passagerDepartmentName);
+        passengerInfo.get(0).getAsJsonObject().addProperty("passengerOid",passengerEmployeeOid);
+        switch (type) {
+            case "flight":
+                orderData.add("airBaseOrder", baseOrder);
+                orderData.add("airPassengerInfo", passengerInfo);
+                break;
+            case "train":
+                orderData.add("trainOrderBase", baseOrder);
+                orderData.add("trainOrderPassengerInfos", passengerInfo);
+                break;
+            case "hotel":
+                orderData.add("hotelOrderBase", baseOrder);
+                orderData.add("hotelOrderPassengerInfos", passengerInfo);
+                break;
+        }
         return orderData;
     }
 }

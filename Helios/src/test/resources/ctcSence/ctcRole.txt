@@ -1,7 +1,0 @@
-0000620,yuuuui30@automation-test.com
-0001230,yuuuui72@automation-test.com
-0022942,yuuuui619@automation-test.com
-0022951,yuuuui620@automation-test.com
-0023280,yuuuui622@automation-test.com
-0023567,yuuuui623@automation-test.com
-8837057,yuuuui674@automation-test.com

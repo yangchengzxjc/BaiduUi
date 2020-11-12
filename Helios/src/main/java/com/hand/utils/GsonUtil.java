@@ -219,7 +219,6 @@ public class GsonUtil {
                 if (object1.get(name) instanceof JsonArray && object2.get(name) instanceof JsonArray) {
                     log.info("正在检查{}数组",name);
                     if(!compareJsonArray(object1.getAsJsonArray(name),object2.getAsJsonArray(name),mapping)){
-
                         arrayList.add(false);
                     }
                     continue;
@@ -337,4 +336,21 @@ public class GsonUtil {
         }
     }
 
+    /**
+     * 检查某个字段是否存在该json中
+     * @param json
+     * @param jsonProperty
+     * @return
+     */
+    public static boolean isExistProperty(JsonObject json,String jsonProperty){
+        boolean flg = false;
+        Iterator<String> iterator = json.keySet().iterator();
+        while (iterator.hasNext()){
+            String property = iterator.next();
+            if(property.equals(jsonProperty)){
+                flg = true;
+            }
+        }
+        return flg;
+    }
 }

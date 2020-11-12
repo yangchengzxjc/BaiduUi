@@ -212,17 +212,16 @@ public class VendorData {
         baseOrder.addProperty("companyOid",companyOID);
         baseOrder.addProperty("departmentName",departmentName);
         baseOrder.addProperty("departmentCode",departmentCode);
-        baseOrder.addProperty("departmentOid",departmentOID);
         baseOrder.addProperty("supplierName",supplierName);
         baseOrder.addProperty("supplierCode",supplierCode);
         if(type.equals("flight")){
             baseOrder.addProperty("preEmployeeOid",employeeInfo.get("userOID").getAsString());
+            baseOrder.addProperty("departmentOid",departmentOID);
         }else if(type.equals("train")){
             baseOrder.addProperty("preEmployeeOid",employeeInfo.get("userOID").getAsString());
         }else if(type.equals("hotel")){
             baseOrder.addProperty("preEmployeeOId",employeeInfo.get("userOID").getAsString());
         }
-
         passengerInfo.get(0).getAsJsonObject().addProperty("departmentCode",passagerDepartmentCode);
         passengerInfo.get(0).getAsJsonObject().addProperty("departmentName",passagerDepartmentName);
         passengerInfo.get(0).getAsJsonObject().addProperty("passengerOid",passengerEmployeeOid);

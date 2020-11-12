@@ -226,7 +226,7 @@ public class Vendor {
     }
 
     /**
-     *  读取火车结算数据 并修改预订人的工号信息
+     *  读取火车模板结算数据 并修改预订人的工号信息
      * @param employee
      * @param path
      * @param corpId
@@ -252,7 +252,7 @@ public class Vendor {
 
 
     /**
-     * 读取酒店模板数据
+     * 读取酒店模板结算数据
      * @param path  读取数据的路径 建议相对路径   读取到的数据进行 订单号和批次号的重新输入 以及更换订票人的fullname和工号。
      * @return
      */
@@ -266,6 +266,79 @@ public class Vendor {
         vendorObject.getAsJsonArray("hotelSettlementList").get(0).getAsJsonObject().getAsJsonArray("passengerList").get(0).getAsJsonObject().addProperty("passengerName",employee.getFullName());
         vendorObject.getAsJsonArray("hotelSettlementList").get(0).getAsJsonObject().getAsJsonArray("passengerList").get(0).getAsJsonObject().addProperty("passengerEmployeeId",employee.getFullName());
         vendorObject.getAsJsonArray("hotelSettlementList").get(0).getAsJsonObject().addProperty("orderNo",orderNo);
+        return vendorObject;
+    }
+
+    /**
+     * 读取飞机订单模板数据
+     * @param employee
+     * @param path
+     * @return
+     */
+    public JsonObject getFlightOrder(Employee employee,String path){
+        String  vendorOrderData = DocumnetUtil.fileReader(path);
+        JsonObject vendorObject = new JsonParser().parse(vendorOrderData).getAsJsonObject();
+        String orderNo = RandomNumber.getTimeNumber();
+        String originalOrderNo = RandomNumber.getTimeNumber();
+        if(GsonUtil.isExistProperty(vendorObject,"airBaseOrder")){
+            vendorObject.getAsJsonObject("airBaseOrder").addProperty("orderNo",orderNo);
+            //如果是改签或者退票的话需要更换下原单号
+            if(!vendorObject.getAsJsonObject("airBaseOrder").get("orderType").getAsString().equals("B")){
+                vendorObject.getAsJsonObject("airBaseOrder").addProperty("originalOrderNo",originalOrderNo);
+            }
+            vendorObject.getAsJsonObject("airBaseOrder").addProperty("employeeId",employee.getEmployeeID());
+            vendorObject.getAsJsonObject("airBaseOrder").addProperty("preEmployName",employee.getFullName());
+        }
+        vendorObject.getAsJsonArray("airFlightInfo").get(0).getAsJsonObject().addProperty("orderNo",orderNo);
+        vendorObject.getAsJsonArray("airPassengerInfo").get(0).getAsJsonObject().addProperty("orderNo",orderNo);
+        vendorObject.getAsJsonArray("airPassengerInfo").get(0).getAsJsonObject().addProperty("passengerName",employee.getFullName());
+        vendorObject.getAsJsonArray("airPassengerInfo").get(0).getAsJsonObject().addProperty("passengeNum",employee.getEmployeeID());
+        //检查是否存在改签
+        if(GsonUtil.isExistProperty(vendorObject,"airChangeInfo")){
+            vendorObject.getAsJsonArray("airChangeInfo").get(0).getAsJsonObject().addProperty("orderNo",orderNo);
+        }
+        //检查是否存在退票
+        if(GsonUtil.isExistProperty(vendorObject,"airRefundInfo")){
+            vendorObject.getAsJsonArray("airRefundInfo").get(0).getAsJsonObject().addProperty("orderNo",orderNo);
+        }
+        //检查是否有保险 更换employeeName
+        if(GsonUtil.isExistProperty(vendorObject,"airInsurance")){
+            vendorObject.getAsJsonArray("airRefundInfo").get(0).getAsJsonObject().addProperty("employeeName",employee.getFullName());
+        }
+        return vendorObject;
+    }
+
+    /**
+     * 读取火车订单模板数据
+     * @param employee
+     * @param path
+     * @return
+     */
+    public JsonObject getTrainOrder(Employee employee,String path){
+        String  vendorOrderData = DocumnetUtil.fileReader(path);
+        JsonObject vendorObject = new JsonParser().parse(vendorOrderData).getAsJsonObject();
+        String orderNo = RandomNumber.getTimeNumber();
+        String originalOrderNo = RandomNumber.getTimeNumber();
+        vendorObject.getAsJsonObject("trainOrderBase").addProperty("orderNo",orderNo);
+        //如果是改签或者退票的话需要更换下原单号
+        if(!vendorObject.getAsJsonObject("trainOrderBase").get("orderType").getAsString().equals("B")) {
+            vendorObject.getAsJsonObject("trainOrderBase").addProperty("originalOrderNum", originalOrderNo);
+        }
+        vendorObject.getAsJsonObject("trainOrderBase").addProperty("employeeNum",employee.getEmployeeID());
+        vendorObject.getAsJsonObject("trainOrderBase").addProperty("employeeName",employee.getFullName());
+        vendorObject.getAsJsonArray("trainOrderTicketInfos").get(0).getAsJsonObject().addProperty("orderNo",orderNo);
+        vendorObject.getAsJsonArray("trainOrderPassengerInfos").get(0).getAsJsonObject().addProperty("orderNo",orderNo);
+        vendorObject.getAsJsonArray("trainOrderPassengerInfos").get(0).getAsJsonObject().addProperty("passengerName",employee.getFullName());
+        vendorObject.getAsJsonArray("trainOrderPassengerInfos").get(0).getAsJsonObject().addProperty("passengeNum",employee.getEmployeeID());
+        vendorObject.getAsJsonArray("trainOrderSequenceInfos").get(0).getAsJsonObject().addProperty("orderNo",employee.getEmployeeID());
+        //检查是否存在改签
+        if(GsonUtil.isExistProperty(vendorObject,"trainOrderChangeInfos")){
+            vendorObject.getAsJsonArray("trainOrderChangeInfos").get(0).getAsJsonObject().addProperty("orderNo",orderNo);
+        }
+        //检查是否存在退票
+        if(GsonUtil.isExistProperty(vendorObject,"trainOrderRefundInfos")){
+            vendorObject.getAsJsonArray("trainOrderRefundInfos").get(0).getAsJsonObject().addProperty("orderNo",orderNo);
+        }
         return vendorObject;
     }
 }

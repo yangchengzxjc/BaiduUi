@@ -96,8 +96,8 @@ public class SettlementDataTest extends BaseTest {
         log.info("拼装的数据:{}",settlementObject);
         //内部接口查询的数据
         SettlementBody settlementBody =SettlementBody.builder()
-                .accBalanceBatchNo(vendorData.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().get("accBalanceBatchNo").getAsString())
-                .orderNo(vendorData.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().get("orderNo").getAsString())
+                .accBalanceBatchNo(vendorData.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().getAsJsonObject("trainBaseSettlement").get("accBalanceBatchNo").getAsString())
+                .orderNo(vendorData.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().getAsJsonObject("trainBaseSettlement").get("orderNo").getAsString())
                 .companyOid("")
                 .size(10)
                 .page(1)
@@ -112,7 +112,7 @@ public class SettlementDataTest extends BaseTest {
 //        mapping.put("月结","1");
 //        mapping.put("现付火车票","N");
         mapping.put("trainPassengerInfos","trainPassengerInfo");
-        assert GsonUtil.compareJsonObject(settlementObject,internalQuerySettlement,mapping);
+        assert GsonUtil.compareJsonObject(settlementObject.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject(),internalQuerySettlement,mapping);
     }
 
     /**
@@ -131,8 +131,8 @@ public class SettlementDataTest extends BaseTest {
         log.info("拼装的数据:{}",settlementObject);
         //内部接口查询的数据
         SettlementBody settlementBody =SettlementBody.builder()
-                .accBalanceBatchNo(vendorData.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().get("accBalanceBatchNo").getAsString())
-                .orderNo(vendorData.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().get("orderNo").getAsString())
+                .accBalanceBatchNo(vendorData.getAsJsonArray("hotelSettlementList").get(0).getAsJsonObject().get("batchNo").getAsString())
+                .orderNo(vendorData.getAsJsonArray("hotelSettlementList").get(0).getAsJsonObject().get("orderNo").getAsString())
                 .companyOid("")
                 .size(10)
                 .page(1)

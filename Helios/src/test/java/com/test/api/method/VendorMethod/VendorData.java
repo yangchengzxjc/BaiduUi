@@ -44,7 +44,7 @@ public class VendorData {
         JsonObject settlementInfo = new JsonObject();
         JsonObject employeeInfo =new JsonObject();
         String passengerEmployeeOid="";
-        JsonArray trainPassengerInfos = new JsonArray();
+        JsonArray passengerInfos = new JsonArray();
         switch (type) {
             case "flight":
                 settlementInfo = settlement.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject();
@@ -59,7 +59,7 @@ public class VendorData {
                 employeeInfo = infraStructure.getUserDetail(employee, settlementInfo.get("bookClerkEmployeeId").getAsString());
                 //根据工号查询乘客的信息
                 passengerEmployeeOid = infraStructure.getUserDetail(employee, settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().getAsJsonArray("trainPassengerInfos").get(0).getAsJsonObject().get("passengerCode").getAsString()).get("userOID").getAsString();
-                trainPassengerInfos = settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().getAsJsonArray("trainPassengerInfos");
+                passengerInfos = settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().getAsJsonArray("trainPassengerInfos");
                 break;
             case "hotel":
                 settlementInfo = settlement.getAsJsonArray("hotelSettlementList").get(0).getAsJsonObject();
@@ -68,6 +68,12 @@ public class VendorData {
                 //根据工号查询乘客的信息
                 log.info("员工信息:{}",settlementInfo.getAsJsonArray("passengerList").get(0).getAsJsonObject().get("passengerEmployeeId").getAsString());
                 passengerEmployeeOid = infraStructure.getUserDetail(employee, settlementInfo.getAsJsonArray("passengerList").get(0).getAsJsonObject().get("passengerEmployeeId").getAsString()).get("userOID").getAsString();
+                break;
+            case "car":
+                settlementInfo = settlement.getAsJsonArray("carSettlementInfos").get(0).getAsJsonObject().getAsJsonObject("carBaseSettlement");
+                employeeInfo = infraStructure.getUserDetail(employee, settlementInfo.get("bookClerkEmployeeId").getAsString());
+                passengerEmployeeOid = infraStructure.getUserDetail(employee, settlement.getAsJsonArray("carSettlementInfos").get(0).getAsJsonObject().getAsJsonArray("carPassengerInfos").get(0).getAsJsonObject().get("passengerCode").getAsString()).get("userOID").getAsString();
+                passengerInfos = settlement.getAsJsonArray("carSettlementInfos").get(0).getAsJsonObject().getAsJsonArray("carPassengerInfos");
                 break;
         }
         String tenantId = employeeInfo.getAsJsonArray("userJobsDTOs").get(0).getAsJsonObject().get("tenantId").getAsString();
@@ -94,16 +100,19 @@ public class VendorData {
                 settlementInfo.addProperty("passengerEmployeeOid", passengerEmployeeOid);
                 break;
             case "train":
-                trainPassengerInfos.get(0).getAsJsonObject().addProperty("passengerOid", passengerEmployeeOid);
+                passengerInfos.get(0).getAsJsonObject().addProperty("passengerOid", passengerEmployeeOid);
                 break;
             case "hotel":
                 settlementInfo.getAsJsonArray("passengerList").get(0).getAsJsonObject().addProperty("passengerEmployeeOid", passengerEmployeeOid);
                 settlementInfo.addProperty("tenantId",tenantId);
                 break;
+            case "car":
+                passengerInfos.get(0).getAsJsonObject().addProperty("passengerOid",passengerEmployeeOid);
+                break;
         }
         if(type.equals("train")){
             settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().add("trainBaseSettlement", settlementInfo);
-            settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().add("trainPassengerInfos", trainPassengerInfos);
+            settlement.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().add("trainPassengerInfos", passengerInfos);
         }
         return settlement;
     }
@@ -188,6 +197,12 @@ public class VendorData {
                 //根据工号查询乘客的信息
                 passagerInfos = infraStructure.getUserDetail(employee, passengerInfo.get(0).getAsJsonObject().get("passengerNum").getAsString());
                 break;
+            case "car":
+                baseOrder = orderData.getAsJsonObject("carBaseOrder");
+                passengerInfo = orderData.getAsJsonArray("carOrderPassengerInfos");
+                employeeInfo = infraStructure.getUserDetail(employee, baseOrder.get("bookClerkEmployeeId").getAsString());
+                passagerInfos = infraStructure.getUserDetail(employee, passengerInfo.get(0).getAsJsonObject().get("passengerCode").getAsString());
+                break;
         }
         String tenantId = employeeInfo.getAsJsonArray("userJobsDTOs").get(0).getAsJsonObject().get("tenantId").getAsString();
         String companyName = employeeInfo.get("companyName").getAsString();
@@ -222,24 +237,13 @@ public class VendorData {
             baseOrder.addProperty("preEmployeeOid",employeeInfo.get("userOID").getAsString());
         }else if(type.equals("hotel")){
             baseOrder.addProperty("preEmployeeOId",employeeInfo.get("userOID").getAsString());
+        }else if(type.equals("car")){
+            baseOrder.addProperty("tenantId",tenantId);
+            baseOrder.addProperty("preEmployeeOid",employeeInfo.get("userOID").getAsString());
         }
         passengerInfo.get(0).getAsJsonObject().addProperty("departmentCode",passagerDepartmentCode);
         passengerInfo.get(0).getAsJsonObject().addProperty("departmentName",passagerDepartmentName);
         passengerInfo.get(0).getAsJsonObject().addProperty("passengerOid",passengerEmployeeOid);
-        switch (type) {
-            case "flight":
-                orderData.add("airBaseOrder", baseOrder);
-                orderData.add("airPassengerInfo", passengerInfo);
-                break;
-            case "train":
-                orderData.add("trainOrderBase", baseOrder);
-                orderData.add("trainOrderPassengerInfos", passengerInfo);
-                break;
-            case "hotel":
-                orderData.add("hotelOrderBase", baseOrder);
-                orderData.add("hotelOrderPassengerInfos", passengerInfo);
-                break;
-        }
         return orderData;
     }
 }

@@ -77,12 +77,12 @@ public class OrderDataTest extends FlightOrderDataTest {
     public void OrderTest2(String supplierName,String supplierCode,String corpId,String appName,String signature,String path) throws HttpStatusException {
         JsonObject vendorData = vendor.getTrainOrder(employee,path);
         log.info("vendorData:{}",vendorData);
-        //火车订单数据推送
+//        //火车订单数据推送
         vendor.pushOrderData(employee,"train",vendorData,appName,corpId,signature);
         // 组装数据
         JsonObject orderData = mVendorData.setOrderData(employee,vendorData,"train",supplierName,supplierCode);
         log.info("拼装的数据:{}",orderData);
-        //查询数据
+//        //查询数据
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid("")
                 .orderNo(vendorData.getAsJsonObject("trainOrderBase").get("orderNo").getAsString())
@@ -104,21 +104,21 @@ public class OrderDataTest extends FlightOrderDataTest {
 
     @Test(description = "酒店订单模板数据测试",dataProvider = "TMC")
     public void OrderTest3(String supplierName,String supplierCode,String corpId,String appName,String signature,String path) throws HttpStatusException {
-        JsonObject vendorData = vendor.getHotelOrder(employee,"src/test/resources/data/VendorTrainSettlementData.json");
+        JsonObject vendorData = vendor.getHotelOrder(employee,path);
         log.info("vendorData:{}",vendorData);
         //酒店订单数据推送
         vendor.pushOrderData(employee,"hotel",vendorData,appName,corpId,signature);
         // 组装数据
         JsonObject orderData = mVendorData.setOrderData(employee,vendorData,"hotel",supplierName,supplierCode);
         log.info("拼装的数据:{}",orderData);
-//        //查询数据
+        //查询数据
         SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid("")
                 .orderNo(vendorData.getAsJsonObject("hotelOrderBase").get("orderNo").getAsString())
                 .page(1)
                 .size(10)
                 .build();
-//        查询订单数据
+        //查询订单数据
         JsonObject  flightOrderData = vendor.queryOrderData(employee,"hotel",settlementBody);
         log.info("hotel order Data:{}",flightOrderData);
         //映射数据
@@ -131,4 +131,35 @@ public class OrderDataTest extends FlightOrderDataTest {
         mapping.put("originalOrderNum","originalOrderNo");
         assert GsonUtil.compareJsonObject(orderData,flightOrderData,mapping);
     }
+
+    @Test(description = "用车订单模板数据测试", dataProvider = "TMC")
+    public void OrderTest4(String supplierName,String supplierCode,String corpId,String appName,String signature,String path) throws HttpStatusException {
+        JsonObject vendorData = vendor.getCarOrder(employee,path);
+        log.info("vendorData:{}",vendorData);
+        //酒店订单数据推送
+        vendor.pushOrderData(employee,"car",vendorData,appName,corpId,signature);
+        // 组装数据
+        JsonObject orderData = mVendorData.setOrderData(employee,vendorData,"car",supplierName,supplierCode);
+        log.info("拼装的数据:{}",orderData);
+        //查询数据
+        SettlementBody settlementBody = SettlementBody.builder()
+                .companyOid("")
+                .orderNo(vendorData.getAsJsonObject("carBaseOrder").get("orderNo").getAsString())
+                .page(1)
+                .size(10)
+                .build();
+        //查询订单数据
+        JsonObject  flightOrderData = vendor.queryOrderData(employee,"car",settlementBody);
+        log.info("car order Data:{}",flightOrderData);
+        //用车映射数据
+        HashMap<String,String> mapping =new HashMap<>();
+//        mapping.put("hotelOrderPassengerInfos","hotelPassengerInfo");
+//        mapping.put("employeeId","preEmployeeId");
+//        mapping.put("hotelOrderBase","hotelBaseOrder");
+//        mapping.put("costCenter1","costCenter");
+//        mapping.put("hotelOrderExceedInfos","hotelExceedInfo");
+//        mapping.put("originalOrderNum","originalOrderNo");
+        assert GsonUtil.compareJsonObject(orderData,flightOrderData,mapping);
+    }
+
 }

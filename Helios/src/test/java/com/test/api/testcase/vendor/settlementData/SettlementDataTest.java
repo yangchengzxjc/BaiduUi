@@ -85,7 +85,7 @@ public class SettlementDataTest extends BaseTest {
      */
     @Test(description = "用于真实的供应商的火车模板结算数据进行推数据落库测试",dataProvider = "TMC")
     public void settlementDataTest2(String supplierName,String supplierCode,String appName,String corpId,String signature,String path) throws HttpStatusException {
-        JsonObject vendorData = vendor.getTrainSettlementData(employee,"src/test/resources/data/VendorTrainSettlementData.json",corpId,supplierCode);
+        JsonObject vendorData = vendor.getTrainSettlementData(employee,path,corpId,supplierCode);
         log.info("vendorData:{}",vendorData);
         //推送结算数据
         JsonObject pushData = vendor.pushSettlementData(employee,"train",vendorData,appName,corpId,signature);
@@ -106,10 +106,10 @@ public class SettlementDataTest extends BaseTest {
         //映射表
         HashMap<String,String> mapping =new HashMap<>();
         //映射月结->M  现付-N   火车映射需要根据实际映射
-//        mapping.put("月结火车票","M");
-//        mapping.put("现付","2");
-//        mapping.put("月结","1");
-//        mapping.put("现付火车票","N");
+        mapping.put("月结火车票","M");
+        mapping.put("现付","2");
+        mapping.put("月结","1");
+        mapping.put("现付火车票","N");
         mapping.put("trainPassengerInfos","trainPassengerInfo");
         assert GsonUtil.compareJsonObject(settlementObject.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject(),internalQuerySettlement,mapping);
     }
@@ -120,7 +120,7 @@ public class SettlementDataTest extends BaseTest {
      */
     @Test(description = "用于真实的供应商的酒店模板结算数据进行推数据落库测试",dataProvider = "TMC")
     public void settlementDataTest3(String supplierName,String supplierCode,String appName,String corpId,String signature,String path) throws HttpStatusException {
-        JsonObject vendorData = vendor.getHotelSettlementData(employee,"src/test/resources/data/VendorTrainSettlementData.json",corpId,supplierCode);
+        JsonObject vendorData = vendor.getHotelSettlementData(employee,path,corpId,supplierCode);
         log.info("vendorData:{}",vendorData);
         //推送结算数据
         JsonObject pushData = vendor.pushSettlementData(employee,"hotel",vendorData,appName,corpId,signature);
@@ -139,6 +139,36 @@ public class SettlementDataTest extends BaseTest {
         JsonObject internalQuerySettlement = vendor.internalQuerySettlement(employee,"hotel",settlementBody);
         log.info("查询的结算数据:{}",internalQuerySettlement);
         //映射表
+        HashMap<String,String> mapping =new HashMap<>();
+        assert GsonUtil.compareJsonObject(settlementObject,internalQuerySettlement,mapping);
+    }
+
+    /**
+     *  需要提供测试账号租户 和corpId  相对应起来，这样里面后台逻辑落库数据才能测试  否则会出现签名错误或者book user not found
+     *
+     */
+    @Test(description = "用于真实的供应商的酒店模板结算数据进行推数据落库测试",dataProvider = "TMC")
+    public void settlementDataTest4(String supplierName,String supplierCode,String appName,String corpId,String signature,String path) throws HttpStatusException {
+        JsonObject vendorData = vendor.getCarSettlementData(employee,path,corpId,supplierCode);
+        log.info("ReadvendorData:{}",vendorData);
+        //推送结算数据
+        JsonObject pushData = vendor.pushSettlementData(employee,"car",vendorData,appName,corpId,signature);
+        log.info("是否成功:{}",pushData);
+        //拼装数据（因为有些数据是后台逻辑查询的)
+        JsonObject settlementObject = mVendorData.setSettlementData(employee,"car",vendorData,supplierName,supplierCode,corpId);
+        log.info("拼装的数据:{}",settlementObject);
+        //内部接口查询的数据
+        SettlementBody settlementBody =SettlementBody.builder()
+                //结算数据没有批次号
+                .accBalanceBatchNo("")
+                .orderNo(vendorData.getAsJsonArray("carSettlementInfos").get(0).getAsJsonObject().getAsJsonObject("carBaseSettlement").get("orderNo").getAsString())
+                .companyOid("")
+                .size(10)
+                .page(1)
+                .build();
+        JsonObject internalQuerySettlement = vendor.internalQuerySettlement(employee,"car",settlementBody);
+        log.info("查询的结算数据:{}",internalQuerySettlement);
+        //用车结算数据映射表
         HashMap<String,String> mapping =new HashMap<>();
         assert GsonUtil.compareJsonObject(settlementObject,internalQuerySettlement,mapping);
     }

@@ -216,12 +216,16 @@ public class Vendor {
         String  vendorData = DocumnetUtil.fileReader(path);
         JsonObject vendorObject = new JsonParser().parse(vendorData).getAsJsonObject();
         String orderNo = RandomNumber.getTimeNumber();
+        String originalOrderNo = RandomNumber.getTimeNumber();
         vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("accBalanceBatchNo",supplierCode+"_"+corpId+"_flight_"+ UTCTime.getBeijingDay(0));
         vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("bookClerkName",employee.getFullName());
         vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("bookClerkEmployeeId",employee.getEmployeeID());
         vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("passengerName",employee.getFullName());
         vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("passengerEmployeeId",employee.getFullName());
         vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("orderNo",orderNo);
+        if(!vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().get("detailType").getAsString().equals("出票")){
+            vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("originalOrderNo",originalOrderNo);
+        }
         return vendorObject;
     }
 
@@ -330,7 +334,7 @@ public class Vendor {
         vendorObject.getAsJsonArray("trainOrderPassengerInfos").get(0).getAsJsonObject().addProperty("orderNo",orderNo);
         vendorObject.getAsJsonArray("trainOrderPassengerInfos").get(0).getAsJsonObject().addProperty("passengerName",employee.getFullName());
         vendorObject.getAsJsonArray("trainOrderPassengerInfos").get(0).getAsJsonObject().addProperty("passengeNum",employee.getEmployeeID());
-        vendorObject.getAsJsonArray("trainOrderSequenceInfos").get(0).getAsJsonObject().addProperty("orderNo",employee.getEmployeeID());
+        vendorObject.getAsJsonArray("trainOrderSequenceInfos").get(0).getAsJsonObject().addProperty("orderNo",orderNo);
         //检查是否存在改签
         if(GsonUtil.isExistProperty(vendorObject,"trainOrderChangeInfos")){
             vendorObject.getAsJsonArray("trainOrderChangeInfos").get(0).getAsJsonObject().addProperty("orderNo",orderNo);
@@ -338,6 +342,34 @@ public class Vendor {
         //检查是否存在退票
         if(GsonUtil.isExistProperty(vendorObject,"trainOrderRefundInfos")){
             vendorObject.getAsJsonArray("trainOrderRefundInfos").get(0).getAsJsonObject().addProperty("orderNo",orderNo);
+        }
+        return vendorObject;
+    }
+
+    /**
+     * 读取酒店订单模板数据
+     * @param employee
+     * @param path
+     * @return
+     */
+    public JsonObject getHotelOrder(Employee employee,String path){
+        String  vendorOrderData = DocumnetUtil.fileReader(path);
+        JsonObject vendorObject = new JsonParser().parse(vendorOrderData).getAsJsonObject();
+        String orderNo = RandomNumber.getTimeNumber();
+        String originalOrderNo = RandomNumber.getTimeNumber();
+        vendorObject.getAsJsonObject("hotelOrderBase").addProperty("orderNo",orderNo);
+        //如果是改签或者退票的话需要更换下原单号
+        if(!vendorObject.getAsJsonObject("hotelOrderBase").get("orderType").getAsString().equals("B")) {
+            vendorObject.getAsJsonObject("hotelOrderBase").addProperty("originalOrderNum", originalOrderNo);
+        }
+        vendorObject.getAsJsonObject("hotelOrderBase").addProperty("employeeId",employee.getEmployeeID());
+        vendorObject.getAsJsonObject("hotelOrderBase").addProperty("employeeName",employee.getFullName());
+        vendorObject.getAsJsonArray("hotelOrderPassengerInfos").get(0).getAsJsonObject().addProperty("orderNo",orderNo);
+        vendorObject.getAsJsonArray("hotelOrderPassengerInfos").get(0).getAsJsonObject().addProperty("passengerName",employee.getFullName());
+        vendorObject.getAsJsonArray("hotelOrderPassengerInfos").get(0).getAsJsonObject().addProperty("passengerNum",employee.getEmployeeID());
+        //检查是否存在超标信息
+        if(GsonUtil.isExistProperty(vendorObject,"hotelOrderExceedInfos")){
+            vendorObject.getAsJsonArray("hotelOrderExceedInfos").get(0).getAsJsonObject().addProperty("orderNo",orderNo);
         }
         return vendorObject;
     }

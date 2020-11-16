@@ -82,7 +82,6 @@ public class SettlementDataTest extends BaseTest {
 
     /**
      *  需要提供测试账号租户 和corpId  相对应起来，这样里面后台逻辑落库数据才能测试  否则会出现签名错误或者book user not found
-     *
      */
     @Test(description = "用于真实的供应商的火车模板结算数据进行推数据落库测试",dataProvider = "TMC")
     public void settlementDataTest2(String supplierName,String supplierCode,String appName,String corpId,String signature,String path) throws HttpStatusException {

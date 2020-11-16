@@ -158,18 +158,19 @@ public class VendorData {
      * @throws HttpStatusException
      */
     public JsonObject setOrderData(Employee employee,JsonObject orderData,String type,String supplierName,String supplierCode) throws HttpStatusException {
+        log.info("更换用户的json{}",orderData);
         JsonObject baseOrder =new JsonObject();
         JsonArray passengerInfo = new JsonArray();
         JsonObject employeeInfo = new JsonObject();
         JsonObject passagerInfos = new JsonObject();
         switch (type) {
-            case "fight":
+            case "flight":
                 baseOrder = orderData.getAsJsonObject("airBaseOrder");
                 passengerInfo = orderData.getAsJsonArray("airPassengerInfo");
                 //查找预定人的信息
-                employeeInfo = infraStructure.getUserDetail(employee, baseOrder.get("preEmployeeId").getAsString());
+                employeeInfo = infraStructure.getUserDetail(employee, baseOrder.get("employeeId").getAsString());
                 //根据工号查询乘客的信息
-                passagerInfos = infraStructure.getUserDetail(employee, passengerInfo.get(0).getAsJsonObject().get("passengerNum").getAsString());
+                passagerInfos = infraStructure.getUserDetail(employee, passengerInfo.get(0).getAsJsonObject().get("passengeNum").getAsString());
                 break;
             case "train":
                 baseOrder = orderData.getAsJsonObject("trainOrderBase");
@@ -177,7 +178,7 @@ public class VendorData {
                 //根据员工的工号 查询订票人的信息
                 employeeInfo = infraStructure.getUserDetail(employee, baseOrder.get("employeeNum").getAsString());
                 //根据工号查询乘客的信息
-                passagerInfos = infraStructure.getUserDetail(employee, passengerInfo.get(0).getAsJsonObject().get("passengerNum").getAsString());
+                passagerInfos = infraStructure.getUserDetail(employee, passengerInfo.get(0).getAsJsonObject().get("passengeNum").getAsString());
                 break;
             case "hotel":
                 baseOrder = orderData.getAsJsonObject("hotelOrderBase");

@@ -405,7 +405,7 @@ public class Vendor {
         vendorObject.getAsJsonObject("carBaseOrder").addProperty("bookClerkEmployeeId", employee.getEmployeeID());
         vendorObject.getAsJsonObject("carBaseOrder").addProperty("bookClerkName", employee.getFullName());
         vendorObject.getAsJsonArray("carOrderPassengerInfos").get(0).getAsJsonObject().addProperty("passengerName", employee.getFullName());
-        vendorObject.getAsJsonArray("carOrderPassengerInfos").get(0).getAsJsonObject().addProperty("passengerNum", employee.getEmployeeID());
+        vendorObject.getAsJsonArray("carOrderPassengerInfos").get(0).getAsJsonObject().addProperty("passengerCode", employee.getEmployeeID());
         return vendorObject;
     }
 

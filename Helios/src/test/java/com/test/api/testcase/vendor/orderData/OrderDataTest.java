@@ -44,6 +44,13 @@ public class OrderDataTest extends FlightOrderDataTest {
         };
     }
 
+    @DataProvider(name = "TMC-CAR")
+    public Object[][] tmcCarData() {
+        return new Object[][]{
+                {TmcChannel.EHI.getSupplierName(),TmcChannel.EHI.getSupplierCode(),TmcChannel.EHI.getCorpId(),TmcChannel.EHI.getAppName(),TmcChannel.EHI.getSigniture(), OrderSettlementDataPath.settlementUseData},
+        };
+    }
+
     @Test(description = "机票订单模板数据测试",dataProvider = "TMC")
     public void OrderTest1(String supplierName,String supplierCode,String corpId,String appName,String signature,String path) throws HttpStatusException {
         JsonObject vendorData = vendor.getFlightOrder(employee,path);
@@ -132,12 +139,13 @@ public class OrderDataTest extends FlightOrderDataTest {
         assert GsonUtil.compareJsonObject(orderData,flightOrderData,mapping);
     }
 
-    @Test(description = "用车订单模板数据测试", dataProvider = "TMC")
+    @Test(description = "用车订单模板数据测试", dataProvider = "TMC-CAR")
     public void OrderTest4(String supplierName,String supplierCode,String corpId,String appName,String signature,String path) throws HttpStatusException {
         JsonObject vendorData = vendor.getCarOrder(employee,path);
         log.info("vendorData:{}",vendorData);
-        //酒店订单数据推送
-        vendor.pushOrderData(employee,"car",vendorData,appName,corpId,signature);
+        //用车订单数据推送
+        JsonObject carData = vendor.pushOrderData(employee,"car",vendorData,appName,corpId,signature);
+        log.info("car data response:{}",carData);
         // 组装数据
         JsonObject orderData = mVendorData.setOrderData(employee,vendorData,"car",supplierName,supplierCode);
         log.info("拼装的数据:{}",orderData);

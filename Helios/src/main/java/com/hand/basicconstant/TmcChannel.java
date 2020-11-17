@@ -12,8 +12,8 @@ public enum TmcChannel {
     FY("FY","supplyFyAirTMCService","","","","","",""),
     CTRIP("Ctrip","supplyCtripService","","","","","",""),
     ZLS("ZLS","supplyOnTheWayTMCService","","","","","",""),
+    EHI("ehi","","","ehi","一嗨","ehi","200428140254184790","69c8658b898b6468d38a9cc68205afd6"),
     AMEX("amex","","","amex","","amex","200428140254184795","3055d656f9feed61f69b368787762d05");
-
 
     private String name;
     private String tmcChannel;

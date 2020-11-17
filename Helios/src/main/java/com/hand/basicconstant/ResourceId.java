@@ -30,4 +30,6 @@ public class ResourceId {
     public static final String DepartManage= "640002000400";
     //公司定义的详情
     public static final String COMPANY = "640002000300";
+    //提交管控
+    public static final String SUBMIT_CONTROL = "660013000600";
 }

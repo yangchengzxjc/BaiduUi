@@ -353,4 +353,30 @@ public class GsonUtil {
         }
         return flg;
     }
+
+    /**
+     * 设置系统多语言扥方法
+     * @param value  为多语言的value值
+     * @return
+     */
+    public static JsonArray setLanguage (String value){
+        JsonArray arrays = new JsonArray();
+        JsonObject en = new JsonObject();
+        en.addProperty("language","en");
+        en.addProperty("value",value);
+        JsonObject ja = new JsonObject();
+        ja.addProperty("language","ja");
+        ja.addProperty("value",value);
+        JsonObject cn = new JsonObject();
+        cn.addProperty("language","zh_cn");
+        cn.addProperty("value",value);
+        JsonObject tw = new JsonObject();
+        tw.addProperty("language","zh_tw");
+        tw.addProperty("value",value);
+        arrays.add(en);
+        arrays.add(ja);
+        arrays.add(cn);
+        arrays.add(tw);
+        return arrays;
+    }
 }

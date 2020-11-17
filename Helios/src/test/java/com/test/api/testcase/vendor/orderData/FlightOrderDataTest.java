@@ -143,6 +143,7 @@ public class FlightOrderDataTest extends BaseTest {
         JsonObject flightOrderDataObject =new JsonParser().parse(GsonUtil.objectToString(airOrderInfoEntity)).getAsJsonObject();
         //订单推送
        JsonObject flightOrderDataPush = vendor.pushOrderData(employee,"flight",airOrderInfoEntity,appName,corpId,signature);
+       log.info("order data response:{}",flightOrderDataPush);
        SettlementBody settlementBody = SettlementBody.builder()
                 .companyOid(employee.getCompanyOID())
                 .orderNo(orderNo)

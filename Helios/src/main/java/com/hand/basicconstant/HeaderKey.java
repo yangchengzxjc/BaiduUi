@@ -17,4 +17,8 @@ public class HeaderKey {
     public static final String DepManager = "department-management";
     //公司定义
     public static final String Company = "company-maintain";
+    //报销单提交管控
+    public static final String REIMB_SUBMIT_CONTROL = "reimb-submission-control";
+    //报销标准
+    public static final String REIMB_STANDARD = "reimbursement-standard";
 }

@@ -5,10 +5,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.Rule.SubmitRules;
 import com.hand.basicconstant.ApiPath;
+import com.hand.basicconstant.HeaderKey;
 import com.hand.basicconstant.ResourceId;
+import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.math3.ml.distance.EarthMoversDistance;
 
 import java.util.HashMap;
 
@@ -18,68 +20,21 @@ public class ReimbSubmissionControlApi extends BaseRequest{
     /**
      * 新建报销单提交管控规则
      * @param employee
-     * @param name
-     * @param controlLevel 控制方式 WARN/FORBID
-     * @param forms
-     * @param message
-     * @param levelCode
-     * @param levelOrgId
-     * @param levelOrgName
-     * @param companys
      * @return
      * @throws HttpStatusException
      */
-    public String creatRules (Employee employee,String name,String controlLevel,JsonArray forms,String message,String levelCode,
-                              String levelOrgId,String levelOrgName,JsonArray companys)throws HttpStatusException {
+   public String creatSubmitRules (Employee employee, SubmitRules rules)throws HttpStatusException {
         String url = employee.getEnvironment().getUrl()+ ApiPath.ADD_REIMB_STANDARD;
-        HashMap<String, String> mapParams3 = new HashMap<>();
-        mapParams3.put("roleType","TENANT");
-        JsonObject body = new JsonObject();
-        body.addProperty("status",true);
-        body.addProperty("name",name);
-        body.add("forms",forms);
-        body.addProperty("controlLevel",controlLevel);
-        body.addProperty("message",message);
-        //多语言
-        JsonObject object =new JsonObject();
-
-        JsonArray nameList= new JsonArray();
-        JsonObject name1 =new JsonObject();
-        name1.addProperty("language","en");
-        name1.addProperty("value",name);
-        JsonObject name2 =new JsonObject();
-        name2.addProperty("language","zh_cn");
-        name2.addProperty("value",name);
-        JsonObject name3 =new JsonObject();
-        name3.addProperty("language","zh_TW");
-        name3.addProperty("value",name);
-        nameList.add(name1);
-        nameList.add(name2);
-        nameList.add(name3);
-        object.add("name",nameList);
-
-        JsonArray nameList1= new JsonArray();
-        JsonObject message1 =new JsonObject();
-        message1.addProperty("language","en");
-        message1.addProperty("value",message);
-        JsonObject message2 =new JsonObject();
-        message2.addProperty("language","zh_cn");
-        message2.addProperty("value",message);
-        JsonObject message3 =new JsonObject();
-        message3.addProperty("language","zh_TW");
-        message3.addProperty("value",message);
-        nameList1.add(message1);
-        nameList1.add(message2);
-        nameList1.add(message3);
-        object.add("message",nameList1);
-
-        body.add("i18n",object);
-        body.addProperty("businessType",1002);
-        body.addProperty("levelCode",levelCode);
-        body.addProperty("levelOrgId",levelOrgId);
-        body.addProperty("levelOrgName",levelOrgName);
-        body.add("companys",companys);
-        String res = doPost(url,getHeader(employee.getAccessToken(),"reimbursement-standard", ResourceId.INFRA),mapParams3,body.toString(),null,employee);
+        String ruleString = GsonUtil.objectToString(rules);
+        JsonObject ruleObject = new JsonParser().parse(ruleString).getAsJsonObject();
+        //设置多语言字段
+        JsonObject i18n =new JsonObject();
+        i18n.add("name",GsonUtil.setLanguage(rules.getName()));
+        i18n.add("message",GsonUtil.setLanguage(rules.getMessage()));
+        ruleObject.add("i18n",i18n);
+        HashMap<String,String> mapParams = new HashMap<>();
+        mapParams.put("roleType","TENANT");
+        String res = doPost(url,getHeader(employee.getAccessToken(), HeaderKey.REIMB_STANDARD, ResourceId.SUBMIT_CONTROL),mapParams,ruleObject.toString(),null,employee);
         return new JsonParser().parse(res).getAsString();
     }
 
@@ -90,12 +45,12 @@ public class ReimbSubmissionControlApi extends BaseRequest{
      * @return
      * @throws HttpStatusException
      */
-    public String getRules(Employee employee, String rulesOid)throws HttpStatusException{
+    public JsonObject getRules(Employee employee, String rulesOid)throws HttpStatusException{
         String url = employee.getEnvironment().getUrl() + String.format(ApiPath.GET_SUBMISSION_RULES,rulesOid) ;
         HashMap<String,String> mapParams = new HashMap<>();
         mapParams.put("roleType","TENANT");
-        String res=doGet(url,getHeader(employee.getAccessToken(),"reimb-submission-control",ResourceId.INFRA),mapParams,employee);
-        return res;
+        String response = doGet(url,getHeader(employee.getAccessToken(),HeaderKey.REIMB_SUBMIT_CONTROL,ResourceId.SUBMIT_CONTROL),mapParams,employee);
+        return new JsonParser().parse(response).getAsJsonObject();
     }
 
     /**
@@ -121,7 +76,7 @@ public class ReimbSubmissionControlApi extends BaseRequest{
         body.addProperty("controlCond",controlCond);
         body.addProperty("mixedItem",mixedItem);
         body.addProperty("extendValue",extendValue);
-        String res = doPost(url,getHeader(employee.getAccessToken(),"reimb-submission-control", ResourceId.INFRA),mapParams,body.toString(),null,employee);
+        String res = doPost(url,getHeader(employee.getAccessToken(),HeaderKey.REIMB_SUBMIT_CONTROL, ResourceId.SUBMIT_CONTROL),mapParams,body.toString(),null,employee);
         return res;
     }
 
@@ -136,7 +91,7 @@ public class ReimbSubmissionControlApi extends BaseRequest{
         String url = employee.getEnvironment().getUrl() + String.format(ApiPath.GET_SUBMISSION_ITEM,rulesOid);
         HashMap<String,String> mapParams = new HashMap<>();
         mapParams.put("roleType","TENANT");
-        String res=doGet(url,getHeader(employee.getAccessToken(),"reimb-submission-control",ResourceId.INFRA),mapParams,employee);
+        String res = doGet(url,getHeader(employee.getAccessToken(),HeaderKey.REIMB_SUBMIT_CONTROL,ResourceId.SUBMIT_CONTROL),mapParams,employee);
         return new JsonParser().parse(res).getAsJsonArray();
     }
 
@@ -150,6 +105,20 @@ public class ReimbSubmissionControlApi extends BaseRequest{
         String url = employee.getEnvironment().getUrl() + String.format(ApiPath.DELETE_REIMB_STANDARD,rulesOid);
         HashMap<String,String> mapParams = new HashMap<>();
         mapParams.put("roleType","TENANT");
-        doPost(url,getHeader(employee.getAccessToken(),"reimb-submission-control",ResourceId.INFRA),mapParams,new JsonObject().toString(),null,employee);
+        doPost(url,getHeader(employee.getAccessToken(),HeaderKey.REIMB_SUBMIT_CONTROL,ResourceId.SUBMIT_CONTROL),mapParams,new JsonObject().toString(),null,employee);
+    }
+
+    /**
+     * 查询报销单提交管控的表单
+     * @param employee
+     * @param setOfBooksId  账套id
+     * @param keyWord  表单名称
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray  controlGetForm(Employee employee,String setOfBooksId,String keyWord) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ String.format(ApiPath.QUERY_FORM,keyWord,keyWord,setOfBooksId);
+        String response = doPost(url,getHeader(employee.getAccessToken(),HeaderKey.REIMB_SUBMIT_CONTROL,ResourceId.SUBMIT_CONTROL),null,new JsonObject().toString(),null,employee);
+        return new JsonParser().parse(response).getAsJsonArray();
     }
 }

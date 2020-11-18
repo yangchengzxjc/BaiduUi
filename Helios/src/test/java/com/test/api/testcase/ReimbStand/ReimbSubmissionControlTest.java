@@ -46,7 +46,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     public void creatRules() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
-        reimbSubmissionControl.addReimbSubmissionControl(employee,rules,"","");
+        reimbSubmissionControl.addReimbSubmissionControl(employee,rules,"自动化测试-日常报销单",employee.getCompanyName());
     }
 
     @Test(priority = 1,description = "报销单提交管控规则校验")

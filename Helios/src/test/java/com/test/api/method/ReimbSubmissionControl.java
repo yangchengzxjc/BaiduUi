@@ -8,7 +8,9 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.Rule.SubmitRules;
 import com.hand.basicconstant.HeaderKey;
 import com.test.api.method.Infra.SetOfBooksMethod.SetOfBooksDefine;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ReimbSubmissionControl {
     private ReimbSubmissionControlApi reimbSubmissionControl;
 
@@ -36,25 +38,26 @@ public class ReimbSubmissionControl {
             levelOrgId = setOfBooksDefine.getSetOfBooksId(employee,"",rules.getLevelOrgName(), HeaderKey.REIMB_SUBMIT_CONTROL);
             rules.setLevelOrgId(levelOrgId);
             if(!formName.equals("")) {
-                form = reimbSubmissionControl.controlGetForm(employee, rules.getLevelOrgId(), null, formName);
+                form = reimbSubmissionControl.controlGetForm(employee, rules.getLevelOrgId(), "", formName);
+                log.info("适用单据:{}",form);
                 rules.setForms(form);
             }
             if(!companyName.equals("")){
                 JsonObject company = new JsonObject();
                 company.addProperty("name",companyName);
-                company.addProperty("id",reimbStandard.getCompany(employee,companyName,null).get("id").getAsString());
+                company.addProperty("id",reimbStandard.getCompany(employee,companyName,"").get("id").getAsString());
                 JsonArray array = new JsonArray();
                 array.add(company);
                 rules.setCompanys(array);
             }
         }else {
             rules.setLevelOrgName(companyName);
-            JsonObject companyObject = reimbStandard.getCompany(employee,rules.getLevelOrgName(),null);
+            JsonObject companyObject = reimbStandard.getCompany(employee,rules.getLevelOrgName(),"");
             levelOrgId = companyObject.get("id").getAsString();
             rules.setLevelOrgId(levelOrgId);
             rules.setCompanyOID(companyObject.get("companyOID").getAsString());
             if(!formName.equals("")){
-                form = reimbSubmissionControl.controlGetForm(employee,null,rules.getCompanyOID(),formName);
+                form = reimbSubmissionControl.controlGetForm(employee,"",rules.getCompanyOID(),formName);
                 rules.setForms(form);
             }
         }

@@ -146,11 +146,13 @@ public class SetOfBooksApi extends BaseRequest {
         String url = employee.getEnvironment().getUrl() + ApiPath.GET_SET_OF_BOOKS;
         Map<String, String> urlParam = new HashMap<>();
         urlParam.put("roleType","TENANT");
+        urlParam.put("enable","true");
         urlParam.put("setOfBooksCode",setOfBooksCode);
         urlParam.put("setOfBooksName",setOfBooksName);
+        urlParam.put("setOfBooksNameLable",setOfBooksName);
         urlParam.put("page","0");
         urlParam.put("size","20");
-        urlParam.put("withAdditionalInfo","true");
+//        urlParam.put("withAdditionalInfo","true");
         String res = doGet(url,getHeader(employee.getAccessToken(),key),urlParam,employee);
         return new JsonParser().parse(res).getAsJsonArray();
     }

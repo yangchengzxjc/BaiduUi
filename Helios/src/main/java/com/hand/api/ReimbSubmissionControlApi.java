@@ -118,7 +118,7 @@ public class ReimbSubmissionControlApi extends BaseRequest{
      */
     public JsonArray  controlGetForm(Employee employee,String setOfBooksId,String companyOID,String keyWord) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl()+ String.format(ApiPath.QUERY_FORM,keyWord,keyWord,setOfBooksId,companyOID);
-        String response = doPost(url,getHeader(employee.getAccessToken(),HeaderKey.REIMB_SUBMIT_CONTROL,ResourceId.SUBMIT_CONTROL),null,new JsonObject().toString(),null,employee);
+        String response = doGet(url,getHeader(employee.getAccessToken(),HeaderKey.REIMB_SUBMIT_CONTROL,ResourceId.SUBMIT_CONTROL),null,employee);
         return new JsonParser().parse(response).getAsJsonArray();
     }
 }

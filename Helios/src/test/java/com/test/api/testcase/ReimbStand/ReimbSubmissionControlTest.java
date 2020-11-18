@@ -6,6 +6,7 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;
 import com.hand.basicObject.InvoiceComponent;
+import com.hand.basicObject.Rule.SubmitRules;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
 import com.test.api.method.ExpenseReport;
@@ -27,40 +28,26 @@ public class ReimbSubmissionControlTest extends BaseTest {
     private SetOfBooksDefine setOfBooksDefine;
     private ExpenseReportComponent expenseReportComponent;
 
-    HashMap<String,String> getrulesOid ;
+    HashMap<String,String> getrulesOid;
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void beforeClass(@Optional("14082978625") String phoneNumber, @Optional("hly12345") String pwd, @Optional("stage") String env){
+    public void beforeClass(@Optional("14082978625") String phoneNumber, @Optional("rr123456") String pwd, @Optional("stage") String env){
         expenseReport =new ExpenseReport();
         expenseReportInvoice =new ExpenseReportInvoice();
         employee=getEmployee(phoneNumber,pwd,env);
         reimbSubmissionControl =new ReimbSubmissionControl();
         expenseReportComponent =new ExpenseReportComponent();
         setOfBooksDefine=new SetOfBooksDefine();
-
     }
 
 //    @BeforeMethod(description = "创建报销单提交管控规则")
-//    public void creatRules() throws HttpStatusException {
-//        String rulesOid =reimbSubmissionControl.addReimbSubmissionControl(employee,"报销单提交日期1","WARN",
-//                new JsonArray(),"费用消费日期不得超过报销单提交日期","SET_OF_BOOK",
-//                setOfBooksDefine.getSetOfBooksId(employee,"DEFAULT_SOB","默认账套","reimb-submission-control"),
-//                "默认账套",new JsonArray());
-//        log.info("规则oid：{}",rulesOid);
-//        //获取规则oid
-//        getrulesOid = new HashMap<>();
-//        getrulesOid.put("rulesOid",rulesOid);
-//        //获取默认规则详情
-//        String  rulesDetail=reimbSubmissionControl.getRules(employee,rulesOid);
-//        log.info("规则默认详情：{}",rulesDetail);
-//        //新建管控项
-//        reimbSubmissionControl.addRulesItem(employee,rulesOid,1006,1004,1002,1001,1);
-//        //查看管控项
-//        JsonArray itemsDetails =new JsonArray();
-//        itemsDetails=reimbSubmissionControl.getItems(employee,rulesOid);
-//        log.info("管控项详情：{}",itemsDetails);
-//    }
+    @Test
+    public void creatRules() throws HttpStatusException {
+        SubmitRules rules = new SubmitRules();
+        rules.setName("报销提交管控-自动化");
+        reimbSubmissionControl.addReimbSubmissionControl(employee,rules,"","");
+    }
 
     @Test(priority = 1,description = "报销单提交管控规则校验")
     public void checkRules()throws HttpStatusException{
@@ -105,10 +92,10 @@ public class ReimbSubmissionControlTest extends BaseTest {
         expenseReport.deleteExpenseReport(employee,expenseReportOID);
     }
 
-    @AfterMethod(description = "删除规则")
-    public void deleteRules() throws HttpStatusException{
-        //删除规则
-        reimbSubmissionControl.deleteReimbSubmissionRules(employee,getrulesOid.get("rulesOid"));
-
-    }
+//    @AfterMethod(description = "删除规则")
+//    public void deleteRules() throws HttpStatusException{
+//        //删除规则
+//        reimbSubmissionControl.deleteReimbSubmissionRules(employee,getrulesOid.get("rulesOid"));
+//
+//    }
 }

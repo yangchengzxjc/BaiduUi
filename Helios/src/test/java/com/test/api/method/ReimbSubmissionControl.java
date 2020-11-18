@@ -1,9 +1,13 @@
 package com.test.api.method;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.hand.api.ReimbSubmissionControlApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.Rule.SubmitRules;
+import com.hand.basicconstant.HeaderKey;
+import com.test.api.method.Infra.SetOfBooksMethod.SetOfBooksDefine;
 
 public class ReimbSubmissionControl {
     private ReimbSubmissionControlApi reimbSubmissionControl;
@@ -15,23 +19,48 @@ public class ReimbSubmissionControl {
     /**
      * 报销单提交管控规则创建
      * @param employee
-     * @param name
-     * @param controlLevel
-     * @param forms
-     * @param message
-     * @param levelCode
-     * @param levelOrgId
-     * @param levelOrgName
-     * @param companys
+     * @param rules
+     * @param formName  适用单据为空则默认为 通用
+     * @param companyName 账套模式下的公司配置  如果为空则认为是通用
      * @return
      * @throws HttpStatusException
      */
-    public String addReimbSubmissionControl(Employee employee,String name,String controlLevel, JsonArray forms,String message,String levelCode,
-                                            String levelOrgId,String levelOrgName,JsonArray companys)throws HttpStatusException {
-        String rulesOid =reimbSubmissionControl.creatRules(employee,name,controlLevel,forms,message,levelCode,levelOrgId,
-                levelOrgName,companys);
-        return rulesOid;
+    public String addReimbSubmissionControl(Employee employee, SubmitRules rules,String formName,String companyName)throws HttpStatusException {
+        //获取控制规则表单
+        SetOfBooksDefine setOfBooksDefine =new SetOfBooksDefine();
+        ReimbStandard reimbStandard = new ReimbStandard();
+        String levelOrgId="";
+        JsonArray form;
+        //账套级配置
+        if(rules.getLevelCode().equals("SET_OF_BOOK")){
+            levelOrgId = setOfBooksDefine.getSetOfBooksId(employee,"",rules.getLevelOrgName(), HeaderKey.REIMB_SUBMIT_CONTROL);
+            rules.setLevelOrgId(levelOrgId);
+            if(!formName.equals("")) {
+                form = reimbSubmissionControl.controlGetForm(employee, rules.getLevelOrgId(), null, formName);
+                rules.setForms(form);
+            }
+            if(!companyName.equals("")){
+                JsonObject company = new JsonObject();
+                company.addProperty("name",companyName);
+                company.addProperty("id",reimbStandard.getCompany(employee,companyName,null).get("id").getAsString());
+                JsonArray array = new JsonArray();
+                array.add(company);
+                rules.setCompanys(array);
+            }
+        }else {
+            rules.setLevelOrgName(companyName);
+            JsonObject companyObject = reimbStandard.getCompany(employee,rules.getLevelOrgName(),null);
+            levelOrgId = companyObject.get("id").getAsString();
+            rules.setLevelOrgId(levelOrgId);
+            rules.setCompanyOID(companyObject.get("companyOID").getAsString());
+            if(!formName.equals("")){
+                form = reimbSubmissionControl.controlGetForm(employee,null,rules.getCompanyOID(),formName);
+                rules.setForms(form);
+            }
+        }
+        return reimbSubmissionControl.creatSubmitRules(employee,rules);
     }
+
 
     /**
      * 获取规则默认详情
@@ -40,9 +69,9 @@ public class ReimbSubmissionControl {
      * @return
      * @throws HttpStatusException
      */
-    public String  getRules(Employee employee, String rulesOid)throws HttpStatusException{
-        String getRulesDetails=reimbSubmissionControl.getRules(employee,rulesOid);
-        return getRulesDetails;
+    public JsonObject getRules(Employee employee, String rulesOid)throws HttpStatusException{
+        JsonObject rulesDetails=reimbSubmissionControl.getRules(employee,rulesOid);
+        return rulesDetails;
     }
 
     /**

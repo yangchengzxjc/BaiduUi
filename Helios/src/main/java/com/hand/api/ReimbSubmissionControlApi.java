@@ -34,8 +34,8 @@ public class ReimbSubmissionControlApi extends BaseRequest{
         ruleObject.add("i18n",i18n);
         HashMap<String,String> mapParams = new HashMap<>();
         mapParams.put("roleType","TENANT");
-        String res = doPost(url,getHeader(employee.getAccessToken(), HeaderKey.REIMB_STANDARD, ResourceId.SUBMIT_CONTROL),mapParams,ruleObject.toString(),null,employee);
-        return new JsonParser().parse(res).getAsString();
+        return doPost(url,getHeader(employee.getAccessToken(), HeaderKey.REIMB_STANDARD, ResourceId.SUBMIT_CONTROL),mapParams,ruleObject.toString(),null,employee);
+
     }
 
     /**
@@ -116,8 +116,8 @@ public class ReimbSubmissionControlApi extends BaseRequest{
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray  controlGetForm(Employee employee,String setOfBooksId,String keyWord) throws HttpStatusException {
-        String url = employee.getEnvironment().getUrl()+ String.format(ApiPath.QUERY_FORM,keyWord,keyWord,setOfBooksId);
+    public JsonArray  controlGetForm(Employee employee,String setOfBooksId,String companyOID,String keyWord) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ String.format(ApiPath.QUERY_FORM,keyWord,keyWord,setOfBooksId,companyOID);
         String response = doPost(url,getHeader(employee.getAccessToken(),HeaderKey.REIMB_SUBMIT_CONTROL,ResourceId.SUBMIT_CONTROL),null,new JsonObject().toString(),null,employee);
         return new JsonParser().parse(response).getAsJsonArray();
     }

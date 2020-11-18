@@ -231,7 +231,7 @@ public class Vendor {
         vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("bookClerkName", employee.getFullName());
         vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("bookClerkEmployeeId", employee.getEmployeeID());
         vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("passengerName", employee.getFullName());
-        vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("passengerEmployeeId", employee.getFullName());
+        vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("passengerEmployeeId", employee.getEmployeeID());
         vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("orderNo", orderNo);
         if (!vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().get("detailType").getAsString().equals("出票")) {
             vendorObject.getAsJsonArray("flightSettlementList").get(0).getAsJsonObject().addProperty("originalOrderNo", originalOrderNo);

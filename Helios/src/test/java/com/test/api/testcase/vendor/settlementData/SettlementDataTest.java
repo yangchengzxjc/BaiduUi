@@ -45,7 +45,7 @@ public class SettlementDataTest extends BaseTest {
     @DataProvider(name = "TMC-CAR")
     public Object[][] tmcCarData() {
         return new Object[][]{
-                {TmcChannel.EHI.getSupplierName(),TmcChannel.EHI.getSupplierCode(),TmcChannel.EHI.getCorpId(),TmcChannel.EHI.getAppName(),TmcChannel.EHI.getSigniture(), OrderSettlementDataPath.settlementUseData},
+                {TmcChannel.EHI.getSupplierName(),TmcChannel.EHI.getSupplierCode(),TmcChannel.EHI.getCorpId(),TmcChannel.EHI.getAppName(),TmcChannel.EHI.getSigniture(), OrderSettlementDataPath.settlementChangeData},
         };
     }
 

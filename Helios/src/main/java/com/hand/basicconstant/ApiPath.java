@@ -326,7 +326,7 @@ public class ApiPath {
 
 
         //报销单提交管控查询单据
-        public static final String QUERY_FORM = "/api/custom/forms/loan/reference/v2?roleType=TENANT&page=0&size=10&keyword=%s&keywordLable=%s&formTypeList=3001&formTypeList=3002&formTypeList=3003&setOfBooksId=%s";
+        public static final String QUERY_FORM = "/api/custom/forms/loan/reference/v2?roleType=TENANT&page=0&size=10&keyword=%s&keywordLable=%s&formTypeList=3001&formTypeList=3002&formTypeList=3003&setOfBooksId=%s&companyOID=%s";
 }
 
 

@@ -78,10 +78,18 @@ public class ReimbStandard {
         return formType;
     }
 
-    public JsonObject getCompany(Employee employee,String companys,String setOfBooksId)throws HttpStatusException{
+    /**
+     *
+     * @param employee
+     * @param companyName  公司的名称
+     * @param setOfBooksId 账套的id
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getCompany(Employee employee,String companyName,String setOfBooksId)throws HttpStatusException{
         JsonArray companyList = reimbStandardRules.getEnabledCompany(employee,setOfBooksId);
         JsonObject company;
-        company = GsonUtil.getJsonValue(companyList,"name",companys);
+        company = GsonUtil.getJsonValue(companyList,"name",companyName);
         return company;
     }
     /**

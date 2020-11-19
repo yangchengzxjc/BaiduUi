@@ -103,7 +103,7 @@ public class FlightSettlementDataTest extends BaseTest {
                 .sendTicketFee(new BigDecimal(0).setScale(2))
                 .insuranceFee(new BigDecimal(0).setScale(2))
                 .serviceFee(serviceFee)
-                .postServiceFee(new BigDecimal(100))
+                .postServiceFee(new BigDecimal(100).setScale(2))
                 .rebate(new BigDecimal(0).setScale(2))
                 //未退票
                 .refundServiceFee(new BigDecimal(0).setScale(2))
@@ -256,7 +256,7 @@ public class FlightSettlementDataTest extends BaseTest {
                 .sendTicketFee(new BigDecimal(0).setScale(2))
                 .insuranceFee(new BigDecimal(0).setScale(2))
                 .serviceFee(serviceFee)
-                .postServiceFee(new BigDecimal(100))
+                .postServiceFee(new BigDecimal(100).setScale(2))
                 .rebate(new BigDecimal(0).setScale(2))
                 //未退票
                 .refundServiceFee(new BigDecimal(0).setScale(2))

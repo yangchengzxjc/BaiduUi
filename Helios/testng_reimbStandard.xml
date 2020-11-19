@@ -8,13 +8,13 @@
 
     <test verbose="10" preserve-order="true" name="报销标准测试">
         <classes>
-            <class name="com.test.api.testcase.ReimbStand.ReimbStandardTest"/>
+            <class name="com.test.api.testcase.expenseControl.ReimbStandardTest"/>
         </classes>
     </test>
 
     <test verbose="10" preserve-order="true" name="报销单提交管控测试">
         <classes>
-            <class name="com.test.api.testcase.ReimbStand.ReimbSubmissionControlTest"/>
+            <class name="com.test.api.testcase.expenseControl.SubmissionControl.ReimbSubmissionControlTest"/>
         </classes>
     </test>
 

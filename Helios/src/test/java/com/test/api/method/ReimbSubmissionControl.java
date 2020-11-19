@@ -5,8 +5,10 @@ import com.google.gson.JsonObject;
 import com.hand.api.ReimbSubmissionControlApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.Rule.SubmitRuleItem;
 import com.hand.basicObject.Rule.SubmitRules;
 import com.hand.basicconstant.HeaderKey;
+import com.hand.utils.GsonUtil;
 import com.test.api.method.Infra.SetOfBooksMethod.SetOfBooksDefine;
 import lombok.extern.slf4j.Slf4j;
 
@@ -61,7 +63,7 @@ public class ReimbSubmissionControl {
                 rules.setForms(form);
             }
         }
-        return reimbSubmissionControl.creatSubmitRules(employee,rules);
+        return reimbSubmissionControl.creatSubmitRules(employee,rules).replace("\"","");
     }
 
 
@@ -80,19 +82,18 @@ public class ReimbSubmissionControl {
     /**
      * 新增管控项
      * @param employee
-     * @param rulesOid
-     * @param controlItem
-     * @param valueType
-     * @param controlCond
-     * @param mixedItem
-     * @param extendValue
      * @return
      * @throws HttpStatusException
      */
-    public String addRulesItem(Employee employee,String rulesOid,int controlItem,int valueType,
-                               int controlCond,int mixedItem,int extendValue)throws HttpStatusException{
-        String body=reimbSubmissionControl.addRulesItems(employee,rulesOid,controlItem,valueType,controlCond,mixedItem,extendValue);
-        return body;
+    public String addRulesItem(Employee employee,String rulesOid,SubmitRuleItem item,String expenseTypeName)throws HttpStatusException{
+        JsonObject ruleDetail = getRules(employee,rulesOid);
+        String expenseTypeOid = getExpense(employee,ruleDetail.get("levelOrgId").getAsString(),expenseTypeName).get("expenseTypeOID").getAsString();
+        if(item.getControlItem().equals(1002) || item.getControlItem().equals(1001)){
+            JsonArray expense = new JsonArray();
+            expense.add(expenseTypeOid);
+            item.setFieldValue(expense);
+        }
+        return reimbSubmissionControl.addRulesItems(employee,rulesOid,item);
     }
 
     /**
@@ -103,9 +104,7 @@ public class ReimbSubmissionControl {
      * @throws HttpStatusException
      */
     public JsonArray getItems(Employee employee,String rulesOid)throws HttpStatusException{
-        JsonArray items =new JsonArray();
-        items = reimbSubmissionControl.getItems(employee,rulesOid);
-        return items;
+        return reimbSubmissionControl.getItems(employee,rulesOid);
     }
 
     /**
@@ -116,5 +115,22 @@ public class ReimbSubmissionControl {
      */
     public void deleteReimbSubmissionRules(Employee employee,String rulesOid) throws HttpStatusException{
         reimbSubmissionControl.deleteReimbSubmissionControlRules(employee,rulesOid);
+    }
+
+    /**
+     *
+     * @param employee
+     * @param setBooksId
+     * @param expenseName
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getExpense(Employee employee,String setBooksId,String expenseName) throws HttpStatusException {
+        JsonArray expense = reimbSubmissionControl.getExpenseType(employee,setBooksId,expenseName);
+        if(GsonUtil.isNotEmpt(expense)){
+            return GsonUtil.getJsonValue(expense,"name",expenseName);
+        }else{
+            throw new RuntimeException("未查找到相关费用类型");
+        }
     }
 }

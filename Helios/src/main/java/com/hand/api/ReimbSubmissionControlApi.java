@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.Rule.SubmitRuleItem;
 import com.hand.basicObject.Rule.SubmitRules;
 import com.hand.basicconstant.ApiPath;
 import com.hand.basicconstant.HeaderKey;
@@ -57,27 +58,16 @@ public class ReimbSubmissionControlApi extends BaseRequest{
      * 新增管控项
      * @param employee
      * @param rulesOid
-     * @param controlItem 管控项 1002 报销单提交日期；
-     * @param valueType 取值方式 1004 <;
-     * @param controlCond 条件 1002 费用消费日期；1004 关联申请单的结束日期
-     * @param mixedItem 条件中的符号 1001 +；1002 -；
-     * @param extendValue 具体数值
      * @return
      * @throws HttpStatusException
      */
-    public String addRulesItems(Employee employee,String rulesOid,int controlItem,int valueType,
-                                int controlCond,int mixedItem,int extendValue)throws HttpStatusException{
+    public String addRulesItems(Employee employee, String rulesOid, SubmitRuleItem item)throws HttpStatusException{
         String url = employee.getEnvironment().getUrl() + String.format(ApiPath.ADD_SUBMISSION_ITEM,rulesOid);
         HashMap<String,String> mapParams = new HashMap<>();
         mapParams.put("roleType","TENANT");
-        JsonObject body =new JsonObject();
-        body.addProperty("controlItem",controlItem);
-        body.addProperty("valueType",valueType);
-        body.addProperty("controlCond",controlCond);
-        body.addProperty("mixedItem",mixedItem);
-        body.addProperty("extendValue",extendValue);
-        String res = doPost(url,getHeader(employee.getAccessToken(),HeaderKey.REIMB_SUBMIT_CONTROL, ResourceId.SUBMIT_CONTROL),mapParams,body.toString(),null,employee);
-        return res;
+        String ruleString = GsonUtil.objectToString(item);
+        JsonObject itemObject = new JsonParser().parse(ruleString).getAsJsonObject();
+        return doPost(url,getHeader(employee.getAccessToken(),HeaderKey.REIMB_SUBMIT_CONTROL, ResourceId.SUBMIT_CONTROL),mapParams,itemObject.toString(),null,employee);
     }
 
     /**
@@ -121,4 +111,35 @@ public class ReimbSubmissionControlApi extends BaseRequest{
         String response = doGet(url,getHeader(employee.getAccessToken(),HeaderKey.REIMB_SUBMIT_CONTROL,ResourceId.SUBMIT_CONTROL),null,employee);
         return new JsonParser().parse(response).getAsJsonArray();
     }
+    
+    /*
+     * 获取费用类型
+     * @ param employee
+     * @ param setOfBookId 账套id
+     * @ return
+     * @ throws HttpStatusException
+     */
+    public JsonArray getExpenseType (Employee employee,String setOfBooksId,String expenseName) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.EXPENSE_TYPE;
+        HashMap<String, String> mapParams = new HashMap<>();
+        mapParams.put("roleType", "TENANT");
+        mapParams.put("page", "0");
+        mapParams.put("size", "10");
+        mapParams.put("name",expenseName);
+        mapParams.put("nameLable",expenseName);
+        mapParams.put("levelCode","ALL");
+        mapParams.put("enabled", "true");
+        if(setOfBooksId.length()>10){
+            mapParams.put("setOfBooksId", setOfBooksId);
+            mapParams.put("companyId","");
+        }else{
+            mapParams.put("companyId",setOfBooksId);
+            mapParams.put("setOfBooksId","");
+        }
+        String res = doGet(url, getHeader(employee.getAccessToken(),"reimbursement-standard"), mapParams, employee);
+        return new JsonParser().parse(res).getAsJsonArray();
+    }
+
+
+
 }

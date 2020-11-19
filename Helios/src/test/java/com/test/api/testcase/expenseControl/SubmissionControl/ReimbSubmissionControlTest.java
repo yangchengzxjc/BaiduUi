@@ -1,4 +1,4 @@
-package com.test.api.testcase.ReimbStand;
+package com.test.api.testcase.expenseControl.SubmissionControl;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -6,6 +6,7 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;
 import com.hand.basicObject.InvoiceComponent;
+import com.hand.basicObject.Rule.SubmitRuleItem;
 import com.hand.basicObject.Rule.SubmitRules;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
@@ -41,12 +42,30 @@ public class ReimbSubmissionControlTest extends BaseTest {
         setOfBooksDefine=new SetOfBooksDefine();
     }
 
-//    @BeforeMethod(description = "创建报销单提交管控规则")
-    @Test
+
+    @Test(description = "报销提交管控-账套级-警告-费用类型管控-包含")
     public void creatRules() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
-        reimbSubmissionControl.addReimbSubmissionControl(employee,rules,"自动化测试-日常报销单",employee.getCompanyName());
+        String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee,rules,"自动化测试-日常报销单",employee.getCompanyName());
+        //设置管控项
+        SubmitRuleItem item = new SubmitRuleItem();
+        item.setControlItem(1001);
+        item.setControlCond(1001);
+        item.setValueType(1006);
+        reimbSubmissionControl.addRulesItem(employee,ruleOID,item,"自动化测试-报销标准");
+        //新建报销单
+        FormComponent component=new FormComponent();
+        InvoiceComponent invoiceComponent = new InvoiceComponent();
+        component.setCompany(employee.getCompanyOID());
+        component.setDepartment(employee.getDepartmentOID());
+        component.setStartDate(UTCTime.getNowUtcTime());
+        component.setEndDate(UTCTime.getUtcTime(3,0));
+
+
+
+        //删除规则
+        deleteRules(ruleOID);
     }
 
     @Test(priority = 1,description = "报销单提交管控规则校验")
@@ -61,7 +80,6 @@ public class ReimbSubmissionControlTest extends BaseTest {
         //添加参与人员  参与人员的value 是一段json数组。
         JsonArray array = new JsonArray();
         array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"自动化测试-日常报销单"),"懿佳欢_stage"));
-        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"自动化测试-日常报销单"),"17900001005"));
         log.info(array.toString());
         component.setParticipant(array.toString());
         component.setCause("报销单提交管控规则校验");
@@ -92,10 +110,10 @@ public class ReimbSubmissionControlTest extends BaseTest {
         expenseReport.deleteExpenseReport(employee,expenseReportOID);
     }
 
-//    @AfterMethod(description = "删除规则")
-//    public void deleteRules() throws HttpStatusException{
-//        //删除规则
-//        reimbSubmissionControl.deleteReimbSubmissionRules(employee,getrulesOid.get("rulesOid"));
-//
-//    }
+
+    public void deleteRules(String ruleOID) throws HttpStatusException{
+        //删除规则
+        reimbSubmissionControl.deleteReimbSubmissionRules(employee,ruleOID);
+
+    }
 }

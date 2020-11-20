@@ -1,6 +1,5 @@
 package com.hand.basicObject.Rule;
 
-import com.google.gson.JsonArray;
 import lombok.Data;
 
 /**
@@ -13,9 +12,9 @@ public class SubmitRuleItem {
 
     // 1001->费用类型  1002->费用重复校验  1005->报销次数
     private Integer controlItem;
-    //1006 费用类型
+    // 取值方式 1006->包含 1007->不包含
     private Integer valueType;
-    // 1001 包含   1002  不包含
+    //条件
     private Integer controlCond;
 
     private Object fieldValue;

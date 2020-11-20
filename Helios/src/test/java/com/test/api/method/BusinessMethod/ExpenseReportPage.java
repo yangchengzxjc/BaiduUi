@@ -83,6 +83,7 @@ public class ExpenseReportPage {
      */
     public boolean checkSubmitLabel(Employee employee,String expenseReportOID,String externalPropertyName,String expectValue) throws HttpStatusException {
         JsonObject result = expenseReport.expenseReportSubmitCheck(employee,expenseReportOID);
+        log.info("校验的结果:{}",result);
         JsonArray checkResultList = result.get("checkResultList").getAsJsonArray();
         if(GsonUtil.isNotEmpt(checkResultList)){
             String message = GsonUtil.getJsonValue(checkResultList,"externalPropertyName",externalPropertyName).get("message").getAsString();

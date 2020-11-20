@@ -14,8 +14,9 @@ public class SubmitRules {
     private boolean status = true;
     private String name;
     private JsonArray forms;
+    // "FORBID" 表示禁止
     private String controlLevel = "WARN";
-    private String message = "该笔报销不符合报销单提交规则,请检查";
+    private String message = "该笔报销不符合报销单提交规则";
     //默认1002为报销单
     private Integer businessType =1002;
     // SET_OF_BOOK 或者 公司级 COMPANY

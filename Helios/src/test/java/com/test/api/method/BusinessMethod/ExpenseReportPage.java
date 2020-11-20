@@ -6,14 +6,13 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;
 import com.hand.basicObject.InvoiceComponent;
+import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
 import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportComponent;
 import com.test.api.method.ExpenseReportInvoice;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.xml.ws.spi.Invoker;
-import java.util.ArrayList;
 
 /**
  * @Author peng.zhang
@@ -55,7 +54,7 @@ public class ExpenseReportPage {
     }
 
     /**
-     * 新建费用  不参与分摊
+     * 新建费用费用控件  不参与分摊
      * @param employee
      * @param expenseName
      * @param expenseReportOID
@@ -68,10 +67,32 @@ public class ExpenseReportPage {
         InvoiceComponent invoiceComponent =new InvoiceComponent();
         invoiceComponent.setCity(cityCode);
         JsonObject startAndEndDate = new JsonObject();
-        startAndEndDate.addProperty("startDate",UTCTime.getNowStartUtcDate());
-        startAndEndDate.addProperty("endDate",UTCTime.getUTCDateEnd(2));
-        startAndEndDate.addProperty("duration",2);
+        startAndEndDate.addProperty("startDate",UTCTime.getFormStartDate(0));
+        startAndEndDate.addProperty("endDate",UTCTime.getFormDateEnd(3));
+        startAndEndDate.addProperty("duration",3);
         invoiceComponent.setStartAndEndData(startAndEndDate.toString());
-        return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,"自动化测试-报销标准",expenseReportOID,200.00,new JsonArray()).get("invoiceOID");
+        return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,200.00,new JsonArray()).get("invoiceOID");
+    }
+
+    /**
+     * 费控标签检查
+     * @param employee
+     * @param expenseReportOID
+     * @param expectValue
+     * @throws HttpStatusException
+     */
+    public boolean checkSubmitLabel(Employee employee,String expenseReportOID,String externalPropertyName,String expectValue) throws HttpStatusException {
+        JsonObject result = expenseReport.expenseReportSubmitCheck(employee,expenseReportOID);
+        JsonArray checkResultList = result.get("checkResultList").getAsJsonArray();
+        if(GsonUtil.isNotEmpt(checkResultList)){
+            String message = GsonUtil.getJsonValue(checkResultList,"externalPropertyName",externalPropertyName).get("message").getAsString();
+            if(message.contains(expectValue)){
+                return true;
+            }else{
+                return false;
+            }
+        }else {
+            return false;
+        }
     }
 }

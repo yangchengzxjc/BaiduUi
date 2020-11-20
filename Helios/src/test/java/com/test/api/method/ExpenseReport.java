@@ -116,7 +116,6 @@ public class ExpenseReport {
         JsonObject jsonObject =reimbursementApi.createExpenseReport(employee,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName)),departmentOID,
                 0, UTCTime.getNowUtcTime(),UTCTime.getUtcTime(2,0),employee.getCompanyOID(),expenseReportComponent.getCityCode(employee,city),participant(employee),new JsonArray(),new JsonArray(),
                 employee.getJobId(),employee.getUserOID());
-        log.info("formdetail:{}",reimbursementApi.getFormDetail(employee,getFormOID(employee,formName)));
         HashMap<String,String> info =new HashMap<>();
         info.put("expenseReportOID",jsonObject.get("expenseReportOID").getAsString());
         info.put("businessCode",jsonObject.get("businessCode").getAsString());
@@ -133,7 +132,8 @@ public class ExpenseReport {
      * @throws HttpStatusException
      */
     public HashMap<String,String> createExpenseReport (Employee employee, String formName, FormComponent component) throws HttpStatusException {
-        JsonObject jsonObject =reimbursementApi.createExpenseReport(employee,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName)),component,employee.getJobId(),employee.getUserOID());
+        JsonObject formDetail = reimbursementApi.getFormDetail(employee,getFormOID(employee,formName));
+        JsonObject jsonObject =reimbursementApi.createExpenseReport(employee,formDetail,component,employee.getJobId(),employee.getUserOID());
         HashMap<String,String> info =new HashMap<>();
         info.put("expenseReportOID",jsonObject.get("expenseReportOID").getAsString());
         info.put("businessCode",jsonObject.get("businessCode").getAsString());

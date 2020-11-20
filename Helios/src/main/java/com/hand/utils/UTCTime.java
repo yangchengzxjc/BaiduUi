@@ -19,8 +19,8 @@ public class UTCTime {
     private static final String BEIJING_FORMATTER_TIME = "yyyy-MM-dd HH:mm:ss";
     private static final String BEIJING_TIME2 = "yyyyMMdd";
     private static final String time = "HH:mm:ss";
-    private static final String UTC_FORMATTER_PATTERN17 = "yyyy-MM-ddT00:00:00Z";
-    private static final String UTC_FORMATTER_PATTERN118 = "yyyy-MM-ddT23:59:59Z";
+    private static final String UTC_FORMATTER_PATTERN17 = "yyyy-MM-dd'T'00:00:00'Z'";
+    private static final String UTC_FORMATTER_PATTERN118 = "yyyy-MM-dd'T'23:59:59'Z'";
 
     /**
      * 返回北京时间的任意日期
@@ -165,7 +165,7 @@ public class UTCTime {
     }
 
     /**
-     * 这个时间如果需要获取当天的时间则传个0;时间格式为2020-07-06T15:59:59Z
+     * 报销单表头的喀什结束日期
      * 转换成北京时间则为：2020-07-06 23:59:59
      * @param day
      * @return

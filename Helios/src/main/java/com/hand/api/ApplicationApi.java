@@ -80,9 +80,9 @@ public class ApplicationApi extends BaseRequest{
         JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
         String url = employee.getEnvironment().getUrl()+ ApiPath.TRAVEL_APPLICATION_SAVE;
         if(component==null){
-            custFormValues = reimbursementApi.processCustFormValues(employee,formdetal);
+            custFormValues = reimbursementApi.processCustFormValues(employee,customFormFields);
         }else{
-            custFormValues = reimbursementApi.processCustFormValues(employee,formdetal,component);
+            custFormValues = reimbursementApi.processCustFormValues(employee,customFormFields,component);
         }
         formdetal.remove("custFormValues");
         formdetal.remove("customFormFields");
@@ -119,9 +119,9 @@ public class ApplicationApi extends BaseRequest{
         JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
         String url = employee.getEnvironment().getUrl()+ ApiPath.EXPENSE_APPLICATION_SAVE;
         if(component==null){
-            custFormValues = reimbursementApi.processCustFormValues(employee,formdetal);
+            custFormValues = reimbursementApi.processCustFormValues(employee,customFormFields);
         }else{
-            custFormValues = reimbursementApi.processCustFormValues(employee,formdetal,component);
+            custFormValues = reimbursementApi.processCustFormValues(employee,customFormFields,component);
         }
         //给费用申请单添加预算  费用申请单预算明细  一般是在表头必填
         for(int i=0; i<custFormValues.size();i++){

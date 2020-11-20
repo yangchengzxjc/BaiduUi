@@ -200,15 +200,12 @@ public class ReimbursementApi extends BaseRequest {
      * @return
      * @throws HttpStatusException
      */
-    public  JsonObject createExpenseReport(Employee employee, JsonObject formdetal, FormComponent component, String jobId, String userOID) throws HttpStatusException {
+    public  JsonObject createExpenseReport(Employee employee, JsonObject formdetal,FormComponent component, String jobId, String userOID) throws HttpStatusException {
         JsonObject responseEntity=null;
         JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
         String url = employee.getEnvironment().getUrl()+ ApiPath.NEW_EXPENSE_REPORT;
-        JsonArray  custFormValues=processCustFormValues(employee,formdetal,component);
-        formdetal.remove("custFormValues");
-        formdetal.remove("customFormFields");
+        JsonArray  custFormValues = processCustFormValues(employee,customFormFields,component);
         formdetal.add("custFormValues",custFormValues);
-        formdetal.add("customFormFields",customFormFields);
         formdetal.addProperty("visibleUserScope",1001);
         formdetal.addProperty("timeZoneOffset",480);
         formdetal.addProperty("currencySame",false);
@@ -217,6 +214,7 @@ public class ReimbursementApi extends BaseRequest {
         formdetal.addProperty("applicantOID",userOID);
         formdetal.add("expenseReportInvoices", new JsonArray());
         formdetal.addProperty("recalculateSubsidy",true);
+        formdetal.addProperty("isDateCombinedUTC",false);
         String res= doPost(url,getHeader(employee.getAccessToken()),null,formdetal.toString(),null,employee);
         responseEntity=new JsonParser().parse(res).getAsJsonObject();
         return  responseEntity;
@@ -236,9 +234,9 @@ public class ReimbursementApi extends BaseRequest {
         JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
         String url = employee.getEnvironment().getUrl()+ ApiPath.NEW_EXPENSE_REPORT;
         if(component==null){
-            custFormValues = processCustFormValues(employee,formdetal);
+            custFormValues = processCustFormValues(employee,customFormFields);
         }else{
-            custFormValues = processCustFormValues(employee,formdetal,component);
+            custFormValues = processCustFormValues(employee,customFormFields,component);
         }
         formdetal.remove("custFormValues");
         formdetal.remove("customFormFields");
@@ -345,7 +343,6 @@ public class ReimbursementApi extends BaseRequest {
                 case "自定义列表":          //自定义列表
                     JsonArray customenumerationlist = componentQueryApi.getCustomEumerationOid(employee,data.get("customEnumerationOID").getAsString());
                     data.addProperty("value", customenumerationlist.get(0).getAsJsonObject().get("value").getAsString());
-//                    data.addProperty("value",custList);
                     break;
                 case "数字":      //数字
                     data.addProperty("value",1);
@@ -451,13 +448,12 @@ public class ReimbursementApi extends BaseRequest {
     /**
      * 报销单处理控件值
      * @param employee
-     * @param formdetal
      * @return
      * @throws HttpStatusException
      */
-    JsonArray processCustFormValues(Employee employee, JsonObject formdetal, FormComponent component) throws HttpStatusException {
-        JsonArray custFormValues=formdetal.get("customFormFields").getAsJsonArray();
-        String formOID=formdetal.get("formOID").getAsString();
+    JsonArray processCustFormValues(Employee employee, JsonArray custFormValues, FormComponent component) throws HttpStatusException {
+//        JsonArray custFormValues=formdetal.get("customFormFields").getAsJsonArray();
+//        String formOID=formdetal.get("formOID").getAsString();
         for (int i=0;i<custFormValues.size();i++)
         {
             JsonObject data= custFormValues.get(i).getAsJsonObject();
@@ -534,12 +530,12 @@ public class ReimbursementApi extends BaseRequest {
                 case "日期时间":            //时间
                     data.addProperty("value",UTCTime.getNowUtcTime());
                     break;
-                case "employee_expand":       //个人信息扩展字段
-                    String fieldOID=data.get("fieldOID").getAsString();
-                    String Default_values=getFormDefaultValues(employee,formOID,employee.getJobId()).getAsString();
-                    String value= GsonUtil.JsonExtractor(Default_values,String.format("$..[?(@.fieldOID == '%s')].value",fieldOID)).get(0);
-                    data.addProperty("value",value);
-                    break;
+//                case "employee_expand":       //个人信息扩展字段
+//                    String fieldOID=data.get("fieldOID").getAsString();
+//                    String Default_values=getFormDefaultValues(employee,formOID,employee.getJobId()).getAsString();
+//                    String value= GsonUtil.JsonExtractor(Default_values,String.format("$..[?(@.fieldOID == '%s')].value",fieldOID)).get(0);
+//                    data.addProperty("value",value);
+//                    break;
                 case "选人":               //选人
                     data.addProperty("value", componentQueryApi.queryEmployees(employee).get(0).getAsJsonObject().get("userOID").getAsString());
                     break;
@@ -702,13 +698,11 @@ public class ReimbursementApi extends BaseRequest {
     /**
      * 制造数据   根据需求添加控件
      * @param employee
-     * @param formdetal
      * @return
      * @throws HttpStatusException
      */
-    JsonArray processCustFormValues(Employee employee, JsonObject formdetal) throws HttpStatusException {
-        JsonArray custFormValues = formdetal.get("customFormFields").getAsJsonArray();
-        String formOID = formdetal.get("formOID").getAsString();
+    JsonArray processCustFormValues(Employee employee,JsonArray custFormValues) throws HttpStatusException {
+//        JsonArray custFormValues = formdetal.get("customFormFields").getAsJsonArray();
         for (int i = 0; i < custFormValues.size(); i++) {
             JsonObject data = custFormValues.get(i).getAsJsonObject();
             String fieldName = data.get("fieldName").getAsString();
@@ -759,11 +753,9 @@ public class ReimbursementApi extends BaseRequest {
         JsonObject responseEntity=null;
         JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
         String url = employee.getEnvironment().getUrl()+ ApiPath.NEW_EXPENSE_REPORT;
-        JsonArray  custFormValues=processCustFormValues(employee,formdetal);
+        JsonArray  custFormValues=processCustFormValues(employee,customFormFields);
         formdetal.remove("custFormValues");
-        formdetal.remove("customFormFields");
         formdetal.add("custFormValues",custFormValues);
-        formdetal.add("customFormFields",customFormFields);
         formdetal.addProperty("visibleUserScope",1001);
         formdetal.addProperty("timeZoneOffset",480);
         formdetal.addProperty("currencySame",false);

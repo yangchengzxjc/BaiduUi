@@ -43,7 +43,7 @@ public class ApiPath {
 //        选择费用并查看控件信息
         public static final String GET_EXPENSE_TYPE ="/api/expense/types/select/%s";
 //        创建费用
-        public static final String CREATEINVOICE ="/invoice/api/v5/invoices";
+        public static final String CREATEINVOICE ="/invoice/api/v5/invoices?isDateCombinedUTC=false";
 //        获取报销单详情
         public static final String GETEXPENSE_REPORT_DETAL ="/api/v3/expense/reports/%s";
 //        获取申请单详情

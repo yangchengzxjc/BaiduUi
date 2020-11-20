@@ -200,11 +200,12 @@ public class FlightOrder {
      * @param orderNo
      * @return
      */
-    public AirChangeInfo setAirChangeInfo(String orderNo){
+    public AirChangeInfo setAirChangeInfo(String orderNo,String ticketKey){
 
         //订单改签信息  有改签则传
         AirChangeInfo airChangeInfo = AirChangeInfo.builder()
                 .orderNo(orderNo)
+                .ticketKey(ticketKey)
                 .changeAmount(new BigDecimal(0).setScale(2))
                 .changeType("VR")
                 .changeReason("机场和时间选择")
@@ -222,10 +223,11 @@ public class FlightOrder {
      * @param orderNo
      * @return
      */
-    public AirRefundInfo setAirRefundInfo(String orderNo){
+    public AirRefundInfo setAirRefundInfo(String orderNo,String ticketKey){
         //订单退票 有退票则必传
         AirRefundInfo trainRefundInfo = AirRefundInfo.builder()
                 .orderNo(orderNo)
+                .ticketKey(ticketKey)
                 .refundAmount(new BigDecimal(500).setScale(2))
                 .refundType("VR")
                 .refundReason("旅程有变化")

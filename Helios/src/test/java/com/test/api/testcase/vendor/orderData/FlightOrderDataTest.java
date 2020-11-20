@@ -385,7 +385,7 @@ public class FlightOrderDataTest extends BaseTest {
         ArrayList<AirPassengerInfo> airPassengerInfos =new ArrayList<>();
         airPassengerInfos.add((airPassengerInfo));
         // 退票
-        AirRefundInfo airRefundInfo =flightOrder.setAirRefundInfo(orderNo);
+        AirRefundInfo airRefundInfo =flightOrder.setAirRefundInfo(orderNo,ticketKey);
         ArrayList<AirRefundInfo> airRefundInfos = new ArrayList<>();
         airRefundInfos.add(airRefundInfo);
         //行程单打印以及配送信息
@@ -524,7 +524,7 @@ public class FlightOrderDataTest extends BaseTest {
         ArrayList<AirPassengerInfo> airPassengerInfos =new ArrayList<>();
         airPassengerInfos.add((airPassengerInfo));
         // 改签
-        AirChangeInfo airChangeInfo =flightOrder.setAirChangeInfo(orderNo);
+        AirChangeInfo airChangeInfo =flightOrder.setAirChangeInfo(orderNo,ticketKey);
         ArrayList<AirChangeInfo> airChangeInfos =new ArrayList<>();
         airChangeInfos.add(airChangeInfo);
         //行程单打印以及配送信息

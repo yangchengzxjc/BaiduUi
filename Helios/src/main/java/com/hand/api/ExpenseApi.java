@@ -382,7 +382,7 @@ public class ExpenseApi extends BaseRequest{
             body.addProperty("actualCurrencyRate",component.getRate());
         }
         body.add("receiptList",receiptList);
-        body.addProperty("createdDate",UTCTime.getNowUtcTime());
+        body.addProperty("createdDate",component.getCreatedDate());
         if(component.getCurrencyCode()==null){
             body.addProperty("invoiceCurrencyCode","CNY");
         }else {

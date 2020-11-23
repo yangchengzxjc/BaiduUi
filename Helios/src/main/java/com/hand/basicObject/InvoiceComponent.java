@@ -1,5 +1,6 @@
 package com.hand.basicObject;
 
+import com.hand.utils.UTCTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,6 +41,8 @@ public class InvoiceComponent {
     String cust;
     //日期   "2020-06-23T15:44:30Z"
     String date;
+    //费用的创建日期
+    String createdDate = UTCTime.getNowUtcTime();
     //文本
     String text;
     //参与人 user的个人信息

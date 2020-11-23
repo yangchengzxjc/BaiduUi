@@ -36,7 +36,6 @@ public class ReimbSubmissionControlApi extends BaseRequest{
         HashMap<String,String> mapParams = new HashMap<>();
         mapParams.put("roleType","TENANT");
         return doPost(url,getHeader(employee.getAccessToken(), HeaderKey.REIMB_STANDARD, ResourceId.SUBMIT_CONTROL),mapParams,ruleObject.toString(),null,employee);
-
     }
 
     /**

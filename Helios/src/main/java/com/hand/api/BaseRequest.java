@@ -277,6 +277,8 @@ public  class BaseRequest{
         Map<String, String> headersdatas = new HashMap<>();
         headersdatas.put("Authorization", "Bearer "+token);
         headersdatas.put("Content-Type", BaseConstant.CONTENT_TYPE);
+        //添加客户端为自动化测试
+        headersdatas.put("x-helios-client","auto test");
         return  headersdatas;
     }
 
@@ -285,6 +287,7 @@ public  class BaseRequest{
         headersdatas.put("Authorization", "Bearer "+token);
         headersdatas.put("Content-Type", BaseConstant.CONTENT_TYPE);
         headersdatas.put("key",key);
+        headersdatas.put("x-helios-client","auto test");
         return  headersdatas;
     }
 
@@ -301,6 +304,7 @@ public  class BaseRequest{
         headersdatas.put("Content-Type", BaseConstant.CONTENT_TYPE);
         headersdatas.put("key",key);
         headersdatas.put("resourceId",resourceId);
+        headersdatas.put("x-helios-client","auto test");
         return  headersdatas;
     }
 

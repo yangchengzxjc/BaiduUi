@@ -92,6 +92,10 @@ public class ReimbSubmissionControl {
             JsonArray expense = new JsonArray();
             expense.add(expenseTypeOid);
             item.setFieldValue(expense);
+        }else if(item.getControlItem().equals(1005)){
+            JsonArray expense = new JsonArray();
+            expense.add(expenseTypeOid);
+            item.setExtendValue(expense);
         }
         return reimbSubmissionControl.addRulesItems(employee,rulesOid,item);
     }

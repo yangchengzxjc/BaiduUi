@@ -75,6 +75,25 @@ public class ExpenseReportPage {
     }
 
     /**
+     * 新建费用费用控件  不参与分摊
+     * @param employee
+     * @param expenseName
+     * @param expenseReportOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public String setInvoice(Employee employee,String expenseName,String expenseReportOID,String createDate) throws HttpStatusException {
+        ExpenseReportComponent expenseReportComponent =new ExpenseReportComponent();
+        String cityCode =expenseReportComponent.getCityCode(employee,"西安市");
+        InvoiceComponent invoiceComponent =new InvoiceComponent();
+        invoiceComponent.setCity(cityCode);
+        invoiceComponent.setCreatedDate(createDate);
+        JsonObject startAndEndDate = new JsonObject();
+        invoiceComponent.setStartAndEndData(startAndEndDate.toString());
+        return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,200.00,new JsonArray()).get("invoiceOID");
+    }
+
+    /**
      * 费控标签检查
      * @param employee
      * @param expenseReportOID

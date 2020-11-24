@@ -1,16 +1,21 @@
 package com.test.api.method.ApplicationMethod;
 
+import com.google.gson.JsonArray;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.FormComponent;
 import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.basicObject.itinerary.HotelItinerary;
 import com.hand.basicObject.itinerary.TrainItinerary;
+import com.hand.basicconstant.SupplierOID;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
+import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportComponent;
 import com.test.api.method.TravelApplication;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -83,6 +88,31 @@ public class TravelApplicationPage {
         return trainItinerary;
     }
 
-
-
+    /**
+     * 新建差旅申请单   控件 开始结束日期  和参与人
+     * @param employee
+     * @param formName
+     * @return
+     * @throws HttpStatusException
+     */
+    public String setTravelApplication(Employee employee,String formName) throws HttpStatusException {
+        ExpenseReport expenseReport =new ExpenseReport();
+        FormComponent component = new FormComponent("自动化测试差旅申请单");
+        component.setDepartment(employee.getDepartmentOID());
+        component.setStartDate(UTCTime.getNowUtcTime());
+        component.setEndDate(UTCTime.getUtcTime(3,0));
+        //添加参与人员  参与人员的value 是一段json数组。
+        JsonArray array = new JsonArray();
+        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,formName),employee.getFullName()));
+        component.setParticipant(array.toString());
+        //创建申请单
+        String applicationOID = travelApplication.createTravelApplication(employee,formName,component).get("applicationOID");
+        //添加差旅行程(目前支持飞机行程和酒店行程)
+        ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
+        FlightItinerary flightItinerary = addFlightItinerary(employee,1001, SupplierOID.CTRIP_AIR,"西安市","北京",null,UTCTime.getNowStartUtcDate());
+        flightItineraries.add(flightItinerary);
+        travelApplication.addItinerary(employee,applicationOID,flightItineraries);
+        travelApplication.submitApplication(employee,applicationOID,"");
+        return applicationOID;
+    }
 }

@@ -13,6 +13,8 @@ import com.test.api.method.ExpenseReportComponent;
 import com.test.api.method.ExpenseReportInvoice;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+
 
 /**
  * @Author peng.zhang
@@ -41,7 +43,7 @@ public class ExpenseReportPage {
         FormComponent component=new FormComponent();
         component.setCompany(employee.getCompanyOID());
         component.setDepartment(employee.getDepartmentOID());
-        component.setStartDate(UTCTime.getFormStartDate(0));
+        component.setStartDate(UTCTime.getFormStartDate(-3));
         component.setEndDate(endData);
         //添加参与人员  参与人员的value 是一段json数组。
         JsonArray array = new JsonArray();
@@ -54,7 +56,7 @@ public class ExpenseReportPage {
     }
 
     /**
-     * 新建费用费用控件  不参与分摊
+     * 新建费用费用控件  不参与分摊   开始结束日期不为空
      * @param employee
      * @param expenseName
      * @param expenseReportOID
@@ -63,7 +65,7 @@ public class ExpenseReportPage {
      */
     public String setInvoice(Employee employee,String expenseName,String expenseReportOID) throws HttpStatusException {
         ExpenseReportComponent expenseReportComponent =new ExpenseReportComponent();
-        String cityCode =expenseReportComponent.getCityCode(employee,"西安市");
+        String cityCode =expenseReportComponent.getCityCode(employee,"上海");
         InvoiceComponent invoiceComponent =new InvoiceComponent();
         invoiceComponent.setCity(cityCode);
         JsonObject startAndEndDate = new JsonObject();
@@ -75,7 +77,7 @@ public class ExpenseReportPage {
     }
 
     /**
-     * 新建费用费用控件  不参与分摊
+     * 新建费用报销单  不参与分摊  时间控件为空的
      * @param employee
      * @param expenseName
      * @param expenseReportOID
@@ -91,6 +93,27 @@ public class ExpenseReportPage {
         JsonObject startAndEndDate = new JsonObject();
         invoiceComponent.setStartAndEndData(startAndEndDate.toString());
         return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,200.00,new JsonArray()).get("invoiceOID");
+    }
+
+    /**
+     * 差旅报销单新建-  控件 部门  参与人
+     * @param employee
+     * @param formName
+     * @param applicationOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public String setTravelReport(Employee employee,String formName,String applicationOID) throws HttpStatusException {
+        //表单初始化
+        FormComponent component = new FormComponent();
+        component.setDepartment(employee.getDepartmentOID());
+        component.setCause("差旅报销单");
+        component.setApplicationOID(applicationOID);
+        ArrayList<String> applicationOIDs =new ArrayList<>();
+        applicationOIDs.add(applicationOID);
+        //  参与人
+        component.setParticipant(expenseReport.getValueFromApplication(employee,applicationOIDs,"参与人员"));
+        return expenseReport.createTravelExpenseReport(employee,false,formName,component).get("expenseReportOID");
     }
 
     /**

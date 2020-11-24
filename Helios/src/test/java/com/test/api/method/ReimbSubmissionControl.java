@@ -88,7 +88,7 @@ public class ReimbSubmissionControl {
     public String addRulesItem(Employee employee,String rulesOid,SubmitRuleItem item,String expenseTypeName)throws HttpStatusException{
         JsonObject ruleDetail = getRules(employee,rulesOid);
         String expenseTypeOid = getExpense(employee,ruleDetail.get("levelOrgId").getAsString(),expenseTypeName).get("expenseTypeOID").getAsString();
-        if(item.getControlItem().equals(1002) || item.getControlItem().equals(1001)){
+        if(item.getControlItem().equals(1002) || item.getControlItem().equals(1001) || item.getControlItem().equals(1009)){
             JsonArray expense = new JsonArray();
             expense.add(expenseTypeOid);
             item.setFieldValue(expense);

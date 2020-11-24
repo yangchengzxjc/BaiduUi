@@ -95,12 +95,12 @@ public class TravelApplicationPage {
      * @return
      * @throws HttpStatusException
      */
-    public String setTravelApplication(Employee employee,String formName) throws HttpStatusException {
+    public String setTravelApplication(Employee employee,String formName,String endDate) throws HttpStatusException {
         ExpenseReport expenseReport =new ExpenseReport();
         FormComponent component = new FormComponent("自动化测试差旅申请单");
         component.setDepartment(employee.getDepartmentOID());
-        component.setStartDate(UTCTime.getNowUtcTime());
-        component.setEndDate(UTCTime.getUtcTime(3,0));
+        component.setStartDate(UTCTime.getUtcStartDate(-5));
+        component.setEndDate(endDate);
         //添加参与人员  参与人员的value 是一段json数组。
         JsonArray array = new JsonArray();
         array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,formName),employee.getFullName()));
@@ -109,7 +109,7 @@ public class TravelApplicationPage {
         String applicationOID = travelApplication.createTravelApplication(employee,formName,component).get("applicationOID");
         //添加差旅行程(目前支持飞机行程和酒店行程)
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
-        FlightItinerary flightItinerary = addFlightItinerary(employee,1001, SupplierOID.CTRIP_AIR,"西安市","北京",null,UTCTime.getNowStartUtcDate());
+        FlightItinerary flightItinerary = addFlightItinerary(employee,1001, SupplierOID.CTRIP_AIR,"西安市","北京",null,UTCTime.getUtcStartDate(-4));
         flightItineraries.add(flightItinerary);
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
         travelApplication.submitApplication(employee,applicationOID,"");

@@ -90,8 +90,6 @@ public class ExpenseReportPage {
         InvoiceComponent invoiceComponent =new InvoiceComponent();
         invoiceComponent.setCity(cityCode);
         invoiceComponent.setCreatedDate(createDate);
-        JsonObject startAndEndDate = new JsonObject();
-        invoiceComponent.setStartAndEndData(startAndEndDate.toString());
         return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,200.00,new JsonArray()).get("invoiceOID");
     }
 

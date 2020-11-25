@@ -175,4 +175,16 @@ public class UTCTime {
         DateTime date = DateTime.now(DateTimeZone.UTC).plusDays(day);
         return fmt.print(date);
     }
+
+    /**
+     * Utc时间转北京时间
+     * @param   "yyyy-MM-dd'T'16:00:00'Z'";  -> yyyyMMdd
+     * @return
+     */
+    public static String utcTObj(String utc, int day){
+        //格式化为北京时间
+        DateTimeFormatter fmt = DateTimeFormat.forPattern(BEIJING_TIME2);
+        DateTime date = DateTime.parse(utc).plusDays(day);
+        return fmt.print(date);
+    }
 }

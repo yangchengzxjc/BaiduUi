@@ -4,6 +4,10 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.Rule.SubmitRuleItem;
 import com.hand.basicObject.Rule.SubmitRules;
+import com.hand.basicconstant.submitControl.ControlCond;
+import com.hand.basicconstant.submitControl.ControlItem;
+import com.hand.basicconstant.submitControl.ControlMixedItem;
+import com.hand.basicconstant.submitControl.ControlValueType;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
 import com.test.api.method.ApplicationMethod.TravelApplicationPage;
@@ -25,6 +29,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     private ReimbSubmissionControl reimbSubmissionControl;
     private ExpenseReportPage expenseReportPage;
     private HashMap<String, String> map;
+    private static HashMap<Integer,String>controlCond;
 
 
     @BeforeClass
@@ -45,6 +50,19 @@ public class ReimbSubmissionControlTest extends BaseTest {
         }
     }
 
+     static {
+        controlCond = new HashMap<>();
+        controlCond.put(1002, "费用消费日期");
+        controlCond.put(1004, "关联申请单的结束日期");
+        controlCond.put(1005, "费用消费月");
+        controlCond.put(1008, "关联申请单的行程城市");
+        controlCond.put(1009, "报销单的行程城市");
+        controlCond.put(1010, "关联申请单的行程日期");
+        controlCond.put(1011, "报销单起止日期");
+        controlCond.put(1012, "关联申请单的起止日期");
+        controlCond.put(1013, "报销单的行程日期");
+    }
+
     @Test(description = "报销提交管控-账套级-警告-费用类型管控-包含")
     public void submissionControlTest1() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
@@ -52,9 +70,9 @@ public class ReimbSubmissionControlTest extends BaseTest {
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
         //设置管控项
         SubmitRuleItem item = new SubmitRuleItem();
-        item.setControlItem(1001);
-        item.setControlCond(1001);
-        item.setValueType(1006);
+        item.setControlItem(ControlItem.EXPENSE_TYPE.getControlItem());
+        item.setControlCond(ControlCond.EXPENSE_TYPE.getControlCond());
+        item.setValueType(ControlValueType.INCLUDE.getValueType());
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
         //创建报销单
         String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", employee.getFullName());
@@ -75,9 +93,9 @@ public class ReimbSubmissionControlTest extends BaseTest {
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
         //设置管控项
         SubmitRuleItem item = new SubmitRuleItem();
-        item.setControlItem(1001);
-        item.setControlCond(1001);
-        item.setValueType(1006);
+        item.setControlItem(ControlItem.EXPENSE_TYPE.getControlItem());
+        item.setControlCond(ControlCond.EXPENSE_TYPE.getControlCond());
+        item.setValueType(ControlValueType.INCLUDE.getValueType());
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
         //创建报销单
         String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", employee.getFullName());
@@ -97,9 +115,9 @@ public class ReimbSubmissionControlTest extends BaseTest {
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
         //设置管控项
         SubmitRuleItem item = new SubmitRuleItem();
-        item.setControlItem(1001);
-        item.setControlCond(1001);
-        item.setValueType(1007);
+        item.setControlItem(ControlItem.EXPENSE_TYPE.getControlItem());
+        item.setControlCond(ControlCond.EXPENSE_TYPE.getControlCond());
+        item.setValueType(ControlValueType.UNINCLUDE.getValueType());
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
         //创建报销单
         String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", employee.getFullName());
@@ -119,9 +137,9 @@ public class ReimbSubmissionControlTest extends BaseTest {
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
         //设置管控项
         SubmitRuleItem item = new SubmitRuleItem();
-        item.setControlItem(1002);
-        item.setControlCond(1001);
-        item.setValueType(1006);
+        item.setControlItem(ControlItem.SAME_COST_DATE.getControlItem());
+        item.setControlCond(ControlCond.EXPENSE_TYPE.getControlCond());
+        item.setValueType(ControlValueType.INCLUDE.getValueType());
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
         //创建报销单
         String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", employee.getFullName());
@@ -144,9 +162,9 @@ public class ReimbSubmissionControlTest extends BaseTest {
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
         //设置管控项
         SubmitRuleItem item = new SubmitRuleItem();
-        item.setControlItem(1002);
-        item.setControlCond(1001);
-        item.setValueType(1006);
+        item.setControlItem(ControlItem.SAME_COST_DATE.getControlItem());
+        item.setControlCond(ControlCond.EXPENSE_TYPE.getControlCond());
+        item.setValueType(ControlValueType.INCLUDE.getValueType());
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
         //创建报销单
         String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", employee.getFullName());
@@ -168,11 +186,11 @@ public class ReimbSubmissionControlTest extends BaseTest {
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
         //设置管控项
         SubmitRuleItem item = new SubmitRuleItem();
-        item.setControlItem(1005);
-        item.setControlCond(1007);
-        item.setValueType(1002);
+        item.setControlItem(ControlItem.REIMBURSEMENT_TIMES.getControlItem());
+        item.setControlCond(ControlCond.CUSTOM_NUMBER.getControlCond());
+        item.setValueType(ControlValueType.GT.getValueType());
         //按月管控
-        item.setMixedItem(2002);
+        item.setMixedItem(ControlMixedItem.MONTH.getMixItem());
         //设置管控次数为1次
         item.setFieldValue(1);
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
@@ -196,11 +214,11 @@ public class ReimbSubmissionControlTest extends BaseTest {
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
         //设置管控项
         SubmitRuleItem item = new SubmitRuleItem();
-        item.setControlItem(1005);
-        item.setControlCond(1007);
-        item.setValueType(1002);
+        item.setControlItem(ControlItem.REIMBURSEMENT_TIMES.getControlItem());
+        item.setControlCond(ControlCond.CUSTOM_NUMBER.getControlCond());
+        item.setValueType(ControlValueType.GT.getValueType());
         //按天管控
-        item.setMixedItem(2001);
+        item.setMixedItem(ControlMixedItem.DAY.getMixItem());
         //设置管控次数为1次
         item.setFieldValue(1);
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
@@ -224,11 +242,11 @@ public class ReimbSubmissionControlTest extends BaseTest {
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
         //设置管控项
         SubmitRuleItem item = new SubmitRuleItem();
-        item.setControlItem(1005);
-        item.setControlCond(1007);
-        item.setValueType(1002);
+        item.setControlItem(ControlItem.REIMBURSEMENT_TIMES.getControlItem());
+        item.setControlCond(ControlCond.CUSTOM_NUMBER.getControlCond());
+        item.setValueType(ControlValueType.GT.getValueType());
         //按月季度管控
-        item.setMixedItem(2003);
+        item.setMixedItem(ControlMixedItem.QUARTER.getMixItem());
         //设置管控次数为1次
         item.setFieldValue(1);
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
@@ -252,11 +270,11 @@ public class ReimbSubmissionControlTest extends BaseTest {
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
         //设置管控项
         SubmitRuleItem item = new SubmitRuleItem();
-        item.setControlItem(1005);
-        item.setControlCond(1007);
-        item.setValueType(1002);
+        item.setControlItem(ControlItem.REIMBURSEMENT_TIMES.getControlItem());
+        item.setControlCond(ControlCond.CUSTOM_NUMBER.getControlCond());
+        item.setValueType(ControlValueType.GT.getValueType());
         //按月季度管控
-        item.setMixedItem(2004);
+        item.setMixedItem(ControlMixedItem.YEAR.getMixItem());
         //设置管控次数为1次
         item.setFieldValue(1);
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
@@ -280,21 +298,23 @@ public class ReimbSubmissionControlTest extends BaseTest {
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
         //设置管控项
         SubmitRuleItem item = new SubmitRuleItem();
-        item.setControlItem(1006);
-        item.setControlCond(1002);
-        item.setValueType(1002);
-        item.setMixedItem(1001);
+        item.setControlItem(ControlItem.REIMBURSEMENT_SUBMIT_DATE.getControlItem());
+        item.setControlCond(ControlCond.EXPENSE_COST_DATE.getControlCond());
+        item.setValueType(ControlValueType.GT.getValueType());
+        item.setMixedItem(ControlMixedItem.PLUS.getMixItem());
         item.setExtendValue("1");
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
         // 创建报销单
         String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", employee.getFullName());
         // 新建费用
         String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,UTCTime.getUtcTime(-2,0));
-//        //检验标签
-//        map.put("reportOID", reportOID);
-//        map.put("invoiceOid1", invoiceOid1);
-//        map.put("ruleOID", ruleOID);
+        //检验标签
+        map.put("reportOID", reportOID);
+        map.put("invoiceOid1", invoiceOid1);
+        map.put("ruleOID", ruleOID);
         assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        String expect = String.format("%s（报销单提交日期\"%s\" 已超出 自动化测试-报销标准 %s \"%s\" 加%s天）",rules.getMessage(),UTCTime.utcTObj(UTCTime.getNowUtcTime(),0),controlCond.get(item.getControlCond()),UTCTime.utcTObj(UTCTime.getUtcTime(-2,0),0),item.getExtendValue());
+        assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN",expect);
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销单提交日期管控-'>'关联申请单结束日期")
@@ -304,10 +324,10 @@ public class ReimbSubmissionControlTest extends BaseTest {
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "差旅报销单-自动化测试", employee.getCompanyName());
         //设置管控项
         SubmitRuleItem item = new SubmitRuleItem();
-        item.setControlItem(1006);
-        item.setControlCond(1004);
-        item.setValueType(1002);
-        item.setMixedItem(1001);
+        item.setControlItem(ControlItem.REIMBURSEMENT_SUBMIT_DATE.getControlItem());
+        item.setControlCond(ControlCond.ASSOCIATED_APPLICATION_LATEST_END_DATE.getControlCond());
+        item.setValueType(ControlValueType.GT.getValueType());
+        item.setMixedItem(ControlMixedItem.PLUS.getMixItem());
         item.setExtendValue(1);
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
         //新建差旅申请单
@@ -324,28 +344,28 @@ public class ReimbSubmissionControlTest extends BaseTest {
         assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
     }
 
-    @Test(description = "报销提交管控-账套级-警告-报销单提交月管控-'>='费用消费日期+0")
+    @Test(description = "报销提交管控-账套级-警告-报销单提交月管控-'>'费用消费月+0")
     public void submissionControlTest12() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
         //设置管控项
         SubmitRuleItem item = new SubmitRuleItem();
-        item.setControlItem(1007);
-        item.setControlCond(1002);
-        item.setValueType(1003);
-        item.setMixedItem(1001);
+        item.setControlItem(ControlItem.REIMBURSEMENT_SUBMIT_MONTH.getControlItem());
+        item.setControlCond(ControlCond.EXPENSE_COST_MONTH.getControlCond());
+        item.setValueType(ControlValueType.GT.getValueType());
+        item.setMixedItem(ControlMixedItem.PLUS.getMixItem());
         item.setExtendValue(0);
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
-        // 创建报销单
-        String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", employee.getFullName());
-        // 新建费用
-        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,UTCTime.getUtcTime(-31,0));
-        //检验标签
-        map.put("reportOID", reportOID);
-        map.put("invoiceOid1", invoiceOid1);
-        map.put("ruleOID", ruleOID);
-        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+//        // 创建报销单
+//        String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", employee.getFullName());
+//        // 新建费用
+//        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,UTCTime.getUtcTime(-31,0));
+//        //检验标签
+//        map.put("reportOID", reportOID);
+//        map.put("invoiceOid1", invoiceOid1);
+//        map.put("ruleOID", ruleOID);
+//        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销单费用城市管控-'不归属'关联申请单的行程城市")
@@ -356,11 +376,11 @@ public class ReimbSubmissionControlTest extends BaseTest {
         //设置管控项
         SubmitRuleItem item = new SubmitRuleItem();
         //报销单内的费用城市管控
-        item.setControlItem(1009);
+        item.setControlItem(ControlItem.REIMBURSEMENT_INVOICE_CITY.getControlItem());
         //关联申请单的行程城市
-        item.setControlCond(1008);
+        item.setControlCond(ControlCond.ASSOCIATED_APPLICATION_TRAVEl_CITY.getControlCond());
         //不归属于
-        item.setValueType(1012);
+        item.setValueType(ControlValueType.UN_BELONG_TO.getValueType());
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
         //新建差旅申请单
         TravelApplicationPage travelApplicationPage =new TravelApplicationPage();
@@ -384,11 +404,11 @@ public class ReimbSubmissionControlTest extends BaseTest {
         //设置管控项
         SubmitRuleItem item = new SubmitRuleItem();
         //报销单费用消费日期
-        item.setControlItem(1010);
+        item.setControlItem(ControlItem.REIMBURSEMENT_COST_DATE.getControlItem());
         //关联申请单的行程日期
-        item.setControlCond(1010);
+        item.setControlCond(ControlCond.ASSOCIATED_APPLICATION_TRAVEl_DATE.getControlCond());
         //不归属于
-        item.setValueType(1012);
+        item.setValueType(ControlValueType.UN_BELONG_TO.getValueType());
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
         //新建差旅申请单
         TravelApplicationPage travelApplicationPage =new TravelApplicationPage();
@@ -412,11 +432,11 @@ public class ReimbSubmissionControlTest extends BaseTest {
         //设置管控项
         SubmitRuleItem item = new SubmitRuleItem();
         //报销单费用消费日期
-        item.setControlItem(1010);
+        item.setControlItem(ControlItem.REIMBURSEMENT_COST_DATE.getControlItem());
         //关联申请单的起止日期
-        item.setControlCond(1012);
+        item.setControlCond(ControlCond.ASSOCIATED_APPLICATION_START_END_DATE.getControlCond());
         //不归属于
-        item.setValueType(1012);
+        item.setValueType(ControlValueType.UN_BELONG_TO.getValueType());
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
         //新建差旅申请单
         TravelApplicationPage travelApplicationPage =new TravelApplicationPage();
@@ -440,11 +460,11 @@ public class ReimbSubmissionControlTest extends BaseTest {
         //设置管控项
         SubmitRuleItem item = new SubmitRuleItem();
         //报销单费用消费日期
-        item.setControlItem(1010);
+        item.setControlItem(ControlItem.REIMBURSEMENT_COST_DATE.getControlItem());
         //报销单起止日期
-        item.setControlCond(1011);
+        item.setControlCond(ControlCond.REIMBURSEMENT_START_END_DATE.getControlCond());
         //不归属于
-        item.setValueType(1012);
+        item.setValueType(ControlValueType.UN_BELONG_TO.getValueType());
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
         String reportOID = expenseReportPage.setDailyReport(employee,UTCTime.getUTCDateEnd(-1),"自动化测试-日常报销单",employee.getFullName());
         //新建费用
@@ -457,7 +477,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     }
 
 
-    @AfterMethod
+//    @AfterMethod
     public void cleanEnv() throws HttpStatusException {
         for (String s : map.keySet()) {
             switch (s) {

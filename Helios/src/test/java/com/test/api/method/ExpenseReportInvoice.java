@@ -241,6 +241,7 @@ public class ExpenseReportInvoice {
         JsonArray invoiceLabel = result.get("invoiceLabels").getAsJsonArray();
         if(GsonUtil.isNotEmpt(invoiceLabel)){
             String toast = GsonUtil.getJsonValue(invoiceLabel,"type",type).get("toast").getAsString();
+            log.info("费用内的标签:{}",toast);
             if(toast.equals(expectValue)){
                 return true;
             }else{

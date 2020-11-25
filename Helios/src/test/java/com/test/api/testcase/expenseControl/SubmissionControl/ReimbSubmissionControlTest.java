@@ -290,10 +290,10 @@ public class ReimbSubmissionControlTest extends BaseTest {
         String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", employee.getFullName());
         // 新建费用
         String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,UTCTime.getUtcTime(-2,0));
-        //检验标签
-        map.put("reportOID", reportOID);
-        map.put("invoiceOid1", invoiceOid1);
-        map.put("ruleOID", ruleOID);
+//        //检验标签
+//        map.put("reportOID", reportOID);
+//        map.put("invoiceOid1", invoiceOid1);
+//        map.put("ruleOID", ruleOID);
         assert expenseReportPage.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
     }
 

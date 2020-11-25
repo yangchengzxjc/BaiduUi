@@ -146,6 +146,8 @@ public class ApiPath {
         public  static  final  String  EXPENSE_WIDGETS_LIST="/invoice/api/expense/widgets";
 //       账本费用列表
         public  static  final  String  INVOICES_LIST="/api/invoices/my";
+        //费用详情
+        public static  final String INVOICE_DETAIL = "/api/invoices/%s";
 //        搜索城市
         public  static  final  String  LOCATION_SEARCH="/location-service/api/custom/location/search/keyword";
 //        新建费用查询会计科目

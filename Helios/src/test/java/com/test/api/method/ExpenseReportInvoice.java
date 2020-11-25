@@ -133,6 +133,17 @@ public class ExpenseReportInvoice {
     }
 
     /**
+     * 根据费用的invoiceOID 获取费用详情
+     * @param employee
+     * @param invoiceOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getInvoice(Employee employee,String invoiceOID) throws HttpStatusException {
+        return expenseApi.getInvocieDetail(employee,invoiceOID);
+    }
+
+    /**
      * 删除费用
      * @param employee
      * @param invoiceOID

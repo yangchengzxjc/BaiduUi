@@ -117,7 +117,7 @@ public class ExpenseReportPage {
     }
 
     /**
-     * 费控标签检查
+     * 报销单费控标签检查
      * @param employee
      * @param expenseReportOID
      * @param expectValue
@@ -135,6 +135,28 @@ public class ExpenseReportPage {
                 return false;
             }
         }else {
+            return false;
+        }
+    }
+
+    /**
+     * 费用内的标签信息
+     * @param employee
+     * @param invoiceOID
+     * @param expectValue
+     * @return
+     */
+    public boolean checkInvoiceLabel(Employee employee,String invoiceOID,String type,String expectValue) throws HttpStatusException {
+        JsonObject result = expenseReportInvoice.getInvoice(employee,invoiceOID);
+        JsonArray invoiceLabel = result.get("invoiceLabels").getAsJsonArray();
+        if(GsonUtil.isNotEmpt(invoiceLabel)){
+            String toast = GsonUtil.getJsonValue(invoiceLabel,"type",type).get("toast").getAsString();
+            if(toast.equals(expectValue)){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
             return false;
         }
     }

@@ -424,17 +424,30 @@ public class ExpenseApi extends BaseRequest{
     }
 
     /**
+     * 根据inviceOID获取到费用的详情
+     * @param employee
+     * @param invoiceOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getInvocieDetail(Employee employee,String invoiceOID) throws HttpStatusException {
+        String url=employee.getEnvironment().getUrl()+ String.format(ApiPath.INVOICE_DETAIL,invoiceOID);
+        String response = doGet(url,getHeader(employee.getAccessToken()),null,employee);
+        return new JsonParser().parse(response).getAsJsonObject();
+    }
+
+    /**
      * 获得系统当前费用类型可以选择的控件信息列表
      * @param employee
      * @return
      * @throws HttpStatusException
      */
     public JsonObject getExpenseWidgetsList(Employee employee) throws HttpStatusException {
-        String Url=employee.getEnvironment().getUrl()+ ApiPath.EXPENSE_WIDGETS_LIST;
+        String url=employee.getEnvironment().getUrl()+ ApiPath.EXPENSE_WIDGETS_LIST;
         Map<String,String> UrlParam=new HashMap<>();
         UrlParam.put("roleType","TENANT");
-        String Res= doGet(Url,getHeader(employee.getAccessToken()),UrlParam,employee);
-        return new JsonParser().parse(Res).getAsJsonObject();
+        String res= doGet(url,getHeader(employee.getAccessToken()),UrlParam,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
     }
 
     /**

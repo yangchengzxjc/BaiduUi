@@ -229,4 +229,26 @@ public class ExpenseReportInvoice {
         return expenseApportions;
     }
 
+    /**
+     * 费用内的标签信息
+     * @param employee
+     * @param invoiceOID
+     * @param expectValue
+     * @return
+     */
+    public boolean checkInvoiceLabel(Employee employee,String invoiceOID,String type,String expectValue) throws HttpStatusException {
+        JsonObject result = getInvoice(employee,invoiceOID);
+        JsonArray invoiceLabel = result.get("invoiceLabels").getAsJsonArray();
+        if(GsonUtil.isNotEmpt(invoiceLabel)){
+            String toast = GsonUtil.getJsonValue(invoiceLabel,"type",type).get("toast").getAsString();
+            if(toast.equals(expectValue)){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
 }

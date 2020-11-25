@@ -407,4 +407,27 @@ public class ExpenseReport {
     }
 
 
+    /**
+     * 报销单费控标签检查
+     * @param employee
+     * @param expenseReportOID
+     * @param expectValue
+     * @throws HttpStatusException
+     */
+    public boolean checkSubmitLabel(Employee employee,String expenseReportOID,String externalPropertyName,String expectValue) throws HttpStatusException {
+        JsonObject result = expenseReportSubmitCheck(employee,expenseReportOID);
+        log.info("校验的结果:{}",result);
+        JsonArray checkResultList = result.get("checkResultList").getAsJsonArray();
+        if(GsonUtil.isNotEmpt(checkResultList)){
+            String message = GsonUtil.getJsonValue(checkResultList,"externalPropertyName",externalPropertyName).get("message").getAsString();
+            if(message.contains(expectValue)){
+                return true;
+            }else{
+                return false;
+            }
+        }else {
+            return false;
+        }
+    }
+
 }

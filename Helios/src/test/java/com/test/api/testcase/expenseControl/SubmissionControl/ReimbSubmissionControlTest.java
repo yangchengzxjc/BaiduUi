@@ -64,7 +64,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);
         map.put("ruleOID", ruleOID);
-        assert expenseReportPage.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
     }
 
     @Test(description = "报销提交管控-账套级-禁止-费用类型管控-包含")
@@ -87,7 +87,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);
         map.put("ruleOID", ruleOID);
-        assert expenseReportPage.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_ERROR", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_ERROR", rules.getMessage());
     }
 
     @Test(description = "报销提交管控-账套级-警告-费用类型管控-不包含")
@@ -109,7 +109,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);
         map.put("ruleOID", ruleOID);
-        assert !expenseReportPage.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        assert !expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
     }
 
     @Test(description = "报销提交管控-账套级-警告-费用重复管控-包含")
@@ -133,7 +133,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid1", invoiceOid1);
         map.put("invoiceOid2", invoiceOid2);
         map.put("ruleOID", ruleOID);
-        assert expenseReportPage.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
     }
 
     @Test(description = "报销提交管控-账套级-禁止-费用重复管控-包含")
@@ -158,7 +158,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid1", invoiceOid1);
         map.put("invoiceOid2", invoiceOid2);
         map.put("ruleOID", ruleOID);
-        assert expenseReportPage.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_ERROR", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_ERROR", rules.getMessage());
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销次数管控-'>'1次/月")
@@ -186,7 +186,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid1", invoiceOid1);
         map.put("invoiceOid2", invoiceOid2);
         map.put("ruleOID", ruleOID);
-        assert expenseReportPage.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销次数管控-'>'1次/天")
@@ -214,7 +214,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid1", invoiceOid1);
         map.put("invoiceOid2", invoiceOid2);
         map.put("ruleOID", ruleOID);
-        assert expenseReportPage.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销次数管控-'>'1次/季度")
@@ -242,7 +242,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid1", invoiceOid1);
         map.put("invoiceOid2", invoiceOid2);
         map.put("ruleOID", ruleOID);
-        assert expenseReportPage.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销次数管控-'>'1次/年")
@@ -270,7 +270,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid1", invoiceOid1);
         map.put("invoiceOid2", invoiceOid2);
         map.put("ruleOID", ruleOID);
-        assert expenseReportPage.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销单提交日期管控-'>'费用消费日期+1")
@@ -294,7 +294,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
 //        map.put("reportOID", reportOID);
 //        map.put("invoiceOid1", invoiceOid1);
 //        map.put("ruleOID", ruleOID);
-        assert expenseReportPage.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销单提交日期管控-'>'关联申请单结束日期")
@@ -321,7 +321,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);
         map.put("ruleOID", ruleOID);
-        assert expenseReportPage.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销单提交月管控-'>='费用消费日期+0")
@@ -345,7 +345,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);
         map.put("ruleOID", ruleOID);
-        assert expenseReportPage.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销单费用城市管控-'不归属'关联申请单的行程城市")
@@ -373,7 +373,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);
         map.put("ruleOID", ruleOID);
-        assert expenseReportPage.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销单费用的消费日期-'不归属'关联申请单的行程日期")
@@ -401,7 +401,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);
         map.put("ruleOID", ruleOID);
-        assert expenseReportPage.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销单费用的消费日期-'不归属'关联申请单的起止日期")
@@ -429,7 +429,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);
         map.put("ruleOID", ruleOID);
-        assert expenseReportPage.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销单费用的消费日期-'不归属'报销单起止日期")
@@ -453,7 +453,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);
         map.put("ruleOID", ruleOID);
-        assert expenseReportPage.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
     }
 
 

@@ -2,9 +2,11 @@ package com.test.api.method;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.hand.api.InfraStructureApi;
 import com.hand.api.ReimbStandardApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.Rule.StandardRules;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -94,31 +96,27 @@ public class ReimbStandard {
     }
     /**
      * 新增报销标准规则
-     * @param employee
-     * @param name
-     * @param controlLevel
-     * @param levelCode
-     * @param levelOrgId
-     * @param controlType
-     * @param controlModeType
-     * @param message
-     * @param userGroups
-     * @param expenseTypes
-     * @param forms
-     * @param companys
      * @return
      */
 
-    public String addReimbstandard(Employee employee, String name, String controlLevel, String levelCode, String levelOrgId,
-                                   String controlType, String controlModeType, String message,
-                                   JsonArray userGroups, JsonArray expenseTypes, JsonArray forms,
-                                   JsonArray companys)throws HttpStatusException{
+    public String addReimbstandard(Employee employee, StandardRules rules,String formName,String ... expenseTypeName)throws HttpStatusException{
+        InfraStructureApi infraStructureApi =new InfraStructureApi();
+        if(rules.getLevelCode().equals("SET_OF_BOOK")){
+            rules.setLevelOrgId(employee.getSetOfBookId());
+        }else{
+            rules.setLevelOrgId(employee.getCompanyId());
+        }
+        //处理费用类型
+        JsonArray expenseType = new JsonArray();
+        for (String aExpenseTypeName : expenseTypeName){
+           expenseType.add(GsonUtil.getJsonValue(infraStructureApi.getExpenseType(employee,rules.getLevelOrgId(),aExpenseTypeName),"name",aExpenseTypeName));
+        }
+        rules.setExpenseTypes(expenseType);
+        //处理表单
+        JsonArray form = new JsonArray();
 
-      String rulesOid= reimbStandardRules.creatReimbStandardRules(employee,name,controlLevel,levelCode,
-                levelOrgId,controlType,controlModeType,message,userGroups,expenseTypes,forms,companys);
-        return rulesOid;
+        return reimbStandardRules.addReimbStandardRules(employee,rules);
     }
-
     /**
      * 启用公司
      * @param companyGroup
@@ -164,9 +162,9 @@ public class ReimbStandard {
      * @return
      */
     public JsonArray formTypes(JsonObject ... formType){
-        JsonArray array  = new JsonArray();
-        for (int i=0;i<formType.length;i++){
-            array.add(formType[i]);
+        JsonArray array = new JsonArray();
+        for (JsonObject aFormType : formType) {
+            array.add(aFormType);
         }
         return array;
     }
@@ -179,7 +177,6 @@ public class ReimbStandard {
      */
     public void deleteReimbStandardRules (Employee employee,String rulesOid)throws HttpStatusException{
         reimbStandardRules.deleteReimbStandardRules(employee,rulesOid);
-
     }
 
     /**
@@ -189,9 +186,7 @@ public class ReimbStandard {
      * @throws HttpStatusException
      */
     public JsonArray getControlItems(Employee employee,String rulesOid)throws HttpStatusException{
-        JsonArray controlItems = new JsonArray();
-        controlItems=reimbStandardRules.getControlItem(employee,rulesOid);
-        return controlItems;
+        return reimbStandardRules.getControlItem(employee,rulesOid);
     }
 
     /**

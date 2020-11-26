@@ -495,4 +495,45 @@ public class InfraStructureApi extends BaseRequest{
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
+    /*
+     * 获取费用类型
+     * @ param employee
+     * @ param setOfBookId 账套id
+     * @ throws HttpStatusException
+     */
+    public JsonArray getExpenseType (Employee employee,String setOfBooksId,String expenseName) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.EXPENSE_TYPE;
+        HashMap<String, String> mapParams = new HashMap<>();
+        mapParams.put("roleType", "TENANT");
+        mapParams.put("page", "0");
+        mapParams.put("size", "10");
+        mapParams.put("name",expenseName);
+        mapParams.put("nameLable",expenseName);
+        mapParams.put("levelCode","ALL");
+        mapParams.put("enabled", "true");
+        if(setOfBooksId.length()>10){
+            mapParams.put("setOfBooksId", setOfBooksId);
+            mapParams.put("companyId","");
+        }else{
+            mapParams.put("companyId",setOfBooksId);
+            mapParams.put("setOfBooksId","");
+        }
+        String res = doGet(url, getHeader(employee.getAccessToken(),"reimbursement-standard"), mapParams, employee);
+        return new JsonParser().parse(res).getAsJsonArray();
+    }
+
+    /**
+     * 查询报销单提交管控的表单
+     * @param employee
+     * @param setOfBooksId  账套id
+     * @param keyWord  表单名称
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray  controlGetForm(Employee employee,String setOfBooksId,String companyOID,String keyWord) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ String.format(ApiPath.QUERY_FORM,keyWord,keyWord,setOfBooksId,companyOID);
+        String response = doGet(url,getHeader(employee.getAccessToken(),HeaderKey.REIMB_SUBMIT_CONTROL,ResourceId.SUBMIT_CONTROL),null,employee);
+        return new JsonParser().parse(response).getAsJsonArray();
+    }
+
 }

@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.Rule.StandardRules;
 import com.hand.basicconstant.ApiPath;
 import com.hand.basicconstant.ResourceId;
 import com.hand.utils.GsonUtil;
@@ -105,86 +106,26 @@ public class ReimbStandardApi  extends BaseRequest {
         return new JsonParser().parse(res).getAsJsonArray();
     }
 
-    private ReimbStandardApi reimbStandardApi;
-    private Object JsonObject;
-    /*
-     * 新建报销标准规则
-     * @ param employee
-     * @ name 规则名称
-     * @ controlLevel 控制力度 FORBID、WARN
-     * @ levelCode 层级 COMPANY、SET_OF_BOOK
-     * @ controlType 控制方式 DAY（MOUTH、QUARTER、YEAR）、SUMMARY、SINGLE
-     * @ controlModeType 控制方式类型 PERIOD SUMMARY
-     * @ message 提示内容
-     * @ userGroups 人员组
-     * @ expenseTypes 费用类型
-     * @ forms 单据类型
-     * @ companys 适用公司
-     * @ businessType 1001 报销标准 1002 提交管控
-     */
 
-    public String creatReimbStandardRules (Employee employee,String name, String controlLevel,
-                                               String levelCode,String levelOrgId,String controlType,String controlModeType,
-                                               String message,
-                                               JsonArray userGroups, JsonArray expenseTypes,JsonArray forms,
-                                               JsonArray companys) throws HttpStatusException{
+    /**
+     * 新增报销标准规则
+     * @param employee
+     * @param rules
+     * @return
+     * @throws HttpStatusException
+     */
+    public String addReimbStandardRules (Employee employee, StandardRules rules) throws HttpStatusException{
         String url = employee.getEnvironment().getUrl()+ ApiPath.ADD_REIMB_STANDARD;
         HashMap<String, String> mapParams3 = new HashMap<>();
         mapParams3.put("roleType", "TENANT");
-        JsonObject body= new JsonObject();
-        body.addProperty("status",true);
-        body.add("userGroups",userGroups);//人员组
-        body.addProperty("controlModeType","SINGLE");
-        body.addProperty("name",name);
-        body.add("expenseTypes",expenseTypes);
-        body.add("forms",forms);
-        body.addProperty("crossCompanyStandard","OWNER");
-        body.addProperty("controlLevel",controlLevel);
-        body.addProperty("complianceCheck",false);
-        body.addProperty("message",message);
-        body.addProperty("participantsEnable",false);
-        //多语言
-        JsonObject object =new JsonObject();
-
-        JsonArray nameList= new JsonArray();
-        JsonObject name1 =new JsonObject();
-        name1.addProperty("language","en");
-        name1.addProperty("value",name);
-        JsonObject name2 =new JsonObject();
-        name2.addProperty("language","zh_cn");
-        name2.addProperty("value",name);
-        JsonObject name3 =new JsonObject();
-        name3.addProperty("language","zh_TW");
-        name3.addProperty("value",name);
-        nameList.add(name1);
-        nameList.add(name2);
-        nameList.add(name3);
-        object.add("name",nameList);
-
-        JsonArray nameList1= new JsonArray();
-        JsonObject message1 =new JsonObject();
-        message1.addProperty("language","en");
-        message1.addProperty("value",message);
-        JsonObject message2 =new JsonObject();
-        message2.addProperty("language","zh_cn");
-        message2.addProperty("value",message);
-        JsonObject message3 =new JsonObject();
-        message3.addProperty("language","zh_TW");
-        message3.addProperty("value",message);
-        nameList1.add(message1);
-        nameList1.add(message2);
-        nameList1.add(message3);
-        object.add("message",nameList1);
-
-        body.add("i18n",object);
-        body.addProperty("type","AMOUNT");
-        body.addProperty("businessType",1001);
-        body.addProperty("levelCode",levelCode);
-        body.addProperty("levelOrgId",levelOrgId);
-        body.add("companys",companys);
-        body.addProperty("controlType",controlType);
-        body.addProperty("controlModeType",controlModeType);
-        String res = doPost(url,getHeader(employee.getAccessToken(),"reimbursement-standard", ResourceId.INFRA),mapParams3,body.toString(),null,employee);
+        String ruleString = GsonUtil.objectToString(rules);
+        JsonObject ruleObject = new JsonParser().parse(ruleString).getAsJsonObject();
+        //设置多语言字段
+        JsonObject i18n =new JsonObject();
+        i18n.add("name",GsonUtil.setLanguage(rules.getName()));
+        i18n.add("message",GsonUtil.setLanguage(rules.getMessage()));
+        ruleObject.add("i18n",i18n);
+        String res = doPost(url,getHeader(employee.getAccessToken(),"reimbursement-standard", ResourceId.INFRA),mapParams3,ruleObject.toString(),null,employee);
         return new JsonParser().parse(res).getAsString();
     }
 

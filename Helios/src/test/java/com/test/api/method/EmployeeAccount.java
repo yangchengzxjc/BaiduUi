@@ -43,6 +43,7 @@ public class EmployeeAccount{
         employee.setCompanyName(jsonObject.get("companyName").getAsString());
         employee.setEmployeeID(jsonObject.get("employeeID").getAsString());
         employee.setJobId(jsonObject.get("companyWithUserJobsDTOList").getAsJsonArray().get(0).getAsJsonObject().get("userJobsDTOList").getAsJsonArray().get(0).getAsJsonObject().get("id").getAsString());
+        employee.setSetOfBookId(jsonObject.get("companyWithUserJobsDTOList").getAsJsonArray().get(0).getAsJsonObject().get("userJobsDTOList").getAsJsonArray().get(0).getAsJsonObject().get("setOfBookId").getAsString());
         employee.setMobile(jsonObject.get("mobile").getAsString());
         employee.setEmail(jsonObject.get("email").getAsString());
         //获取当前用户的租户信息

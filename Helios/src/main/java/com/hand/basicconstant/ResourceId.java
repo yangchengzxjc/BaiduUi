@@ -14,6 +14,8 @@ public class ResourceId {
 
     //基础组的resourceId
     public static final String INFRA = "660013000300";
+    //城市组
+    public static final String CITY_GROUP = "660012000300";
     //报销组的resourceId
     public static final String EXPENSE_REPORT = "66000200";
     //账本中的resourceId

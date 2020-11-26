@@ -77,6 +77,8 @@ public class ApiPath {
 //        申请单提交
         //报销单账本导入费用
         public static final String APPLICATION_SUBMIT ="/api/loan/application/submit";
+        //新建城市组
+        public static final String CREATE_CITY_GROUP = "/api/levels?roleType=TENANT";
 
         public static final String validate ="/api/travel/standards/validate";
 //        报销单撤回

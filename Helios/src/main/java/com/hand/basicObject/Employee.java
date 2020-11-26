@@ -27,6 +27,7 @@ public class Employee {
     private String corporationOID;
     //公司OID
     private String companyOID;
+    private String companyId;
     //当前环境变量(eg:sit,stage,service...)
     private String env;
     //多语言

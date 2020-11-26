@@ -7,6 +7,8 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicconstant.ApiPath;
 import com.hand.basicconstant.ResourceId;
+import com.hand.utils.GsonUtil;
+import com.hand.utils.RandomNumber;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -281,7 +283,33 @@ public class ReimbStandardApi  extends BaseRequest {
 
     }
 
-//    public String editRules()throws HttpStatusException{
-//
-//    }
+    /**
+     * 新增城市组
+     * @param employee
+     * @param cityGroupName
+     * @param levelCode   组户级"TENANT"还是公司级"COMPANY"
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject addCityGroup(Employee employee,String cityGroupName,String levelCode) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.CREATE_CITY_GROUP;
+        JsonObject body = new JsonObject();
+        body.addProperty("levelName",cityGroupName);
+        body.addProperty("comment",cityGroupName+"城市组");
+        body.addProperty("code", RandomNumber.getUUID(6));
+        body.addProperty("levelCode",levelCode);
+        if(levelCode.equals("TENANT")){
+            body.addProperty("levelOrgName",employee.getTenantName());
+            body.addProperty("levelOrgId",employee.getTenantId());
+        }else{
+            body.addProperty("levelOrgName",employee.getCompanyName());
+            body.addProperty("levelOrgId",employee.getCompanyId());
+        }
+        JsonObject i18n =new JsonObject();
+        i18n.add("levelName", GsonUtil.setLanguage(cityGroupName));
+        i18n.add("comment",GsonUtil.setLanguage(cityGroupName+"城市组"));
+        body.add("i18n",i18n);
+        String res = doPost(url,getHeader(employee.getAccessToken(),ResourceId.CITY_GROUP),null,body.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
 }

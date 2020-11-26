@@ -53,6 +53,7 @@ public class EmployeeAccount{
             //获取当前登录人的公司信息
             JsonObject companyInfo = employeeInfoApi.getCompanys(employee);
             employee.setCompanyCode(companyInfo.get("companyCode").getAsString());
+            employee.setCompanyId(companyInfo.get("id").getAsString());
         }catch (HttpStatusException e){
             e.printStackTrace();
         }

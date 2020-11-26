@@ -13,7 +13,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ControlItem {
 
-
     /**
      * 费用类型
      */
@@ -55,4 +54,5 @@ public enum ControlItem {
 
     private Integer ControlItem;
     private String typeName;
+
 }

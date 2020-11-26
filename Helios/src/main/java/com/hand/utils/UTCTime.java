@@ -201,4 +201,16 @@ public class UTCTime {
         DateTime date = DateTime.parse(utc).plusDays(day);
         return fmt.print(date);
     }
+
+    /**
+     * 转化为的北京时间格式为 yyyy-MMM-dd
+     * @param utc
+     * @return
+     */
+    public static String utcTObj(String utc){
+        //格式化为北京时间
+        DateTimeFormatter fmt = DateTimeFormat.forPattern(BEiJING_FORMATTER_PATTERN15);
+        DateTime date = DateTime.parse(utc);
+        return fmt.print(date);
+    }
 }

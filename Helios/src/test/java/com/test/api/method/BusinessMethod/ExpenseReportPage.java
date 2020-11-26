@@ -6,7 +6,6 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;
 import com.hand.basicObject.InvoiceComponent;
-import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
 import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportComponent;
@@ -14,6 +13,7 @@ import com.test.api.method.ExpenseReportInvoice;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -38,7 +38,7 @@ public class ExpenseReportPage {
      * @return
      * @throws HttpStatusException
      */
-    public String  setDailyReport(Employee employee,String endData,String formName,String participant) throws HttpStatusException {
+    public HashMap<String,String> setDailyReport(Employee employee, String endData, String formName, String participant) throws HttpStatusException {
         //新建报销单
         FormComponent component=new FormComponent();
         component.setCompany(employee.getCompanyOID());
@@ -52,7 +52,7 @@ public class ExpenseReportPage {
         log.info(array.toString());
         component.setParticipant(array.toString());
         component.setCause("报销单提交管控规则校验");
-        return expenseReport.createExpenseReport(employee,formName,component).get("expenseReportOID");
+        return expenseReport.createExpenseReport(employee,formName,component);
     }
 
     /**

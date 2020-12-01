@@ -325,10 +325,10 @@ public class ApiPath {
 
 
 
-
-
-
-
+        //报销标准查询城市组
+        public static final String GET_CITY_GROUP = "/api/levels/org";
+        //删除报销标准中的标准项
+        public static final String SANDARD_ITEM_DELETE = "/api/expense/standard/item/delete/%s/%s";
         //报销单提交管控查询单据
         public static final String QUERY_FORM = "/api/custom/forms/loan/reference/v2?roleType=TENANT&page=0&size=10&keyword=%s&keywordLable=%s&formTypeList=3001&formTypeList=3002&formTypeList=3003&setOfBooksId=%s&companyOID=%s";
 }

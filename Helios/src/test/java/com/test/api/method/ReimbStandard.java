@@ -7,8 +7,11 @@ import com.hand.api.ReimbStandardApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.Rule.StandardRules;
+import com.hand.basicObject.Rule.StandardRulesItem;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.HashMap;
 
 
 @Slf4j
@@ -29,16 +32,19 @@ public class ReimbStandard {
         return GsonUtil.getJsonValue(BookList,"setOfBooksName",BooksName,"id");
     }
 
-    /*
-     * 根据人员组名称获取人员组
-     * @ userGroupsName 人员组名称
-     * @ return
+
+    /**
+     * 查询人员组
+     * @param employee
+     * @param userGroupsName 人员组的名称
+     * @param setOfBooksId  账套id
+     * @return
+     * @throws HttpStatusException
      */
     public JsonObject getUserGroups(Employee employee,String userGroupsName,String setOfBooksId) throws HttpStatusException {
-        JsonArray userGroupsList = reimbStandardRules.getUserGroups(employee, setOfBooksId);
+        JsonArray userGroupsList = reimbStandardRules.getUserGroups(employee, setOfBooksId,userGroupsName);
         JsonObject userGroups;
         userGroups = GsonUtil.getJsonValue(userGroupsList,"name",userGroupsName);
-        log.info("userList,{}",userGroupsList);
         return userGroups;
     }
 
@@ -53,11 +59,6 @@ public class ReimbStandard {
         JsonArray expenseTypeList = reimbStandardRules.getExpenseType(employee,setOfBooksId);
         JsonObject expenseType;
         expenseType = GsonUtil.getJsonValue(expenseTypeList,"name",expenseTypeName);
-//        for (int i =0;i<expenseTypeList.size();i++){
-//            if(expenseTypeList.get(i).getAsJsonObject().get("name").getAsString().equals(expenseTypeName)){
-//                expenseType=expenseTypeList.get(i).getAsJsonObject();
-//            }
-//        }
         return expenseType;
     }
 
@@ -96,7 +97,7 @@ public class ReimbStandard {
     }
 
     /**
-     *
+     * 报销标准-新建规则
      * @param employee
      * @param rules
      * @param formName 适用的表单名称
@@ -104,7 +105,7 @@ public class ReimbStandard {
      * @return
      * @throws HttpStatusException
      */
-    public String addReimbstandard(Employee employee, StandardRules rules,String[] formName,String ... expenseTypeName)throws HttpStatusException{
+    public HashMap<String,String> addReimbstandard(Employee employee, StandardRules rules, String [] userGroupsName, String[] formName, String ... expenseTypeName)throws HttpStatusException{
         InfraStructureApi infraStructureApi =new InfraStructureApi();
         if(rules.getLevelCode().equals("SET_OF_BOOK")){
             rules.setLevelOrgId(employee.getSetOfBookId());
@@ -113,6 +114,15 @@ public class ReimbStandard {
         }else{
             //如果是公司模式  默认了当前账号的公司
             rules.setLevelOrgId(employee.getCompanyId());
+        }
+        //设置人员组
+        if(userGroupsName.length!=0){
+            JsonArray userGroup = new JsonArray();
+            for (String mUserGroupsName : userGroupsName){
+                userGroup.add(getUserGroups(employee,mUserGroupsName,employee.getSetOfBookId()));
+            }
+        }else{
+            rules.setUserGroups(new JsonArray());
         }
         //处理费用类型
         JsonArray expenseType = new JsonArray();
@@ -129,8 +139,15 @@ public class ReimbStandard {
             }
             rules.setForms(form);
         }
-        return reimbStandardRules.addReimbStandardRules(employee,rules);
+        String ruleOID = reimbStandardRules.addReimbStandardRules(employee,rules).replace("\"","");
+        //获取默认的标准的oid
+        String standardOid = reimbStandardRules.getItem(employee,ruleOID).get(0).getAsJsonObject().get("standardOID").getAsString();
+        HashMap<String,String> map = new HashMap<>();
+        map.put("ruleOID",ruleOID);
+        map.put("dafaultStandardOID",standardOid);
+        return map;
     }
+
 
     /**
      * 启用公司
@@ -212,23 +229,24 @@ public class ReimbStandard {
      * @throws HttpStatusException
      */
     public JsonArray getItem(Employee employee,String rulesOid)throws HttpStatusException{
-
         return reimbStandardRules.getItem(employee,rulesOid);
-
     }
 
     /**
      * 添加基本标准
      * @param employee
-     * @param standardOid
-     * @param amount
-     * @param userGroups
-     * @param citys
+     * @param item 标准管控项
+     * @param defaultStandardOID 默认的基本标准的oid,如果基本标准存在，则必须删除掉
      * @return
      * @throws HttpStatusException
      */
-    public String addItems(Employee employee,String standardOid,String rulesOid,Integer amount,JsonArray userGroups,JsonArray citys)throws HttpStatusException{
-         String items = reimbStandardRules.addItems(employee,standardOid,rulesOid,amount,userGroups,citys);
+    public String addItems(Employee employee, StandardRulesItem item,String defaultStandardOID)throws HttpStatusException{
+        String items = reimbStandardRules.addItems(employee,item);
+
+        //删除默认的管控标准
+        if(!defaultStandardOID.equals("")){
+            reimbStandardRules.deleteStandardItem(employee,item.getRuleOID(),defaultStandardOID);
+        }
         return items;
     }
 
@@ -244,8 +262,4 @@ public class ReimbStandard {
         rulesList =reimbStandardRules.getRules(employee,ruleName);
         return  rulesList;
     }
-
-//    public String creatReimbSubmissionControlRuls(Employee employee)throws HttpStatusException{
-//        String rulesOid=reimbStandardRules
-//    }
 }

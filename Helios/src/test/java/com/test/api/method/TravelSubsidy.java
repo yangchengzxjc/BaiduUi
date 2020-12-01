@@ -282,7 +282,7 @@ public class TravelSubsidy {
      */
     public String getUserGroupOID(Employee employee,String userGroupName) throws HttpStatusException {
         ReimbStandardApi reimbStandardApi =new ReimbStandardApi();
-        JsonArray array = reimbStandardApi.getUserGroups(employee,employee.getSetOfBookId());
+        JsonArray array = reimbStandardApi.getUserGroups(employee,employee.getSetOfBookId(),userGroupName);
         String userGroupOID = "";
         if(GsonUtil.isNotEmpt(array)){
             userGroupOID = GsonUtil.getJsonValue(array,"name",userGroupName,"userGroupOID");

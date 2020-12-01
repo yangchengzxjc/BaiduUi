@@ -15,7 +15,7 @@ public class StandardRules {
     private boolean status = true;
     //人员组默认为所有
     private JsonArray userGroups= new JsonArray();
-    //管控模式
+    //管控模式 DAY 天管控
     private String controlModeType = "PERIOD";
     //
     private String name;
@@ -23,11 +23,11 @@ public class StandardRules {
     private JsonArray expenseTypes;
     //表单
     private JsonArray forms;
-    //控制方式
+    //控制方式 DAY 按天，
     private String controlType;
     private String crossCompanyStandard = "OWNER";
     private String controlLevel = "WARN";
-    private String complianceCheck;
+    private boolean complianceCheck = false;
     private String message = "费用超标了";
     private String type = "AMOUNT";
     private String nonAmountCtrlItem =null;

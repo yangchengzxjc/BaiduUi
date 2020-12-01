@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.Rule.StandardRules;
+import com.hand.basicObject.Rule.StandardRulesItem;
 import com.hand.basicconstant.ApiPath;
 import com.hand.basicconstant.ResourceId;
 import com.hand.utils.GsonUtil;
@@ -62,7 +63,7 @@ public class ReimbStandardApi  extends BaseRequest {
      * @ return
      * @ throws HttpStatusException
      */
-    public JsonArray getUserGroups (Employee employee,String setOfBooksId) throws HttpStatusException {
+    public JsonArray getUserGroups (Employee employee,String setOfBooksId,String userGroupName) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.USER_GROUPS;
         HashMap<String, String> mapParams2 = new HashMap<>();
         mapParams2.put("roleType", "TENANT");
@@ -71,6 +72,8 @@ public class ReimbStandardApi  extends BaseRequest {
         mapParams2.put("size", "10");
         mapParams2.put("levelCode","SET_OF_BOOK");
         mapParams2.put("levelOrgId", setOfBooksId);
+        mapParams2.put("name",userGroupName);
+        mapParams2.put("nameLable",userGroupName);
         String res = doGet(url, getHeader(employee.getAccessToken(),"reimbursement-standard"), mapParams2, employee);
         return new JsonParser().parse(res).getAsJsonArray();
     }
@@ -125,8 +128,7 @@ public class ReimbStandardApi  extends BaseRequest {
         i18n.add("name",GsonUtil.setLanguage(rules.getName()));
         i18n.add("message",GsonUtil.setLanguage(rules.getMessage()));
         ruleObject.add("i18n",i18n);
-        String res = doPost(url,getHeader(employee.getAccessToken(),"reimbursement-standard", ResourceId.INFRA),mapParams3,ruleObject.toString(),null,employee);
-        return new JsonParser().parse(res).getAsString();
+        return doPost(url,getHeader(employee.getAccessToken(),"reimbursement-standard", ResourceId.INFRA),mapParams3,ruleObject.toString(),null,employee);
     }
 
     /**
@@ -139,7 +141,7 @@ public class ReimbStandardApi  extends BaseRequest {
         String url = employee.getEnvironment().getUrl() + String.format(ApiPath.DELETE_REIMB_STANDARD,rulesOid);
         HashMap<String, String> mapParams = new HashMap<>();
         mapParams.put("roleType", "TENANT");
-       doPost(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,new JsonObject().toString(),null,employee);
+        doPost(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,new JsonObject().toString(),null,employee);
     }
 
     /**
@@ -158,6 +160,19 @@ public class ReimbStandardApi  extends BaseRequest {
     }
 
     /**
+     * 删除报销标准的管控项
+     * @param employee
+     * @param ruleOID
+     * @param itemOID
+     */
+    public void deleteStandardItem(Employee employee,String ruleOID,String itemOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+String.format(ApiPath.SANDARD_ITEM_DELETE,ruleOID,itemOID);
+        HashMap<String, String> mapParams = new HashMap<>();
+        mapParams.put("roleType", "TENANT");
+        doPost(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,new JsonObject().toString(),null,employee);
+    }
+
+    /**
      * 获取报销标准规则的基本标准
      * @param employee
      * @param rulesOid
@@ -165,7 +180,7 @@ public class ReimbStandardApi  extends BaseRequest {
      * @throws HttpStatusException
      */
     public JsonArray getItem(Employee employee,String rulesOid)throws HttpStatusException{
-        String url = employee.getEnvironment().getUrl() + String.format(ApiPath.GET_ITEM,rulesOid) ;
+        String url = employee.getEnvironment().getUrl() + String.format(ApiPath.GET_ITEM,rulesOid);
         HashMap<String,String> mapParams = new HashMap<>();
         mapParams.put("roleType","TENENT");
         String res=doGet(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,employee);
@@ -175,31 +190,29 @@ public class ReimbStandardApi  extends BaseRequest {
     /**
      * 添加基本标准
      * @param employee
-     * @param standardOid
-     * @param amount
-     * @param userGroups
-     * @param citys
      * @return
      * @throws HttpStatusException
      */
-    public String addItems(Employee employee,String standardOid,String rulesOid,Integer amount,JsonArray userGroups,JsonArray citys)throws HttpStatusException{
+    public String addItems(Employee employee, StandardRulesItem item)throws HttpStatusException{
         String url = employee.getEnvironment().getUrl() +ApiPath.ADD_ITEM;
-        HashMap<String,String> mapParams = new HashMap<>();
-        mapParams.put("roleType","TENENT");
-//        JsonArray body = new JsonArray();
-        JsonObject body1 = new JsonObject();
-//        body.add(body1);
-        body1.addProperty("ruleOID",rulesOid);
-        body1.addProperty("standardOID",standardOid);
-        body1.addProperty("currencyCode","CNY");
-        body1.addProperty("amount",amount);
-        body1.add("userGroups",userGroups);
-        body1.add("citys",citys);
-        //1 是包含；0 是不包含
-        body1.addProperty("cityAssociateType",1);
-        body1.addProperty("userAssociateType",1);
-        String res = doPost(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,body1.toString(),null,employee);
-        return res;
+        String itemString = GsonUtil.objectToString(item);
+        HashMap<String, String> mapParams = new HashMap<>();
+        mapParams.put("roleType", "TENANT");
+        JsonObject itemObject = new JsonParser().parse(itemString).getAsJsonObject();
+        return doPost(url,getHeader(employee.getAccessToken(),ResourceId.INFRA),mapParams,itemObject.toString(),null,employee);
+    }
+
+    /**
+     * 添加基本标准 新建规则后的会生成默认的标准 修改默认的标准项
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public String addItems(Employee employee, JsonObject item)throws HttpStatusException{
+        String url = employee.getEnvironment().getUrl() +ApiPath.ADD_ITEM;
+        HashMap<String, String> mapParams = new HashMap<>();
+        mapParams.put("roleType", "TENANT");
+        return doPost(url,getHeader(employee.getAccessToken(),ResourceId.INFRA),mapParams,item.toString(),null,employee);
     }
 
     /**
@@ -253,4 +266,6 @@ public class ReimbStandardApi  extends BaseRequest {
         String res = doPost(url,getHeader(employee.getAccessToken(),ResourceId.CITY_GROUP),null,body.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
+
+//    public void getCityGroup(Employee employee,)
 }

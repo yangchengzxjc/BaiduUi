@@ -34,7 +34,7 @@ public class StandardRules {
     private boolean participantsEnable = false;
     private Integer businessType = 1001;
     private String levelCode = "SET_OF_BOOK";
-    private String levelOrgId ;
+    private String levelOrgId;
     private JsonArray companys;
 
 }

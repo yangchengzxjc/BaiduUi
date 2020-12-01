@@ -94,16 +94,24 @@ public class ReimbStandard {
         company = GsonUtil.getJsonValue(companyList,"name",companyName);
         return company;
     }
-    /**
-     * 新增报销标准规则
-     * @return
-     */
 
-    public String addReimbstandard(Employee employee, StandardRules rules,String formName,String ... expenseTypeName)throws HttpStatusException{
+    /**
+     *
+     * @param employee
+     * @param rules
+     * @param formName 适用的表单名称
+     * @param expenseTypeName  费用类型
+     * @return
+     * @throws HttpStatusException
+     */
+    public String addReimbstandard(Employee employee, StandardRules rules,String[] formName,String ... expenseTypeName)throws HttpStatusException{
         InfraStructureApi infraStructureApi =new InfraStructureApi();
         if(rules.getLevelCode().equals("SET_OF_BOOK")){
             rules.setLevelOrgId(employee.getSetOfBookId());
+            //账套级的 默认为通用
+            rules.setCompanys(new JsonArray());
         }else{
+            //如果是公司模式  默认了当前账号的公司
             rules.setLevelOrgId(employee.getCompanyId());
         }
         //处理费用类型
@@ -112,11 +120,18 @@ public class ReimbStandard {
            expenseType.add(GsonUtil.getJsonValue(infraStructureApi.getExpenseType(employee,rules.getLevelOrgId(),aExpenseTypeName),"name",aExpenseTypeName));
         }
         rules.setExpenseTypes(expenseType);
-        //处理表单
-        JsonArray form = new JsonArray();
-
+        //处理表单 form
+        if(formName.length!=0){
+            //适配单据
+            JsonArray form = new JsonArray();
+            for (String mFormName : formName){
+                form.add(GsonUtil.getJsonValue(infraStructureApi.controlGetForm(employee,rules.getLevelOrgId(),mFormName),"formName",mFormName));
+            }
+            rules.setForms(form);
+        }
         return reimbStandardRules.addReimbStandardRules(employee,rules);
     }
+
     /**
      * 启用公司
      * @param companyGroup

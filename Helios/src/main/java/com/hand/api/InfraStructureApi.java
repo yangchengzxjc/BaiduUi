@@ -495,11 +495,13 @@ public class InfraStructureApi extends BaseRequest{
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
-    /*
-     * 获取费用类型
-     * @ param employee
-     * @ param setOfBookId 账套id
-     * @ throws HttpStatusException
+    /**
+     *  获取费用类型
+     * @param employee
+     * @param setOfBooksId
+     * @param expenseName
+     * @return
+     * @throws HttpStatusException
      */
     public JsonArray getExpenseType (Employee employee,String setOfBooksId,String expenseName) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.EXPENSE_TYPE;
@@ -525,12 +527,21 @@ public class InfraStructureApi extends BaseRequest{
     /**
      * 查询报销单提交管控的表单
      * @param employee
-     * @param setOfBooksId  账套id
+     * @param levelOrgId  账套id或者公司的oid
      * @param keyWord  表单名称
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray  controlGetForm(Employee employee,String setOfBooksId,String companyOID,String keyWord) throws HttpStatusException {
+    public JsonArray controlGetForm(Employee employee,String levelOrgId,String keyWord) throws HttpStatusException {
+        String companyOID = "";
+        String setOfBooksId = "";
+        if(levelOrgId.length()>30){
+            companyOID = levelOrgId;
+            setOfBooksId ="";
+        }else{
+            companyOID = "";
+            setOfBooksId = levelOrgId;
+        }
         String url = employee.getEnvironment().getUrl()+ String.format(ApiPath.QUERY_FORM,keyWord,keyWord,setOfBooksId,companyOID);
         String response = doGet(url,getHeader(employee.getAccessToken(),HeaderKey.REIMB_SUBMIT_CONTROL,ResourceId.SUBMIT_CONTROL),null,employee);
         return new JsonParser().parse(response).getAsJsonArray();

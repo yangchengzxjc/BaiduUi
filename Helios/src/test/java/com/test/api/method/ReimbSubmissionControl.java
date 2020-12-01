@@ -42,8 +42,7 @@ public class ReimbSubmissionControl {
             levelOrgId = setOfBooksDefine.getSetOfBooksId(employee,"",rules.getLevelOrgName(), HeaderKey.REIMB_SUBMIT_CONTROL);
             rules.setLevelOrgId(levelOrgId);
             if(!formName.equals("")) {
-                form = infraStructureApi.controlGetForm(employee, rules.getLevelOrgId(), "", formName);
-                log.info("适用单据:{}",form);
+                form = infraStructureApi.controlGetForm(employee, rules.getLevelOrgId(), formName);
                 form.get(0).getAsJsonObject().addProperty("key",form.get(0).getAsJsonObject().get("formOID").getAsString());
                 rules.setForms(form);
             }
@@ -62,7 +61,7 @@ public class ReimbSubmissionControl {
             rules.setLevelOrgId(levelOrgId);
             rules.setCompanyOID(companyObject.get("companyOID").getAsString());
             if(!formName.equals("")){
-                form = infraStructureApi.controlGetForm(employee,"",rules.getCompanyOID(),formName);
+                form = infraStructureApi.controlGetForm(employee,rules.getCompanyOID(),formName);
                 form.get(0).getAsJsonObject().addProperty("key",form.get(0).getAsJsonObject().get("formOID").getAsString());
                 rules.setForms(form);
             }

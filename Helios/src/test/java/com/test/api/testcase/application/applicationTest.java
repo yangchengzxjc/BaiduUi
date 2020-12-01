@@ -53,7 +53,7 @@ public class applicationTest extends BaseTest {
         component.setEndDate(UTCTime.getUtcTime(3,0));
         //添加参与人员  参与人员的value 是一段json数组。
         JsonArray array = new JsonArray();
-        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-自动化测试"),"懿佳欢_stage"));
+        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-自动化测试"),employee.getFullName()));
         component.setParticipant(array.toString());
         //创建申请单
         String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-自动化测试",component).get("applicationOID");

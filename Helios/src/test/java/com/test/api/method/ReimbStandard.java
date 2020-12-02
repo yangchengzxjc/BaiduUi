@@ -37,12 +37,12 @@ public class ReimbStandard {
      * 查询人员组
      * @param employee
      * @param userGroupsName 人员组的名称
-     * @param setOfBooksId  账套id
+     * @param rules
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject getUserGroups(Employee employee,String userGroupsName,String setOfBooksId) throws HttpStatusException {
-        JsonArray userGroupsList = reimbStandardRules.getUserGroups(employee, setOfBooksId,userGroupsName);
+    public JsonObject getUserGroups(Employee employee,String userGroupsName,StandardRules rules) throws HttpStatusException {
+        JsonArray userGroupsList = reimbStandardRules.getUserGroups(employee,rules.getLevelCode(),rules.getLevelOrgId(),userGroupsName);
         JsonObject userGroups;
         userGroups = GsonUtil.getJsonValue(userGroupsList,"name",userGroupsName);
         return userGroups;
@@ -119,7 +119,7 @@ public class ReimbStandard {
         if(userGroupsName.length!=0){
             JsonArray userGroup = new JsonArray();
             for (String mUserGroupsName : userGroupsName){
-                userGroup.add(getUserGroups(employee,mUserGroupsName,employee.getSetOfBookId()));
+                userGroup.add(getUserGroups(employee,mUserGroupsName,rules));
             }
         }else{
             rules.setUserGroups(new JsonArray());
@@ -240,9 +240,28 @@ public class ReimbStandard {
      * @return
      * @throws HttpStatusException
      */
-    public String addItems(Employee employee, StandardRulesItem item,String defaultStandardOID)throws HttpStatusException{
+    public String addItems(Employee employee, StandardRules rules,StandardRulesItem item,String defaultStandardOID,String [] userGroupsName,String []cityGroupsName)throws HttpStatusException{
+        // config userGroups
+        if(userGroupsName.length!=0){
+            JsonArray userGroups =new JsonArray();
+            for (String userGroupName: userGroupsName){
+                 JsonObject userGroupObject = getUserGroups(employee,userGroupName,rules);
+                 userGroups.add(userGroupObject);
+            }
+            item.setUserGroups(userGroups);
+        }
+        //config cityGroups
+        if(cityGroupsName.length!=0){
+            JsonArray userGroupArray = reimbStandardRules.getCityGroup(employee,rules.getLevelCode(),rules.getLevelOrgId());
+            JsonArray cityGroups = new JsonArray();
+            for(String cityGroupName:cityGroupsName){
+                if(GsonUtil.isNotEmpt(cityGroups)){
+                cityGroups.add(GsonUtil.getJsonValue(userGroupArray,"levelName",cityGroupName));
+                }
+            }
+            item.setCitys(cityGroups);
+        }
         String items = reimbStandardRules.addItems(employee,item);
-
         //删除默认的管控标准
         if(!defaultStandardOID.equals("")){
             reimbStandardRules.deleteStandardItem(employee,item.getRuleOID(),defaultStandardOID);

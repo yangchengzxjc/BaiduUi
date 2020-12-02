@@ -56,25 +56,27 @@ public class ReimbStandardApi  extends BaseRequest {
         return new JsonParser().parse(res).getAsJsonArray();
     }
 
-    /*
-     * 获取账套件级人员组
-     * @ param employee
-     * @ param setOfBookId 账套id
-     * @ return
-     * @ throws HttpStatusException
+    /**
+     * get userGroup
+     * @param employee
+     * @param levelCode
+     * @param levelOrgId
+     * @param userGroupName
+     * @return
+     * @throws HttpStatusException
      */
-    public JsonArray getUserGroups (Employee employee,String setOfBooksId,String userGroupName) throws HttpStatusException {
+    public JsonArray getUserGroups (Employee employee,String levelCode,String levelOrgId,String userGroupName) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.USER_GROUPS;
-        HashMap<String, String> mapParams2 = new HashMap<>();
-        mapParams2.put("roleType", "TENANT");
-        mapParams2.put("enabled", "true");
-        mapParams2.put("page", "0");
-        mapParams2.put("size", "10");
-        mapParams2.put("levelCode","SET_OF_BOOK");
-        mapParams2.put("levelOrgId", setOfBooksId);
-        mapParams2.put("name",userGroupName);
-        mapParams2.put("nameLable",userGroupName);
-        String res = doGet(url, getHeader(employee.getAccessToken(),"reimbursement-standard"), mapParams2, employee);
+        HashMap<String, String> mapParams = new HashMap<>();
+        mapParams.put("roleType", "TENANT");
+        mapParams.put("enabled", "true");
+        mapParams.put("page", "0");
+        mapParams.put("size", "10");
+        mapParams.put("levelCode",levelCode);
+        mapParams.put("levelOrgId", levelOrgId);
+        mapParams.put("name",userGroupName);
+        mapParams.put("nameLable",userGroupName);
+        String res = doGet(url, getHeader(employee.getAccessToken()), mapParams, employee);
         return new JsonParser().parse(res).getAsJsonArray();
     }
     /*
@@ -155,7 +157,7 @@ public class ReimbStandardApi  extends BaseRequest {
         String url = employee.getEnvironment().getUrl() + String.format(ApiPath.GET_CONTROLITEM,rulesOid);
         HashMap<String, String> mapParams = new HashMap<>();
         mapParams.put("roleType", "TENANT");
-        String res=doGet(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,employee);
+        String res = doGet(url,getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA),mapParams,employee);
         return new JsonParser().parse(res).getAsJsonArray();
     }
 
@@ -267,5 +269,22 @@ public class ReimbStandardApi  extends BaseRequest {
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
-//    public void getCityGroup(Employee employee,)
+    /**
+     * get citygroup
+     * @param employee
+     * @param leveCode SET_OF_BOOK or COMPANY
+     * @param levelOrgId setbooksId or companyId
+     */
+    public JsonArray getCityGroup(Employee employee,String leveCode,String levelOrgId) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.GET_CITY_GROUP;
+        HashMap<String,String> map = new HashMap<>();
+        map.put("roleType","TENANT");
+        map.put("enabled","true");
+        map.put("page","0");
+        map.put("size","10");
+        map.put("levelCode",leveCode);
+        map.put("levelOrgId",levelOrgId);
+        String response = doGet(url, getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA), map, employee);
+        return new JsonParser().parse(response).getAsJsonArray();
+    }
 }

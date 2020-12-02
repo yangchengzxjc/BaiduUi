@@ -47,7 +47,7 @@ public class StandardRules {
      */
     private Integer participantsRatio = 100;
     /**
-     * 费用参与人标准开关
+     * 费用参与人标准开关 周期管控 费用参与人默认关闭，无法打开
      */
     private boolean participantsEnable = false;
     private Integer businessType = 1001;

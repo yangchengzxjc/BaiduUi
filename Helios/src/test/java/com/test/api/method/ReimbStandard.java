@@ -2,16 +2,20 @@ package com.test.api.method;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.hand.api.InfraStructureApi;
 import com.hand.api.ReimbStandardApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.Rule.StandardCondition;
+import com.hand.basicObject.Rule.StandardControlItem;
 import com.hand.basicObject.Rule.StandardRules;
 import com.hand.basicObject.Rule.StandardRulesItem;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
+import java.util.List;
 
 
 @Slf4j
@@ -139,16 +143,24 @@ public class ReimbStandard {
             }
             rules.setForms(form);
         }
+        // period mode, participantsEnable must be false
+        if(rules.getControlModeType().equals("PERIOD")){
+            rules.setParticipantsEnable(false);
+        }
         // expense participants standard
         if(rules.isParticipantsEnable()){
             //default participantsMode="HIGH"
             if(rules.getParticipantsMode()==null){
                 rules.setParticipantsMode("HIGH");
+                rules.setParticipantsRatio(100);
+            }
+            if(rules.getParticipantsMode().equals("SUM")){
+                rules.setParticipantsRatio(100);
             }
         }
         String ruleOID = reimbStandardRules.addReimbStandardRules(employee,rules).replace("\"","");
         //获取默认的标准的oid
-        String standardOid = reimbStandardRules.getItem(employee,ruleOID).get(0).getAsJsonObject().get("standardOID").getAsString();
+        String standardOid = reimbStandardRules.getStandardItem(employee,ruleOID).get(0).getAsJsonObject().get("standardOID").getAsString();
         HashMap<String,String> map = new HashMap<>();
         map.put("ruleOID",ruleOID);
         map.put("dafaultStandardOID",standardOid);
@@ -236,7 +248,7 @@ public class ReimbStandard {
      * @throws HttpStatusException
      */
     public JsonArray getItem(Employee employee,String rulesOid)throws HttpStatusException{
-        return reimbStandardRules.getItem(employee,rulesOid);
+        return reimbStandardRules.getStandardItem(employee,rulesOid);
     }
 
     /**
@@ -247,7 +259,7 @@ public class ReimbStandard {
      * @return
      * @throws HttpStatusException
      */
-    public String addItems(Employee employee, StandardRules rules,StandardRulesItem item,String defaultStandardOID,String [] userGroupsName,String []cityGroupsName)throws HttpStatusException{
+    public String addStandard(Employee employee, StandardRules rules,StandardRulesItem item,String defaultStandardOID,String [] userGroupsName,String []cityGroupsName)throws HttpStatusException{
         // config userGroups
         if(userGroupsName.length!=0){
             JsonArray userGroups =new JsonArray();
@@ -268,12 +280,37 @@ public class ReimbStandard {
             }
             item.setCitys(cityGroups);
         }
-        String items = reimbStandardRules.addItems(employee,item);
+        String items = reimbStandardRules.addStandarditems(employee,item);
         //删除默认的管控标准
         if(!defaultStandardOID.equals("")){
-            reimbStandardRules.deleteStandardItem(employee,item.getRuleOID(),defaultStandardOID);
+            reimbStandardRules.deleteStandard(employee,item.getRuleOID(),defaultStandardOID);
         }
         return items;
+    }
+
+    /**
+     *
+     * @param employee
+     * @param rulesOID
+     * @throws HttpStatusException
+     */
+    public void editORSaveControlItem(Employee employee, String rulesOID, List<StandardCondition> controlItem) throws HttpStatusException {
+        String itemId = reimbStandardRules.getStandardItem(employee,rulesOID).get(0).getAsJsonObject().get("id").getAsString();
+        JsonObject itemDetail = reimbStandardRules.getControlItemDetail(employee,itemId);
+        JsonArray condition = new JsonParser().parse(GsonUtil.objectToString(controlItem)).getAsJsonArray();
+        itemDetail.add("conditions",condition);
+        reimbStandardRules.editOrSaveControlItem(employee,itemDetail,rulesOID);
+    }
+
+    /**
+     * 添加基本标准
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public String addStandard(Employee employee,JsonObject standardItem)throws HttpStatusException{
+
+        return null;
     }
 
     /**

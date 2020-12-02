@@ -15,7 +15,9 @@ public class StandardRules {
     private boolean status = true;
     //人员组默认为所有
     private JsonArray userGroups= new JsonArray();
-    //管控模式 DAY 天管控
+    /**
+     * 控制方式类型： PERIOD (周期管控) SUMMARY(单据内汇总管控) SINGLE(单条管控)
+     */
     private String controlModeType = "PERIOD";
     //
     private String name;
@@ -23,14 +25,30 @@ public class StandardRules {
     private JsonArray expenseTypes;
     //表单
     private JsonArray forms;
-    //控制方式 DAY 按天，
+    /**
+     * 控制方式:每天(DAY),每月(MONTH),每季度(QUARTER),汇总校验（SUMMARY),单条管控(SINGLE)
+     */
     private String controlType;
     private String crossCompanyStandard = "OWNER";
+    /**
+     * 控制力度:警告(WARN),禁止(FORBID)
+     */
     private String controlLevel = "WARN";
     private boolean complianceCheck = false;
     private String message = "费用超标了";
     private String type = "AMOUNT";
-    private String nonAmountCtrlItem =null;
+    private String nonAmountCtrlItem = null;
+    /**
+     * 费用参与人标准,就高(HIGN)、和值(SUM)
+     */
+    private String participantsMode;
+    /**
+     * 费用参与人系数：正整数 1-200 默认100
+     */
+    private Integer participantsRatio = 100;
+    /**
+     * 费用参与人标准开关
+     */
     private boolean participantsEnable = false;
     private Integer businessType = 1001;
     private String levelCode = "SET_OF_BOOK";

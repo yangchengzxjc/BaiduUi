@@ -139,6 +139,13 @@ public class ReimbStandard {
             }
             rules.setForms(form);
         }
+        // expense participants standard
+        if(rules.isParticipantsEnable()){
+            //default participantsMode="HIGH"
+            if(rules.getParticipantsMode()==null){
+                rules.setParticipantsMode("HIGH");
+            }
+        }
         String ruleOID = reimbStandardRules.addReimbStandardRules(employee,rules).replace("\"","");
         //获取默认的标准的oid
         String standardOid = reimbStandardRules.getItem(employee,ruleOID).get(0).getAsJsonObject().get("standardOID").getAsString();

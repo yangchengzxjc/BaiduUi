@@ -46,7 +46,7 @@ public class ReimbStandardTest extends BaseTest {
     @Test(description = "创建报销标准规则")
     public void Test01()throws HttpStatusException{
         StandardRules rules = new StandardRules();
-        rules.setName("自动化测试报销标准");
+        rules.setName("auto test standard");
         rules.setControlType("DAY");
         reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
     }

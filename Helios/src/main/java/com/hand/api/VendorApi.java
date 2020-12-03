@@ -217,4 +217,29 @@ public class VendorApi extends BaseRequest{
         String res = doPost(url, setHeaderSignature(appName,corpId,signature),null,body.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
+
+    /**
+     * info 通用sso入口
+     * @param employee
+     * @param roleType
+     * @param supplierOID
+     * @param realmId
+     * @param companyOID
+     * @param pageType
+     * @param direction
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject vendorInfoSso( Employee employee, String roleType, String supplierOID, String realmId, String companyOID, String pageType, String direction ) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.SSO;
+        Map<String,String> datas = new HashMap<>();
+        datas.put("roleType", roleType);
+        datas.put("supplierOID", supplierOID);
+        datas.put("realmId", realmId);
+        datas.put("companyOID", companyOID);
+        datas.put("pageType", pageType);
+        datas.put("direction", direction);
+        String res = doGet(url, getHeader(employee.getAccessToken()), datas, employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
 }

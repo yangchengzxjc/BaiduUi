@@ -13,10 +13,12 @@ import com.hand.utils.DocumnetUtil;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
+import com.jayway.jsonpath.JsonPath;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -431,5 +433,12 @@ public class Vendor {
         vendorObject.getAsJsonArray("carSettlementInfos").get(0).getAsJsonObject().getAsJsonArray("carPassengerInfos").get(0).getAsJsonObject().addProperty("passengerName", employee.getFullName());
         vendorObject.getAsJsonArray("carSettlementInfos").get(0).getAsJsonObject().getAsJsonArray("carPassengerInfos").get(0).getAsJsonObject().addProperty("passengerCode", employee.getEmployeeID());
         return vendorObject;
+    }
+
+    public HashMap<String, String> getSsoUrl(Employee employee, String roleType, String supplierOID, String realmId, String companyOID, String pageType, String direction ) throws HttpStatusException {
+        Map<String, String> ssoUrl = new HashMap<>();
+        JsonObject res = VendorApi.vendorInfoSso(employee, roleType, supplierOID, realmId, companyOID, pageType, direction);
+        ssoUrl = JsonPath.read(res, "todo");
+        return ssoUrl;
     }
 }

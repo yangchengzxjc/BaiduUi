@@ -313,10 +313,10 @@ public class ApiPath {
         public static final String COMPANYDetail = "/api/company/%s";
         //平台sso登录
         public static final String SSOLOGIN = "/sso";
-
-
-
-
+        // 消费平台 web sso 入口列表
+        public static final String SSO = "/vendor-info-service/api/sso";
+        // 消费平台 web sso 统一单点登录
+        public static final String SSO_COMMON = "/vendor-info-service/api/sso/common";
 
 
 

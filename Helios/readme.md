@@ -215,4 +215,9 @@ public class TestDataProviderITestContext {
 }
 ```
 
-
+### 用例编写步骤
+- 定义接口路径：Helios/src/main/java/com/hand/basicconstant/ApiPath.java
+- 实现接口请求：Helios/src/main/java/com/hand/api/VendorApi.java
+- 调用接口方法类：Helios/src/test/java/com/test/api/method/Vendor.java
+- 编写测试case：Helios/src/test/java/com/test/api/testcase/vendor/VendorSSOTest.java
+- 用例集组织case：Helios/vendor_testng.xml

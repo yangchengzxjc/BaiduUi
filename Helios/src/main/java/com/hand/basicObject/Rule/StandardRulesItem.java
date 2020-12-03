@@ -3,6 +3,8 @@ package com.hand.basicObject.Rule;
 import com.google.gson.JsonArray;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 /**
  * @Author peng.zhang
  * @Date 2020/12/1
@@ -45,4 +47,11 @@ public class StandardRulesItem {
      * 返回空给前端时表示通用
      */
     private JsonArray citys;
+
+    /**
+     * 金额
+     */
+    private BigDecimal amount;
+
+
 }

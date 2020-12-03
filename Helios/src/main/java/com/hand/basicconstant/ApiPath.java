@@ -282,7 +282,7 @@ public class ApiPath {
         //获取报销标准规则管控信息
         public static final String GET_CONTROLITEM = "/api/expense/standard/master/controlitems/%s";
         //获取报销标准规则基本标准
-        public static final String GET_ITEM = "/api/expense/standard/master/item/%s";
+        public static final String GET_ITEM = "/api/expense/standard/master/items/%s";
         //修改报销标准基本标准
         public static final String ADD_ITEM = "/api/expense/standard/item";
         // 火车,机票,酒店 订单数据推送

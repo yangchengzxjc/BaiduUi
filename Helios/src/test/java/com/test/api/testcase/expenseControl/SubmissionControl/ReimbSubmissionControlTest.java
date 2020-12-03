@@ -138,7 +138,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid2", invoiceOid2);
         map.put("ruleOID", ruleOID);
         assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
-        String costMoth = UTCTime.utcTObj(UTCTime.getUtcTime(0,0));
+        String costMoth = UTCTime.utcTOdate(UTCTime.getUtcTime(0,0));
         String expect = String.format("%s（ \"自动化测试-报销标准\"与\"自动化测试-报销标准\"在%s重复 ）。",rules.getMessage(),costMoth);
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN",expect);
     }
@@ -166,7 +166,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid2", invoiceOid2);
         map.put("ruleOID", ruleOID);
         assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_ERROR", rules.getMessage());
-        String costMoth = UTCTime.utcTObj(UTCTime.getUtcTime(0,0));
+        String costMoth = UTCTime.utcTOdate(UTCTime.getUtcTime(0,0));
         String expect = String.format("%s（ \"自动化测试-报销标准\"与\"自动化测试-报销标准\"在%s重复 ）。",rules.getMessage(),costMoth);
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_ERROR",expect);
     }
@@ -197,7 +197,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid2", invoiceOid2);
         map.put("ruleOID", ruleOID);
         assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
-        String costMoth = UTCTime.utcTObj(UTCTime.getUtcTime(0,0),0);
+        String costMoth = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String expect = String.format("%s（自动化测试-报销标准 每月可报销1次，实报2次，已超出1次，详见：自动化测试-报销标准-%s、自动化测试-报销标准-%s。）",rules.getMessage(),costMoth,costMoth);
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN",expect);
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid2,"REPORT_SUBMIT_WARN",expect);
@@ -229,7 +229,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid2", invoiceOid2);
         map.put("ruleOID", ruleOID);
         assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
-        String costMoth = UTCTime.utcTObj(UTCTime.getUtcTime(0,0),0);
+        String costMoth = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String expect = String.format("%s（自动化测试-报销标准 每天可报销1次，实报2次，已超出1次，详见：自动化测试-报销标准-%s、自动化测试-报销标准-%s。）",rules.getMessage(),costMoth,costMoth);
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN",expect);
     }
@@ -260,7 +260,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid2", invoiceOid2);
         map.put("ruleOID", ruleOID);
         assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
-        String costMoth = UTCTime.utcTObj(UTCTime.getUtcTime(0,0),0);
+        String costMoth = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String expect = String.format("%s（自动化测试-报销标准 每季度可报销1次，实报2次，已超出1次，详见：自动化测试-报销标准-%s、自动化测试-报销标准-%s。）",rules.getMessage(),costMoth,costMoth);
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN",expect);
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid2,"REPORT_SUBMIT_WARN",expect);
@@ -292,7 +292,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid2", invoiceOid2);
         map.put("ruleOID", ruleOID);
         assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
-        String costMoth = UTCTime.utcTObj(UTCTime.getUtcTime(0,0),0);
+        String costMoth = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String expect = String.format("%s（自动化测试-报销标准 每年可报销1次，实报2次，已超出1次，详见：自动化测试-报销标准-%s、自动化测试-报销标准-%s。）",rules.getMessage(),costMoth,costMoth);
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN",expect);
     }
@@ -319,7 +319,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid1", invoiceOid1);
         map.put("ruleOID", ruleOID);
         assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
-        String expect = String.format("%s（%s\"%s\" 已超出 自动化测试-报销标准 %s \"%s\" 加%s天）",rules.getMessage(),ControlItem.REIMBURSEMENT_SUBMIT_DATE.getTypeName(),UTCTime.utcTObj(UTCTime.getNowUtcTime(),0),ControlCond.EXPENSE_COST_DATE.getTypeName(),UTCTime.utcTObj(UTCTime.getUtcTime(-2,0),0),item.getExtendValue());
+        String expect = String.format("%s（%s\"%s\" 已超出 自动化测试-报销标准 %s \"%s\" 加%s天）",rules.getMessage(),ControlItem.REIMBURSEMENT_SUBMIT_DATE.getTypeName(),UTCTime.utcTOday(UTCTime.getNowUtcTime(),0),ControlCond.EXPENSE_COST_DATE.getTypeName(),UTCTime.utcTOday(UTCTime.getUtcTime(-2,0),0),item.getExtendValue());
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN",expect);
     }
 
@@ -433,7 +433,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid1", invoiceOid1);
         map.put("ruleOID", ruleOID);
         assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
-        String itDate = UTCTime.utcTObj(UTCTime.getUtcTime(0,0),0);
+        String itDate = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String expect = String.format("%s（自动化测试-报销标准 %s\"%s ~ %s\" 已超出 %s）",rules.getMessage(),ControlItem.REIMBURSEMENT_COST_DATE.getTypeName(),itDate,itDate,ControlCond.ASSOCIATED_APPLICATION_TRAVEl_DATE.getTypeName());
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN",expect);
     }
@@ -464,7 +464,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid1", invoiceOid1);
         map.put("ruleOID", ruleOID);
         assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
-        String itDate = UTCTime.utcTObj(UTCTime.getUtcTime(0,0),0);
+        String itDate = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String expect = String.format("%s（自动化测试-报销标准 %s\"%s ~ %s\" 已超出 %s）",rules.getMessage(),ControlItem.REIMBURSEMENT_COST_DATE.getTypeName(),itDate,itDate,ControlCond.ASSOCIATED_APPLICATION_START_END_DATE.getTypeName());
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN",expect);
     }
@@ -491,7 +491,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid1", invoiceOid1);
         map.put("ruleOID", ruleOID);
         assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
-        String itDate = UTCTime.utcTObj(UTCTime.getUtcTime(0,0),0);
+        String itDate = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String expect = String.format("%s（自动化测试-报销标准 %s\"%s ~ %s\" 已超出 %s）",rules.getMessage(),ControlItem.REIMBURSEMENT_COST_DATE.getTypeName(),itDate,itDate,ControlCond.REIMBURSEMENT_START_END_DATE.getTypeName());
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN",expect);
     }
@@ -524,7 +524,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid2", invoiceOid2);
         map.put("ruleOID", ruleOID);
         assert expenseReport.checkSubmitLabel(employee, reportOID2, "REPORT_SUBMIT_WARN", rules.getMessage());
-        String costMoth = UTCTime.utcTObj(UTCTime.getUtcTime(0,0));
+        String costMoth = UTCTime.utcTOdate(UTCTime.getUtcTime(0,0));
         String expect = String.format("%s（ \"自动化测试-报销标准\"与\"%s-自动化测试-报销标准\"在%s重复 ）。",rules.getMessage(),businessCode,costMoth);
         log.info("标签:{}",expect);
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid2,"REPORT_SUBMIT_WARN",expect);
@@ -565,12 +565,11 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid2", invoiceOid2);
         map.put("ruleOID", ruleOID);
         assert expenseReport.checkSubmitLabel(employee, reportOID2, "REPORT_SUBMIT_WARN", rules.getMessage());
-        String costMoth = UTCTime.utcTObj(UTCTime.getUtcTime(0,0),0);
+        String costMoth = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String expect = String.format("%s（自动化测试-报销标准 每月可报销1次，实报2次，已超出1次，详见：自动化测试-报销标准-%s、%s-自动化测试-报销标准-%s。）",rules.getMessage(),costMoth,businessCode,costMoth);
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid2,"REPORT_SUBMIT_WARN",expect);
         expenseReport.withdraw(employee,reportOID1);
     }
-
 
     @AfterMethod
     public void cleanEnv() throws HttpStatusException {

@@ -8,6 +8,7 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.Rule.StandardRules;
 import com.hand.basicObject.Rule.StandardRulesItem;
 import com.hand.basicconstant.ApiPath;
+import com.hand.basicconstant.HeaderKey;
 import com.hand.basicconstant.ResourceId;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
@@ -134,7 +135,7 @@ public class ReimbStandardApi  extends BaseRequest {
     }
 
     /**
-     * 删除规则
+     * 删除报销标准规则
      * @param employee
      * @param rulesOid
      * @throws HttpStatusException
@@ -225,7 +226,7 @@ public class ReimbStandardApi  extends BaseRequest {
         HashMap<String, String> mapParams = new HashMap<>();
         mapParams.put("roleType", "TENANT");
         JsonObject itemObject = new JsonParser().parse(itemString).getAsJsonObject();
-        return doPost(url,getHeader(employee.getAccessToken(),ResourceId.INFRA),mapParams,itemObject.toString(),null,employee);
+        return doPost(url,getHeader(employee.getAccessToken(), HeaderKey.REIMB_STANDARD,ResourceId.INFRA),mapParams,itemObject.toString(),null,employee);
     }
 
     /**

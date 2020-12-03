@@ -182,7 +182,7 @@ public class UTCTime {
      * @param   "yyyy-MM-dd'T'16:00:00'Z'";  -> yyyyMMdd
      * @return
      */
-    public static String utcTObj(String utc, int day){
+    public static String utcTOday(String utc, int day){
         //格式化为北京时间
         DateTimeFormatter fmt = DateTimeFormat.forPattern(BEIJING_TIME2);
         DateTime date = DateTime.parse(utc).plusDays(day);
@@ -192,7 +192,7 @@ public class UTCTime {
 
     /**
      * Utc时间转北京日期
-     * @param   "yyyy-MM-dd'T'16:00:00'Z'";  -> yyyyMMdd
+     * @param   "yyyy-MM-dd'T'16:00:00'Z'";  -> yyyyMM
      * @return
      */
     public static String utcTObjmoth(String utc, int day){
@@ -207,7 +207,7 @@ public class UTCTime {
      * @param utc
      * @return
      */
-    public static String utcTObj(String utc){
+    public static String utcTOdate(String utc){
         //格式化为北京时间
         DateTimeFormatter fmt = DateTimeFormat.forPattern(BEiJING_FORMATTER_PATTERN15);
         DateTime date = DateTime.parse(utc);

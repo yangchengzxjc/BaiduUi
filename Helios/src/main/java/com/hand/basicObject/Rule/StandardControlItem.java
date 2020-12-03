@@ -23,7 +23,7 @@ public class StandardControlItem {
 
     private Object extendsValue;
 
-    private String dataType;
+    private String dataType = "DOUBLE";
 
     private Long setOfBooksId;
 

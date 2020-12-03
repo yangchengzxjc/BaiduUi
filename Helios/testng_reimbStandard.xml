@@ -8,7 +8,7 @@
 
     <test verbose="10" preserve-order="true" name="报销标准测试">
         <classes>
-            <class name="com.test.api.testcase.expenseControl.ReimbStandardTest"/>
+            <class name="com.test.api.testcase.expenseControl.RemimbStandard.SingleControlTest"/>
         </classes>
     </test>
 

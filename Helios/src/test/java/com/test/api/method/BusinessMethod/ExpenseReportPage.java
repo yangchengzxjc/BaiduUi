@@ -51,7 +51,7 @@ public class ExpenseReportPage {
         array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,formName),participant));
         log.info(array.toString());
         component.setParticipant(array.toString());
-        component.setCause("报销单提交管控规则校验");
+        component.setCause("invoice control");
         return expenseReport.createExpenseReport(employee,formName,component);
     }
 
@@ -73,7 +73,7 @@ public class ExpenseReportPage {
         startAndEndDate.addProperty("endDate",UTCTime.getFormDateEnd(3));
         startAndEndDate.addProperty("duration",3);
         invoiceComponent.setStartAndEndData(startAndEndDate.toString());
-        return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,200.00,new JsonArray()).get("invoiceOID");
+        return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,250.00,new JsonArray()).get("invoiceOID");
     }
 
     /**

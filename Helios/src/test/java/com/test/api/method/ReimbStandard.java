@@ -226,7 +226,7 @@ public class ReimbStandard {
      * @param rulesOid
      * @throws HttpStatusException
      */
-    public void deleteReimbStandardRules (Employee employee,String rulesOid)throws HttpStatusException{
+    public void deleteReimbStandardRules(Employee employee,String rulesOid)throws HttpStatusException{
         reimbStandardRules.deleteReimbStandardRules(employee,rulesOid);
     }
 
@@ -247,19 +247,18 @@ public class ReimbStandard {
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray getItem(Employee employee,String rulesOid)throws HttpStatusException{
+    public JsonArray getStandardItem(Employee employee,String rulesOid)throws HttpStatusException{
         return reimbStandardRules.getStandardItem(employee,rulesOid);
     }
 
     /**
      * 添加基本标准
      * @param employee
-     * @param item 标准管控项
-     * @param defaultStandardOID 默认的基本标准的oid,如果基本标准存在，则必须删除掉
+     * @param item 基本标准 if standardOID is null, the item is edit
      * @return
      * @throws HttpStatusException
      */
-    public String addStandard(Employee employee, StandardRules rules,StandardRulesItem item,String defaultStandardOID,String [] userGroupsName,String []cityGroupsName)throws HttpStatusException{
+    public String addStandard(Employee employee, StandardRules rules,StandardRulesItem item,String [] userGroupsName,String []cityGroupsName)throws HttpStatusException{
         // config userGroups
         if(userGroupsName.length!=0){
             JsonArray userGroups =new JsonArray();
@@ -280,12 +279,7 @@ public class ReimbStandard {
             }
             item.setCitys(cityGroups);
         }
-        String items = reimbStandardRules.addStandarditems(employee,item);
-        //删除默认的管控标准
-        if(!defaultStandardOID.equals("")){
-            reimbStandardRules.deleteStandard(employee,item.getRuleOID(),defaultStandardOID);
-        }
-        return items;
+        return reimbStandardRules.addStandarditems(employee,item).replace("\"","");
     }
 
     /**
@@ -303,14 +297,34 @@ public class ReimbStandard {
     }
 
     /**
-     * 添加基本标准
+     *  报销标准管控项新建or 添加
      * @param employee
-     * @return
+     * @param rulesOID
+     * @param controlItem  汇总管控仅支持费用金额
      * @throws HttpStatusException
      */
-    public String addStandard(Employee employee,JsonObject standardItem)throws HttpStatusException{
-
-        return null;
+    public void editORaddControlItem(Employee employee,boolean isEdit,StandardRules rules,String rulesOID,StandardControlItem controlItem) throws HttpStatusException {
+        //如果是编辑管控项需要查找默认的
+        if(rules.getControlModeType().equals("SINGLE")){
+            if(isEdit){
+                String itemId = reimbStandardRules.getStandardItem(employee,rulesOID).get(0).getAsJsonObject().get("id").getAsString();
+                controlItem.setId(itemId);
+            }
+            if(controlItem.getControlItem().equals("INVOICE_AMOUNT")){
+                controlItem.setValueType(1002);
+                controlItem.setFieldValue("基本标准");
+                controlItem.setControlCond("STANDARD_AMOUNT");
+            }
+        }
+        if(rules.getControlModeType().equals("SUMMARY")){
+            //仅存在金额的管控
+        }
+        if(rules.getControlModeType().equals("PERIOD")){
+            //存在费用金额和平均费用金额
+        }
+        String ruleString = GsonUtil.objectToString(controlItem);
+        JsonObject itemObject = new JsonParser().parse(ruleString).getAsJsonObject();
+        reimbStandardRules.editOrSaveControlItem(employee,itemObject,rulesOID);
     }
 
     /**

@@ -146,6 +146,16 @@ assertArrayEquals([String message], expectedArray, resultArray)
 
 </suite>
 ```
+- 执行顺序
+    - class - `testng.xml` 之 `preserve-order` 
+    > \<test\>中默认的preserve-order为true，表示\<test\>下所有\<classes\>按照顺序执行。
+    一个\<class\>类里面可能存在多个测试方法(被@Test注解的方法)，
+    这些方法的执行顺序不受preserve-order控制。默认测试方法的执行顺序是按照方法名的首字母升序排序执行的。 
+    - test
+        - 默认执行顺序是按照方法名的首字母升序排序执行
+        - 使用 priority 指定执行顺序(默认值为0)，数值越小，越靠前执行
+        - 在xml里面使用 \<include\> 指定需要执行的方法和顺序
+    
 ### 参数化
 - XML传递参数
 ```xml

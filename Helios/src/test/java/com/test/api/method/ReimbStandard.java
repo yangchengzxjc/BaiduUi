@@ -318,9 +318,24 @@ public class ReimbStandard {
         }
         if(rules.getControlModeType().equals("SUMMARY")){
             //仅存在金额的管控
+            String itemId = reimbStandardRules.getStandardItem(employee,rulesOID).get(0).getAsJsonObject().get("id").getAsString();
+            controlItem.setId(itemId);
+            controlItem.setControlItem("INVOICE_AMOUNT");
+            controlItem.setValueType(1002);
+            controlItem.setFieldValue("基本标准");
+            controlItem.setControlCond("STANDARD_AMOUNT");
         }
         if(rules.getControlModeType().equals("PERIOD")){
             //存在费用金额和平均费用金额
+            if(controlItem.getControlItem()!=null){
+                String itemId = reimbStandardRules.getStandardItem(employee,rulesOID).get(0).getAsJsonObject().get("id").getAsString();
+                controlItem.setId(itemId);
+                controlItem.setValueType(1002);
+                controlItem.setFieldValue("基本标准");
+                controlItem.setControlCond("STANDARD_AMOUNT");
+            }else{
+                throw new NullPointerException("controlItem can not is null");
+            }
         }
         String ruleString = GsonUtil.objectToString(controlItem);
         JsonObject itemObject = new JsonParser().parse(ruleString).getAsJsonObject();

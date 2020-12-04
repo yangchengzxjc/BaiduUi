@@ -109,7 +109,7 @@ public class ReimbStandard {
      * @return
      * @throws HttpStatusException
      */
-    public HashMap<String,String> addReimbstandard(Employee employee, StandardRules rules, String [] userGroupsName, String[] formName, String ... expenseTypeName)throws HttpStatusException{
+    public String addReimbstandard(Employee employee, StandardRules rules, String [] userGroupsName, String[] formName, String ... expenseTypeName)throws HttpStatusException{
         InfraStructureApi infraStructureApi =new InfraStructureApi();
         if(rules.getLevelCode().equals("SET_OF_BOOK")){
             rules.setLevelOrgId(employee.getSetOfBookId());
@@ -158,13 +158,7 @@ public class ReimbStandard {
                 rules.setParticipantsRatio(100);
             }
         }
-        String ruleOID = reimbStandardRules.addReimbStandardRules(employee,rules).replace("\"","");
-        //获取默认的标准的oid
-        String standardOid = reimbStandardRules.getStandardItem(employee,ruleOID).get(0).getAsJsonObject().get("standardOID").getAsString();
-        HashMap<String,String> map = new HashMap<>();
-        map.put("ruleOID",ruleOID);
-        map.put("dafaultStandardOID",standardOid);
-        return map;
+        return reimbStandardRules.addReimbStandardRules(employee,rules).replace("\"","");
     }
 
 
@@ -254,11 +248,15 @@ public class ReimbStandard {
     /**
      * 添加基本标准
      * @param employee
-     * @param item 基本标准 if standardOID is null, the item is edit
+     * @param rulesItem 基本标准 if standardOID is null, the item is edit
      * @return
      * @throws HttpStatusException
      */
-    public String addStandard(Employee employee, StandardRules rules,StandardRulesItem item,String [] userGroupsName,String []cityGroupsName)throws HttpStatusException{
+    public String addStandard(Employee employee, boolean isEdit,StandardRules rules,StandardRulesItem rulesItem,String [] userGroupsName,String []cityGroupsName)throws HttpStatusException{
+        if(isEdit){
+            String standardOID = getStandardItem(employee,rulesItem.getRuleOID()).get(0).getAsJsonObject().get("standardOID").getAsString();
+            rulesItem.setStandardOID(standardOID);
+        }
         // config userGroups
         if(userGroupsName.length!=0){
             JsonArray userGroups =new JsonArray();
@@ -266,7 +264,7 @@ public class ReimbStandard {
                  JsonObject userGroupObject = getUserGroups(employee,userGroupName,rules);
                  userGroups.add(userGroupObject);
             }
-            item.setUserGroups(userGroups);
+            rulesItem.setUserGroups(userGroups);
         }
         //config cityGroups
         if(cityGroupsName.length!=0){
@@ -277,24 +275,24 @@ public class ReimbStandard {
                 cityGroups.add(GsonUtil.getJsonValue(userGroupArray,"levelName",cityGroupName));
                 }
             }
-            item.setCitys(cityGroups);
+            rulesItem.setCitys(cityGroups);
         }
-        return reimbStandardRules.addStandarditems(employee,item).replace("\"","");
+        return reimbStandardRules.addStandarditems(employee,rulesItem).replace("\"","");
     }
 
-    /**
-     *
-     * @param employee
-     * @param rulesOID
-     * @throws HttpStatusException
-     */
-    public void editORSaveControlItem(Employee employee, String rulesOID, List<StandardCondition> controlItem) throws HttpStatusException {
-        String itemId = reimbStandardRules.getStandardItem(employee,rulesOID).get(0).getAsJsonObject().get("id").getAsString();
-        JsonObject itemDetail = reimbStandardRules.getControlItemDetail(employee,itemId);
-        JsonArray condition = new JsonParser().parse(GsonUtil.objectToString(controlItem)).getAsJsonArray();
-        itemDetail.add("conditions",condition);
-        reimbStandardRules.editOrSaveControlItem(employee,itemDetail,rulesOID);
-    }
+//    /**
+//     *
+//     * @param employee
+//     * @param rulesOID
+//     * @throws HttpStatusException
+//     */
+//    public void editORSaveControlItem(Employee employee, String rulesOID, List<StandardCondition> controlItem) throws HttpStatusException {
+//        String standardOID = reimbStandardRules.getStandardItem(employee,rulesOID).get(0).getAsJsonObject().get("id").getAsString();
+//        JsonObject itemDetail = reimbStandardRules.getControlItemDetail(employee,itemId);
+//        JsonArray condition = new JsonParser().parse(GsonUtil.objectToString(controlItem)).getAsJsonArray();
+//        itemDetail.add("conditions",condition);
+//        reimbStandardRules.editOrSaveControlItem(employee,itemDetail,rulesOID);
+//    }
 
     /**
      *  报销标准管控项新建or 添加
@@ -307,7 +305,7 @@ public class ReimbStandard {
         //如果是编辑管控项需要查找默认的
         if(rules.getControlModeType().equals("SINGLE")){
             if(isEdit){
-                String itemId = reimbStandardRules.getStandardItem(employee,rulesOID).get(0).getAsJsonObject().get("id").getAsString();
+                String itemId = getControlItems(employee,rulesOID).get(0).getAsJsonObject().get("id").getAsString();
                 controlItem.setId(itemId);
             }
             if(controlItem.getControlItem().equals("INVOICE_AMOUNT")){
@@ -318,7 +316,7 @@ public class ReimbStandard {
         }
         if(rules.getControlModeType().equals("SUMMARY")){
             //仅存在金额的管控
-            String itemId = reimbStandardRules.getStandardItem(employee,rulesOID).get(0).getAsJsonObject().get("id").getAsString();
+            String itemId = getControlItems(employee,rulesOID).get(0).getAsJsonObject().get("id").getAsString();
             controlItem.setId(itemId);
             controlItem.setControlItem("INVOICE_AMOUNT");
             controlItem.setValueType(1002);
@@ -328,7 +326,7 @@ public class ReimbStandard {
         if(rules.getControlModeType().equals("PERIOD")){
             //存在费用金额和平均费用金额
             if(controlItem.getControlItem()!=null){
-                String itemId = reimbStandardRules.getStandardItem(employee,rulesOID).get(0).getAsJsonObject().get("id").getAsString();
+                String itemId = getControlItems(employee,rulesOID).get(0).getAsJsonObject().get("id").getAsString();
                 controlItem.setId(itemId);
                 controlItem.setValueType(1002);
                 controlItem.setFieldValue("基本标准");

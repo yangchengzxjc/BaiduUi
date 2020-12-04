@@ -279,7 +279,7 @@ public class ApiPath {
         public static final String QUERYVENDORDATA = "/vendor-data-service/api/open/internal/%s/settlement";
         //新增管控信息
         public static final String ADD_CONTROLITEM = "/api/expense/standard/controlitem/%s";
-        //获取报销标准规则管控信息
+        //获取报销标准规
         public static final String GET_CONTROLITEM = "/api/expense/standard/master/controlitems/%s";
         //获取报销标准规则基本标准
         public static final String GET_ITEM = "/api/expense/standard/master/items/%s";

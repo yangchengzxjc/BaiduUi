@@ -58,14 +58,14 @@ public class PeriodControlTest extends BaseTest {
         StandardRules rules = new StandardRules();
         rules.setName("auto test period control");
         rules.setControlType("DAY");
-        HashMap<String,String> ruleInfo = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
+        String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
         //config base standard
-        StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,rules,ruleInfo.get("ruleOID"),ruleInfo.get("dafaultStandardOID"));
+        StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,true,rules,ruleOID);
         //新建报销单
         String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",employee.getFullName()).get("expenseReportOID");
         //新建费用
         String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1);
-        map.put("ruleOID",ruleInfo.get("ruleOID"));
+        map.put("ruleOID",ruleOID);
         map.put("reportOID1",reportOID1);
         map.put("invoiceOID1",invoiceOID1);
         String data = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);

@@ -435,10 +435,10 @@ public class Vendor {
         return vendorObject;
     }
 
-    public HashMap<String, String> getSsoUrl(Employee employee, String roleType, String supplierOID, String realmId, String companyOID, String pageType, String direction ) throws HttpStatusException {
-        Map<String, String> ssoUrl = new HashMap<>();
-        JsonObject res = VendorApi.vendorInfoSso(employee, roleType, supplierOID, realmId, companyOID, pageType, direction);
-        ssoUrl = JsonPath.read(res, "todo");
-        return ssoUrl;
-    }
+//    public HashMap<String, String> getSsoUrl(Employee employee, String roleType, String supplierOID, String realmId, String companyOID, String pageType, String direction ) throws HttpStatusException {
+//        Map<String, String> ssoUrl = new HashMap<>();
+//        JsonObject res = VendorApi.vendorInfoSso(employee, roleType, supplierOID, realmId, companyOID, pageType, direction);
+//        ssoUrl = JsonPath.read(res, "todo");
+//        return ssoUrl;
+//    }
 }

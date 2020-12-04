@@ -44,4 +44,20 @@ public class VendorSSOTest extends BaseTest {
         JsonObject response = vendor.ssoLogin(employee,ssoBody,"cimccTMC","200428140254184788","");
         log.info("单点登录的响应:{}",response);
     }
+
+    public void ssoTest2() throws HttpStatusException {
+        // request param
+        String roleType = "TENANT";
+        String supplierOID = "66666666-6666-11e6-9639-00ffa3fb4c67";
+        String realmId = "639514855899537001";
+        String companyOID = "11234";
+        String emnum = "ca6af54d-f28d-48fe-9b07-5a75bde983c0";
+        String direction = "WEB";
+        // expect response
+        String res_code = "200";
+        // do request
+
+        // assert result
+
+    }
 }

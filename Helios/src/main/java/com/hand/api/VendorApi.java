@@ -230,13 +230,21 @@ public class VendorApi extends BaseRequest{
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject vendorInfoSso( Employee employee, String roleType, String supplierOID, String realmId, String companyOID, String pageType, String direction ) throws HttpStatusException {
+    public JsonObject vendorInfoSso( Employee employee,
+                                     String roleType,
+                                     String supplierOID,
+                                     String realmId,
+                                     String companyOID,
+                                     String emnum,
+                                     String pageType,
+                                     String direction ) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.SSO;
         Map<String,String> datas = new HashMap<>();
         datas.put("roleType", roleType);
         datas.put("supplierOID", supplierOID);
         datas.put("realmId", realmId);
         datas.put("companyOID", companyOID);
+        datas.put("emnum", emnum);
         datas.put("pageType", pageType);
         datas.put("direction", direction);
         String res = doGet(url, getHeader(employee.getAccessToken()), datas, employee);

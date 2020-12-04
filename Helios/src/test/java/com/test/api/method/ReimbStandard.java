@@ -147,6 +147,12 @@ public class ReimbStandard {
         if(rules.getControlModeType().equals("PERIOD")){
             rules.setParticipantsEnable(false);
         }
+        if(rules.getControlModeType().equals("SINGLE")){
+            rules.setControlType("SINGLE");
+        }
+        if(rules.getControlModeType().equals("SUMMARY")){
+            rules.setControlType("SUMMARY");
+        }
         // expense participants standard
         if(rules.isParticipantsEnable()){
             //default participantsMode="HIGH"
@@ -160,7 +166,6 @@ public class ReimbStandard {
         }
         return reimbStandardRules.addReimbStandardRules(employee,rules).replace("\"","");
     }
-
 
     /**
      * 启用公司

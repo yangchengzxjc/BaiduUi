@@ -38,12 +38,42 @@ public class StandardControl {
      * @param cityGroupsName
      * @throws HttpStatusException
      */
-    public StandardRulesItem setStandardRulesItem(Employee employee, boolean isEdit,StandardRules rules,String ruleOID,String [] userGroupsName,String []cityGroupsName) throws HttpStatusException {
+    public StandardRulesItem setStandardRulesItem(Employee employee,Integer amount,boolean isEdit,StandardRules rules,String ruleOID,String [] userGroupsName,String []cityGroupsName) throws HttpStatusException {
         StandardRulesItem standardRulesItem = new StandardRulesItem();
         ReimbStandard reimbStandard = new ReimbStandard();
-        standardRulesItem.setAmount(new BigDecimal(200));
+        standardRulesItem.setAmount(new BigDecimal(amount));
         standardRulesItem.setRuleOID(ruleOID);
         reimbStandard.addStandard(employee,isEdit,rules,standardRulesItem,userGroupsName,cityGroupsName);
         return standardRulesItem;
+    }
+
+    /**
+     * 初始化账套级规则
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public String setStandardRules(Employee employee,String controlModeType) throws HttpStatusException {
+        //新建账套级规则
+        StandardRules rules = new StandardRules();
+        ReimbStandard reimbStandard = new ReimbStandard();
+        rules.setName("auto test period control");
+        rules.setControlModeType(controlModeType);
+        return reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
+    }
+
+    /**
+     * 初始化账套级规则
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public String setStandardRules(Employee employee,String controlModeType,String [] userGroups,String [] formName,String ... expenseTypeName ) throws HttpStatusException {
+        //新建账套级规则
+        StandardRules rules = new StandardRules();
+        ReimbStandard reimbStandard = new ReimbStandard();
+        rules.setName("auto test period control");
+        rules.setControlModeType(controlModeType);
+        return reimbStandard.addReimbstandard(employee,rules,userGroups,formName,expenseTypeName);
     }
 }

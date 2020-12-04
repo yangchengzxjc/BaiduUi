@@ -73,6 +73,7 @@ public class ExpenseReportPage {
         startAndEndDate.addProperty("endDate",UTCTime.getFormDateEnd(3));
         startAndEndDate.addProperty("duration",3);
         invoiceComponent.setStartAndEndData(startAndEndDate.toString());
+
         return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,250.00,new JsonArray()).get("invoiceOID");
     }
 

@@ -51,7 +51,7 @@ public class SingleControlTest extends BaseTest {
     public void singleControlTest1() throws HttpStatusException {
         //新建账套级规则
         StandardRules rules = new StandardRules();
-        rules.setName("auto test period control");
+        rules.setName("auto test single control");
         //开启单条管控
         rules.setControlModeType("SINGLE");
         String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");

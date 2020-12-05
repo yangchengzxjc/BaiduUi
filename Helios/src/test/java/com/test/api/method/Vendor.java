@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.api.VendorApi;
+import com.hand.api.VendorInfoApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SSOBody;
@@ -433,23 +434,5 @@ public class Vendor {
         vendorObject.getAsJsonArray("carSettlementInfos").get(0).getAsJsonObject().getAsJsonArray("carPassengerInfos").get(0).getAsJsonObject().addProperty("passengerName", employee.getFullName());
         vendorObject.getAsJsonArray("carSettlementInfos").get(0).getAsJsonObject().getAsJsonArray("carPassengerInfos").get(0).getAsJsonObject().addProperty("passengerCode", employee.getEmployeeID());
         return vendorObject;
-    }
-
-//    public HashMap<String, String> getSsoUrl(Employee employee, String roleType, String supplierOID, String realmId, String companyOID, String pageType, String direction ) throws HttpStatusException {
-//        Map<String, String> ssoUrl = new HashMap<>();
-//        JsonObject res = VendorApi.vendorInfoSso(employee, roleType, supplierOID, realmId, companyOID, pageType, direction);
-//        ssoUrl = JsonPath.read(res, "todo");
-//        return ssoUrl;
-//    }
-
-    public String vendorInfoSso( Employee employee,
-                                     String roleType,
-                                     String supplierOID,
-                                     String realmId,
-                                     String companyOID,
-                                     String emnum,
-                                     String pageType,
-                                     String direction ) throws HttpStatusException {
-        return vendorApi.vendorInfoSso(employee, roleType, supplierOID, realmId, companyOID, emnum, pageType, direction);
     }
 }

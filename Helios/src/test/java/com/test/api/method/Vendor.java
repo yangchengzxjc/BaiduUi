@@ -441,4 +441,15 @@ public class Vendor {
 //        ssoUrl = JsonPath.read(res, "todo");
 //        return ssoUrl;
 //    }
+
+    public String vendorInfoSso( Employee employee,
+                                     String roleType,
+                                     String supplierOID,
+                                     String realmId,
+                                     String companyOID,
+                                     String emnum,
+                                     String pageType,
+                                     String direction ) throws HttpStatusException {
+        return vendorApi.vendorInfoSso(employee, roleType, supplierOID, realmId, companyOID, emnum, pageType, direction);
+    }
 }

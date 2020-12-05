@@ -231,3 +231,6 @@ public class TestDataProviderITestContext {
 - 调用接口方法类：Helios/src/test/java/com/test/api/method/Vendor.java
 - 编写测试case：Helios/src/test/java/com/test/api/testcase/vendor/VendorSSOTest.java
 - 用例集组织case：Helios/vendor_testng.xml
+
+## toDo
+- 请求方法封装，log增加请求request header、请求参数、response header、code、返回结果

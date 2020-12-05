@@ -225,12 +225,13 @@ public class VendorApi extends BaseRequest{
      * @param supplierOID
      * @param realmId
      * @param companyOID
+     * @param emnum
      * @param pageType
      * @param direction
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject vendorInfoSso( Employee employee,
+    public String vendorInfoSso( Employee employee,
                                      String roleType,
                                      String supplierOID,
                                      String realmId,
@@ -247,7 +248,16 @@ public class VendorApi extends BaseRequest{
         datas.put("emnum", emnum);
         datas.put("pageType", pageType);
         datas.put("direction", direction);
+        log.info("req: {}", datas);
         String res = doGet(url, getHeader(employee.getAccessToken()), datas, employee);
-        return new JsonParser().parse(res).getAsJsonObject();
+//        System.out.println(res);
+        log.info("res: {} ", res);
+        return res;
+//        return new JsonParser().parse(res).getAsJsonObject();
     }
+
+    public JsonObject vendorInfoSsoCommon(){
+
+    }
+
 }

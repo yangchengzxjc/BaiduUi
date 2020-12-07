@@ -31,15 +31,15 @@ public class InfoSsoTest extends BaseTest {
                 {"web 获取所有登录URL", "66666666-6666-11e6-9639-00ffa3fb4c67", null, null, null, null,
                 null, null, null, "WEB", null, null, null,
                 null, null, null, null,
-                null},
+                "loginUrl"},
                 {"web CTRIP_TRAIN", "213691b5-75a4-11e7-af18-00163e00373d", null, null, null, "2001",
                 null, null, null, "WEB", null, null, null,
                 null, null, null, null,
-                null},
+                "ctrip"},
                 {"web cimmcc_air", "8afc4c9e-a7ea-4de6-ab60-70669a5b91e8", null, null, null, "2002",
                 null, null, null, "WEB", null, null, null,
                 null, null, null, null,
-                null},
+                "cimc"},
         };
     }
 
@@ -67,6 +67,6 @@ public class InfoSsoTest extends BaseTest {
                 itineraryDirection, lng, lat, direction, orderId, startCity, endCity,
                 startDate, endDate, forCorp, flightSearchType);
         // assert result todo
-        Assert.assertTrue(resStr.equals(res_expect));
+        Assert.assertTrue(resStr.contains(res_expect));
     }
 }

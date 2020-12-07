@@ -87,7 +87,7 @@ public class ExpenseReportPage {
      */
     public String setInvoice(Employee employee,String expenseName,String expenseReportOID,String createDate) throws HttpStatusException {
         ExpenseReportComponent expenseReportComponent =new ExpenseReportComponent();
-        String cityCode =expenseReportComponent.getCityCode(employee,"西安市");
+        String cityCode =expenseReportComponent.getCityCode(employee,"西安");
         InvoiceComponent invoiceComponent =new InvoiceComponent();
         invoiceComponent.setCity(cityCode);
         invoiceComponent.setCreatedDate(createDate);

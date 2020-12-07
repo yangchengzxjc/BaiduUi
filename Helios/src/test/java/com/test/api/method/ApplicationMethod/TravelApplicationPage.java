@@ -102,9 +102,7 @@ public class TravelApplicationPage {
         component.setStartDate(UTCTime.getUtcStartDate(-5));
         component.setEndDate(endDate);
         //添加参与人员  参与人员的value 是一段json数组。
-        JsonArray array = new JsonArray();
-        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,formName),employee.getFullName()));
-        component.setParticipant(array.toString());
+        component.setParticipant(new String[]{employee.getFullName()});
         //创建申请单
         String applicationOID = travelApplication.createTravelApplication(employee,formName,component).get("applicationOID");
         //添加差旅行程(目前支持飞机行程和酒店行程)

@@ -62,7 +62,7 @@ public class FormComponent {
     //城市       CHN061001000 城市代码
     String city;
     //参与人  "[{"userOID":"10098d8b-f346-4f14-a12d-3b4c2526e0fd","fullName":"小红35","highOff":null,"participantOID":"10098d8b-f346-4f14-a12d-3b4c2526e0fd","avatar":null},{"userOID":"d387ce07-e4f3-487e-a330-c76e56cf4c2e","fullName":"yuuki","highOff":null,"participantOID":"d387ce07-e4f3-487e-a330-c76e56cf4c2e","avatar":null}]"
-    String participant;
+    private Object participant;
     //联动开关    字符串的 "ture" "false"
     String linkageSwitch;
     //备注

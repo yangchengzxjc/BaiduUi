@@ -91,9 +91,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
         component.setEndDate(UTCTime.getUTCDateEnd(7));
         component.setCostCenter("成本中心NO1");
         //添加参与人员  参与人员的value 是一段json数组。
-        JsonArray array = new JsonArray();
-        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-消费平台"),"懿消费商(xiao/feishang)"));
-        component.setParticipant(array.toString());
+        component.setParticipant(employee.getFullName());
         //创建申请单
         String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
         //添加飞机行程 供应商中集
@@ -239,9 +237,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
         component.setEndDate(UTCTime.getUTCDateEnd(5));
         component.setCostCenter("成本中心NO1");
         //添加参与人员  参与人员的value 是一段json数组。
-        JsonArray array = new JsonArray();
-        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-消费平台"),"懿消费商(xiao/feishang)"));
-        component.setParticipant(array.toString());
+        component.setParticipant(employee.getFullName());
 //        创建申请单
         String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
         //初始化酒店行程  中集
@@ -345,9 +341,7 @@ public class SyncPlanWorkFlowTest extends BaseTest {
         component.setEndDate(UTCTime.getUTCDateEnd(7));
         component.setCostCenter("成本中心NO1");
         //添加参与人员  参与人员的value 是一段json数组。
-        JsonArray array = new JsonArray();
-        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-消费平台"),"懿消费商(xiao/feishang)"));
-        component.setParticipant(array.toString());
+        component.setParticipant(employee.getFullName());
         //创建申请单
         String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
         //初始化火车行程

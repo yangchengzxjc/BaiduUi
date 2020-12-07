@@ -45,12 +45,7 @@ public class ExpenseReportPage {
         component.setDepartment(employee.getDepartmentOID());
         component.setStartDate(UTCTime.getFormStartDate(-3));
         component.setEndDate(endData);
-        //添加参与人员  参与人员的value 是一段json数组。
-        JsonArray array = new JsonArray();
-        ExpenseReportComponent expenseReportComponent =new ExpenseReportComponent();
-        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,formName),participant));
-        log.info(array.toString());
-        component.setParticipant(array.toString());
+        component.setParticipant(participant);
         component.setCause("invoice control");
         return expenseReport.createExpenseReport(employee,formName,component);
     }

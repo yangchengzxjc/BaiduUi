@@ -51,7 +51,7 @@ public class PeriodControlTest extends BaseTest {
         }
     }
 
-    @Test(description = "标准:账套级-周期管控/每天-费用金额>基本标准")
+    @Test(description = "规则配置:账套级-周期管控/每天-费用金额>基本标准")
     public void periodControlTest1() throws HttpStatusException {
         //新建账套级规则
         StandardRules rules = new StandardRules();
@@ -61,7 +61,7 @@ public class PeriodControlTest extends BaseTest {
         //配置基本标准：200
         StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,true,rules,ruleOID);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",employee.getFullName()).get("expenseReportOID");
+        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
         //新建费用
         String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1);
         map.put("ruleOID",ruleOID);
@@ -83,7 +83,7 @@ public class PeriodControlTest extends BaseTest {
         //配置基本标准:200
         StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,true,rules,ruleOID);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee,UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",employee.getFullName()).get("expenseReportOID");
+        String reportOID1 = expenseReportPage.setDailyReport(employee,UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
         //新建费用
         String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1);
         map.put("ruleOID",ruleOID);
@@ -95,6 +95,26 @@ public class PeriodControlTest extends BaseTest {
         assert expenseReport.checkSubmitLabel(employee,reportOID1,"5001",label);
         assert invoice.checkInvoiceLabel(employee,invoiceOID1,"EXPENSE_STANDARD_EXCEEDED_WARN",label);
     }
+
+    @Test(description = "规则配置：账套级-周期管控/每季度-费用金额>基本标准")
+    public void periodControlTest3()throws HttpStatusException{
+        //新建账套级规则
+        StandardRules rules = new StandardRules();
+        rules.setName("autoTest period concrol/quarter");
+        rules.setControlType("QUARTER");
+        String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String[]{"自动化测试-日常报销单"},"自动化测试-报销标准");
+        //配置基本标准：200
+        StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,true,rules,ruleOID);
+        //新建报销单
+        String reportOID1 = expenseReportPage.setDailyReport(employee,UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        //新建费用
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName()});
+        map.put("",ruleOID);
+
+
+
+    }
+
     @AfterMethod
     public void cleanEnv() throws HttpStatusException {
         for (String s : map.keySet()){

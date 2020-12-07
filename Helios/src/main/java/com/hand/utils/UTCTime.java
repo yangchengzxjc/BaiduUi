@@ -195,7 +195,7 @@ public class UTCTime {
      * @param   "yyyy-MM-dd'T'16:00:00'Z'";  -> yyyyMM
      * @return
      */
-    public static String utcTObjmoth(String utc, int day){
+    public static String utcTObjmonth(String utc, int day){
         //格式化为北京时间
         DateTimeFormatter fmt = DateTimeFormat.forPattern(BEIJING_DATE);
         DateTime date = DateTime.parse(utc).plusDays(day);

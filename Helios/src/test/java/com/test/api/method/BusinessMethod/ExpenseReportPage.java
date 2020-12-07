@@ -51,7 +51,7 @@ public class ExpenseReportPage {
     }
 
     /**
-     * 新建费用费用控件  不参与分摊   开始结束日期不为空
+     * 新建费用  不参与分摊   开始结束日期控件不为空
      * @param employee
      * @param expenseName
      * @param expenseReportOID
@@ -72,7 +72,7 @@ public class ExpenseReportPage {
     }
 
     /**
-     * 新建费用报销单  不参与分摊  时间控件为空的
+     * 新建费用  不参与分摊  开始结束日期控件为空的
      * @param employee
      * @param expenseName
      * @param expenseReportOID

@@ -233,6 +233,7 @@ public class ExpenseReportInvoice {
      * 费用内的标签信息
      * @param employee
      * @param invoiceOID
+     * @param type 标签类型 超费用标准：EXPENSE_STANDARD_EXCEEDED_WARN；校验警告：REPORT_SUBMIT_WARN
      * @param expectValue
      * @return
      */

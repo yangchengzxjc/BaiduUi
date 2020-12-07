@@ -372,8 +372,8 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("invoiceOid1", invoiceOid1);
         map.put("ruleOID", ruleOID);
         assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
-        String costMoth = UTCTime.utcTObjmoth(UTCTime.getUtcTime(-31,0),0);
-        String expect = String.format("%s（%s\"%s\" 已超出 自动化测试-报销标准 %s \"%s ~ %s\" ）",rules.getMessage(),ControlItem.REIMBURSEMENT_SUBMIT_MONTH.getTypeName(),UTCTime.utcTObjmoth(UTCTime.getNowUtcTime(),0),ControlCond.EXPENSE_COST_MONTH.getTypeName(),costMoth,costMoth);
+        String costMoth = UTCTime.utcTObjmonth(UTCTime.getUtcTime(-31,0),0);
+        String expect = String.format("%s（%s\"%s\" 已超出 自动化测试-报销标准 %s \"%s ~ %s\" ）",rules.getMessage(),ControlItem.REIMBURSEMENT_SUBMIT_MONTH.getTypeName(),UTCTime.utcTObjmonth(UTCTime.getNowUtcTime(),0),ControlCond.EXPENSE_COST_MONTH.getTypeName(),costMoth,costMoth);
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN",expect);
     }
 

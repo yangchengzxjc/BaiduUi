@@ -26,7 +26,7 @@ public class StandardRules {
     //表单
     private JsonArray forms;
     /**
-     * 控制方式:每天(DAY),每月(MONTH),每季度(QUARTER),汇总校验（SUMMARY),单条管控(SINGLE)
+     * 控制方式:每天(DAY),每月(MONTH),每季度(QUARTER),每年(YEAR),汇总校验（SUMMARY),单条管控(SINGLE)
      */
     private String controlType;
     private String crossCompanyStandard = "OWNER";

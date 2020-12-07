@@ -14,7 +14,6 @@ import com.test.api.method.ReimbStandard;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 
 /**
@@ -52,14 +51,14 @@ public class PeriodControlTest extends BaseTest {
         }
     }
 
-    @Test(description = "标准:账套级-周期管控/每天-费用金额>标准金额")
+    @Test(description = "标准:账套级-周期管控/每天-费用金额>基本标准")
     public void periodControlTest1() throws HttpStatusException {
         //新建账套级规则
         StandardRules rules = new StandardRules();
         rules.setName("auto test period control");
         rules.setControlType("DAY");
         String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
-        //config base standard
+        //配置基本标准：200
         StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,true,rules,ruleOID);
         //新建报销单
         String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",employee.getFullName()).get("expenseReportOID");
@@ -74,6 +73,28 @@ public class PeriodControlTest extends BaseTest {
         assert expenseReport.checkSubmitLabel(employee, reportOID1, "5001",label);
     }
 
+    @Test(description = "规则配置:账套级-周期管控/每月-费用金额>基本标准")
+    public  void periodControlTest2()throws HttpStatusException{
+        //新建账套级规则
+        StandardRules rules = new StandardRules();
+        rules.setName("autoTest period control/month");
+        rules.setControlType("MONTH");
+        String ruleOID = reimbStandard.addReimbstandard(employee,rules,new  String[]{},new String[]{"自动化测试-日常报销单"},"自动化测试-报销标准");
+        //配置基本标准:200
+        StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,true,rules,ruleOID);
+        //新建报销单
+        String reportOID1 = expenseReportPage.setDailyReport(employee,UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",employee.getFullName()).get("expenseReportOID");
+        //新建费用
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1);
+        map.put("ruleOID",ruleOID);
+        map.put("reportOID1",reportOID1);
+        map.put("invoiceOID1",invoiceOID1);
+        String data = UTCTime.utcTObjmonth(UTCTime.getUtcTime(0,0),0);
+        String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 250.00，超标：CNY 50.00。",rules.getMessage(),data,standardRulesItem.getAmount());
+        log.info("标签：{}",label);
+        assert expenseReport.checkSubmitLabel(employee,reportOID1,"5001",label);
+        assert invoice.checkInvoiceLabel(employee,invoiceOID1,"EXPENSE_STANDARD_EXCEEDED_WARN",label);
+    }
     @AfterMethod
     public void cleanEnv() throws HttpStatusException {
         for (String s : map.keySet()){

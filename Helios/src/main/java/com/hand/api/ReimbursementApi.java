@@ -550,17 +550,19 @@ public class ReimbursementApi extends BaseRequest {
                     data.addProperty("value", component.getCity());
                     break;
                 case "参与人员":
-                    JsonArray array = new JsonArray();
-                    if(component.getParticipant().getClass().equals(String [].class)){
-                        String [] participant = (String [])component.getParticipant();
-                        for(int j=0;j<participant.length;j++){
-                            array.add(componentQueryApi.getParticipant(employee,formOID,participant[j]));
+                    if(component.getParticipant()!=null){
+                        JsonArray array = new JsonArray();
+                        if(component.getParticipant().getClass().equals(String [].class)){
+                            String [] participant = (String [])component.getParticipant();
+                            for(int j=0;j<participant.length;j++){
+                                array.add(componentQueryApi.getParticipant(employee,formOID,participant[j]));
+                            }
+                            data.addProperty("value",array.toString());
                         }
-                        data.addProperty("value",array.toString());
-                    }
-                    if(component.getParticipant().getClass().equals(String.class)){
-                        String participant = (String) component.getParticipant();
-                        data.addProperty("value",participant);
+                        if(component.getParticipant().getClass().equals(String.class)){
+                            String participant = (String) component.getParticipant();
+                            data.addProperty("value",participant);
+                        }
                     }
                     break;
                 case "图片":      //图片

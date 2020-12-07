@@ -325,19 +325,21 @@ public class ExpenseApi extends BaseRequest{
                 case  "LOCATION":              //城市控件
                     data.addProperty("value", component.getCity());
                     break;
-                case  "PARTICIPANTS":                 //参与人
-                    JsonArray array = new JsonArray();
-                    //参与人员
-                    if(component.getParticipants().getClass().equals(String [].class)){
-                        String [] participant = (String [])component.getParticipants();
-                        for(int j=0;j<participant.length;j++){
-                            array.add(setParticipant(employee,expenseReportOID,participant[j]));
+                case  "PARTICIPANTS"://参与人
+                    if(component.getParticipants()!=null){
+                        JsonArray array = new JsonArray();
+                        //参与人员
+                        if(component.getParticipants().getClass().equals(String [].class)){
+                            String [] participant = (String [])component.getParticipants();
+                            for(int j=0;j<participant.length;j++){
+                                array.add(setParticipant(employee,expenseReportOID,participant[j]));
+                            }
+                            data.addProperty("value",array.toString());
                         }
-                        data.addProperty("value",array.toString());
-                    }
-                    if(component.getParticipants().getClass().equals(String.class)){
-                        String participant = (String) component.getParticipants();
-                        data.addProperty("value",participant);
+                        if(component.getParticipants().getClass().equals(String.class)){
+                            String participant = (String) component.getParticipants();
+                            data.addProperty("value",participant);
+                        }
                     }
                     break;
                 case  "PARTICIPANT":                 //同行人

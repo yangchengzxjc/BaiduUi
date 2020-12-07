@@ -9,7 +9,7 @@ import org.testng.annotations.*;
 
 import java.lang.reflect.Method;
 
-public class infoSsoCommonTest extends BaseTest {
+public class InfoSsoCommonTest extends BaseTest {
 
     private Employee employee;
     private VendorInfo vendorInfo;
@@ -29,13 +29,17 @@ public class infoSsoCommonTest extends BaseTest {
 //                direction, orderId, businessCode, startCity, endCity, startDate, endDate, forCorp, flightSearchType
 //                res_expect},
                 {"ctrip",
-                "50b78b72-ed9d-4392-b7a1-df3b79f4cb17", null, 1002, "2001",
+                "50b78b72-ed9d-4392-b7a1-df3b79f4cb17", null, 1002, "2002",
                 "web", null, null, null, null, null, null, null, null,
-                "{\"url\":\"https://apistage.huilianyi.com/jump.html?URL=https://www.corporatetravel.ctrip.com/corpservice/authorize/login&Ticket=5fca6775e726b0e4691a8414&AppKey=obk_meixia&EmployeeID=11234&Backurl=http://ct.ctrip.com/flight/home\"}"}
+                "Backurl=http://ct.ctrip.com/flight/home\"}"},
+                {"CTRIP_TRAIN",
+                "213691b5-75a4-11e7-af18-00163e00373d", null, 1002, "2001",
+                "H5", null, null, null, null, null, null, null, null,
+                "URL=https://ct.ctrip.com/m/SingleSignOn/H5SignInfo"},
         };
     }
 
-    @Test(description = "vendor info sso common ", dataProvider = "dataProvider")
+    @Test(description = "vendor info sso common", dataProvider = "dataProvider")
     public void ssoCommonTest(String caseDesc,
                               String supplierOID,
                               String newVendorsName,
@@ -54,7 +58,7 @@ public class infoSsoCommonTest extends BaseTest {
         // do request
         String resStr = vendorInfo.vendorInfoSsoCommon(employee, supplierOID, newVendorsName, pageType, vendorType,
                 direction, orderId, businessCode, startCity, endCity, startDate, endDate, forCorp, flightSearchType);
-        // assert result todo
-//        Assert.assertTrue((resStr.equals(res_expect)));
+        // assert result
+        Assert.assertTrue((resStr.contains(res_expect)));
     }
 }

@@ -9,7 +9,7 @@ import org.testng.annotations.*;
 
 import java.lang.reflect.Method;
 
-public class infoSsoTest extends BaseTest {
+public class InfoSsoTest extends BaseTest {
 
     private Employee employee;
     private VendorInfo vendorInfo;
@@ -24,22 +24,26 @@ public class infoSsoTest extends BaseTest {
     @DataProvider
     public Object[][] dataProvider(Method method){
         return new Object[][]{
-//                {caseDesc, supplierOID, vendorsName, businessCode, pageType, vendorType,
+//                { caseDesc, supplierOID, vendorsName, businessCode, pageType, vendorType,
 //                itineraryDirection, lng, lat, direction, orderId, startCity, endCity,
 //                startDate, endDate, forCorp, flightSearchType,
-//                res_expect},
-                {"web 预定列表", "66666666-6666-11e6-9639-00ffa3fb4c67", null, null, null, null,
+//                res_expect },
+                {"web 获取所有登录URL", "66666666-6666-11e6-9639-00ffa3fb4c67", null, null, null, null,
                 null, null, null, "WEB", null, null, null,
                 null, null, null, null,
                 null},
-                {"H5 预定列表", "66666666-6666-11e6-9639-00ffa3fb4c67", null, null, null, null,
-                null, null, null, "H5", null, null, null,
+                {"web CTRIP_TRAIN", "213691b5-75a4-11e7-af18-00163e00373d", null, null, null, "2001",
+                null, null, null, "WEB", null, null, null,
                 null, null, null, null,
-                null}
+                null},
+                {"web cimmcc_air", "8afc4c9e-a7ea-4de6-ab60-70669a5b91e8", null, null, null, "2002",
+                null, null, null, "WEB", null, null, null,
+                null, null, null, null,
+                null},
         };
     }
 
-    @Test(description = "vendor info sso ", dataProvider = "dataProvider")
+    @Test(description = "vendor info sso", dataProvider = "dataProvider")
     public void ssoTest(String caseDesc,
                         @Optional("66666666-6666-11e6-9639-00ffa3fb4c67") String supplierOID,
                         String vendorsName,

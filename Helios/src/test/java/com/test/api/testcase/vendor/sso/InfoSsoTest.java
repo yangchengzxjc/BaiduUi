@@ -1,5 +1,6 @@
 package com.test.api.testcase.vendor.sso;
 
+import com.hand.api.VendorInfoApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.test.BaseTest;
@@ -12,13 +13,13 @@ import java.lang.reflect.Method;
 public class InfoSsoTest extends BaseTest {
 
     private Employee employee;
-    private VendorInfo vendorInfo;
+    private VendorInfoApi vendorInfo;
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
     public void init(@Optional("14082978666") String phoneNumber, @Optional("hly123456") String pwd, @Optional("stage") String env) {
         employee = getEmployee(phoneNumber, pwd, env);
-        vendorInfo = new VendorInfo();
+        vendorInfo = new VendorInfoApi();
     }
 
     @DataProvider

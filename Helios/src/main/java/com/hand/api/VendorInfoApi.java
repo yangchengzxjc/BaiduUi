@@ -11,17 +11,26 @@ import java.util.Map;
 public class VendorInfoApi extends BaseRequest {
 
     /**
-     * info 通用sso入口
+     * 通用 sso 接口
      * get /sso
      *
      * @param employee
-     * @param roleType
-     * @param supplierOID
-     * @param realmId
-     * @param companyOID
-     * @param emnum
-     * @param pageType
-     * @param direction
+     * @param supplierOID        查询出属于哪个供应商
+     * @param vendorsName        供应商EN
+     * @param businessCode       单据号
+     * @param pageType           指定登录页面   (机票，酒店，火车，机票订单，酒店订单，火车订单 )
+     * @param vendorType       消费上类型，机酒火
+     * @param itineraryDirection 往返有效 1001：去程 1002：返程
+     * @param direction          H5/WEB登录
+     * @param lng                经度 需支持(百动、小秘书)
+     * @param lat                维度 需支持(百动、小秘书)
+     * @param orderId            订单id
+     * @param startCity          出发城市
+     * @param endCity            到达城市
+     * @param startDate          出发时间 yyyy-MM-dd
+     * @param endDate            到达时间
+     * @param forCorp            0：因公出行，1 ：因私出行
+     * @param flightSearchType   S：单程 D：往返
      * @return
      * @throws HttpStatusException
      */
@@ -99,19 +108,20 @@ public class VendorInfoApi extends BaseRequest {
     /**
      * 统一单点登录接口
      * get /sso/common
-     * @param supplierOID
-     * @param newVendorsName
-     * @param pageType
-     * @param vendorType
-     * @param direction
-     * @param orderId
-     * @param businessCode
-     * @param startCity
-     * @param endCity
-     * @param startDate
-     * @param endDate
-     * @param forCorp
-     * @param flightSearchType
+     *
+     * @param supplierOID      消费商oid
+     * @param newVendorsName   消费商名称
+     * @param pageType         跳转页面，首页 订单 审批单
+     * @param vendorType       消费上类型，机酒火
+     * @param direction        web、h5
+     * @param orderId          订单id
+     * @param businessCode     审批单号
+     * @param startCity        出发城市
+     * @param endCity          到达城市
+     * @param startDate        出发日期
+     * @param endDate          到达日期
+     * @param forCorp          因公0 因私1
+     * @param flightSearchType 单程S 往返D
      * @return
      */
     public String vendorInfoSsoCommon(Employee employee,
@@ -172,5 +182,6 @@ public class VendorInfoApi extends BaseRequest {
         String res = doGet(url, getHeader(employee.getAccessToken()), datas, employee);
         return res;
     }
+
 
 }

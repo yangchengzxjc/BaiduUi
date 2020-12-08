@@ -1,5 +1,6 @@
 package com.test.api.testcase.vendor.sso;
 
+import com.hand.api.VendorInfoApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.test.BaseTest;
@@ -12,13 +13,13 @@ import java.lang.reflect.Method;
 public class InfoSsoCommonTest extends BaseTest {
 
     private Employee employee;
-    private VendorInfo vendorInfo;
+    private VendorInfoApi vendorInfo;
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
     public void init(@Optional("14082978666") String phoneNumber, @Optional("hly123456") String pwd, @Optional("stage") String env) {
         employee = getEmployee(phoneNumber, pwd, env);
-        vendorInfo = new VendorInfo();
+        vendorInfo = new VendorInfoApi();
     }
 
     @DataProvider
@@ -36,6 +37,14 @@ public class InfoSsoCommonTest extends BaseTest {
                 "213691b5-75a4-11e7-af18-00163e00373d", null, 1002, "2001",
                 "H5", null, null, null, null, null, null, null, null,
                 "URL=https://ct.ctrip.com/m/SingleSignOn/H5SignInfo"},
+                {"dttrip",
+                        "9c7207b5-7807-42b0-86f9-3db6ccb723f6", null, 1002, "2001",
+                        "H5", null, null, null, null, null, null, null, null,
+                        "URL"},
+                {"CTRIP_TRAIN",
+                        "213691b5-75a4-11e7-af18-00163e00373d", null, 1002, "2001",
+                        "H5", null, null, null, null, null, null, null, null,
+                        "URL"},
         };
     }
 

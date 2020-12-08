@@ -38,25 +38,43 @@ public class ExpenseReportPage {
      * @return
      * @throws HttpStatusException
      */
-    public HashMap<String,String> setDailyReport(Employee employee, String endData, String formName, String participant) throws HttpStatusException {
+    public HashMap<String,String> setDailyReport(Employee employee, String endData, String formName, String []participant) throws HttpStatusException {
         //新建报销单
         FormComponent component=new FormComponent();
         component.setCompany(employee.getCompanyOID());
         component.setDepartment(employee.getDepartmentOID());
         component.setStartDate(UTCTime.getFormStartDate(-3));
         component.setEndDate(endData);
-        //添加参与人员  参与人员的value 是一段json数组。
-        JsonArray array = new JsonArray();
-        ExpenseReportComponent expenseReportComponent =new ExpenseReportComponent();
-        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,formName),participant));
-        log.info(array.toString());
-        component.setParticipant(array.toString());
-        component.setCause("报销单提交管控规则校验");
+        component.setParticipant(participant);
+        component.setCause("invoice control");
         return expenseReport.createExpenseReport(employee,formName,component);
     }
 
     /**
-     * 新建费用费用控件  不参与分摊   开始结束日期不为空
+     * 创建一个报销单 控件有部门,开始结束日期,参与人,事由
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public HashMap<String,String> setDailyReport(Employee employee,String formName, String []participant) throws HttpStatusException {
+        //新建报销单
+        FormComponent component=new FormComponent();
+        component.setCompany(employee.getCompanyOID());
+        component.setDepartment(employee.getDepartmentOID());
+        if(UTCTime.isMonthTail(UTCTime.getBeijingDay(0))){
+            component.setStartDate(UTCTime.getFormStartDate(-6));
+            component.setEndDate(UTCTime.getFormStartDate(0));
+        }else{
+            component.setStartDate(UTCTime.getFormStartDate(0));
+            component.setEndDate(UTCTime.getFormStartDate(6));
+        }
+        component.setParticipant(participant);
+        component.setCause("invoice control");
+        return expenseReport.createExpenseReport(employee,formName,component);
+    }
+
+    /**
+     * 新建费用  不参与分摊   开始结束日期控件不为空
      * @param employee
      * @param expenseName
      * @param expenseReportOID
@@ -73,11 +91,38 @@ public class ExpenseReportPage {
         startAndEndDate.addProperty("endDate",UTCTime.getFormDateEnd(3));
         startAndEndDate.addProperty("duration",3);
         invoiceComponent.setStartAndEndData(startAndEndDate.toString());
-        return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,200.00,new JsonArray()).get("invoiceOID");
+        return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,250.00,new JsonArray()).get("invoiceOID");
     }
 
     /**
-     * 新建费用报销单  不参与分摊  时间控件为空的
+     * 新建费用  不参与分摊   开始结束日期控件不为空
+     * @param employee
+     * @param expenseName
+     * @param expenseReportOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public String setInvoice(Employee employee,String expenseName,String expenseReportOID,String [] participant,double amount) throws HttpStatusException {
+        ExpenseReportComponent expenseReportComponent =new ExpenseReportComponent();
+        String cityCode =expenseReportComponent.getCityCode(employee,"上海");
+        InvoiceComponent invoiceComponent =new InvoiceComponent();
+        invoiceComponent.setCity(cityCode);
+        JsonObject startAndEndDate = new JsonObject();
+        if(UTCTime.isMonthTail(UTCTime.getBeijingDay(0))){
+            startAndEndDate.addProperty("startDate",UTCTime.getFormStartDate(-6));
+            startAndEndDate.addProperty("endDate",UTCTime.getFormDateEnd(-3));
+        }else{
+            startAndEndDate.addProperty("startDate",UTCTime.getFormStartDate(0));
+            startAndEndDate.addProperty("endDate",UTCTime.getFormDateEnd(3));
+        }
+        startAndEndDate.addProperty("duration",3);
+        invoiceComponent.setStartAndEndData(startAndEndDate.toString());
+        invoiceComponent.setParticipants(participant);
+        return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,amount,new JsonArray()).get("invoiceOID");
+    }
+
+    /**
+     * 新建费用  不参与分摊  开始结束日期控件为空的
      * @param employee
      * @param expenseName
      * @param expenseReportOID
@@ -86,7 +131,7 @@ public class ExpenseReportPage {
      */
     public String setInvoice(Employee employee,String expenseName,String expenseReportOID,String createDate) throws HttpStatusException {
         ExpenseReportComponent expenseReportComponent =new ExpenseReportComponent();
-        String cityCode =expenseReportComponent.getCityCode(employee,"西安市");
+        String cityCode =expenseReportComponent.getCityCode(employee,"西安");
         InvoiceComponent invoiceComponent =new InvoiceComponent();
         invoiceComponent.setCity(cityCode);
         invoiceComponent.setCreatedDate(createDate);

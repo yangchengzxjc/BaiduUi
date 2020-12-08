@@ -411,6 +411,7 @@ public class ExpenseReport {
      * 报销单费控标签检查
      * @param employee
      * @param expenseReportOID
+     * @param externalPropertyName 标签类型：5001 超费用标准；REPORT_SUBMIT_WARN 校验警告
      * @param expectValue
      * @throws HttpStatusException
      */

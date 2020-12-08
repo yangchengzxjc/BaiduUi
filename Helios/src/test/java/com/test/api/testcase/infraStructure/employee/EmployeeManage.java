@@ -6,6 +6,7 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.infrastructure.employee.EmployeeExtendComponent;
 import com.hand.basicObject.infrastructure.employee.InfraEmployee;
+import com.hand.basicconstant.CardType;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
@@ -13,10 +14,7 @@ import com.test.api.method.Infra.EmployeeMethod.EmployeeManagePage;
 import com.test.api.method.InfraStructure;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 /**
  * @Author peng.zhang
@@ -48,6 +46,7 @@ public class EmployeeManage extends BaseTest {
     private String errorEmployeeID = RandomNumber.getTimeNumber(15);
     private String errorFullName = RandomNumber.getTimeNumber(15)+RandomNumber.getTimeNumber(15)+RandomNumber.getTimeNumber(15)+RandomNumber.getTimeNumber(15)+RandomNumber.getTimeNumber(15)+RandomNumber.getTimeNumber(15)+RandomNumber.getTimeNumber(15);
     private String editEmployeeID;
+    private String editEmployeeUserOid;
     private String companyNameMultiplePosts ="stage测试08";
     private String departmentNameMultiplePosts="20200310072121测试";
     private String departmentCodeMultiplePosts="";//20200310072121top
@@ -56,7 +55,7 @@ public class EmployeeManage extends BaseTest {
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void beforeClass(@Optional("hong.liang@xnhly.com") String phoneNumber, @Optional("hly123") String pwd, @Optional("stage") String env){
+    public void beforeClass(@Optional("hong.liang@xnhly.com") String phoneNumber, @Optional("lhfa123456") String pwd, @Optional("stage") String env){
         employee=getEmployee(phoneNumber,pwd,env);
         employeeManagePage =new EmployeeManagePage();
         infraEmployee = new InfraEmployee();
@@ -78,6 +77,7 @@ public class EmployeeManage extends BaseTest {
         log.info("获取到的人员姓名为：" + name);
         //获取新增人员后的工号，用于查询该人员数据，用于编辑
         this.editEmployeeID = object.get("employeeID").getAsString();
+        this.editEmployeeUserOid = object.get("userOID").getAsString();
         Assert.assertEquals(name,fullName);
     }
 
@@ -125,7 +125,7 @@ public class EmployeeManage extends BaseTest {
         component.setCustList("hong888");
         component.setText("1");
         component.setDefaultCostCenter("测试成本中心项987");
-        JsonObject object = employeeManagePage.addEmployee(employee,fullName,"14009220010",employeeID,alreadyEmail,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank,component);
+        JsonObject object = employeeManagePage.addEmployee(employee,fullName,"14009220010",employeeID+1,alreadyEmail,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank,component);
         String message = object.get("message").getAsString();
         String errorCode = object.get("errorCode").getAsString();
         Assert.assertEquals(message,"邮箱已被占用");
@@ -147,6 +147,7 @@ public class EmployeeManage extends BaseTest {
     }
 
     @Test(description = "正常新增多岗")
+    @Ignore
     public void addEmployee07() throws HttpStatusException {
         //员工扩展字段
         EmployeeExtendComponent component =new EmployeeExtendComponent();
@@ -160,6 +161,7 @@ public class EmployeeManage extends BaseTest {
     }
 
     @Test(description = "异常新增多岗-同一个公司下2个主岗")
+    @Ignore
     public void addEmployee08() throws HttpStatusException {
         //员工扩展字段
         EmployeeExtendComponent component =new EmployeeExtendComponent();
@@ -174,6 +176,7 @@ public class EmployeeManage extends BaseTest {
     }
 
     @Test(description = "异常新增多岗-部门-公司-职位相同")
+    @Ignore
     public void addEmployee09() throws HttpStatusException {
         //员工扩展字段
         EmployeeExtendComponent component =new EmployeeExtendComponent();
@@ -186,6 +189,7 @@ public class EmployeeManage extends BaseTest {
     }
 
     @Test(description = "异常新增多岗-岗位跨账套")
+    @Ignore
     public void addEmployee010() throws HttpStatusException {
         //员工扩展字段
         EmployeeExtendComponent component =new EmployeeExtendComponent();
@@ -206,5 +210,29 @@ public class EmployeeManage extends BaseTest {
         infraEmployee.setEmail(RandomNumber.getTimeNumber()+"@123.com");
         infraEmployee.setBirthday(UTCTime.getBeijingDate(-2000));
         assert employeeManagePage.editEmployee(employee,editEmployeeID,infraEmployee).toString().contains("fullName");
+    }
+
+    @DataProvider(name = "Card")
+    public static Object[][] addCard() {
+        return new Object[][] {
+                {CardType.CHINA_ID,"身份证","shenfenzheng",true},
+                {CardType.PASSPORT,"护照","huzhao",true},
+                {CardType.MAINLAND,"台胞证","taibaozheng",true},
+                {CardType.HOME_RETURN_PERMIT,"回乡证","huixiangzheng",true},
+                {CardType.HONG_KONG,"港澳通行证","gangaotongxingzheng",true},
+                {CardType.PERMANENT_RESIDENCE,"外国人永久居留身份证","waiguorenyongjiujuliuzheng",true},
+                {CardType.MILITARY,"军人证","junrenzheng",true},
+                {CardType.TRAVEL,"旅行证","lvxingzheng",true},
+                {CardType.TAIWAN,"台湾通行证","taiwantongxingzheng",true},
+        };
+    }
+
+    @Test(description = "新增证件",dataProvider = "Card")
+    public void addEmployeeCard(CardType cardType,String firstName,String lastName,boolean enabled) throws HttpStatusException {
+        //员工扩展字段
+        EmployeeExtendComponent component =new EmployeeExtendComponent();
+        component.setCustList("hong888");
+        component.setText("1");
+        employeeManagePage.addUserCard(employee,editEmployeeUserOid,cardType,firstName,lastName,enabled);
     }
 }

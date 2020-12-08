@@ -2,11 +2,20 @@ package com.test.api.method;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.hand.api.InfraStructureApi;
 import com.hand.api.ReimbStandardApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.Rule.StandardCondition;
+import com.hand.basicObject.Rule.StandardControlItem;
+import com.hand.basicObject.Rule.StandardRules;
+import com.hand.basicObject.Rule.StandardRulesItem;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.HashMap;
+import java.util.List;
 
 
 @Slf4j
@@ -27,16 +36,19 @@ public class ReimbStandard {
         return GsonUtil.getJsonValue(BookList,"setOfBooksName",BooksName,"id");
     }
 
-    /*
-     * 根据人员组名称获取人员组
-     * @ userGroupsName 人员组名称
-     * @ return
+
+    /**
+     * 查询人员组
+     * @param employee
+     * @param userGroupsName 人员组的名称
+     * @param rules
+     * @return
+     * @throws HttpStatusException
      */
-    public JsonObject getUserGroups(Employee employee,String userGroupsName,String setOfBooksId) throws HttpStatusException {
-        JsonArray userGroupsList = reimbStandardRules.getUserGroups(employee, setOfBooksId);
+    public JsonObject getUserGroups(Employee employee,String userGroupsName,StandardRules rules) throws HttpStatusException {
+        JsonArray userGroupsList = reimbStandardRules.getUserGroups(employee,rules.getLevelCode(),rules.getLevelOrgId(),userGroupsName);
         JsonObject userGroups;
         userGroups = GsonUtil.getJsonValue(userGroupsList,"name",userGroupsName);
-        log.info("userList,{}",userGroupsList);
         return userGroups;
     }
 
@@ -51,11 +63,6 @@ public class ReimbStandard {
         JsonArray expenseTypeList = reimbStandardRules.getExpenseType(employee,setOfBooksId);
         JsonObject expenseType;
         expenseType = GsonUtil.getJsonValue(expenseTypeList,"name",expenseTypeName);
-//        for (int i =0;i<expenseTypeList.size();i++){
-//            if(expenseTypeList.get(i).getAsJsonObject().get("name").getAsString().equals(expenseTypeName)){
-//                expenseType=expenseTypeList.get(i).getAsJsonObject();
-//            }
-//        }
         return expenseType;
     }
 
@@ -92,31 +99,72 @@ public class ReimbStandard {
         company = GsonUtil.getJsonValue(companyList,"name",companyName);
         return company;
     }
+
     /**
-     * 新增报销标准规则
+     * 报销标准-新建规则
      * @param employee
-     * @param name
-     * @param controlLevel
-     * @param levelCode
-     * @param levelOrgId
-     * @param controlType
-     * @param controlModeType
-     * @param message
-     * @param userGroups
-     * @param expenseTypes
-     * @param forms
-     * @param companys
+     * @param rules
+     * @param formName 适用的表单名称
+     * @param expenseTypeName  费用类型
      * @return
+     * @throws HttpStatusException
      */
-
-    public String addReimbstandard(Employee employee, String name, String controlLevel, String levelCode, String levelOrgId,
-                                   String controlType, String controlModeType, String message,
-                                   JsonArray userGroups, JsonArray expenseTypes, JsonArray forms,
-                                   JsonArray companys)throws HttpStatusException{
-
-      String rulesOid= reimbStandardRules.creatReimbStandardRules(employee,name,controlLevel,levelCode,
-                levelOrgId,controlType,controlModeType,message,userGroups,expenseTypes,forms,companys);
-        return rulesOid;
+    public String addReimbstandard(Employee employee, StandardRules rules, String [] userGroupsName, String[] formName, String ... expenseTypeName)throws HttpStatusException{
+        InfraStructureApi infraStructureApi =new InfraStructureApi();
+        if(rules.getLevelCode().equals("SET_OF_BOOK")){
+            rules.setLevelOrgId(employee.getSetOfBookId());
+            //账套级的 默认为通用
+            rules.setCompanys(new JsonArray());
+        }else{
+            //如果是公司模式  默认了当前账号的公司
+            rules.setLevelOrgId(employee.getCompanyId());
+        }
+        //设置人员组
+        if(userGroupsName.length!=0){
+            JsonArray userGroup = new JsonArray();
+            for (String mUserGroupsName : userGroupsName){
+                userGroup.add(getUserGroups(employee,mUserGroupsName,rules));
+            }
+        }else{
+            rules.setUserGroups(new JsonArray());
+        }
+        //处理费用类型
+        JsonArray expenseType = new JsonArray();
+        for (String aExpenseTypeName : expenseTypeName){
+           expenseType.add(GsonUtil.getJsonValue(infraStructureApi.getExpenseType(employee,rules.getLevelOrgId(),aExpenseTypeName),"name",aExpenseTypeName));
+        }
+        rules.setExpenseTypes(expenseType);
+        //处理表单 form
+        if(formName.length!=0){
+            //适配单据
+            JsonArray form = new JsonArray();
+            for (String mFormName : formName){
+                form.add(GsonUtil.getJsonValue(infraStructureApi.controlGetForm(employee,rules.getLevelOrgId(),mFormName),"formName",mFormName));
+            }
+            rules.setForms(form);
+        }
+        // period mode, participantsEnable must be false
+        if(rules.getControlModeType().equals("PERIOD")){
+            rules.setParticipantsEnable(false);
+        }
+        if(rules.getControlModeType().equals("SINGLE")){
+            rules.setControlType("SINGLE");
+        }
+        if(rules.getControlModeType().equals("SUMMARY")){
+            rules.setControlType("SUMMARY");
+        }
+        // expense participants standard
+        if(rules.isParticipantsEnable()){
+            //default participantsMode="HIGH"
+            if(rules.getParticipantsMode()==null){
+                rules.setParticipantsMode("HIGH");
+                rules.setParticipantsRatio(100);
+            }
+            if(rules.getParticipantsMode().equals("SUM")){
+                rules.setParticipantsRatio(100);
+            }
+        }
+        return reimbStandardRules.addReimbStandardRules(employee,rules).replace("\"","");
     }
 
     /**
@@ -164,9 +212,9 @@ public class ReimbStandard {
      * @return
      */
     public JsonArray formTypes(JsonObject ... formType){
-        JsonArray array  = new JsonArray();
-        for (int i=0;i<formType.length;i++){
-            array.add(formType[i]);
+        JsonArray array = new JsonArray();
+        for (JsonObject aFormType : formType) {
+            array.add(aFormType);
         }
         return array;
     }
@@ -177,9 +225,8 @@ public class ReimbStandard {
      * @param rulesOid
      * @throws HttpStatusException
      */
-    public void deleteReimbStandardRules (Employee employee,String rulesOid)throws HttpStatusException{
+    public void deleteReimbStandardRules(Employee employee,String rulesOid)throws HttpStatusException{
         reimbStandardRules.deleteReimbStandardRules(employee,rulesOid);
-
     }
 
     /**
@@ -189,9 +236,7 @@ public class ReimbStandard {
      * @throws HttpStatusException
      */
     public JsonArray getControlItems(Employee employee,String rulesOid)throws HttpStatusException{
-        JsonArray controlItems = new JsonArray();
-        controlItems=reimbStandardRules.getControlItem(employee,rulesOid);
-        return controlItems;
+        return reimbStandardRules.getControlItem(employee,rulesOid);
     }
 
     /**
@@ -201,25 +246,105 @@ public class ReimbStandard {
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray getItem(Employee employee,String rulesOid)throws HttpStatusException{
-
-        return reimbStandardRules.getItem(employee,rulesOid);
-
+    public JsonArray getStandardItem(Employee employee,String rulesOid)throws HttpStatusException{
+        return reimbStandardRules.getStandardItem(employee,rulesOid);
     }
 
     /**
      * 添加基本标准
      * @param employee
-     * @param standardOid
-     * @param amount
-     * @param userGroups
-     * @param citys
+     * @param rulesItem 基本标准 if standardOID is null, the item is edit
+     * @param isEdit 是否编辑
+     * @param
      * @return
      * @throws HttpStatusException
      */
-    public String addItems(Employee employee,String standardOid,String rulesOid,Integer amount,JsonArray userGroups,JsonArray citys)throws HttpStatusException{
-         String items = reimbStandardRules.addItems(employee,standardOid,rulesOid,amount,userGroups,citys);
-        return items;
+    public String addStandard(Employee employee, boolean isEdit,StandardRules rules,StandardRulesItem rulesItem,String [] userGroupsName,String []cityGroupsName)throws HttpStatusException{
+        if(isEdit){
+            String standardOID = getStandardItem(employee,rulesItem.getRuleOID()).get(0).getAsJsonObject().get("standardOID").getAsString();
+            rulesItem.setStandardOID(standardOID);
+        }
+        // config userGroups
+        if(userGroupsName.length!=0){
+            JsonArray userGroups =new JsonArray();
+            for (String userGroupName: userGroupsName){
+                 JsonObject userGroupObject = getUserGroups(employee,userGroupName,rules);
+                 userGroups.add(userGroupObject);
+            }
+            rulesItem.setUserGroups(userGroups);
+        }
+        //config cityGroups
+        if(cityGroupsName.length!=0){
+            JsonArray userGroupArray = reimbStandardRules.getCityGroup(employee,rules.getLevelCode(),rules.getLevelOrgId());
+            JsonArray cityGroups = new JsonArray();
+            for(String cityGroupName:cityGroupsName){
+                if(GsonUtil.isNotEmpt(cityGroups)){
+                cityGroups.add(GsonUtil.getJsonValue(userGroupArray,"levelName",cityGroupName));
+                }
+            }
+            rulesItem.setCitys(cityGroups);
+        }
+        return reimbStandardRules.addStandarditems(employee,rulesItem).replace("\"","");
+    }
+
+//    /**
+//     *
+//     * @param employee
+//     * @param rulesOID
+//     * @throws HttpStatusException
+//     */
+//    public void editORSaveControlItem(Employee employee, String rulesOID, List<StandardCondition> controlItem) throws HttpStatusException {
+//        String standardOID = reimbStandardRules.getStandardItem(employee,rulesOID).get(0).getAsJsonObject().get("id").getAsString();
+//        JsonObject itemDetail = reimbStandardRules.getControlItemDetail(employee,itemId);
+//        JsonArray condition = new JsonParser().parse(GsonUtil.objectToString(controlItem)).getAsJsonArray();
+//        itemDetail.add("conditions",condition);
+//        reimbStandardRules.editOrSaveControlItem(employee,itemDetail,rulesOID);
+//    }
+
+    /**
+     *  报销标准管控项新建or 添加
+     * @param employee
+     * @param rulesOID
+     * @param controlItem  汇总管控仅支持费用金额
+     * @throws HttpStatusException
+     */
+    public void editORaddControlItem(Employee employee,boolean isEdit,StandardRules rules,String rulesOID,StandardControlItem controlItem) throws HttpStatusException {
+        //如果是编辑管控项需要查找默认的
+        if(rules.getControlModeType().equals("SINGLE")){
+            if(isEdit){
+                String itemId = getControlItems(employee,rulesOID).get(0).getAsJsonObject().get("id").getAsString();
+                controlItem.setId(itemId);
+            }
+            if(controlItem.getControlItem().equals("INVOICE_AMOUNT")){
+                controlItem.setValueType(1002);
+                controlItem.setFieldValue("基本标准");
+                controlItem.setControlCond("STANDARD_AMOUNT");
+            }
+        }
+        if(rules.getControlModeType().equals("SUMMARY")){
+            //仅存在金额的管控
+            String itemId = getControlItems(employee,rulesOID).get(0).getAsJsonObject().get("id").getAsString();
+            controlItem.setId(itemId);
+            controlItem.setControlItem("INVOICE_AMOUNT");
+            controlItem.setValueType(1002);
+            controlItem.setFieldValue("基本标准");
+            controlItem.setControlCond("STANDARD_AMOUNT");
+        }
+        if(rules.getControlModeType().equals("PERIOD")){
+            //存在费用金额和平均费用金额
+            if(controlItem.getControlItem()!=null){
+                String itemId = getControlItems(employee,rulesOID).get(0).getAsJsonObject().get("id").getAsString();
+                controlItem.setId(itemId);
+                controlItem.setValueType(1002);
+                controlItem.setFieldValue("基本标准");
+                controlItem.setControlCond("STANDARD_AMOUNT");
+            }else{
+                throw new NullPointerException("controlItem can not is null");
+            }
+        }
+        String ruleString = GsonUtil.objectToString(controlItem);
+        JsonObject itemObject = new JsonParser().parse(ruleString).getAsJsonObject();
+        reimbStandardRules.editOrSaveControlItem(employee,itemObject,rulesOID);
     }
 
     /**
@@ -234,8 +359,4 @@ public class ReimbStandard {
         rulesList =reimbStandardRules.getRules(employee,ruleName);
         return  rulesList;
     }
-
-//    public String creatReimbSubmissionControlRuls(Employee employee)throws HttpStatusException{
-//        String rulesOid=reimbStandardRules
-//    }
 }

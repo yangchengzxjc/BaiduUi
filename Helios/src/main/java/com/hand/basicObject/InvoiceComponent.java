@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+
 /**
  * @Author peng.zhang
  * @Date 2020/6/23
@@ -46,7 +47,7 @@ public class InvoiceComponent {
     //文本
     String text;
     //参与人 user的个人信息
-    String participants;
+    private Object participants;
     //同行人   "{"userOID":"d387ce07-e4f3-487e-a330-c76e56cf4c2e"}"
     String participant;
     //开始结束日期    "{"startDate":"2020-06-22T16:00:00.000Z","endDate":"2020-06-24T16:00:00.000Z","duration":2}"

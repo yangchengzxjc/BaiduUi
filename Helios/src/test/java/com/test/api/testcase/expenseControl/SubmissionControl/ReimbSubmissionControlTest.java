@@ -130,8 +130,8 @@ public class ReimbSubmissionControlTest extends BaseTest {
         //创建报销单
         String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
         //新建费用
-        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID);
-        String invoiceOid2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID);
+        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,UTCTime.getUtcTime(0,0));
+        String invoiceOid2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,UTCTime.getUtcTime(0,0));
         //检验标签
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);

@@ -9,6 +9,11 @@
 
 package com.test.api.testcase.vendor.sso;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
 public enum InfoSsoEnum {
 
     // 非 openApi
@@ -114,16 +119,25 @@ public enum InfoSsoEnum {
     zhenxuanAirlines("甄选机票","zhenxuanAirlines","cloudheliosFlightService","9dbb6bed-e3c7-4353-bee2-f0dfc69d6317","2001");
 
     private String name;
-    private String vendors_name;
-    private String app_code;
-    private String supplier_oid;
+    private String vendorsName;
+    private String appCode;
+    private String supplierOid;
     private String category;
 
-    InfoSsoEnum (String name, String vendors_name, String app_code, String supplier_oid, String category){
+    InfoSsoEnum (String name, String vendorsName, String appCode, String supplierOid, String category){
         this.name = name;
-        this.vendors_name = vendors_name;
-        this.app_code = app_code;
-        this.supplier_oid = supplier_oid;
+        this.vendorsName = vendorsName;
+        this.appCode = appCode;
+        this.supplierOid = supplierOid;
         this.category = category;
+    }
+
+    public static InfoSsoEnum getInfoSso(String vendorName){
+        for (InfoSsoEnum info : InfoSsoEnum.values()) {
+            if (info.getVendorsName().equalsIgnoreCase(vendorName)) {
+                return info;
+            }
+        }
+        return CTRIP_AIR;
     }
 }

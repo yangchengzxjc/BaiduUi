@@ -3,6 +3,8 @@ package com.hand.basicObject.Rule;
 import com.google.gson.JsonArray;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @Author peng.zhang
  * @Date 2020/12/2
@@ -27,6 +29,6 @@ public class StandardControlItem {
 
     private Long setOfBooksId;
 
-    private JsonArray conditions;
+    private List<StandardCondition> conditions;
 
 }

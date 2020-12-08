@@ -213,4 +213,18 @@ public class UTCTime {
         DateTime date = DateTime.parse(utc);
         return fmt.print(date);
     }
+
+
+    /**
+     * 判断是否是月末了
+     * @param date
+     * @return
+     */
+    public static boolean isMonthTail(String date){
+        if(date.substring(6).equals("28") ||date.substring(6).equals("29") ||date.substring(6).equals("30")||date.substring(6).equals("31")){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

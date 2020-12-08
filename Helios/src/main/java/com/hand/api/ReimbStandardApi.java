@@ -77,9 +77,10 @@ public class ReimbStandardApi  extends BaseRequest {
         mapParams.put("levelOrgId", levelOrgId);
         mapParams.put("name",userGroupName);
         mapParams.put("nameLable",userGroupName);
-        String res = doGet(url, getHeader(employee.getAccessToken()), mapParams, employee);
+        String res = doGet(url, getHeader(employee.getAccessToken(),HeaderKey.REIMB_STANDARD,ResourceId.INFRA), mapParams, employee);
         return new JsonParser().parse(res).getAsJsonArray();
     }
+
     /*
      * 获取费用类型
      * @ param employee

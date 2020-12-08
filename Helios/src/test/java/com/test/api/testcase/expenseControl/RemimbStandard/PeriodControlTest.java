@@ -108,7 +108,7 @@ public class PeriodControlTest extends BaseTest {
         //新建报销单
         String reportOID1 = expenseReportPage.setDailyReport(employee,UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName()});
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName()},250.00);
         map.put("",ruleOID);
 
 

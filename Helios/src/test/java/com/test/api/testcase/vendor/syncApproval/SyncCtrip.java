@@ -78,7 +78,7 @@ public class SyncCtrip extends BaseTest {
         //添加飞机行程 供应商携程机票
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
         //单程机票无返回时间
-        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, SupplierOID.CTRIP_AIR,"西安市","北京",null,UTCTime.getNowStartUtcDate());
+        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, SupplierOID.CTRIPAIR.getSupplierOID(),"西安市","北京",null,UTCTime.getNowStartUtcDate());
         flightItineraries.add(flightItinerary);
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
         travelApplication.submitApplication(employee,applicationOID,"");
@@ -134,7 +134,7 @@ public class SyncCtrip extends BaseTest {
         //添加飞机行程 供应商携程机票
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
         //单程机票无返回时间
-        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, SupplierOID.CTRIP_AIR,"西安市","北京",null,UTCTime.getNowStartUtcDate());
+        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, SupplierOID.CTRIPAIR.getSupplierOID(),"西安市","北京",null,UTCTime.getNowStartUtcDate());
         flightItineraries.add(flightItinerary);
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
         travelApplication.submitApplication(employee,applicationOID,"");

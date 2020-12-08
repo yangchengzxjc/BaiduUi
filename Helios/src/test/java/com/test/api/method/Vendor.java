@@ -15,6 +15,7 @@ import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
+import org.openqa.selenium.json.Json;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,6 +118,22 @@ public class Vendor {
         //转化为 JsonObject
         JsonObject requestBody = new JsonParser().parse(orderString).getAsJsonObject();
         return vendorApi.vendorSSO(employee, requestBody, appName, corpId, signature);
+    }
+
+    /**
+     * 消费平台 sso单点登录
+     * @param employee
+     * @param supplierOID
+     * @param direction
+     * @param pageType
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject vndSSO(Employee employee,String supplierOID,String direction,String pageType) throws HttpStatusException {
+        return vendorApi.vndSSO(employee,supplierOID,direction,pageType);
+    }
+    public int ssoCode(Employee employee,String supplierOID,String direction,String pageType) throws HttpStatusException {
+        return vendorApi.ssoCode(employee,supplierOID,direction,pageType);
     }
 
     /**

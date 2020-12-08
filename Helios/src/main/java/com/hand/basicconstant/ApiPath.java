@@ -313,7 +313,8 @@ public class ApiPath {
         public static final String COMPANYDetail = "/api/company/%s";
         //平台sso登录
         public static final String SSOLOGIN = "/sso";
-
+        //消费平台H5 SSO单点
+        public static final String SUPPLIER_SSO="/vendor-info-service/api/sso/common";
 
 
 

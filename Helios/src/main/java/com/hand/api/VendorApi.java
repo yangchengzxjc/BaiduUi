@@ -217,4 +217,44 @@ public class VendorApi extends BaseRequest{
         String res = doPost(url, setHeaderSignature(appName,corpId,signature),null,body.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
+
+    /**
+     * 消费平台SSO 单点登录
+     * @param employee
+     * @param supplierOID
+     * @return
+     */
+    public JsonObject vndSSO(Employee employee,String supplierOID,String direction,String pageType) throws HttpStatusException {
+        String url =employee.getEnvironment().getUrl()+ApiPath.SUPPLIER_SSO;
+        Map<String,String> headerParam =new HashMap<>();
+        headerParam.put("Authorization", "Bearer "+employee.getAccessToken()+"");
+        Map<String, String> datas = new HashMap<String, String>();
+        datas.put("supplierOID",supplierOID);
+        datas.put("direction",direction);
+        datas.put("pageType",pageType);
+        datas.put("access_token",employee.getAccessToken());
+        String res = doGet(url,headerParam,datas,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 消费平台SSO 单点登录  状态码
+     * @param employee
+     * @param supplierOID
+     * @param direction
+     * @param pageType
+     * @return
+     * @throws HttpStatusException
+     */
+    public int ssoCode(Employee employee,String supplierOID,String direction,String pageType) throws HttpStatusException {
+        String url =employee.getEnvironment().getUrl()+ApiPath.SUPPLIER_SSO;
+        Map<String,String> headerParam =new HashMap<>();
+        headerParam.put("Authorization", "Bearer "+employee.getAccessToken()+"");
+        Map<String, String> datas = new HashMap<String, String>();
+        datas.put("supplierOID",supplierOID);
+        datas.put("direction",direction);
+        datas.put("pageType",pageType);
+        datas.put("access_token",employee.getAccessToken());
+        return doGetStatusCode(url,headerParam,datas,employee);
+    }
 }

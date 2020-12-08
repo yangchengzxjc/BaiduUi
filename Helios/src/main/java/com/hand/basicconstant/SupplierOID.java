@@ -8,7 +8,7 @@ package com.hand.basicconstant;
 public class SupplierOID {
 //飞机行程
     //携程机票
-    public static final String CTRIP_AIR = "50b78b72-ed9d-4392-b7a1-df3b79f4cb17";
+    public static final String CTRIP_AIR = "fbf77233-766f-11e6-9639-00ffa3fb4c67";
     //程腾机票
     public static final String CHTTRAVEL_AIR = "c7e261c6-045c-40e0-a811-63e9e1531318";
     //金田地机票
@@ -22,9 +22,12 @@ public class SupplierOID {
     //中集商旅
     public static final String cimccTMC = "8afc4c9e-a7ea-4de6-ab60-70669a5b91e8";
 
+//酒店行程
+    //携程酒店
+    public static final String CTRIP_HOTEL = "d9771362-5359-11e7-ace0-7cd30ad300be";
 
-    //酒店行程
-
-
+//火车行程
+    //携程火车
+    public static final String CTRIP_TRAIN = "213691b5-75a4-11e7-af18-00163e00373d";
 
 }

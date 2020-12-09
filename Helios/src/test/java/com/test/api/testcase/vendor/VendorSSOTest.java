@@ -35,60 +35,33 @@ public class VendorSSOTest extends BaseTest {
         employee =getEmployee(phoneNumber,pwd,env);
         vendor =new Vendor();
     }
+//    @Test(description = "sso单点登录")
+//    public void ssoTest1() throws HttpStatusException {
+//        SSOBody ssoBody =SSOBody.builder()
+//                .tenantId(employee.getTenantId())
+//                .employeeId(employee.getEmployeeID())
+//                .deviceType("web")
+//                .initPage("HotelSearch")
+//                .orderNumber("")
+//                .build();
+//        JsonObject response = vendor.ssoLogin(employee,ssoBody,"cimccTMC","200428140254184788","");
+//        log.info("单点登录的响应:{}",response);
+//    }
 
-
-    @DataProvider(name = "ctripSSO")
-    public Object[][] ctripSSO(){
+    @DataProvider(name = "SSO")
+    public Object[][] vendorSSO(){
         return new Object[][]{
-                {employee, CTRIPAIR.getSupplierOID(),"H5"},
-                {employee, CTRIPHOTEL.getSupplierOID(),"H5"},
-                {employee, CTRIPTRAIN.getSupplierOID(),"H5"},
-                {employee,CTRIPAIR.getSupplierOID(),"web"},
-                {employee,CTRIPHOTEL.getSupplierOID(),"web"},
-                {employee,CTRIPTRAIN.getSupplierOID(),"web"},
+                {employee,CTRIP_AIR,"H5","1002"},
+                {employee,CTRIP_HOTEL,"H5","1002"},
+                {employee,CTRIP_TRAIN,"H5","1002"}
         };
     }
 
-    @Test(description = "携程sso首页单点登录",dataProvider = "ctripSSO")
-    public void ctripSSO(Employee employee, String supplierOID,String direction) throws HttpStatusException {
-        JsonObject response = vendor.vndSSO(employee,supplierOID,direction,"1002");
+    @Test(description = "sso单点登录",dataProvider = "SSO")
+    public void vndSSO(Employee employee, String supplierOID,String direction,String pageType) throws HttpStatusException {
+        JsonObject response = vendor.vndSSO(employee,supplierOID,direction,pageType);
         log.info("单点登录的响应:{}",response);
-        int statusCode = vendor.ssoCode(employee,supplierOID,direction,"1002");
-        Assert.assertEquals(statusCode,200);
-    }
-
-    @DataProvider(name = "ctripSSO1")
-    public Object[][] ctripSSO1(){
-        return new Object[][]{
-                {employee, CTRIPAIR.getSupplierOID(),"H5"},
-                {employee, CTRIPHOTEL.getSupplierOID(),"H5"},
-                {employee, CTRIPTRAIN.getSupplierOID(),"H5"},
-        };
-    }
-    @Test(description = "携程sso订单单点登录",dataProvider = "ctripSSO1")
-    public void ctripOrderSSO1(Employee employee, String supplierOID,String direction) throws HttpStatusException {
-        JsonObject response = vendor.vndSSO(employee,supplierOID,direction,"1001");
-        log.info("单点登录的响应:{}",response);
-        int statusCode = vendor.ssoCode(employee,supplierOID,direction,"1001");
-        Assert.assertEquals(statusCode,200);
-    }
-
-    @DataProvider(name = "meiYaSSO")
-    public Object[][] meiYaSSO(){
-        return new Object[][]{
-                {employee, MEIYAAIR.getSupplierOID(),"H5"},
-                {employee, MEIYAHOTEL.getSupplierOID(),"H5"},
-                {employee, MEIYATRAIN.getSupplierOID(),"H5"},
-                {employee,MEIYAAIR.getSupplierOID(),"web"},
-                {employee,MEIYAHOTEL.getSupplierOID(),"web"},
-                {employee,MEIYATRAIN.getSupplierOID(),"web"},
-        };
-    }
-    @Test(description = "美亚sso首页单点登录" ,dataProvider = "meiYaSSO")
-    public void meiYaSSO(Employee employee, String supplierOID,String direction) throws HttpStatusException {
-        JsonObject response = vendor.vndSSO(employee,supplierOID,direction,"1002");
-        log.info("单点登录的响应:{}",response);
-        int statusCode = vendor.ssoCode(employee,supplierOID,direction,"1002");
+        int statusCode = vendor.ssoCode(employee,CTRIP_AIR,"H5","1002");
         Assert.assertEquals(statusCode,200);
     }
 

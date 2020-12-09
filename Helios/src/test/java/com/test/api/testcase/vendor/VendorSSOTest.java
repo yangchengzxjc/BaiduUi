@@ -45,7 +45,7 @@ public class VendorSSOTest extends BaseTest {
     }
 
     @Test(description = "携程sso首页单点登录", dataProvider = "ctripSSO")
-    public void ctripSSO(Employee employee, String supplierOID, String direction) throws HttpStatusException {
+    public void ctripSSO(String caseDesc, String supplierOID, String direction) throws HttpStatusException {
         JsonObject response = vendor.vndSSO(employee, supplierOID, direction, "1002");
         log.info("单点登录的响应:{}", response);
         int statusCode = vendor.ssoCode(employee, supplierOID, direction, "1002");
@@ -62,7 +62,7 @@ public class VendorSSOTest extends BaseTest {
     }
 
     @Test(description = "携程sso订单单点登录", dataProvider = "ctripSSO1")
-    public void ctripOrderSSO1(Employee employee, String supplierOID, String direction) throws HttpStatusException {
+    public void ctripOrderSSO1(String caseDesc, String supplierOID, String direction) throws HttpStatusException {
         JsonObject response = vendor.vndSSO(employee, supplierOID, direction, "1001");
         log.info("单点登录的响应:{}", response);
         int statusCode = vendor.ssoCode(employee, supplierOID, direction, "1001");
@@ -82,7 +82,7 @@ public class VendorSSOTest extends BaseTest {
     }
 
     @Test(description = "美亚sso首页单点登录", dataProvider = "meiYaSSO")
-    public void meiYaSSO(Employee employee, String supplierOID, String direction) throws HttpStatusException {
+    public void meiYaSSO(String caseDesc, String supplierOID, String direction) throws HttpStatusException {
         JsonObject response = vendor.vndSSO(employee, supplierOID, direction, "1002");
         log.info("单点登录的响应:{}", response);
         int statusCode = vendor.ssoCode(employee, supplierOID, direction, "1002");

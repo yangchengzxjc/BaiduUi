@@ -1,33 +1,29 @@
 package com.hand.basicconstant;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * @Author peng.zhang
  * @Date 2020/8/5
  * @Version 1.0
  **/
-public class SupplierOID {
-//飞机行程
-    //携程机票
-    public static final String CTRIP_AIR = "fbf77233-766f-11e6-9639-00ffa3fb4c67";
-    //程腾机票
-    public static final String CHTTRAVEL_AIR = "c7e261c6-045c-40e0-a811-63e9e1531318";
-    //金田地机票
-    public static final String BAOKU_AIR = "91502799-22db-4f31-bae6-b7813db5d159";
-    //BCD_AIR
-    public static final String BCD_AIR = "35ebfce8-9e52-466d-ac74-4dbe5c692335";
-    //ZHENXUAN_AIR
-    public static final String ZHENXUAN_AIR = "90fc8496-1c60-4674-88d7-8c2153eeebc8";
-    //大唐
-    public static final String dttrip = "9c7207b5-7807-42b0-86f9-3db6ccb723f6";
-    //中集商旅
-    public static final String cimccTMC = "8afc4c9e-a7ea-4de6-ab60-70669a5b91e8";
 
-//酒店行程
-    //携程酒店
-    public static final String CTRIP_HOTEL = "d9771362-5359-11e7-ace0-7cd30ad300be";
+@AllArgsConstructor
+@Getter
+public enum  SupplierOID {
 
-//火车行程
-    //携程火车
-    public static final String CTRIP_TRAIN = "213691b5-75a4-11e7-af18-00163e00373d";
+    CTRIPAIR("CTRIP_AIR","ctrip_flight","50b78b72-ed9d-4392-b7a1-df3b79f4cb17",""),
+    CTRIPHOTEL("CTRIP_HOTEL","ctrip_hotel","74da7eb8-e5d5-4c2f-b84f-6cead8436fa3",""),
+    CTRIPTRAIN("CTRIP_TRAIN","ctrip_train","c9677c97-cc48-4c2e-b988-4c0986faf1b5",""),
+    MEIYAAIR("MEIYA_AIR","meiya","0d6d1a69-62f5-11e7-a0e0-00163e000c55",""),
+    MEIYAHOTEL("MEIYA_HOTEL","meiya_hotel","d73880c8-172f-4379-8682-4f93f279e5ed",""),
+    MEIYATRAIN("MEIYA_TRAIN","meiya_train","7864964d-f57b-4528-a371-babfe6f64d86",""),
+    MEIYAINT("MEIYA_INT","meiya_inter_air","564c9461-cbbc-4bb7-93e1-c5d561575ec6",""),
+    DTTRIP("","","9c7207b5-7807-42b0-86f9-3db6ccb723f6","2001");
+    private String name;
+    private String vendorsName;
+    private String supplierOID;
+    private String vendorType;
 
 }

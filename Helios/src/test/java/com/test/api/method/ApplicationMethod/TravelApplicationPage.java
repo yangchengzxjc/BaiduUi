@@ -107,7 +107,7 @@ public class TravelApplicationPage {
         String applicationOID = travelApplication.createTravelApplication(employee,formName,component).get("applicationOID");
         //添加差旅行程(目前支持飞机行程和酒店行程)
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
-        FlightItinerary flightItinerary = addFlightItinerary(employee,1001, SupplierOID.CTRIP_AIR,"西安","北京",null,UTCTime.getUtcStartDate(-4));
+        FlightItinerary flightItinerary = addFlightItinerary(employee,1001, SupplierOID.CTRIPAIR.getSupplierOID(),"西安","北京",null,UTCTime.getUtcStartDate(-4));
         flightItineraries.add(flightItinerary);
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
         travelApplication.submitApplication(employee,applicationOID,"");

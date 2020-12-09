@@ -148,7 +148,7 @@ public class TestReportListener implements IReporter {
                 info.setStatus(status);
                 info.setClassName(result.getInstanceName());
                 info.setMethodName(result.getName());
-                info.setDescription(result.getMethod().getDescription() + "-" + result.getParameters()[0].toString() + " " + result.getParameters()[1].toString());
+                info.setDescription(result.getMethod().getDescription() + "-" + result.getParameters()[0].toString());
 //                info.setParameters(result.getParameters());
                 info.setLog(log);
                 listInfo.add(info);

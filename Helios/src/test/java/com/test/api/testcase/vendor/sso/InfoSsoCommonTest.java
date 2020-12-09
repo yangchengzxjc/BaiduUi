@@ -10,6 +10,8 @@ import org.testng.annotations.*;
 
 import java.lang.reflect.Method;
 
+import static com.test.api.testcase.vendor.sso.InfoSsoEnum.*;
+
 public class InfoSsoCommonTest extends BaseTest {
 
     private Employee employee;
@@ -23,26 +25,70 @@ public class InfoSsoCommonTest extends BaseTest {
     }
 
     @DataProvider
-    public Object[][] dataProvider(Method method){
+    public Object[][] dataProvider(Method method) {
         return new Object[][]{
 //                {caseDesc,
 //                supplierOID, newVendorsName, pageType, vendorType,
 //                direction, orderId, businessCode, startCity, endCity, startDate, endDate, forCorp, flightSearchType
 //                res_expect},
-                {"ctrip",
-                "50b78b72-ed9d-4392-b7a1-df3b79f4cb17", null, 1002, "2002",
-                "web", null, null, null, null, null, null, null, null,
-                "Backurl=http://ct.ctrip.com/flight/home\"}"},
-                {"CTRIP_TRAIN",
-                "213691b5-75a4-11e7-af18-00163e00373d", null, 1002, "2001",
-                "H5", null, null, null, null, null, null, null, null,
-                "URL=https://ct.ctrip.com/m/SingleSignOn/H5SignInfo"},
-                {"dttrip",
-                        "9c7207b5-7807-42b0-86f9-3db6ccb723f6", null, 1002, "2001",
+                {"CTRIP_TRAIN H5",
+                        CTRIP_TRAIN.getSupplierOid(), null, 1002, CTRIP_TRAIN.getCategory(),
                         "H5", null, null, null, null, null, null, null, null,
                         "URL"},
-                {"CTRIP_TRAIN",
-                        "213691b5-75a4-11e7-af18-00163e00373d", null, 1002, "2001",
+                {"CTRIP_AIR H5",
+                        CTRIP_AIR.getSupplierOid(), null, 1002, CTRIP_AIR.getCategory(),
+                        "H5", null, null, null, null, null, null, null, null,
+                        "URL"},
+                {"CTRIP_HOTEL H5",
+                        CTRIP_HOTEL.getSupplierOid(), null, 1002, CTRIP_HOTEL.getCategory(),
+                        "H5", null, null, null, null, null, null, null, null,
+                        "URL"},
+                {"BAOKU_AIR H5",
+                        BAOKU_AIR.getSupplierOid(), null, 1002, BAOKU_AIR.getCategory(),
+                        "H5", null, null, null, null, null, null, null, null,
+                        "URL"},
+                {"BAOKU_HOTEL H5",
+                        BAOKU_HOTEL.getSupplierOid(), null, 1002, BAOKU_HOTEL.getCategory(),
+                        "H5", null, null, null, null, null, null, null, null,
+                        "URL"},
+                {"cimcctmcAir H5",
+                        cimcctmcAir.getSupplierOid(), null, 1002, cimcctmcAir.getCategory(),
+                        "H5", null, null, null, null, null, null, null, null,
+                        "URL"},
+                {"cimcctmcTrain H5",
+                        cimcctmcTrain.getSupplierOid(), null, 1002, cimcctmcTrain.getCategory(),
+                        "H5", null, null, null, null, null, null, null, null,
+                        "URL"},
+                {"cimcctmcHotel H5",
+                        cimcctmcHotel.getSupplierOid(), null, 1002, cimcctmcHotel.getCategory(),
+                        "H5", null, null, null, null, null, null, null, null,
+                        "URL"},
+                {"dttrip H5",
+                        dttrip.getSupplierOid(), null, 1002, dttrip.getCategory(),
+                        "H5", null, null, null, null, null, null, null, null,
+                        "URL"},
+                {"shenzhenAir H5",
+                        shenzhenAir.getSupplierOid(), null, 1002, shenzhenAir.getCategory(),
+                        "H5", null, null, null, null, null, null, null, null,
+                        "URL"},
+                {"onTheWayTMCAir H5",
+                        onTheWayTMCAir.getSupplierOid(), null, 1002, onTheWayTMCAir.getCategory(),
+                        "H5", null, null, null, null, null, null, null, null,
+                        "URL"},
+                {"onTheWayTMCTrain H5",
+                        onTheWayTMCTrain.getSupplierOid(), null, 1002, onTheWayTMCTrain.getCategory(),
+                        "H5", null, null, null, null, null, null, null, null,
+                        "URL"},
+                {"onTheWayTMCHotel H5",
+                        onTheWayTMCHotel.getSupplierOid(), null, 1002, onTheWayTMCHotel.getCategory(),
+                        "H5", null, null, null, null, null, null, null, null,
+                        "URL"},
+                {"tehang H5",
+                        tehang.getSupplierOid(), null, 1002, tehang.getCategory(),
+                        "H5", null, null, null, null, null, null, null, null,
+                        "URL"},
+                {"fyair H5",
+                        fyair.getSupplierOid(), null, 1002, fyair.getCategory(),
                         "H5", null, null, null, null, null, null, null, null,
                         "URL"},
         };

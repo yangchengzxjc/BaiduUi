@@ -11,12 +11,19 @@
         <parameter name="passWord" value="hly123456"></parameter>
 
         <classes>
-            <class name="com.test.api.testcase.vendor.sso.InfoSsoTest">
+<!--            <class name="com.test.api.testcase.vendor.sso.InfoSsoTest">-->
+<!--                <methods>-->
+<!--                    <include name="ssoTest"></include>-->
+<!--                </methods>-->
+<!--            </class>-->
+
+            <class name="com.test.api.testcase.vendor.sso.InfoSsoCommonTest">
                 <methods>
-                    <include name="ssoTest"></include>
+                    <include name="ssoCommonTest"></include>
                 </methods>
             </class>
         </classes>
+
     </test>
 
     <listeners>

@@ -18,25 +18,25 @@ import org.testng.TestListenerAdapter;
 public class TestLogListener extends TestListenerAdapter {
     @Override
     public void onStart(ITestContext iTestContext) {
-        super.onStart( iTestContext );
-        Base base=new Base();
-        ThreadContext.put("logid",base.GetUUid());
-        ThreadContext.put("ROUTINGKEY",base.GetUUid());
-        ThreadContext.put("ThreadName",iTestContext.getName());
-        log.info( String.format( "====================测试线程：%s测试开始====================", iTestContext.getName() ) );
+        super.onStart(iTestContext);
+        Base base = new Base();
+        ThreadContext.put("logid", base.GetUUid());
+        ThreadContext.put("ROUTINGKEY", base.GetUUid());
+        ThreadContext.put("ThreadName", iTestContext.getName());
+        log.info(String.format("====================测试线程：%s测试开始====================", iTestContext.getName()));
     }
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        super.onTestStart( iTestResult );
-        ThreadContext.put("CaseName","case:"+iTestResult.getName());
-        log.info( String.format( "========用例 %s.%s测试开始========", iTestResult.getInstanceName(), iTestResult.getName()) );
+        super.onTestStart(iTestResult);
+        ThreadContext.put("CaseName", "case:" + iTestResult.getName());
+        log.info(String.format("========用例 %s.%s测试开始========", iTestResult.getInstanceName(), iTestResult.getName()));
     }
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-        super.onTestSuccess( iTestResult );
-        log.info( String.format( "========用例 %s.%s测试通过========", iTestResult.getInstanceName(), iTestResult.getName()) );
+        super.onTestSuccess(iTestResult);
+        log.info(String.format("========用例 %s.%s测试通过========", iTestResult.getInstanceName(), iTestResult.getName()));
         ThreadContext.remove("CaseName");
     }
 
@@ -60,18 +60,18 @@ public class TestLogListener extends TestListenerAdapter {
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-        super.onTestSkipped( iTestResult );
-        log.info( String.format( "========用例 %s.%s跳过测试========", iTestResult.getInstanceName(), iTestResult.getName()) );
+        super.onTestSkipped(iTestResult);
+        log.info(String.format("========用例 %s.%s跳过测试========", iTestResult.getInstanceName(), iTestResult.getName()));
         ThreadContext.remove("CaseName");
     }
 
     @Override
     public void onFinish(ITestContext iTestContext) {
-        super.onFinish( iTestContext );
+        super.onFinish(iTestContext);
 //        ThreadContext.remove("logid");
         ThreadContext.remove("ROUTINGKEY");
         ThreadContext.remove("logid");
-        log.info( String.format( "====================测试线程：%s测试结束====================", iTestContext.getName() ) );
+        log.info(String.format("====================测试线程：%s测试结束====================", iTestContext.getName()));
         ThreadContext.remove("ThreadName");
     }
 }

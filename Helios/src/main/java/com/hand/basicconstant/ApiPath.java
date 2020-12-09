@@ -137,7 +137,8 @@ public class ApiPath {
         public  static  final  String  MY_EXPENSEREPORT_LIST="/api/expense/reports/search/my";
 //        我的申请单列表
         public  static  final  String  MY_APPLICATION_LIST="/api/applications/v3/search";
-
+        //获取费用的参与人信息
+        public static final String EXPENSE_PARTICIPANT = "/api/expense/participantsList";
 //        确认付款操作
         public  static  final  String  CONFIRM_PAYMENT="/api/reimbursement/batch/pay/finished/confirm";
 //        获得费用控件明细

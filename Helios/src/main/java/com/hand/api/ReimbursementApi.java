@@ -202,9 +202,8 @@ public class ReimbursementApi extends BaseRequest {
      */
     public  JsonObject createExpenseReport(Employee employee, JsonObject formdetal,FormComponent component, String jobId, String userOID) throws HttpStatusException {
         JsonObject responseEntity=null;
-        JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
         String url = employee.getEnvironment().getUrl()+ ApiPath.NEW_EXPENSE_REPORT;
-        JsonArray  custFormValues = processCustFormValues(employee,customFormFields,component);
+        JsonArray  custFormValues = processCustFormValues(employee,formdetal,component);
         formdetal.add("custFormValues",custFormValues);
         formdetal.addProperty("visibleUserScope",1001);
         formdetal.addProperty("timeZoneOffset",480);
@@ -236,7 +235,7 @@ public class ReimbursementApi extends BaseRequest {
         if(component==null){
             custFormValues = processCustFormValues(employee,customFormFields);
         }else{
-            custFormValues = processCustFormValues(employee,customFormFields,component);
+            custFormValues = processCustFormValues(employee,formdetal,component);
         }
         formdetal.remove("custFormValues");
         formdetal.remove("customFormFields");
@@ -451,9 +450,9 @@ public class ReimbursementApi extends BaseRequest {
      * @return
      * @throws HttpStatusException
      */
-    JsonArray processCustFormValues(Employee employee, JsonArray custFormValues, FormComponent component) throws HttpStatusException {
-//        JsonArray custFormValues=formdetal.get("customFormFields").getAsJsonArray();
-//        String formOID=formdetal.get("formOID").getAsString();
+    JsonArray processCustFormValues(Employee employee, JsonObject formdetal, FormComponent component) throws HttpStatusException {
+        JsonArray custFormValues=formdetal.get("customFormFields").getAsJsonArray();
+        String formOID=formdetal.get("formOID").getAsString();
         for (int i=0;i<custFormValues.size();i++)
         {
             JsonObject data= custFormValues.get(i).getAsJsonObject();
@@ -550,15 +549,21 @@ public class ReimbursementApi extends BaseRequest {
 //                    String  city=componentQueryApi.locationSearch(employee,"西安").get(0).getAsJsonObject().get("city").getAsString();
                     data.addProperty("value", component.getCity());
                     break;
-                case "参与人员":                   //参与人
-//                    JsonObject Participant=componentQueryApi.getSelectParticipant(employee,formOID).get(0).getAsJsonObject();
-//                    JsonArray ja0 = new JsonArray();
-//                    JsonObject myobj = new JsonObject();
-//                    myobj.addProperty("userOID",Participant.get("userOID").getAsString());
-//                    myobj.addProperty("fullName",Participant.get("fullName").getAsString());
-//                    myobj.addProperty("participantOID",Participant.get("userOID").getAsString());
-//                    ja0.add(myobj);
-                    data.addProperty("value",component.getParticipant());
+                case "参与人员":
+                    if(component.getParticipant()!=null){
+                        JsonArray array = new JsonArray();
+                        if(component.getParticipant().getClass().equals(String [].class)){
+                            String [] participant = (String [])component.getParticipant();
+                            for(int j=0;j<participant.length;j++){
+                                array.add(componentQueryApi.getParticipant(employee,formOID,participant[j]));
+                            }
+                            data.addProperty("value",array.toString());
+                        }
+                        if(component.getParticipant().getClass().equals(String.class)){
+                            String participant = (String) component.getParticipant();
+                            data.addProperty("value",participant);
+                        }
+                    }
                     break;
                 case "图片":      //图片
                         data.addProperty("value", component.getImage().toString());

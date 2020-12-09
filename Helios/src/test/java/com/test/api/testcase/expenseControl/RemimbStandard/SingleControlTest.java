@@ -58,7 +58,7 @@ public class SingleControlTest extends BaseTest {
         //config base standard, exist default control item
         StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,true,rules,ruleOID);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",employee.getFullName()).get("expenseReportOID");
+        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
         //新建费用
         String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1);
         map.put("ruleOID",ruleOID);

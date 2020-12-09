@@ -6,11 +6,11 @@
     <parameter name="phoneNumber" value="${phoneNumber}"/>
     <parameter name="passWord" value="rr123456"/>
 
-    <test verbose="10" preserve-order="true" name="报销标准-汇总校验">
-        <classes>
-            <class name="com.test.api.testcase.expenseControl.RemimbStandard.SummaryControlTest"/>
-        </classes>
-    </test>
+    <!--<test verbose="10" preserve-order="true" name="报销标准-汇总校验">-->
+        <!--<classes>-->
+            <!--<class name="com.test.api.testcase.expenseControl.RemimbStandard.SummaryControlTest"/>-->
+        <!--</classes>-->
+    <!--</test>-->
 
     <test verbose="10" preserve-order="true" name="报销单提交管控测试">
         <classes>

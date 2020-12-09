@@ -325,8 +325,22 @@ public class ExpenseApi extends BaseRequest{
                 case  "LOCATION":              //城市控件
                     data.addProperty("value", component.getCity());
                     break;
-                case  "PARTICIPANTS":                 //参与人
-                    data.addProperty("value",component.getParticipants());
+                case  "PARTICIPANTS"://参与人
+                    if(component.getParticipants()!=null){
+                        JsonArray array = new JsonArray();
+                        //参与人员
+                        if(component.getParticipants().getClass().equals(String [].class)){
+                            String [] participant = (String [])component.getParticipants();
+                            for(int j=0;j<participant.length;j++){
+                                array.add(setParticipant(employee,expenseReportOID,participant[j]));
+                            }
+                            data.addProperty("value",array.toString());
+                        }
+                        if(component.getParticipants().getClass().equals(String.class)){
+                            String participant = (String) component.getParticipants();
+                            data.addProperty("value",participant);
+                        }
+                    }
                     break;
                 case  "PARTICIPANT":                 //同行人
                     data.addProperty("value",component.getParticipant());
@@ -544,4 +558,42 @@ public class ExpenseApi extends BaseRequest{
         return new JsonParser().parse(res).getAsJsonArray().get(0).getAsJsonObject();
     }
 
+    /**
+     * 获取费用上的参与人信息
+     * @param employee
+     * @param expenseReportOID
+     * @param keyWord
+     */
+    public JsonObject getExpenseParticipant(Employee employee,String expenseReportOID,String keyWord) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.EXPENSE_PARTICIPANT;
+        Map<String,String> urlParam=new HashMap<>();
+        urlParam.put("expenseReportOId",expenseReportOID);
+        urlParam.put("page","0");
+        urlParam.put("size","10");
+        urlParam.put("keyword",keyWord);
+        urlParam.put("keywordLable",keyWord);
+        urlParam.put("ownerOId",employee.getUserOID());
+        urlParam.put("selectRange","3");
+        String res = doGet(url,getHeader(employee.getAccessToken()),urlParam,employee);
+        return new JsonParser().parse(res).getAsJsonArray().get(0).getAsJsonObject();
+    }
+
+    /**
+     * 组装
+     * @param employee
+     * @param expenseReportOID
+     * @param keyWords
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject setParticipant(Employee employee,String expenseReportOID,String keyWords) throws HttpStatusException {
+        JsonObject participants = getExpenseParticipant(employee,expenseReportOID,keyWords);
+        JsonObject participant = new JsonObject();
+        participant.addProperty("userOID",participants.get("userOID").getAsString());
+        participant.addProperty("fullName",participants.get("fullName").getAsString());
+        participant.addProperty("participantOID",participants.get("userOID").getAsString());
+        participant.addProperty("highOff", (String) null);
+        participant.addProperty("avatar",(String) null);
+        return participant;
+    }
 }

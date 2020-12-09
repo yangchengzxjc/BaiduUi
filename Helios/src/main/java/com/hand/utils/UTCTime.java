@@ -22,6 +22,7 @@ public class UTCTime {
     private static final String time = "HH:mm:ss";
     private static final String UTC_FORMATTER_PATTERN17 = "yyyy-MM-dd'T'00:00:00'Z'";
     private static final String UTC_FORMATTER_PATTERN118 = "yyyy-MM-dd'T'23:59:59'Z'";
+    private static final String BEIJING_YEAR = "yyyy";
 
     /**
      * 返回北京时间的任意日期
@@ -195,7 +196,7 @@ public class UTCTime {
      * @param   "yyyy-MM-dd'T'16:00:00'Z'";  -> yyyyMM
      * @return
      */
-    public static String utcTObjmoth(String utc, int day){
+    public static String utcTObjmonth(String utc, int day){
         //格式化为北京时间
         DateTimeFormatter fmt = DateTimeFormat.forPattern(BEIJING_DATE);
         DateTime date = DateTime.parse(utc).plusDays(day);
@@ -213,4 +214,31 @@ public class UTCTime {
         DateTime date = DateTime.parse(utc);
         return fmt.print(date);
     }
+
+    /**
+     * 判断是否是月末了
+     * @param date
+     * @return
+     */
+    public static boolean isMonthTail(String date){
+        if(date.substring(6).equals("28") ||date.substring(6).equals("29") ||date.substring(6).equals("30")||date.substring(6).equals("31")){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * Utc时间转北京年份
+     * @param   "yyyy-MM-dd'T'16:00:00'Z'";  -> yyyy
+     * @return
+     */
+    public static String utcTObjyear(String utc, int day){
+        //格式化为北京时间
+        DateTimeFormatter fmt = DateTimeFormat.forPattern(BEIJING_YEAR);
+        DateTime date = DateTime.parse(utc).plusDays(day);
+        return fmt.print(date);
+    }
+
+
 }

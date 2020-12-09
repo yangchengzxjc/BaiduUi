@@ -7,7 +7,6 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.employeeInfoDto.EmployeeDTO;
 import com.hand.basicconstant.BaseConstant;
-import com.hand.basicconstant.CardType;
 import com.hand.basicconstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.PropertyReader;
@@ -22,7 +21,6 @@ import org.testng.annotations.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 
 public class SyncEmployee extends BaseTest {

@@ -17,18 +17,18 @@ import java.util.*;
  * @DATE : 2019/4/23 15:25
  **/
 
-public class TestReportListener implements IReporter{
+public class TestReportListener implements IReporter {
     // 日期格式化
     private static Date date = new Date();
-    private static SimpleDateFormat simpleDateFormat  = new SimpleDateFormat("yyyyMMdd-HHmmss");
-    private static String reportdate = simpleDateFormat .format(date);
+    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
+    private static String reportdate = simpleDateFormat.format(date);
     private static String getReportName = "汇联易自动化测试报告" + reportdate;
 
     // 定义html模板所在路径
     private String templatePath = this.getClass().getResource("/").getPath() + "report/template.html";
     // 定义报告生成的路径
-    private String reportDirPath = System.getProperty("user.dir") + File.separator +"target" + File.separator + "test-output" + File.separator + "report";
-    private String reportPath = reportDirPath  + File.separator + getReportName + ".html";
+    private String reportDirPath = System.getProperty("user.dir") + File.separator + "target" + File.separator + "test-output" + File.separator + "report";
+    private String reportPath = reportDirPath + File.separator + getReportName + ".html";
 
     private String name = "DemoTest";
     private int testsPass;
@@ -38,9 +38,8 @@ public class TestReportListener implements IReporter{
     private long totalTime;
     private String project = "Helios";
     private String browseNumber = "";
-    private String environment = "" ;
+    private String environment = "";
 //    private String language = "";
-
 
 
     @Override
@@ -58,14 +57,14 @@ public class TestReportListener implements IReporter{
             System.out.println("browseNumber:" + suite.getParameter("browseNumber"));
             System.out.println("language:" + suite.getParameter("language"));
 */
-            if(suite.getParameter(environment)==null)
-            if(suite.getParameter("environment").equals("uat")){
+//            if (suite.getParameter(environment) == null)
+            if (suite.getParameter("environment").equalsIgnoreCase("uat")) {
                 this.environment = "UAT";
-            }else if(suite.getParameter("environment").equals("stage")){
+            } else if (suite.getParameter("environment").equalsIgnoreCase("stage")) {
                 this.environment = "STAGE";
-            }else if(suite.getParameter("environment").equals("console")){
+            } else if (suite.getParameter("environment").equalsIgnoreCase("console")) {
                 this.environment = "CONSOLE";
-            }else if(suite.getParameter("environment").equals("console-tc")){
+            } else if (suite.getParameter("environment").equalsIgnoreCase("console-tc")) {
                 this.environment = "CONSOLE-TC";
             }
 
@@ -123,8 +122,8 @@ public class TestReportListener implements IReporter{
             int index = 0;
             for (ITestResult result : list) {
                 String testName = result.getMethod().getMethodName();
-                if(index==0){
-                    SimpleDateFormat formatter = new SimpleDateFormat ("yyyyMMddHHmmssSSS");
+                if (index == 0) {
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmssSSS");
                     beginTime = formatter.format(new Date(result.getStartMillis()));
                     index++;
                 }
@@ -136,7 +135,7 @@ public class TestReportListener implements IReporter{
                     log.set(i, log.get(i).replaceAll("\"", "\\\\\""));
                 }
                 Throwable throwable = result.getThrowable();
-                if(throwable!=null){
+                if (throwable != null) {
                     log.add(throwable.toString().replaceAll("\"", "\\\\\""));
                     StackTraceElement[] st = throwable.getStackTrace();
                     for (StackTraceElement stackTraceElement : st) {
@@ -145,11 +144,12 @@ public class TestReportListener implements IReporter{
                 }
                 ReportInfo info = new ReportInfo();
                 info.setName(testName);
-                info.setSpendTime(spendTime+"ms");
+                info.setSpendTime(spendTime + "ms");
                 info.setStatus(status);
                 info.setClassName(result.getInstanceName());
                 info.setMethodName(result.getName());
-                info.setDescription(result.getMethod().getDescription());
+                info.setDescription(result.getMethod().getDescription() + "-" + result.getParameters()[0].toString() + " " + result.getParameters()[1].toString());
+//                info.setParameters(result.getParameters());
                 info.setLog(log);
                 listInfo.add(info);
             }
@@ -159,13 +159,13 @@ public class TestReportListener implements IReporter{
             result.put("testPass", testsPass);
             result.put("testFail", testsFail);
             result.put("testSkip", testsSkip);
-            result.put("testAll", testsPass+testsFail+testsSkip);
+            result.put("testAll", testsPass + testsFail + testsSkip);
             result.put("beginTime", beginTime);
-            result.put("totalTime", totalTime+"ms");
+            result.put("totalTime", totalTime + "ms");
             result.put("testResult", listInfo);
             Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
             String template = this.read(reportDirPath, templatePath);
-            BufferedWriter output = new BufferedWriter( new OutputStreamWriter(new FileOutputStream(new File(reportPath)),"UTF-8"));
+            BufferedWriter output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(reportPath)), "UTF-8"));
             template = template.replace("${resultData}", gson.toJson(result));
             output.write(template);
             output.flush();
@@ -206,6 +206,8 @@ public class TestReportListener implements IReporter{
         private String spendTime;
 
         private String status;
+
+//        private Object[] parameters;
 
         private List<String> log;
 
@@ -265,6 +267,13 @@ public class TestReportListener implements IReporter{
             this.description = description;
         }
 
+//        public Object[] getParameters() {
+//            return parameters;
+//        }
+//
+//        public void setParameters(Object[] parameters) {
+//            this.parameters = parameters;
+//        }
     }
 
     private String read(String reportDirPath, String templatePath) {
@@ -273,7 +282,7 @@ public class TestReportListener implements IReporter{
         if (!reportDir.exists() && !reportDir.isDirectory()) {
             reportDir.mkdirs();
         }
-        File templateFile = new File( templatePath );
+        File templateFile = new File(templatePath);
         InputStream inputStream = null;
         StringBuffer stringBuffer = new StringBuffer();
         try {

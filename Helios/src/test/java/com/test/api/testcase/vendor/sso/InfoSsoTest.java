@@ -67,7 +67,7 @@ public class InfoSsoTest extends BaseTest {
         String resStr = vendorInfo.vendorInfoSso(employee, supplierOID, vendorsName, businessCode, pageType, vendorType,
                 itineraryDirection, lng, lat, direction, orderId, startCity, endCity,
                 startDate, endDate, forCorp, flightSearchType);
-        // assert result todo
+        // assert result
         Assert.assertTrue(resStr.contains(res_expect));
     }
 }

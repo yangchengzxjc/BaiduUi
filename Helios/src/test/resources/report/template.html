@@ -7052,20 +7052,26 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <div class="input-group panel-heading" style="width: 100%; background-color: #1ab394; margin-bottom: 10px; text-align: left; font-family: Consolas;">
+                    <div class="input-group panel-heading"
+                         style="width: 100%; background-color: #1ab394; margin-bottom: 10px; text-align: left; font-family: Consolas;">
                         <label style="color: snow">测试类:</label>
-                        <select class="chosen-select form-control" data-placeholder="----------" style="width: 300px;" name="filterClass" id="filterClass">
+                        <select class="chosen-select form-control" data-placeholder="----------" style="width: 300px;"
+                                name="filterClass" id="filterClass">
                             <option value="">----------</option>
                         </select>
                         <label style="color: snow;width: 40px;text-align:right;">结果:</label>
-                        <select class="chosen-select form-control" data-placeholder="----------" style="width: 300px;" name="filterResult" id="filterResult">
+                        <select class="chosen-select form-control" data-placeholder="----------" style="width: 300px;"
+                                name="filterResult" id="filterResult">
                             <option value="">----------</option>
                         </select>
                         <div style="float: right">
                             <label class="form-control">
-                                <span class="text-navy">用例数: </span><span class="text-navy b-r" id="filterAll"></span><span> | </span>
-                                <span style="color: green">成功: </span><span style="color: green" id="filterOk"></span><span> | </span>
-                                <span class="text-danger">失败: </span><span class="text-danger" id="filterFail"></span><span> | </span>
+                                <span class="text-navy">用例数: </span><span class="text-navy b-r"
+                                                                          id="filterAll"></span><span> | </span>
+                                <span style="color: green">成功: </span><span style="color: green"
+                                                                            id="filterOk"></span><span> | </span>
+                                <span class="text-danger">失败: </span><span class="text-danger"
+                                                                           id="filterFail"></span><span> | </span>
                                 <span class="text-warning">跳过: </span><span class="text-warning" id="filterSkip"></span>
                             </label>
                         </div>
@@ -7073,7 +7079,15 @@
                     <table class="table table-bordered" style="word-wrap:break-word;word-break:break-all;">
                         <thead>
                         <tr>
-                            <th>编号</th><th>用例名称</th><th>测试类</th><th>测试方法</th><th>用例描述</th><th>耗时</th><th>结果</th><th>日志</th>
+                            <th>编号</th>
+                            <th>用例名称</th>
+                            <th>测试类</th>
+                            <th>测试方法</th>
+                            <th>用例描述</th>
+                            <!-- <th>测试数据</th>-->
+                            <th>耗时</th>
+                            <th>结果</th>
+                            <th>日志</th>
                         </tr>
                         </thead>
                         <tbody id="detailBody">
@@ -7088,7 +7102,7 @@
 
 <div style="position:fixed;width:auto;height:auto;left:91%;top:93%;" id="scroll">
     <button type="button" class="btn btn-default btn-sm" style="color:ghostwhite;opacity:0.8;">
-        <a href="javascript:scrollTo(0,0);"style="font-weight:bold;color:#1ab394;opacity:0.9;">
+        <a href="javascript:scrollTo(0,0);" style="font-weight:bold;color:#1ab394;opacity:0.9;">
             <span class="glyphicon glyphicon-open"></span>
             返回顶部
         </a>
@@ -7100,14 +7114,38 @@
 <script src="https://cdn.bootcss.com/echarts/4.4.0-rc.1/echarts.js"></script>
 <script src="https://cdn.bootcss.com/chosen/1.8.2/chosen.jquery.js"></script>
 <script type="text/javascript">
-    $("#scroll").click(function(){
-        $(document).scrollTop(0,0);
+    // $("#scroll").click(function(){
+    //     $(document).scrollTop(0,0);
+    // });
+    // 优化回到顶部按钮逻辑
+    $(document).ready(function () {
+        //首先将#scroll隐藏
+        $("#scroll").hide();
+        //当滚动条的位置处于距顶部50像素以下时，btn出现，否则消失
+        $(function () {
+            $(window).scroll(function () {
+                if ($(window).scrollTop() > 50) {
+                    $("#scroll").fadeIn(200);
+                } else {
+                    $("#scroll").fadeOut(200);
+                }
+            });
+            //当点击btn后，回到页面顶部位置
+            $("#scroll").click(function () {
+                $('body,html').animate({
+                        scrollTop: 0
+                    },
+                    500);
+                return false;
+            });
+        });
     });
 </script>
 <script type="text/javascript">
     function $childNode(o) {
         return window.frames[o]
     }
+
     function animationHover(o, e) {
         o = $(o), o.hover(function () {
             o.addClass("animated " + e)
@@ -7117,6 +7155,7 @@
             }, 2e3)
         })
     }
+
     function WinMove() {
         var o = "[class*=col]", e = ".ibox-title", i = "[class*=col]";
         $(o).sortable({
@@ -7127,27 +7166,28 @@
             opacity: .8
         }).disableSelection()
     }
+
     var $parentNode = window.parent.document;
     if ($(".tooltip-demo").tooltip({
-            selector: "[data-toggle=tooltip]",
-            container: "body"
-        }), $(".modal").appendTo("body"), $("[data-toggle=popover]").popover(), $(".collapse-link").click(function () {
-            var o = $(this).closest("div.ibox"), e = $(this).find("i"), i = o.find("div.ibox-content");
-            i.slideToggle(200), e.toggleClass("fa-chevron-up").toggleClass("fa-chevron-down"), o.toggleClass("").toggleClass("border-bottom"), setTimeout(function () {
-                o.resize(), o.find("[id^=map-]").resize()
-            }, 50)
-        }), $(".close-link").click(function () {
-            var o = $(this).closest("div.ibox");
-            o.remove()
-        }), top == this) {
+        selector: "[data-toggle=tooltip]",
+        container: "body"
+    }), $(".modal").appendTo("body"), $("[data-toggle=popover]").popover(), $(".collapse-link").click(function () {
+        var o = $(this).closest("div.ibox"), e = $(this).find("i"), i = o.find("div.ibox-content");
+        i.slideToggle(200), e.toggleClass("fa-chevron-up").toggleClass("fa-chevron-down"), o.toggleClass("").toggleClass("border-bottom"), setTimeout(function () {
+            o.resize(), o.find("[id^=map-]").resize()
+        }, 50)
+    }), $(".close-link").click(function () {
+        var o = $(this).closest("div.ibox");
+        o.remove()
+    }), top == this) {
     }
 </script>
 <script type="text/javascript">
     var resultData = ${resultData};
 
-    function clickRow(obj){
-        $("#detailBody").children("tr").attr("style","font-family: Consolas");
-        $(obj).attr("style","font-family: Consolas; background-color: #b0d877");
+    function clickRow(obj) {
+        $("#detailBody").children("tr").attr("style", "font-family: Consolas");
+        $(obj).attr("style", "font-family: Consolas; background-color: #b0d877");
     }
 
     function details(obj) {
@@ -7170,30 +7210,33 @@
         }
 
     }
+
     $(function () {
         $("#testName").text(resultData["testName"]);
         $("#testPass").text(resultData["testPass"]);
         $("#testFail").text(resultData["testFail"]);
         $("#testSkip").text(resultData["testSkip"]);
         $("#testAll").text(resultData["testAll"]);
-        function formatBeginTime (time) {
-            var beginTime = ''+ time.slice(0, 4) + '-'
-                + time.slice(4,6) + '-'
-                + time.slice(6,8) + " "
-                + time.slice(8,10) + ":"
-                + time.slice(10,12) + ":"
-                + time.slice(12,14) + "";
+
+        function formatBeginTime(time) {
+            var beginTime = '' + time.slice(0, 4) + '-'
+                + time.slice(4, 6) + '-'
+                + time.slice(6, 8) + " "
+                + time.slice(8, 10) + ":"
+                + time.slice(10, 12) + ":"
+                + time.slice(12, 14) + "";
             return beginTime
         }
 
         $("#beginTime").text(formatBeginTime(resultData["beginTime"]));
 
-        function formatTotalTime (time) {
+        function formatTotalTime(time) {
             var totalTime = parseInt(time);
             var minutes = parseInt((totalTime % (1000 * 60 * 60)) / (1000 * 60));//分
             var seconds = parseInt((totalTime % (1000 * 60)) / 1000);//秒
+            var millisecond = Math.floor(totalTime) % 1000;
 
-            return minutes + "min " + seconds + "s ";
+            return minutes + "min " + seconds + "s " + millisecond;
         }
 
         $("#totalTime").text(formatTotalTime(resultData["totalTime"]));
@@ -7250,8 +7293,9 @@
                         "<td>" + n["className"] + "</td>" +
                         "<td>" + n["methodName"] + "</td>" +
                         "<td>" + n["description"] + "</td>" +
+                        // "<td>" + n["parameters"] + "</td>" +
                         //"<td>" + n["spendTime"] + "</td>" +
-                        "<td>" + formatTotalTime( n["spendTime"]) + "</td>" +
+                        "<td>" + formatTotalTime(n["spendTime"]) + "</td>" +
                         status + "<td><button type='button' onclick='details(this)' buttonIndex='" + i + "' class='btn btn-primary btn-xs' style='margin-bottom: 0px'>展开</button></td></tr>";
                     $("#detailBody").append(tr);
                 }
@@ -7305,8 +7349,8 @@
                             {value: resultData["testSkip"], name: '跳过'},
                             {value: resultData["testPass"], name: '成功'}
                         ],
-                        label:{
-                            formatter:'{b} : {c} ({d}%)'
+                        label: {
+                            formatter: '{b} : {c} ({d}%)'
                         },
                         itemStyle: {
                             emphasis: {

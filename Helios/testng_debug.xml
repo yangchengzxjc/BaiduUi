@@ -11,9 +11,9 @@
         <parameter name="passWord" value="hly123456"></parameter>
 
         <classes>
-            <class name="com.test.api.testcase.vendor.VendorSSOTest">
+            <class name="com.test.api.testcase.vendor.sso.InfoSsoTest">
                 <methods>
-                    <include name="ssoTest2"></include>
+                    <include name="ssoTest"></include>
                 </methods>
             </class>
         </classes>

@@ -28,7 +28,8 @@
 
     <listeners>
         <listener class-name="com.test.listener.TestLogListener"/>
-        <listener class-name="com.test.listener.TestReportListener"/>
+<!--        <listener class-name="com.test.listener.TestReportListener"/>-->
+        <listener class-name="com.test.listener.ExtentTestNGIReporterListener"></listener>
     </listeners>
 </suite>
 

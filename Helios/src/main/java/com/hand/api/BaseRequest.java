@@ -11,6 +11,7 @@ import com.hand.basicObject.Employee;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.http.HttpStatus;
+import org.testng.Reporter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -212,6 +213,11 @@ public class BaseRequest {
             default:
                 log.info("未知错误，还需定位");
         }
+        Reporter.log("req url: " + url);
+        Reporter.log("req headersParams: " + headersParams.toString());
+        Reporter.log("req urlMapParams: " + urlMapParams.toString());
+        Reporter.log("res code: " + code);
+        Reporter.log("res data: " + res);
         return res;
     }
 

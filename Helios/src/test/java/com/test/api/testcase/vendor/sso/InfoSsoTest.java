@@ -4,7 +4,6 @@ import com.hand.api.VendorInfoApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.test.BaseTest;
-import com.test.api.method.VendorMethod.VendorInfo;
 import org.testng.Assert;
 import org.testng.annotations.*;
 

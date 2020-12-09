@@ -67,8 +67,8 @@ public class PeriodControlTest extends BaseTest {
         map.put("ruleOID",ruleOID);
         map.put("reportOID1",reportOID1);
         map.put("invoiceOID1",invoiceOID1);
-        String data = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
-        String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 250.00，超标：CNY 50.00。",rules.getMessage(),data,standardRulesItem.getAmount());
+        String date = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
+        String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 250.00，超标：CNY 50.00。",rules.getMessage(),date,standardRulesItem.getAmount());
         log.info("标签:{}",label);
         assert expenseReport.checkSubmitLabel(employee, reportOID1, "5001",label);
     }
@@ -114,8 +114,9 @@ public class PeriodControlTest extends BaseTest {
         map.put("invoiceOID1",invoiceOID1);
         map.put("invoiceOID2",invoiceOID2);
         map.put("reportOID1",reportOID1);
-        String data = UTCTime.utcTObjmonth(UTCTime.getUtcTime(0,0),0);
-        String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 500.00，超标：CNY 300.00。",rules.getMessage(),data,standardRulesItem.getAmount());
+        String year = UTCTime.utcTObjyear(UTCTime.getUtcTime(0,0),0);
+        String quarter = UTCTime.isQuarter(UTCTime.getUtcTime(0,0));
+        String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 500.00，超标：CNY 300.00。",rules.getMessage(),year+quarter,standardRulesItem.getAmount());
         log.info("标签：{}",label);
         assert expenseReport.checkSubmitLabel(employee,reportOID1,"5001",label);
         assert invoice.checkInvoiceLabel(employee,invoiceOID1,"EXPENSE_STANDARD_EXCEEDED_WARN",label);
@@ -140,8 +141,8 @@ public class PeriodControlTest extends BaseTest {
         map.put("invoiceOID1",invoiceOID1);
         map.put("invoiceOID2",invoiceOID2);
         map.put("reportOID1",reportOID1);
-        String data = UTCTime.utcTObjyear(UTCTime.getUtcTime(0,0),0);
-        String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 500.00，超标：CNY 300.00。",rules.getMessage(),data+"年",standardRulesItem.getAmount());
+        String date = UTCTime.utcTObjyear(UTCTime.getUtcTime(0,0),0);
+        String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 500.00，超标：CNY 300.00。",rules.getMessage(),date+"年",standardRulesItem.getAmount());
         log.info("标签：{}",label);
         assert expenseReport.checkSubmitLabel(employee,reportOID1,"5001",label);
         assert invoice.checkInvoiceLabel(employee,invoiceOID1,"EXPENSE_STANDARD_EXCEEDED_WARN",label);

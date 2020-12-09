@@ -240,5 +240,18 @@ public class UTCTime {
         return fmt.print(date);
     }
 
-
+    public static String isQuarter(String utc){
+        String beijing=utcToBJDate(utc,0);
+        if(("01,02,03").contains(beijing.split("-")[1])){
+            return"Q1";
+        }
+        if(("04,05,06").contains(beijing.split("-")[1])){
+            return"Q2";
+        }
+        if(("07,08,09").contains(beijing.split("-")[1])){
+            return"Q3";
+        }else {
+            return "Q4";
+        }
+    }
 }

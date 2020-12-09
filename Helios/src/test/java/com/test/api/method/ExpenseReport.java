@@ -189,8 +189,6 @@ public class ExpenseReport {
     public String expenseReportSubmit(Employee employee,String expenseReportOID) throws HttpStatusException {
         String submitSuccess="";
         reimbursementApi.validate(employee,expenseReportOID);
-        log.info("报销单提交:{}",reimbursementApi.expenseReportSubmit(employee,getExpenseReportDetail(employee,expenseReportOID),false,"",expenseReportInvoice.
-                getInvoiceDetail(employee,expenseReportOID)).get("submitSuccess").getAsString());
         if(reimbursementApi.expenseReportSubmit(employee,getExpenseReportDetail(employee,expenseReportOID),false,"",expenseReportInvoice.
                 getInvoiceDetail(employee,expenseReportOID)).get("submitSuccess").getAsString().equalsIgnoreCase("false")){
            submitSuccess = reimbursementApi.enforceExpenseReportSubmit(employee,getExpenseReportDetail(employee,expenseReportOID),false,"",expenseReportInvoice.
@@ -431,4 +429,14 @@ public class ExpenseReport {
         }
     }
 
+    /**
+     * 查看报销单 的状态 1001 编辑中  1002 审批中 1003 是审批通过
+     * @param employee
+     * @param expenseReportOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public Integer getReportStatus(Employee employee,String expenseReportOID) throws HttpStatusException {
+       return getExpenseReportDetail(employee,expenseReportOID).get("status").getAsInt();
+    }
 }

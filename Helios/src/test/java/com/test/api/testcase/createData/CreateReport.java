@@ -74,7 +74,7 @@ public class CreateReport extends BaseTest {
         //添加差旅行程(飞机 酒店 火车等行车均已经支持)
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
         TravelApplicationPage travelApplicationPage = new TravelApplicationPage();
-        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, SupplierOID.CTRIP_AIR,"西安市","北京",null,UTCTime.getNowStartUtcDate());
+        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, SupplierOID.CTRIPAIR.getSupplierOID(),"西安市","北京",null,UTCTime.getNowStartUtcDate());
         flightItineraries.add(flightItinerary);
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
         //行程会自动带出预算费用。

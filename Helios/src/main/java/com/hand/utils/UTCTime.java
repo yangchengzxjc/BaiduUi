@@ -22,6 +22,7 @@ public class UTCTime {
     private static final String time = "HH:mm:ss";
     private static final String UTC_FORMATTER_PATTERN17 = "yyyy-MM-dd'T'00:00:00'Z'";
     private static final String UTC_FORMATTER_PATTERN118 = "yyyy-MM-dd'T'23:59:59'Z'";
+    private static final String BEIJING_YEAR = "yyyy";
 
     /**
      * 返回北京时间的任意日期
@@ -214,7 +215,6 @@ public class UTCTime {
         return fmt.print(date);
     }
 
-
     /**
      * 判断是否是月末了
      * @param date
@@ -225,6 +225,33 @@ public class UTCTime {
             return true;
         }else{
             return false;
+        }
+    }
+
+    /**
+     * Utc时间转北京年份
+     * @param   "yyyy-MM-dd'T'16:00:00'Z'";  -> yyyy
+     * @return
+     */
+    public static String utcTObjyear(String utc, int day){
+        //格式化为北京时间
+        DateTimeFormatter fmt = DateTimeFormat.forPattern(BEIJING_YEAR);
+        DateTime date = DateTime.parse(utc).plusDays(day);
+        return fmt.print(date);
+    }
+
+    public static String isQuarter(String utc){
+        String beijing=utcToBJDate(utc,0);
+        if(("01,02,03").contains(beijing.split("-")[1])){
+            return"Q1";
+        }
+        if(("04,05,06").contains(beijing.split("-")[1])){
+            return"Q2";
+        }
+        if(("07,08,09").contains(beijing.split("-")[1])){
+            return"Q3";
+        }else {
+            return "Q4";
         }
     }
 }

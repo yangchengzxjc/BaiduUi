@@ -579,6 +579,9 @@ public class ReimbSubmissionControlTest extends BaseTest {
                     reimbSubmissionControl.deleteReimbSubmissionRules(employee, map.get("ruleOID"));
                     break;
                 case "reportOID":
+                    if (expenseReport.getReportStatus(employee, map.get("reportOID")) == 1002) {
+                        expenseReport.withdraw(employee,map.get("reportOID"));
+                    }
                     expenseReport.deleteExpenseReport(employee, map.get("reportOID"));
                     break;
                 case "reportOID2":

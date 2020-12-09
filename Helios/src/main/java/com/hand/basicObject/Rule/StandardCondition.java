@@ -11,6 +11,7 @@ import lombok.Data;
 public class StandardCondition {
 
     private String rightFieldCode;
+    // 1001 ->"+"   1004->"*"
     private Integer operatorId;
     //private OperatorEnum operator;
     //自定义正数

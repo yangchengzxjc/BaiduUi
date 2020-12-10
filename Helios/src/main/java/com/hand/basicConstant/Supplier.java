@@ -134,6 +134,21 @@ public enum Supplier {
     //    private String category;
     private String expectUrl;
 
+    /**
+     * 匹配supplierOID
+     * @param venName
+     * @return
+     */
+    public static String getSupplier(String venName){
+        Supplier[] suppliers = values();
+        for (Supplier supplier: suppliers){
+            if(supplier.getName().equals(venName)){
+                return supplier.getSupplierOID();
+            }
+        }
+        return null;
+    }
+
     public static Supplier getInfoSso(String vendorName) {
         for (Supplier info : Supplier.values()) {
             if (info.vendorsName.equalsIgnoreCase(vendorName)) {

@@ -94,14 +94,6 @@ public class TestReportListener implements IReporter {
 
     }
 
-/*    @Parameters({"browseNumber","environment", "language"})
-    private void environment(String browseNumber,String environment,String language){
-        this.browseNumber = browseNumber;
-        this.environment = environment;
-        this.language = language;
-    }*/
-
-
     private ArrayList<ITestResult> listTestResult(IResultMap resultMap) {
         Set<ITestResult> results = resultMap.getAllResults();
         return new ArrayList<ITestResult>(results);

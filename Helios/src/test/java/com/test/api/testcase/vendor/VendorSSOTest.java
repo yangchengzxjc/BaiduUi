@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import static com.hand.basicConstant.SupplierOID.*;
+import static com.hand.basicConstant.Supplier.*;
 
 
 /**
@@ -35,12 +35,12 @@ public class VendorSSOTest extends BaseTest {
     @DataProvider(name = "ctripSSO")
     public Object[][] ctripSSO() {
         return new Object[][]{
-                {"CTRIP AIR H5", CTRIPAIR.getSupplierOID(), "H5"},
-                {"CTRIP HOTEL H5", CTRIPHOTEL.getSupplierOID(), "H5"},
-                {"CTRIP TRAIN H5", CTRIPTRAIN.getSupplierOID(), "H5"},
-                {"CTRIP AIR WEB", CTRIPAIR.getSupplierOID(), "web"},
-                {"CTRIP HOTEL WEB", CTRIPHOTEL.getSupplierOID(), "web"},
-                {"CTRIP TRAIN WEB", CTRIPTRAIN.getSupplierOID(), "web"},
+                {"CTRIP AIR H5", CTRIP_AIR.getSupplierOID(), "H5"},
+                {"CTRIP HOTEL H5", CTRIP_HOTEL.getSupplierOID(), "H5"},
+                {"CTRIP TRAIN H5", CTRIP_TRAIN.getSupplierOID(), "H5"},
+                {"CTRIP AIR WEB", CTRIP_AIR.getSupplierOID(), "web"},
+                {"CTRIP HOTEL WEB", CTRIP_HOTEL.getSupplierOID(), "web"},
+                {"CTRIP TRAIN WEB", CTRIP_TRAIN.getSupplierOID(), "web"},
         };
     }
 
@@ -72,12 +72,12 @@ public class VendorSSOTest extends BaseTest {
     @DataProvider(name = "meiYaSSO")
     public Object[][] meiYaSSO() {
         return new Object[][]{
-                {"MEIYA AIR H5", MEIYAAIR.getSupplierOID(), "H5"},
-                {"MEIYA HOTEL H5", MEIYAHOTEL.getSupplierOID(), "H5"},
-                {"MEIYA TRAIN H5", MEIYATRAIN.getSupplierOID(), "H5"},
-                {"MEIYA AIR H5", MEIYAAIR.getSupplierOID(), "web"},
-                {"MEIYA HOTEL H5", MEIYAHOTEL.getSupplierOID(), "web"},
-                {"MEIYA TRAIN H5", MEIYATRAIN.getSupplierOID(), "web"},
+                {"MEIYA AIR H5", MEIYA_FLIGHT.getSupplierOID(), "H5"},
+                {"MEIYA HOTEL H5", MEIYA_HOTEL.getSupplierOID(), "H5"},
+                {"MEIYA TRAIN H5", MEIYA_TRAIN.getSupplierOID(), "H5"},
+                {"MEIYA AIR H5", MEIYA_FLIGHT.getSupplierOID(), "web"},
+                {"MEIYA HOTEL H5", MEIYA_HOTEL.getSupplierOID(), "web"},
+                {"MEIYA TRAIN H5", MEIYA_TRAIN.getSupplierOID(), "web"},
         };
     }
 

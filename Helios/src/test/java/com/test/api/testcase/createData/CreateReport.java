@@ -6,7 +6,7 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;
 import com.hand.basicObject.itinerary.FlightItinerary;
-import com.hand.basicconstant.SupplierOID;
+import com.hand.basicConstant.SupplierOID;
 import com.hand.utils.DocumnetUtil;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;

@@ -1,6 +1,6 @@
 package com.hand.basicObject;
 
-import com.hand.basicconstant.Environment;
+import com.hand.basicConstant.Environment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

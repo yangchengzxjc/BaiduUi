@@ -8,7 +8,7 @@ import com.hand.basicObject.infrastructure.employee.EmployeeExtendComponent;
 import com.hand.basicObject.infrastructure.employee.InfraEmployee;
 import com.hand.basicObject.infrastructure.employee.InfraJob;
 import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoEntity;
-import com.hand.basicconstant.CardType;
+import com.hand.basicConstant.CardType;
 import com.test.api.method.InfraStructure;
 import lombok.extern.slf4j.Slf4j;
 

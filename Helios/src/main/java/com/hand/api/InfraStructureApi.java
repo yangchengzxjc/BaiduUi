@@ -7,14 +7,13 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.infrastructure.employee.InfraEmployee;
 import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoEntity;
-import com.hand.basicconstant.ApiPath;
-import com.hand.basicconstant.HeaderKey;
-import com.hand.basicconstant.ResourceId;
-import com.hand.basicconstant.TmcChannel;
+import com.hand.basicConstant.ApiPath;
+import com.hand.basicConstant.HeaderKey;
+import com.hand.basicConstant.ResourceId;
+import com.hand.basicConstant.TmcChannel;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.json.Json;
 
 import java.util.HashMap;
 import java.util.Map;

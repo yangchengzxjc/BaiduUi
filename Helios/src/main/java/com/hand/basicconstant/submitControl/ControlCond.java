@@ -1,4 +1,4 @@
-package com.hand.basicconstant.submitControl;
+package com.hand.basicConstant.submitControl;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

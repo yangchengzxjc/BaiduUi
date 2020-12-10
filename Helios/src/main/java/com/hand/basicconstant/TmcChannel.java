@@ -1,4 +1,4 @@
-package com.hand.basicconstant;
+package com.hand.basicConstant;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

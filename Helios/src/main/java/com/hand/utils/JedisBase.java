@@ -1,7 +1,7 @@
 package com.hand.utils;
 
 import com.hand.baseMethod.ThreadLocalUtil;
-import com.hand.basicconstant.BaseConstant;
+import com.hand.basicConstant.BaseConstant;
 import lombok.extern.slf4j.Slf4j;
 
 import redis.clients.jedis.Jedis;

@@ -3,7 +3,7 @@ package com.hand.api;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
-import com.hand.basicconstant.ApiPath;
+import com.hand.basicConstant.ApiPath;
 import com.hand.basicObject.Employee;
 
 import java.util.HashMap;

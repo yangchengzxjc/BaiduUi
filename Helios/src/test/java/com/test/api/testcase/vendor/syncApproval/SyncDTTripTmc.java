@@ -11,8 +11,8 @@ import com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity.BookC
 import com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity.Participant;
 import com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity.SyncEntity;
 import com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity.TravelFlightItinerary;
-import com.hand.basicconstant.SupplierOID;
-import com.hand.basicconstant.TmcChannel;
+import com.hand.basicConstant.SupplierOID;
+import com.hand.basicConstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;

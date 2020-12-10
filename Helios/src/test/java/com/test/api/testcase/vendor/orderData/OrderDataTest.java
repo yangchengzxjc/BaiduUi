@@ -4,11 +4,10 @@ import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SettlementBody;
-import com.hand.basicconstant.OrderSettlementDataPath;
-import com.hand.basicconstant.TmcChannel;
+import com.hand.basicConstant.OrderSettlementDataPath;
+import com.hand.basicConstant.TmcChannel;
 
 import com.hand.utils.GsonUtil;
-import com.test.BaseTest;
 import com.test.api.method.Vendor;
 import com.test.api.method.VendorMethod.VendorData;
 import lombok.extern.slf4j.Slf4j;

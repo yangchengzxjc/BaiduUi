@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import static com.hand.basicconstant.SupplierOID.*;
+import static com.hand.basicConstant.SupplierOID.*;
 
 
 /**

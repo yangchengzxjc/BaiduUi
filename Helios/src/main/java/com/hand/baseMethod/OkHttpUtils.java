@@ -3,7 +3,6 @@ package com.hand.baseMethod;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.basicObject.MyResponse;
-import com.hand.basicconstant.FileMediaType;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 

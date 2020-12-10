@@ -1,6 +1,6 @@
 package com.hand.utils;
 
-import com.hand.basicconstant.BaseConstant;
+import com.hand.basicConstant.BaseConstant;
 import java.io.*;
 import java.util.Properties;
 

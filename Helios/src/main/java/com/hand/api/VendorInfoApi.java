@@ -1,9 +1,8 @@
 package com.hand.api;
 
-import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicconstant.ApiPath;
+import com.hand.basicConstant.ApiPath;
 
 import java.util.HashMap;
 import java.util.Map;

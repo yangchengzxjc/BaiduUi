@@ -1,13 +1,11 @@
 package com.test.api.method.ApplicationMethod;
 
-import com.google.gson.JsonArray;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;
 import com.hand.basicObject.itinerary.FlightItinerary;
-import com.hand.basicObject.itinerary.HotelItinerary;
 import com.hand.basicObject.itinerary.TrainItinerary;
-import com.hand.basicconstant.SupplierOID;
+import com.hand.basicConstant.SupplierOID;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import com.test.api.method.ExpenseReport;

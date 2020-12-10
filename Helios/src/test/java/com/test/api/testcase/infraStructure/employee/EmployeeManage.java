@@ -1,12 +1,11 @@
 package com.test.api.testcase.infraStructure.employee;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.infrastructure.employee.EmployeeExtendComponent;
 import com.hand.basicObject.infrastructure.employee.InfraEmployee;
-import com.hand.basicconstant.CardType;
+import com.hand.basicConstant.CardType;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;

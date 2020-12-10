@@ -4,8 +4,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicconstant.ApiPath;
-import com.hand.basicconstant.BaseConstant;
+import com.hand.basicConstant.ApiPath;
+import com.hand.basicConstant.BaseConstant;
 
 import java.util.HashMap;
 import java.util.Map;

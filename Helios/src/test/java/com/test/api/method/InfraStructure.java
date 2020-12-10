@@ -12,10 +12,9 @@ import com.hand.basicObject.infrastructure.employee.EmployeeExtendComponent;
 import com.hand.basicObject.infrastructure.employee.InfraEmployee;
 import com.hand.basicObject.infrastructure.employee.InfraJob;
 import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoEntity;
-import com.hand.basicconstant.TmcChannel;
+import com.hand.basicConstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,6 +1,6 @@
 package com.test;
 
-import com.hand.basicconstant.Environment;
+import com.hand.basicConstant.Environment;
 import com.test.api.method.EmployeeAccount;
 import com.test.api.method.EmployeeLogin;
 import lombok.extern.slf4j.Slf4j;

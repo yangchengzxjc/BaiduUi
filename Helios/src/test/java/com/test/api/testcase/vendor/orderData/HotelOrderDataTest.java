@@ -9,7 +9,7 @@ import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelBaseOrder;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelExceedInfo;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelOrderInfoEntity;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelPassengerInfo;
-import com.hand.basicconstant.TmcChannel;
+import com.hand.basicConstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;

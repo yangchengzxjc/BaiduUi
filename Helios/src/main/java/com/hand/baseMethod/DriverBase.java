@@ -1,6 +1,6 @@
 package com.hand.baseMethod;
 import java.io.*;
-import com.hand.basicconstant.BaseConstant;
+import com.hand.basicConstant.BaseConstant;
 
 import com.hand.utils.PropertyReader;
 import lombok.extern.slf4j.Slf4j;

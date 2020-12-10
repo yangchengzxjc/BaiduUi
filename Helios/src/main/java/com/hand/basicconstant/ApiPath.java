@@ -1,4 +1,4 @@
-package com.hand.basicconstant;
+package com.hand.basicConstant;
 
 /**
  * @Author peng.zhang

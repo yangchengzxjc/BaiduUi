@@ -1,6 +1,5 @@
 package com.test.api.testcase.vendor;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
@@ -16,7 +15,7 @@ import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelBaseOrder;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelOrderInfoEntity;
 import com.hand.basicObject.supplierObject.hotelOrderInfo.HotelPassengerInfo;
 import com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity.*;
-import com.hand.basicconstant.TmcChannel;
+import com.hand.basicConstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;

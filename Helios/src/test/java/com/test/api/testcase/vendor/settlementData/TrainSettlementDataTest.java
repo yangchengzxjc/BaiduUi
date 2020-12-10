@@ -5,7 +5,7 @@ import com.google.gson.JsonParser;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicObject.supplierObject.trainSettlementInfo.*;
-import com.hand.basicconstant.TmcChannel;
+import com.hand.basicConstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;

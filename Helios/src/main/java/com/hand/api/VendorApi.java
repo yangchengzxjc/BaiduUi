@@ -6,10 +6,9 @@ import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SettlementBody;
-import com.hand.basicconstant.ApiPath;
+import com.hand.basicConstant.ApiPath;
 import com.hand.utils.Md5Util;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.Optional;
 
 import java.util.HashMap;
 import java.util.Map;

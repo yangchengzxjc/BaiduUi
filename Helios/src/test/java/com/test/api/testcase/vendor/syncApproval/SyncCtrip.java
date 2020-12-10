@@ -11,8 +11,8 @@ import com.hand.basicObject.supplierObject.syncApproval.syncCtrip.CtripApprovalE
 import com.hand.basicObject.supplierObject.syncApproval.syncCtrip.ExtendFieldList;
 import com.hand.basicObject.supplierObject.syncApproval.syncCtrip.FlightEndorsementDetail;
 import com.hand.basicObject.supplierObject.syncApproval.syncCtrip.Passenger;
-import com.hand.basicconstant.SupplierOID;
-import com.hand.basicconstant.TmcChannel;
+import com.hand.basicConstant.SupplierOID;
+import com.hand.basicConstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;

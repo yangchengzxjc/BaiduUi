@@ -6,7 +6,7 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicObject.supplierObject.hotelOrderSettlementInfo.HotelOrderSettlementInfo;
 import com.hand.basicObject.supplierObject.hotelOrderSettlementInfo.PassengerInfo;
-import com.hand.basicconstant.TmcChannel;
+import com.hand.basicConstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;

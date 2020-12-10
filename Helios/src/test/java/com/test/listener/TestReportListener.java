@@ -51,13 +51,10 @@ public class TestReportListener implements IReporter {
         List<ITestResult> list = new ArrayList<ITestResult>();
         for (ISuite suite : suites) {
             Map<String, ISuiteResult> suiteResults = suite.getResults();
-            //System.out.println("suiteResults："+ suiteResults);
 
-   /*         System.out.println("environment:" + suite.getParameter("environment"));
-            System.out.println("browseNumber:" + suite.getParameter("browseNumber"));
-            System.out.println("language:" + suite.getParameter("language"));
-*/
-//            if (suite.getParameter(environment) == null)
+            if (suite.getParameter("environment") == null){
+                throw new NullPointerException("环境信息未配置");
+            }
             if (suite.getParameter("environment").equalsIgnoreCase("uat")) {
                 this.environment = "UAT";
             } else if (suite.getParameter("environment").equalsIgnoreCase("stage")) {
@@ -68,11 +65,6 @@ public class TestReportListener implements IReporter {
                 this.environment = "CONSOLE-TC";
             }
 
-     /*       System.out.println("project:" + this.project);
-
-            System.out.println("suiteName："+suite.getName());
-*/
-            //System.out.print("suiteResults:"+ suiteResults);
             for (ISuiteResult suiteResult : suiteResults.values()) {
                 ITestContext testContext = suiteResult.getTestContext();
                 IResultMap passedTests = testContext.getPassedTests();
@@ -140,13 +132,15 @@ public class TestReportListener implements IReporter {
                 info.setStatus(status);
                 info.setClassName(result.getInstanceName());
                 info.setMethodName(result.getName());
-                info.setDescription(result.getMethod().getDescription() + "-" + result.getParameters()[0].toString());
-//                info.setParameters(result.getParameters());
+                try{
+                    info.setDescription(result.getMethod().getDescription() + "-" + result.getParameters()[0].toString());
+                }catch (ArrayIndexOutOfBoundsException e){
+                    info.setDescription(result.getMethod().getDescription());
+                }
                 info.setLog(log);
                 listInfo.add(info);
             }
             Map<String, Object> result = new HashMap<String, Object>();
-            //result.put("testName", name);
             result.put("testName", this.project);
             result.put("testPass", testsPass);
             result.put("testFail", testsFail);

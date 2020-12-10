@@ -26,7 +26,7 @@ public class VendorSSOTest extends BaseTest {
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void init(@Optional("14082978000") String phoneNumber, @Optional("hly123456") String pwd, @Optional("") String env) {
+    public void init(@Optional("14082978000") String phoneNumber, @Optional("hly123456") String pwd, @Optional("stage") String env) {
         employee = getEmployee(phoneNumber, pwd, env);
         vendor = new Vendor();
     }

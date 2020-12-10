@@ -26,7 +26,6 @@ public class ApproveApi extends BaseRequest{
      * @param businessCode
      * @return
      * @throws HttpStatusException
-     
      */
     public JsonArray reportSearch(Employee employee,String businessCode) throws  HttpStatusException {
         String url=employee.getEnvironment().getUrl()+ ApiPath.APPROVAL_LIST_SEARCH;

@@ -64,16 +64,12 @@ public class OkHttpUtils {
 
     private static void addRequestLog(String method, String url, String urlParam, String body, String formParam) {
         log.info("===========================request begin================================================");
-        log.info("Method: {}", method);
         log.info("URI: {}", url);
-        if (StringUtils.isNotBlank(urlParam)) {
-            log.info("Request urlParam : {}", urlParam);
-        }
         if (StringUtils.isNotBlank(body)) {
             log.info("Request body : {}", body);
         }
         if (StringUtils.isNotBlank(formParam)) {
-            log.info("Request param: {}", formParam);
+            log.info("Request param: {}",formParam);
         }
 //        log.info("---------------------------request end--------------------------------------------------");
     }
@@ -586,16 +582,9 @@ public class OkHttpUtils {
         }
         int httpCode = response.code();
 
-//        if (httpCode != 200 && httpCode != 201) {
+        if (httpCode != 200 && httpCode != 201) {
             addResponseLog(DELETE, Url, Url, null, null, response, httpCode, res, response.header("SpanID"), startTime);
-//        }
-        Reporter.log("url: " + Url);
-        Reporter.log("headersParams: " + headers);
-        Reporter.log("urlMapParams: " + strParams);
-        Reporter.log("res code: " + httpCode);
-        Reporter.log("res spanID: " + response.header("SpanID"));
-        Reporter.log("res traceID: " + response.header("TraceID"));
-        Reporter.log("res data: " + res);
+        }
         return handleHttpResponse(httpCode, res, response);
     }
 }

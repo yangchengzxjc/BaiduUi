@@ -94,7 +94,7 @@ public class InfoSsoCommonTest extends BaseTest {
         };
     }
 
-    @Test(description = "vendor info sso common", dataProvider = "dataProvider")
+    @Test(description = "vendor info sso common ", dataProvider = "dataProvider")
     public void ssoCommonTest(String caseDesc,
                               String supplierOID,
                               String newVendorsName,

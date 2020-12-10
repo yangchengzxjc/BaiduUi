@@ -233,4 +233,5 @@ public class TestDataProviderITestContext {
 - 用例集组织case：Helios/vendor_testng.xml
 
 ## toDo
-- 请求方法封装，log增加请求request header、请求参数、response header、code、返回结果
+- 请求方法封装，log增加请求request header、请求参数、response header、code、返回结果 DONE
+- 测试报告增加请求路径 参数 返回结果输出 → 新增监听类`ExtentTestNGIReporterListener` DONE

@@ -2,6 +2,7 @@ package com.hand.baseMethod;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.hand.basicConstant.FileMediaType;
 import com.hand.basicObject.MyResponse;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
@@ -176,7 +177,6 @@ public class OkHttpUtils {
             }
         }
         headers = headersbuilder.build();
-
         return headers;
     }
 
@@ -296,16 +296,9 @@ public class OkHttpUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        if (httpCode != 200 && httpCode != 201) {
+        if (httpCode != 200 && httpCode != 201) {
             addResponseLog(GET, Url, Url, null, null, response, httpCode, res, response.header("SpanID"), startTime);
-//        }
-        Reporter.log("url: " + Url);
-        Reporter.log("headersParams: " + headers);
-        Reporter.log("urlMapParams: " + strParams);
-        Reporter.log("res code: " + httpCode);
-        Reporter.log("res spanID: " + response.header("SpanID"));
-        Reporter.log("res traceID: " + response.header("TraceID"));
-        Reporter.log("res data: " + res);
+        }
         return handleHttpResponse(httpCode, res, response);
     }
 
@@ -385,18 +378,10 @@ public class OkHttpUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        if (httpCode != 200 && httpCode != 201) {
+        if (httpCode != 200 && httpCode != 201) {
             addResponseLog(PUT, Url, Url, jsonlog, FormLog, response, httpCode, res, response.header("SpanID"), startTime);
-//        }
-        Reporter.log("url: " + Url);
-        Reporter.log("headersParams: " + headers);
-        Reporter.log("params: " + (body == null ? "null" : body.toString()));
-        Reporter.log("res code: " + httpCode);
-        Reporter.log("res spanID: " + response.header("SpanID"));
-        Reporter.log("res traceID: " + response.header("TraceID"));
-        Reporter.log("res data: " + res);
+        }
         return handleHttpResponse(httpCode, res, response);
-
     }
 
     /**
@@ -474,16 +459,9 @@ public class OkHttpUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        if (httpCode != 200 && httpCode != 201) {
+        if (httpCode != 200 && httpCode != 201) {
             addResponseLog(POST, Url, Url, jsonlog, FormLog, response, httpCode, res, response.header("SpanID"), startTime);
-//        }
-        Reporter.log("url: " + Url);
-        Reporter.log("headersParams: " + headers);
-        Reporter.log("body: " + ((body == null) ? "null" : body.toString()));
-        Reporter.log("res code: " + httpCode);
-        Reporter.log("res spanID: " + response.header("SpanID"));
-        Reporter.log("res traceID: " + response.header("TraceID"));
-        Reporter.log("res data: " + res);
+        }
         return handleHttpResponse(httpCode, res, response);
     }
 
@@ -500,7 +478,7 @@ public class OkHttpUtils {
      * @throws IOException
      */
     public static MyResponse UpLoadFile(String Url, Map<String, String> headersParams, Map<String, String> BodyParams, String Name, String FilePath, String
-            FileMediaType) throws HttpStatusException {
+        FileMediaType) throws HttpStatusException {
         Headers headers = null;
         long startTime = System.currentTimeMillis();
         String res = "";

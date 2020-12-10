@@ -103,8 +103,6 @@ public class BaseRequest {
         myResponse = OkHttpUtils.post(url, headersParams, urlMapParams, jsonBody, bodyParams);
         int code = myResponse.getStatusCode();
         String res = myResponse.getBody();
-//        log.info("res code: {}", code);
-//        log.info("res data: {}", res);
         switch (code) {
             case HttpStatus.OK_200:
             case HttpStatus.CREATED_201:
@@ -213,11 +211,6 @@ public class BaseRequest {
             default:
                 log.info("未知错误，还需定位");
         }
-//        Reporter.log("req url: " + url);
-//        Reporter.log("req headersParams: " + headersParams.toString());
-//        Reporter.log("req urlMapParams: " + urlMapParams.toString());
-//        Reporter.log("res code: " + code);
-//        Reporter.log("res data: " + res);
         return res;
     }
 

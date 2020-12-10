@@ -23,7 +23,7 @@ public enum Supplier {
 //    DTTRIP("","","9c7207b5-7807-42b0-86f9-3db6ccb723f6","2001");
 
 
-    ALL("获取所有登录URL", "all", "", "66666666-6666-11e6-9639-00ffa3fb4c67", "", "", ""),
+    ALL("获取所有登录URL", "all", "", "66666666-6666-11e6-9639-00ffa3fb4c67", "", ""),
     // 非 openApi
 //    CTRIP_TRAIN("携程", "ctrip", "CTRIP_TRAIN", "213691b5-75a4-11e7-af18-00163e00373d", "2001",""),
 //    CTRIP_AIR("携程", "ctrip", "CTRIP_AIR", "fbf77233-766f-11e6-9639-00ffa3fb4c67", "2002"),
@@ -33,15 +33,15 @@ public enum Supplier {
     CTRIP_TRAIN("携程", "ctrip_train", "CTRIP_TRAIN", "c9677c97-cc48-4c2e-b988-4c0986faf1b5", "2003", ""),
     MEIYA_FLIGHT("美亚", "meiya", "MEIYA_FLIGHT", "0d6d1a69-62f5-11e7-a0e0-00163e000c55", "2002", ""),
     MEIYA_HOTEL("美亚酒店", "meiya_hotel", "MEIYA_HOTEL", "d73880c8-172f-4379-8682-4f93f279e5ed", "2001", ""),
-    MEIYA_TRAIN("美亚火车","meiya_train","MEIYA_TRAIN","7864964d-f57b-4528-a371-babfe6f64d86","2003",""),
+    MEIYA_TRAIN("美亚火车", "meiya_train", "MEIYA_TRAIN", "7864964d-f57b-4528-a371-babfe6f64d86", "2003", ""),
     MEIYA_INTER_AIR("美亚国际", "meiya_inter_air", "", "564c9461-cbbc-4bb7-93e1-c5d561575ec6", "2002", ""),
-    BAOKU_AIR("宝库", "baoku", "BAOKU_AIR", "fbfc7b74-766f-11e6-9639-00ffa3fb4c67", "2001"),
-    BAOKU_HOTEL("宝库", "baoku", "BAOKU_HOTEL", "2eb865bf-981a-43c7-b2e5-e1426c769573", "2001"),
+    BAOKU_AIR("宝库", "baoku", "BAOKU_AIR", "fbfc7b74-766f-11e6-9639-00ffa3fb4c67", "2001", ""),
+    BAOKU_HOTEL("宝库", "baoku", "BAOKU_HOTEL", "2eb865bf-981a-43c7-b2e5-e1426c769573", "2001", ""),
     CTSHO_AIR("中旅", "ctsho", "CTSHO_AIR", "f41c3bcc-0869-11e7-ad4a-00163e000c55", "", ""),
     FASCO("供应商Fasco", "fasco", "FASCO", "fd5e7b53-a86e-439f-af25-6881907fd8d0", "", ""),
     HRS("供应商HRS", "hrs", "HRS", "ddb76c1e-b2f3-4388-b7c3-e0b3464a16d7", "2001", ""),
     YGET("供应商油卡话费", "yget", "YGET", "a971408e-0ebf-4a56-adbd-1e5627ee2f52", "2000", ""),
-    HUAZHU("供应商华住", "huazhu", null, "67fa4c98-c377-4a5d-8b57-55698f8f3d39", "", ""),
+    HUAZHU("供应商华住", "huazhu", "", "67fa4c98-c377-4a5d-8b57-55698f8f3d39", "", ""),
 //            ("供应商百动","bestdo,BAIDONG,cbddced1-3064-40ad-94e2-b290d5097b10,2000"),
 //            ("小秘书,xms,null,fcaf022e-fc0e-4c33-a74c-5ff1e258f45b,0"),
 //            ("供应商订单","order,null,951a2ccf-0535-4446-ac82-f58298ca5035,0"),
@@ -131,12 +131,12 @@ public enum Supplier {
     private String appCode;
     private String supplierOID;
     private String vendorType;
-    private String category;
+    //    private String category;
     private String expectUrl;
 
     public static Supplier getInfoSso(String vendorName) {
         for (Supplier info : Supplier.values()) {
-            if (info.Supplier().equalsIgnoreCase(vendorName)) {
+            if (info.vendorsName.equalsIgnoreCase(vendorName)) {
                 return info;
             }
         }

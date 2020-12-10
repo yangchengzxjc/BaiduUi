@@ -41,37 +41,6 @@ public class VendorSSOTest extends BaseTest {
                 {"CTRIP AIR WEB", CTRIP_AIR.getSupplierOID(), "web"},
                 {"CTRIP HOTEL WEB", CTRIP_HOTEL.getSupplierOID(), "web"},
                 {"CTRIP TRAIN WEB", CTRIP_TRAIN.getSupplierOID(), "web"},
-        };
-    }
-
-    @Test(description = "携程sso首页单点登录", dataProvider = "ctripSSO")
-    public void ctripSSO(String caseDesc, String supplierOID, String direction) throws HttpStatusException {
-        JsonObject response = vendor.vndSSO(employee, supplierOID, direction, "1002");
-        log.info("单点登录的响应:{}", response);
-        int statusCode = vendor.ssoCode(employee, supplierOID, direction, "1002");
-        Assert.assertEquals(statusCode, 200);
-    }
-
-    @DataProvider(name = "ctripSSO1")
-    public Object[][] ctripSSO1() {
-        return new Object[][]{
-                {"CTRIP AIR H5", CTRIPAIR.getSupplierOID(), "H5"},
-                {"CTRIP HOTEL H5", CTRIPHOTEL.getSupplierOID(), "H5"},
-                {"CTRIP TRAIN H5", CTRIPTRAIN.getSupplierOID(), "H5"},
-        };
-    }
-
-    @Test(description = "携程sso订单单点登录", dataProvider = "ctripSSO1")
-    public void ctripOrderSSO1(String caseDesc, String supplierOID, String direction) throws HttpStatusException {
-        JsonObject response = vendor.vndSSO(employee, supplierOID, direction, "1001");
-        log.info("单点登录的响应:{}", response);
-        int statusCode = vendor.ssoCode(employee, supplierOID, direction, "1001");
-        Assert.assertEquals(statusCode, 200);
-    }
-
-    @DataProvider(name = "meiYaSSO")
-    public Object[][] meiYaSSO() {
-        return new Object[][]{
                 {"MEIYA AIR H5", MEIYA_FLIGHT.getSupplierOID(), "H5"},
                 {"MEIYA HOTEL H5", MEIYA_HOTEL.getSupplierOID(), "H5"},
                 {"MEIYA TRAIN H5", MEIYA_TRAIN.getSupplierOID(), "H5"},
@@ -81,12 +50,49 @@ public class VendorSSOTest extends BaseTest {
         };
     }
 
-    @Test(description = "美亚sso首页单点登录", dataProvider = "meiYaSSO")
-    public void meiYaSSO(String caseDesc, String supplierOID, String direction) throws HttpStatusException {
+    @Test(description = "sso首页单点登录", dataProvider = "ctripSSO")
+    public void ctripSSO(String caseDesc, String supplierOID, String direction) throws HttpStatusException {
         JsonObject response = vendor.vndSSO(employee, supplierOID, direction, "1002");
         log.info("单点登录的响应:{}", response);
         int statusCode = vendor.ssoCode(employee, supplierOID, direction, "1002");
         Assert.assertEquals(statusCode, 200);
     }
+//
+//    @DataProvider(name = "ctripSSO1")
+//    public Object[][] ctripSSO1() {
+//        return new Object[][]{
+//                {"CTRIP AIR H5", CTRIP_AIR.getSupplierOID(), "H5"},
+//                {"CTRIP HOTEL H5", CTRIP_HOTEL.getSupplierOID(), "H5"},
+//                {"CTRIP TRAIN H5", CTRIP_TRAIN.getSupplierOID(), "H5"},
+//        };
+//    }
+//
+//    @Test(description = "携程sso订单单点登录", dataProvider = "ctripSSO1")
+//    public void ctripOrderSSO1(String caseDesc, String supplierOID, String direction) throws HttpStatusException {
+//        JsonObject response = vendor.vndSSO(employee, supplierOID, direction, "1001");
+//        log.info("单点登录的响应:{}", response);
+//        int statusCode = vendor.ssoCode(employee, supplierOID, direction, "1001");
+//        Assert.assertEquals(statusCode, 200);
+//    }
+//
+//    @DataProvider(name = "meiYaSSO")
+//    public Object[][] meiYaSSO() {
+//        return new Object[][]{
+//                {"MEIYA AIR H5", MEIYA_FLIGHT.getSupplierOID(), "H5"},
+//                {"MEIYA HOTEL H5", MEIYA_HOTEL.getSupplierOID(), "H5"},
+//                {"MEIYA TRAIN H5", MEIYA_TRAIN.getSupplierOID(), "H5"},
+//                {"MEIYA AIR H5", MEIYA_FLIGHT.getSupplierOID(), "web"},
+//                {"MEIYA HOTEL H5", MEIYA_HOTEL.getSupplierOID(), "web"},
+//                {"MEIYA TRAIN H5", MEIYA_TRAIN.getSupplierOID(), "web"},
+//        };
+//    }
+//
+//    @Test(description = "美亚sso首页单点登录", dataProvider = "meiYaSSO")
+//    public void meiYaSSO(String caseDesc, String supplierOID, String direction) throws HttpStatusException {
+//        JsonObject response = vendor.vndSSO(employee, supplierOID, direction, "1002");
+//        log.info("单点登录的响应:{}", response);
+//        int statusCode = vendor.ssoCode(employee, supplierOID, direction, "1002");
+//        Assert.assertEquals(statusCode, 200);
+//    }
 
 }

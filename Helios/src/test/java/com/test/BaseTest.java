@@ -1,6 +1,5 @@
 package com.test;
 
-import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicconstant.Environment;
 import com.test.api.method.EmployeeAccount;
 import com.test.api.method.EmployeeLogin;
@@ -11,19 +10,19 @@ import com.hand.basicObject.Employee;
 import java.util.Properties;
 
 @Slf4j
-public class BaseTest{
+public class BaseTest {
     public static Properties properties;
     public static int multilingual;
-    private  Employee employee;
+    private Employee employee;
     private EmployeeLogin employeeLogin;
     private EmployeeAccount employeeAccount;
 
-    public Employee getEmployee(String phoneNumber, String pwd, String env){
+    public Employee getEmployee(String phoneNumber, String pwd, String env) {
         employeeLogin = new EmployeeLogin();
-        employeeAccount =new EmployeeAccount();
-        employee=new Employee(phoneNumber,pwd,Environment.getEnv(env));
+        employeeAccount = new EmployeeAccount();
+        employee = new Employee(phoneNumber, pwd, Environment.getEnv(env));
         employee.setAccessToken(employeeLogin.getToken(employee));
-        employee=employeeAccount.setEmployeeInfo(employee);
+        employee = employeeAccount.setEmployeeInfo(employee);
         return employee;
     }
 
@@ -41,22 +40,23 @@ public class BaseTest{
 
 
     @AfterTest(alwaysRun = true)
-    public void end(){
+    public void end() {
         log.info("测试结束");
     }
 
     /**
-     * @param employee  员工employee对象
-     * @param env       环境 stage/service ..
-     * @param username  用户名
-     * @param pass       密码
-     * @param language   语言
+     * @param employee 员工employee对象
+     * @param env      环境 stage/service ..
+     * @param username 用户名
+     * @param pass     密码
+     * @param language 语言
      */
-    public void setEmployee(Employee employee,String env,String username,String pass,String language){
+    public void setEmployee(Employee employee, String env, String username, String pass, String language) {
         employee.setPhoneNumber(username);
         employee.setPassWord(pass);
         employee.setLanguage(language);
         employee.setEnv(env);
         employee.setEnvironment(Environment.getEnv(env));
     }
+
 }

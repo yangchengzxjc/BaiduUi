@@ -317,12 +317,10 @@ public class ApiPath {
         //消费平台H5 SSO单点
         public static final String SUPPLIER_SSO="/vendor-info-service/api/sso/common";
 
-
-
-
-
-
-
+        // 消费平台 web sso
+        public static final String SSO = "/vendor-info-service/api/sso";
+        // 消费平台 web sso 统一单点登录
+        public static final String SSO_COMMON = "/vendor-info-service/api/sso/common";
 
 
 

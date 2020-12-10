@@ -1,4 +1,5 @@
 package com.hand.baseMethod;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.basicObject.MyResponse;
@@ -16,13 +17,15 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.Call;
 import okhttp3.RequestBody;
-import  okhttp3.MediaType;
-import  okhttp3.MultipartBody;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 
 import java.io.IOException;
 import java.io.File;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.entity.ContentType;
+import org.testng.Reporter;
 
 /**
  * HTTP通讯结构处理器
@@ -41,7 +44,7 @@ public class OkHttpUtils {
     private static final String DELETE = "DELETE";
     private static final String PUT = "PUT";
 
-    private OkHttpUtils(){
+    private OkHttpUtils() {
     }
 
     public static OkHttpClient getInstance() {
@@ -61,7 +64,11 @@ public class OkHttpUtils {
 
     private static void addRequestLog(String method, String url, String urlParam, String body, String formParam) {
         log.info("===========================request begin================================================");
+        log.info("Method: {}", method);
         log.info("URI: {}", url);
+        if (StringUtils.isNotBlank(urlParam)) {
+            log.info("Request urlParam : {}", urlParam);
+        }
         if (StringUtils.isNotBlank(body)) {
             log.info("Request body : {}", body);
         }
@@ -72,48 +79,48 @@ public class OkHttpUtils {
     }
 
 
-
-    private static void addResponseLog(String method, String callMethod, String url, String jsonbody, String formParam,Response response,int httpCode, String result,String SpanID, long startTime) {
+    private static void addResponseLog(String method, String callMethod, String url, String jsonbody, String formParam, Response response, int httpCode, String result, String SpanID, long startTime) {
 
         log.info("Status: {}", httpCode);
         log.info("SpanID: {}", SpanID);
 
         long endTime = System.currentTimeMillis();
 
+        try {
+            log.info("MyResponse: {}", new JsonParser().parse(result).getAsJsonObject().toString());
+        } catch (Exception e) {
+
             try {
-                log.info("MyResponse: {}", new JsonParser().parse(result).getAsJsonObject().toString());
-            } catch (Exception e) {
+                log.info("MyResponse: {}", new JsonParser().parse(result).getAsJsonArray().toString());
 
-                try {
-                    log.info("MyResponse: {}", new JsonParser().parse(result).getAsJsonArray().toString());
-
-                } catch (Exception ignored) {
-                }
+            } catch (Exception ignored) {
             }
-            log.info("Time: {} ms", endTime - startTime);
-            if((endTime - startTime)>=5000 && (endTime - startTime)<7000){
-                log.info("请求大于5秒，有待观察:");
-            }
-            else if((endTime - startTime)>=7000){
-                log.info("请求大于7秒，有待观察:");
-            }
-            log.info("===========================response end================================================");
+        }
+        log.info("Time: {} ms", endTime - startTime);
+        if ((endTime - startTime) >= 5000 && (endTime - startTime) < 7000) {
+            log.info("请求大于5秒，有待观察:");
+        } else if ((endTime - startTime) >= 7000) {
+            log.info("请求大于7秒，有待观察:");
+        }
+        log.info("===========================response end================================================");
     }
 
     /**
      * 返回相应结果
+     *
      * @param httpCode
      * @param result
      * @param response
      * @return
      * @throws HttpStatusException
      */
-    private static MyResponse handleHttpResponse(int httpCode, String result, Response response)  {
-          MyResponse   myResponse= new MyResponse();
-          myResponse.setBody(result);
-          myResponse.setStatusCode(httpCode);
-          return myResponse;
+    private static MyResponse handleHttpResponse(int httpCode, String result, Response response) {
+        MyResponse myResponse = new MyResponse();
+        myResponse.setBody(result);
+        myResponse.setStatusCode(httpCode);
+        return myResponse;
     }
+
     private static void handleHttpThrowable(Exception ex, String url) throws HttpStatusException {
         if (ex instanceof HttpStatusException) {
             throw (HttpStatusException) ex;
@@ -126,27 +133,26 @@ public class OkHttpUtils {
     }
 
 
-
     /**
      * get方法连接拼加参数
+     *
      * @param mapParams
      * @return
      */
-    private static String setGetUrlParams(Map<String, String> mapParams){
+    private static String setGetUrlParams(Map<String, String> mapParams) {
         String strParams = "";
-        if(mapParams != null){
+        if (mapParams != null) {
             Iterator<String> iterator = mapParams.keySet().iterator();
             String key = "";
             while (iterator.hasNext()) {
                 key = iterator.next();
-                strParams += key + "=" + mapParams.get(key)+"&";
+                strParams += key + "=" + mapParams.get(key) + "&";
             }
         }
-        if ("&".equals(strParams.substring(strParams.length()-1))){
-            return "?"+strParams.substring(0,strParams.length()-1);
-        }
-        else{
-            return "?"+strParams;
+        if ("&".equals(strParams.substring(strParams.length() - 1))) {
+            return "?" + strParams.substring(0, strParams.length() - 1);
+        } else {
+            return "?" + strParams;
         }
 
     }
@@ -154,15 +160,15 @@ public class OkHttpUtils {
 
     /**
      * 设置请求头
+     *
      * @param headersParams
      * @return
      */
-    private static Headers setHeaders(Map<String, String> headersParams){
-        Headers headers=null;
-        okhttp3.Headers.Builder headersbuilder=new okhttp3.Headers.Builder();
+    private static Headers setHeaders(Map<String, String> headersParams) {
+        Headers headers = null;
+        okhttp3.Headers.Builder headersbuilder = new okhttp3.Headers.Builder();
 
-        if(headersParams != null)
-        {
+        if (headersParams != null) {
             Iterator<String> iterator = headersParams.keySet().iterator();
             String key = "";
             while (iterator.hasNext()) {
@@ -170,20 +176,21 @@ public class OkHttpUtils {
                 headersbuilder.add(key, headersParams.get(key));
             }
         }
-        headers=headersbuilder.build();
+        headers = headersbuilder.build();
 
         return headers;
     }
 
     /**
      * post请求参数
+     *
      * @param BodyParams
      * @return
      */
-    private static RequestBody SetRequestFormBody(Map<String, String> BodyParams){
-        RequestBody body=null;
-        okhttp3.FormBody.Builder formEncodingBuilder=new okhttp3.FormBody.Builder();
-        if(BodyParams != null){
+    private static RequestBody SetRequestFormBody(Map<String, String> BodyParams) {
+        RequestBody body = null;
+        okhttp3.FormBody.Builder formEncodingBuilder = new okhttp3.FormBody.Builder();
+        if (BodyParams != null) {
             Iterator<String> iterator = BodyParams.keySet().iterator();
             String key = "";
             while (iterator.hasNext()) {
@@ -191,25 +198,26 @@ public class OkHttpUtils {
                 formEncodingBuilder.add(key, BodyParams.get(key));
             }
         }
-        body=formEncodingBuilder.build();
+        body = formEncodingBuilder.build();
         return body;
 
     }
 
     /**
      * Post上传图片的参数
+     *
      * @param BodyParams
      * @param fileParams
      * @return
      */
-    public static RequestBody SetFileRequestBody(Map<String, String> BodyParams, Map<String, String> fileParams){
+    public static RequestBody SetFileRequestBody(Map<String, String> BodyParams, Map<String, String> fileParams) {
         //带文件的Post参数
-        RequestBody body=null;
-	    okhttp3.MultipartBody.Builder  MultipartBodyBuilder=new okhttp3.MultipartBody.Builder();
+        RequestBody body = null;
+        okhttp3.MultipartBody.Builder MultipartBodyBuilder = new okhttp3.MultipartBody.Builder();
         MultipartBodyBuilder.setType(MultipartBody.FORM);
         RequestBody fileBody = null;
 
-        if(BodyParams != null){
+        if (BodyParams != null) {
             Iterator<String> iterator = BodyParams.keySet().iterator();
             String key = "";
             while (iterator.hasNext()) {
@@ -218,135 +226,137 @@ public class OkHttpUtils {
             }
         }
 
-        if(fileParams != null){
+        if (fileParams != null) {
             Iterator<String> iterator = fileParams.keySet().iterator();
             String key = "";
-            int i=0;
+            int i = 0;
             while (iterator.hasNext()) {
                 key = iterator.next().toString();
                 i++;
                 MultipartBodyBuilder.addFormDataPart(key, fileParams.get(key));
-                log.info("post http", "post_Params==="+key+"===="+fileParams.get(key));
+                log.info("post http", "post_Params===" + key + "====" + fileParams.get(key));
                 MediaType MEDIATYPE = MediaType.parse("text/plain; charset=utf-8");
                 fileBody = RequestBody.create(MEDIATYPE, new File(fileParams.get(key)));
-                MultipartBodyBuilder.addFormDataPart(key, i+".png", fileBody);
+                MultipartBodyBuilder.addFormDataPart(key, i + ".png", fileBody);
             }
         }
 
-        body=MultipartBodyBuilder.build();
+        body = MultipartBodyBuilder.build();
         return body;
 
     }
 
     /**
      * 带有URL的get请求
+     *
      * @param Url
      * @return
      * @throws IOException
      */
-    public static MyResponse get(String Url,Map<String, String> headersParams, Map<String, String> UrlMapParams) throws HttpStatusException {
-        Headers headers=null;
+    public static MyResponse get(String Url, Map<String, String> headersParams, Map<String, String> UrlMapParams) throws HttpStatusException {
+        Headers headers = null;
         String strParams = "";
         long startTime = System.currentTimeMillis();
         OkHttpClient client = getInstance();
-            if(headersParams != null){
-                headers= setHeaders(headersParams);
-            }
-            if(UrlMapParams != null){
-                strParams= setGetUrlParams(UrlMapParams);
-            }
-        Url+=strParams;
+        if (headersParams != null) {
+            headers = setHeaders(headersParams);
+        }
+        if (UrlMapParams != null) {
+            strParams = setGetUrlParams(UrlMapParams);
+        }
+        Url += strParams;
         addRequestLog(GET, Url, strParams, null, null);
-            Request req = null;
-            Response response=null;
-            String res="";
-            int httpCode = 0;
+        Request req = null;
+        Response response = null;
+        String res = "";
+        int httpCode = 0;
+        try {
+            req = new Request.Builder()
+                    .url(Url)
+                    .headers(headers)
+                    .build();
+            response = client.newCall(req).execute();
+            res = response.body().string();
+            httpCode = response.code();
+
+
+        } catch (SocketTimeoutException e) {
+            log.error("SocketTimeoutException,try again:" + e.getMessage());
+            req = new Request.Builder()
+                    .url(Url)
+                    .headers(headers)
+                    .build();
             try {
-                req = new Request.Builder()
-                .url(Url)
-                .headers(headers)
-                .build();
                 response = client.newCall(req).execute();
-                res=response.body().string();
-                httpCode = response.code();
-
-
-            } catch (SocketTimeoutException e) {
-                log.error("SocketTimeoutException,try again:"+e.getMessage());
-                req = new Request.Builder()
-                        .url(Url)
-                        .headers(headers)
-                        .build();
-                try {
-                    response = client.newCall(req).execute();
-                    res=response.body().string();
-                } catch (Exception ex) {
-                    log.error("Retry still fails:"+ex.getMessage());
-                    ex.printStackTrace();
-                }
-                httpCode = response.code();
+                res = response.body().string();
+            } catch (Exception ex) {
+                log.error("Retry still fails:" + ex.getMessage());
+                ex.printStackTrace();
             }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-            if(httpCode!=200&&httpCode!=201){
-                addResponseLog(GET, Url, Url, null, null,response,httpCode, res, response.header("SpanID"),startTime);
-            }
-            return handleHttpResponse(httpCode, res, response);
+            httpCode = response.code();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        if (httpCode != 200 && httpCode != 201) {
+            addResponseLog(GET, Url, Url, null, null, response, httpCode, res, response.header("SpanID"), startTime);
+//        }
+        Reporter.log("url: " + Url);
+        Reporter.log("headersParams: " + headers);
+        Reporter.log("urlMapParams: " + strParams);
+        Reporter.log("res code: " + httpCode);
+        Reporter.log("res spanID: " + response.header("SpanID"));
+        Reporter.log("res traceID: " + response.header("TraceID"));
+        Reporter.log("res data: " + res);
+        return handleHttpResponse(httpCode, res, response);
     }
 
     /**
      * JSON数据修改
+     *
      * @param Url
      * @param Jsonbody
      * @return
      * @throws IOException
      */
-    public static MyResponse  put(String Url, Map<String, String> headersParams, Map<String, String> UrlMapParams, String Jsonbody,Map<String, String> BodyParams) throws HttpStatusException {
-        Headers headers=null;
-        RequestBody body=null;
+    public static MyResponse put(String Url, Map<String, String> headersParams, Map<String, String> UrlMapParams, String Jsonbody, Map<String, String> BodyParams) throws HttpStatusException {
+        Headers headers = null;
+        RequestBody body = null;
         String strParams = "";
         OkHttpClient client = getInstance();
-        Request req=null;
+        Request req = null;
         long startTime = System.currentTimeMillis();
-        String res="";
-        String jsonlog="";
-        String FormLog="";
-        if(headersParams != null){
-            headers= setHeaders(headersParams);
+        String res = "";
+        String jsonlog = "";
+        String FormLog = "";
+        if (headersParams != null) {
+            headers = setHeaders(headersParams);
         }
-        if(UrlMapParams != null)
-        {
-            strParams= setGetUrlParams(UrlMapParams);
-            Url+=strParams;
+        if (UrlMapParams != null) {
+            strParams = setGetUrlParams(UrlMapParams);
+            Url += strParams;
 
         }
 //        form请求
-        if(BodyParams != null)
-        {
-            body=SetRequestFormBody(BodyParams);
-            FormLog=BodyParams.toString();
+        if (BodyParams != null) {
+            body = SetRequestFormBody(BodyParams);
+            FormLog = BodyParams.toString();
         }
 
 //        json 请求
-        if(Jsonbody != null)
-        {
+        if (Jsonbody != null) {
             MediaType JSON = MediaType.parse(String.valueOf(ContentType.APPLICATION_JSON));
-            body = RequestBody.create(JSON,Jsonbody);
+            body = RequestBody.create(JSON, Jsonbody);
         }
 
 
-        if(BodyParams != null)
-        {
+        if (BodyParams != null) {
             req = new Request.Builder()
                     .url(Url)
                     .headers(headers)
                     .addHeader("Content-Type", String.valueOf(ContentType.APPLICATION_FORM_URLENCODED))
                     .put(body)
                     .build();
-        }
-        else if (Jsonbody != null)
-        {
+        } else if (Jsonbody != null) {
             req = new Request.Builder()
                     .url(Url)
                     .headers(headers)
@@ -354,122 +364,133 @@ public class OkHttpUtils {
                     .put(body)
                     .build();
         }
-        addRequestLog(req.method(),Url, Url, Jsonbody, FormLog);
-        Response response=null;
+        addRequestLog(req.method(), Url, strParams, Jsonbody, FormLog);
+        Response response = null;
         int httpCode = 0;
         try {
             Call call = client.newCall(req);
             response = call.execute();
-            res=response.body().string();
+            res = response.body().string();
             httpCode = response.code();
         } catch (SocketTimeoutException e) {
-            log.error("SocketTimeoutException,try again:"+e.getMessage());
+            log.error("SocketTimeoutException,try again:" + e.getMessage());
             Call call = client.newCall(req);
             try {
                 response = call.execute();
-                res=response.body().string();
+                res = response.body().string();
             } catch (Exception ex) {
-                log.error("Retry still fails:"+ex.getMessage());
+                log.error("Retry still fails:" + ex.getMessage());
                 ex.printStackTrace();
             }
             httpCode = response.code();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if(httpCode!=200&&httpCode!=201){
-            addResponseLog(PUT, Url, Url, jsonlog, FormLog,response,httpCode, res, response.header("SpanID"),startTime);
-        }
+//        if (httpCode != 200 && httpCode != 201) {
+            addResponseLog(PUT, Url, Url, jsonlog, FormLog, response, httpCode, res, response.header("SpanID"), startTime);
+//        }
+        Reporter.log("url: " + Url);
+        Reporter.log("headersParams: " + headers);
+        Reporter.log("params: " + (body == null ? "null" : body.toString()));
+        Reporter.log("res code: " + httpCode);
+        Reporter.log("res spanID: " + response.header("SpanID"));
+        Reporter.log("res traceID: " + response.header("TraceID"));
+        Reporter.log("res data: " + res);
         return handleHttpResponse(httpCode, res, response);
 
     }
+
     /**
      * JSON数据提交
+     *
      * @param Url
      * @param Jsonbody
      * @return
      * @throws IOException
      */
-    public static MyResponse post(String Url, Map<String, String> headersParams, Map<String, String> UrlMapParams, String Jsonbody,Map<String, String> BodyParams) throws HttpStatusException {
-        Headers headers=null;
-        RequestBody body=null;
+    public static MyResponse post(String Url, Map<String, String> headersParams, Map<String, String> UrlMapParams, String Jsonbody, Map<String, String> BodyParams) throws HttpStatusException {
+        Headers headers = null;
+        RequestBody body = null;
         String strParams = "";
         OkHttpClient client = getInstance();
-        Request req=null;
+        Request req = null;
         long startTime = System.currentTimeMillis();
-        String res="";
-        String jsonlog="";
-        String FormLog="";
-        if(headersParams != null) {
-            headers= setHeaders(headersParams);
+        String res = "";
+        String jsonlog = "";
+        String FormLog = "";
+        if (headersParams != null) {
+            headers = setHeaders(headersParams);
         }
-        if(UrlMapParams != null)
-        {
-            strParams= setGetUrlParams(UrlMapParams);
-            Url+=strParams;
+        if (UrlMapParams != null) {
+            strParams = setGetUrlParams(UrlMapParams);
+            Url += strParams;
 
         }
 //        form请求
-            if(BodyParams != null)
-            {
-                body=SetRequestFormBody(BodyParams);
-                FormLog=BodyParams.toString();
-            }
+        if (BodyParams != null) {
+            body = SetRequestFormBody(BodyParams);
+            FormLog = BodyParams.toString();
+        }
 
 //        json 请求
-            if(Jsonbody != null)
-            {
-                MediaType JSON = MediaType.parse(String.valueOf(ContentType.APPLICATION_JSON));
-                body = RequestBody.create(JSON,Jsonbody);
-            }
-            if(BodyParams != null)
-            {
-                req = new Request.Builder()
-                        .url(Url)
-                        .headers(headers)
-                        .addHeader("Content-Type", String.valueOf(ContentType.APPLICATION_FORM_URLENCODED))
-                        .post(body)
-                        .build();
-            }
-            else if (Jsonbody != null)
-            {
-                req = new Request.Builder()
-                        .url(Url)
-                        .headers(headers)
-                        .addHeader("Content-Type", String.valueOf(ContentType.APPLICATION_JSON))
-                        .post(body)
-                        .build();
-            }
-            addRequestLog(req.method(),Url, Url, Jsonbody, FormLog);
-            Response response=null;
-            int httpCode = 0;
+        if (Jsonbody != null) {
+            MediaType JSON = MediaType.parse(String.valueOf(ContentType.APPLICATION_JSON));
+            body = RequestBody.create(JSON, Jsonbody);
+        }
+        if (BodyParams != null) {
+            req = new Request.Builder()
+                    .url(Url)
+                    .headers(headers)
+                    .addHeader("Content-Type", String.valueOf(ContentType.APPLICATION_FORM_URLENCODED))
+                    .post(body)
+                    .build();
+        } else if (Jsonbody != null) {
+            req = new Request.Builder()
+                    .url(Url)
+                    .headers(headers)
+                    .addHeader("Content-Type", String.valueOf(ContentType.APPLICATION_JSON))
+                    .post(body)
+                    .build();
+        }
+        addRequestLog(req.method(), Url, strParams, Jsonbody, FormLog);
+        Response response = null;
+        int httpCode = 0;
+        try {
+            Call call = client.newCall(req);
+            response = call.execute();
+            res = response.body().string();
+            httpCode = response.code();
+        } catch (SocketTimeoutException e) {
+            log.error("SocketTimeoutException,try again:" + e.getMessage());
+            Call call = client.newCall(req);
             try {
-                Call call = client.newCall(req);
                 response = call.execute();
-                res=response.body().string();
-                httpCode = response.code();
-            } catch (SocketTimeoutException e) {
-                log.error("SocketTimeoutException,try again:"+e.getMessage());
-                Call call = client.newCall(req);
-                try {
-                    response = call.execute();
-                    log.info("执行了吗");
-                    res=response.body().string();
-                } catch (Exception ex) {
-                    log.error("Retry still fails:"+ex.getMessage());
-                    ex.printStackTrace();
-                }
-                httpCode = response.code();
-            }catch (Exception e) {
-                e.printStackTrace();
+                log.info("执行了吗");
+                res = response.body().string();
+            } catch (Exception ex) {
+                log.error("Retry still fails:" + ex.getMessage());
+                ex.printStackTrace();
             }
-            if(httpCode!=200&&httpCode!=201){
-                addResponseLog(POST, Url, Url, jsonlog, FormLog,response,httpCode, res, response.header("SpanID"),startTime);
-            }
-            return handleHttpResponse(httpCode, res, response);
+            httpCode = response.code();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        if (httpCode != 200 && httpCode != 201) {
+            addResponseLog(POST, Url, Url, jsonlog, FormLog, response, httpCode, res, response.header("SpanID"), startTime);
+//        }
+        Reporter.log("url: " + Url);
+        Reporter.log("headersParams: " + headers);
+        Reporter.log("body: " + ((body == null) ? "null" : body.toString()));
+        Reporter.log("res code: " + httpCode);
+        Reporter.log("res spanID: " + response.header("SpanID"));
+        Reporter.log("res traceID: " + response.header("TraceID"));
+        Reporter.log("res data: " + res);
+        return handleHttpResponse(httpCode, res, response);
     }
 
     /**
      * 上传单个文件
+     *
      * @param Url
      * @param headersParams
      * @param BodyParams
@@ -479,22 +500,21 @@ public class OkHttpUtils {
      * @return
      * @throws IOException
      */
-    public static MyResponse  UpLoadFile(String Url, Map<String, String> headersParams,Map<String, String> BodyParams,  String Name,  String FilePath,  String
-        FileMediaType) throws  HttpStatusException {
-        Headers headers=null;
+    public static MyResponse UpLoadFile(String Url, Map<String, String> headersParams, Map<String, String> BodyParams, String Name, String FilePath, String
+            FileMediaType) throws HttpStatusException {
+        Headers headers = null;
         long startTime = System.currentTimeMillis();
-        String res="";
-        RequestBody body=null;
-        okhttp3.MultipartBody.Builder  MultipartBodyBuilder=new okhttp3.MultipartBody.Builder();
+        String res = "";
+        RequestBody body = null;
+        okhttp3.MultipartBody.Builder MultipartBodyBuilder = new okhttp3.MultipartBody.Builder();
         MultipartBodyBuilder.setType(MultipartBody.FORM);
 
         OkHttpClient client = getInstance();
-        if(headersParams != null)
-        {
-            headers= setHeaders(headersParams);
+        if (headersParams != null) {
+            headers = setHeaders(headersParams);
         }
 
-        if(BodyParams != null){
+        if (BodyParams != null) {
             Iterator<String> iterator = BodyParams.keySet().iterator();
             String key = "";
             while (iterator.hasNext()) {
@@ -505,11 +525,11 @@ public class OkHttpUtils {
 
         File file = new File(FilePath);
         MultipartBodyBuilder.addFormDataPart(Name, file.getName(), RequestBody.create(MediaType.parse(FileMediaType), file));
-        body=MultipartBodyBuilder.build();
+        body = MultipartBodyBuilder.build();
         Response response = null;
         int httpCode = 0;
-        Request req=null;
-        addRequestLog(POST, Url, Url, null, null);
+        Request req = null;
+        addRequestLog(POST, Url, null, null, null);
         try {
             req = new Request.Builder()
                     .url(Url)
@@ -518,10 +538,10 @@ public class OkHttpUtils {
                     .build();
             Call call = client.newCall(req);
             response = call.execute();
-            res=response.body().string();
+            res = response.body().string();
             httpCode = response.code();
         } catch (SocketTimeoutException e) {
-            log.error("SocketTimeoutException,try again:"+e.getMessage());
+            log.error("SocketTimeoutException,try again:" + e.getMessage());
             req = new Request.Builder()
                     .url(Url)
                     .headers(headers)
@@ -530,17 +550,17 @@ public class OkHttpUtils {
             Call call = client.newCall(req);
             try {
                 response = call.execute();
-                res=response.body().string();
+                res = response.body().string();
             } catch (Exception ex) {
-                log.error("Retry still fails:"+ex.getMessage());
+                log.error("Retry still fails:" + ex.getMessage());
                 ex.printStackTrace();
             }
 
             httpCode = response.code();
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        addResponseLog(POST, Url, Url, null, null,response,httpCode, res, response.header("SpanID"),startTime);
+        addResponseLog(POST, Url, Url, null, null, response, httpCode, res, response.header("SpanID"), startTime);
         return handleHttpResponse(httpCode, res, response);
 
 
@@ -548,31 +568,30 @@ public class OkHttpUtils {
 
     /**
      * 删除操作
-     * @param Url 请求URL
-     * @param headersParams  请求头参数
+     *
+     * @param Url           请求URL
+     * @param headersParams 请求头参数
      * @param UrlMapParams  URL参数
-     * @param Jsonbody  请求Json
+     * @param Jsonbody      请求Json
      * @return
      * @throws IOException
      */
-    public static MyResponse delete(String Url,Map<String, String> headersParams, Map<String, String> UrlMapParams,JsonObject Jsonbody) throws  HttpStatusException {
-        Headers headers=null;
+    public static MyResponse delete(String Url, Map<String, String> headersParams, Map<String, String> UrlMapParams, JsonObject Jsonbody) throws HttpStatusException {
+        Headers headers = null;
         String strParams = "";
-        String res="";
+        String res = "";
         long startTime = System.currentTimeMillis();
-        if(headersParams != null)
-        {
-            headers= setHeaders(headersParams);
+        if (headersParams != null) {
+            headers = setHeaders(headersParams);
         }
-        if(UrlMapParams != null)
-        {
-            strParams= setGetUrlParams(UrlMapParams);
-            Url+=strParams;
+        if (UrlMapParams != null) {
+            strParams = setGetUrlParams(UrlMapParams);
+            Url += strParams;
 
         }
 
         MediaType JSON = MediaType.parse(String.valueOf(ContentType.APPLICATION_JSON));
-        RequestBody body = RequestBody.create(JSON,Jsonbody.toString());
+        RequestBody body = RequestBody.create(JSON, Jsonbody.toString());
         addRequestLog(DELETE, Url, Url, null, null);
         OkHttpClient client = new OkHttpClient();
         Request req = new Request.Builder()
@@ -584,15 +603,22 @@ public class OkHttpUtils {
         Response response = null;
         try {
             response = client.newCall(req).execute();
-            res=response.body().string();
+            res = response.body().string();
         } catch (IOException e) {
             e.printStackTrace();
         }
         int httpCode = response.code();
 
-        if(httpCode!=200&&httpCode!=201){
-            addResponseLog(DELETE, Url, Url, null, null,response,httpCode, res, response.header("SpanID"),startTime);
-        }
+//        if (httpCode != 200 && httpCode != 201) {
+            addResponseLog(DELETE, Url, Url, null, null, response, httpCode, res, response.header("SpanID"), startTime);
+//        }
+        Reporter.log("url: " + Url);
+        Reporter.log("headersParams: " + headers);
+        Reporter.log("urlMapParams: " + strParams);
+        Reporter.log("res code: " + httpCode);
+        Reporter.log("res spanID: " + response.header("SpanID"));
+        Reporter.log("res traceID: " + response.header("TraceID"));
+        Reporter.log("res data: " + res);
         return handleHttpResponse(httpCode, res, response);
     }
 }

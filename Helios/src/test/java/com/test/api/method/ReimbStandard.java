@@ -275,11 +275,11 @@ public class ReimbStandard {
         }
         //config cityGroups
         if(cityGroupsName.length!=0){
-            JsonArray userGroupArray = reimbStandardRules.getCityGroup(employee,rules.getLevelCode(),rules.getLevelOrgId());
+            JsonArray cityGroupArray = reimbStandardRules.getCityGroup(employee,rules.getLevelCode(),rules.getLevelOrgId());
             JsonArray cityGroups = new JsonArray();
             for(String cityGroupName:cityGroupsName){
-                if(GsonUtil.isNotEmpt(cityGroups)){
-                cityGroups.add(GsonUtil.getJsonValue(userGroupArray,"levelName",cityGroupName));
+                if(GsonUtil.isNotEmpt(cityGroupArray)){
+                cityGroups.add(GsonUtil.getJsonValue(cityGroupArray,"levelName",cityGroupName));
                 }
             }
             rulesItem.setCitys(cityGroups);

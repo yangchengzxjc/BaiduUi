@@ -37,16 +37,13 @@ public class TestReportListener implements IReporter {
     private String beginTime;
     private long totalTime;
     private String project = "Helios";
-    private String browseNumber = "";
+    private String reportName = "hahahah";
     private String environment = "";
 //    private String language = "";
 
 
     @Override
     public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
-//        System.out.println("browseNumber："+ browseNumber);
-//        System.out.println("environment："+ environment);
-//        System.out.println("language："+ language);
 
         List<ITestResult> list = new ArrayList<ITestResult>();
         for (ISuite suite : suites) {
@@ -80,6 +77,7 @@ public class TestReportListener implements IReporter {
                 list.addAll(this.listTestResult(failedConfig));
             }
         }
+
         this.project = this.project + "-" + this.environment;
         this.sort(list);
         this.outputResult(list);
@@ -139,9 +137,11 @@ public class TestReportListener implements IReporter {
                 }
                 info.setLog(log);
                 listInfo.add(info);
+//                reportName = result.getTestContext().getSuite().getName();
             }
             Map<String, Object> result = new HashMap<String, Object>();
-            result.put("testName", this.project);
+            result.put("environmentName", this.project);
+//            result.put("reportName",reportName);
             result.put("testPass", testsPass);
             result.put("testFail", testsFail);
             result.put("testSkip", testsSkip);

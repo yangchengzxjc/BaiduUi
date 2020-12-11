@@ -138,7 +138,7 @@ public enum Supplier {
      * @param venName
      * @return
      */
-    public static String getSupplierOIDByName(String venName){
+    public static String getSupplier(String venName){
         Supplier[] suppliers = values();
         for (Supplier supplier: suppliers){
             if(supplier.getName().equals(venName)){

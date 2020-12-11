@@ -18,7 +18,7 @@ public class VendorInfoApi extends BaseRequest {
      * @param vendorsName        供应商EN
      * @param businessCode       单据号
      * @param pageType           指定登录页面   (机票，酒店，火车，机票订单，酒店订单，火车订单 )
-     * @param vendorType       消费上类型，机酒火
+     * @param vendorType         消费上类型，机酒火
      * @param itineraryDirection 往返有效 1001：去程 1002：返程
      * @param direction          H5/WEB登录
      * @param lng                经度 需支持(百动、小秘书)
@@ -105,6 +105,61 @@ public class VendorInfoApi extends BaseRequest {
     }
 
     /**
+     * vendorInfoSso重载 H5 首页 单点登录场景
+     *
+     * @param employee
+     * @param supplierOID
+     * @param direction
+     * @param pageType
+     * @return
+     */
+    public String vendorInfoSso(Employee employee,
+                                String supplierOID,
+                                String direction,
+                                Integer pageType) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.SSO;
+        Map<String, String> datas = new HashMap<>();
+        datas.put("supplierOID", supplierOID);
+        datas.put("direction", direction);
+        datas.put("pageType", String.valueOf(pageType));
+        String res = doGet(url, getHeader(employee.getAccessToken()), datas, employee);
+        return res;
+    }
+
+    /**
+     * vendorInfoSso 重载 H5 审批单行程单点场景
+     *
+     * @param employee
+     * @param supplierOID
+     * @param direction
+     * @param pageType
+     * @param businessCode
+     * @param itineraryDirection
+     * @param vendorType
+     * @return
+     */
+    public String vendorInfoSso(Employee employee,
+                                String supplierOID,
+                                String direction,
+                                Integer pageType,
+                                String businessCode,
+                                Integer itineraryDirection,
+                                String vendorType) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.SSO;
+        Map<String, String> datas = new HashMap<>();
+        datas.put("supplierOID", supplierOID);
+        datas.put("direction", direction);
+        datas.put("pageType", String.valueOf(pageType));
+        datas.put("businessCode", businessCode);
+        if (null != itineraryDirection) {
+            datas.put("itineraryDirection", String.valueOf(itineraryDirection));
+        }
+        datas.put("vendorType", vendorType);
+        String res = doGet(url, getHeader(employee.getAccessToken()), datas, employee);
+        return res;
+    }
+
+    /**
      * 统一单点登录接口
      * get /sso/common
      *
@@ -182,5 +237,29 @@ public class VendorInfoApi extends BaseRequest {
         return res;
     }
 
-
+    /**
+     * vendorInfoSsoCommon 重载 web 首页单点登录场景
+     *
+     * @param employee
+     * @param supplierOID
+     * @param pageType
+     * @param vendorType
+     * @param direction
+     * @return
+     * @throws HttpStatusException
+     */
+    public String vendorInfoSsoCommon(Employee employee,
+                                      String supplierOID,
+                                      Integer pageType,
+                                      String vendorType,
+                                      String direction) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.SSO_COMMON;
+        Map<String, String> datas = new HashMap<>();
+        datas.put("supplierOID", supplierOID);
+        datas.put("pageType", String.valueOf(pageType));
+        datas.put("vendorType", vendorType);
+        datas.put("direction", direction);
+        String res = doGet(url, getHeader(employee.getAccessToken()), datas, employee);
+        return res;
+    }
 }

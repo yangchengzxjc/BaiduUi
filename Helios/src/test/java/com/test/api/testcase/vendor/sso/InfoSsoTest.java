@@ -67,29 +67,14 @@ public class InfoSsoTest extends BaseTest {
         System.out.println(testStr);
     }
 
-    @Test(description = "vendor info sso", dataProvider = "dataProvider")
+    @Test(description = "vendor info sso H5", dataProvider = "dataProvider")
     public void ssoTest(String caseDesc,
-                        @Optional("66666666-6666-11e6-9639-00ffa3fb4c67") String supplierOID,
-                        String vendorsName,
-                        String businessCode,
-                        Integer pageType,
-                        String vendorType,
-                        Integer itineraryDirection,
-                        Double lng,
-                        Double lat,
-                        @Optional("WEB") String direction,
-                        String orderId,
-                        String startCity,
-                        String endCity,
-                        String startDate,
-                        String endDate,
-                        String forCorp,
-                        String flightSearchType,
+                        String supplierOID,
+                        @Optional("H5") String direction,
+                        @Optional("1002")Integer pageType,
                         String res_expect) throws HttpStatusException {
         // do request
-        String resStr = vendorInfo.vendorInfoSso(employee, supplierOID, vendorsName, businessCode, pageType, vendorType,
-                itineraryDirection, lng, lat, direction, orderId, startCity, endCity,
-                startDate, endDate, forCorp, flightSearchType);
+        String resStr = vendorInfo.vendorInfoSso(employee, supplierOID, direction, pageType);
         // assert result
         Assert.assertTrue(resStr.contains(res_expect));
     }

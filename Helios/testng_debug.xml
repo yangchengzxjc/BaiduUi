@@ -22,7 +22,6 @@
             <!--                </methods>-->
             <!--            </class>-->
             <class name="com.test.api.testcase.vendor.sso.InfoSsoCommonTest"/>
-            <class name="com.test.api.testcase.vendor.VendorSSOTest"/>
 
         </classes>
 

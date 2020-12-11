@@ -98,10 +98,10 @@ public class OkHttpUtils {
         } else if ((endTime - startTime) >= 7000) {
             log.info("请求大于7秒，有待观察:");
         }
-        // 报告打印日志
-        Reporter.log("httpCode: " + httpCode);
-        Reporter.log("spanID: " + response.header("SpanID"));
-        Reporter.log("res: " + result);
+//        // 报告打印日志 debug
+//        Reporter.log("httpCode: " + httpCode);
+//        Reporter.log("spanID: " + response.header("SpanID"));
+//        Reporter.log("res: " + result);
 
         log.info("===========================response end================================================");
     }

@@ -50,7 +50,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     }
 
     @Test(description = "报销提交管控-账套级-警告-费用类型管控-包含")
-    public void submissionControlTest1() throws HttpStatusException {
+    public void submissionControlTest01() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
@@ -72,7 +72,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     }
 
     @Test(description = "报销提交管控-账套级-禁止-费用类型管控-包含")
-    public void submissionControlTest2() throws HttpStatusException {
+    public void submissionControlTest02() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         rules.setControlLevel("FORBID");
@@ -95,7 +95,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     }
 
     @Test(description = "报销提交管控-账套级-警告-费用类型管控-不包含")
-    public void submissionControlTest3() throws HttpStatusException {
+    public void submissionControlTest03() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
@@ -117,7 +117,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     }
 
     @Test(description = "报销提交管控-账套级-警告-费用重复管控-包含")
-    public void submissionControlTest4() throws HttpStatusException {
+    public void submissionControlTest04() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
@@ -144,7 +144,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     }
 
     @Test(description = "报销提交管控-账套级-禁止-费用重复管控-包含")
-    public void submissionControlTest5() throws HttpStatusException {
+    public void submissionControlTest05() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         rules.setControlLevel("FORBID");
@@ -172,7 +172,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销次数管控-'>'1次/月")
-    public void submissionControlTest6() throws HttpStatusException {
+    public void submissionControlTest06() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
@@ -204,7 +204,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销次数管控-'>'1次/天")
-    public void submissionControlTest7() throws HttpStatusException {
+    public void submissionControlTest07() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
@@ -235,7 +235,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销次数管控-'>'1次/季度")
-    public void submissionControlTest8() throws HttpStatusException {
+    public void submissionControlTest08() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
@@ -267,7 +267,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销次数管控-'>'1次/年")
-    public void submissionControlTest9() throws HttpStatusException {
+    public void submissionControlTest09() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());

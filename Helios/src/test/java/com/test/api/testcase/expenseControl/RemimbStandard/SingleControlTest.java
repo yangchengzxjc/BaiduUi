@@ -48,7 +48,7 @@ public class SingleControlTest extends BaseTest {
     }
 
     @Test(description = "标准:账套级-单条管控-费用参与人标准关闭-管控信息为：费用金额>基本标准")
-    public void singleControlTest1() throws HttpStatusException {
+    public void singleControlTest01() throws HttpStatusException {
         //新建账套级规则
         StandardRules rules = new StandardRules();
         rules.setName("auto test single control");

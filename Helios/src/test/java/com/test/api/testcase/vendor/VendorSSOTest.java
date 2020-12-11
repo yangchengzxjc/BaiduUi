@@ -51,7 +51,7 @@ public class VendorSSOTest extends BaseTest {
     }
 
     @Test(description = "sso首页单点登录", dataProvider = "ctripSSO")
-    public void ctripSSO(String caseDesc, String supplierOID, String direction) throws HttpStatusException {
+    public void SSO(String caseDesc, String supplierOID, String direction) throws HttpStatusException {
         JsonObject response = vendor.vndSSO(employee, supplierOID, direction, "1002");
         log.info("单点登录的响应:{}", response);
         int statusCode = vendor.ssoCode(employee, supplierOID, direction, "1002");

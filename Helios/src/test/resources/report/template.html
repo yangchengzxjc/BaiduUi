@@ -6983,14 +6983,20 @@
                 </div>
                 <div class="ibox-content">
                     <div class="row">
-                        <div class="col-sm-6 b-r" style="height:350px">
+                        <div class="col-sm-6 b-r" style="height:300px">
                             <form class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label text-navy">报告名称:</label>
+                                    <label class="col-sm-2 control-label text-navy">运行环境:</label>
                                     <div class="col-sm-5">
-                                        <span class="form-control" id="testName"></span>
+                                        <span class="form-control" id="environmentName"></span>
                                     </div>
                                 </div>
+                                <!--<div class="form-group">-->
+                                    <!--<label class="col-sm-2 control-label text-navy">报告名称:</label>-->
+                                    <!--<div class="col-sm-5">-->
+                                        <!--<span class="form-control" id="reportName"></span>-->
+                                    <!--</div>-->
+                                <!--</div>-->
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label text-navy">用例总数:</label>
                                     <div class="col-sm-5">
@@ -7208,11 +7214,11 @@
             $(obj).removeClass("btn-danger");
             $(obj).addClass("btn-primary");
         }
-
     }
 
     $(function () {
-        $("#testName").text(resultData["testName"]);
+        $("#environmentName").text(resultData["environmentName"])
+        // $("#reportName").text(resultData["reportName"])
         $("#testPass").text(resultData["testPass"]);
         $("#testFail").text(resultData["testFail"]);
         $("#testSkip").text(resultData["testSkip"]);

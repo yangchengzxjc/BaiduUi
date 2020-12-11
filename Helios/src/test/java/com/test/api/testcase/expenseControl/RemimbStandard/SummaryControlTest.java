@@ -56,7 +56,7 @@ public class SummaryControlTest extends BaseTest {
     }
 
     @Test(description = "标准:账套级-汇总管控/费用参与人标准关闭-管控信息为：费用金额>基本标准")
-    public void summaryControlTest1() throws HttpStatusException {
+    public void summaryControlTest01() throws HttpStatusException {
         //新建账套级规则
         StandardRules rules = new StandardRules();
         rules.setName("auto test period control");
@@ -77,7 +77,7 @@ public class SummaryControlTest extends BaseTest {
     }
 
     @Test(description = "标准:账套级-汇总管控-禁止/费用参与人标准关闭-管控信息为：费用金额>基本标准")
-    public void summaryControlTest2() throws HttpStatusException {
+    public void summaryControlTest02() throws HttpStatusException {
         //新建账套级规则
         StandardRules rules = new StandardRules();
         rules.setName("auto test summary control");
@@ -99,7 +99,7 @@ public class SummaryControlTest extends BaseTest {
     }
 
     @Test(description = "标准:公司级-汇总管控/费用参与人标准关闭-管控信息为：费用金额>基本标准")
-    public void summaryControlTest3() throws HttpStatusException {
+    public void summaryControlTest03() throws HttpStatusException {
         //新建账套级规则
         StandardRules rules = new StandardRules();
         rules.setName("auto test period control");
@@ -121,7 +121,7 @@ public class SummaryControlTest extends BaseTest {
     }
 
     @Test(description = "标准:账套级-汇总管控/费用参与人标准取就高-管控信息为：费用金额>基本标准")
-    public void summaryControlTest4() throws HttpStatusException {
+    public void summaryControlTest04() throws HttpStatusException {
         StandardRules rules = standardControl.setSummaryHighRule();
         String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
         map.put("ruleOID",ruleOID);
@@ -140,7 +140,7 @@ public class SummaryControlTest extends BaseTest {
     }
 
     @Test(description = "标准:账套级-汇总管控/费用参与人标准取就高-管控信息为：费用金额>基本标准*天数")
-    public void summaryControlTest5() throws HttpStatusException {
+    public void summaryControlTest05() throws HttpStatusException {
         StandardRules rules = standardControl.setSummaryHighRule();
         String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
         map.put("ruleOID",ruleOID);
@@ -164,7 +164,7 @@ public class SummaryControlTest extends BaseTest {
     }
 
     @Test(description = "标准:账套级-汇总管控/费用参与人标准取就高-管控信息为：费用金额>基本标准*人数")
-    public void summaryControlTest6() throws HttpStatusException {
+    public void summaryControlTest06() throws HttpStatusException {
         StandardRules rules = standardControl.setSummaryHighRule();
         String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
         map.put("ruleOID",ruleOID);
@@ -188,7 +188,7 @@ public class SummaryControlTest extends BaseTest {
     }
 
     @Test(description = "标准:账套级-汇总管控/费用参与人标准取就高-管控信息为：费用金额>基本标准*房间数")
-    public void summaryControlTest7() throws HttpStatusException {
+    public void summaryControlTest07() throws HttpStatusException {
         StandardRules rules = standardControl.setSummaryHighRule();
         String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
         map.put("ruleOID",ruleOID);
@@ -212,7 +212,7 @@ public class SummaryControlTest extends BaseTest {
     }
 
     @Test(description = "标准:账套级-汇总管控/费用参与人标准取就高-管控信息为：费用金额>基本标准*月数")
-    public void summaryControlTest8() throws HttpStatusException {
+    public void summaryControlTest08() throws HttpStatusException {
         StandardRules rules = standardControl.setSummaryHighRule();
         String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
         map.put("ruleOID",ruleOID);
@@ -236,7 +236,7 @@ public class SummaryControlTest extends BaseTest {
     }
 
     @Test(description = "标准:账套级-汇总管控/费用参与人标准取就高-管控信息为：费用金额>基本标准*出差天数")
-    public void summaryControlTest9() throws HttpStatusException {
+    public void summaryControlTest09() throws HttpStatusException {
         //初始化规则
         StandardRules rules = standardControl.setSummaryHighRule();
         String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
@@ -420,6 +420,8 @@ public class SummaryControlTest extends BaseTest {
         assert expenseReport.checkSubmitLabel(employee, reportOID1, "5001",label);
         assert invoice.checkInvoiceLabel(employee,invoiceOID1,"EXPENSE_STANDARD_EXCEEDED_WARN",label);
     }
+
+
 
     @AfterMethod
     public void cleanEnv() throws HttpStatusException {

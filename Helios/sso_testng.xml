@@ -2,6 +2,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite" parallel="tests" thread-count="1">
 
+<!--    Jenkins定时构建用例 请勿随意修改！！！！     -->
+
     <parameter name="environment" value="${environment}"/>
     <parameter name="phoneNumber" value="${phoneNumber}"/>
     <parameter name="passWord" value="${passWord}"/>

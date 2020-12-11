@@ -185,8 +185,6 @@ public class BaseRequest {
         myResponse = OkHttpUtils.get(url, headersParams, urlMapParams);
         int code = myResponse.getStatusCode();
         String res = myResponse.getBody();
-//        log.info("res code: {}", code);
-//        log.info("res data: {}", res);
         switch (code) {
             case HttpStatus.OK_200:
             case HttpStatus.CREATED_201:

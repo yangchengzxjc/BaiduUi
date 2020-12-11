@@ -2,34 +2,36 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite" parallel="tests" thread-count="2">
 
-    <parameter name="environment" value="${environment}"/>
-    <parameter name="passWord" value="${passWord}"/>
+<!--    本地调试使用该脚本   -->
+    <parameter name="environment" value="stage"></parameter>
 
     <test verbose="10" preserve-order="true" name="debug">
-        <parameter name="environment" value="stage"></parameter>
         <parameter name="phoneNumber" value="14082978666"/>
         <parameter name="passWord" value="hly123456"></parameter>
 
         <classes>
-<!--            <class name="com.test.api.testcase.vendor.sso.InfoSsoTest">-->
-<!--                <methods>-->
-<!--                    <include name="ssoTest"></include>-->
-<!--                </methods>-->
-<!--            </class>-->
+            <!--            <class name="com.test.api.testcase.vendor.sso.InfoSsoTest">-->
+            <!--                <methods>-->
+            <!--                    <include name="ssoTest"></include>-->
+            <!--                </methods>-->
+            <!--            </class>-->
 
-            <class name="com.test.api.testcase.vendor.sso.InfoSsoCommonTest">
-                <methods>
-                    <include name="ssoCommonTest"></include>
-                </methods>
-            </class>
+            <!--            <class name="com.test.api.testcase.vendor.sso.InfoSsoCommonTest">-->
+            <!--                <methods>-->
+            <!--                    <include name="ssoCommonTest"></include>-->
+            <!--                </methods>-->
+            <!--            </class>-->
+            <class name="com.test.api.testcase.vendor.sso.InfoSsoCommonTest"/>
+            <class name="com.test.api.testcase.vendor.VendorSSOTest"/>
+
         </classes>
 
     </test>
 
     <listeners>
         <listener class-name="com.test.listener.TestLogListener"/>
-<!--        <listener class-name="com.test.listener.TestReportListener"/>-->
-        <listener class-name="com.test.listener.ExtentTestNGIReporterListener"></listener>
+        <listener class-name="com.test.listener.TestReportListener"/>
+        <!--        <listener class-name="com.test.listener.ExtentTestNGIReporterListener"></listener>-->
     </listeners>
 </suite>
 

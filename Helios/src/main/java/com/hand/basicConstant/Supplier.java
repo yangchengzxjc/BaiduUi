@@ -131,7 +131,6 @@ public enum Supplier {
     private String appCode;
     private String supplierOID;
     private String vendorType;
-    //    private String category;
     private String expectUrl;
 
     /**
@@ -139,7 +138,7 @@ public enum Supplier {
      * @param venName
      * @return
      */
-    public static String getSupplier(String venName){
+    public static String getSupplierOIDByName(String venName){
         Supplier[] suppliers = values();
         for (Supplier supplier: suppliers){
             if(supplier.getName().equals(venName)){

@@ -54,7 +54,7 @@ public class InfoSsoTest extends BaseTest {
         vendorList.add("cimcctmc");
         vendorList.add("大唐");
         for (String vendor:vendorList) {
-            objList.add(new Object[]{vendor, Supplier.getSupplier(vendor)});
+            objList.add(new Object[]{vendor, Supplier.getSupplierOIDByName(vendor)});
         }
         return objList.iterator();
     }

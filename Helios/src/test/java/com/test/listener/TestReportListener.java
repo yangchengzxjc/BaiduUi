@@ -82,7 +82,19 @@ public class TestReportListener implements IReporter {
         this.project = this.project + "-" + this.environment;
         this.sort(list);
         this.outputResult(list);
-
+        //新加钉钉机器人测试报告
+        if (this.project.contains("CONSOLE")) {
+            int testAll = testsPass + testsFail + testsSkip;
+            String pass = DingDingUtil.folatToPer((float) testsPass / testAll);
+            String url = "https://oapi.dingtalk.com/robot/send?access_token=592a7abc3b71fa4570aa9b48115511f50f803b4405614620fa44b2e6bdd7cfc2";
+//                String context = this.project + "运行接口用例，总用例数为：" + testAll + "；通过：" + testsPass + "；失败：" + testsFail + "；跳过：" + testsSkip + "；通过率为：" + pass;
+            String context = "### 接口用例执行结果 \\n> - 总用例数：" + testAll + "\\n> - 通过：" + testsPass + "\\n> - 失败：" + testsFail + "\\n> - 跳过：" + testsSkip + "\\n> - 通过率为：" + pass;
+            try {
+                DingDingUtil.sendVal(url, context);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private ArrayList<ITestResult> listTestResult(IResultMap resultMap) {
@@ -157,21 +169,6 @@ public class TestReportListener implements IReporter {
             output.write(template);
             output.flush();
             output.close();
-
-            //新加钉钉机器人测试报告
-            if (suite.getParameter("environment").contains("console")) {
-                int testAll = testsPass + testsFail + testsSkip;
-                String pass = DingDingUtil.folatToPer((float) testsPass / testAll);
-                String url = "https://oapi.dingtalk.com/robot/send?access_token=592a7abc3b71fa4570aa9b48115511f50f803b4405614620fa44b2e6bdd7cfc2";
-//                String context = this.project + "运行接口用例，总用例数为：" + testAll + "；通过：" + testsPass + "；失败：" + testsFail + "；跳过：" + testsSkip + "；通过率为：" + pass;
-                String context = "### 接口用例执行结果 \\n> - 总用例数：" + testAll + "\\n> - 通过：" + testsPass + "\\n> - 失败：" + testsFail + "\\n> - 跳过：" + testsSkip + "\\n> - 通过率为：" + pass;
-                try {
-                    DingDingUtil.sendVal(url, context);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -15,7 +15,8 @@ public class DingDingUtil {
     public static void sendVal(String url, String context) throws Exception {
         Map<String, String> headermap = new HashMap<>();
         headermap.put("Content-Type", "application/json");
-        String entityString = "{'msgtype': 'text', 'text': {'content': '" + context + "'}}";
+//        String entityString = "{'msgtype': 'text', 'text': {'content': '" + context + "'}}";
+        String entityString = "{'msgtype': 'markdown', 'markdown': {'title': 'Helios接口测试','text': '" + context + "'}}";
 
         MyResponse responseJson = OkHttpUtils.post(url, headermap, null, entityString, null);
         log.info("dingding res: {}", responseJson);

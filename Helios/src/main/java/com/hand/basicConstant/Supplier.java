@@ -148,6 +148,16 @@ public enum Supplier {
         return null;
     }
 
+    public static String getSupplierUrlByName(String venName){
+        Supplier[] suppliers = values();
+        for (Supplier supplier: suppliers){
+            if(supplier.getName().equals(venName)){
+                return supplier.getExpectUrl();
+            }
+        }
+        return null;
+    }
+
     public static Supplier getInfoSso(String venName) {
         for (Supplier info : Supplier.values()) {
             if (info.vendorsName.equalsIgnoreCase(venName)) {

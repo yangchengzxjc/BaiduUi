@@ -14,13 +14,11 @@ public class DingDingUtil {
     //通过钉钉机器人发送消息到钉钉群中
     public static void sendVal(String url, String context) throws Exception {
         Map<String, String> headermap = new HashMap<>();
-//        headermap.put("Content-Type", "application/json");
 //        String entityString = "{'msgtype': 'text', 'text': {'content': '" + context + "'}}";
         String entityString = "{'msgtype': 'markdown', 'markdown': {'title': 'Helios接口测试','text': '" + context + "'}}";
         MediaType JSON = MediaType.parse(String.valueOf(ContentType.APPLICATION_JSON));
         RequestBody requestBody = RequestBody.create(JSON, entityString);
 
-//        MyResponse responseJson = OkHttpUtils.post(url, headermap, null, entityString, null);
         OkHttpClient okHttpClient = new OkHttpClient();
         Request req = new Request.Builder()
                 .url(url)

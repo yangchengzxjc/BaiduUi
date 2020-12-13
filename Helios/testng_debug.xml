@@ -16,12 +16,8 @@
             <!--                </methods>-->
             <!--            </class>-->
 
-            <!--            <class name="com.test.api.testcase.vendor.sso.InfoSsoCommonTest">-->
-            <!--                <methods>-->
-            <!--                    <include name="ssoCommonTest"></include>-->
-            <!--                </methods>-->
-            <!--            </class>-->
             <class name="com.test.api.testcase.vendor.sso.InfoSsoCommonTest"/>
+            <class name="com.test.api.testcase.vendor.sso.InfoSsoTest"/>
 
         </classes>
 

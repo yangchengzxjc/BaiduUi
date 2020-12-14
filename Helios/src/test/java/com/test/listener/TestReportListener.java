@@ -39,7 +39,7 @@ public class TestReportListener implements IReporter {
     private String project = "Helios";
     private String reportName = "hahahah";
     private String environment = "";
-    private String module = "";
+    private String module = "[]";
 
 
     @Override

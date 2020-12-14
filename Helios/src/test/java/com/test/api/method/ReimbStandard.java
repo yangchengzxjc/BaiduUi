@@ -102,14 +102,14 @@ public class ReimbStandard {
 
     /**
      * 报销标准-新建规则
-     * @param employee
+     * @param employee 1218迭代新增了费用大类管控
      * @param rules
      * @param formName 适用的表单名称
-     * @param expenseTypeName  费用类型
+     * @param expenseTypeNameCategory  当为费用类型管控时则为费用类型的名称 当为费用属性的时候则为属性名称
      * @return
      * @throws HttpStatusException
      */
-    public String addReimbstandard(Employee employee, StandardRules rules, String [] userGroupsName, String[] formName, String ... expenseTypeName)throws HttpStatusException{
+    public String addReimbstandard(Employee employee, StandardRules rules, String [] userGroupsName, String[] formName, String ... expenseTypeNameCategory)throws HttpStatusException{
         InfraStructureApi infraStructureApi =new InfraStructureApi();
         if(rules.getLevelCode().equals("SET_OF_BOOK")){
             rules.setLevelOrgId(employee.getSetOfBookId());
@@ -128,10 +128,37 @@ public class ReimbStandard {
         }else{
             rules.setUserGroups(new JsonArray());
         }
-        //处理费用类型
+        //处理费用类型 默认为按照费用类型
         JsonArray expenseType = new JsonArray();
-        for (String aExpenseTypeName : expenseTypeName){
-           expenseType.add(GsonUtil.getJsonValue(infraStructureApi.getExpenseType(employee,rules.getLevelOrgId(),aExpenseTypeName),"name",aExpenseTypeName));
+        if(rules.getSetType().equals("EXPENSE_TYPE")){
+            for (String aExpenseTypeName : expenseTypeNameCategory){
+                expenseType.add(GsonUtil.getJsonValue(infraStructureApi.getExpenseType(employee,rules.getLevelOrgId(),aExpenseTypeName),"name",aExpenseTypeName));
+            }
+        }
+        if(rules.getSetType().equals("EXPENSE_TYPE_CATEGORY")){
+            JsonObject expenseTypeCategory = new JsonObject();
+            if(expenseTypeNameCategory[0].equals("机票")){
+                expenseTypeCategory.addProperty("code","PLANE");
+            }
+            if(expenseTypeNameCategory[0].equals("火车")){
+                expenseTypeCategory.addProperty("code","TRAIN");
+            }
+            if(expenseTypeNameCategory[0].equals("通讯")){
+                expenseTypeCategory.addProperty("code","COMMUNITACTION");
+            }
+            if(expenseTypeNameCategory[0].equals("住宿")){
+                expenseTypeCategory.addProperty("code","ACCOMMODATION");
+            }
+            if(expenseTypeNameCategory[0].equals("餐饮")){
+                expenseTypeCategory.addProperty("code","MEAL");
+            }
+            if(expenseTypeNameCategory[0].equals("用车")){
+                expenseTypeCategory.addProperty("code","CAR");
+            }
+            if(expenseTypeNameCategory[0].equals("轮船")){
+                expenseTypeCategory.addProperty("code","MEAL");
+            }
+            expenseType.add(expenseTypeCategory);
         }
         rules.setExpenseTypes(expenseType);
         //处理表单 form

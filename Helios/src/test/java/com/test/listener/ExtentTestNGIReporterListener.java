@@ -18,13 +18,14 @@ import java.util.*;
 
 public class ExtentTestNGIReporterListener implements IReporter {
 
-    private static Date date = new Date();
-    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
-    private static String reportdate = simpleDateFormat.format(date);
+//    private static Date date = new Date();
+//    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
+//    private static String reportdate = simpleDateFormat.format(date);
 
     //生成的路径以及文件名
     private static final String OUTPUT_FOLDER = "target/test-output/";
-    private static final String FILE_NAME = "汇联易自动化测试报告" + reportdate + ".html";
+    //    private static final String FILE_NAME = "汇联易自动化测试报告" + reportdate + ".html";
+    private static final String FILE_NAME = "index.html";
 
     private ExtentReports extent;
 

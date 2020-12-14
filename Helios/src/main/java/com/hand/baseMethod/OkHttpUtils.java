@@ -69,7 +69,7 @@ public class OkHttpUtils {
             log.info("Request body : {}", body);
         }
         if (StringUtils.isNotBlank(formParam)) {
-            log.info("Request param: {}",formParam);
+            log.info("Request param: {}", formParam);
         }
 //        log.info("---------------------------request end--------------------------------------------------");
     }
@@ -98,6 +98,11 @@ public class OkHttpUtils {
         } else if ((endTime - startTime) >= 7000) {
             log.info("请求大于7秒，有待观察:");
         }
+//        // 报告打印日志 debug
+//        Reporter.log("httpCode: " + httpCode);
+//        Reporter.log("spanID: " + response.header("SpanID"));
+//        Reporter.log("res: " + result);
+
         log.info("===========================response end================================================");
     }
 
@@ -474,7 +479,7 @@ public class OkHttpUtils {
      * @throws IOException
      */
     public static MyResponse UpLoadFile(String Url, Map<String, String> headersParams, Map<String, String> BodyParams, String Name, String FilePath, String
-        FileMediaType) throws HttpStatusException {
+            FileMediaType) throws HttpStatusException {
         Headers headers = null;
         long startTime = System.currentTimeMillis();
         String res = "";

@@ -2,6 +2,7 @@ package com.test.listener;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hand.utils.DingDingUtil;
 import org.testng.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
@@ -49,7 +50,7 @@ public class TestReportListener implements IReporter {
         for (ISuite suite : suites) {
             Map<String, ISuiteResult> suiteResults = suite.getResults();
 
-            if (suite.getParameter("environment") == null){
+            if (suite.getParameter("environment") == null) {
                 throw new NullPointerException("环境信息未配置");
             }
             if (suite.getParameter("environment").equalsIgnoreCase("uat")) {
@@ -81,7 +82,19 @@ public class TestReportListener implements IReporter {
         this.project = this.project + "-" + this.environment;
         this.sort(list);
         this.outputResult(list);
-
+        //新加钉钉机器人测试报告
+        if (this.project.contains("CONSOLE")) {
+            int testAll = testsPass + testsFail + testsSkip;
+            String pass = DingDingUtil.folatToPer((float) testsPass / testAll);
+            String url = "https://oapi.dingtalk.com/robot/send?access_token=592a7abc3b71fa4570aa9b48115511f50f803b4405614620fa44b2e6bdd7cfc2";
+//                String context = this.project + "运行接口用例，总用例数为：" + testAll + "；通过：" + testsPass + "；失败：" + testsFail + "；跳过：" + testsSkip + "；通过率为：" + pass;
+            String context = "### 接口用例执行结果 " + "\\n> - 环境：" + this.environment + "\\n> - 总用例数：" + testAll + "\\n> - 通过：" + testsPass + "\\n> - 失败：" + testsFail + "\\n> - 跳过：" + testsSkip + "\\n> - 通过率为：" + pass;
+            try {
+                DingDingUtil.sendVal(url, context);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private ArrayList<ITestResult> listTestResult(IResultMap resultMap) {
@@ -130,9 +143,9 @@ public class TestReportListener implements IReporter {
                 info.setStatus(status);
                 info.setClassName(result.getInstanceName());
                 info.setMethodName(result.getName());
-                try{
+                try {
                     info.setDescription(result.getMethod().getDescription() + "-" + result.getParameters()[0].toString());
-                }catch (ArrayIndexOutOfBoundsException e){
+                } catch (ArrayIndexOutOfBoundsException e) {
                     info.setDescription(result.getMethod().getDescription());
                 }
                 info.setLog(log);

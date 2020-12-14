@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite" parallel="tests" thread-count="1">
-    <parameter  name="environment" value="stage"/>
+
+<!--    Jenkins定时构建用例 请勿随意修改！！！！     -->
+
+    <parameter name="environment" value="${environment}"/>
+    <parameter name="phoneNumber" value="${phoneNumber}"/>
+    <parameter name="passWord" value="${passWord}"/>
+
     <test verbose="10" preserve-order="true" name="testSSO">
         <classes>
             <class name="com.test.api.testcase.vendor.VendorSSOTest"/>
         </classes>
     </test>
+
     <listeners>
         <listener class-name="com.test.listener.TestLogListener"/>
         <listener class-name="com.test.listener.TestReportListener"/>
+<!--        <listener class-name="com.test.listener.ExtentTestNGIReporterListener"></listener>-->
     </listeners>
+
 </suite>
 

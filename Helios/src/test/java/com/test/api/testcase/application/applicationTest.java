@@ -6,7 +6,7 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.basicObject.FormComponent;
-import com.hand.basicConstant.SupplierOID;
+import com.hand.basicConstant.Supplier;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
 import com.test.api.method.ApplicationMethod.TravelApplicationPage;
@@ -57,7 +57,7 @@ public class applicationTest extends BaseTest {
         String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-自动化测试",component).get("applicationOID");
         //添加差旅行程(目前支持飞机行程和酒店行程)
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
-        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001,SupplierOID.CTRIPAIR.getSupplierOID(),"西安市","北京",null,UTCTime.getNowStartUtcDate());
+        FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, Supplier.CTRIP_AIR.getSupplierOID(),"西安市","北京",null,UTCTime.getNowStartUtcDate());
         flightItineraries.add(flightItinerary);
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
         //申请单添加预算

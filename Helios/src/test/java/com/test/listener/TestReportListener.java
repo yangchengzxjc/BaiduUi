@@ -89,8 +89,9 @@ public class TestReportListener implements IReporter {
             int testAll = testsPass + testsFail + testsSkip;
             String pass = DingDingUtil.folatToPer((float) testsPass / testAll);
             StringBuilder context = new StringBuilder("### 接口用例执行结果 " + "\\n> - 环境：" + this.environment + "\\n> - 总用例数：" + testAll + "\\n> - 通过：" + testsPass + "\\n> - 失败：" + testsFail + "\\n> - 跳过：" + testsSkip + "\\n> - 通过率为：" + pass);
+            log.info("参数module为:{}",module);
             JsonElement moduleelement = new JsonParser().parse(module);
-            if(moduleelement.isJsonArray()){
+            if(moduleelement.getAsJsonArray().isJsonArray()){
                 for(int i=0;i<moduleelement.getAsJsonArray().size();i++){
                     context.append("@").append(moduleelement.getAsJsonArray().get(i));
                 }

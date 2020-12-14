@@ -94,7 +94,7 @@ public class TestReportListener implements IReporter {
             JsonElement moduleelement = new JsonParser().parse(module);
             if(moduleelement.getAsJsonArray().isJsonArray()){
                 for(int i=0;i<moduleelement.getAsJsonArray().size();i++){
-                    context.append("@").append(moduleelement.getAsJsonArray().get(i).getAsInt());
+                    context.append("@").append(moduleelement.getAsJsonArray().get(i));
                 }
             }
             log.info("发送的消息内容为:{}",context.toString());

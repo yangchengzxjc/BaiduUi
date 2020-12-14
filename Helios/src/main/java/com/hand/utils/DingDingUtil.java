@@ -12,13 +12,13 @@ import java.util.Map;
 public class DingDingUtil {
 
     //通过钉钉机器人发送消息到钉钉群中
-    public static void sendVal(String url, String context) throws Exception {
+    public static void sendVal(String url, String context,String at) throws Exception {
         Map<String, String> headermap = new HashMap<>();
 //        String entityString = "{'msgtype': 'text', 'text': {'content': '" + context + "'}}";
-        String entityString = "{'msgtype': 'markdown', 'markdown': {'title': 'Helios接口测试','text': '" + context + "'}}";
+        String entityString = String.format("{\"msgtype\": \"markdown\", \"markdown\": {\"title\": \"Helios接口测试\",\"text\": %s},\"at\":{\"atMobiles\": %s,\"isAtAll\":true}}",context,at);
+        log.info("dingding请求的数据为:{}",entityString);
         MediaType JSON = MediaType.parse(String.valueOf(ContentType.APPLICATION_JSON));
         RequestBody requestBody = RequestBody.create(JSON, entityString);
-        log.info("消息请求的body:{}",requestBody);
         OkHttpClient okHttpClient = new OkHttpClient();
         Request req = new Request.Builder()
                 .url(url)

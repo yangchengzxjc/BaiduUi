@@ -249,6 +249,8 @@
             <environment>${environment}</environment>
             <!--设置账号-->
             <phoneNumber>${phoneNumber}</phoneNumber>
+            <passWord>${passWord}</passWord>
+            <module>${module}</module>
           </systemPropertyVariables>
           <argLine>-Dfile.encoding=UTF-8</argLine>
           <testFailureIgnore>true</testFailureIgnore>

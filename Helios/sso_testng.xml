@@ -6,6 +6,7 @@
 
     <parameter name="environment" value="${environment}"/>
     <parameter name="phoneNumber" value="${phoneNumber}"/>
+    <parameter name="module" value="${module}"/>
     <parameter name="passWord" value="${passWord}"/>
 
     <test verbose="10" preserve-order="true" name="testSSO">

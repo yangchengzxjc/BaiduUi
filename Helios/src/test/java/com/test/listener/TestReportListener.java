@@ -51,6 +51,7 @@ public class TestReportListener implements IReporter {
             Map<String, ISuiteResult> suiteResults = suite.getResults();
             if(suite.getParameter("module")!= null){
                 module = suite.getParameter("module");
+                log.info("参数module传递了吗{}",module);
             }
             if (suite.getParameter("environment") == null) {
                 throw new NullPointerException("环境信息未配置");
@@ -88,12 +89,12 @@ public class TestReportListener implements IReporter {
         if (this.project.contains("CONSOLE")) {
             int testAll = testsPass + testsFail + testsSkip;
             String pass = DingDingUtil.folatToPer((float) testsPass / testAll);
-            StringBuilder context = new StringBuilder("### 接口用例执行结果 " + "\\n> - 环境：" + this.environment + "\\n> - 总用例数：" + testAll + "\\n> - 通过：" + testsPass + "\\n> - 失败：" + testsFail + "\\n> - 跳过：" + testsSkip + "\\n> - 通过率为：" + pass);
+            StringBuilder context = new StringBuilder("### 接口用例执行结果 " + "\\n> - 环境：" + this.environment + "\\n> - 总用例数：" + testAll + "\\n> - 通过：" + testsPass + "\\n> - 失败：" + testsFail + "\\n> - 跳过：" + testsSkip + "\\n> - 通过率为：" + pass + "\\n>");
             log.info("参数module为:{}",module);
             JsonElement moduleelement = new JsonParser().parse(module);
             if(moduleelement.getAsJsonArray().isJsonArray()){
                 for(int i=0;i<moduleelement.getAsJsonArray().size();i++){
-                    context.append("@").append(moduleelement.getAsJsonArray().get(i));
+                    context.append("@").append(moduleelement.getAsJsonArray().get(i).getAsInt());
                 }
             }
             log.info("发送的消息内容为:{}",context.toString());

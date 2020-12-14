@@ -18,13 +18,14 @@ public class DingDingUtil {
         String entityString = "{'msgtype': 'markdown', 'markdown': {'title': 'Helios接口测试','text': '" + context + "'}}";
         MediaType JSON = MediaType.parse(String.valueOf(ContentType.APPLICATION_JSON));
         RequestBody requestBody = RequestBody.create(JSON, entityString);
-
+        log.info("消息请求的body:{}",requestBody);
         OkHttpClient okHttpClient = new OkHttpClient();
         Request req = new Request.Builder()
                 .url(url)
                 .addHeader("Content-Type", String.valueOf(ContentType.APPLICATION_JSON))
                 .post(requestBody)
                 .build();
+
         try (Response response = okHttpClient.newCall(req).execute()) {
             ResponseBody body = response.body();
             if (response.isSuccessful()) {

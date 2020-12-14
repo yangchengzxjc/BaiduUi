@@ -2,6 +2,7 @@ package com.test.listener;
 
 import com.google.gson.*;
 import com.hand.utils.DingDingUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
@@ -16,7 +17,7 @@ import java.util.*;
  * @Email: xinghong.chen@huilianyi.com
  * @DATE : 2019/4/23 15:25
  **/
-
+@Slf4j
 public class TestReportListener implements IReporter {
     // 日期格式化
     private static Date date = new Date();
@@ -94,6 +95,7 @@ public class TestReportListener implements IReporter {
                     context.append("@").append(moduleelement.getAsJsonArray().get(i));
                 }
             }
+            log.info("发送的消息内容为:{}",context.toString());
             String url = "https://oapi.dingtalk.com/robot/send?access_token=592a7abc3b71fa4570aa9b48115511f50f803b4405614620fa44b2e6bdd7cfc2";
             try {
                 DingDingUtil.sendVal(url, context.toString());

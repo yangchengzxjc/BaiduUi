@@ -15,7 +15,7 @@ public class DingDingUtil {
     public static void sendVal(String url, String context,String at) throws Exception {
         Map<String, String> headermap = new HashMap<>();
 //        String entityString = "{'msgtype': 'text', 'text': {'content': '" + context + "'}}";
-        String entityString = String.format("{\"msgtype\": \"markdown\", \"markdown\": {\"title\": \"Helios接口测试\",\"text\": %s},\"at\":{\"atMobiles\": %s,\"isAtAll\":true}}",context,at);
+        String entityString = String.format("{\"msgtype\": \"markdown\", \"markdown\": {\"title\": \"Helios接口测试\",\"text\": \"%s\"},\"at\":{\"atMobiles\": %s,\"isAtAll\":true}}",context,at);
         log.info("dingding请求的数据为:{}",entityString);
         MediaType JSON = MediaType.parse(String.valueOf(ContentType.APPLICATION_JSON));
         RequestBody requestBody = RequestBody.create(JSON, entityString);

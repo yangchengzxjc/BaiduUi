@@ -235,7 +235,7 @@ public class VendorApi extends BaseRequest {
      * @param supplierOID
      * @return
      */
-    public JsonObject vndSSO(Employee employee,String supplierOID,String direction,String pageType) throws HttpStatusException {
+    public String vndSSO(Employee employee,String supplierOID,String direction,String pageType) throws HttpStatusException {
         String url =employee.getEnvironment().getUrl()+ApiPath.SUPPLIER_SSO;
         Map<String,String> headerParam =new HashMap<>();
         headerParam.put("Authorization", "Bearer "+employee.getAccessToken()+"");
@@ -245,7 +245,7 @@ public class VendorApi extends BaseRequest {
         datas.put("pageType",pageType);
         datas.put("access_token",employee.getAccessToken());
         String res = doGet(url,headerParam,datas,employee);
-        return new JsonParser().parse(res).getAsJsonObject();
+        return res;
     }
 
     /**

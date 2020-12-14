@@ -507,6 +507,31 @@ public class SummaryControlTest extends BaseTest {
         assert expenseReport.checkSubmitLabel(employee, reportOID1, "5001",label);
     }
 
+    @Test(description = "标准:账套级-汇总管控/费用参与人标准取就高-设置方式为费用大类-管控信息为：费用金额>基本标准*天数")
+    public void summaryControlTest19() throws HttpStatusException {
+        //新建账套级规则
+        StandardRules rules = standardControl.setSummaryRule("HIGH","费用大类");
+        String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"餐饮");
+        map.put("ruleOID",ruleOID);
+        //config base standard 取就高 标准为200
+        StandardRulesItem standardRulesItem1 = standardControl.setStandardRulesItem(employee,150,true,rules,ruleOID,new String[]{"auto_test_employee006"},new String[]{});
+        StandardRulesItem standardRulesItem2 = standardControl.setStandardRulesItem(employee,200,false,rules,ruleOID,new String[]{"auto_test_oneself"},new String[]{});
+        //设置管控项为费用金额>基本标准*天数
+        StandardControlItem controlItem = standardControl.setStandardCondition("DAYS");
+        reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
+        //新建报销单
+        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        map.put("reportOID1",reportOID1);
+        //新建费用
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName(),"员工0006"},650.00);
+        map.put("invoiceOID1",invoiceOID1);
+        //管控项为基本标准*天数 开始结束日期为3天  则标准取就高的话200*3
+        String label = String.format("%s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 650.00，超标：CNY 50.00。",rules.getMessage(),standardRulesItem2.getAmount().multiply(new BigDecimal(3)));
+        log.info("标签:{}",label);
+        assert expenseReport.checkSubmitLabel(employee, reportOID1, "5001",label);
+        assert invoice.checkInvoiceLabel(employee,invoiceOID1,"EXPENSE_STANDARD_EXCEEDED_WARN",label);
+    }
+
     @AfterMethod
     public void cleanEnv() throws HttpStatusException {
         for (String s : map.keySet()){

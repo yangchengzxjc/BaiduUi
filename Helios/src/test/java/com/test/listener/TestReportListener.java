@@ -86,16 +86,21 @@ public class TestReportListener implements IReporter {
         this.outputResult(list);
         //新加钉钉机器人测试报告
         if (this.project.contains("CONSOLE")) {
+            String url = "https://oapi.dingtalk.com/robot/send?access_token=592a7abc3b71fa4570aa9b48115511f50f803b4405614620fa44b2e6bdd7cfc2";
             int testAll = testsPass + testsFail + testsSkip;
             String pass = DingDingUtil.folatToPer((float) testsPass / testAll);
             StringBuilder context = new StringBuilder("### 接口用例执行结果 " + "\\n> - 环境：" + this.environment + "\\n> - 总用例数：" + testAll + "\\n> - 通过：" + testsPass + "\\n> - 失败：" + testsFail + "\\n> - 跳过：" + testsSkip + "\\n> - 通过率为：" + pass);
             JsonElement moduleelement = new JsonParser().parse(module);
-            if(moduleelement.getAsJsonArray().isJsonArray()){
-                for(int i=0;i<moduleelement.getAsJsonArray().size();i++){
-                    context.append("\\n").append("@").append(Long.valueOf(moduleelement.getAsJsonArray().get(i).getAsString()));
+            if(testsFail>0){
+                if(moduleelement.getAsJsonArray().isJsonArray()){
+                    for(int i=0;i<moduleelement.getAsJsonArray().size();i++){
+                        context.append("\\r").append("@").append(Long.valueOf(moduleelement.getAsJsonArray().get(i).getAsString()));
+                    }
                 }
             }
-            String url = "https://oapi.dingtalk.com/robot/send?access_token=592a7abc3b71fa4570aa9b48115511f50f803b4405614620fa44b2e6bdd7cfc2";
+            if(testsFail==0){
+                module="[]";
+            }
             try {
                 DingDingUtil.sendVal(url, context.toString(),module);
             } catch (Exception e) {

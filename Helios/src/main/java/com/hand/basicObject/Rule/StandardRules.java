@@ -19,9 +19,11 @@ public class StandardRules {
      * 控制方式类型： PERIOD (周期管控) SUMMARY(单据内汇总管控) SINGLE(单条管控)
      */
     private String controlModeType = "PERIOD";
-    //
+    //规则的名称
     private String name;
-    //适用的费用类型
+    // 设置方式   默认为 "EXPENSE_TYPE"  可选："EXPENSE_TYPE_CATEGORY"
+    private String setType = "EXPENSE_TYPE";
+    //适用的费用类型  如果是费用费用大类的话，则传一个费用大类的code 对象
     private JsonArray expenseTypes;
     //表单
     private JsonArray forms;

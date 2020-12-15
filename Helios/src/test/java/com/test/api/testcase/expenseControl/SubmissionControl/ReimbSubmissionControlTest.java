@@ -50,7 +50,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     }
 
     @Test(description = "报销提交管控-账套级-警告-费用类型管控-包含")
-    public void submissionControlTest1() throws HttpStatusException {
+    public void submissionControlTest01() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
@@ -72,7 +72,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     }
 
     @Test(description = "报销提交管控-账套级-禁止-费用类型管控-包含")
-    public void submissionControlTest2() throws HttpStatusException {
+    public void submissionControlTest02() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         rules.setControlLevel("FORBID");
@@ -95,7 +95,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     }
 
     @Test(description = "报销提交管控-账套级-警告-费用类型管控-不包含")
-    public void submissionControlTest3() throws HttpStatusException {
+    public void submissionControlTest03() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
@@ -117,7 +117,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     }
 
     @Test(description = "报销提交管控-账套级-警告-费用重复管控-包含")
-    public void submissionControlTest4() throws HttpStatusException {
+    public void submissionControlTest04() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
@@ -130,21 +130,32 @@ public class ReimbSubmissionControlTest extends BaseTest {
         //创建报销单
         String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
         //新建费用
-        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,UTCTime.getUtcTime(0,0));
-        String invoiceOid2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,UTCTime.getUtcTime(0,0));
+        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准",reportOID,new String[]{employee.getFullName()},200.00);
+        String invoiceOid2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准",reportOID,new String[]{employee.getFullName()},200.00);
         //检验标签
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);
         map.put("invoiceOid2", invoiceOid2);
         map.put("ruleOID", ruleOID);
         assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
-        String costMoth = UTCTime.utcTOdate(UTCTime.getUtcTime(0,0));
-        String expect = String.format("%s（ \"自动化测试-报销标准\"与\"自动化测试-报销标准\"在%s重复 ）。",rules.getMessage(),costMoth);
+        String repeatMoth1 = "";
+        String repeatMoth2 = "";
+        String repeatMoth3 = "";
+        if(UTCTime.isMonthTail(UTCTime.getBeijingDay(0))){
+            repeatMoth1 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-5));
+            repeatMoth2 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-4));
+            repeatMoth3 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-3));
+        }else{
+            repeatMoth1 = UTCTime.utcTOdate(UTCTime.getFormStartDate(1));
+            repeatMoth2 = UTCTime.utcTOdate(UTCTime.getFormStartDate(2));
+            repeatMoth3 = UTCTime.utcTOdate(UTCTime.getFormStartDate(3));
+        }
+        String expect = String.format("%s（ \"自动化测试-报销标准\"与\"自动化测试-报销标准\"在%s,%s,%s重复 ）。",rules.getMessage(),repeatMoth1,repeatMoth2,repeatMoth3);
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN",expect);
     }
 
     @Test(description = "报销提交管控-账套级-禁止-费用重复管控-包含")
-    public void submissionControlTest5() throws HttpStatusException {
+    public void submissionControlTest05() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         rules.setControlLevel("FORBID");
@@ -158,21 +169,33 @@ public class ReimbSubmissionControlTest extends BaseTest {
         //创建报销单
         String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
         //新建费用
-        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,UTCTime.getUtcTime(0,0));
-        String invoiceOid2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,UTCTime.getUtcTime(0,0));
+        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,new String[]{employee.getFullName()},200.00);
+        String invoiceOid2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,new String[]{employee.getFullName()},200.00);
         //检验标签
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);
         map.put("invoiceOid2", invoiceOid2);
         map.put("ruleOID", ruleOID);
+        String repeatMoth1 = "";
+        String repeatMoth2 = "";
+        String repeatMoth3 = "";
+        if(UTCTime.isMonthTail(UTCTime.getBeijingDay(0))){
+            repeatMoth1 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-5));
+            repeatMoth2 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-4));
+            repeatMoth3 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-3));
+        }else{
+            repeatMoth1 = UTCTime.utcTOdate(UTCTime.getFormStartDate(1));
+            repeatMoth2 = UTCTime.utcTOdate(UTCTime.getFormStartDate(2));
+            repeatMoth3 = UTCTime.utcTOdate(UTCTime.getFormStartDate(3));
+        }
         assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_ERROR", rules.getMessage());
         String costMoth = UTCTime.utcTOdate(UTCTime.getUtcTime(0,0));
-        String expect = String.format("%s（ \"自动化测试-报销标准\"与\"自动化测试-报销标准\"在%s重复 ）。",rules.getMessage(),costMoth);
+        String expect = String.format("%s（ \"自动化测试-报销标准\"与\"自动化测试-报销标准\"在%s,%s,%s重复 ）。",rules.getMessage(),repeatMoth1,repeatMoth2,repeatMoth3);
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_ERROR",expect);
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销次数管控-'>'1次/月")
-    public void submissionControlTest6() throws HttpStatusException {
+    public void submissionControlTest06() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
@@ -204,7 +227,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销次数管控-'>'1次/天")
-    public void submissionControlTest7() throws HttpStatusException {
+    public void submissionControlTest07() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
@@ -235,7 +258,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销次数管控-'>'1次/季度")
-    public void submissionControlTest8() throws HttpStatusException {
+    public void submissionControlTest08() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());
@@ -267,7 +290,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销次数管控-'>'1次/年")
-    public void submissionControlTest9() throws HttpStatusException {
+    public void submissionControlTest09() throws HttpStatusException {
         SubmitRules rules = new SubmitRules();
         rules.setName("报销提交管控-自动化");
         String ruleOID = reimbSubmissionControl.addReimbSubmissionControl(employee, rules, "自动化测试-日常报销单", employee.getCompanyName());

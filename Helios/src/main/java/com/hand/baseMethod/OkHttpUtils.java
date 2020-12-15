@@ -2,6 +2,7 @@ package com.hand.baseMethod;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.hand.basicConstant.FileMediaType;
 import com.hand.basicObject.MyResponse;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
@@ -63,11 +64,7 @@ public class OkHttpUtils {
 
     private static void addRequestLog(String method, String url, String urlParam, String body, String formParam) {
         log.info("===========================request begin================================================");
-        log.info("Method: {}", method);
         log.info("URI: {}", url);
-        if (StringUtils.isNotBlank(urlParam)) {
-            log.info("Request urlParam : {}", urlParam);
-        }
         if (StringUtils.isNotBlank(body)) {
             log.info("Request body : {}", body);
         }
@@ -101,6 +98,11 @@ public class OkHttpUtils {
         } else if ((endTime - startTime) >= 7000) {
             log.info("请求大于7秒，有待观察:");
         }
+//        // 报告打印日志 debug
+//        Reporter.log("httpCode: " + httpCode);
+//        Reporter.log("spanID: " + response.header("SpanID"));
+//        Reporter.log("res: " + result);
+
         log.info("===========================response end================================================");
     }
 
@@ -176,7 +178,6 @@ public class OkHttpUtils {
             }
         }
         headers = headersbuilder.build();
-
         return headers;
     }
 
@@ -296,16 +297,9 @@ public class OkHttpUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        if (httpCode != 200 && httpCode != 201) {
+        if (httpCode != 200 && httpCode != 201) {
             addResponseLog(GET, Url, Url, null, null, response, httpCode, res, response.header("SpanID"), startTime);
-//        }
-        Reporter.log("url: " + Url);
-        Reporter.log("headersParams: " + headers);
-        Reporter.log("urlMapParams: " + strParams);
-        Reporter.log("res code: " + httpCode);
-        Reporter.log("res spanID: " + response.header("SpanID"));
-        Reporter.log("res traceID: " + response.header("TraceID"));
-        Reporter.log("res data: " + res);
+        }
         return handleHttpResponse(httpCode, res, response);
     }
 
@@ -385,18 +379,10 @@ public class OkHttpUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        if (httpCode != 200 && httpCode != 201) {
+        if (httpCode != 200 && httpCode != 201) {
             addResponseLog(PUT, Url, Url, jsonlog, FormLog, response, httpCode, res, response.header("SpanID"), startTime);
-//        }
-        Reporter.log("url: " + Url);
-        Reporter.log("headersParams: " + headers);
-        Reporter.log("params: " + (body == null ? "null" : body.toString()));
-        Reporter.log("res code: " + httpCode);
-        Reporter.log("res spanID: " + response.header("SpanID"));
-        Reporter.log("res traceID: " + response.header("TraceID"));
-        Reporter.log("res data: " + res);
+        }
         return handleHttpResponse(httpCode, res, response);
-
     }
 
     /**
@@ -474,16 +460,9 @@ public class OkHttpUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        if (httpCode != 200 && httpCode != 201) {
+        if (httpCode != 200 && httpCode != 201) {
             addResponseLog(POST, Url, Url, jsonlog, FormLog, response, httpCode, res, response.header("SpanID"), startTime);
-//        }
-        Reporter.log("url: " + Url);
-        Reporter.log("headersParams: " + headers);
-        Reporter.log("body: " + ((body == null) ? "null" : body.toString()));
-        Reporter.log("res code: " + httpCode);
-        Reporter.log("res spanID: " + response.header("SpanID"));
-        Reporter.log("res traceID: " + response.header("TraceID"));
-        Reporter.log("res data: " + res);
+        }
         return handleHttpResponse(httpCode, res, response);
     }
 
@@ -608,16 +587,9 @@ public class OkHttpUtils {
         }
         int httpCode = response.code();
 
-//        if (httpCode != 200 && httpCode != 201) {
+        if (httpCode != 200 && httpCode != 201) {
             addResponseLog(DELETE, Url, Url, null, null, response, httpCode, res, response.header("SpanID"), startTime);
-//        }
-        Reporter.log("url: " + Url);
-        Reporter.log("headersParams: " + headers);
-        Reporter.log("urlMapParams: " + strParams);
-        Reporter.log("res code: " + httpCode);
-        Reporter.log("res spanID: " + response.header("SpanID"));
-        Reporter.log("res traceID: " + response.header("TraceID"));
-        Reporter.log("res data: " + res);
+        }
         return handleHttpResponse(httpCode, res, response);
     }
 }

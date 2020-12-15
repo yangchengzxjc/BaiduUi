@@ -103,7 +103,7 @@ public class StandardControl{
      * @return
      * @throws HttpStatusException
      */
-    public StandardRules setSummaryHighRule() throws HttpStatusException {
+    public StandardRules setSummaryHighRule(){
         //新建账套级规则
         StandardRules rules = new StandardRules();
         rules.setName("auto test period control");
@@ -119,7 +119,7 @@ public class StandardControl{
      * @return
      * @throws HttpStatusException
      */
-    public StandardRules setSummarySumRule() throws HttpStatusException {
+    public StandardRules setSummarySumRule(){
         //新建账套级规则
         StandardRules rules = new StandardRules();
         rules.setName("auto test period control");
@@ -127,6 +127,25 @@ public class StandardControl{
         rules.setParticipantsEnable(true);
         //取就高
         rules.setParticipantsMode("SUM");
+        return rules;
+    }
+
+    /**
+     * 初始化一个汇总校验的规则
+     * @return
+     * @throws HttpStatusException
+     */
+    public StandardRules setSummaryRule(String participantsMode,String setType){
+        //新建账套级规则
+        StandardRules rules = new StandardRules();
+        rules.setName("auto test period control");
+        rules.setControlModeType("SUMMARY");
+        rules.setParticipantsEnable(true);
+        if(setType.equals("费用大类")){
+            rules.setSetType("EXPENSE_TYPE_CATEGORY");
+        }
+        //取就高
+        rules.setParticipantsMode(participantsMode);
         return rules;
     }
 }

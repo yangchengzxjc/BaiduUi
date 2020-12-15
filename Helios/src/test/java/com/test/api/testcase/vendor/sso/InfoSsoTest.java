@@ -2,12 +2,16 @@ package com.test.api.testcase.vendor.sso;
 
 import com.hand.api.VendorInfoApi;
 import com.hand.baseMethod.HttpStatusException;
+import com.hand.basicConstant.Supplier;
 import com.hand.basicObject.Employee;
 import com.test.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class InfoSsoTest extends BaseTest {
 
@@ -22,50 +26,26 @@ public class InfoSsoTest extends BaseTest {
     }
 
     @DataProvider
-    public Object[][] dataProvider(Method method){
-        return new Object[][]{
-//                { caseDesc, supplierOID, vendorsName, businessCode, pageType, vendorType,
-//                itineraryDirection, lng, lat, direction, orderId, startCity, endCity,
-//                startDate, endDate, forCorp, flightSearchType,
-//                res_expect },
-                {"web 获取所有登录URL", "66666666-6666-11e6-9639-00ffa3fb4c67", null, null, null, null,
-                null, null, null, "WEB", null, null, null,
-                null, null, null, null,
-                "loginUrl"},
-                {"web CTRIP_TRAIN", "213691b5-75a4-11e7-af18-00163e00373d", null, null, null, "2001",
-                null, null, null, "WEB", null, null, null,
-                null, null, null, null,
-                "ctrip"},
-                {"web cimmcc_air", "8afc4c9e-a7ea-4de6-ab60-70669a5b91e8", null, null, null, "2002",
-                null, null, null, "WEB", null, null, null,
-                null, null, null, null,
-                "cimc"},
-        };
+    public Iterator<Object[]> iteratorDataProvider() {
+        List<Object[]> objList = new ArrayList<Object[]>();
+        ArrayList<String> vendorList = new ArrayList<>();
+        vendorList.add("cimcctmcAir");
+        vendorList.add("大唐");
+        vendorList.add("深圳航空");
+        for (String vendor : vendorList) {
+            objList.add(new Object[]{vendor, Supplier.getSupplierOIDByName(vendor), "H5", 1002, Supplier.getSupplierUrlByName(vendor)});
+        }
+        return objList.iterator();
     }
 
-    @Test(description = "vendor info sso", dataProvider = "dataProvider")
+    @Test(description = "vendor info sso H5", dataProvider = "iteratorDataProvider")
     public void ssoTest(String caseDesc,
-                        @Optional("66666666-6666-11e6-9639-00ffa3fb4c67") String supplierOID,
-                        String vendorsName,
-                        String businessCode,
-                        Integer pageType,
-                        String vendorType,
-                        Integer itineraryDirection,
-                        Double lng,
-                        Double lat,
-                        @Optional("WEB") String direction,
-                        String orderId,
-                        String startCity,
-                        String endCity,
-                        String startDate,
-                        String endDate,
-                        String forCorp,
-                        String flightSearchType,
-                        String res_expect) throws HttpStatusException {
+                        String supplierOID,
+                        @Optional("H5") String direction,
+                        @Optional("1002") Integer pageType,
+                        @Optional("url=")String res_expect) throws HttpStatusException {
         // do request
-        String resStr = vendorInfo.vendorInfoSso(employee, supplierOID, vendorsName, businessCode, pageType, vendorType,
-                itineraryDirection, lng, lat, direction, orderId, startCity, endCity,
-                startDate, endDate, forCorp, flightSearchType);
+        String resStr = vendorInfo.vendorInfoSso(employee, supplierOID, direction, pageType);
         // assert result
         Assert.assertTrue(resStr.contains(res_expect));
     }

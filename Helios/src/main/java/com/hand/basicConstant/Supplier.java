@@ -54,7 +54,7 @@ public enum Supplier {
 //            ("汇联易优选酒店","helios_hotel,null,93ce0cd8-3e6a-450e-ab7d-272ebf2f5322,2001"),
 //            ("饿了么,eleme,ELEME,d82e4152-a3ce-4dfd-8265-1573f46d3d30,2000"),
 //            ("神舟专车","zuche,null,93d2a555-3ee5-4351-b6e1-ceba82821ee9,0"),
-    ZHENXUAN("甄选酒店", "zhenhui_hotel", "ZHENXUAN", "f4cd142f-2057-11e8-b507-00163e1c8bb1", "2003", ""),
+    ZHENXUAN_HOTEL("甄选酒店", "zhenhui_hotel", "ZHENXUAN", "f4cd142f-2057-11e8-b507-00163e1c8bb1", "2003", ""),
 
     //            ("泛嘉机票","fanjia_flight,FANJIA_FLIGHT,fd1aa055-ca9d-492d-806a-114f3629d185,2002"),
 //            ("泛嘉酒店","fanjia_hotel,FANJIA_HOTEL,04ebb13d-3ddd-489b-8e7f-3669e233db60,2001"),

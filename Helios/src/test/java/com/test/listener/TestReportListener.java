@@ -94,7 +94,7 @@ public class TestReportListener implements IReporter {
             if(testsFail>0){
                 if(moduleelement.getAsJsonArray().isJsonArray()){
                     for(int i=0;i<moduleelement.getAsJsonArray().size();i++){
-                        context.append("\\r").append("@").append(Long.valueOf(moduleelement.getAsJsonArray().get(i).getAsString()));
+                        context.append("\\n").append("@").append(Long.valueOf(moduleelement.getAsJsonArray().get(i).getAsString()));
                     }
                 }
             }

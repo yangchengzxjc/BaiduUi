@@ -42,7 +42,7 @@ public class VendorSSOTest extends BaseTest {
         }
         else {
             return new Object[][]{
-                    {"甄选机票H5首页单点登录",ZHENXUAN_AIR.getSupplierOID(),"H5","https://airlinesstage.huilianyi.com/?"},
+                    {"甄选机票H5首页单点登录",ZHENXUAN_AIR.getSupplierOID(),"H5","https://airlines.huilianyi.com/?"},
                     {"携程机票H5首页单点登录", CTRIP_AIR.getSupplierOID(), "H5","URL=https://ct.ctrip.com/m/SingleSignOn/H5SignInfo&CallBack"},
                     {"携程酒店H5首页单点登录", CTRIP_HOTEL.getSupplierOID(), "H5","URL=https://ct.ctrip.com/m/SingleSignOn/H5SignInfo&CallBack"},
                     {"携程火车H5首页单点登录", CTRIP_TRAIN.getSupplierOID(), "H5","URL=https://ct.ctrip.com/m/SingleSignOn/H5SignInfo&CallBack"},

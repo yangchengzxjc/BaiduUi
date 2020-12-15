@@ -2,15 +2,21 @@ package com.test.api.testcase.vendor.sso;
 
 import com.hand.api.VendorInfoApi;
 import com.hand.baseMethod.HttpStatusException;
+import com.hand.basicConstant.Supplier;
 import com.hand.basicObject.Employee;
 import com.test.BaseTest;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import static com.hand.basicConstant.Supplier.*;
 
+@Slf4j
 public class InfoSsoCommonTest extends BaseTest {
 
     private Employee employee;
@@ -32,37 +38,24 @@ public class InfoSsoCommonTest extends BaseTest {
                 {"cimcctmcAir web",
                         cimcctmcAir.getSupplierOID(), 1002, cimcctmcAir.getVendorType(), "web",
                         "url"},
-                {"cimcctmcTrain web",
-                        cimcctmcTrain.getSupplierOID(), 1002, cimcctmcTrain.getVendorType(), "web",
-                        "url"},
-                {"cimcctmcHotel web",
-                        cimcctmcHotel.getSupplierOID(), 1002, cimcctmcHotel.getVendorType(), "web",
-                        "url"},
-                {"dttrip web",
-                        dttrip.getSupplierOID(), 1002, dttrip.getVendorType(), "web",
-                        "url"},
-                {"shenzhenAir web",
-                        shenzhenAir.getSupplierOID(), 1002, shenzhenAir.getVendorType(), "web",
-                        "url"},
-                {"onTheWayTMCAir web",
-                        onTheWayTMCAir.getSupplierOID(), 1002, onTheWayTMCAir.getVendorType(), "web",
-                        "url"},
-                {"onTheWayTMCTrain web",
-                        onTheWayTMCTrain.getSupplierOID(), 1002, onTheWayTMCTrain.getVendorType(), "web",
-                        "url"},
-                {"onTheWayTMCHotel web",
-                        onTheWayTMCHotel.getSupplierOID(), 1002, onTheWayTMCHotel.getVendorType(), "web",
-                        "url"},
-                {"tehang web",
-                        tehang.getSupplierOID(), 1002, tehang.getVendorType(), "web",
-                        "url"},
-                {"fyair web",
-                        fyair.getSupplierOID(), 1002, fyair.getVendorType(), "web",
-                        "url"},
         };
     }
 
-    @Test(description = "vendor info sso common web", dataProvider = "dataProvider")
+    @DataProvider
+    public Iterator<Object[]> iteratorDataProvider() {
+        List<Object[]> objList = new ArrayList<Object[]>();
+        ArrayList<String> vendorList = new ArrayList<>();
+        vendorList.add("cimcctmcAir");
+        vendorList.add("大唐");
+        vendorList.add("深圳航空");
+        for (String vendor : vendorList) {
+            objList.add(new Object[]{vendor, Supplier.getSupplierOIDByName(vendor), 1002,
+                    Supplier.getSupplierTypeByName(vendor),"web", Supplier.getSupplierUrlByName(vendor)});
+        }
+        return objList.iterator();
+    }
+
+    @Test(description = "vendor info sso common web", dataProvider = "iteratorDataProvider")
     public void ssoCommonTest(String caseDesc,
                               String supplierOID,
                               Integer pageType,
@@ -71,6 +64,8 @@ public class InfoSsoCommonTest extends BaseTest {
                               String res_expect) throws HttpStatusException {
         // do request
         String resStr = vendorInfo.vendorInfoSsoCommon(employee, supplierOID, pageType, vendorType, direction);
+        log.info("actual result: {}", resStr);
+        log.info("expect result: {}", res_expect);
         // assert result
         Assert.assertTrue((resStr.contains(res_expect)));
     }

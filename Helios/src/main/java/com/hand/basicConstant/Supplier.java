@@ -104,25 +104,25 @@ public enum Supplier {
 //            ("FCM酒店,fcm_hotel,FCM_HOTEL,c13a1d10-a1ba-4fb3-ada3-51cb0219a49e,2003"),
 
     // openApi
-    cimcctmcAir("cimcctmcAir", "cimccTMC", "supplyCimccTMCService", "8afc4c9e-a7ea-4de6-ab60-70669a5b91e8", "2001", ""),
+    cimcctmcAir("cimcctmcAir", "cimccTMC", "supplyCimccTMCService", "8afc4c9e-a7ea-4de6-ab60-70669a5b91e8", "2001", "http://cimc-adapter.abctrip.cn/adapter/login/comm/loginH5"),
 
-    cimcctmcTrain("cimcctmcTrain", "cimccTMC", "supplyCimccTMCService", "8afc4c9e-a7ea-4de6-ab60-70669a5b91e8", "2003", ""),
+    cimcctmcTrain("cimcctmcTrain", "cimccTMC", "supplyCimccTMCService", "8afc4c9e-a7ea-4de6-ab60-70669a5b91e8", "2003", "http://cimc-adapter.abctrip.cn/adapter/login/comm/loginH5"),
 
-    cimcctmcHotel("cimcctmcHotel", "cimccTMC", "supplyCimccTMCService", "8afc4c9e-a7ea-4de6-ab60-70669a5b91e8", "2002", ""),
+    cimcctmcHotel("cimcctmcHotel", "cimccTMC", "supplyCimccTMCService", "8afc4c9e-a7ea-4de6-ab60-70669a5b91e8", "2002", "http://cimc-adapter.abctrip.cn/adapter/login/comm/loginH5"),
 
-    dttrip("大唐", "dttrip", "supplyDTTripTmcService", "9c7207b5-7807-42b0-86f9-3db6ccb723f6", "2001", ""),
+    dttrip("大唐", "dttrip", "supplyDTTripTmcService", "9c7207b5-7807-42b0-86f9-3db6ccb723f6", "2001", "http://api.dttrip.cn/openapi/api/DJi/SSO"),
 
-    shenzhenAir("深圳航空", "shenzhenAir", "supplyShenZhenAirTmcService", "810f87c4-f59b-4718-948e-381460715390", "2001", ""),
+    shenzhenAir("深圳航空", "shenzhenAir", "supplyShenZhenAirTmcService", "810f87c4-f59b-4718-948e-381460715390", "2001", "https://tmcadapter.shenzhenair.com/tmc-zhenxuan/adapter/zhenxuan/sso"),
 
-    onTheWayTMCAir("在路上商旅机票", "onTheWayTMC", "supplyOnTheWayTMCService", "31e68258-ffb1-4fde-afc2-b88cf9533632", "2001", ""),
+    onTheWayTMCAir("在路上商旅机票", "onTheWayTMC", "supplyOnTheWayTMCService", "31e68258-ffb1-4fde-afc2-b88cf9533632", "2001", "https://huilianyi.otw.cn/api/sso"),
 
-    onTheWayTMCTrain("在路上商旅酒店", "onTheWayTMC", "supplyOnTheWayTMCService", "31e68258-ffb1-4fde-afc2-b88cf9533632", "2003", ""),
+    onTheWayTMCTrain("在路上商旅酒店", "onTheWayTMC", "supplyOnTheWayTMCService", "31e68258-ffb1-4fde-afc2-b88cf9533632", "2003", "https://huilianyi.otw.cn/api/sso"),
 
-    onTheWayTMCHotel("在路上商旅火车", "onTheWayTMC", "supplyOnTheWayTMCService", "31e68258-ffb1-4fde-afc2-b88cf9533632", "2002", ""),
+    onTheWayTMCHotel("在路上商旅火车", "onTheWayTMC", "supplyOnTheWayTMCService", "31e68258-ffb1-4fde-afc2-b88cf9533632", "2002", "https://huilianyi.otw.cn/api/sso"),
 
     tehang("特航", "tehang", "supplyTeHangTMCService", "3385750c-733a-47ec-be12-49419e7e3f19", "2001", ""),
 
-    fyair("丰谊商旅", "fyair", "supplyFyAirTMCService", "8d3b7d9e-d0ad-4fed-89c6-2563bd67ff36", "2002", ""),
+    fyair("丰谊商旅", "fyair", "supplyFyAirTMCService", "8d3b7d9e-d0ad-4fed-89c6-2563bd67ff36", "2002", "http://121.196.183.183:7926/sso"),
 
     ehi("一嗨", "ehi", "supplyEHiTMCService", "26d7abc0-82c9-49ed-8408-1e9924165d9c", "2004", ""),
 
@@ -130,15 +130,15 @@ public enum Supplier {
 
     auvgo("行旅", "auvgo", "supplyAuvgoTMCService", "f71b9532-ea8a-46ba-83ab-39919fe854a1", "2002", ""),
 
-    neitAir("光大商旅", "neit", "supplyNEITService", "b62b10c8-b92b-4f8a-8d42-ed1620fe556c", "2001", ""),
+    neitAir("光大商旅", "neit", "supplyNEITService", "b62b10c8-b92b-4f8a-8d42-ed1620fe556c", "2001", "http://oa.c0574.net/adapter/login/nbgdlogin/sso"),
 
-    neitHotel("光大商旅", "neit", "supplyNEITService", "b62b10c8-b92b-4f8a-8d42-ed1620fe556c", "2003", ""),
+    neitHotel("光大商旅", "neit", "supplyNEITService", "b62b10c8-b92b-4f8a-8d42-ed1620fe556c", "2003", "http://oa.c0574.net/adapter/login/nbgdlogin/sso"),
 
     xrtmc("金翔达商旅", "xrtmc", "supplyXRTMCService", "1e9e137a-d5ce-4925-a882-43dde36269cd", "2001", "");
 
+    // 没用的
 //    zhenxuanHotel("甄选机票", "zhenxuanHotel", "cloudheliosHotelService", "67f89eae-13ad-4485-a71a-d8a37137fe3c", "2003", ""),
-
-    //    ctripAir("携程商旅", "ctrip", "supplyCtripService", "067fe549-b075-43a6-8dc4-b2a8851cb7a3", "2001", ""),
+//    ctripAir("携程商旅", "ctrip", "supplyCtripService", "067fe549-b075-43a6-8dc4-b2a8851cb7a3", "2001", ""),
 //    ctripTrain("携程商旅", "ctrip", "supplyCtripService", "067fe549-b075-43a6-8dc4-b2a8851cb7a3", "2003", ""),
 //    ctripHotel("携程商旅", "ctrip", "supplyCtripService", "067fe549-b075-43a6-8dc4-b2a8851cb7a3", "2002", ""),
 //    zhenxuanAirlines("甄选机票", "zhenxuanAirlines", "cloudheliosFlightService", "9dbb6bed-e3c7-4353-bee2-f0dfc69d6317", "2001", "");
@@ -172,6 +172,16 @@ public enum Supplier {
         for (Supplier supplier : suppliers) {
             if (supplier.getName().equals(venName)) {
                 return supplier.getExpectUrl();
+            }
+        }
+        return null;
+    }
+
+    public static String getSupplierTypeByName(String venName) {
+        Supplier[] suppliers = values();
+        for (Supplier supplier : suppliers) {
+            if (supplier.getName().equals(venName)) {
+                return supplier.getVendorType();
             }
         }
         return null;

@@ -12,6 +12,7 @@ import org.testng.annotations.*;
 import static com.hand.basicConstant.Supplier.*;
 
 
+
 /**
  * @Author peng.zhang
  * @Date 2020/10/27
@@ -23,39 +24,60 @@ public class VendorSSOTest extends BaseTest {
 
     private Employee employee;
     private Vendor vendor;
+    private String env;
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void init(@Optional("18333333333") String phoneNumber, @Optional("hly123") String pwd, @Optional("console") String env) {
+    public void init(@Optional("14082978000") String phoneNumber, @Optional("hly123456") String pwd, @Optional("stage") String env) {
         employee = getEmployee(phoneNumber, pwd, env);
         vendor = new Vendor();
+        this.env = env;
     }
 
-
-    @DataProvider(name = "ctripSSO")
-    public Object[][] ctripSSO() {
-        return new Object[][]{
-                {"CTRIP AIR H5", CTRIP_AIR.getSupplierOID(), "H5"},
-                {"CTRIP HOTEL H5", CTRIP_HOTEL.getSupplierOID(), "H5"},
-                {"CTRIP TRAIN H5", CTRIP_TRAIN.getSupplierOID(), "H5"},
-                {"CTRIP AIR WEB", CTRIP_AIR.getSupplierOID(), "web"},
-                {"CTRIP HOTEL WEB", CTRIP_HOTEL.getSupplierOID(), "web"},
-                {"CTRIP TRAIN WEB", CTRIP_TRAIN.getSupplierOID(), "web"},
-                {"MEIYA AIR H5", MEIYA_FLIGHT.getSupplierOID(), "H5"},
-                {"MEIYA HOTEL H5", MEIYA_HOTEL.getSupplierOID(), "H5"},
-                {"MEIYA TRAIN H5", MEIYA_TRAIN.getSupplierOID(), "H5"},
-                {"MEIYA AIR H5", MEIYA_FLIGHT.getSupplierOID(), "web"},
-                {"MEIYA HOTEL H5", MEIYA_HOTEL.getSupplierOID(), "web"},
-                {"MEIYA TRAIN H5", MEIYA_TRAIN.getSupplierOID(), "web"},
-        };
+    @DataProvider( name = "vendorSSO")
+    public Object[][] vendorSSO() {
+        if (env.equals("prod")) {
+            return new Object[][]{
+            };
+        }
+        else {
+            return new Object[][]{
+                    {"甄选机票H5首页单点登录",zhenxuanAirlines.getSupplierOID(),"H5","https://airlinesstage.huilianyi.com/?"},
+                    {"携程机票H5首页单点登录", ctripAir.getSupplierOID(), "H5","URL=https://ct.ctrip.com/m/SingleSignOn/H5SignInfo&CallBack"},
+                    {"携程酒店H5首页单点登录", ctripHotel.getSupplierOID(), "H5","URL=https://ct.ctrip.com/m/SingleSignOn/H5SignInfo&CallBack"},
+                    {"携程火车H5首页单点登录", ctripTrain.getSupplierOID(), "H5","URL=https://ct.ctrip.com/m/SingleSignOn/H5SignInfo&CallBack"},
+                    {"携程机票WEB首页单点登录", ctripAir.getSupplierOID(), "web","URL=https://www.corporatetravel.ctrip.com/corpservice/authorize/login"},
+                    {"携程酒店WEB首页单点登录", ctripHotel.getSupplierOID(), "web","URL=https://www.corporatetravel.ctrip.com/corpservice/authorize/login"},
+                    {"携程火车WEB首页单点登录", ctripTrain.getSupplierOID(), "web","URL=https://www.corporatetravel.ctrip.com/corpservice/authorize/login"},
+                    {"携程机票H5订单单点登录", ctripAir.getSupplierOID(), "H5","URL=https://ct.ctrip.com/m/SingleSignOn/H5SignInfo&CallBack"},
+                    {"携程酒店H5订单单点登录", ctripHotel.getSupplierOID(), "H5","URL=https://ct.ctrip.com/m/SingleSignOn/H5SignInfo&CallBack"},
+                    {"携程火车H5订单单点登录", ctripTrain.getSupplierOID(), "H5","URL=https://ct.ctrip.com/m/SingleSignOn/H5SignInfo&CallBack"},
+                    {"美亚机票H5首页单点登录", MEIYA_FLIGHT.getSupplierOID(), "H5",
+                            "unih5/#/pages/dAirTk/search/index?backUrl=&applyNo=&h5ApplyTripId=1&tripNum=0&menuId=DAirTk&formResult=1&data"},
+                    {"美亚酒店H5首页单点登录", MEIYA_HOTEL.getSupplierOID(), "H5",
+                            "unih5/#/pages/dAirTk/search/index?backUrl=&applyNo=&h5ApplyTripId=1&tripNum=0&menuId=DAirTk&formResult=1&data"},
+                    {"美亚火车H5首页单点登录", MEIYA_TRAIN.getSupplierOID(), "H5",
+                            "unih5/#/pages/dAirTk/search/index?backUrl=&applyNo=&h5ApplyTripId=1&tripNum=0&menuId=DAirTk&formResult=1&data"},
+                    {"美亚机票WEB首页单点登录", MEIYA_FLIGHT.getSupplierOID(), "web",
+                            "Route.aspx?code=p64l0lJqZo7zvHn1Qpj"},
+                    {"美亚酒店WEB首页单点登录", MEIYA_HOTEL.getSupplierOID(), "web",
+                            "Route.aspx?code=p64l0lJqZo7zvHn1Qpj"},
+                    {"美亚火车WEB首页单点登录", MEIYA_TRAIN.getSupplierOID(), "web",
+                            "Route.aspx?code=p64l0lJqZo7zvHn1Qpj"},
+                    {"美亚机票H5订单单点登录", MEIYA_FLIGHT.getSupplierOID(), "H5",
+                            "unih5/#/pages/dAirTk/search/index?backUrl=&applyNo=&h5ApplyTripId=1&tripNum=0&menuId=DAirTk&formResult=1&data"},
+                    {"美亚酒店H5订单单点登录", MEIYA_HOTEL.getSupplierOID(), "H5",
+                            "unih5/#/pages/dAirTk/search/index?backUrl=&applyNo=&h5ApplyTripId=1&tripNum=0&menuId=DAirTk&formResult=1&data"},
+                    {"美亚火车H5订单单点登录", MEIYA_TRAIN.getSupplierOID(), "H5",
+                            "unih5/#/pages/dAirTk/search/index?backUrl=&applyNo=&h5ApplyTripId=1&tripNum=0&menuId=DAirTk&formResu1lt=1&data"}
+            };
+        }
     }
 
-    @Test(description = "sso首页单点登录", dataProvider = "ctripSSO")
-    public void SSO(String caseDesc, String supplierOID, String direction) throws HttpStatusException {
-        JsonObject response = vendor.vndSSO(employee, supplierOID, direction, "1002");
+    @Test(priority = 1,description = "sso单点登录", dataProvider = "vendorSSO")
+    public void vendorSSO(String caseDesc, String supplierOID, String direction,String res_expect) throws HttpStatusException {
+        String response = vendor.vndSSO(employee, supplierOID, direction, "1002");
         log.info("单点登录的响应:{}", response);
-        int statusCode = vendor.ssoCode(employee, supplierOID, direction, "1002");
-        Assert.assertEquals(statusCode, 200);
+        Assert.assertTrue(response.contains(res_expect));
     }
-
 }

@@ -33,7 +33,8 @@ public class InfoSsoTest extends BaseTest {
         vendorList.add("大唐");
         vendorList.add("深圳航空");
         for (String vendor : vendorList) {
-            objList.add(new Object[]{vendor, Supplier.getSupplierOIDByName(vendor), "H5", 1002, Supplier.getSupplierUrlByName(vendor)});
+            objList.add(new Object[]{vendor, Supplier.getSupplierOIDByName(vendor),
+                    "H5", 1002, Supplier.getSupplierUrlByName(vendor)});
         }
         return objList.iterator();
     }

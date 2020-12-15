@@ -52,7 +52,7 @@ public class PeriodControlTest extends BaseTest {
     }
 
     @Test(description = "规则配置:账套级-周期管控/每天-费用金额>基本标准")
-    public void periodControlTest1() throws HttpStatusException {
+    public void periodControlTest01() throws HttpStatusException {
         //新建账套级规则
         StandardRules rules = new StandardRules();
         rules.setName("auto test period control");
@@ -74,7 +74,7 @@ public class PeriodControlTest extends BaseTest {
     }
 
     @Test(description = "规则配置:账套级-周期管控/每月-费用金额>基本标准")
-    public  void periodControlTest2()throws HttpStatusException{
+    public  void periodControlTest02()throws HttpStatusException{
         //新建账套级规则
         StandardRules rules = new StandardRules();
         rules.setName("autoTest period control/month");
@@ -97,7 +97,7 @@ public class PeriodControlTest extends BaseTest {
     }
 
     @Test(description = "规则配置：账套级-周期管控/每季度-费用金额>基本标准")
-    public void periodControlTest3()throws HttpStatusException{
+    public void periodControlTest03()throws HttpStatusException{
         //新建账套级规则
         StandardRules rules = new StandardRules();
         rules.setName("autoTest period concrol/quarter");
@@ -124,7 +124,7 @@ public class PeriodControlTest extends BaseTest {
     }
 
     @Test(description = "规则配置：账套级-周期管控/每年-费用金额>基本标准")
-    public void periodControlTest4()throws HttpStatusException{
+    public void periodControlTest04()throws HttpStatusException{
         //新建账套级规则
         StandardRules rules = new StandardRules();
         rules.setName("autoTest period control/year");

@@ -13,6 +13,7 @@ git merge team/master
 git pull team master
 ```
 ### 提交代码到被fork分支
+git网页操作：提交合并请求
 ```$xslt
 git push team master:master
 ```
@@ -225,10 +226,22 @@ public class TestDataProviderITestContext {
 }
 ```
 
+### 项目结构
+- main 
+    - api 各模块接口请求
+    - baseMethod 
+    - baseConstant 常量定义
+    - baseObject 对象定义
+    - exception
+    - utils 工具类
+- test
+    - api method 公共测试方法
+    - api testcase 测试用例
+
 ### 用例编写步骤
 - 定义接口路径：Helios/src/main/java/com/hand/basicconstant/ApiPath.java
 - 实现接口请求：Helios/src/main/java/com/hand/api/VendorApi.java
-- 调用接口方法类：Helios/src/test/java/com/test/api/method/Vendor.java
+- 公共测试方法类：Helios/src/test/java/com/test/api/method/Vendor.java
 - 编写测试case：Helios/src/test/java/com/test/api/testcase/vendor/VendorSSOTest.java
 - 用例集组织case：Helios/vendor_testng.xml
 

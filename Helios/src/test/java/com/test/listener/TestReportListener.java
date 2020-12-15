@@ -1,7 +1,8 @@
 package com.test.listener;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
+import com.hand.utils.DingDingUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
@@ -16,7 +17,7 @@ import java.util.*;
  * @Email: xinghong.chen@huilianyi.com
  * @DATE : 2019/4/23 15:25
  **/
-
+@Slf4j
 public class TestReportListener implements IReporter {
     // 日期格式化
     private static Date date = new Date();
@@ -37,27 +38,23 @@ public class TestReportListener implements IReporter {
     private String beginTime;
     private long totalTime;
     private String project = "Helios";
-    private String browseNumber = "";
+    private String reportName = "hahahah";
     private String environment = "";
-//    private String language = "";
+    private String module = "[]";
 
 
     @Override
     public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
-//        System.out.println("browseNumber："+ browseNumber);
-//        System.out.println("environment："+ environment);
-//        System.out.println("language："+ language);
 
         List<ITestResult> list = new ArrayList<ITestResult>();
         for (ISuite suite : suites) {
             Map<String, ISuiteResult> suiteResults = suite.getResults();
-            //System.out.println("suiteResults："+ suiteResults);
-
-   /*         System.out.println("environment:" + suite.getParameter("environment"));
-            System.out.println("browseNumber:" + suite.getParameter("browseNumber"));
-            System.out.println("language:" + suite.getParameter("language"));
-*/
-//            if (suite.getParameter(environment) == null)
+            if(suite.getParameter("module")!= null){
+                module = suite.getParameter("module");
+            }
+            if (suite.getParameter("environment") == null) {
+                throw new NullPointerException("环境信息未配置");
+            }
             if (suite.getParameter("environment").equalsIgnoreCase("uat")) {
                 this.environment = "UAT";
             } else if (suite.getParameter("environment").equalsIgnoreCase("stage")) {
@@ -68,11 +65,6 @@ public class TestReportListener implements IReporter {
                 this.environment = "CONSOLE-TC";
             }
 
-     /*       System.out.println("project:" + this.project);
-
-            System.out.println("suiteName："+suite.getName());
-*/
-            //System.out.print("suiteResults:"+ suiteResults);
             for (ISuiteResult suiteResult : suiteResults.values()) {
                 ITestContext testContext = suiteResult.getTestContext();
                 IResultMap passedTests = testContext.getPassedTests();
@@ -88,10 +80,33 @@ public class TestReportListener implements IReporter {
                 list.addAll(this.listTestResult(failedConfig));
             }
         }
+
         this.project = this.project + "-" + this.environment;
         this.sort(list);
         this.outputResult(list);
-
+        //新加钉钉机器人测试报告
+        if (this.project.contains("CONSOLE")) {
+            String url = "https://oapi.dingtalk.com/robot/send?access_token=592a7abc3b71fa4570aa9b48115511f50f803b4405614620fa44b2e6bdd7cfc2";
+            int testAll = testsPass + testsFail + testsSkip;
+            String pass = DingDingUtil.folatToPer((float) testsPass / testAll);
+            StringBuilder context = new StringBuilder("### 接口用例执行结果 " + "\\n> - 环境：" + this.environment + "\\n> - 总用例数：" + testAll + "\\n> - 通过：" + testsPass + "\\n> - 失败：" + testsFail + "\\n> - 跳过：" + testsSkip + "\\n> - 通过率为：" + pass);
+            JsonElement moduleelement = new JsonParser().parse(module);
+            if(testsFail>0){
+                if(moduleelement.getAsJsonArray().isJsonArray()){
+                    for(int i=0;i<moduleelement.getAsJsonArray().size();i++){
+                        context.append("\\n").append("@").append(Long.valueOf(moduleelement.getAsJsonArray().get(i).getAsString()));
+                    }
+                }
+            }
+            if(testsFail==0){
+                module="[]";
+            }
+            try {
+                DingDingUtil.sendVal(url, context.toString(),module);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private ArrayList<ITestResult> listTestResult(IResultMap resultMap) {
@@ -140,14 +155,18 @@ public class TestReportListener implements IReporter {
                 info.setStatus(status);
                 info.setClassName(result.getInstanceName());
                 info.setMethodName(result.getName());
-                info.setDescription(result.getMethod().getDescription() + "-" + result.getParameters()[0].toString());
-//                info.setParameters(result.getParameters());
+                try {
+                    info.setDescription(result.getMethod().getDescription() + "-" + result.getParameters()[0].toString());
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    info.setDescription(result.getMethod().getDescription());
+                }
                 info.setLog(log);
                 listInfo.add(info);
+//                reportName = result.getTestContext().getSuite().getName();
             }
             Map<String, Object> result = new HashMap<String, Object>();
-            //result.put("testName", name);
-            result.put("testName", this.project);
+            result.put("environmentName", this.project);
+//            result.put("reportName",reportName);
             result.put("testPass", testsPass);
             result.put("testFail", testsFail);
             result.put("testSkip", testsSkip);

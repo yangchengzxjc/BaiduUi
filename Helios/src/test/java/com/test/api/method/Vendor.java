@@ -132,7 +132,7 @@ public class Vendor {
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject vndSSO(Employee employee,String supplierOID,String direction,String pageType) throws HttpStatusException {
+    public String vndSSO(Employee employee,String supplierOID,String direction,String pageType) throws HttpStatusException {
         return vendorApi.vndSSO(employee,supplierOID,direction,pageType);
     }
     public int ssoCode(Employee employee,String supplierOID,String direction,String pageType) throws HttpStatusException {

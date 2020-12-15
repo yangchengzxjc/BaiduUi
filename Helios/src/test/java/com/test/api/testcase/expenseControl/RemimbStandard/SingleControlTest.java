@@ -50,10 +50,7 @@ public class SingleControlTest extends BaseTest {
     @Test(description = "标准:账套级-单条管控-费用参与人标准关闭-管控信息为：费用金额>基本标准")
     public void singleControlTest01() throws HttpStatusException {
         //新建账套级规则
-        StandardRules rules = new StandardRules();
-        rules.setName("auto test single control");
-        //开启单条管控
-        rules.setControlModeType("SINGLE");
+        StandardRules rules = standardControl.setSingleRule("费用类型");
         String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
         //config base standard, exist default control item
         StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,true,rules,ruleOID);

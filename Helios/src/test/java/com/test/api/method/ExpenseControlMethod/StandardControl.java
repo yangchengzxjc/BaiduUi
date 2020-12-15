@@ -115,7 +115,7 @@ public class StandardControl{
     }
 
     /**
-     * 初始化一个汇总校验 取就高的规则
+     * 初始化一个汇总校验 取和值的规则
      * @return
      * @throws HttpStatusException
      */
@@ -146,6 +146,46 @@ public class StandardControl{
         }
         //取就高
         rules.setParticipantsMode(participantsMode);
+        return rules;
+    }
+
+    /**
+     * 初始化一个单条管控规则
+     * @param participantsMode  费用参与人标准 取值为：就高或和值
+     * @param setType 设置方式：  费用类型  或者 费用大类
+     * @return
+     */
+    public StandardRules setSingleRule(String participantsMode,String setType){
+        //新建账套级规则
+        StandardRules rules = new StandardRules();
+        rules.setName("auto test single control");
+        //开启单条管控
+        rules.setControlModeType("SINGLE");
+        //费用参与人标准开启
+        rules.setParticipantsEnable(true);
+        if(setType.equals("费用大类")){
+            rules.setSetType("EXPENSE_TYPE_CATEGORY");
+        }
+        rules.setParticipantsMode(participantsMode);
+        return rules;
+    }
+
+    /**
+     * 初始化一个单条费用参与人管控关闭规则
+     * @param setType 设置方式：  费用类型  或者 费用大类
+     * @return
+     */
+    public StandardRules setSingleRule(String setType){
+        //新建账套级规则
+        StandardRules rules = new StandardRules();
+        rules.setName("auto test single control");
+        //开启单条管控
+        rules.setControlModeType("SINGLE");
+        //费用参与人标准开启
+        rules.setParticipantsEnable(false);
+        if(setType.equals("费用大类")){
+            rules.setSetType("EXPENSE_TYPE_CATEGORY");
+        }
         return rules;
     }
 }

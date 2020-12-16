@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @Author peng.zhang
@@ -244,6 +245,18 @@ public class ExpenseReport {
             invoicesOID.add(jsonArray.get(j).getAsJsonObject().get("invoiceOID").getAsString());
         }
         return  invoicesOID;
+    }
+
+    /**
+     * 账本根据费用的oid 导入到报销单
+     * @param employee
+     * @param expenseReportOID
+     * @param invoiceOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public String importInvoice(Employee employee, String expenseReportOID, ArrayList<String> invoiceOID) throws HttpStatusException {
+        return reimbursementApi.importInvoices(employee,expenseReportOID,invoiceOID,true);
     }
 
     /**

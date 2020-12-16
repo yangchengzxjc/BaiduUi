@@ -646,8 +646,8 @@ public class ReimbursementApi extends BaseRequest {
             jsonArray.add(invoiceOID);
         }
         object.add("invoiceOIDs",jsonArray);
-        String Res= doPost(url,getHeader(employee.getAccessToken()),null,object.toString(),null,employee);
-        return new JsonParser().parse(Res).getAsJsonObject().get("success").getAsString();
+        String res= doPost(url,getHeader(employee.getAccessToken()),null,object.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject().get("success").getAsString();
     }
 
     /**

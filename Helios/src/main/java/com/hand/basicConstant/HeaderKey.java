@@ -21,4 +21,6 @@ public class HeaderKey {
     public static final String REIMB_SUBMIT_CONTROL = "reimb-submission-control";
     //报销标准
     public static final String REIMB_STANDARD = "reimbursement-standard";
+    //财务审核
+    public static final String FINANCE_AUDIT = "finance-audit";
 }

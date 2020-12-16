@@ -2,6 +2,7 @@ package com.test.api.method;
 
 import com.google.gson.JsonArray;
 import com.hand.api.ApproveApi;
+import com.hand.api.FinanceApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 
@@ -49,4 +50,14 @@ public class Approve {
         return approveApi.reportApproval(employee,approveOID,reportOID,entityType).get("successNum").getAsInt();
     }
 
+    /**
+     * 财务驳回单据
+     * @param employee
+     * @param expenseReportOID
+     * @param entityType
+     */
+    public int auditReject(Employee employee,String expenseReportOID,int entityType) throws HttpStatusException {
+        FinanceApi financeApi = new FinanceApi();
+        return financeApi.reportAuditreject(employee,expenseReportOID,entityType).get("failNum").getAsInt();
+    }
 }

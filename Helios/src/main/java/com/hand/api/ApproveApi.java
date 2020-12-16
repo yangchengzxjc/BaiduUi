@@ -49,6 +49,7 @@ public class ApproveApi extends BaseRequest{
     /**
      * 员工审批单据
      * @param employee
+     * @param approverOID 审批人的userOID
      * @param expenseReportOID
      * @param entityType  表示单据类型   1001：申请单    1002：表示报销单
      * @return
@@ -56,7 +57,7 @@ public class ApproveApi extends BaseRequest{
      */
     public  JsonObject reportApproval(Employee employee,String approverOID, String expenseReportOID, int entityType) throws HttpStatusException {
         JsonObject responseEntity=null;
-        String url=employee.getEnvironment().getUrl()+ ApiPath.EXPENSEREPORT_APPROVAL;
+        String url = employee.getEnvironment().getUrl()+ ApiPath.EXPENSEREPORT_APPROVAL;
         JsonObject jsonObject=new JsonObject();
         JsonArray entities=new JsonArray();
         JsonObject entitie =new JsonObject();

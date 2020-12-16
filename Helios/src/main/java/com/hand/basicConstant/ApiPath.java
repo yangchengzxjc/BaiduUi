@@ -7,7 +7,7 @@ package com.hand.basicConstant;
  **/
 public class ApiPath {
        //登录
-        public static final String GET_TOKEN ="/oauth/token";
+        public static final String GET_TOKEN ="/proxy/oauth/token";
         //    获取用户信息
         public static final String GET_ACCOUNT ="/api/account";
         //    获取账套

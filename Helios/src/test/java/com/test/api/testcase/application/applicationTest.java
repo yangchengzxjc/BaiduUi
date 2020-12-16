@@ -45,8 +45,8 @@ public class applicationTest extends BaseTest {
         travelApplicationPage =new TravelApplicationPage();
     }
 
-    @Test(description = "新建差旅申请单")
-    public void createApplicationTest01() throws HttpStatusException {
+    @Test(description = "汇联易核心功能")
+    public void smokeTest01() throws HttpStatusException {
         FormComponent component = new FormComponent("自动化测试新建差旅申请单");
         component.setDepartment(employee.getDepartmentOID());
         component.setStartDate(UTCTime.getNowUtcTime());
@@ -60,12 +60,7 @@ public class applicationTest extends BaseTest {
         FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, Supplier.CTRIP_AIR.getSupplierOID(),"西安市","北京",null,UTCTime.getNowStartUtcDate());
         flightItineraries.add(flightItinerary);
         travelApplication.addItinerary(employee,applicationOID,flightItineraries);
-        //申请单添加预算
-        JsonObject expenseObject = travelApplication.addBudgetExpense(employee,1000.00,false,"机票","差旅申请单-节假日");
-        JsonArray expenseArray =new JsonArray();
-        expenseArray.add(expenseObject);
-        String budgetDetail = travelApplication.addBudgetDetail(expenseArray,1000.00);
-        travelApplication.submitApplication(employee,applicationOID,budgetDetail);
+        travelApplication.submitApplication(employee,applicationOID,"");
 
     }
 

@@ -16,6 +16,8 @@
     <test verbose="10" preserve-order="true" name="报销单提交管控测试">
         <classes>
             <class name="com.test.api.testcase.expenseControl.SubmissionControl.ReimbSubmissionControlTest"/>
+            <class name="com.test.api.testcase.expenseControl.RemimbStandard.SummaryControlTest"/>
+            <class name="com.test.api.testcase.expenseControl.RemimbStandard.PeriodControlTest"/>
         </classes>
     </test>
 

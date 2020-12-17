@@ -487,7 +487,7 @@ public class SummaryControlTest extends BaseTest {
     }
 
     @Test(description = "标准:账套级-汇总管控/费用参与人标准开启-管控信息为：费用金额>基本标准(城市组管控)")
-    public void summaryControlTest018() throws HttpStatusException {
+    public void summaryControlTest18() throws HttpStatusException {
         //初始化规则
         StandardRules rules = standardControl.setSummarySumRule();
         String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
@@ -532,7 +532,7 @@ public class SummaryControlTest extends BaseTest {
         assert invoice.checkInvoiceLabel(employee,invoiceOID1,"EXPENSE_STANDARD_EXCEEDED_WARN",label);
     }
 
-    @AfterMethod
+//    @AfterMethod
     public void cleanEnv() throws HttpStatusException {
         for (String s : map.keySet()){
             switch (s){

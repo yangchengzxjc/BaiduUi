@@ -67,7 +67,7 @@ public class SmokeTest extends BaseTest {
             e.printStackTrace();
         }
         approve.approveal(employee,reportOID,1002);
-        //审核驳回
-        assert approve.auditReject(employee,reportOID,1002)==0;
+        //审核成功
+        assert approve.auditPass(employee,reportOID,1002)==0;
     }
 }

@@ -60,4 +60,15 @@ public class Approve {
         FinanceApi financeApi = new FinanceApi();
         return financeApi.reportAuditreject(employee,expenseReportOID,entityType).get("failNum").getAsInt();
     }
+
+    /**
+     * 财务驳回单据
+     * @param employee
+     * @param expenseReportOID
+     * @param entityType
+     */
+    public int auditPass(Employee employee,String expenseReportOID,int entityType) throws HttpStatusException {
+        FinanceApi financeApi = new FinanceApi();
+        return financeApi.reportAuditpass(employee,expenseReportOID,entityType).get("failNum").getAsInt();
+    }
 }

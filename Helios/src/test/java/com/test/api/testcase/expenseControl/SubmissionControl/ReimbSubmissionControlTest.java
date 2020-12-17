@@ -146,9 +146,9 @@ public class ReimbSubmissionControlTest extends BaseTest {
             repeatMoth2 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-4));
             repeatMoth3 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-3));
         }else{
-            repeatMoth1 = UTCTime.utcTOdate(UTCTime.getFormStartDate(1));
-            repeatMoth2 = UTCTime.utcTOdate(UTCTime.getFormStartDate(2));
-            repeatMoth3 = UTCTime.utcTOdate(UTCTime.getFormStartDate(3));
+            repeatMoth1 = UTCTime.utcTOdate(UTCTime.getFormStartDate(0));
+            repeatMoth2 = UTCTime.utcTOdate(UTCTime.getFormStartDate(1));
+            repeatMoth3 = UTCTime.utcTOdate(UTCTime.getFormStartDate(2));
         }
         String expect = String.format("%s（ \"自动化测试-报销标准\"与\"自动化测试-报销标准\"在%s,%s,%s重复 ）。",rules.getMessage(),repeatMoth1,repeatMoth2,repeatMoth3);
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN",expect);
@@ -184,9 +184,9 @@ public class ReimbSubmissionControlTest extends BaseTest {
             repeatMoth2 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-4));
             repeatMoth3 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-3));
         }else{
-            repeatMoth1 = UTCTime.utcTOdate(UTCTime.getFormStartDate(1));
-            repeatMoth2 = UTCTime.utcTOdate(UTCTime.getFormStartDate(2));
-            repeatMoth3 = UTCTime.utcTOdate(UTCTime.getFormStartDate(3));
+            repeatMoth1 = UTCTime.utcTOdate(UTCTime.getFormStartDate(0));
+            repeatMoth2 = UTCTime.utcTOdate(UTCTime.getFormStartDate(1));
+            repeatMoth3 = UTCTime.utcTOdate(UTCTime.getFormStartDate(2));
         }
         assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_ERROR", rules.getMessage());
         String costMoth = UTCTime.utcTOdate(UTCTime.getUtcTime(0,0));

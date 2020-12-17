@@ -87,7 +87,7 @@ public class TrainSettlementDataTest extends BaseTest {
                 .expressFee(new BigDecimal(0).setScale(2))
                 //改签服务费
                 .changeServiceFee(new BigDecimal(0).setScale(2))
-                .postServiceFee(new BigDecimal(0).setScale(2))
+                .postServiceFee(new BigDecimal(1).setScale(2))
                 //实际应收
                 .amount(ticketFee.add(insuranceFee).add(serviceFee))
                 .deductibleFee(new BigDecimal(0).setScale(2))

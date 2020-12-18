@@ -532,7 +532,7 @@ public class SummaryControlTest extends BaseTest {
         assert invoice.checkInvoiceLabel(employee,invoiceOID1,"EXPENSE_STANDARD_EXCEEDED_WARN",label);
     }
 
-//    @AfterMethod
+    @AfterMethod
     public void cleanEnv() throws HttpStatusException {
         for (String s : map.keySet()){
             switch (s){

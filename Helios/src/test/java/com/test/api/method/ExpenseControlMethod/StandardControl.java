@@ -172,7 +172,7 @@ public class StandardControl{
 
     /**
      * 初始化一个单条费用参与人管控关闭规则
-     * @param setType 设置方式：  费用类型  或者 费用大类
+     * @param setType 设置方式：费用类型  或者 费用大类
      * @return
      */
     public StandardRules setSingleRule(String setType){
@@ -188,4 +188,21 @@ public class StandardControl{
         }
         return rules;
     }
+
+    /**
+     * 初始化周期管控的规则
+     * @param controlType
+     * @param setType
+     * @return
+     */
+    public StandardRules setPeriod(String controlType,String setType){
+        StandardRules rules = new StandardRules();
+        rules.setName("autoTest period control");
+        rules.setControlType(controlType);
+        if(setType.equals("费用大类")){
+            rules.setSetType("EXPENSE_TYPE_CATEGORY");
+        }
+        return rules;
+    }
+
 }

@@ -104,6 +104,9 @@ public class ApiPath {
 
 //        上传附件
         public static final String UPLOAD_ATTACHMENT="/api/upload/attachment";
+
+        //ocr
+        public static final String OCR = "/receipt/api/receipt/ocr";
 //        获取差补规则标准
         public static final String GET_TRAVEL_STANDARD ="/api/expense/report/subsidy/add";
 //        修改差补时间
@@ -323,6 +326,9 @@ public class ApiPath {
         public static final String SSO_COMMON = "/vendor-info-service/api/sso/common";
         //发票查验
         public static final String  RECEIPT_VERIFY = "/receipt/api/receipt/verify";
+
+        //批量查验发票
+        public static final String BATCH_VERIFY = "/receipt/api/receipt/verify/batch";
 
         //报销标准查询城市组
         public static final String GET_CITY_GROUP = "/api/levels/org";

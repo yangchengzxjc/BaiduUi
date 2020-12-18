@@ -3,18 +3,17 @@ package com.test.api.testcase.monitor;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
+import com.hand.basicConstant.Receript;
 import com.hand.basicConstant.Supplier;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;
 import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
+import com.test.api.method.*;
 import com.test.api.method.ApplicationMethod.TravelApplicationPage;
-import com.test.api.method.Approve;
 import com.test.api.method.BusinessMethod.ExpenseReportPage;
-import com.test.api.method.ExpenseReport;
-import com.test.api.method.ExpenseReportComponent;
-import com.test.api.method.TravelApplication;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
@@ -42,7 +41,7 @@ public class SmokeTest extends BaseTest {
     }
 
     @Test(description = "核心功能")
-    public void createApplicationTest01() throws HttpStatusException {
+    public void smokeTest01() throws HttpStatusException {
         //新建差旅申请单
         TravelApplicationPage travelApplicationPage =new TravelApplicationPage();
         ExpenseReportPage expenseReportPage = new ExpenseReportPage();
@@ -70,4 +69,13 @@ public class SmokeTest extends BaseTest {
         //审核成功
         assert approve.auditPass(employee,reportOID,1002)==0;
     }
+
+    @Test(description = "发票查验")
+    public void smokeTest02() throws HttpStatusException {
+        ExpenseReportInvoice invoice = new ExpenseReportInvoice();
+        String msg = invoice.receptVerify(employee, Receript.handRecept);
+        Assert.assertEquals(msg,"查验成功，发票一致");
+    }
+
+
 }

@@ -253,4 +253,15 @@ public class ExpenseReportInvoice {
         }
     }
 
+    /**
+     * 发票查验
+     * @param employee
+     * @param receptInfo
+     * @return
+     * @throws HttpStatusException
+     */
+    public String receptVerify(Employee employee,String receptInfo) throws HttpStatusException {
+        return expenseApi.receiptVerify(employee,receptInfo).get("msg").getAsString();
+    }
+
 }

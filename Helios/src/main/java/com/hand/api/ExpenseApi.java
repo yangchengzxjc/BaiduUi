@@ -4,11 +4,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
+import com.hand.basicConstant.Receript;
 import com.hand.basicObject.InvoiceComponent;
 import com.hand.basicConstant.ApiPath;
 import com.hand.basicObject.Employee;
+import com.hand.utils.DocumentUtil;
 import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.util.NullLogger;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -527,8 +530,8 @@ public class ExpenseApi extends BaseRequest{
         JsonObject object =new JsonObject();
         object.addProperty("reimbursementUserId",reimbursementUserId);
         object.add("invoiceOIDs",array);
-        String Res= doPost(url,getHeader(employee.getAccessToken()),null,object.toString(),null,employee);
-        return new JsonParser().parse(Res).getAsJsonObject();
+        String res = doPost(url,getHeader(employee.getAccessToken()),null,object.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
     }
 
     /**
@@ -594,10 +597,68 @@ public class ExpenseApi extends BaseRequest{
         return participant;
     }
 
-    public void receiptVerify(Employee employee){
+
+    /**
+     * 发票查验
+     * @param employee
+     * @param receptionInfo  发票信息的json字符
+     */
+    public JsonObject receiptVerify(Employee employee,String receptionInfo) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl()+ ApiPath.RECEIPT_VERIFY;
-        //读取发票信息
-        DocumentUtil
+        JsonObject receptInfo = new JsonParser().parse(receptionInfo).getAsJsonObject();
         JsonObject body = new JsonObject();
+        body.add("invoiceInfo",receptInfo);
+        body.addProperty("userOID",employee.getUserOID());
+        body.addProperty("entityType",(String)null);
+        body.addProperty("finance",false);
+        String res = doPost(url,getHeader(employee.getAccessToken()),null,body.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 发票附件上传上传附件
+     * @param employee
+     * @param path
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject upload(Employee employee,String path) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.UPLOAD_ATTACHMENT;
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("attachmentType","PDF");
+        String res = doupload(url,getHeader(employee.getAccessToken()),parm,"file",path,"application/pdf",employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 发票识别ocr
+     * @param employee
+     * @param attachment
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject ocr(Employee employee,JsonObject attachment) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.OCR;
+        String res = doPost(url,getHeader(employee.getAccessToken()),null,attachment.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 上传文件批量识别
+     * @param employee
+     * @param receiptInfo
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject batchReceipt(Employee employee,JsonObject receiptInfo) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.BATCH_VERIFY;
+        JsonArray array = new JsonArray();
+        JsonObject body = new JsonObject();
+        body.add("invoiceInfo",receiptInfo);
+        body.addProperty("finance",false);
+        body.addProperty("userOID",employee.getUserOID());
+        array.add(body);
+        String res = doPost(url,getHeader(employee.getAccessToken()),null,array.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
     }
 }

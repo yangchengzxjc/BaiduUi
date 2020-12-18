@@ -10,10 +10,10 @@ import okhttp3.Response;
  */
 
 @Data
-public class MyResponse {
+public class APIResponse {
 	private  int statusCode;
 	private  String body;
-	public MyResponse() {
+	public APIResponse() {
 
 	}
 }

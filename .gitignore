@@ -1,5 +1,6 @@
 *.pptx
 *.doc
+*.pdf
 *.zip
 .idea/
 .idea

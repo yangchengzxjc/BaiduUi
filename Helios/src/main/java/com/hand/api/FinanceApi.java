@@ -71,27 +71,23 @@ public class FinanceApi extends BaseRequest{
         body.addProperty("needChargeBack",false);
         String res= doPost(url,getHeader(employee.getAccessToken(), HeaderKey.FINANCE_AUDIT, ResourceId.FINANCE_AUDIT),null,body.toString(),null,  employee);
         return new JsonParser().parse(res).getAsJsonObject();
-
     }
 
+    /**
+     * 财务卷票机ocr识别
+     * @param employee
+     * @return
+     */
+    public JsonObject scanOcr(Employee employee,String expenseReportID,JsonObject attachment) throws HttpStatusException {
+        String url=employee.getEnvironment().getUrl()+ ApiPath.SCAN_OCR;
+        JsonObject body = new JsonObject();
+        body.addProperty("entityId",expenseReportID);
+        body.addProperty("entityType","expense_report");
+        body.add("attachmentDTO",attachment);
+        String res= doPost(url,getHeader(employee.getAccessToken(), HeaderKey.FINANCE_AUDIT, ResourceId.FINANCE_AUDIT),null,body.toString(),null,  employee);
+        return new JsonParser().parse(res).getAsJsonObject();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
 }
 
 

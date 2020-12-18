@@ -72,10 +72,18 @@ public class SmokeTest extends BaseTest {
         Assert.assertEquals(msg,"查验成功，发票一致");
     }
 
-    @Test(description = "ocr发票识别并查验")
+    @Test(description = "员工ocr发票识别并查验")
     public void smokeTest03() throws HttpStatusException {
         ExpenseReportInvoice invoice = new ExpenseReportInvoice();
         String msg = invoice.ocrReceptVerify(employee,Receript.ocrReceipt);
         Assert.assertEquals(msg,"查验成功，发票一致");
     }
+
+    @Test(description = "票小蜜：财务scan ocr 识别")
+    public void smokeTest04() throws HttpStatusException {
+        ExpenseReportInvoice invoice = new ExpenseReportInvoice();
+        String message = invoice.scanOcr(employee,Receript.ocrReceipt,"1454516");
+        Assert.assertEquals(message,"发票识别成功");
+    }
+
 }

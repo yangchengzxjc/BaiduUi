@@ -319,23 +319,22 @@ public class ApiPath {
         public static final String SSOLOGIN = "/sso";
         //消费平台H5 SSO单点
         public static final String SUPPLIER_SSO="/vendor-info-service/api/sso/common";
-
         // 消费平台 web sso H5
         public static final String SSO = "/vendor-info-service/api/sso";
         // 消费平台 web sso 统一单点登录 web
         public static final String SSO_COMMON = "/vendor-info-service/api/sso/common";
         //发票查验
         public static final String  RECEIPT_VERIFY = "/receipt/api/receipt/verify";
-
         //批量查验发票
         public static final String BATCH_VERIFY = "/receipt/api/receipt/verify/batch";
-
         //报销标准查询城市组
         public static final String GET_CITY_GROUP = "/api/levels/org";
         //删除报销标准中的标准项
         public static final String SANDARD_ITEM_DELETE = "/api/expense/standard/item/delete/%s/%s";
         //报销单提交管控查询单据
         public static final String QUERY_FORM = "/api/custom/forms/loan/reference/v2?roleType=TENANT&page=0&size=10&keyword=%s&keywordLable=%s&formTypeList=3001&formTypeList=3002&formTypeList=3003&setOfBooksId=%s&companyOID=%s";
+        //财务卷票机ocr识别
+        public static final String SCAN_OCR = "/api/expense/reports/bag/receipt/scan";
 }
 
 

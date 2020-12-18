@@ -49,12 +49,13 @@ public class ReimbSubmissionControl {
             if(!companyName.equals("")){
                 JsonObject company = new JsonObject();
                 company.addProperty("name",companyName);
-                company.addProperty("id",reimbStandard.getCompany(employee,companyName,"").get("id").getAsString());
+                company.addProperty("id",reimbStandard.getCompany(employee,companyName,rules.getLevelOrgId()).get("id").getAsString());
                 JsonArray array = new JsonArray();
                 array.add(company);
                 rules.setCompanys(array);
             }
         }else {
+            //公司级配置
             rules.setLevelOrgName(companyName);
             JsonObject companyObject = reimbStandard.getCompany(employee,rules.getLevelOrgName(),"");
             levelOrgId = companyObject.get("id").getAsString();

@@ -95,9 +95,11 @@ public class ReimbStandard {
      */
     public JsonObject getCompany(Employee employee,String companyName,String setOfBooksId)throws HttpStatusException{
         JsonArray companyList = reimbStandardRules.getEnabledCompany(employee,setOfBooksId);
-        JsonObject company;
-        company = GsonUtil.getJsonValue(companyList,"name",companyName);
-        return company;
+        if(GsonUtil.isNotEmpt(companyList)){
+            return GsonUtil.getJsonValue(companyList,"name",companyName);
+        }else{
+            throw new RuntimeException("查询的公司为空");
+        }
     }
 
     /**

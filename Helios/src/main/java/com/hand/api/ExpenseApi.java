@@ -26,11 +26,8 @@ public class ExpenseApi extends BaseRequest{
 
     private ComponentQueryApi componentQueryApi;
 
-    private EmployeeInfoApi employeeInfoApi;
-
     public ExpenseApi(){
         componentQueryApi =new ComponentQueryApi();
-        employeeInfoApi =new EmployeeInfoApi();
     }
 
 
@@ -595,5 +592,12 @@ public class ExpenseApi extends BaseRequest{
         participant.addProperty("highOff", (String) null);
         participant.addProperty("avatar",(String) null);
         return participant;
+    }
+
+    public void receiptVerify(Employee employee){
+        String url = employee.getEnvironment().getUrl()+ ApiPath.RECEIPT_VERIFY;
+        //读取发票信息
+        DocumentUtil
+        JsonObject body = new JsonObject();
     }
 }

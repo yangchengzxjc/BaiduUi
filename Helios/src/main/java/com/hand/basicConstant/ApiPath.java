@@ -321,9 +321,8 @@ public class ApiPath {
         public static final String SSO = "/vendor-info-service/api/sso";
         // 消费平台 web sso 统一单点登录 web
         public static final String SSO_COMMON = "/vendor-info-service/api/sso/common";
-
-
-
+        //发票查验
+        public static final String  RECEIPT_VERIFY = "/receipt/api/receipt/verify";
 
         //报销标准查询城市组
         public static final String GET_CITY_GROUP = "/api/levels/org";

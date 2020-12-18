@@ -622,7 +622,7 @@ public class ExpenseApi extends BaseRequest{
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject upload(Employee employee,String path) throws HttpStatusException {
+    public JsonObject uploadAttachment(Employee employee,String path) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl()+ ApiPath.UPLOAD_ATTACHMENT;
         HashMap<String,String> parm = new HashMap<>();
         parm.put("attachmentType","PDF");
@@ -637,7 +637,7 @@ public class ExpenseApi extends BaseRequest{
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject ocr(Employee employee,JsonObject attachment) throws HttpStatusException {
+    public JsonObject ocr(Employee employee,JsonArray attachment) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl()+ ApiPath.OCR;
         String res = doPost(url,getHeader(employee.getAccessToken()),null,attachment.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
@@ -646,11 +646,11 @@ public class ExpenseApi extends BaseRequest{
     /**
      * 上传文件批量识别
      * @param employee
-     * @param receiptInfo
+     * @param receiptInfo 发票信息
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject batchReceipt(Employee employee,JsonObject receiptInfo) throws HttpStatusException {
+    public JsonArray batchVerify(Employee employee,JsonObject receiptInfo) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl()+ ApiPath.BATCH_VERIFY;
         JsonArray array = new JsonArray();
         JsonObject body = new JsonObject();
@@ -659,6 +659,6 @@ public class ExpenseApi extends BaseRequest{
         body.addProperty("userOID",employee.getUserOID());
         array.add(body);
         String res = doPost(url,getHeader(employee.getAccessToken()),null,array.toString(),null,employee);
-        return new JsonParser().parse(res).getAsJsonObject();
+        return new JsonParser().parse(res).getAsJsonArray();
     }
 }

@@ -264,4 +264,21 @@ public class ExpenseReportInvoice {
         return expenseApi.receiptVerify(employee,receptInfo).get("msg").getAsString();
     }
 
+
+    /**
+     * ocr识别发票-上传pdf 方式
+     * @param employee
+     * @param filePath
+     * @return
+     * @throws HttpStatusException
+     */
+    public String ocrReceptVerify(Employee employee,String filePath) throws HttpStatusException {
+        JsonObject attachment = expenseApi.uploadAttachment(employee,filePath);
+        JsonArray ocrArray = new JsonArray();
+        ocrArray.add(attachment);
+        JsonObject receiptInfo = expenseApi.ocr(employee,ocrArray).getAsJsonObject("rows").getAsJsonArray("receiptList").get(0).getAsJsonObject();
+        //发票查验
+        return expenseApi.batchVerify(employee,receiptInfo).get(0).getAsJsonObject().get("msg").getAsString();
+    }
+
 }

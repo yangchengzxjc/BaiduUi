@@ -1,13 +1,8 @@
 package com.test.api.testcase.monitor;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicConstant.Receript;
-import com.hand.basicConstant.Supplier;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.FormComponent;
-import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
 import com.test.api.method.*;
@@ -77,5 +72,10 @@ public class SmokeTest extends BaseTest {
         Assert.assertEquals(msg,"查验成功，发票一致");
     }
 
-
+    @Test(description = "ocr发票识别并查验")
+    public void smokeTest03() throws HttpStatusException {
+        ExpenseReportInvoice invoice = new ExpenseReportInvoice();
+        String msg = invoice.ocrReceptVerify(employee,Receript.ocrReceipt);
+        Assert.assertEquals(msg,"查验成功，发票一致");
+    }
 }

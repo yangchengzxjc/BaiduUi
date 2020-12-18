@@ -34,17 +34,6 @@ public  class Base {
 
     }
 
-    public JsonObject jsonObject;
-//    public JSONObject jsonObject;
-
-
-    /**
-     * 构造方法
-     */
-    public Base() {
-
-    }
-
     /**
      * @param obj
      * @param jsonParth

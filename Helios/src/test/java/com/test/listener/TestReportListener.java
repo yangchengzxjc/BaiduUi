@@ -38,7 +38,7 @@ public class TestReportListener implements IReporter {
     private String beginTime;
     private long totalTime;
     private String project = "Helios";
-    private String reportName = "hahahah";
+    private String suitName = "";
     private String environment = "";
     private String module = "[]";
 
@@ -52,6 +52,7 @@ public class TestReportListener implements IReporter {
             if(suite.getParameter("module")!= null){
                 module = suite.getParameter("module");
             }
+            suitName = suite.getName();
             if (suite.getParameter("environment") == null) {
                 throw new NullPointerException("环境信息未配置");
             }
@@ -89,7 +90,7 @@ public class TestReportListener implements IReporter {
             String url = "https://oapi.dingtalk.com/robot/send?access_token=592a7abc3b71fa4570aa9b48115511f50f803b4405614620fa44b2e6bdd7cfc2";
             int testAll = testsPass + testsFail + testsSkip;
             String pass = DingDingUtil.folatToPer((float) testsPass / testAll);
-            StringBuilder context = new StringBuilder("### 接口用例执行结果 " + "\\n> - 环境：" + this.environment + "\\n> - 总用例数：" + testAll + "\\n> - 通过：" + testsPass + "\\n> - 失败：" + testsFail + "\\n> - 跳过：" + testsSkip + "\\n> - 通过率为：" + pass);
+            StringBuilder context = new StringBuilder("### 接口用例执行结果 " +"\\n> - 运行项目："+ suitName + "\\n> - 环境：" + this.environment + "\\n> - 总用例数：" + testAll + "\\n> - 通过：" + testsPass + "\\n> - 失败：" + testsFail + "\\n> - 跳过：" + testsSkip + "\\n> - 通过率为：" + pass);
             JsonElement moduleelement = new JsonParser().parse(module);
             if(testsFail>0){
                 if(moduleelement.getAsJsonArray().isJsonArray()){

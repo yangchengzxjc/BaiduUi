@@ -12,7 +12,7 @@ import java.util.Scanner;
  * @Version 1.0
  **/
 @Slf4j
-public class DocumnetUtil {
+public class DocumentUtil {
 
     /**
      * 读取文件

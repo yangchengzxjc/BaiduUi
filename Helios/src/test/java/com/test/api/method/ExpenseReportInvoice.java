@@ -3,6 +3,7 @@ package com.test.api.method;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hand.api.ExpenseApi;
+import com.hand.api.FinanceApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.InvoiceComponent;
@@ -251,6 +252,51 @@ public class ExpenseReportInvoice {
         }else{
             return false;
         }
+    }
+
+    /**
+     * 发票查验
+     * @param employee
+     * @param receptInfo
+     * @return
+     * @throws HttpStatusException
+     */
+    public String receptVerify(Employee employee,String receptInfo) throws HttpStatusException {
+        return expenseApi.receiptVerify(employee,receptInfo).get("msg").getAsString();
+    }
+
+
+    /**
+     * ocr识别发票-上传pdf 方式
+     * @param employee
+     * @param filePath
+     * @return
+     * @throws HttpStatusException
+     */
+    public String ocrReceptVerify(Employee employee,String filePath) throws HttpStatusException {
+        JsonObject attachment = expenseApi.uploadAttachment(employee,filePath);
+        JsonArray ocrArray = new JsonArray();
+        ocrArray.add(attachment);
+        JsonObject receiptInfo = expenseApi.ocr(employee,ocrArray).getAsJsonObject("rows").getAsJsonArray("receiptList").get(0).getAsJsonObject();
+        //发票查验
+        return expenseApi.batchVerify(employee,receiptInfo).get(0).getAsJsonObject().get("msg").getAsString();
+    }
+
+    /**
+     * 财务卷票机 scan  发票识别
+     * @param employee
+     * @param filePath
+     * @param reportId
+     * @return
+     * @throws HttpStatusException
+     */
+    public String scanOcr(Employee employee,String filePath,String reportId) throws HttpStatusException {
+        FinanceApi financeApi = new FinanceApi();
+        JsonObject attachment = expenseApi.uploadAttachment(employee,filePath);
+        JsonObject ocr = financeApi.scanOcr(employee,reportId,attachment);
+        log.info("ocr响应:{}",ocr);
+        return ocr.get("message").getAsString();
+
     }
 
 }

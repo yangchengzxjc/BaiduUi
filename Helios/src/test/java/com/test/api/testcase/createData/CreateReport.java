@@ -7,7 +7,7 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.FormComponent;
 import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.basicConstant.Supplier;
-import com.hand.utils.DocumnetUtil;
+import com.hand.utils.DocumentUtil;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
 import com.test.api.method.ApplicationMethod.TravelApplicationPage;
@@ -29,7 +29,7 @@ public class CreateReport extends BaseTest {
     public void createDailyReport() throws HttpStatusException {
         ExpenseReport expenseReport = new ExpenseReport();
         //读取文件中的账号信息
-        ArrayList data = DocumnetUtil.fileReader("D:/t.txt",1);
+        ArrayList data = DocumentUtil.fileReader("D:/t.txt",1);
         for(int i=0; i<10;i++){
             for (Object phoneNumber:data){
                 //设置环境登录信息

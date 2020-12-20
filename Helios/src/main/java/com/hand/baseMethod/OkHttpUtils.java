@@ -2,8 +2,7 @@ package com.hand.baseMethod;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.hand.basicConstant.FileMediaType;
-import com.hand.basicObject.MyResponse;
+import com.hand.basicObject.APIResponse;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 
@@ -25,7 +24,6 @@ import java.io.File;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.entity.ContentType;
-import org.testng.Reporter;
 
 /**
  * HTTP通讯结构处理器
@@ -83,11 +81,11 @@ public class OkHttpUtils {
         long endTime = System.currentTimeMillis();
 
         try {
-            log.info("MyResponse: {}", new JsonParser().parse(result).getAsJsonObject().toString());
+            log.info("APIResponse: {}", new JsonParser().parse(result).getAsJsonObject().toString());
         } catch (Exception e) {
 
             try {
-                log.info("MyResponse: {}", new JsonParser().parse(result).getAsJsonArray().toString());
+                log.info("APIResponse: {}", new JsonParser().parse(result).getAsJsonArray().toString());
 
             } catch (Exception ignored) {
             }
@@ -115,11 +113,11 @@ public class OkHttpUtils {
      * @return
      * @throws HttpStatusException
      */
-    private static MyResponse handleHttpResponse(int httpCode, String result, Response response) {
-        MyResponse myResponse = new MyResponse();
-        myResponse.setBody(result);
-        myResponse.setStatusCode(httpCode);
-        return myResponse;
+    private static APIResponse handleHttpResponse(int httpCode, String result, Response response) {
+        APIResponse APIResponse = new APIResponse();
+        APIResponse.setBody(result);
+        APIResponse.setStatusCode(httpCode);
+        return APIResponse;
     }
 
     private static void handleHttpThrowable(Exception ex, String url) throws HttpStatusException {
@@ -184,18 +182,18 @@ public class OkHttpUtils {
     /**
      * post请求参数
      *
-     * @param BodyParams
+     * @param bodyParams
      * @return
      */
-    private static RequestBody SetRequestFormBody(Map<String, String> BodyParams) {
+    private static RequestBody SetRequestFormBody(Map<String, String> bodyParams) {
         RequestBody body = null;
         okhttp3.FormBody.Builder formEncodingBuilder = new okhttp3.FormBody.Builder();
-        if (BodyParams != null) {
-            Iterator<String> iterator = BodyParams.keySet().iterator();
+        if (bodyParams != null) {
+            Iterator<String> iterator = bodyParams.keySet().iterator();
             String key = "";
             while (iterator.hasNext()) {
                 key = iterator.next().toString();
-                formEncodingBuilder.add(key, BodyParams.get(key));
+                formEncodingBuilder.add(key, bodyParams.get(key));
             }
         }
         body = formEncodingBuilder.build();
@@ -206,23 +204,23 @@ public class OkHttpUtils {
     /**
      * Post上传图片的参数
      *
-     * @param BodyParams
+     * @param bodyParams
      * @param fileParams
      * @return
      */
-    public static RequestBody SetFileRequestBody(Map<String, String> BodyParams, Map<String, String> fileParams) {
+    public static RequestBody SetFileRequestBody(Map<String, String> bodyParams, Map<String, String> fileParams) {
         //带文件的Post参数
         RequestBody body = null;
         okhttp3.MultipartBody.Builder MultipartBodyBuilder = new okhttp3.MultipartBody.Builder();
         MultipartBodyBuilder.setType(MultipartBody.FORM);
         RequestBody fileBody = null;
 
-        if (BodyParams != null) {
-            Iterator<String> iterator = BodyParams.keySet().iterator();
+        if (bodyParams != null) {
+            Iterator<String> iterator = bodyParams.keySet().iterator();
             String key = "";
             while (iterator.hasNext()) {
                 key = iterator.next().toString();
-                MultipartBodyBuilder.addFormDataPart(key, BodyParams.get(key));
+                MultipartBodyBuilder.addFormDataPart(key, bodyParams.get(key));
             }
         }
 
@@ -249,11 +247,11 @@ public class OkHttpUtils {
     /**
      * 带有URL的get请求
      *
-     * @param Url
+     * @param url
      * @return
      * @throws IOException
      */
-    public static MyResponse get(String Url, Map<String, String> headersParams, Map<String, String> UrlMapParams) throws HttpStatusException {
+    public static APIResponse get(String url, Map<String, String> headersParams, Map<String, String> formBody) throws HttpStatusException {
         Headers headers = null;
         String strParams = "";
         long startTime = System.currentTimeMillis();
@@ -261,18 +259,18 @@ public class OkHttpUtils {
         if (headersParams != null) {
             headers = setHeaders(headersParams);
         }
-        if (UrlMapParams != null) {
-            strParams = setGetUrlParams(UrlMapParams);
+        if (formBody != null) {
+            strParams = setGetUrlParams(formBody);
         }
-        Url += strParams;
-        addRequestLog(GET, Url, strParams, null, null);
+        url += strParams;
+        addRequestLog(GET, url, strParams, null, null);
         Request req = null;
         Response response = null;
         String res = "";
         int httpCode = 0;
         try {
             req = new Request.Builder()
-                    .url(Url)
+                    .url(url)
                     .headers(headers)
                     .build();
             response = client.newCall(req).execute();
@@ -283,7 +281,7 @@ public class OkHttpUtils {
         } catch (SocketTimeoutException e) {
             log.error("SocketTimeoutException,try again:" + e.getMessage());
             req = new Request.Builder()
-                    .url(Url)
+                    .url(url)
                     .headers(headers)
                     .build();
             try {
@@ -298,7 +296,7 @@ public class OkHttpUtils {
             e.printStackTrace();
         }
         if (httpCode != 200 && httpCode != 201) {
-            addResponseLog(GET, Url, Url, null, null, response, httpCode, res, response.header("SpanID"), startTime);
+            addResponseLog(GET, url, url, null, null, response, httpCode, res, response.header("SpanID"), startTime);
         }
         return handleHttpResponse(httpCode, res, response);
     }
@@ -306,12 +304,12 @@ public class OkHttpUtils {
     /**
      * JSON数据修改
      *
-     * @param Url
-     * @param Jsonbody
+     * @param url
+     * @param requestBody
      * @return
      * @throws IOException
      */
-    public static MyResponse put(String Url, Map<String, String> headersParams, Map<String, String> UrlMapParams, String Jsonbody, Map<String, String> BodyParams) throws HttpStatusException {
+    public static APIResponse put(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, String requestBody, Map<String, String> formBody) throws HttpStatusException {
         Headers headers = null;
         RequestBody body = null;
         String strParams = "";
@@ -324,40 +322,40 @@ public class OkHttpUtils {
         if (headersParams != null) {
             headers = setHeaders(headersParams);
         }
-        if (UrlMapParams != null) {
-            strParams = setGetUrlParams(UrlMapParams);
-            Url += strParams;
+        if (urlMapParams != null) {
+            strParams = setGetUrlParams(urlMapParams);
+            url += strParams;
 
         }
 //        form请求
-        if (BodyParams != null) {
-            body = SetRequestFormBody(BodyParams);
-            FormLog = BodyParams.toString();
+        if (formBody != null) {
+            body = SetRequestFormBody(formBody);
+            FormLog = formBody.toString();
         }
 
 //        json 请求
-        if (Jsonbody != null) {
+        if (requestBody != null) {
             MediaType JSON = MediaType.parse(String.valueOf(ContentType.APPLICATION_JSON));
-            body = RequestBody.create(JSON, Jsonbody);
+            body = RequestBody.create(JSON, requestBody);
         }
 
 
-        if (BodyParams != null) {
+        if (formBody != null) {
             req = new Request.Builder()
-                    .url(Url)
+                    .url(url)
                     .headers(headers)
                     .addHeader("Content-Type", String.valueOf(ContentType.APPLICATION_FORM_URLENCODED))
                     .put(body)
                     .build();
-        } else if (Jsonbody != null) {
+        } else if (requestBody != null) {
             req = new Request.Builder()
-                    .url(Url)
+                    .url(url)
                     .headers(headers)
                     .addHeader("Content-Type", String.valueOf(ContentType.APPLICATION_JSON))
                     .put(body)
                     .build();
         }
-        addRequestLog(req.method(), Url, strParams, Jsonbody, FormLog);
+        addRequestLog(req.method(), url, strParams, requestBody, FormLog);
         Response response = null;
         int httpCode = 0;
         try {
@@ -380,7 +378,7 @@ public class OkHttpUtils {
             e.printStackTrace();
         }
         if (httpCode != 200 && httpCode != 201) {
-            addResponseLog(PUT, Url, Url, jsonlog, FormLog, response, httpCode, res, response.header("SpanID"), startTime);
+            addResponseLog(PUT, url, url, jsonlog, FormLog, response, httpCode, res, response.header("SpanID"), startTime);
         }
         return handleHttpResponse(httpCode, res, response);
     }
@@ -388,12 +386,12 @@ public class OkHttpUtils {
     /**
      * JSON数据提交
      *
-     * @param Url
-     * @param Jsonbody
+     * @param url
+     * @param requestBody
      * @return
      * @throws IOException
      */
-    public static MyResponse post(String Url, Map<String, String> headersParams, Map<String, String> UrlMapParams, String Jsonbody, Map<String, String> BodyParams) throws HttpStatusException {
+    public static APIResponse post(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, String requestBody, Map<String, String> formData) throws HttpStatusException {
         Headers headers = null;
         RequestBody body = null;
         String strParams = "";
@@ -406,38 +404,37 @@ public class OkHttpUtils {
         if (headersParams != null) {
             headers = setHeaders(headersParams);
         }
-        if (UrlMapParams != null) {
-            strParams = setGetUrlParams(UrlMapParams);
-            Url += strParams;
+        if (urlMapParams != null) {
+            strParams = setGetUrlParams(urlMapParams);
+            url += strParams;
 
         }
-//        form请求
-        if (BodyParams != null) {
-            body = SetRequestFormBody(BodyParams);
-            FormLog = BodyParams.toString();
+////        form请求
+        if (formData != null) {
+            body = SetRequestFormBody(formData);
+            FormLog = formData.toString();
         }
-
 //        json 请求
-        if (Jsonbody != null) {
+        if (requestBody != null) {
             MediaType JSON = MediaType.parse(String.valueOf(ContentType.APPLICATION_JSON));
-            body = RequestBody.create(JSON, Jsonbody);
+            body = RequestBody.create(JSON, requestBody);
         }
-        if (BodyParams != null) {
+        if (formData!= null) {
             req = new Request.Builder()
-                    .url(Url)
+                    .url(url)
                     .headers(headers)
                     .addHeader("Content-Type", String.valueOf(ContentType.APPLICATION_FORM_URLENCODED))
                     .post(body)
                     .build();
-        } else if (Jsonbody != null) {
+        } else if (requestBody != null) {
             req = new Request.Builder()
-                    .url(Url)
+                    .url(url)
                     .headers(headers)
                     .addHeader("Content-Type", String.valueOf(ContentType.APPLICATION_JSON))
                     .post(body)
                     .build();
         }
-        addRequestLog(req.method(), Url, strParams, Jsonbody, FormLog);
+        addRequestLog(req.method(), url, strParams, requestBody, FormLog);
         Response response = null;
         int httpCode = 0;
         try {
@@ -461,7 +458,7 @@ public class OkHttpUtils {
             e.printStackTrace();
         }
         if (httpCode != 200 && httpCode != 201) {
-            addResponseLog(POST, Url, Url, jsonlog, FormLog, response, httpCode, res, response.header("SpanID"), startTime);
+            addResponseLog(POST, url, url, jsonlog, FormLog, response, httpCode, res, response.header("SpanID"), startTime);
         }
         return handleHttpResponse(httpCode, res, response);
     }
@@ -471,15 +468,15 @@ public class OkHttpUtils {
      *
      * @param Url
      * @param headersParams
-     * @param BodyParams
-     * @param Name
-     * @param FilePath
-     * @param FileMediaType
+     * @param formBody
+     * @param name
+     * @param filePath
+     * @param fileMediaType
      * @return
      * @throws IOException
      */
-    public static MyResponse UpLoadFile(String Url, Map<String, String> headersParams, Map<String, String> BodyParams, String Name, String FilePath, String
-            FileMediaType) throws HttpStatusException {
+    public static APIResponse upLoadFile(String Url, Map<String, String> headersParams, Map<String, String> formBody, String name, String filePath, String
+            fileMediaType) throws HttpStatusException {
         Headers headers = null;
         long startTime = System.currentTimeMillis();
         String res = "";
@@ -492,17 +489,17 @@ public class OkHttpUtils {
             headers = setHeaders(headersParams);
         }
 
-        if (BodyParams != null) {
-            Iterator<String> iterator = BodyParams.keySet().iterator();
+        if (formBody != null) {
+            Iterator<String> iterator = formBody.keySet().iterator();
             String key = "";
             while (iterator.hasNext()) {
                 key = iterator.next().toString();
-                MultipartBodyBuilder.addFormDataPart(key, BodyParams.get(key));
+                MultipartBodyBuilder.addFormDataPart(key, formBody.get(key));
             }
         }
 
-        File file = new File(FilePath);
-        MultipartBodyBuilder.addFormDataPart(Name, file.getName(), RequestBody.create(MediaType.parse(FileMediaType), file));
+        File file = new File(filePath);
+        MultipartBodyBuilder.addFormDataPart(name, file.getName(), RequestBody.create(MediaType.parse(fileMediaType), file));
         body = MultipartBodyBuilder.build();
         Response response = null;
         int httpCode = 0;
@@ -554,7 +551,7 @@ public class OkHttpUtils {
      * @return
      * @throws IOException
      */
-    public static MyResponse delete(String Url, Map<String, String> headersParams, Map<String, String> UrlMapParams, JsonObject Jsonbody) throws HttpStatusException {
+    public static APIResponse delete(String Url, Map<String, String> headersParams, Map<String, String> UrlMapParams, JsonObject Jsonbody) throws HttpStatusException {
         Headers headers = null;
         String strParams = "";
         String res = "";

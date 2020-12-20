@@ -34,7 +34,7 @@ public class ReimbursementApi extends BaseRequest {
 
     /**
      * 获取员工可用单据类型
-     * @param formType 单据类型   可选102为报销单  101 申请单
+     * @param formType 单据类型   可选102为报销单  101 申请单 104 借款单
      */
     public JsonArray getAvailableforms(Employee employee, String formType, String jobId) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.GETAVAILABLE_BXFORMS;
@@ -773,5 +773,7 @@ public class ReimbursementApi extends BaseRequest {
         responseEntity=new JsonParser().parse(res).getAsJsonObject();
         return  responseEntity;
     }
+
+
 
 }

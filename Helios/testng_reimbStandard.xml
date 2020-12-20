@@ -13,7 +13,7 @@
         <!--</classes>-->
     <!--</test>-->
 
-    <test verbose="10" preserve-order="true" name="报销单提交管控测试">
+    <test verbose="10" preserve-order= "true" name="报销单提交管控测试">
         <classes>
             <class name="com.test.api.testcase.expenseControl.SubmissionControl.ReimbSubmissionControlTest"/>
         </classes>
@@ -28,6 +28,7 @@
     <test verbose="10" preserve-order="true" name="报销标准周期测试">
         <classes>
             <class name="com.test.api.testcase.expenseControl.RemimbStandard.PeriodControlTest"/>
+            <class name="com.test.api.testcase.expenseControl.RemimbStandard.SummaryControlTest"/>
         </classes>
     </test>
 

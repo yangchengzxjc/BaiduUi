@@ -4,23 +4,16 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.api.VendorApi;
-import com.hand.api.VendorInfoApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SSOBody;
 import com.hand.basicObject.supplierObject.SettlementBody;
-import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoDTO;
-import com.hand.utils.DocumnetUtil;
+import com.hand.utils.DocumentUtil;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
-import com.jayway.jsonpath.JsonPath;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
-import org.openqa.selenium.json.Json;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -243,7 +236,7 @@ public class Vendor {
      * @return
      */
     public JsonObject getFlightSettlementData(Employee employee, String path, String corpId, String supplierCode) {
-        String vendorData = DocumnetUtil.fileReader(path);
+        String vendorData = DocumentUtil.fileReader(path);
         JsonObject vendorObject = new JsonParser().parse(vendorData).getAsJsonObject();
         String orderNo = RandomNumber.getTimeNumber();
         String originalOrderNo = RandomNumber.getTimeNumber();
@@ -269,7 +262,7 @@ public class Vendor {
      * @return
      */
     public JsonObject getTrainSettlementData(Employee employee, String path, String corpId, String supplierCode) {
-        String vendorData = DocumnetUtil.fileReader(path);
+        String vendorData = DocumentUtil.fileReader(path);
         JsonObject vendorObject = new JsonParser().parse(vendorData).getAsJsonObject();
         String orderNo = RandomNumber.getTimeNumber();
         JsonObject trainBaseSettlement = vendorObject.getAsJsonArray("trainSettlementInfos").get(0).getAsJsonObject().getAsJsonObject("trainBaseSettlement");
@@ -293,7 +286,7 @@ public class Vendor {
      * @return
      */
     public JsonObject getHotelSettlementData(Employee employee, String path, String corpId, String supplierCode) {
-        String vendorData = DocumnetUtil.fileReader(path);
+        String vendorData = DocumentUtil.fileReader(path);
         JsonObject vendorObject = new JsonParser().parse(vendorData).getAsJsonObject();
         String orderNo = RandomNumber.getTimeNumber();
         vendorObject.getAsJsonArray("hotelSettlementList").get(0).getAsJsonObject().addProperty("batchNo", supplierCode + "_" + corpId + "_hotel_" + UTCTime.getBeijingDay(0));
@@ -313,7 +306,7 @@ public class Vendor {
      * @return
      */
     public JsonObject getFlightOrder(Employee employee, String path) {
-        String vendorOrderData = DocumnetUtil.fileReader(path);
+        String vendorOrderData = DocumentUtil.fileReader(path);
         JsonObject vendorObject = new JsonParser().parse(vendorOrderData).getAsJsonObject();
         String orderNo = RandomNumber.getTimeNumber();
         String originalOrderNo = RandomNumber.getTimeNumber();
@@ -353,7 +346,7 @@ public class Vendor {
      * @return
      */
     public JsonObject getTrainOrder(Employee employee, String path) {
-        String vendorOrderData = DocumnetUtil.fileReader(path);
+        String vendorOrderData = DocumentUtil.fileReader(path);
         JsonObject vendorObject = new JsonParser().parse(vendorOrderData).getAsJsonObject();
         String orderNo = RandomNumber.getTimeNumber();
         String originalOrderNo = RandomNumber.getTimeNumber();
@@ -388,7 +381,7 @@ public class Vendor {
      * @return
      */
     public JsonObject getHotelOrder(Employee employee, String path) {
-        String vendorOrderData = DocumnetUtil.fileReader(path);
+        String vendorOrderData = DocumentUtil.fileReader(path);
         JsonObject vendorObject = new JsonParser().parse(vendorOrderData).getAsJsonObject();
         String orderNo = RandomNumber.getTimeNumber();
         String originalOrderNo = RandomNumber.getTimeNumber();
@@ -418,7 +411,7 @@ public class Vendor {
      * @return
      */
     public JsonObject getCarOrder(Employee employee, String path) {
-        String vendorOrderData = DocumnetUtil.fileReader(path);
+        String vendorOrderData = DocumentUtil.fileReader(path);
         JsonObject vendorObject = new JsonParser().parse(vendorOrderData).getAsJsonObject();
         String orderNo = RandomNumber.getTimeNumber();
         vendorObject.getAsJsonObject("carBaseOrder").addProperty("orderNo", orderNo);
@@ -439,7 +432,7 @@ public class Vendor {
      * @return
      */
     public JsonObject getCarSettlementData(Employee employee, String path, String corpId, String supplierCode) {
-        String vendorData = DocumnetUtil.fileReader(path);
+        String vendorData = DocumentUtil.fileReader(path);
         JsonObject vendorObject = new JsonParser().parse(vendorData).getAsJsonObject();
         String orderNo = RandomNumber.getTimeNumber();
         JsonObject carBaseSettlement = vendorObject.getAsJsonArray("carSettlementInfos").get(0).getAsJsonObject().getAsJsonObject("carBaseSettlement");

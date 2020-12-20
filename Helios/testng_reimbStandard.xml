@@ -16,7 +16,17 @@
     <test verbose="10" preserve-order="true" name="报销单提交管控测试">
         <classes>
             <class name="com.test.api.testcase.expenseControl.SubmissionControl.ReimbSubmissionControlTest"/>
+        </classes>
+    </test>
+
+    <test verbose="10" preserve-order="true" name="报销标准汇总管控测试">
+        <classes>
             <class name="com.test.api.testcase.expenseControl.RemimbStandard.SummaryControlTest"/>
+        </classes>
+    </test>
+
+    <test verbose="10" preserve-order="true" name="报销标准周期测试">
+        <classes>
             <class name="com.test.api.testcase.expenseControl.RemimbStandard.PeriodControlTest"/>
         </classes>
     </test>

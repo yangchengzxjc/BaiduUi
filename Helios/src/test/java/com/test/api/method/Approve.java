@@ -2,9 +2,11 @@ package com.test.api.method;
 
 import com.google.gson.JsonArray;
 import com.hand.api.ApproveApi;
+import com.hand.api.ExpenseApi;
 import com.hand.api.FinanceApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.utils.GsonUtil;
 
 /**
  * @Author peng.zhang
@@ -70,5 +72,21 @@ public class Approve {
     public int auditPass(Employee employee,String expenseReportOID,int entityType) throws HttpStatusException {
         FinanceApi financeApi = new FinanceApi();
         return financeApi.reportAuditpass(employee,expenseReportOID,entityType).get("failNum").getAsInt();
+    }
+
+    /**
+     * 财务人员删除发票
+     * @param employee
+     * @param reportOID
+     * @throws HttpStatusException
+     */
+    public void deleteReceipt(Employee employee,String reportOID) throws HttpStatusException {
+        FinanceApi financeApi = new FinanceApi();
+        JsonArray receipts = financeApi.queryFinanceReport(employee,reportOID);
+        if(GsonUtil.isNotEmpt(receipts)){
+            for(int i= 0 ;i<receipts.size();i++){
+                financeApi.deleteReceipt(employee,receipts.get(i).getAsJsonObject().get("id").getAsString());
+            }
+        }
     }
 }

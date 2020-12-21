@@ -4,7 +4,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
+import com.hand.basicConstant.HeaderKey;
 import com.hand.basicConstant.Receript;
+import com.hand.basicConstant.ResourceId;
 import com.hand.basicObject.InvoiceComponent;
 import com.hand.basicConstant.ApiPath;
 import com.hand.basicObject.Employee;
@@ -282,7 +284,8 @@ public class ExpenseApi extends BaseRequest{
         JsonObject responseEntity=null;
         String url=employee.getEnvironment().getUrl()+ ApiPath.CREATEINVOICE;
         JsonObject body=new JsonObject();
-        String accountSetId=expenseTypeInfo.get("setOfBooks").getAsJsonObject().get("accountSetId").getAsString();
+        //暂时没人用 先注释掉
+//        String accountSetId=expenseTypeInfo.get("setOfBooks").getAsJsonObject().get("accountSetId").getAsString();
         String messageKey=null;
         if (!expenseTypeInfo.get("messageKey").isJsonNull()) {
             messageKey=expenseTypeInfo.get("messageKey").getAsString();
@@ -661,4 +664,8 @@ public class ExpenseApi extends BaseRequest{
         String res = doPost(url,getHeader(employee.getAccessToken()),null,array.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonArray();
     }
+
+
+
+
 }

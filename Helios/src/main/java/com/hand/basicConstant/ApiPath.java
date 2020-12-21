@@ -335,6 +335,10 @@ public class ApiPath {
         public static final String QUERY_FORM = "/api/custom/forms/loan/reference/v2?roleType=TENANT&page=0&size=10&keyword=%s&keywordLable=%s&formTypeList=3001&formTypeList=3002&formTypeList=3003&setOfBooksId=%s&companyOID=%s";
         //财务卷票机ocr识别
         public static final String SCAN_OCR = "/api/expense/reports/bag/receipt/scan";
+        //删除发票
+        public static final String DELETE_RECEIPT = "/receipt/api/receipts/%s";
+        //财务查询票据详情
+        public static final String RECEIPT_QUERY = "/api/expense/reports/receipt/finance/query";
 }
 
 

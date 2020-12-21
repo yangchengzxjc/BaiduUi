@@ -267,7 +267,7 @@ public class ExpenseReportInvoice {
 
 
     /**
-     * ocr识别发票-上传pdf 方式
+     * ocr识别发票-上传pdf 方式 并查验
      * @param employee
      * @param filePath
      * @return
@@ -283,6 +283,20 @@ public class ExpenseReportInvoice {
     }
 
     /**
+     * ocr识别发票-上传pdf 方式
+     * @param employee
+     * @param filePath
+     * @return
+     * @throws HttpStatusException
+     */
+    public boolean ocr(Employee employee,String filePath) throws HttpStatusException {
+        JsonObject attachment = expenseApi.uploadAttachment(employee,filePath);
+        JsonArray ocrArray = new JsonArray();
+        ocrArray.add(attachment);
+        return expenseApi.ocr(employee,ocrArray).get("success").getAsBoolean();
+    }
+
+    /**
      * 财务卷票机 scan  发票识别
      * @param employee
      * @param filePath
@@ -294,7 +308,6 @@ public class ExpenseReportInvoice {
         FinanceApi financeApi = new FinanceApi();
         JsonObject attachment = expenseApi.uploadAttachment(employee,filePath);
         JsonObject ocr = financeApi.scanOcr(employee,reportId,attachment);
-        log.info("ocr响应:{}",ocr);
         return ocr.get("message").getAsString();
 
     }

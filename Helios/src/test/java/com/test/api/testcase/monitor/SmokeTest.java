@@ -30,7 +30,7 @@ public class SmokeTest extends BaseTest {
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void beforeClass(@Optional("16900000001") String phoneNumber, @Optional("hly123") String pwd, @Optional("console") String env){
+    public void beforeClass(@Optional("14082971221") String phoneNumber, @Optional("zp123456") String pwd, @Optional("console") String env){
         employee=getEmployee(phoneNumber,pwd,env);
         expenseReport = new ExpenseReport();
     }
@@ -61,7 +61,7 @@ public class SmokeTest extends BaseTest {
             e.printStackTrace();
         }
         approve.approveal(employee,reportOID,1002);
-        //审核成功
+//        审核成功
         assert approve.auditPass(employee,reportOID,1002)==0;
     }
 
@@ -82,8 +82,17 @@ public class SmokeTest extends BaseTest {
     @Test(description = "票小蜜：财务scan ocr 识别")
     public void smokeTest04() throws HttpStatusException {
         ExpenseReportInvoice invoice = new ExpenseReportInvoice();
-        String message = invoice.scanOcr(employee,Receript.ocrReceipt,"1454516");
+        String message = invoice.scanOcr(employee,Receript.scanOcrReceipt,"6285295");
         Assert.assertEquals(message,"发票识别成功");
+        Approve approve = new Approve();
+        approve.deleteReceipt(employee,"05614dba-7ab8-44b4-96c7-5da069b4572f");
+    }
+
+    @Test(description = "员工ocr识别发票")
+    public void smokeTest05() throws HttpStatusException {
+        ExpenseReportInvoice invoice = new ExpenseReportInvoice();
+        boolean msg = invoice.ocr(employee,Receript.ocrReceipt);
+        Assert.assertTrue(msg);
     }
 
 }

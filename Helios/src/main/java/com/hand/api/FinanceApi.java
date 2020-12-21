@@ -86,7 +86,36 @@ public class FinanceApi extends BaseRequest{
         body.add("attachmentDTO",attachment);
         String res= doPost(url,getHeader(employee.getAccessToken(), HeaderKey.FINANCE_AUDIT, ResourceId.FINANCE_AUDIT),null,body.toString(),null,  employee);
         return new JsonParser().parse(res).getAsJsonObject();
+    }
 
+    /**
+     * 财务删除发票
+     * @param employee
+     * @param receiptId  发票id
+     * @throws HttpStatusException
+     */
+    public void deleteReceipt(Employee employee,String receiptId) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ String.format(ApiPath.DELETE_RECEIPT,receiptId);
+        HashMap<String,String> map = new HashMap<>();
+        map.put("roleType","TENANT");
+        map.put("invoiceOID","");
+        doDlete(url,getHeader(employee.getAccessToken(), HeaderKey.FINANCE_AUDIT, ResourceId.FINANCE_AUDIT),map,new JsonObject(),employee);
+    }
+
+    /**
+     * 财务查询发票
+     * @param employee
+     * @param reportOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray queryFinanceReport(Employee employee,String reportOID) throws HttpStatusException {
+        String url=employee.getEnvironment().getUrl()+ ApiPath.RECEIPT_QUERY;
+        HashMap<String,String> map = new HashMap<>();
+        map.put("roleType","TENANT");
+        map.put("expenseReportOID",reportOID);
+        String response = doGet(url,getHeader(employee.getAccessToken(), HeaderKey.FINANCE_AUDIT, ResourceId.FINANCE_AUDIT),map,employee);
+        return new JsonParser().parse(response).getAsJsonObject().getAsJsonArray("financeReceipts");
     }
 }
 

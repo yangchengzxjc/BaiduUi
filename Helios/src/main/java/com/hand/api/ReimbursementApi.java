@@ -795,4 +795,68 @@ public class ReimbursementApi extends BaseRequest {
         String res= doPost(url,getHeader(employee.getAccessToken()),null,loanReportDetail.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
+
+    /**
+     * 创建借款单
+     * @param employee
+     * @param loanReportDetail
+     * @param component
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject createLoanBill(Employee employee,JsonObject loanReportDetail,FormComponent component) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ApiPath.DRAFT_LOAN;
+        JsonArray customFormValues = processCustFormValues(employee,loanReportDetail,component);
+        loanReportDetail.add("customFormValues",customFormValues);
+        loanReportDetail.remove("customFormProperties");
+        loanReportDetail.addProperty("referenceApplicationOID","");
+        loanReportDetail.addProperty("jobId",employee.getJobId());
+        loanReportDetail.add("countersignApproverOIDs",new JsonArray());
+        loanReportDetail.addProperty("applicantOID",employee.getUserOID());
+        loanReportDetail.addProperty("type",2005);
+        String res = doPost(url,getHeader(employee.getAccessToken()),null,loanReportDetail.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 查询借款类型
+     * @param employee
+     * @param formOID
+     */
+    public JsonObject getLoanType(Employee employee,String formOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+String.format(ApiPath.LOAN_TYPE,formOID);
+        HashMap<String,String> map = new HashMap<>();
+        map.put("setOfBooksId",employee.getSetOfBookId());
+        map.put("applicantOID",employee.getUserOID());
+        String res = doGet(url,getHeader(employee.getAccessToken()),map,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 借款获取银行信息
+     * @param employee
+     * @return
+     */
+    public JsonObject getBankInfo(Employee employee) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.GET_BANK;
+        HashMap<String,String> map = new HashMap<>();
+        map.put("userOID",employee.getUserOID());
+        String res = doGet(url,getHeader(employee.getAccessToken()),map,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+//    public JsonObject createLanLine(Employee employee,String loanTypeId){
+//        String url = employee.getEnvironment().getUrl() + ApiPath.LOAN_LINE;
+//        JsonObject body = new JsonObject();
+//        body.addProperty("loanTypeId",loanTypeId);
+//        body.addProperty("payeeType",1002);
+//        body.addProperty("payeeId",employee.getUserId());
+//        body.addProperty("payeeAccountNumber",);
+//        body.addProperty("payeeAccountNumber",);
+//        body.addProperty("payeeAccountNumber",);
+//        body.addProperty("payeeAccountNumber",);
+//        body.addProperty("payeeAccountNumber",);
+//        body.addProperty("payeeAccountNumber",);
+//
+//    }
 }

@@ -75,9 +75,7 @@ public class SyncDTTripTmc extends BaseTest {
         component.setEndDate(UTCTime.getUTCDateEnd(5));
         component.setCostCenter("成本中心NO1");
         //添加参与人员  参与人员的value 是一段json数组。
-        JsonArray array = new JsonArray();
-        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-消费平台"),"懿消费商(xiao/feishang)"));
-        component.setParticipant(array.toString());
+        component.setParticipant(new String[]{employee.getFullName()});
         //创建申请单
         String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
         //添加飞机行程 供应商为大唐
@@ -133,9 +131,7 @@ public class SyncDTTripTmc extends BaseTest {
         component.setEndDate(UTCTime.getUTCDateEnd(5));
         component.setCostCenter("成本中心NO1");
         //添加参与人员  参与人员的value 是一段json数组。
-        JsonArray array = new JsonArray();
-        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-消费平台"),"懿消费商(xiao/feishang)"));
-        component.setParticipant(array.toString());
+        component.setParticipant(new String[]{employee.getFullName()});
         //创建申请单
         String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
         //添加飞机行程 供应商为大唐
@@ -194,8 +190,8 @@ public class SyncDTTripTmc extends BaseTest {
         component.setCostCenter("成本中心NO1");
         //添加参与人员  参与人员的value 是一段json数组。
         JsonArray array = new JsonArray();
-        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-消费平台"),"曾任康"));
-        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-消费平台"),"S0001"));
+        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-消费平台","101"),"曾任康"));
+        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-消费平台","101"),"S0001"));
         component.setParticipant(array.toString());
         //创建申请单
         String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");

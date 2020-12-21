@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 /**
  * @Author peng.zhang
  * @Date 2020/6/23
@@ -77,7 +79,10 @@ public class FormComponent {
     String applicationOID;
     //关联多申请的dto      例：[{"applicationOID":"073b77b0-d7af-44cb-bd0e-bff9c8bc4d98","tenantId":"1089991852293296130"}]  如果有多个的话 就添加多个object就好
     JsonArray expenseReportApplicationDTOS;
-
+    //借款单 借款金额
+    double totalBudget;
+    //还款日期
+    String rebackDate;
     //因为事由是必输项 所以初始化的时候就输入
     public FormComponent(String cause){
         this.cause =cause;

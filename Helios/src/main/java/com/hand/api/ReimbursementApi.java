@@ -34,7 +34,7 @@ public class ReimbursementApi extends BaseRequest {
 
     /**
      * 获取员工可用单据类型
-     * @param formType 单据类型   可选102为报销单  101 申请单 104 借款单
+     * @param formType 单据类型   可选102为报销单  101 申请单  104 借款单
      */
     public JsonArray getAvailableforms(Employee employee, String formType, String jobId) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.GETAVAILABLE_BXFORMS;
@@ -450,7 +450,7 @@ public class ReimbursementApi extends BaseRequest {
      * @return
      * @throws HttpStatusException
      */
-    JsonArray processCustFormValues(Employee employee, JsonObject formdetal, FormComponent component) throws HttpStatusException {
+    public JsonArray processCustFormValues(Employee employee, JsonObject formdetal, FormComponent component) throws HttpStatusException {
         JsonArray custFormValues=formdetal.get("customFormFields").getAsJsonArray();
         String formOID=formdetal.get("formOID").getAsString();
         for (int i=0;i<custFormValues.size();i++)
@@ -581,6 +581,11 @@ public class ReimbursementApi extends BaseRequest {
                 case "备注":              //备注
                     data.addProperty("value","Cause");
                     break;
+                case "借款金额" :
+                    data.addProperty("value",component.getTotalBudget());
+                    break;
+                case "预计还款日期":
+                    data.addProperty("value",component.getRebackDate());
             }
         }
         return  custFormValues;
@@ -774,6 +779,20 @@ public class ReimbursementApi extends BaseRequest {
         return  responseEntity;
     }
 
-
-
+    /**
+     * 借款单提交
+     * @param employee
+     */
+    public JsonObject submitLoanBill(Employee employee,JsonObject loanReportDetail,JsonArray customFormValue) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ApiPath.SUBMIT_LOAN_BILL;
+        loanReportDetail.add("customFormValues",customFormValue);
+        loanReportDetail.remove("customFormProperties");
+        loanReportDetail.addProperty("referenceApplicationOID","");
+        loanReportDetail.addProperty("jobId",employee.getJobId());
+        loanReportDetail.add("countersignApproverOIDs",new JsonArray());
+        loanReportDetail.addProperty("applicantOID",employee.getUserOID());
+        loanReportDetail.addProperty("type",2005);
+        String res= doPost(url,getHeader(employee.getAccessToken()),null,loanReportDetail.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
 }

@@ -37,20 +37,21 @@ public class ExpenseReport {
      * 根据表单名称返回表单的formOID
      * @param employee
      * @param formName
+     * @param formType 表单类型
      * @return
      */
-    public String getFormOID(Employee employee, String formName) throws HttpStatusException {
+    public String getFormOID(Employee employee, String formName,String formType) throws HttpStatusException {
         JsonArray jsonArray=null;
         String formOID="";
-        jsonArray=reimbursementApi.getAvailableforms(employee,"102",employee.getJobId());
+        jsonArray=reimbursementApi.getAvailableforms(employee,formType,employee.getJobId());
         if(GsonUtil.isNotEmpt(jsonArray)){
             formOID=GsonUtil.getJsonValue(jsonArray,"formName",formName,"formOID");
         }
         //如果formOID 为空的话 则去申请单查找下是否存在该表单
-        if(formOID.equals("")){
-            jsonArray=reimbursementApi.getAvailableforms(employee,"101",employee.getJobId());
-            formOID = GsonUtil.getJsonValue(jsonArray,"formName",formName,"formOID");
-        }
+//        if(formOID.equals("")){
+//            jsonArray=reimbursementApi.getAvailableforms(employee,"101",employee.getJobId());
+//            formOID = GsonUtil.getJsonValue(jsonArray,"formName",formName,"formOID");
+//        }
         return formOID;
     }
 
@@ -114,7 +115,7 @@ public class ExpenseReport {
      * @throws HttpStatusException
      */
     public HashMap<String,String> createExpenseReport(Employee employee, String formName, String departmentOID,String city) throws HttpStatusException {
-        JsonObject jsonObject =reimbursementApi.createExpenseReport(employee,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName)),departmentOID,
+        JsonObject jsonObject =reimbursementApi.createExpenseReport(employee,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName,"102")),departmentOID,
                 0, UTCTime.getNowUtcTime(),UTCTime.getUtcTime(2,0),employee.getCompanyOID(),expenseReportComponent.getCityCode(employee,city),participant(employee),new JsonArray(),new JsonArray(),
                 employee.getJobId(),employee.getUserOID());
         HashMap<String,String> info =new HashMap<>();
@@ -133,7 +134,7 @@ public class ExpenseReport {
      * @throws HttpStatusException
      */
     public HashMap<String,String> createExpenseReport (Employee employee, String formName, FormComponent component) throws HttpStatusException {
-        JsonObject formDetail = reimbursementApi.getFormDetail(employee,getFormOID(employee,formName));
+        JsonObject formDetail = reimbursementApi.getFormDetail(employee,getFormOID(employee,formName,"102"));
         JsonObject jsonObject =reimbursementApi.createExpenseReport(employee,formDetail,component,employee.getJobId(),employee.getUserOID());
         HashMap<String,String> info =new HashMap<>();
         info.put("expenseReportOID",jsonObject.get("expenseReportOID").getAsString());
@@ -150,7 +151,7 @@ public class ExpenseReport {
      * @throws HttpStatusException
      */
     public HashMap<String,String> createExpenseReport (Employee employee, String formName) throws HttpStatusException {
-        JsonObject jsonObject =reimbursementApi.createExpenseReport(employee,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName)),employee.getJobId(),employee.getUserOID());
+        JsonObject jsonObject =reimbursementApi.createExpenseReport(employee,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName,"102")),employee.getJobId(),employee.getUserOID());
         HashMap<String,String> info =new HashMap<>();
         info.put("expenseReportOID",jsonObject.get("expenseReportOID").getAsString());
         info.put("businessCode",jsonObject.get("businessCode").getAsString());
@@ -348,7 +349,7 @@ public class ExpenseReport {
      * @throws HttpStatusException
      */
     public ArrayList<String> getApplication(Employee employee,String formName) throws HttpStatusException {
-        JsonArray array = reimbursementApi.getApplication(employee,getFormOID(employee,formName));
+        JsonArray array = reimbursementApi.getApplication(employee,getFormOID(employee,formName,"101"));
         ArrayList<String> list =new ArrayList<>();
         for(int i =0;i<array.size();i++){
             list.add(array.get(i).getAsJsonObject().get("applicationOID").getAsString());
@@ -366,7 +367,7 @@ public class ExpenseReport {
      * @throws HttpStatusException
      */
     public HashMap<String, String> createTravelExpenseReport(Employee employee, boolean isMoreApplication, String formName, FormComponent component) throws HttpStatusException {
-        JsonObject jsonObject = reimbursementApi.createTravelExpenseReport(employee,isMoreApplication,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName)),component);
+        JsonObject jsonObject = reimbursementApi.createTravelExpenseReport(employee,isMoreApplication,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName,"102")),component);
         HashMap<String,String> info =new HashMap<>();
         info.put("expenseReportOID",jsonObject.get("expenseReportOID").getAsString());
         info.put("businessCode",jsonObject.get("businessCode").getAsString());
@@ -383,7 +384,7 @@ public class ExpenseReport {
      * @throws HttpStatusException
      */
     public HashMap<String, String> createTravelExpenseReport(Employee employee, String formName, String applicationOID,JsonArray customFormValues) throws HttpStatusException {
-        JsonObject reportdetail = reimbursementApi.createTravelExpenseReport(employee,applicationOID,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName)),customFormValues);
+        JsonObject reportdetail = reimbursementApi.createTravelExpenseReport(employee,applicationOID,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName,"102")),customFormValues);
         HashMap<String,String> info =new HashMap<>();
         info.put("expenseReportOID",reportdetail.get("expenseReportOID").getAsString());
         info.put("businessCode",reportdetail.get("businessCode").getAsString());
@@ -451,5 +452,25 @@ public class ExpenseReport {
      */
     public Integer getReportStatus(Employee employee,String expenseReportOID) throws HttpStatusException {
        return getExpenseReportDetail(employee,expenseReportOID).get("status").getAsInt();
+    }
+
+    /**
+     * 单行借款单提交
+     * @param employee
+     * @param formName
+     * @param component
+     * @return
+     * @throws HttpStatusException
+     */
+    public HashMap<String,String> submitLoanReport(Employee employee,String formName,FormComponent component) throws HttpStatusException {
+        String formOID = getFormOID(employee,formName,"104");
+        JsonObject formDetail = reimbursementApi.getFormDetail(employee,formOID);
+        JsonArray customFormValues = reimbursementApi.processCustFormValues(employee,formDetail,component);
+        JsonObject detail = reimbursementApi.submitLoanBill(employee,formDetail,customFormValues);
+        HashMap<String,String> map = new HashMap<>();
+        map.put("businessCode",detail.get("businessCode").getAsString());
+        log.info("借款单的单号：{}",detail.get("businessCode").getAsString());
+        map.put("loanBillOID",detail.get("loanBillOID").getAsString());
+        return map;
     }
 }

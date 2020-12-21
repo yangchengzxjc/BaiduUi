@@ -45,9 +45,7 @@ public class TravelSubsidyTest extends BaseTest {
         component.setStartDate(UTCTime.getNowStartUtcDate());
         component.setEndDate(UTCTime.getUTCDateEnd(5));
         component.setCause("自动化测试差补");
-        JsonArray array = new JsonArray();
-        array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"测试差旅申请单1"),"懿佳欢_stage"));
-        component.setParticipant(array.toString());
+        component.setParticipant(new String[]{employee.getFullName()});
         //关联申请单
         String applicationOID = expenseReport.getApplication(employee,"测试差旅申请单1").get(0);
     }

@@ -22,6 +22,8 @@ public class ApiPath {
         public static final String GETBX_FORMS ="/api/custom/forms/%s";
         //报销单保存
         public static final String NEW_EXPENSE_REPORT ="/api/expense/reports/custom/form/draft";
+        // 借款单 提交
+        public static final String SUBMIT_LOAN_BILL = "/api/loanBill/submit/v2";
         //差旅申请单保存
         public static final String TRAVEL_APPLICATION_SAVE = "/api/travel/applications/draft";
         //费用申请单保存
@@ -34,8 +36,6 @@ public class ApiPath {
         public static final String saerchAvailableImport="/api/expense/report/invoices/import/search";
         //        查询成本中心项
         public static final String GETCOSTCENTEROIDITEMS ="/api/my/cost/center/items/%s";
-//        费用分摊查询成本中心项
-        public static final String GET_EXPENSE_COST_CENTER_ITEMS ="/api/my/cost/center/items";
 //        报销单新建费用选择
         public static final String GET_EXPENSE_REPORT_EXPENSE_TYPES ="/api/expense/type/byUser";
 //        管理员模式查看费用类型
@@ -124,9 +124,6 @@ public class ApiPath {
         public static final String EXPENSEREPORT_APPROVAL="/api/approvals/pass";
 //        报销单审批列表查询
         public static final String APPROVAL_LIST_SEARCH ="/api/approvals/batchfilters/v4";
-//        财务审核报销单查询
-        public static final String FINANCIAL_EXPENSE_REORTS_AUDIT_LIST_SEARCH ="/api/v2/expense/reports/finance/admin/search";
-        public static final String FINANCIAL_APPLICATION_AUDIT_LIST_SEARCH="/api/loan/application/finance/admin/search";
 //        获得用户资源id
         public  static  final String USER_PERMISSION ="/api/authorization/policy/user/permission";
 //        报销单财务审核通过

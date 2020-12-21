@@ -462,11 +462,10 @@ public class ExpenseReport {
      * @return
      * @throws HttpStatusException
      */
-    public HashMap<String,String> submitLoanReport(Employee employee,String formName,FormComponent component) throws HttpStatusException {
+    public HashMap<String,String> createLoanReport(Employee employee,String formName,FormComponent component) throws HttpStatusException {
         String formOID = getFormOID(employee,formName,"104");
         JsonObject formDetail = reimbursementApi.getFormDetail(employee,formOID);
-        JsonArray customFormValues = reimbursementApi.processCustFormValues(employee,formDetail,component);
-        JsonObject detail = reimbursementApi.submitLoanBill(employee,formDetail,customFormValues);
+        JsonObject detail = reimbursementApi.createLoanBill(employee,formDetail,component);
         HashMap<String,String> map = new HashMap<>();
         map.put("businessCode",detail.get("businessCode").getAsString());
         log.info("借款单的单号：{}",detail.get("businessCode").getAsString());

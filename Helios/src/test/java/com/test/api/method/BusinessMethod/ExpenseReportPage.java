@@ -158,4 +158,20 @@ public class ExpenseReportPage {
         component.setParticipant(expenseReport.getValueFromApplication(employee,applicationOIDs,"参与人员"));
         return expenseReport.createTravelExpenseReport(employee,false,formName,component).get("expenseReportOID");
     }
+
+    /**
+     * 新建借款单 表单为默认的表单
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public String setDefaultLoanBill(Employee employee,String formName,String rebackDate) throws HttpStatusException {
+        ExpenseReport expenseReport = new ExpenseReport();
+        FormComponent component =new FormComponent();
+        component.setCause("借款");
+        component.setDepartment(employee.getDepartmentOID());
+        component.setCurrencyCode("CNY");
+        component.setRebackDate(rebackDate);
+        return expenseReport.createLoanReport(employee,formName,component).get("loanBillOID");
+    }
 }

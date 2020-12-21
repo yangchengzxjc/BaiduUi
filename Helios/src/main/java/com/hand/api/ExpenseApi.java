@@ -4,16 +4,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
-import com.hand.basicConstant.HeaderKey;
-import com.hand.basicConstant.Receript;
-import com.hand.basicConstant.ResourceId;
 import com.hand.basicObject.InvoiceComponent;
 import com.hand.basicConstant.ApiPath;
 import com.hand.basicObject.Employee;
-import com.hand.utils.DocumentUtil;
 import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.util.NullLogger;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;

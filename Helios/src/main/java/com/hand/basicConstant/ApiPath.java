@@ -24,6 +24,16 @@ public class ApiPath {
         public static final String NEW_EXPENSE_REPORT ="/api/expense/reports/custom/form/draft";
         // 借款单 提交
         public static final String SUBMIT_LOAN_BILL = "/api/loanBill/submit/v2";
+
+        //借款单 保存
+        public static final String DRAFT_LOAN = "/api/loanBill/draft";
+
+        //新建借款行
+        public static final String LOAN_LINE = "/api/loan/line";
+        //查询借款类型
+        public static final String LOAN_TYPE = "/api/custom/forms/%S/reference/loan/types";
+        //查询银行账户
+        public static final String GET_BANK = "/api/contact/bank/account/enable";
         //差旅申请单保存
         public static final String TRAVEL_APPLICATION_SAVE = "/api/travel/applications/draft";
         //费用申请单保存

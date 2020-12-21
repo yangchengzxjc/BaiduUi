@@ -3,6 +3,7 @@ package com.test.api.testcase.monitor;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicConstant.Receript;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.FormComponent;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
 import com.test.api.method.*;
@@ -14,6 +15,7 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import static java.lang.Thread.sleep;
@@ -30,7 +32,7 @@ public class SmokeTest extends BaseTest {
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void beforeClass(@Optional("14082971221") String phoneNumber, @Optional("zp123456") String pwd, @Optional("console") String env){
+    public void beforeClass(@Optional("14082978625") String phoneNumber, @Optional("rr123456") String pwd, @Optional("stage") String env){
         employee=getEmployee(phoneNumber,pwd,env);
         expenseReport = new ExpenseReport();
     }
@@ -98,5 +100,15 @@ public class SmokeTest extends BaseTest {
         boolean msg = invoice.ocr(employee,Receript.ocrReceipt);
         Assert.assertTrue(msg);
     }
+
+    @Test(description = "单行借款单提交-撤回-删除")
+    public void smokeTest06() throws HttpStatusException {
+        ExpenseReportPage expenseReportPage = new ExpenseReportPage();
+        expenseReportPage.setDefaultLoanBill(employee,"个人借款单",UTCTime.getFormStartDate(1));
+        //新建借款行
+
+    }
+
+
 
 }

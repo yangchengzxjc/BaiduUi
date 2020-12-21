@@ -94,7 +94,6 @@ public class TravelApplicationPage {
      * @throws HttpStatusException
      */
     public String setTravelApplication(Employee employee,String formName,String endDate) throws HttpStatusException {
-        ExpenseReport expenseReport =new ExpenseReport();
         FormComponent component = new FormComponent("自动化测试差旅申请单");
         component.setDepartment(employee.getDepartmentOID());
         component.setStartDate(UTCTime.getUtcStartDate(-5));

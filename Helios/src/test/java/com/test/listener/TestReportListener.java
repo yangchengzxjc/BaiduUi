@@ -86,7 +86,7 @@ public class TestReportListener implements IReporter {
         this.sort(list);
         this.outputResult(list);
         //新加钉钉机器人测试报告  如果@人不是空的话就进行发送钉钉消息
-        if (!module.equals("")) {
+        if (!module.equals("[]")) {
             String url = "https://oapi.dingtalk.com/robot/send?access_token=592a7abc3b71fa4570aa9b48115511f50f803b4405614620fa44b2e6bdd7cfc2";
             int testAll = testsPass + testsFail + testsSkip;
             String pass = DingDingUtil.folatToPer((float) testsPass / testAll);

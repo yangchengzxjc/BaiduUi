@@ -26,6 +26,7 @@ public class DingDingUtil {
                 .post(requestBody)
                 .build();
         try (Response response = okHttpClient.newCall(req).execute()) {
+            log.info("请求的返回为：{}",response);
             ResponseBody body = response.body();
             if (response.isSuccessful()) {
                 log.info("push to DingDing success. ", body == null ? "" : body.toString());

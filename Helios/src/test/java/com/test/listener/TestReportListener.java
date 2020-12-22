@@ -91,10 +91,18 @@ public class TestReportListener implements IReporter {
             int testAll = testsPass + testsFail + testsSkip;
             String pass = DingDingUtil.folatToPer((float) testsPass / testAll);
 //            StringBuilder context = new StringBuilder("### " +"**"+suitName+"**" + "\\n> - 环境：" + this.environment + "\\n> - 总用例数：" + testAll + "\\n> - ：" +"<font color=\"#00dd00\">通过"+testsPass+"</font><br />"+ "\\n> - 失败：" + testsFail + "\\n> - 跳过：" + testsSkip + "\\n> - 通过率为：" + pass);
+            String a = "### **阿里云服务健康监测** \n" +
+                    "> - <font color=\"#00dd00\">环境：CONSOLE</font><br/>\n" +
+                    "> - <font color=\"#00dd00\">总用例数：1</font><br/>\n" +
+                    "> - <font color=\"#00dd00\">通过:1</font><br/>\n" +
+                    "> - <font color=\"#00dd00\">失败：0</font><br/>\n" +
+                    "> - <font color=\"#00dd00\">跳过：0</font><br/>\n" +
+                    "> - <font color=\"#00dd00\">通过率为：100%</font><br/>";
             StringBuilder context = new StringBuilder();
             JsonElement moduleelement = new JsonParser().parse(module);
             if(testsFail==0){
-                context.append("### " +"**"+suitName+"**"  + "\\n> - "+ "<font color=\"#00dd00\">" + "环境：" +this.environment + "</font><br/>" + "\\n> - " + "<font color=\"#00dd00\">" + "总用例数：" + testAll + "</font><br/>" + "\\n> - " + "<font color=\"#00dd00\">通过:" + testsPass + "</font><br/>" + "\\n> - " + "<font color=\"#00dd00\">失败：" + testsFail + "</font><br/>" + "\\n> - " + "<font color=\"#00dd00\">跳过：" + testsSkip + "</font><br/>" + "\\n> -" + "<font color=\"#00dd00\">通过率为：" + pass + "</font><br/>");
+//                context.append("### " +"**"+suitName+"**"  + "\\n> - "+ "<font color=\"#00dd00\">" + "环境：" +this.environment + "</font><br/>" + "\\n> - " + "<font color=\"#00dd00\">" + "总用例数：" + testAll + "</font><br/>" + "\\n> - " + "<font color=\"#00dd00\">通过:" + testsPass + "</font><br/>" + "\\n> - " + "<font color=\"#00dd00\">失败：" + testsFail + "</font><br/>" + "\\n> - " + "<font color=\"#00dd00\">跳过：" + testsSkip + "</font><br/>" + "\\n> -" + "<font color=\"#00dd00\">通过率为：" + pass + "</font><br/>");
+                context.append(a);
             }
             if(testsFail>0){
                 context.append("### " +"**"+suitName+"**"  + "\\n> - "+ "<font color=\"##dd0000\">" + "环境：" +this.environment + "</font><br/>" + "\\n> - " + "<font color=\"#dd0000\">" + "总用例数：" + testAll + "</font><br/>" + "\\n> - " + "<font color=\"#dd0000\">通过:" + testsPass + "</font><br/>" + "\\n> - " + "<font color=\"#dd0000\">失败：" + testsFail + "</font><br/>" + "\\n> - " + "<font color=\"#dd0000\">跳过：" + testsSkip + "</font><br/>" + "\\n> -" + "<font color=\"#dd0000\">通过率为：" + pass + "</font><br/>");

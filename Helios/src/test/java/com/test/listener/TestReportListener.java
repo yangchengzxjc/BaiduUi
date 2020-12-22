@@ -85,14 +85,19 @@ public class TestReportListener implements IReporter {
         this.project = this.project + "-" + this.environment;
         this.sort(list);
         this.outputResult(list);
-        //新加钉钉机器人测试报告
-        if (this.project.contains("CONSOLE")) {
+        //新加钉钉机器人测试报告  如果@人不是空的话就进行发送钉钉消息
+        if (!module.equals("")) {
             String url = "https://oapi.dingtalk.com/robot/send?access_token=592a7abc3b71fa4570aa9b48115511f50f803b4405614620fa44b2e6bdd7cfc2";
             int testAll = testsPass + testsFail + testsSkip;
             String pass = DingDingUtil.folatToPer((float) testsPass / testAll);
-            StringBuilder context = new StringBuilder("### 接口用例执行结果 " +"\\n> - 运行项目："+ suitName + "\\n> - 环境：" + this.environment + "\\n> - 总用例数：" + testAll + "\\n> - 通过：" + testsPass + "\\n> - 失败：" + testsFail + "\\n> - 跳过：" + testsSkip + "\\n> - 通过率为：" + pass);
+//            StringBuilder context = new StringBuilder("### " +"**"+suitName+"**" + "\\n> - 环境：" + this.environment + "\\n> - 总用例数：" + testAll + "\\n> - ：" +"<font color=\"#00dd00\">通过"+testsPass+"</font><br />"+ "\\n> - 失败：" + testsFail + "\\n> - 跳过：" + testsSkip + "\\n> - 通过率为：" + pass);
+            StringBuilder context = new StringBuilder();
             JsonElement moduleelement = new JsonParser().parse(module);
+            if(testsFail==0){
+                context.append("### " + "**").append(suitName).append("**").append("\\n> - ").append("<font color=\"#00dd00\">").append("环境：").append(this.environment).append("</font><br/>").append("\\n> - ").append("<font color=\"#00dd00\">").append("总用例数：").append(testAll).append("</font><br/>").append("\\n> - ").append("<font color=\"#00dd00\">通过:").append(testsPass).append("</font><br/>").append("\\n> - ").append("<font color=\"#00dd00\">失败：").append(testsFail).append("</font><br/>").append("\\n> - ").append("<font color=\"#00dd00\">跳过：").append(testsSkip).append("</font><br/>").append("\\n> -").append("<font color=\"#00dd00\">通过率为：").append(pass).append("</font><br/>");
+            }
             if(testsFail>0){
+                context.append("### " + "**").append(suitName).append("**").append("\\n> - ").append("<font color=\"##dd0000\">").append("环境：").append(this.environment).append("</font><br/>").append("\\n> - ").append("<font color=\"#dd0000\">").append("总用例数：").append(testAll).append("</font><br/>").append("\\n> - ").append("<font color=\"#dd0000\">通过:").append(testsPass).append("</font><br/>").append("\\n> - ").append("<font color=\"#dd0000\">失败：").append(testsFail).append("</font><br/>").append("\\n> - ").append("<font color=\"#dd0000\">跳过：").append(testsSkip).append("</font><br/>").append("\\n> -").append("<font color=\"#dd0000\">通过率为：").append(pass).append("</font><br/>");
                 if(moduleelement.getAsJsonArray().isJsonArray()){
                     for(int i=0;i<moduleelement.getAsJsonArray().size();i++){
                         context.append("\\n").append("@").append(Long.valueOf(moduleelement.getAsJsonArray().get(i).getAsString()));

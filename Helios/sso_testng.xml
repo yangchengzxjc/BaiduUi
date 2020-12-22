@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name=" monitor vendor sso login" parallel="tests" thread-count="1">
+<suite name="消费商单点登录" parallel="tests" thread-count="1">
 
 <!--    Jenkins定时构建用例 请勿随意修改！！！！     -->
 

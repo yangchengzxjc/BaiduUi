@@ -82,6 +82,9 @@ public class SmokeTest extends BaseTest {
     public void smokeTest03() throws HttpStatusException {
         ExpenseReportInvoice invoice = new ExpenseReportInvoice();
         String msg = invoice.ocrReceptVerify(employee,Receript.ocrReceipt);
+        if(!msg.equals("查验成功，发票一致")){
+            msg = invoice.ocrReceptVerify(employee,Receript.scanOcrReceipt);
+        }
         Assert.assertEquals(msg,"查验成功，发票一致");
     }
 

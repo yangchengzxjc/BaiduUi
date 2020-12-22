@@ -93,7 +93,7 @@ public class TestReportListener implements IReporter {
             StringBuilder context = new StringBuilder();
             JsonElement moduleelement = new JsonParser().parse(module);
             if(testsFail==0){
-                String contxtString =String.format("### **%s**\n> - <font color=\"##006600\">环境：%s</font><br/>\n> - <font color=\"#006600\">总用例数：%s</font><br/>\n> - <font color=\"#006600\">通过：%s</font><br/>\n> - <font color=\"#006600\">失败：%s</font><br/>\n> - <font color=\"#006600\">跳过：%s</font><br/>\n> - <font color=\"#006600\">通过率为：%s</font><br/>",suitName,environment,testAll,testsPass,testsFail,testsSkip,pass);
+                String contxtString =String.format("\"### **%s**\n> - <font color=\"##006600\">环境：%s</font><br/>\n> - <font color=\"#006600\">总用例数：%s</font><br/>\n> - <font color=\"#006600\">通过：%s</font><br/>\n> - <font color=\"#006600\">失败：%s</font><br/>\n> - <font color=\"#006600\">跳过：%s</font><br/>\n> - <font color=\"#006600\">通过率为：%s</font><br/>\"",suitName,environment,testAll,testsPass,testsFail,testsSkip,pass);
                 context.append(contxtString);
             }
             if(testsFail>0){

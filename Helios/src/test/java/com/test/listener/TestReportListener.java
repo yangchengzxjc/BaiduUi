@@ -90,14 +90,14 @@ public class TestReportListener implements IReporter {
             String url = "https://oapi.dingtalk.com/robot/send?access_token=592a7abc3b71fa4570aa9b48115511f50f803b4405614620fa44b2e6bdd7cfc2";
             int testAll = testsPass + testsFail + testsSkip;
             String pass = DingDingUtil.folatToPer((float) testsPass / testAll);
-            StringBuilder context = new StringBuilder("### 接口用例执行结果 " +"\\n> - 运行项目："+ suitName + "\\n> - 环境：" + this.environment + "\\n> - 总用例数：" + testAll + "\\n> - 通过：" + testsPass + "\\n> - 失败：" + testsFail + "\\n> - 跳过：" + testsSkip + "\\n> - 通过率为：" + pass);
+            StringBuilder context = new StringBuilder();
             JsonElement moduleelement = new JsonParser().parse(module);
             if(testsFail==0){
-//                context.append("### " +"**"+suitName+"**"  + "\\n> - "+ "<font color=\"#00dd00\">" + "环境：" +this.environment + "</font><br/>" + "\\n> - " + "<font color=\"#00dd00\">" + "总用例数：" + testAll + "</font><br/>" + "\\n> - " + "<font color=\"#00dd00\">通过:" + testsPass + "</font><br/>" + "\\n> - " + "<font color=\"#00dd00\">失败：" + testsFail + "</font><br/>" + "\\n> - " + "<font color=\"#00dd00\">跳过：" + testsSkip + "</font><br/>" + "\\n> -" + "<font color=\"#00dd00\">通过率为：" + pass + "</font><br/>");
-//                context.append(a);
+                String contxtString =String.format("### **%s**\n> - <font color=\"##006600\">环境：%s</font><br/>\n> - <font color=\"#006600\">总用例数：%s</font><br/>\n> - <font color=\"#006600\">通过：%s</font><br/>\n> - <font color=\"#006600\">失败：%s</font><br/>\n> - <font color=\"#006600\">跳过：%s</font><br/>\n> - <font color=\"#006600\">通过率为：%s</font><br/>",suitName,environment,testAll,testsPass,testsFail,testsSkip,pass);
+                context.append(contxtString);
             }
             if(testsFail>0){
-                context.append("### " +"**"+suitName+"**"  + "\\n> - "+ "<font color=\"##dd0000\">" + "环境：" +this.environment + "</font><br/>" + "\\n> - " + "<font color=\"#dd0000\">" + "总用例数：" + testAll + "</font><br/>" + "\\n> - " + "<font color=\"#dd0000\">通过:" + testsPass + "</font><br/>" + "\\n> - " + "<font color=\"#dd0000\">失败：" + testsFail + "</font><br/>" + "\\n> - " + "<font color=\"#dd0000\">跳过：" + testsSkip + "</font><br/>" + "\\n> -" + "<font color=\"#dd0000\">通过率为：" + pass + "</font><br/>");
+                context.append(String.format("### **%s**\n> - <font color=\"#660000\">环境：%s</font><br/>\n> - <font color=\"#660000\">总用例数：%s</font><br/>\n> - <font color=\"#660000\">通过：%s</font><br/>\n> - <font color=\"#660000\">失败：%s</font><br/>\n> - <font color=\"#660000\">跳过：%s</font><br/>\n> - <font color=\"#660000\">通过率为：%s</font><br/>",suitName,environment,testAll,testsPass,testsFail,testsSkip,pass));
                 if(moduleelement.getAsJsonArray().isJsonArray()){
                     for(int i=0;i<moduleelement.getAsJsonArray().size();i++){
                         context.append("\\n").append("@").append(Long.valueOf(moduleelement.getAsJsonArray().get(i).getAsString()));

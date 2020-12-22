@@ -109,7 +109,7 @@ public class TestReportListener implements IReporter {
             }
             try {
                 log.info("发送的消息为：{}",context.toString());
-                DingDingUtil.sendVal(url, context.toString(),module);
+                DingDingUtil.sendVal(url,suitName,environment,testAll,testsPass,testsFail,testsSkip,pass,module);
             } catch (Exception e) {
                 e.printStackTrace();
             }

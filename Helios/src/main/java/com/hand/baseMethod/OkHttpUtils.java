@@ -25,6 +25,8 @@ import java.io.File;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.entity.ContentType;
 
+import static java.lang.Thread.sleep;
+
 /**
  * HTTP通讯结构处理器
  *
@@ -285,6 +287,7 @@ public class OkHttpUtils {
                     .headers(headers)
                     .build();
             try {
+                sleep(500);
                 response = client.newCall(req).execute();
                 res = response.body().string();
             } catch (Exception ex) {
@@ -359,6 +362,7 @@ public class OkHttpUtils {
         Response response = null;
         int httpCode = 0;
         try {
+            sleep(500);
             Call call = client.newCall(req);
             response = call.execute();
             res = response.body().string();
@@ -438,6 +442,7 @@ public class OkHttpUtils {
         Response response = null;
         int httpCode = 0;
         try {
+            sleep(500);
             Call call = client.newCall(req);
             response = call.execute();
             res = response.body().string();

@@ -16,7 +16,7 @@ public class DingDingUtil {
         Map<String, String> headermap = new HashMap<>();
 //        String entityString = "{'msgtype': 'text', 'text': {'content': '" + context + "'}}";
 //        String entityString = String.format("{\"msgtype\": \"markdown\", \"markdown\": {\"title\": \"Helios接口测试\",\"text\": \"%s\"},\"at\":{\"atMobiles\": %s,\"isAtAll\":false}}",context,at);
-        String entityString = String.format("{\"msgtype\": \"markdown\", \"markdown\": {\"title\": \"Helios接口测试\",\"text\": \"### **%s**\\n> - <font color=\\\"#00dd00\\\">环境：%s</font><br/>\\n> - <font color=\\\"#00dd00\\\">总用例数：%s</font><br/>\\n> - <font color=\\\"#00dd00\\\">通过：%s</font><br/>\\n> - <font color=\\\"#00dd00\\\">失败：0</font><br/>\\n> - <font color=\\\"#00dd00\\\">跳过：%s</font><br/>\\n> - <font color=\\\"#00dd00\\\">通过率为：%s</font><br/>\"},\"at\":{\"atMobiles\": %s,\"isAtAll\":false}}",suitName,environment,testAll,testsPass,testsFail,testsSkip,pass,at);
+        String entityString = String.format("{\"msgtype\": \"markdown\", \"markdown\": {\"title\": \"Helios接口测试\",\"text\": \"### **%s**\\n> - <font color=\\\"#00dd00\\\">环境：%s</font><br/>\\n> - <font color=\\\"#00dd00\\\">总用例数：%s</font><br/>\\n> - <font color=\\\"#00dd00\\\">通过：%s</font><br/>\\n> - <font color=\\\"#00dd00\\\">失败：%s</font><br/>\\n> - <font color=\\\"#00dd00\\\">跳过：%s</font><br/>\\n> - <font color=\\\"#00dd00\\\">通过率为：%s</font><br/>\"},\"at\":{\"atMobiles\": %s,\"isAtAll\":false}}",suitName,environment,testAll,testsPass,testsFail,testsSkip,pass,at);
         log.info("请求的body为：{}",entityString);
         MediaType JSON = MediaType.parse(String.valueOf(ContentType.APPLICATION_JSON));
         RequestBody requestBody = RequestBody.create(JSON, entityString);

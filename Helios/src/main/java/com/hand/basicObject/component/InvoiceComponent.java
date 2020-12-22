@@ -1,4 +1,4 @@
-package com.hand.basicObject;
+package com.hand.basicObject.component;
 
 import com.hand.utils.UTCTime;
 import lombok.AllArgsConstructor;

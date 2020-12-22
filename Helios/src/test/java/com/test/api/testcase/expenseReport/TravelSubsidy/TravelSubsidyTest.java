@@ -1,9 +1,8 @@
 package com.test.api.testcase.expenseReport.TravelSubsidy;
 
-import com.google.gson.JsonArray;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.FormComponent;
+import com.hand.basicObject.component.FormComponent;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
 import com.test.api.method.ExpenseReport;
@@ -13,8 +12,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
-import java.util.HashMap;
 
 /**
  * @Author peng.zhang

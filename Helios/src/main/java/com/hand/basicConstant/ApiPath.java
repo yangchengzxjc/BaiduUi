@@ -34,6 +34,8 @@ public class ApiPath {
         public static final String LOAN_TYPE = "/api/custom/forms/%S/reference/loan/types";
         //查询银行账户
         public static final String GET_BANK = "/api/contact/bank/account/enable";
+        //获取借款单详情
+        public static final String LOAN_BILL_DETAIL = "/api/loanBill/%s";
         //差旅申请单保存
         public static final String TRAVEL_APPLICATION_SAVE = "/api/travel/applications/draft";
         //费用申请单保存

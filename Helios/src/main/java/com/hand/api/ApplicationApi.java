@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.FormComponent;
+import com.hand.basicObject.component.FormComponent;
 import com.hand.basicConstant.ApiPath;
 import com.hand.basicConstant.HeaderKey;
 import com.hand.basicConstant.ResourceId;

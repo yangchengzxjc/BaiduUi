@@ -2,7 +2,7 @@ package com.test.api.testcase.invoice;
 
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.FormComponent;
+import com.hand.basicObject.component.FormComponent;
 import com.test.BaseTest;
 import com.test.api.method.ExpenseMethod.BookInvoicePage;
 import com.test.api.method.ExpenseReport;

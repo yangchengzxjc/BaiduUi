@@ -5,9 +5,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.FormComponent;
+import com.hand.basicObject.component.FormComponent;
 import com.hand.basicConstant.ApiPath;
 import com.hand.basicConstant.BaseConstant;
+import com.hand.basicObject.component.LoanBillComponent;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
@@ -837,26 +838,38 @@ public class ReimbursementApi extends BaseRequest {
      * @param employee
      * @return
      */
-    public JsonObject getBankInfo(Employee employee) throws HttpStatusException {
+    public JsonArray getBankInfo(Employee employee) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.GET_BANK;
         HashMap<String,String> map = new HashMap<>();
         map.put("userOID",employee.getUserOID());
         String res = doGet(url,getHeader(employee.getAccessToken()),map,employee);
+        return new JsonParser().parse(res).getAsJsonArray();
+    }
+
+    /**
+     * 获取借款单的详情
+     * @param employee
+     * @param loanBillOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject loanBillDetail(Employee employee,String loanBillOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + String.format(ApiPath.LOAN_BILL_DETAIL,loanBillOID);
+        String res = doGet(url,getHeader(employee.getAccessToken()),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
-//    public JsonObject createLanLine(Employee employee,String loanTypeId){
-//        String url = employee.getEnvironment().getUrl() + ApiPath.LOAN_LINE;
-//        JsonObject body = new JsonObject();
-//        body.addProperty("loanTypeId",loanTypeId);
-//        body.addProperty("payeeType",1002);
-//        body.addProperty("payeeId",employee.getUserId());
-//        body.addProperty("payeeAccountNumber",);
-//        body.addProperty("payeeAccountNumber",);
-//        body.addProperty("payeeAccountNumber",);
-//        body.addProperty("payeeAccountNumber",);
-//        body.addProperty("payeeAccountNumber",);
-//        body.addProperty("payeeAccountNumber",);
-//
-//    }
+    /**
+     * 新建借款行
+     * @param employee
+     * @param component
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject createLanLine(Employee employee, LoanBillComponent component) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.LOAN_LINE;
+        JsonObject body = new JsonParser().parse(GsonUtil.objectToString(component)).getAsJsonObject();
+        String res = doPost(url,getHeader(employee.getAccessToken()),null,body.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
 }

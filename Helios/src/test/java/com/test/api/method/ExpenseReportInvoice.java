@@ -6,7 +6,7 @@ import com.hand.api.ExpenseApi;
 import com.hand.api.FinanceApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.InvoiceComponent;
+import com.hand.basicObject.component.InvoiceComponent;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
 

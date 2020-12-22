@@ -4,8 +4,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.FormComponent;
-import com.hand.basicObject.InvoiceComponent;
+import com.hand.basicObject.component.FormComponent;
+import com.hand.basicObject.component.FormDetail;
+import com.hand.basicObject.component.InvoiceComponent;
 import com.hand.utils.UTCTime;
 import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportComponent;
@@ -165,13 +166,14 @@ public class ExpenseReportPage {
      * @return
      * @throws HttpStatusException
      */
-    public String setDefaultLoanBill(Employee employee,String formName,String rebackDate) throws HttpStatusException {
+    public FormDetail setDefaultLoanBill(Employee employee, String formName, String rebackDate) throws HttpStatusException {
         ExpenseReport expenseReport = new ExpenseReport();
         FormComponent component =new FormComponent();
         component.setCause("借款");
         component.setDepartment(employee.getDepartmentOID());
         component.setCurrencyCode("CNY");
         component.setRebackDate(rebackDate);
-        return expenseReport.createLoanReport(employee,formName,component).get("loanBillOID");
+        return expenseReport.createLoanReport(employee,formName,component);
     }
+
 }

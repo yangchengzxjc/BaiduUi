@@ -5,15 +5,15 @@ import com.google.gson.JsonObject;
 import com.hand.api.ReimbursementApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.FormComponent;
+import com.hand.basicObject.component.FormComponent;
+import com.hand.basicObject.component.FormDetail;
+import com.hand.basicObject.component.LoanBillComponent;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * @Author peng.zhang
@@ -462,14 +462,58 @@ public class ExpenseReport {
      * @return
      * @throws HttpStatusException
      */
-    public HashMap<String,String> createLoanReport(Employee employee,String formName,FormComponent component) throws HttpStatusException {
+    public FormDetail createLoanReport(Employee employee, String formName, FormComponent component) throws HttpStatusException {
         String formOID = getFormOID(employee,formName,"104");
         JsonObject formDetail = reimbursementApi.getFormDetail(employee,formOID);
         JsonObject detail = reimbursementApi.createLoanBill(employee,formDetail,component);
-        HashMap<String,String> map = new HashMap<>();
-        map.put("businessCode",detail.get("businessCode").getAsString());
         log.info("借款单的单号：{}",detail.get("businessCode").getAsString());
-        map.put("loanBillOID",detail.get("loanBillOID").getAsString());
-        return map;
+        FormDetail formDetails = new FormDetail();
+        formDetails.setBusinessCode(detail.get("businessCode").getAsString());
+        formDetails.setExpenseReportOID(detail.get("loanBillOID").getAsString());
+        formDetails.setId(detail.get("id").getAsString());
+        return formDetails;
+    }
+
+    /**
+     * 新建借款行
+     * @param employee
+     * @param forName
+     * @param loanBill
+     * @param isonself 是否是自己  false = 对公
+     * @throws HttpStatusException
+     */
+    public void createLoanLine(Employee employee, String forName,LoanBillComponent loanBill,boolean isonself) throws HttpStatusException {
+        if(loanBill.getLoanBillId()==null || loanBill.getAmount() ==0.0 || loanBill.getPlanedRepaymentDate() == null){
+            throw new RuntimeException("loanBillId,金额和还款日期不能为空");
+        }
+        JsonArray loanType = reimbursementApi.getLoanType(employee,getFormOID(employee,forName,"104")).getAsJsonArray("loanTypes");
+        if(isonself){
+            JsonArray bankInfo = reimbursementApi.getBankInfo(employee);
+            JsonObject bankObject;
+            if(GsonUtil.isNotEmpt(bankInfo)){
+                bankObject = GsonUtil.getJsonValue(bankInfo,"isPrimary","true");
+            }else{
+                throw new RuntimeException("银行卡信息为空");
+            }
+            loanBill.setLoanTypeId(GsonUtil.getJsonValue(loanType,"description","个人借款","id"));
+            loanBill.setPayeeType(1002);
+            loanBill.setPayeeId(employee.getUserId());
+            loanBill.setPayeeAccountNumber(bankObject.get("bankAccountNo").getAsString());
+            loanBill.setPayeeAccountName(bankObject.get("bankAccountName").getAsString());
+            loanBill.setPaymentType("EBANK_PAYMENT");
+            loanBill.setRemark("借款");
+            loanBill.setOwnerOid(employee.getUserOID());
+            loanBill.setLoanTypeName("个人借款");
+            loanBill.setPayeeName(employee.getFullName());
+            loanBill.setPayeeId(employee.getEmployeeID());
+            if(loanBill.getCurrencyCode() == null){
+                loanBill.setCurrencyCode("CNY");
+            }
+            loanBill.setPayeeBankCode(bankObject.get("bankCode").getAsString());
+            loanBill.setPayeeAccountType(bankObject.get("sourceType").getAsString());
+        }else{
+            //对公预付
+        }
+        reimbursementApi.createLanLine(employee,loanBill);
     }
 }

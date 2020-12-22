@@ -1,4 +1,4 @@
-package com.hand.basicObject;
+package com.hand.basicObject.component;
 
 import com.google.gson.JsonArray;
 import lombok.AllArgsConstructor;

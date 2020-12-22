@@ -3,7 +3,8 @@ package com.test.api.testcase.monitor;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicConstant.Receript;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.FormComponent;
+import com.hand.basicObject.component.FormDetail;
+import com.hand.basicObject.component.LoanBillComponent;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
 import com.test.api.method.*;
@@ -15,7 +16,6 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import static java.lang.Thread.sleep;
@@ -107,9 +107,14 @@ public class SmokeTest extends BaseTest {
     @Test(description = "单行借款单提交-撤回-删除")
     public void smokeTest06() throws HttpStatusException {
         ExpenseReportPage expenseReportPage = new ExpenseReportPage();
-        expenseReportPage.setDefaultLoanBill(employee,"个人借款单",UTCTime.getFormStartDate(1));
+        ExpenseReport expenseReport = new ExpenseReport();
+        FormDetail formDetail = expenseReportPage.setDefaultLoanBill(employee,"个人借款单",UTCTime.getFormStartDate(1));
         //新建借款行
-
+        LoanBillComponent loanBillComponent = new LoanBillComponent();
+        loanBillComponent.setAmount(0.1);
+        loanBillComponent.setLoanBillId(formDetail.getId());
+        loanBillComponent.setPlanedRepaymentDate(UTCTime.getBeijingDate(1));
+        expenseReport.createLoanLine(employee,"个人借款单",loanBillComponent,true);
     }
 
 

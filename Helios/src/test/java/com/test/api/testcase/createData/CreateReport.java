@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
-import com.hand.basicObject.FormComponent;
+import com.hand.basicObject.component.FormComponent;
 import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.basicConstant.Supplier;
 import com.hand.utils.DocumentUtil;

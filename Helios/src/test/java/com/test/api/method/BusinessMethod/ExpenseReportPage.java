@@ -148,7 +148,7 @@ public class ExpenseReportPage {
      * @return
      * @throws HttpStatusException
      */
-    public String setTravelReport(Employee employee,String formName,String applicationOID) throws HttpStatusException {
+    public FormDetail setTravelReport(Employee employee,String formName,String applicationOID) throws HttpStatusException {
         //表单初始化
         FormComponent component = new FormComponent();
         component.setDepartment(employee.getDepartmentOID());
@@ -158,7 +158,7 @@ public class ExpenseReportPage {
         applicationOIDs.add(applicationOID);
         //  参与人
         component.setParticipant(expenseReport.getValueFromApplication(employee,applicationOIDs,"参与人员"));
-        return expenseReport.createTravelExpenseReport(employee,false,formName,component).get("expenseReportOID");
+        return expenseReport.createTravelExpenseReport(employee,false,formName,component);
     }
 
     /**

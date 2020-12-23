@@ -366,13 +366,16 @@ public class ExpenseReport {
      * @return
      * @throws HttpStatusException
      */
-    public HashMap<String, String> createTravelExpenseReport(Employee employee, boolean isMoreApplication, String formName, FormComponent component) throws HttpStatusException {
+    public FormDetail createTravelExpenseReport(Employee employee, boolean isMoreApplication, String formName, FormComponent component) throws HttpStatusException {
         JsonObject jsonObject = reimbursementApi.createTravelExpenseReport(employee,isMoreApplication,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName,"102")),component);
         HashMap<String,String> info =new HashMap<>();
+        FormDetail formDetail = new FormDetail();
         info.put("expenseReportOID",jsonObject.get("expenseReportOID").getAsString());
         info.put("businessCode",jsonObject.get("businessCode").getAsString());
+        formDetail.setBusinessCode(jsonObject.get("businessCode").getAsString());
+        formDetail.setReportOID(jsonObject.get("expenseReportOID").getAsString());
         log.info("[businessCode]:{}",info.get("businessCode"));
-        return info;
+        return formDetail;
     }
 
     /**

@@ -5,6 +5,8 @@ import com.hand.basicConstant.Receript;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.component.FormDetail;
 import com.hand.basicObject.component.LoanBillComponent;
+import com.hand.utils.DButil;
+import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
 import com.test.api.method.*;
@@ -32,7 +34,7 @@ public class SmokeTest extends BaseTest {
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void beforeClass(@Optional("14082978625") String phoneNumber, @Optional("rr123456") String pwd, @Optional("stage") String env){
+    public void beforeClass(@Optional("14082971221") String phoneNumber, @Optional("zp123456") String pwd, @Optional("console") String env){
         employee=getEmployee(phoneNumber,pwd,env);
         expenseReport = new ExpenseReport();
     }
@@ -44,27 +46,36 @@ public class SmokeTest extends BaseTest {
         ExpenseReportPage expenseReportPage = new ExpenseReportPage();
         String applicatioOID = travelApplicationPage.setTravelApplication(employee,"差旅申请单-自动化测试",UTCTime.getUTCDateEnd(-2));
         //关联报销单
-        String reportOID = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
+        FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
         // 新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,UTCTime.getUtcTime(-2,0));
+        String invoiceOID1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", formDetail.getReportOID(),UTCTime.getUtcTime(-2,0));
         //新建费用账本导入
         String invoiceOID2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", "",UTCTime.getUtcTime(-2,0));
         //导入费用
         ArrayList<String> invoices = new ArrayList<>();
         invoices.add(invoiceOID2);
-        expenseReport.importInvoice(employee,reportOID,invoices);
+        expenseReport.importInvoice(employee,formDetail.getReportOID(),invoices);
         //提交报销单
-        expenseReport.expenseReportSubmit(employee,reportOID);
+        expenseReport.expenseReportSubmit(employee,formDetail.getReportOID());
+        //测试报销单提交回调
+        DButil.Business business = new DButil.Business();
+        try {
+          business = DButil.dbConnection(formDetail.getBusinessCode());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        Assert.assertEquals(formDetail.getBusinessCode(),business.getBusinessCode());
+        Assert.assertEquals("EXPENSE_REPORT_SUBMIT",business.getApiCode());
         //审批报销单
         Approve approve = new Approve();
         try {
-            sleep(5000);
+            sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        approve.approveal(employee,reportOID,1002);
-//        审核成功
-        assert approve.auditPass(employee,reportOID,1002)==0;
+        approve.approveal(employee,formDetail.getReportOID(),1002);
+        //审核成功
+        assert approve.auditPass(employee,formDetail.getReportOID(),1002) == 0;
     }
 
     @Test(description = "发票查验")

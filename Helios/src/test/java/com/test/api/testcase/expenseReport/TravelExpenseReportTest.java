@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.component.FormComponent;
+import com.hand.basicObject.component.FormDetail;
 import com.hand.basicObject.component.InvoiceComponent;
 import com.test.BaseTest;
 import com.test.api.method.ExpenseReport;
@@ -54,10 +55,10 @@ public class TravelExpenseReportTest extends BaseTest {
         ArrayList<String> applicationOIDs =new ArrayList<>();
         applicationOIDs.add(applicationOID);
         component.setParticipant(expenseReport.getValueFromApplication(employee,applicationOIDs,"参与人员"));
-        String expenseReportOID = expenseReport.createTravelExpenseReport(employee,false,"差旅报销单-节假日",component).get("expenseReportOID");
+        FormDetail formDetail = expenseReport.createTravelExpenseReport(employee,false,"差旅报销单-节假日",component);
         //报销单新建费用
-        expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseReportOID,"交通",23.43,new JsonArray());
-        expenseReport.expenseReportSubmit(employee,expenseReportOID);
+        expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,formDetail.getReportOID(),"交通",23.43,new JsonArray());
+        expenseReport.expenseReportSubmit(employee,formDetail.getReportOID());
     }
 
     @Test(description = "差旅报销单关联多个申请单(两个)")
@@ -83,9 +84,9 @@ public class TravelExpenseReportTest extends BaseTest {
         applicationOIDs.add(applicationOID1);
         applicationOIDs.add(applicationOID2);
         component.setParticipant(expenseReport.getValueFromApplication(employee,applicationOIDs,"参与人员"));
-        String expenseReportOID = expenseReport.createTravelExpenseReport(employee,true,"差旅报销单-节假日",component).get("expenseReportOID");
+        FormDetail formDetail = expenseReport.createTravelExpenseReport(employee,true,"差旅报销单-节假日",component);
         //报销单新建费用
-        expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,"交通",expenseReportOID,23.43,new JsonArray());
-        expenseReport.expenseReportSubmit(employee,expenseReportOID);
+        expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,"交通",formDetail.getReportOID(),23.43,new JsonArray());
+        expenseReport.expenseReportSubmit(employee,formDetail.getReportOID());
     }
 }

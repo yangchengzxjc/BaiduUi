@@ -8,6 +8,7 @@ import com.hand.basicConstant.submitControl.ControlCond;
 import com.hand.basicConstant.submitControl.ControlItem;
 import com.hand.basicConstant.submitControl.ControlMixedItem;
 import com.hand.basicConstant.submitControl.ControlValueType;
+import com.hand.basicObject.component.FormDetail;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
 import com.test.api.method.ApplicationMethod.TravelApplicationPage;
@@ -363,14 +364,14 @@ public class ReimbSubmissionControlTest extends BaseTest {
         TravelApplicationPage travelApplicationPage =new TravelApplicationPage();
         String applicatioOID = travelApplicationPage.setTravelApplication(employee,"差旅申请单-自动化测试",UTCTime.getUTCDateEnd(-2));
         //报销单
-        String reportOID = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
+        FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
         // 新建费用
-        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID);
+        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", formDetail.getReportOID());
         //检验标签
-        map.put("reportOID", reportOID);
+        map.put("reportOID", formDetail.getReportOID());
         map.put("invoiceOid1", invoiceOid1);
         map.put("ruleOID", ruleOID);
-        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "REPORT_SUBMIT_WARN", rules.getMessage());
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销单提交月管控-'>'费用消费月+0")
@@ -418,14 +419,14 @@ public class ReimbSubmissionControlTest extends BaseTest {
         TravelApplicationPage travelApplicationPage =new TravelApplicationPage();
         String applicatioOID = travelApplicationPage.setTravelApplication(employee,"差旅申请单-自动化测试",UTCTime.getUTCDateEnd(-2));
         //报销单
-        String reportOID = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
+        FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
         //新建费用
-        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID);
+        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", formDetail.getReportOID());
         //检验标签
-        map.put("reportOID", reportOID);
+        map.put("reportOID", formDetail.getReportOID());
         map.put("invoiceOid1", invoiceOid1);
         map.put("ruleOID", ruleOID);
-        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "REPORT_SUBMIT_WARN", rules.getMessage());
         String expect = String.format("%s（自动化测试-报销标准 城市\"上海\" 不在%s 范围内）",rules.getMessage(),ControlCond.ASSOCIATED_APPLICATION_TRAVEl_CITY.getTypeName());
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN",expect);
     }
@@ -448,14 +449,14 @@ public class ReimbSubmissionControlTest extends BaseTest {
         TravelApplicationPage travelApplicationPage =new TravelApplicationPage();
         String applicatioOID = travelApplicationPage.setTravelApplication(employee,"差旅申请单-自动化测试",UTCTime.getUTCDateEnd(-2));
         //报销单
-        String reportOID = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
+        FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
         //新建费用
-        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,UTCTime.getUtcTime(0,0));
+        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", formDetail.getReportOID(),UTCTime.getUtcTime(0,0));
         //检验标签
-        map.put("reportOID", reportOID);
+        map.put("reportOID", formDetail.getReportOID());
         map.put("invoiceOid1", invoiceOid1);
         map.put("ruleOID", ruleOID);
-        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "REPORT_SUBMIT_WARN", rules.getMessage());
         String itDate = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String expect = String.format("%s（自动化测试-报销标准 %s\"%s ~ %s\" 已超出 %s）",rules.getMessage(),ControlItem.REIMBURSEMENT_COST_DATE.getTypeName(),itDate,itDate,ControlCond.ASSOCIATED_APPLICATION_TRAVEl_DATE.getTypeName());
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN",expect);
@@ -479,14 +480,14 @@ public class ReimbSubmissionControlTest extends BaseTest {
         TravelApplicationPage travelApplicationPage =new TravelApplicationPage();
         String applicatioOID = travelApplicationPage.setTravelApplication(employee,"差旅申请单-自动化测试",UTCTime.getUTCDateEnd(-2));
         //报销单
-        String reportOID = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
+        FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
         //新建费用
-        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,UTCTime.getUtcTime(0,0));
+        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", formDetail.getReportOID(),UTCTime.getUtcTime(0,0));
         //检验标签
-        map.put("reportOID", reportOID);
+        map.put("reportOID", formDetail.getReportOID());
         map.put("invoiceOid1", invoiceOid1);
         map.put("ruleOID", ruleOID);
-        assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
+        assert expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "REPORT_SUBMIT_WARN", rules.getMessage());
         String itDate = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String expect = String.format("%s（自动化测试-报销标准 %s\"%s ~ %s\" 已超出 %s）",rules.getMessage(),ControlItem.REIMBURSEMENT_COST_DATE.getTypeName(),itDate,itDate,ControlCond.ASSOCIATED_APPLICATION_START_END_DATE.getTypeName());
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN",expect);

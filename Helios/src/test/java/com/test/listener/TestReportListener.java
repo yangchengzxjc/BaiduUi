@@ -94,11 +94,11 @@ public class TestReportListener implements IReporter {
             JsonElement moduleelement = new JsonParser().parse(module);
             if(testsFail==0){
 //                String contxtString =String.format("\"### **%s**\n> - <font color=\"##006600\">环境：%s</font><br/>\n> - <font color=\"#006600\">总用例数：%s</font><br/>\n> - <font color=\"#006600\">通过：%s</font><br/>\n> - <font color=\"#006600\">失败：%s</font><br/>\n> - <font color=\"#006600\">跳过：%s</font><br/>\n> - <font color=\"#006600\">通过率为：%s</font><br/>\"",suitName,environment,testAll,testsPass,testsFail,testsSkip,pass);
-                String contxtString = String.format("\"### **%s**\\n> - <font color=\\\"#006600\\\">环境：%s</font><br/>\\n> - <font color=\\\"#006600\\\">总用例数：%s</font><br/>\\n> - <font color=\\\"#006600\\\">通过：%s</font><br/>\\n> - <font color=\\\"#006600\\\">失败：%s</font><br/>\\n> - <font color=\\\"#006600\\\">跳过：%s</font><br/>\\n> - <font color=\\\"#006600\\\">通过率为：%s</font><br/>\"",suitName,environment,testAll,testsPass,testsFail,testsSkip,pass);
+                String contxtString = String.format("\"### **%s**\\n> - <font color=\\\"#34A853\\\">环境：%s</font><br/>\\n> - <font color=\\\"#34A853\\\">总用例数：%s</font><br/>\\n> - <font color=\\\"#34A853\\\">通过：%s</font><br/>\\n> - <font color=\\\"#34A853\\\">失败：%s</font><br/>\\n> - <font color=\\\"#34A853\\\">跳过：%s</font><br/>\\n> - <font color=\\\"#34A853\\\">通过率为：%s</font><br/>\"",suitName,environment,testAll,testsPass,testsFail,testsSkip,pass);
                 context.append(contxtString);
             }
             if(testsFail>0){
-                context.append(String.format("### **%s**\n> - <font color=\"#660000\">环境：%s</font><br/>\n> - <font color=\"#660000\">总用例数：%s</font><br/>\n> - <font color=\"#660000\">通过：%s</font><br/>\n> - <font color=\"#660000\">失败：%s</font><br/>\n> - <font color=\"#660000\">跳过：%s</font><br/>\n> - <font color=\"#660000\">通过率为：%s</font><br/>",suitName,environment,testAll,testsPass,testsFail,testsSkip,pass));
+                context.append(String.format("\"### **%s**\\n> - <font color=\\\"#EA4335\\\">环境：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">总用例数：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">通过：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">失败：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">跳过：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">通过率为：%s</font><br/>\"",suitName,environment,testAll,testsPass,testsFail,testsSkip,pass));
                 if(moduleelement.getAsJsonArray().isJsonArray()){
                     for(int i=0;i<moduleelement.getAsJsonArray().size();i++){
                         context.append("\\n").append("@").append(Long.valueOf(moduleelement.getAsJsonArray().get(i).getAsString()));

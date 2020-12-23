@@ -101,7 +101,7 @@ public class SmokeTest extends BaseTest {
     public void smokeTest05() throws HttpStatusException {
         ExpenseReportInvoice invoice = new ExpenseReportInvoice();
         boolean msg = invoice.ocr(employee,Receript.ocrReceipt);
-        Assert.assertTrue(msg);
+        Assert.assertTrue(false);
     }
 
 //    @Test(description = "单行借款单提交-撤回-删除")

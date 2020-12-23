@@ -97,19 +97,20 @@ public class TestReportListener implements IReporter {
                 context.append(contxtString);
             }
             if(testsFail>0){
-                context.append(String.format("\"### **%s**\\n> - <font color=\\\"#EA4335\\\">环境：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">总用例数：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">通过：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">失败：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">跳过：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">通过率为：%s</font><br/>\"",suitName,environment,testAll,testsPass,testsFail,testsSkip,pass));
+                StringBuilder at = new StringBuilder();
                 if(moduleelement.getAsJsonArray().isJsonArray()){
                     for(int i=0;i<moduleelement.getAsJsonArray().size();i++){
-                        context.append("\\n").append("@").append(Long.valueOf(moduleelement.getAsJsonArray().get(i).getAsString()));
+                        at.append(String.format("@%s",Long.valueOf(moduleelement.getAsJsonArray().get(i).getAsString())));
                     }
                 }
+                context.append(String.format("\"### **%s**\\n> - <font color=\\\"#EA4335\\\">环境：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">总用例数：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">通过：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">失败：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">跳过：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">通过率为：%s</font><br/>%s\"",suitName,environment,testAll,testsPass,testsFail,testsSkip,pass,at));
             }
             if(testsFail==0){
                 module="[]";
             }
             try {
                 log.info("发送的消息为：{}",context.toString());
-                DingDingUtil.sendVal(url,context.toString(),suitName,environment,testAll,testsPass,testsFail,testsSkip,pass,module);
+                DingDingUtil.sendVal(url,context.toString(),module);
             } catch (Exception e) {
                 e.printStackTrace();
             }

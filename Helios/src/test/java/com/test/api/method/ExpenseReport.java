@@ -525,6 +525,31 @@ public class ExpenseReport {
             loanBill.setPayeeAccountType(bankObject.get("sourceType").getAsString());
         }else{
             //对公预付
+            JsonArray suppliers = reimbursementApi.getSupplier(employee);
+            JsonObject supplier;
+            JsonObject venBankAccountBean ;
+            if(GsonUtil.isNotEmpt(suppliers)){
+                supplier = suppliers.get(0).getAsJsonObject();
+                venBankAccountBean = supplier.getAsJsonArray("venBankAccountBeans").get(0).getAsJsonObject();
+            }else{
+                throw new RuntimeException("供应商为空,请维护供应商");
+            }
+            loanBill.setLoanTypeId(GsonUtil.getJsonValue(loanType,"description","对公预付","id"));
+            loanBill.setPayeeType(1001);
+            loanBill.setPayeeAccountNumber(venBankAccountBean.get("bankAccount").getAsString());
+            loanBill.setPayeeAccountName(supplier.get("venNickname").getAsString());
+            loanBill.setPaymentType("EBANK_PAYMENT");
+            loanBill.setRemark("借款");
+            loanBill.setOwnerOid(employee.getUserOID());
+            loanBill.setLoanTypeName("对公预付");
+            loanBill.setPayeeName(supplier.get("venNickname").getAsString());
+            loanBill.setPayeeId(supplier.get("id").getAsString());
+            loanBill.setPayeeCode(supplier.get("venderCode").getAsString());
+            if(loanBill.getCurrencyCode() == null){
+                loanBill.setCurrencyCode("CNY");
+            }
+            loanBill.setPayeeBankCode(venBankAccountBean.get("bankCode").getAsString());
+            loanBill.setPayeeAccountType(venBankAccountBean.get("accountType").getAsString());
         }
         reimbursementApi.createLanLine(employee,loanBill);
     }

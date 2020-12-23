@@ -178,18 +178,17 @@ public class ExpenseReportPage {
     }
 
     /**
-     * 个人借款单 - 收款方为个人
+     * 个人借款单 - 新建借款行
      * @param employee
      * @param formDetail
      * @param formName
      * @throws HttpStatusException
      */
-    public void setLoanLine(Employee employee,FormDetail formDetail,String formName) throws HttpStatusException {
+    public void setLoanLine(Employee employee,FormDetail formDetail,String formName,boolean isOneself) throws HttpStatusException {
         LoanBillComponent loanBillComponent = new LoanBillComponent();
         loanBillComponent.setAmount(0.1);
         loanBillComponent.setLoanBillId(formDetail.getId());
         loanBillComponent.setPlanedRepaymentDate(UTCTime.getBeijingDate(1));
-        expenseReport.createLoanLine(employee,formName,loanBillComponent,true);
+        expenseReport.createLoanLine(employee,formName,loanBillComponent,isOneself);
     }
-
 }

@@ -7,6 +7,7 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.component.FormComponent;
 import com.hand.basicObject.component.FormDetail;
 import com.hand.basicObject.component.InvoiceComponent;
+import com.hand.basicObject.component.LoanBillComponent;
 import com.hand.utils.UTCTime;
 import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportComponent;
@@ -161,7 +162,7 @@ public class ExpenseReportPage {
     }
 
     /**
-     * 新建借款单 表单为默认的表单
+     * 新建借款单 表单为默认的表单-个人借款单呢
      * @param employee
      * @return
      * @throws HttpStatusException
@@ -174,6 +175,21 @@ public class ExpenseReportPage {
         component.setCurrencyCode("CNY");
         component.setRebackDate(rebackDate);
         return expenseReport.createLoanReport(employee,formName,component);
+    }
+
+    /**
+     * 个人借款单 - 收款方为个人
+     * @param employee
+     * @param formDetail
+     * @param formName
+     * @throws HttpStatusException
+     */
+    public void setLoanLine(Employee employee,FormDetail formDetail,String formName) throws HttpStatusException {
+        LoanBillComponent loanBillComponent = new LoanBillComponent();
+        loanBillComponent.setAmount(0.1);
+        loanBillComponent.setLoanBillId(formDetail.getId());
+        loanBillComponent.setPlanedRepaymentDate(UTCTime.getBeijingDate(1));
+        expenseReport.createLoanLine(employee,formName,loanBillComponent,true);
     }
 
 }

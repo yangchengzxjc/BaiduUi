@@ -37,85 +37,91 @@ public class SmokeTest extends BaseTest {
         expenseReport = new ExpenseReport();
     }
 
-//    @Test(description = "核心功能")
-//    public void smokeTest01() throws HttpStatusException {
-//        //新建差旅申请单
-//        TravelApplicationPage travelApplicationPage =new TravelApplicationPage();
-//        ExpenseReportPage expenseReportPage = new ExpenseReportPage();
-//        String applicatioOID = travelApplicationPage.setTravelApplication(employee,"差旅申请单-自动化测试",UTCTime.getUTCDateEnd(-2));
-//        //关联报销单
-//        String reportOID = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
-//        // 新建费用
-//        String invoiceOID1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,UTCTime.getUtcTime(-2,0));
-//        //新建费用账本导入
-//        String invoiceOID2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", "",UTCTime.getUtcTime(-2,0));
-//        //导入费用
-//        ArrayList<String> invoices = new ArrayList<>();
-//        invoices.add(invoiceOID2);
-//        expenseReport.importInvoice(employee,reportOID,invoices);
-//        //提交报销单
-//        expenseReport.expenseReportSubmit(employee,reportOID);
-//        //审批报销单
-//        Approve approve = new Approve();
-//        try {
-//            sleep(5000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        approve.approveal(employee,reportOID,1002);
-////        审核成功
-//        assert approve.auditPass(employee,reportOID,1002)==0;
-//    }
-//
-//    @Test(description = "发票查验")
-//    public void smokeTest02() throws HttpStatusException {
-//        ExpenseReportInvoice invoice = new ExpenseReportInvoice();
-//        String msg = invoice.receptVerify(employee, Receript.handRecept);
-//        //发票每日只能查验5次， 做一个兜底 选用备用发票
-//        if(!msg.equals("查验成功，发票一致")){
-//            msg = invoice.receptVerify(employee, Receript.handReceipt2);
-//        }
-//        Assert.assertEquals(msg,"查验成功，发票一致");
-//    }
-//
-//    @Test(description = "员工ocr发票识别并查验")
-//    public void smokeTest03() throws HttpStatusException {
-//        ExpenseReportInvoice invoice = new ExpenseReportInvoice();
-//        String msg = invoice.ocrReceptVerify(employee,Receript.ocrReceipt);
-//        if(!msg.equals("查验成功，发票一致")){
-//            msg = invoice.ocrReceptVerify(employee,Receript.scanOcrReceipt);
-//        }
-//        Assert.assertEquals(msg,"查验成功，发票一致");
-//    }
-//
-//    @Test(description = "票小蜜：财务scan ocr 识别")
-//    public void smokeTest04() throws HttpStatusException {
-//        ExpenseReportInvoice invoice = new ExpenseReportInvoice();
-//        String message = invoice.scanOcr(employee,Receript.scanOcrReceipt,"6285295");
-//        Assert.assertEquals(message,"发票识别成功");
-//        Approve approve = new Approve();
-//        approve.deleteReceipt(employee,"05614dba-7ab8-44b4-96c7-5da069b4572f");
-//    }
+    @Test(description = "核心功能")
+    public void smokeTest01() throws HttpStatusException {
+        //新建差旅申请单
+        TravelApplicationPage travelApplicationPage =new TravelApplicationPage();
+        ExpenseReportPage expenseReportPage = new ExpenseReportPage();
+        String applicatioOID = travelApplicationPage.setTravelApplication(employee,"差旅申请单-自动化测试",UTCTime.getUTCDateEnd(-2));
+        //关联报销单
+        String reportOID = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
+        // 新建费用
+        String invoiceOID1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,UTCTime.getUtcTime(-2,0));
+        //新建费用账本导入
+        String invoiceOID2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", "",UTCTime.getUtcTime(-2,0));
+        //导入费用
+        ArrayList<String> invoices = new ArrayList<>();
+        invoices.add(invoiceOID2);
+        expenseReport.importInvoice(employee,reportOID,invoices);
+        //提交报销单
+        expenseReport.expenseReportSubmit(employee,reportOID);
+        //审批报销单
+        Approve approve = new Approve();
+        try {
+            sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        approve.approveal(employee,reportOID,1002);
+//        审核成功
+        assert approve.auditPass(employee,reportOID,1002)==0;
+    }
+
+    @Test(description = "发票查验")
+    public void smokeTest02() throws HttpStatusException {
+        ExpenseReportInvoice invoice = new ExpenseReportInvoice();
+        String msg = invoice.receptVerify(employee, Receript.handRecept);
+        //发票每日只能查验5次， 做一个兜底 选用备用发票
+        if(!msg.equals("查验成功，发票一致")){
+            msg = invoice.receptVerify(employee, Receript.handReceipt2);
+        }
+        Assert.assertEquals(msg,"查验成功，发票一致");
+    }
+
+    @Test(description = "员工ocr发票识别并查验")
+    public void smokeTest03() throws HttpStatusException {
+        ExpenseReportInvoice invoice = new ExpenseReportInvoice();
+        String msg = invoice.ocrReceptVerify(employee,Receript.ocrReceipt);
+        if(!msg.equals("查验成功，发票一致")){
+            msg = invoice.ocrReceptVerify(employee,Receript.scanOcrReceipt);
+        }
+        Assert.assertEquals(msg,"查验成功，发票一致");
+    }
+
+    @Test(description = "票小蜜：财务scan ocr 识别")
+    public void smokeTest04() throws HttpStatusException {
+        ExpenseReportInvoice invoice = new ExpenseReportInvoice();
+        String message = invoice.scanOcr(employee,Receript.scanOcrReceipt,"6285295");
+        Assert.assertEquals(message,"发票识别成功");
+        Approve approve = new Approve();
+        approve.deleteReceipt(employee,"05614dba-7ab8-44b4-96c7-5da069b4572f");
+    }
 
     @Test(description = "员工ocr识别发票")
     public void smokeTest05() throws HttpStatusException {
         ExpenseReportInvoice invoice = new ExpenseReportInvoice();
         boolean msg = invoice.ocr(employee,Receript.ocrReceipt);
-        Assert.assertTrue(false);
+        Assert.assertTrue(msg);
     }
 
-//    @Test(description = "单行借款单提交-撤回-删除")
-//    public void smokeTest06() throws HttpStatusException {
-//        ExpenseReportPage expenseReportPage = new ExpenseReportPage();
-//        ExpenseReport expenseReport = new ExpenseReport();
-//        FormDetail formDetail = expenseReportPage.setDefaultLoanBill(employee,"个人借款单",UTCTime.getFormStartDate(1));
-//        //新建借款行
-//        LoanBillComponent loanBillComponent = new LoanBillComponent();
-//        loanBillComponent.setAmount(0.1);
-//        loanBillComponent.setLoanBillId(formDetail.getId());
-//        loanBillComponent.setPlanedRepaymentDate(UTCTime.getBeijingDate(1));
-//        expenseReport.createLoanLine(employee,"个人借款单",loanBillComponent,true);
-//    }
+    @Test(description = "单行个人借款单提交-撤回-删除")
+    public void smokeTest06() throws HttpStatusException {
+        ExpenseReportPage expenseReportPage = new ExpenseReportPage();
+        ExpenseReport expenseReport = new ExpenseReport();
+        FormDetail formDetail = expenseReportPage.setDefaultLoanBill(employee,"个人借款单",UTCTime.getFormStartDate(1));
+        //新建借款行
+        expenseReportPage.setLoanLine(employee,formDetail,"个人借款单");
+        //提交借款单
+        expenseReport.submitLoanBill(employee,formDetail.getReportOID());
+        //审批借款单
+        Approve approve = new Approve();
+        int successNumber = approve.approveal(employee,formDetail.getReportOID(),3001);
+        Assert.assertEquals(successNumber,1);
+        //审核拒绝
+        int fail = approve.auditReject(employee,formDetail.getReportOID(),3001);
+        Assert.assertEquals(fail,0);
+        expenseReport.deleteLoanBill(employee,formDetail.getReportOID());
+    }
 
 
 

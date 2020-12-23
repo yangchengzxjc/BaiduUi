@@ -765,7 +765,7 @@ public class ReimbursementApi extends BaseRequest {
         JsonArray customFormFields = formdetal.get("customFormFields").getAsJsonArray();
         String url = employee.getEnvironment().getUrl()+ ApiPath.NEW_EXPENSE_REPORT;
         JsonArray  custFormValues=processCustFormValues(employee,customFormFields);
-        formdetal.remove("custFormValues");
+        formdetal.remove("customFormProperties");
         formdetal.add("custFormValues",custFormValues);
         formdetal.addProperty("visibleUserScope",1001);
         formdetal.addProperty("timeZoneOffset",480);
@@ -784,15 +784,9 @@ public class ReimbursementApi extends BaseRequest {
      * 借款单提交
      * @param employee
      */
-    public JsonObject submitLoanBill(Employee employee,JsonObject loanReportDetail,JsonArray customFormValue) throws HttpStatusException {
+    public JsonObject submitLoanBill(Employee employee,JsonObject loanReportDetail) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl()+ApiPath.SUBMIT_LOAN_BILL;
-        loanReportDetail.add("customFormValues",customFormValue);
         loanReportDetail.remove("customFormProperties");
-        loanReportDetail.addProperty("referenceApplicationOID","");
-        loanReportDetail.addProperty("jobId",employee.getJobId());
-        loanReportDetail.add("countersignApproverOIDs",new JsonArray());
-        loanReportDetail.addProperty("applicantOID",employee.getUserOID());
-        loanReportDetail.addProperty("type",2005);
         String res= doPost(url,getHeader(employee.getAccessToken()),null,loanReportDetail.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
@@ -871,5 +865,13 @@ public class ReimbursementApi extends BaseRequest {
         JsonObject body = new JsonParser().parse(GsonUtil.objectToString(component)).getAsJsonObject();
         String res = doPost(url,getHeader(employee.getAccessToken()),null,body.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 借款单删除
+     */
+    public void deleteLoanBill(Employee employee,String loanBillOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + String.format(ApiPath.DELETE_LOAN,loanBillOID);
+        doDlete(url,getHeader(employee.getAccessToken()),null,new JsonObject(),employee);
     }
 }

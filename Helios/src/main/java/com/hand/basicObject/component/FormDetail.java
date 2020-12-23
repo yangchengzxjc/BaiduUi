@@ -11,9 +11,11 @@ import lombok.Data;
 @Data
 public class FormDetail {
 
-    private String expenseReportOID;
+    //表单oid  包括借款单  报销单  申请单
+    private String ReportOID;
     //单号
     private String businessCode;
     //表单id
     private String id;
+
 }

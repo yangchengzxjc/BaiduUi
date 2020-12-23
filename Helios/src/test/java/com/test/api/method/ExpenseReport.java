@@ -455,7 +455,18 @@ public class ExpenseReport {
     }
 
     /**
-     * 单行借款单提交
+     * 获取借款单详情
+     * @param employee
+     * @param loanBillOID 借款单的oid
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getLoanBillDetail(Employee employee,String loanBillOID) throws HttpStatusException {
+        return reimbursementApi.loanBillDetail(employee,loanBillOID);
+    }
+
+    /**
+     * 借款单保存/创建
      * @param employee
      * @param formName
      * @param component
@@ -463,15 +474,13 @@ public class ExpenseReport {
      * @throws HttpStatusException
      */
     public FormDetail createLoanReport(Employee employee, String formName, FormComponent component) throws HttpStatusException {
-        String formOID = getFormOID(employee,formName,"104");
-        JsonObject formDetail = reimbursementApi.getFormDetail(employee,formOID);
-        JsonObject detail = reimbursementApi.createLoanBill(employee,formDetail,component);
-        log.info("借款单的单号：{}",detail.get("businessCode").getAsString());
-        FormDetail formDetails = new FormDetail();
-        formDetails.setBusinessCode(detail.get("businessCode").getAsString());
-        formDetails.setExpenseReportOID(detail.get("loanBillOID").getAsString());
-        formDetails.setId(detail.get("id").getAsString());
-        return formDetails;
+        JsonObject formDetails = reimbursementApi.createLoanBill(employee,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName,"104")),component);
+        FormDetail formDetail = new FormDetail();
+        formDetail.setId(formDetails.get("id").getAsString());
+        log.info("借款单号为:{}",formDetails.get("businessCode").getAsString());
+        formDetail.setReportOID(formDetails.get("loanBillOID").getAsString());
+        formDetail.setBusinessCode(formDetails.get("businessCode").getAsString());
+        return formDetail;
     }
 
     /**
@@ -515,5 +524,25 @@ public class ExpenseReport {
             //对公预付
         }
         reimbursementApi.createLanLine(employee,loanBill);
+    }
+
+    /**
+     * 借款单提交
+     * @param employee
+     * @param loanBillOID
+     * @throws HttpStatusException
+     */
+    public void submitLoanBill(Employee employee, String loanBillOID) throws HttpStatusException {
+        reimbursementApi.submitLoanBill(employee,getLoanBillDetail(employee,loanBillOID));
+    }
+
+    /**
+     * 删除借款单呢
+     * @param employee
+     * @param loanBill
+     * @throws HttpStatusException
+     */
+    public void deleteLoanBill(Employee employee,String loanBill) throws HttpStatusException {
+        reimbursementApi.deleteLoanBill(employee,loanBill);
     }
 }

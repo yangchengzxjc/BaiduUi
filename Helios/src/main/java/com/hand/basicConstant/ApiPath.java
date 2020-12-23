@@ -30,6 +30,8 @@ public class ApiPath {
 
         //新建借款行
         public static final String LOAN_LINE = "/api/loan/line";
+        //删除借款单
+        public static final String DELETE_LOAN = "/api/loanBill/%s";
         //查询借款类型
         public static final String LOAN_TYPE = "/api/custom/forms/%S/reference/loan/types";
         //查询银行账户

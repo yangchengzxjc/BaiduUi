@@ -20,7 +20,7 @@ public class StandardControlItem {
     private Integer valueType =1002;
 
     private String controlCond = "BASIC_STANDARD";
-
+    //如果是人员组的话，直接传人员组的名称  后面公共方法会直接修改
     private Object fieldValue;
 
     private Object extendsValue;

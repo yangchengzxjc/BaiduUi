@@ -350,6 +350,13 @@ public class ReimbStandard {
                 controlItem.setControlCond("STANDARD_AMOUNT");
             }
         }
+        //处理申请人组管控项
+        if(controlItem.getControlItem().equals("APPLY_USER") || controlItem.getControlItem().equals("PARTICIPANT_USER")){
+            JsonArray userGroups = reimbStandardRules.getUserGroups(employee,rules.getLevelCode(),rules.getLevelOrgId(),"");
+            if(GsonUtil.isNotEmpt(userGroups)){
+                controlItem.setFieldValue(GsonUtil.getJsonValue(userGroups,"name",controlItem.getFieldValue().toString(),"id"));
+            }
+        }
         if(rules.getControlModeType().equals("SUMMARY")){
             //仅存在金额的管控
             String itemId = getControlItems(employee,rulesOID).get(0).getAsJsonObject().get("id").getAsString();

@@ -69,6 +69,23 @@ public class StandardControl{
     }
 
     /**
+     * 初始化管控项
+     * @param controlItem
+     * @param valueType
+     * @param fieldValue
+     * @param dataType
+     * @return
+     */
+    public StandardControlItem setStandControlItem(String controlItem,Integer valueType,String fieldValue,String dataType){
+        StandardControlItem standardControlItem = new StandardControlItem();
+        standardControlItem.setControlItem(controlItem);
+        standardControlItem.setValueType(valueType);
+        standardControlItem.setFieldValue(fieldValue);
+        standardControlItem.setDataType(dataType);
+        return standardControlItem;
+    }
+
+    /**
      * 初始化账套级规则
      * @param employee
      * @return

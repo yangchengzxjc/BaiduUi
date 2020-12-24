@@ -66,7 +66,6 @@ public class UTCTime {
         return fmt.print(date);
     }
 
-
     /**
      * 返回北京时间   例如：  13:30
      * @param hour  0为当前小时

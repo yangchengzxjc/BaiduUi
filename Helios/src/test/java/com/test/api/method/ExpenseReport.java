@@ -447,6 +447,25 @@ public class ExpenseReport {
     }
 
     /**
+     * 报销单费控标签检查
+     * @param employee
+     * @param expenseReportOID
+     * @param externalPropertyName 标签类型：5001 超费用标准；REPORT_SUBMIT_WARN 校验警告
+     * @throws HttpStatusException
+     */
+    public String checkSubmitLabel(Employee employee,String expenseReportOID,String externalPropertyName) throws HttpStatusException {
+        JsonObject result = expenseReportSubmitCheck(employee,expenseReportOID);
+        log.info("校验的结果:{}",result);
+        JsonArray checkResultList = result.get("checkResultList").getAsJsonArray();
+        if(GsonUtil.isNotEmpt(checkResultList)) {
+            String message = GsonUtil.getJsonValue(checkResultList, "externalPropertyName", externalPropertyName).get("message").getAsString();
+            return message;
+        }else{
+            throw new RuntimeException("报销单不存在标签");
+        }
+    }
+
+    /**
      * 查看报销单 的状态 1001 编辑中  1002 审批中 1003 是审批通过
      * @param employee
      * @param expenseReportOID

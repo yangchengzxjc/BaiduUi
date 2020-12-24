@@ -171,7 +171,7 @@ public class StandardControl{
     }
 
     /**
-     * 初始化一个单条费用参与人管控关闭规则
+     * 初始化一个单条管控 费用参与人管控关闭规则
      * @param setType 设置方式：费用类型  或者 费用大类
      * @return
      */

@@ -1,6 +1,5 @@
 package com.hand.basicObject.Rule;
 
-import com.google.gson.JsonArray;
 import lombok.Data;
 
 import java.util.List;

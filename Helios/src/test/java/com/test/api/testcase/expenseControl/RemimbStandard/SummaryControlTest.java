@@ -68,7 +68,7 @@ public class SummaryControlTest extends BaseTest {
         //新建报销单
         String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,false);
         map.put("ruleOID",ruleOID);
         map.put("reportOID1",reportOID1);
         map.put("invoiceOID1",invoiceOID1);
@@ -90,7 +90,7 @@ public class SummaryControlTest extends BaseTest {
         //新建报销单
         String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,false);
         map.put("ruleOID",ruleOID);
         map.put("reportOID1",reportOID1);
         map.put("invoiceOID1",invoiceOID1);
@@ -114,7 +114,7 @@ public class SummaryControlTest extends BaseTest {
         String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
         map.put("reportOID1",reportOID1);
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,false);
         map.put("invoiceOID1",invoiceOID1);
         String label = String.format("%s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 250.00，超标：CNY 50.00。",rules.getMessage(),standardRulesItem.getAmount());
         log.info("标签:{}",label);

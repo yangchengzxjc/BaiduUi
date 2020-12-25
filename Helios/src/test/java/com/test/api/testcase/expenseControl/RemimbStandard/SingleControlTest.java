@@ -62,7 +62,7 @@ public class SingleControlTest extends BaseTest {
         //新建报销单
         String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,false);
         map.put("ruleOID",ruleOID);
         map.put("reportOID1",reportOID1);
         map.put("invoiceOID1",invoiceOID1);
@@ -83,7 +83,7 @@ public class SingleControlTest extends BaseTest {
         //新建报销单
         String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,false);
         map.put("ruleOID",ruleOID);
         map.put("reportOID1",reportOID1);
         map.put("invoiceOID1",invoiceOID1);
@@ -253,8 +253,104 @@ public class SingleControlTest extends BaseTest {
         Assert.assertEquals(expenseReport.checkSubmitLabel(employee,reportOID1,"5001"),rules.getMessage());
     }
 
+    @Test(description = "标准:账套级-单条管控-费用参与人标准开启取就高-管控信息为：费用附件为空")
+    public void singleControlTest10() throws HttpStatusException {
+        //新建账套级规则
+        StandardRules rules = standardControl.setSingleRule("HIGH","费用类型");
+        String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
+        map.put("ruleOID",ruleOID);
+        //设置管控项为备注包括
+        StandardControlItem controlItem = standardControl.setStandControlItem("INVOICE_ATTACHMENT", ControlValueType.IS_NULL.getValueType(),null,"STRING");
+        reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
+        //新建报销单
+        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        map.put("reportOID1",reportOID1);
+        //新建费用
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName(),"员工0006"},450.00);
+        map.put("invoiceOID1",invoiceOID1);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,reportOID1,"5001"),rules.getMessage());
+    }
 
-//    @AfterMethod
+    @Test(description = "标准:账套级-单条管控-费用参与人标准开启取就高-管控信息为：费用附件为空&& 费用金额>基本标准必须满足")
+    public void singleControlTest11() throws HttpStatusException {
+        //新建账套级规则
+        StandardRules rules = standardControl.setSingleRule("HIGH","费用类型");
+        String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
+        map.put("ruleOID",ruleOID);
+        //设置基本的标准
+        StandardRulesItem standardRulesItem1 = standardControl.setStandardRulesItem(employee,200,true,rules,ruleOID,new String[]{"auto_test_oneself"},new String[]{});
+        //设置管控项为备注包括 费用附件为空和 费用金额>基本标准
+        StandardControlItem controlItem1 = standardControl.setStandControlItem("INVOICE_ATTACHMENT", ControlValueType.IS_NULL.getValueType(),null,"STRING");
+        reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem1);
+        //设置一个费用金额的标准
+        StandardControlItem controlItem2 = new StandardControlItem();
+        reimbStandard.editORaddControlItem(employee,false,rules,ruleOID,controlItem2);
+        //新建报销单
+        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        map.put("reportOID1",reportOID1);
+        //新建费用
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName()},100.00);
+        map.put("invoiceOID1",invoiceOID1);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,reportOID1,"5001"),"");
+    }
+
+    @Test(description = "标准:账套级-单条管控-费用参与人标准开启取就高-管控信息为：费用标签-包含-公司已付")
+    public void singleControlTest12() throws HttpStatusException {
+        //新建账套级规则
+        StandardRules rules = standardControl.setSingleRule("HIGH","费用类型");
+        String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
+        map.put("ruleOID",ruleOID);
+        //设置管控项为备注包括
+        StandardControlItem controlItem = standardControl.setStandControlItem("INVOICE_LABEL", ControlValueType.INCLUDE.getValueType(),"20","INVOICE_LABEL");
+        reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
+        //新建报销单
+        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        map.put("reportOID1",reportOID1);
+        //新建费用
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,true);
+        map.put("invoiceOID1",invoiceOID1);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,reportOID1,"5001"),rules.getMessage());
+    }
+
+    @Test(description = "标准:账套级-单条管控-费用参与人标准开启取就高-管控信息为：费用标签-不包含-电子票")
+    public void singleControlTest13() throws HttpStatusException {
+        //新建账套级规则
+        StandardRules rules = standardControl.setSingleRule("HIGH","费用类型");
+        String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
+        map.put("ruleOID",ruleOID);
+        //设置管控项为备注包括
+        StandardControlItem controlItem = standardControl.setStandControlItem("INVOICE_LABEL", ControlValueType.UNINCLUDE.getValueType(),"9","INVOICE_LABEL");
+        reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
+        //新建报销单
+        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        map.put("reportOID1",reportOID1);
+        //新建费用
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,true);
+        map.put("invoiceOID1",invoiceOID1);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,reportOID1,"5001"),rules.getMessage());
+    }
+
+    @Test(description = "标准:账套级-单条管控-费用参与人标准开启取就高-管控信息为：费用标签-包含-替票")
+    public void singleControlTest14() throws HttpStatusException {
+        //新建账套级规则
+        StandardRules rules = standardControl.setSingleRule("HIGH","费用类型");
+        String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
+        map.put("ruleOID",ruleOID);
+        //设置管控项为备注包括
+        StandardControlItem controlItem = standardControl.setStandControlItem("INVOICE_LABEL", ControlValueType.UNINCLUDE.getValueType(),"32","INVOICE_LABEL");
+        reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
+        //新建报销单
+        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        map.put("reportOID1",reportOID1);
+        //新建费用
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1);
+        map.put("invoiceOID1",invoiceOID1);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,reportOID1,"5001"),rules.getMessage());
+    }
+
+
+
+    @AfterMethod
     public void cleanEnv() throws HttpStatusException {
         ExpenseReportInvoice invoice =new ExpenseReportInvoice();
         for (String s : map.keySet()){

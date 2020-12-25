@@ -458,8 +458,12 @@ public class ExpenseReport {
         log.info("校验的结果:{}",result);
         JsonArray checkResultList = result.get("checkResultList").getAsJsonArray();
         if(GsonUtil.isNotEmpt(checkResultList)) {
-            String message = GsonUtil.getJsonValue(checkResultList, "externalPropertyName", externalPropertyName).get("message").getAsString();
-            return message;
+            try{
+                String message = GsonUtil.getJsonValue(checkResultList, "externalPropertyName", externalPropertyName).get("message").getAsString();
+                return message;
+            }catch (NullPointerException e){
+                return "";
+            }
         }else{
             throw new RuntimeException("报销单不存在标签");
         }

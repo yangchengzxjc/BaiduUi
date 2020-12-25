@@ -83,11 +83,12 @@ public class ExpenseReportPage {
      * @return
      * @throws HttpStatusException
      */
-    public String setInvoice(Employee employee,String expenseName,String expenseReportOID) throws HttpStatusException {
+    public String setInvoice(Employee employee,String expenseName,String expenseReportOID,boolean isCompanyPay) throws HttpStatusException {
         ExpenseReportComponent expenseReportComponent =new ExpenseReportComponent();
         String cityCode =expenseReportComponent.getCityCode(employee,"上海");
         InvoiceComponent invoiceComponent =new InvoiceComponent();
         invoiceComponent.setCity(cityCode);
+        invoiceComponent.setCompanyPay(isCompanyPay);
         JsonObject startAndEndDate = new JsonObject();
         startAndEndDate.addProperty("startDate",UTCTime.getFormStartDate(0));
         startAndEndDate.addProperty("endDate",UTCTime.getFormDateEnd(3));
@@ -124,7 +125,7 @@ public class ExpenseReportPage {
     }
 
     /**
-     * 新建费用  不参与分摊  开始结束日期控件为空的
+     * 新建费用  不参与分摊  开始结束日期控件为空的 费用的createDate可以选择
      * @param employee
      * @param expenseName
      * @param expenseReportOID
@@ -137,6 +138,23 @@ public class ExpenseReportPage {
         InvoiceComponent invoiceComponent =new InvoiceComponent();
         invoiceComponent.setCity(cityCode);
         invoiceComponent.setCreatedDate(createDate);
+        return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,200.00,new JsonArray()).get("invoiceOID");
+    }
+
+    /**
+     * 新建费用  不参与分摊  替票开关开启
+     * @param employee
+     * @param expenseName
+     * @param expenseReportOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public String setInvoice(Employee employee,String expenseName,String expenseReportOID) throws HttpStatusException {
+        ExpenseReportComponent expenseReportComponent =new ExpenseReportComponent();
+        String cityCode =expenseReportComponent.getCityCode(employee,"西安");
+        InvoiceComponent invoiceComponent =new InvoiceComponent();
+        invoiceComponent.setCity(cityCode);
+        invoiceComponent.setInvoiceInstead(true);
         return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,200.00,new JsonArray()).get("invoiceOID");
     }
 

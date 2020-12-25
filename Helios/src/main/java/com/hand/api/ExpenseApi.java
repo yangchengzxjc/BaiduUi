@@ -400,6 +400,7 @@ public class ExpenseApi extends BaseRequest{
         }else {
             body.addProperty("invoiceCurrencyCode",component.getCurrencyCode());
         }
+        body.addProperty("invoiceInstead",component.isInvoiceInstead());
         body.addProperty("comment","事由");
         body.addProperty("invoiceInsteadReason","");
         body.add("data",fieldsdata);

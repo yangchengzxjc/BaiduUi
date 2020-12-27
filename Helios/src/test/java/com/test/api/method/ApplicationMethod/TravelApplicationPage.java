@@ -3,6 +3,7 @@ package com.test.api.method.ApplicationMethod;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.component.FormComponent;
+import com.hand.basicObject.itinerary.DiningItinerary;
 import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.basicObject.itinerary.TrainItinerary;
 import com.hand.basicConstant.Supplier;
@@ -10,6 +11,7 @@ import com.hand.utils.RandomNumber;
 import com.hand.utils.UTCTime;
 import com.test.api.method.ExpenseReportComponent;
 import com.test.api.method.TravelApplication;
+import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -83,6 +85,18 @@ public class TravelApplicationPage {
         trainItinerary.setSeatClass(seatClass);
         trainItinerary.setSeatClassCode(setclassCode.get(seatClass));
         return trainItinerary;
+    }
+
+    public DiningItinerary setDiningItinerary(Employee employee, Long diningSceneId, String cityName, String startDate, String endDate, Double standardAmount, String remark) throws HttpStatusException {
+        DiningItinerary diningItinerary = new DiningItinerary();
+        diningItinerary.setDiningSceneId(diningSceneId);
+        diningItinerary.setCityName(cityName);
+        diningItinerary.setCityCode(expenseReportComponent.getCityCode(employee, cityName));
+        diningItinerary.setStartDate(startDate);
+        diningItinerary.setEndDate(endDate);
+        diningItinerary.setStandardAmount(standardAmount);
+        diningItinerary.setRemark(remark);
+        return diningItinerary;
     }
 
     /**

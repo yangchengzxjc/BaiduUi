@@ -236,6 +236,8 @@ public class ApiPath {
         public static final String ADD_HOTEL_ITINERARY = "/api/travel/hotel/itinerary";
         //添加火车
         public static final String ADD_TRAIN_ININERARY = "/api/travel/train/itinerary";
+        // 添加用餐行程
+        public static final String ADD_DINING_ITINERARY = "/api/travel/dining/itinerary";
         //差旅申请单提交
         public static final String SUBMIT_APPLICATION = "/api/travel/applications/submit/v2";
         //费用申请单提交

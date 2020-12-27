@@ -21,10 +21,11 @@ public class SetOfBooksTest extends BaseTest {
     private SetOfBooksDefine setOfBooksDefine;
     private SetOfBooksPage setOfBooksPage;
     private SetOfBooks setOfBooks;
+    private String editSetOfBooksCode;
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void beforeClass(@Optional("14082978888") String phoneNumber, @Optional("hly123") String pwd, @Optional("stage") String env) {
+    public void beforeClass(@Optional("14082978888") String phoneNumber, @Optional("lhfa123456") String pwd, @Optional("stage") String env) {
         employee = getEmployee(phoneNumber, pwd, env);
         setOfBooksDefine = new SetOfBooksDefine();
         setOfBooksPage = new SetOfBooksPage();
@@ -51,9 +52,11 @@ public class SetOfBooksTest extends BaseTest {
 
     @Test(description = "正常新建账套")
     public void addSetOfBooksTest01() throws HttpStatusException {
-        JsonObject object = setOfBooksPage.addSetOfBooks(employee,setOfBooks, true, "新增", "add");
+        JsonObject object = setOfBooksPage.addSetOfBooks(employee,setOfBooks, true, "新增", "add",
+                "DEFAULT_ACC","默认会计期","人民币");
         String setOfBooksName = object.get("setOfBooksName").getAsString();
         String setOfBooksCode = object.get("setOfBooksCode").getAsString();
+        this.editSetOfBooksCode = object.get("setOfBooksCode").getAsString();
         log.info("新增的账套名称为：" + setOfBooksName);
         log.info("新增的账套编码为：" + setOfBooksCode);
         Assert.assertEquals(setOfBooksName, setOfBooks.getSetOfBooksName());
@@ -62,7 +65,8 @@ public class SetOfBooksTest extends BaseTest {
 
     @Test(description = "异常新建账套，账套code不符合编码规则，包含中文")
     public void addSetOfBooksTest02() throws HttpStatusException {
-        JsonObject object = setOfBooksPage.addSetOfBooks(employee,setOfBooks, true, "新增", "中文");
+        JsonObject object = setOfBooksPage.addSetOfBooks(employee,setOfBooks, true, "新增", "中文",
+                "DEFAULT_ACC","默认会计期","人民币");
         String message = object.get("message").getAsString();
         log.info("获取到的message信息：" + message);
         String errorCode = object.get("errorCode").getAsString();
@@ -71,10 +75,33 @@ public class SetOfBooksTest extends BaseTest {
         Assert.assertEquals(errorCode, "6029001");
     }
 
+    @Test(description = "异常新建账套，账套code超长")
+    public void addSetOfBooksTest03() throws HttpStatusException {
+        JsonObject object = setOfBooksPage.addSetOfBooks(employee,setOfBooks, true, "新增", editSetOfBooksCode,
+                "DEFAULT_ACC","默认会计期","人民币");
+        String message = object.get("message").getAsString();
+        log.info("获取到的message信息：" + message);
+        String errorCode = object.get("errorCode").getAsString();
+        log.info("获取到的错误代码：" + errorCode);
+        Assert.assertEquals(message, "字符长度大于0&小于36,且只能输入数字,字母,下划线,点符号");
+        Assert.assertEquals(errorCode, "6029001");
+    }
+
+    @Test(description = "异常新建账套，账套code已存在")
+    public void addSetOfBooksTest04() throws HttpStatusException {
+        JsonObject object = setOfBooksPage.addSetOfBooks(employee,setOfBooks, true, "新增", editSetOfBooksCode);
+        String message = object.get("message").getAsString();
+        log.info("获取到的message信息：" + message);
+        String errorCode = object.get("errorCode").getAsString();
+        log.info("获取到的错误代码：" + errorCode);
+        Assert.assertEquals(message, "当前账套已存在");
+        Assert.assertEquals(errorCode, "6018001");
+    }
+
     @Test(description = "正常编辑账套")
     public void editSetOfBooksTest01() throws HttpStatusException {
         //不传账套code和name，默认取到第一条账套数据的code和name
-        JsonObject object = setOfBooksDefine.getSetOfBooksDetail(employee, "", "","set-of-books");
+        JsonObject object = setOfBooksDefine.getSetOfBooksDetail(employee, editSetOfBooksCode, "","set-of-books");
         String setOfBooksName = object.get("setOfBooksName").getAsString();
         String setOfBooksCode = object.get("setOfBooksCode").getAsString();
         String updateSetOfBooksName = "测试修改" + RandomNumber.getTimeNumber();

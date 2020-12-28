@@ -1,6 +1,7 @@
 package com.test.api.method;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.hand.api.ApproveApi;
 import com.hand.api.ExpenseApi;
 import com.hand.api.FinanceApi;
@@ -39,6 +40,10 @@ public class Approve {
      */
     public int approveal(Employee employee,String reportOID,int entityType) throws HttpStatusException {
         return approveApi.reportApproval(employee,employee.getUserOID(),reportOID,entityType).get("successNum").getAsInt();
+    }
+
+    public JsonObject approval(Employee employee, String reportOID, int entityType) throws HttpStatusException {
+        return approveApi.reportApproval(employee,employee.getUserOID(),reportOID,entityType);
     }
 
     /**

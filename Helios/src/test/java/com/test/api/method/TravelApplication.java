@@ -133,7 +133,8 @@ public class TravelApplication {
     }
 
     /**
-     * 申请单提交需要添加预算费用。有俩种方式1.在创建的时时直接给customformValue 的预算控件的value 把预算费用信息塞进去
+     * 申请单提交需要添加预算费用。有俩种方式
+     * 1.在创建的时时直接给customformValue 的预算控件的value 把预算费用信息塞进去
      * 2.在提交前：获取到申请单详情 然后给详情中的customformValue的预算控件的value假如预算费用。
      * 这个方法是在获取详情后在添加预算费用
      *
@@ -210,6 +211,10 @@ public class TravelApplication {
         //如果有酒店行程的话，则设置酒店统一订票人
         if (itineraryInfo.get("HOTEL") != null) {
             applicationDetail.getAsJsonObject("travelApplication").addProperty("hotelBookingClerkOID", employee.getUserOID());
+        }
+        // 用餐订票人
+        if (itineraryInfo.get("DINING") != null) {
+            applicationDetail.getAsJsonObject("travelApplication").addProperty("diningBookingClerkOID", employee.getUserOID());
         }
         return applicationApi.submitApplication(employee, applicationDetail);
     }

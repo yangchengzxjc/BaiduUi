@@ -199,6 +199,15 @@ public class ApplicationApi extends BaseRequest {
         return new JsonParser().parse(res).getAsJsonArray();
     }
 
+    /**
+     * 添加一个用餐行程
+     * @param employee
+     * @param applicationOID
+     * @param diningItineraries
+     * @param <E>
+     * @return
+     * @throws HttpStatusException
+     */
     public <E> JsonArray addDiningItineraay(Employee employee, String applicationOID, ArrayList<E> diningItineraries) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.ADD_DINING_ITINERARY;
         Map<String, String> data = new HashMap<>();

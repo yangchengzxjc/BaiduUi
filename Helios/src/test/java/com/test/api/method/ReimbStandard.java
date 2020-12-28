@@ -193,6 +193,12 @@ public class ReimbStandard {
                 rules.setParticipantsRatio(100);
             }
         }
+        //非金额管控 飞机 火车 轮船
+        if(rules.getNonAmountCtrlItem()!=null){
+            rules.setControlType("SINGLE");
+            rules.setType("NON_AMOUNT");
+            rules.setControlModeType("SINGLE");
+        }
         return reimbStandardRules.addReimbStandardRules(employee,rules).replace("\"","");
     }
 
@@ -394,5 +400,25 @@ public class ReimbStandard {
         JsonArray rulesList = new JsonArray();
         rulesList =reimbStandardRules.getRules(employee,ruleName);
         return  rulesList;
+    }
+
+    /**
+     * 获取舱等的值列表信息
+     * @return
+     */
+    public JsonArray getCustomEnumerationItems(Employee employee,String ...cabin) throws HttpStatusException {
+        JsonArray cabinArray = reimbStandardRules.getEnumerations(employee);
+        JsonArray customEnumerationItems = new JsonArray();
+        if(GsonUtil.isNotEmpt(cabinArray)){
+            for(int i = 0;i<cabin.length;i++){
+                JsonObject customEnumerationItem = new JsonObject();
+                JsonObject cabinObject = GsonUtil.getJsonValue(cabinArray,"messageKey",cabin[i]);
+                customEnumerationItem.addProperty("customEnumerationItemOID",cabinObject.get("customEnumerationItemOID").getAsString());
+                customEnumerationItem.addProperty("messageKey",cabin[i]);
+                customEnumerationItem.addProperty("value",cabinObject.get("value").getAsString());
+                customEnumerationItems.add(customEnumerationItem);
+            }
+        }
+        return customEnumerationItems;
     }
 }

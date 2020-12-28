@@ -39,7 +39,7 @@ public class StandardRules {
     private boolean complianceCheck = false;
     private String message = "费用超标了";
     private String type = "AMOUNT";
-    //空的话则默认 全部参与同住
+    //非金额管控 "PLANE_CABIN" ->飞机管控
     private String nonAmountCtrlItem = null;
     /**
      * 费用参与人标准,就高(HIGH)、和值(SUM)

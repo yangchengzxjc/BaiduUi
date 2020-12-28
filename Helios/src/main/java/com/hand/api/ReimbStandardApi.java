@@ -310,7 +310,23 @@ public class ReimbStandardApi  extends BaseRequest {
         map.put("size","10");
         map.put("levelCode",leveCode);
         map.put("levelOrgId",levelOrgId);
-        String response = doGet(url, getHeader(employee.getAccessToken(),"reimbursement-standard",ResourceId.INFRA), map, employee);
+        String response = doGet(url, getHeader(employee.getAccessToken(),HeaderKey.REIMB_STANDARD,ResourceId.INFRA), map, employee);
+        return new JsonParser().parse(response).getAsJsonArray();
+    }
+
+    /**
+     * 非金额管控获取值列表
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getEnumerations(Employee employee) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.GET_enumerations;
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("roleType","TENANT");
+        parm.put("systemCustomEnumerationType","1016");
+        parm.put("paged","false");
+        String response = doGet(url, getHeader(employee.getAccessToken(),HeaderKey.REIMB_STANDARD,ResourceId.INFRA), parm, employee);
         return new JsonParser().parse(response).getAsJsonArray();
     }
 }

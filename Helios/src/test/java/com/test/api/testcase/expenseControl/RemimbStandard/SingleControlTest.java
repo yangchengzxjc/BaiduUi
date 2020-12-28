@@ -367,25 +367,25 @@ public class SingleControlTest extends BaseTest {
         Assert.assertEquals(expenseReport.checkSubmitLabel(employee,reportOID1,"5001"),rules.getMessage());
     }
 
-    @Test(description = "标准:账套级-单条管控-费用参与人标准开启取就高-管控信息为:房间数>1&&>基本标准")
-    public void singleControlTest16() throws HttpStatusException {
-        //新建账套级规则
-        StandardRules rules = standardControl.setSingleRule("HIGH","费用类型");
-        String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
-        map.put("ruleOID",ruleOID);
-        //设置基本标准200元
-        StandardRulesItem standardRulesItem1 = standardControl.setStandardRulesItem(employee,true,rules,ruleOID);
-        //设置管控项为备注包括
-        StandardControlItem controlItem1 = standardControl.setStandControlItem("ROOMS", ControlValueType.GT.getValueType(),1,"LONG");
-        reimbStandard.editORaddControlItem(employee,false,rules,ruleOID,controlItem1);
-        //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
-        map.put("reportOID1",reportOID1);
-        //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName(),"yuuki"},250.00);
-        map.put("invoiceOID1",invoiceOID1);
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,reportOID1,"5001"),rules.getMessage());
-    }
+//    @Test(description = "标准:账套级-单条管控-费用参与人标准开启取就高-管控信息为:房间数>1&&>基本标准")
+//    public void singleControlTest16() throws HttpStatusException {
+//        //新建账套级规则
+//        StandardRules rules = standardControl.setSingleRule("HIGH","费用类型");
+//        String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
+//        map.put("ruleOID",ruleOID);
+//        //设置基本标准200元
+//        StandardRulesItem standardRulesItem1 = standardControl.setStandardRulesItem(employee,true,rules,ruleOID);
+//        //设置管控项为备注包括
+//        StandardControlItem controlItem1 = standardControl.setStandControlItem("ROOMS", ControlValueType.GT.getValueType(),1,"LONG");
+//        reimbStandard.editORaddControlItem(employee,false,rules,ruleOID,controlItem1);
+//        //新建报销单
+//        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+//        map.put("reportOID1",reportOID1);
+//        //新建费用
+//        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName(),"yuuki"},250.00);
+//        map.put("invoiceOID1",invoiceOID1);
+//        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,reportOID1,"5001"),rules.getMessage());
+//    }
 
     @Test(description = "标准:账套级-单条管控-费用参与人标准开启取和值-管控信息为：费用金额>基本标准*天数")
     public void singleControlTest17() throws HttpStatusException {
@@ -511,7 +511,7 @@ public class SingleControlTest extends BaseTest {
         Assert.assertEquals(invoice.checkInvoiceLabel(employee,invoiceOID1,"EXPENSE_STANDARD_EXCEEDED_WARN"),label);
     }
 
-    @AfterMethod
+//    @AfterMethod
     public void cleanEnv() throws HttpStatusException {
         ExpenseReportInvoice invoice =new ExpenseReportInvoice();
         for (String s : map.keySet()){

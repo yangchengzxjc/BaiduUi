@@ -76,7 +76,7 @@ public class StandardControl{
      * @param dataType
      * @return
      */
-    public StandardControlItem setStandControlItem(String controlItem,Integer valueType,String fieldValue,String dataType){
+    public StandardControlItem setStandControlItem(String controlItem,Integer valueType,Object fieldValue,String dataType){
         StandardControlItem standardControlItem = new StandardControlItem();
         standardControlItem.setControlItem(controlItem);
         standardControlItem.setValueType(valueType);

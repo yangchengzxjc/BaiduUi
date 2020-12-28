@@ -134,10 +134,10 @@ public class ReimbSubmissionControlTest extends BaseTest {
         String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准",reportOID,new String[]{employee.getFullName()},200.00);
         String invoiceOid2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准",reportOID,new String[]{employee.getFullName()},200.00);
         //检验标签
-//        map.put("reportOID", reportOID);
-//        map.put("invoiceOid1", invoiceOid1);
-//        map.put("invoiceOid2", invoiceOid2);
-//        map.put("ruleOID", ruleOID);
+        map.put("reportOID", reportOID);
+        map.put("invoiceOid1", invoiceOid1);
+        map.put("invoiceOid2", invoiceOid2);
+        map.put("ruleOID", ruleOID);
         assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_WARN", rules.getMessage());
         String repeatMoth1 = "";
         String repeatMoth2 = "";

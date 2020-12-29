@@ -193,6 +193,12 @@ public class ReimbStandard {
                 rules.setParticipantsRatio(100);
             }
         }
+        //非金额管控 飞机 火车 轮船
+        if(rules.getNonAmountCtrlItem()!=null){
+            rules.setControlType("SINGLE");
+            rules.setType("NON_AMOUNT");
+            rules.setControlModeType("SINGLE");
+        }
         return reimbStandardRules.addReimbStandardRules(employee,rules).replace("\"","");
     }
 
@@ -350,6 +356,13 @@ public class ReimbStandard {
                 controlItem.setControlCond("STANDARD_AMOUNT");
             }
         }
+        //处理申请人组管控项
+        if(controlItem.getControlItem().equals("APPLY_USER") || controlItem.getControlItem().equals("PARTICIPANT_USER")){
+            JsonArray userGroups = reimbStandardRules.getUserGroups(employee,rules.getLevelCode(),rules.getLevelOrgId(),"");
+            if(GsonUtil.isNotEmpt(userGroups)){
+                controlItem.setFieldValue(GsonUtil.getJsonValue(userGroups,"name",controlItem.getFieldValue().toString(),"id"));
+            }
+        }
         if(rules.getControlModeType().equals("SUMMARY")){
             //仅存在金额的管控
             String itemId = getControlItems(employee,rulesOID).get(0).getAsJsonObject().get("id").getAsString();
@@ -387,5 +400,25 @@ public class ReimbStandard {
         JsonArray rulesList = new JsonArray();
         rulesList =reimbStandardRules.getRules(employee,ruleName);
         return  rulesList;
+    }
+
+    /**
+     * 获取舱等的值列表信息
+     * @return
+     */
+    public JsonArray getCustomEnumerationItems(Employee employee,String ...cabin) throws HttpStatusException {
+        JsonArray cabinArray = reimbStandardRules.getEnumerations(employee);
+        JsonArray customEnumerationItems = new JsonArray();
+        if(GsonUtil.isNotEmpt(cabinArray)){
+            for(int i = 0;i<cabin.length;i++){
+                JsonObject customEnumerationItem = new JsonObject();
+                JsonObject cabinObject = GsonUtil.getJsonValue(cabinArray,"messageKey",cabin[i]);
+                customEnumerationItem.addProperty("customEnumerationItemOID",cabinObject.get("customEnumerationItemOID").getAsString());
+                customEnumerationItem.addProperty("messageKey",cabin[i]);
+                customEnumerationItem.addProperty("value",cabinObject.get("value").getAsString());
+                customEnumerationItems.add(customEnumerationItem);
+            }
+        }
+        return customEnumerationItems;
     }
 }

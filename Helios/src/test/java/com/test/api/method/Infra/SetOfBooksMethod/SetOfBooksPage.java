@@ -24,10 +24,21 @@ public class SetOfBooksPage {
      * @param setOfBooksCode
      * @throws HttpStatusException
      */
-    public JsonObject addSetOfBooks(Employee employee,SetOfBooks setOfBooks, boolean enabled, String setOfBooksName, String setOfBooksCode) throws HttpStatusException{
+    public JsonObject addSetOfBooks(Employee employee,SetOfBooks setOfBooks, boolean enabled, String setOfBooksName, String setOfBooksCode,
+                                    String accountSetCode,String periodSetName,String currencyName) throws HttpStatusException{
         setOfBooks.setEnabled(enabled);
         setOfBooks.setSetOfBooksName(setOfBooksName + RandomNumber.getTimeNumber());
         setOfBooks.setSetOfBooksCode(setOfBooksCode + RandomNumber.getTimeNumber());
+        setOfBooks.setAccountSetId(setOfBooksDefine.getAccountSetId(employee,accountSetCode));
+        setOfBooks.setPeriodSetCode(setOfBooksDefine.getAccountingPeriod(employee,periodSetName));
+        setOfBooks.setFunctionalCurrencyCode(setOfBooksDefine.getFunctionalCurrencyCode(employee,currencyName));
+        return setOfBooksDefine.addSetOfBooks(employee,setOfBooks,enabled);
+    }
+
+    public JsonObject addSetOfBooks(Employee employee,SetOfBooks setOfBooks, boolean enabled, String setOfBooksName, String setOfBooksCode) throws HttpStatusException{
+        setOfBooks.setEnabled(enabled);
+        setOfBooks.setSetOfBooksName(setOfBooksName);
+        setOfBooks.setSetOfBooksCode(setOfBooksCode);
         setOfBooks.setAccountSetId(setOfBooksDefine.getAccountSetId(employee,"DEFAULT_ACC"));
         setOfBooks.setPeriodSetCode(setOfBooksDefine.getAccountingPeriod(employee,"默认会计期"));
         setOfBooks.setFunctionalCurrencyCode(setOfBooksDefine.getFunctionalCurrencyCode(employee,"人民币"));

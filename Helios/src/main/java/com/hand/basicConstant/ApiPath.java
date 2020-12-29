@@ -352,6 +352,10 @@ public class ApiPath {
         public static final String DELETE_RECEIPT = "/receipt/api/receipts/%s";
         //财务查询票据详情
         public static final String RECEIPT_QUERY = "/api/expense/reports/receipt/finance/query";
+        //借款单查询供应商
+        public static final String GET_SUPPLIER = "/supplier/api/ven/info/by/company";
+        //非金额管控 查询值列表
+        public static final String GET_enumerations = "/api/custom/enumerations/items/by/type";
 }
 
 

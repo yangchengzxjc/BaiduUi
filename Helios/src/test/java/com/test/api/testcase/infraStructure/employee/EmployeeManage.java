@@ -113,7 +113,7 @@ public class EmployeeManage extends BaseTest {
         JsonObject object = employeeManagePage.addEmployee(employee,fullName,alreadyMobile,employeeID,email,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank,component);
         String message = object.get("message").getAsString();
         String errorCode = object.get("errorCode").getAsString();
-        Assert.assertEquals(message,"手机号已被占用");
+        Assert.assertEquals(message,"手机号被占用：该手机号已被绑定，请重新输入手机号");
         Assert.assertEquals(errorCode,"6040013");
     }
 
@@ -127,7 +127,7 @@ public class EmployeeManage extends BaseTest {
         JsonObject object = employeeManagePage.addEmployee(employee,fullName,"14009220010",employeeID+1,alreadyEmail,employeeTypeValueName,directManager,companyName,departmentName,departmentCode,position,duty,rank,component);
         String message = object.get("message").getAsString();
         String errorCode = object.get("errorCode").getAsString();
-        Assert.assertEquals(message,"邮箱已被占用");
+        Assert.assertEquals(message,"邮箱已被占用：该邮箱已被绑定，请重新输入邮箱地址");
         Assert.assertEquals(errorCode,"6040014");
     }
 
@@ -211,23 +211,49 @@ public class EmployeeManage extends BaseTest {
         assert employeeManagePage.editEmployee(employee,editEmployeeID,infraEmployee).toString().contains("fullName");
     }
 
-    @DataProvider(name = "Card")
-    public static Object[][] addCard() {
+    @DataProvider(name = "CardError01")
+    public static Object[][] addCardError() {
         return new Object[][] {
-                {CardType.CHINA_ID,"身份证","shenfenzheng",true},
                 {CardType.PASSPORT,"护照","huzhao",true},
                 {CardType.MAINLAND,"台胞证","taibaozheng",true},
                 {CardType.HOME_RETURN_PERMIT,"回乡证","huixiangzheng",true},
                 {CardType.HONG_KONG,"港澳通行证","gangaotongxingzheng",true},
                 {CardType.PERMANENT_RESIDENCE,"外国人永久居留身份证","waiguorenyongjiujuliuzheng",true},
-                {CardType.MILITARY,"军人证","junrenzheng",true},
                 {CardType.TRAVEL,"旅行证","lvxingzheng",true},
                 {CardType.TAIWAN,"台湾通行证","taiwantongxingzheng",true},
         };
     }
 
-    @Test(description = "新增证件",dataProvider = "Card")
-    public void addEmployeeCard(CardType cardType,String firstName,String lastName,boolean enabled) throws HttpStatusException {
+    @DataProvider(name = "Card")
+    public static Object[][] addCard() {
+        return new Object[][] {
+                {CardType.CHINA_ID,"身份证","shenfenzheng",true},
+                {CardType.PASSPORT,"huzhao","huzhao",true},
+                {CardType.MAINLAND,"taibaozheng","taibaozheng",true},
+                {CardType.HOME_RETURN_PERMIT,"huixiangzheng","huixiangzheng",true},
+                {CardType.HONG_KONG,"gangaotongxingzheng","gangao",true},
+                {CardType.PERMANENT_RESIDENCE,"yongjiujuliuzheng","waiguoren",true},
+                {CardType.MILITARY,"军人证","junrenzheng",true},
+                {CardType.TRAVEL,"旅行证","lvxingzheng",true},
+                {CardType.TAIWAN,"taiwantongxingzheng","taiwan",true},
+        };
+    }
+
+    @Test(description = "异常新增证件，包含中文",dataProvider = "CardError01")
+    public void addEmployeeCard01(CardType cardType,String firstName,String lastName,boolean enabled) throws HttpStatusException {
+        //员工扩展字段
+        EmployeeExtendComponent component =new EmployeeExtendComponent();
+        component.setCustList("hong888");
+        component.setText("1");
+        JsonObject object = employeeManagePage.addUserCard(employee,editEmployeeUserOid,cardType,firstName,lastName,enabled);
+        String message = object.get("message").getAsString();
+        String errorCode = object.get("errorCode").getAsString();
+        Assert.assertEquals(message,"护照、台胞证、回乡证、港澳通行证、台湾通行证、旅行证、外国人永久居留身份证的姓和名只能为英文字母（包括大小写）、“.”  、 “_”");
+        Assert.assertEquals(errorCode,"13842@CONTACT_CARD_ERROR_005");
+    }
+
+    @Test(description = "正常新增证件",dataProvider = "Card")
+    public void addEmployeeCard02(CardType cardType,String firstName,String lastName,boolean enabled) throws HttpStatusException {
         //员工扩展字段
         EmployeeExtendComponent component =new EmployeeExtendComponent();
         component.setCustList("hong888");

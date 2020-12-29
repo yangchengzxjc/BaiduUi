@@ -447,6 +447,29 @@ public class ExpenseReport {
     }
 
     /**
+     * 报销单费控标签检查
+     * @param employee
+     * @param expenseReportOID
+     * @param externalPropertyName 标签类型：5001 超费用标准；REPORT_SUBMIT_WARN 校验警告
+     * @throws HttpStatusException
+     */
+    public String checkSubmitLabel(Employee employee,String expenseReportOID,String externalPropertyName) throws HttpStatusException {
+        JsonObject result = expenseReportSubmitCheck(employee,expenseReportOID);
+        log.info("校验的结果:{}",result);
+        JsonArray checkResultList = result.get("checkResultList").getAsJsonArray();
+        if(GsonUtil.isNotEmpt(checkResultList)) {
+            try{
+                String message = GsonUtil.getJsonValue(checkResultList, "externalPropertyName", externalPropertyName).get("message").getAsString();
+                return message;
+            }catch (NullPointerException e){
+                return "";
+            }
+        }else{
+            throw new RuntimeException("报销单不存在标签");
+        }
+    }
+
+    /**
      * 查看报销单 的状态 1001 编辑中  1002 审批中 1003 是审批通过
      * @param employee
      * @param expenseReportOID
@@ -525,6 +548,31 @@ public class ExpenseReport {
             loanBill.setPayeeAccountType(bankObject.get("sourceType").getAsString());
         }else{
             //对公预付
+            JsonArray suppliers = reimbursementApi.getSupplier(employee);
+            JsonObject supplier;
+            JsonObject venBankAccountBean ;
+            if(GsonUtil.isNotEmpt(suppliers)){
+                supplier = suppliers.get(0).getAsJsonObject();
+                venBankAccountBean = supplier.getAsJsonArray("venBankAccountBeans").get(0).getAsJsonObject();
+            }else{
+                throw new RuntimeException("供应商为空,请维护供应商");
+            }
+            loanBill.setLoanTypeId(GsonUtil.getJsonValue(loanType,"description","对公预付","id"));
+            loanBill.setPayeeType(1001);
+            loanBill.setPayeeAccountNumber(venBankAccountBean.get("bankAccount").getAsString());
+            loanBill.setPayeeAccountName(supplier.get("venNickname").getAsString());
+            loanBill.setPaymentType("EBANK_PAYMENT");
+            loanBill.setRemark("借款");
+            loanBill.setOwnerOid(employee.getUserOID());
+            loanBill.setLoanTypeName("对公预付");
+            loanBill.setPayeeName(supplier.get("venNickname").getAsString());
+            loanBill.setPayeeId(supplier.get("id").getAsString());
+            loanBill.setPayeeCode(supplier.get("venderCode").getAsString());
+            if(loanBill.getCurrencyCode() == null){
+                loanBill.setCurrencyCode("CNY");
+            }
+            loanBill.setPayeeBankCode(venBankAccountBean.get("bankCode").getAsString());
+            loanBill.setPayeeAccountType(venBankAccountBean.get("accountType").getAsString());
         }
         reimbursementApi.createLanLine(employee,loanBill);
     }

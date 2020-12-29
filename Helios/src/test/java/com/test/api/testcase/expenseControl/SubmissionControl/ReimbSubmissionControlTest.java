@@ -64,7 +64,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         //创建报销单
         String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
         //新建费用
-        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID);
+        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,false);
         //检验标签
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);
@@ -87,7 +87,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         //创建报销单
         String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
         //新建费用
-        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID);
+        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,false);
         //检验标签
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);
@@ -109,7 +109,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         //创建报销单
         String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
         //新建费用
-        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID);
+        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,false);
         //检验标签
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);
@@ -143,9 +143,9 @@ public class ReimbSubmissionControlTest extends BaseTest {
         String repeatMoth2 = "";
         String repeatMoth3 = "";
         if(UTCTime.isMonthTail(UTCTime.getBeijingDay(0))){
-            repeatMoth1 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-5));
-            repeatMoth2 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-4));
-            repeatMoth3 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-3));
+            repeatMoth1 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-6));
+            repeatMoth2 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-5));
+            repeatMoth3 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-4));
         }else{
             repeatMoth1 = UTCTime.utcTOdate(UTCTime.getFormStartDate(0));
             repeatMoth2 = UTCTime.utcTOdate(UTCTime.getFormStartDate(1));
@@ -181,9 +181,9 @@ public class ReimbSubmissionControlTest extends BaseTest {
         String repeatMoth2 = "";
         String repeatMoth3 = "";
         if(UTCTime.isMonthTail(UTCTime.getBeijingDay(0))){
-            repeatMoth1 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-5));
-            repeatMoth2 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-4));
-            repeatMoth3 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-3));
+            repeatMoth1 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-6));
+            repeatMoth2 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-5));
+            repeatMoth3 = UTCTime.utcTOdate(UTCTime.getFormStartDate(-4));
         }else{
             repeatMoth1 = UTCTime.utcTOdate(UTCTime.getFormStartDate(0));
             repeatMoth2 = UTCTime.utcTOdate(UTCTime.getFormStartDate(1));
@@ -213,8 +213,8 @@ public class ReimbSubmissionControlTest extends BaseTest {
         //创建报销单
         String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
         //新建费用
-        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID);
-        String invoiceOid2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID);
+        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,false);
+        String invoiceOid2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,false);
         //检验标签
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);
@@ -245,8 +245,8 @@ public class ReimbSubmissionControlTest extends BaseTest {
         //创建报销单
         String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
         //新建费用
-        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID);
-        String invoiceOid2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID);
+        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,false);
+        String invoiceOid2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,false);
         //检验标签
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);
@@ -276,8 +276,8 @@ public class ReimbSubmissionControlTest extends BaseTest {
         //创建报销单
         String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
         //新建费用
-        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID);
-        String invoiceOid2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID);
+        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,false);
+        String invoiceOid2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,false);
         //检验标签
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);
@@ -308,8 +308,8 @@ public class ReimbSubmissionControlTest extends BaseTest {
         //创建报销单
         String reportOID = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
         //新建费用
-        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID);
-        String invoiceOid2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID);
+        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,false);
+        String invoiceOid2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID,false);
         //检验标签
         map.put("reportOID", reportOID);
         map.put("invoiceOid1", invoiceOid1);
@@ -366,7 +366,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         //报销单
         FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
         // 新建费用
-        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", formDetail.getReportOID());
+        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", formDetail.getReportOID(),false);
         //检验标签
         map.put("reportOID", formDetail.getReportOID());
         map.put("invoiceOid1", invoiceOid1);
@@ -421,7 +421,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         //报销单
         FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
         //新建费用
-        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", formDetail.getReportOID());
+        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", formDetail.getReportOID(),false);
         //检验标签
         map.put("reportOID", formDetail.getReportOID());
         map.put("invoiceOid1", invoiceOid1);
@@ -576,12 +576,12 @@ public class ReimbSubmissionControlTest extends BaseTest {
         String reportOID1 = expenseInfo.get("expenseReportOID");
         String businessCode = expenseInfo.get("businessCode");
         //新建费用
-        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID1);
+        String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID1,false);
         //提交报销单1
         expenseReport.expenseReportSubmit(employee,reportOID1);
         //新建报销单2
         String reportOID2 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
-        String invoiceOid2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID2);
+        String invoiceOid2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", reportOID2,false);
         //检验标签
         map.put("reportOID", reportOID1);
         map.put("reportOID2",reportOID2);

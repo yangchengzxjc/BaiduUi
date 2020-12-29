@@ -874,4 +874,21 @@ public class ReimbursementApi extends BaseRequest {
         String url = employee.getEnvironment().getUrl() + String.format(ApiPath.DELETE_LOAN,loanBillOID);
         doDlete(url,getHeader(employee.getAccessToken()),null,new JsonObject(),employee);
     }
+
+    /**
+     * 借款单查询供应商
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getSupplier(Employee employee) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.GET_SUPPLIER;
+        HashMap<String,String> map = new HashMap<>();
+        map.put("page","0");
+        map.put("size","10");
+        map.put("companyOid",employee.getCompanyOID());
+        map.put("companyId",employee.getCompanyId());
+        String res = doGet(url,getHeader(employee.getAccessToken()),map,employee);
+        return new JsonParser().parse(res).getAsJsonArray();
+    }
 }

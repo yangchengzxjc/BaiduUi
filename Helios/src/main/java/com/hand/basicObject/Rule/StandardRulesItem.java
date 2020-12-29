@@ -53,5 +53,8 @@ public class StandardRulesItem {
      */
     private BigDecimal amount;
 
-
+    /**
+     * 
+     */
+    private JsonArray customEnumerationItems;
 }

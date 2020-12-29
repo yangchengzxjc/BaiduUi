@@ -22,6 +22,8 @@ public class InvoiceComponent {
     String currencyCode;
     //是否公司支付  false=1001   true=1002可选  默认公司未付
     boolean isCompanyPay;
+    //是否是替票 默认为否
+    boolean invoiceInstead = false;
     //地点控件  一般名称为出发地和目的地
     String departure ;
     //汇率

@@ -4,9 +4,7 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicConstant.Receript;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.component.FormDetail;
-import com.hand.basicObject.component.LoanBillComponent;
 import com.hand.utils.DButil;
-import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
 import com.test.api.method.*;
@@ -31,15 +29,17 @@ public class SmokeTest extends BaseTest {
 
     private Employee employee;
     private ExpenseReport expenseReport;
+    private String environment;
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
     public void beforeClass(@Optional("14082971221") String phoneNumber, @Optional("zp123456") String pwd, @Optional("console") String env){
         employee=getEmployee(phoneNumber,pwd,env);
         expenseReport = new ExpenseReport();
+        environment = env;
     }
 
-    @Test(description = "核心功能")
+    @Test(description = "核心功能+外部接口回调")
     public void smokeTest01() throws HttpStatusException {
         //新建差旅申请单
         TravelApplicationPage travelApplicationPage =new TravelApplicationPage();
@@ -57,15 +57,17 @@ public class SmokeTest extends BaseTest {
         expenseReport.importInvoice(employee,formDetail.getReportOID(),invoices);
         //提交报销单
         expenseReport.expenseReportSubmit(employee,formDetail.getReportOID());
-        //测试报销单提交回调
-        DButil.Business business = new DButil.Business();
-        try {
-          business = DButil.dbConnection(formDetail.getBusinessCode());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        //测试报销单提交回调  只能在生产环境
+        if(environment.equals("console")){
+            DButil.Business business = new DButil.Business();
+            try {
+                business = DButil.dbConnection(formDetail.getBusinessCode());
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            Assert.assertEquals(formDetail.getBusinessCode(),business.getBusinessCode());
+            Assert.assertEquals("EXPENSE_REPORT_SUBMIT",business.getApiCode());
         }
-        Assert.assertEquals(formDetail.getBusinessCode(),business.getBusinessCode());
-        Assert.assertEquals("EXPENSE_REPORT_SUBMIT",business.getApiCode());
         //审批报销单
         Approve approve = new Approve();
         try {
@@ -121,7 +123,26 @@ public class SmokeTest extends BaseTest {
         ExpenseReport expenseReport = new ExpenseReport();
         FormDetail formDetail = expenseReportPage.setDefaultLoanBill(employee,"个人借款单",UTCTime.getFormStartDate(1));
         //新建借款行
-        expenseReportPage.setLoanLine(employee,formDetail,"个人借款单");
+        expenseReportPage.setLoanLine(employee,formDetail,"个人借款单",true);
+        //提交借款单
+        expenseReport.submitLoanBill(employee,formDetail.getReportOID());
+        //审批借款单
+        Approve approve = new Approve();
+        int successNumber = approve.approveal(employee,formDetail.getReportOID(),3001);
+        Assert.assertEquals(successNumber,1);
+        //审核拒绝
+        int fail = approve.auditReject(employee,formDetail.getReportOID(),3001);
+        Assert.assertEquals(fail,0);
+        expenseReport.deleteLoanBill(employee,formDetail.getReportOID());
+    }
+
+    @Test(description = "单行个人借款单-对公预付提交-撤回-删除")
+    public void smokeTest07() throws HttpStatusException {
+        ExpenseReportPage expenseReportPage = new ExpenseReportPage();
+        ExpenseReport expenseReport = new ExpenseReport();
+        FormDetail formDetail = expenseReportPage.setDefaultLoanBill(employee,"个人借款单",UTCTime.getFormStartDate(1));
+        //新建借款行
+        expenseReportPage.setLoanLine(employee,formDetail,"个人借款单",false);
         //提交借款单
         expenseReport.submitLoanBill(employee,formDetail.getReportOID());
         //审批借款单

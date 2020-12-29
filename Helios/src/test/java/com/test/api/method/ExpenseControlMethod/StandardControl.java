@@ -1,5 +1,6 @@
 package com.test.api.method.ExpenseControlMethod;
 
+import com.google.gson.JsonArray;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.Rule.StandardCondition;
@@ -66,6 +67,23 @@ public class StandardControl{
         conditions.add(standardCondition);
         controlItem.setConditions(conditions);
         return controlItem;
+    }
+
+    /**
+     * 初始化管控项
+     * @param controlItem
+     * @param valueType
+     * @param fieldValue
+     * @param dataType
+     * @return
+     */
+    public StandardControlItem setStandControlItem(String controlItem,Integer valueType,Object fieldValue,String dataType){
+        StandardControlItem standardControlItem = new StandardControlItem();
+        standardControlItem.setControlItem(controlItem);
+        standardControlItem.setValueType(valueType);
+        standardControlItem.setFieldValue(fieldValue);
+        standardControlItem.setDataType(dataType);
+        return standardControlItem;
     }
 
     /**
@@ -171,7 +189,7 @@ public class StandardControl{
     }
 
     /**
-     * 初始化一个单条费用参与人管控关闭规则
+     * 初始化一个单条管控 费用参与人管控关闭规则
      * @param setType 设置方式：费用类型  或者 费用大类
      * @return
      */
@@ -205,4 +223,46 @@ public class StandardControl{
         return rules;
     }
 
+    /**
+     * 非金额管控规则初始化
+     * @param noAmountType
+     * @param setType
+     * @return
+     */
+    public StandardRules setNoAmount(String noAmountType,String setType){
+        StandardRules rules = new StandardRules();
+        rules.setName("autoTest noAmount control");
+        if(noAmountType.equals("飞机")){
+            rules.setNonAmountCtrlItem("PLANE_CABIN");
+        }
+        if(noAmountType.equals("火车")){
+            rules.setNonAmountCtrlItem("PLANE_CABIN");
+        }
+        if(noAmountType.equals("轮船")){
+            rules.setNonAmountCtrlItem("PLANE_CABIN");
+        }
+        if(setType.equals("费用大类")){
+            rules.setSetType("EXPENSE_TYPE_CATEGORY");
+        }
+        return rules;
+    }
+
+
+    /**
+     * 非金额的标准初始化
+     * @param employee
+     * @param rules
+     * @param ruleOID
+     * @param cabin
+     * @return
+     * @throws HttpStatusException
+     */
+    public StandardRulesItem setNoAmountStandard(Employee employee,StandardRules rules,String ruleOID,String ...cabin) throws HttpStatusException {
+        StandardRulesItem standardRulesItem = new StandardRulesItem();
+        ReimbStandard reimbStandard = new ReimbStandard();
+        standardRulesItem.setCustomEnumerationItems(reimbStandard.getCustomEnumerationItems(employee,cabin));
+        standardRulesItem.setRuleOID(ruleOID);
+        reimbStandard.addStandard(employee,true,rules,standardRulesItem,new String[]{},new String[]{});
+        return standardRulesItem;
+    }
 }

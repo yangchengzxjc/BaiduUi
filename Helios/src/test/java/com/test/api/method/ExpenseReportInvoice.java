@@ -255,6 +255,29 @@ public class ExpenseReportInvoice {
     }
 
     /**
+     * 费用内的标签信息
+     * @param employee
+     * @param invoiceOID
+     * @param type 标签类型 超费用标准：EXPENSE_STANDARD_EXCEEDED_WARN；校验警告：REPORT_SUBMIT_WARN
+     * @return
+     */
+    public String checkInvoiceLabel(Employee employee,String invoiceOID,String type) throws HttpStatusException {
+        JsonObject result = getInvoice(employee,invoiceOID);
+        JsonArray invoiceLabel = result.get("invoiceLabels").getAsJsonArray();
+        if(GsonUtil.isNotEmpt(invoiceLabel)) {
+            try {
+                String toast = GsonUtil.getJsonValue(invoiceLabel, "type", type).get("toast").getAsString();
+                log.info("费用内的标签:{}", toast);
+                return toast;
+            }catch (NullPointerException e){
+                return "";
+            }
+        }else{
+            throw new RuntimeException("未存在标签");
+        }
+    }
+
+    /**
      * 发票查验
      * @param employee
      * @param receptInfo

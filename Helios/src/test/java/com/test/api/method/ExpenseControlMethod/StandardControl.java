@@ -236,7 +236,7 @@ public class StandardControl{
             rules.setNonAmountCtrlItem("PLANE_CABIN");
         }
         if(noAmountType.equals("火车")){
-            rules.setNonAmountCtrlItem("PLANE_CABIN");
+            rules.setNonAmountCtrlItem("TRAIN_SEAT_CLASS");
         }
         if(noAmountType.equals("轮船")){
             rules.setNonAmountCtrlItem("PLANE_CABIN");

@@ -12,6 +12,7 @@ import com.hand.utils.UTCTime;
 import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportComponent;
 import com.test.api.method.ExpenseReportInvoice;
+import com.test.api.method.ReimbStandard;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -96,6 +97,36 @@ public class ExpenseReportPage {
         invoiceComponent.setStartAndEndData(startAndEndDate.toString());
         return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,250.00,new JsonArray()).get("invoiceOID");
     }
+
+    /**
+     * 新建机票费用包含舱等信息
+     * @param employee
+     * @param expenseName
+     * @param expenseReportOID
+     * @param cabin
+     * @return
+     * @throws HttpStatusException
+     */
+    public String setairPlanInvoice(Employee employee,String expenseName,String expenseReportOID,String cabin) throws HttpStatusException {
+        ExpenseReportComponent expenseReportComponent =new ExpenseReportComponent();
+        String setOffcityCode = expenseReportComponent.getCityCode(employee,"上海");
+        String arriveCityCode = expenseReportComponent.getCityCode(employee,"西安");
+        InvoiceComponent invoiceComponent =new InvoiceComponent();
+        ReimbStandard reimbStandard = new ReimbStandard();
+        JsonArray cabinArray = reimbStandard.getCustomEnumerationItems(employee,cabin);
+        invoiceComponent.setCabin(cabinArray.get(0).getAsJsonObject().get("value").getAsString());
+        invoiceComponent.setArriveCity(arriveCityCode);
+        invoiceComponent.setSetoffCity(setOffcityCode);
+        invoiceComponent.setCompanyPay(false);
+        JsonObject startAndEndDate = new JsonObject();
+        startAndEndDate.addProperty("startDate",UTCTime.getFormStartDate(0));
+        startAndEndDate.addProperty("endDate",UTCTime.getFormDateEnd(3));
+        startAndEndDate.addProperty("duration",3);
+        invoiceComponent.setStartAndEndData(startAndEndDate.toString());
+        return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,250.00,new JsonArray()).get("invoiceOID");
+    }
+
+
 
     /**
      * 新建费用  不参与分摊   开始结束日期控件不为空

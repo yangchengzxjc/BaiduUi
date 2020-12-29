@@ -289,41 +289,41 @@ public class ExpenseApi extends BaseRequest{
         //开始给控件塞值
         for (int i=0;i<fieldsdata.size();i++) {
             JsonObject data = fieldsdata.get(i).getAsJsonObject();
-            String fieldType=data.get("fieldType").getAsString();
-            switch (fieldType)
+            String name=data.get("name").getAsString();
+            switch (name)
             {
-                case "ASSOCIATE_APPLICATION":                //关联申请单
+                case "关联申请单":                //关联申请单
                     data.addProperty("value",component.getApplication());
                     break;
-                case "CUSTOM_ENUMERATION":                          //值列表
+                case "值列表":                          //值列表
                     JsonArray customenumerationlist = componentQueryApi.getCustomEumerationOid(employee,data.get("customEnumerationOID").getAsString());
                     data.addProperty("value", customenumerationlist.get(0).getAsJsonObject().get("value").getAsString());
                     break;
-                case  "MONTH":
+                case  "月份":
                     data.addProperty("value", UTCTime.getNowUtcTime());
                     break;
-                case  "TEXT":
+                case  "文本":
                     data.addProperty("value", "test");
                     break;
-                case  "LONG":
+                case  "正整数":
                     data.addProperty("value", 125L);
                     break;
                 case  "POSITIVE_INTEGER":
                     data.addProperty("value", 125L);
                     break;
-                case  "DATETIME":
+                case  "时间":
                     data.addProperty("value",component.getDateTime());
                     break;
-                case  "DOUBLE":
+                case  "浮点数":
                     data.addProperty("value", 1.25f);
                     break;
-                case  "DATE":
+                case  "日期":
                     data.addProperty("value", UTCTime.getNowUtcTime());
                     break;
-                case  "LOCATION":              //城市控件
+                case  "城市":              //城市控件
                     data.addProperty("value", component.getCity());
                     break;
-                case  "PARTICIPANTS"://参与人
+                case  "参与人"://参与人
                     if(component.getParticipants()!=null){
                         JsonArray array = new JsonArray();
                         //参与人员
@@ -340,16 +340,16 @@ public class ExpenseApi extends BaseRequest{
                         }
                     }
                     break;
-                case  "PARTICIPANT":                 //同行人
+                case  "同行人":                 //同行人
                     data.addProperty("value",component.getParticipant());
                     break;
-                case  "START_DATE_AND_END_DATE":               //开始结束日期
+                case  "开始结束日期":               //开始结束日期
                     data.addProperty("value",component.getStartAndEndData());
                     break;
                 case  "TEXT_AREA":
                     data.addProperty("value", "text");
                     break;
-                case  "COMPANY_PAID":             //公司支付   1002是公司已付    默认1001是公司未付费用
+                case  "公司已付":             //公司支付   1002是公司已付    默认1001是公司未付费用
                     if (component.isCompanyPay()){
                         data.addProperty("value", "1002");
                     }
@@ -357,13 +357,20 @@ public class ExpenseApi extends BaseRequest{
                         data.addProperty("value", "1001");
                     }
                     break;
-                case  "GPS":                //出发地或者目的地
-                    if(data.get("messageKey").getAsString().equalsIgnoreCase("departure.location")){
+                case "出发地":                //出发地或者目的地
                         data.addProperty("value",component.getDeparture());
-                    }else if(data.get("messageKey").getAsString().equalsIgnoreCase("destination.location")){
-                        data.addProperty("value",component.getDestination());
-                    }
                     break;
+                case "目的地" :
+                    data.addProperty("value",component.getDestination());
+                    break;
+                case "飞机舱等":
+                    data.addProperty("value",component.getCabin());
+                    break;
+                case "出发城市":
+                    data.addProperty("value",component.getSetoffCity());
+                    break;
+                case "到达城市":
+                    data.addProperty("value",component.getArriveCity());
             }
         }
 //        结束给控件塞值  附件

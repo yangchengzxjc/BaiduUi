@@ -22,6 +22,7 @@
     <test verbose="10" preserve-order="true" name="报销标准周期测试">
         <classes>
             <class name="com.test.api.testcase.expenseControl.RemimbStandard.PeriodControlTest"/>
+            <class name="com.test.api.testcase.expenseControl.RemimbStandard.SingleControlTest"/>
         </classes>
     </test>
 

@@ -245,6 +245,23 @@ public class TestDataProviderITestContext {
 - 编写测试case：Helios/src/test/java/com/test/api/testcase/vendor/VendorSSOTest.java
 - 用例集组织case：Helios/vendor_testng.xml
 
+## Gson
+```
+//String、JsonObject、JavaBean 互相转换
+    User user = new Gson().fromJson(jsonObject, User.class);
+    User user = new Gson().fromJson(string, User.class);
+    String string = new Gson().toJson(user);
+    JsonObject jsonObject = new Gson().toJsonTree(user).getAsJsonObject(); 
+    JsonObject jsonObject = new JsonParser().parse(string).getAsJsonObject();
+//String、JsonArray、List互相转换
+    List<User> userList = new Gson.fromJson(string, new TypeToken<List<User>>() {}.getType()); 
+    List<User> userList = new Gson.fromJson(jsonArray, new TypeToken<List<User>>() {}.getType()); 
+    String string = new Gson().toJson(userList); 
+    JsonArray jsonArray = new Gson().toJsonTree(userList, new TypeToken<List<User>>() {}.getType()).getAsJsonArray();
+    JsonArray jsonArray = new JsonParser().parse(string).getAsJsonArray();
+```
+
 ## toDo
 - 请求方法封装，log增加请求request header、请求参数、response header、code、返回结果 DONE
 - 测试报告增加请求路径 参数 返回结果输出 → 新增监听类`ExtentTestNGIReporterListener` DONE
+

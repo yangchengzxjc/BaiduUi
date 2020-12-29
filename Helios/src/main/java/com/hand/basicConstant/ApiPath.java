@@ -275,6 +275,8 @@ public class ApiPath {
         public static final String SUBSIDY_RULE_DETAIL = "/api/travel/subsidies/rule";
         //差补表单详情
         public static final String FORM_DETAIL = "/api/custom/forms/%s/detail";
+        // @api {GET} /api/dining/scene/form/enable  查询表单可用的用餐场景
+        public static final String FORM_DINING_SCRNE = "/api/dining/scene/form/enable";
         //新建报销标准规则
         public static final String ADD_REIMB_STANDARD = "/api/expense/standard/rule";
         //获取费用类型

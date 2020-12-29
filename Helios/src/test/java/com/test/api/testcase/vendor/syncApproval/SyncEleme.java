@@ -17,10 +17,7 @@ import com.test.api.method.ApplicationMethod.TravelApplicationPage;
 import com.test.api.method.VendorMethod.SyncService;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.json.Json;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,17 +49,32 @@ public class SyncEleme extends BaseTest {
         approve = new Approve();
     }
 
-    @Test(description = "消费商-饿了么用餐")
-    public void elemeTest1() throws HttpStatusException, InterruptedException {
+    @DataProvider(name = "eleme")
+    public Object[][] testData() {
+        return new Object[][]{
+                {"懿消费商(xiao/feishang)", "饿了么餐补申请单", "测试饿了么", "上海", 50.0, "餐补", "餐补"},
+        };
+    }
 
-        String userName = "懿消费商(xiao/feishang)";
-        String formName = "饿了么餐补申请单";
+    @Test(description = "消费商-饿了么用餐", dataProvider = "eleme")
+    public void elemeTest1(String userName,
+                           String formName,
+                           String cause,
+                           String cityName,
+                           Double amount,
+                           String expenseName,
+                           String sceneName) throws HttpStatusException, InterruptedException {
+
+//        // 测试数据抽取到 dataProvider
+//        String userName = "懿消费商(xiao/feishang)";
+//        String formName = "饿了么餐补申请单";
+//        String cause = "测试饿了么";
+//        Double amount = 50.0;
+//        String expenseName = "餐补";
+//        String cityName = "上海";
+//        String sceneName = "餐补"; // 用餐场景
         String startDate = UTCTime.getNowStartUtcDate();
         String endDate = UTCTime.getUTCDateEnd(5);
-        String cause = "测试饿了么";
-        Double amount = 50.0;
-        String expenseName = "餐补";
-
         String formOID = expenseReport.getFormOID(employee, formName, "101");
 
         // 表单控件必填项：事由、开始日期、结束日期、参与人默认自己
@@ -71,7 +83,8 @@ public class SyncEleme extends BaseTest {
         component.setDepartment(employee.getDepartmentOID());
         component.setStartDate(startDate);
         component.setEndDate(endDate);
-        // 表单添加参与人员  参与人员的value 是一段json数组
+
+        // 表单添加参与人员
         JsonArray array = new JsonArray();
         array.add(expenseReportComponent.getParticipant(employee, formOID, userName));
         component.setParticipant(array.toString());
@@ -81,16 +94,18 @@ public class SyncEleme extends BaseTest {
 
         //添加用餐行程
         ArrayList<DiningItinerary> diningItineraries = new ArrayList<>();
-        // 查询用餐类型 @applicationOID todo
-        Long diningSceneId = 1218722645100748802L;
-        DiningItinerary diningItinerary = travelApplicationPage.setDiningItinerary(employee, diningSceneId, "上海", startDate, endDate, 1.00, "");
+//        Long diningSceneId = 1218722645100748802L;
+        Long diningSceneId = travelApplication.getDiningSceneId(employee, formOID, sceneName);
+        DiningItinerary diningItinerary = travelApplicationPage.setDiningItinerary(employee, diningSceneId, cityName, startDate, endDate, 1.00, "");
         diningItineraries.add(diningItinerary);
         travelApplication.addItinerary(employee, applicationOID, diningItineraries);
+
         // 添加预算费用
         JsonObject budgetExpense = travelApplication.addBudgetExpense(employee, amount, true, expenseName, formName);
         JsonArray budgetExpenses = new JsonArray();
         budgetExpenses.add(budgetExpense);
         String budgetDetail = travelApplication.addBudgetDetail(budgetExpenses, amount);
+
         // 提交申请单
         travelApplication.submitApplication(employee, applicationOID, budgetDetail);
 
@@ -102,21 +117,19 @@ public class SyncEleme extends BaseTest {
             log.info("审批结果：{}", approvalRes);
             throw new RuntimeException("审批单审批失败");
         } else {
-            sleep(3000);
             JsonObject dining = travelApplication.getItinerary(employee, applicationOID, "DINING").get(0).getAsJsonObject();
-
             // 获取审批单中的 travelApplication
             JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee, applicationOID);
 
-            // 查询同步实体
+            // 查询同步实体 todo-同步实体支持用餐行程
             CtripApprovalEntity ctripApprovalEntity = syncService.setCtripApprovalEntity(traveApplicationDetail, dining, null, null, null, null);
             JsonObject syncEntityJson = new JsonParser().parse(GsonUtil.objectToString(ctripApprovalEntity)).getAsJsonObject();
+            log.info("同步实体syncEntityJson数据为：{}", syncEntityJson);
 
             //查询tmc 同步的数据
-            JsonObject syncData = vendor.getTMCPlan(employee, TmcChannel.ELEME.getTmcChannel(), dining.get("approvalNumber").getAsString());
-            log.info("查询的数据为：{}", syncData);
-            JsonObject tmcRequestData = syncData.getAsJsonObject("tmcRequest");
-//            JsonObject tmcResponse = syncData.getAsJsonObject("response");
+            JsonObject tmcRequestData = vendor.getTMCPlanRequestDTO(employee, TmcChannel.ELEME.getTmcChannel(), dining.get("approvalNumber").getAsString());
+            log.info("查询的tmcRequestData数据为：{}", tmcRequestData);
+
             assert GsonUtil.compareJsonObject(syncEntityJson, tmcRequestData, new HashMap<>());
         }
     }

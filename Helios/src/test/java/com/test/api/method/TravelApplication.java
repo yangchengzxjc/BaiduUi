@@ -1,8 +1,10 @@
 package com.test.api.method;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.hand.api.ApplicationApi;
 import com.hand.api.ExpenseApi;
 import com.hand.api.ReimbursementApi;
@@ -20,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author peng.zhang
@@ -68,6 +72,30 @@ public class TravelApplication {
         info.put("businessCode", jsonObject.get("businessCode").getAsString());
         log.info("businessCode:{}", info.get("businessCode"));
         return info;
+    }
+
+    public Long getDiningSceneId(Employee employee, String formOID, String sceneName) throws HttpStatusException {
+        JsonArray diningSceneDTOs = applicationApi.getFormDiningScene(employee, formOID);
+
+        // JsonArray to ArrayList
+        log.debug("diningSceneDTOs: {}", diningSceneDTOs);
+        List<JsonObject> diningSceneDTOList = new Gson().fromJson(diningSceneDTOs, new TypeToken<List<JsonObject>>() {
+        }.getType());
+
+        // filer 过滤 包含 sceneName的 diningSceneDTO
+        log.debug("diningSceneDTOList: {}", diningSceneDTOList);
+        List<JsonObject> diningSceneResult = diningSceneDTOList.stream()
+                .filter(diningSceneDTO -> diningSceneDTO.get("name").getAsString().contains(sceneName))
+                .collect(Collectors.toList());
+        log.debug("diningSceneResult: {}", diningSceneResult);
+        // 初始值 Long
+        Long diningSceneId;
+        if (diningSceneResult != null && !diningSceneResult.isEmpty()) {
+            diningSceneId = diningSceneResult.get(0).get("id").getAsLong();
+        } else {
+            throw new RuntimeException("用餐场景不存在，请检查！");
+        }
+        return diningSceneId;
     }
 
 

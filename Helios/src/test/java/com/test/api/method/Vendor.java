@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.api.VendorApi;
 import com.hand.baseMethod.HttpStatusException;
+import com.hand.basicConstant.TmcChannel;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SSOBody;
 import com.hand.basicObject.supplierObject.SettlementBody;
@@ -15,6 +16,8 @@ import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+
+import static java.lang.Thread.sleep;
 
 /**
  * @Author peng.zhang
@@ -118,6 +121,7 @@ public class Vendor {
 
     /**
      * 消费平台 sso单点登录
+     *
      * @param employee
      * @param supplierOID
      * @param direction
@@ -125,11 +129,12 @@ public class Vendor {
      * @return
      * @throws HttpStatusException
      */
-    public String vndSSO(Employee employee,String supplierOID,String direction,String pageType) throws HttpStatusException {
-        return vendorApi.vndSSO(employee,supplierOID,direction,pageType);
+    public String vndSSO(Employee employee, String supplierOID, String direction, String pageType) throws HttpStatusException {
+        return vendorApi.vndSSO(employee, supplierOID, direction, pageType);
     }
-    public int ssoCode(Employee employee,String supplierOID,String direction,String pageType) throws HttpStatusException {
-        return vendorApi.ssoCode(employee,supplierOID,direction,pageType);
+
+    public int ssoCode(Employee employee, String supplierOID, String direction, String pageType) throws HttpStatusException {
+        return vendorApi.ssoCode(employee, supplierOID, direction, pageType);
     }
 
     /**
@@ -218,7 +223,7 @@ public class Vendor {
     }
 
     /**
-     * 查询TMC 申请单同步信息
+     * 查询 TMC 申请单同步信息
      *
      * @param employee
      * @param tmcChannel 例：supplyUbtripService优行   supplyCimccTMCService中集  supplyCtripService
@@ -227,6 +232,35 @@ public class Vendor {
      */
     public JsonObject getTMCPlan(Employee employee, String tmcChannel, String approvalNo) throws HttpStatusException {
         return vendorApi.tmcPlanInfo(employee, tmcChannel, approvalNo);
+    }
+
+    /**
+     * 查询 TMC 申请单同步信息方法
+     * 封装重试 + 等待机制
+     *
+     * @param employee
+     * @param tmcChannel
+     * @param approvalNo
+     * @return
+     * @throws HttpStatusException
+     * @throws InterruptedException
+     */
+    public JsonObject getTMCPlanRequestDTO(Employee employee, String tmcChannel, String approvalNo) throws HttpStatusException, InterruptedException {
+        JsonObject tmcRequestData = new JsonObject();
+        // 重试 三次
+        int i = 0;
+        while (i < 3) {
+            // 间隔 20s
+            sleep(20000);
+            JsonObject syncData = this.getTMCPlan(employee, tmcChannel, approvalNo);
+            log.info("查询的数据为：{}", syncData);
+            if (!syncData.get("tmcRequest").isJsonNull()) {
+                tmcRequestData = syncData.getAsJsonObject("tmcRequest");
+                break;
+            }
+            i++;
+        }
+        return tmcRequestData;
     }
 
     /**

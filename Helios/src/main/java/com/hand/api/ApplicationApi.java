@@ -12,9 +12,11 @@ import com.hand.basicConstant.ResourceId;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.json.Json;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -201,6 +203,7 @@ public class ApplicationApi extends BaseRequest {
 
     /**
      * 添加一个用餐行程
+     *
      * @param employee
      * @param applicationOID
      * @param diningItineraries
@@ -297,9 +300,13 @@ public class ApplicationApi extends BaseRequest {
      * 获取差旅申请单中的行程
      *
      * @param employee
-     * @param applicationOID
      * @return
      * @throws HttpStatusException
+     * @apiParam {UUID} applicationOID                      申请单oid
+     * @apiParam {Boolean} itineraryShowDetails             行程备注中的行程详情是否使用统一格式
+     * @apiParam {Boolean} withRequestDetail                是否查询差补行程的详细信息（每条差补行程的费用类型、参与人姓名、币种和金额）
+     * @apiParam {Boolean} withItemDetail                   是否查询差补行程下的每个人的差补详情
+     * @apiParam {Object[]} filterItineraryTypes            行程类型  (1001: 机票行程;  1002: 火车; 1003: 酒店; 1004: 其他; 1005: 行程备注; 1006: 差旅补贴
      */
     public JsonObject getItinerarys(Employee employee, String applicationOID) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.APPLICATION_ITINERARY;
@@ -342,6 +349,32 @@ public class ApplicationApi extends BaseRequest {
         maps.put("roleType", "TENANT");
         String res = doGet(url, getHeader(employee.getAccessToken(), HeaderKey.FORM_CONFIG, ResourceId.FORM_CONFIG), maps, employee);
         return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 获取用餐场景
+     *
+     * @param employee
+     * @param formOID
+     * @return
+     * @throws HttpStatusException [
+     *                             {
+     *                             "id":"1218722645100748802",
+     *                             "name":"餐补",
+     *                             "status":1,
+     *                             "durationType":2,
+     *                             "startTime":"09:00",
+     *                             "endTime":"22:00",
+     *                             "frequency":1001
+     *                             }
+     *                             ]
+     */
+    public JsonArray getFormDiningScene(Employee employee, String formOID) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.FORM_DINING_SCRNE;
+        Map<String, String> map = new HashMap<>();
+        map.put("formOID", formOID);
+        String res = doGet(url, getHeader(employee.getAccessToken()), map, employee);
+        return new JsonParser().parse(res).getAsJsonArray();
     }
 
 }

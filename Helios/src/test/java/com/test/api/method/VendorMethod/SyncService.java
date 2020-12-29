@@ -8,6 +8,7 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.employeeInfoDto.EmployeeDTO;
 import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoDTO;
 import com.hand.basicObject.supplierObject.syncApproval.syncCtrip.*;
+import com.hand.basicObject.supplierObject.syncApproval.syncEleme.SyncElemePlanRequest;
 import com.hand.basicObject.supplierObject.syncApproval.syncPlatformEntity.*;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
@@ -476,5 +477,12 @@ public class SyncService {
         JsonObject bookInfo = infraStructure.getEmployeeDetail(employee,applicationParticipant.get("participantOID").getAsString());
         passenger.setName(bookInfo.get("fullName").getAsString());
         return passenger;
+    }
+
+    // todo-构造饿了么审批单同步dto
+    public SyncElemePlanRequest setElemePlanDTO(Object applicationDTO){
+        SyncElemePlanRequest syncElemePlanRequest = new SyncElemePlanRequest();
+//        syncElemePlanRequest.setBusinessCode(applicationDTO.getBusinessCode());
+        return syncElemePlanRequest;
     }
 }

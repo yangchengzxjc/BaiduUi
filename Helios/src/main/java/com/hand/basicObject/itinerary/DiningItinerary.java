@@ -14,10 +14,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class DiningItinerary {
 
-    /**
-     * 申请单oid
-     */
-    private UUID applicationOID;
 
     /**
      * 行程oid

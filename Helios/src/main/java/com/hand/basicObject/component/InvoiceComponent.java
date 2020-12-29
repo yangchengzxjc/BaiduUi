@@ -54,7 +54,13 @@ public class InvoiceComponent {
     String participant;
     //开始结束日期    "{"startDate":"2020-06-22T16:00:00.000Z","endDate":"2020-06-24T16:00:00.000Z","duration":2}"
     String startAndEndData ;
-    //业务用途  值列表
+    //出发城市
+    private String setoffCity;
+    //到达城市
+    private String arriveCity;
+    //飞机舱等
+    private String cabin;
+    private String discount;
     public InvoiceComponent(){
 
     }

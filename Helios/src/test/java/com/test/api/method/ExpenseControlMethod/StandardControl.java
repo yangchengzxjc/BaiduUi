@@ -229,7 +229,7 @@ public class StandardControl{
      * @param setType
      * @return
      */
-    public StandardRules setNoAmount(String noAmountType,String setType){
+    public StandardRules setNoAmountRule(String noAmountType,String setType){
         StandardRules rules = new StandardRules();
         rules.setName("autoTest noAmount control");
         if(noAmountType.equals("飞机")){
@@ -239,7 +239,7 @@ public class StandardControl{
             rules.setNonAmountCtrlItem("TRAIN_SEAT_CLASS");
         }
         if(noAmountType.equals("轮船")){
-            rules.setNonAmountCtrlItem("PLANE_CABIN");
+            rules.setNonAmountCtrlItem("SHIP_CABIN");
         }
         if(setType.equals("费用大类")){
             rules.setSetType("EXPENSE_TYPE_CATEGORY");
@@ -247,6 +247,31 @@ public class StandardControl{
         return rules;
     }
 
+    /**
+     * 非金额管控规则初始化 参与人标准开启
+     * @param noAmountType
+     * @param setType
+     * @return
+     */
+    public StandardRules setNoAmountRule(String noAmountType,String setType,String participantMode){
+        StandardRules rules = new StandardRules();
+        rules.setName("autoTest noAmount control");
+        if(noAmountType.equals("飞机")){
+            rules.setNonAmountCtrlItem("PLANE_CABIN");
+        }
+        if(noAmountType.equals("火车")){
+            rules.setNonAmountCtrlItem("TRAIN_SEAT_CLASS");
+        }
+        if(noAmountType.equals("轮船")){
+            rules.setNonAmountCtrlItem("SHIP_CABIN");
+        }
+        if(setType.equals("费用大类")){
+            rules.setSetType("EXPENSE_TYPE_CATEGORY");
+        }
+        rules.setParticipantsEnable(true);
+        rules.setParticipantsMode(participantMode);
+        return rules;
+    }
 
     /**
      * 非金额的标准初始化
@@ -257,12 +282,20 @@ public class StandardControl{
      * @return
      * @throws HttpStatusException
      */
-    public StandardRulesItem setNoAmountStandard(Employee employee,StandardRules rules,String ruleOID,String ...cabin) throws HttpStatusException {
+    public StandardRulesItem setNoAmountStandard(Employee employee,StandardRules rules,boolean isEdit,String ruleOID,String[] userGroup,String ...cabin) throws HttpStatusException {
         StandardRulesItem standardRulesItem = new StandardRulesItem();
         ReimbStandard reimbStandard = new ReimbStandard();
-        standardRulesItem.setCustomEnumerationItems(reimbStandard.getCustomEnumerationItems(employee,cabin));
+        if(rules.getNonAmountCtrlItem().equals("PLANE_CABIN")){
+            standardRulesItem.setCustomEnumerationItems(reimbStandard.getCustomEnumerationItems(employee,"舱等",cabin));
+        }
+        if(rules.getNonAmountCtrlItem().equals("TRAIN_SEAT_CLASS")){
+            standardRulesItem.setCustomEnumerationItems(reimbStandard.getCustomEnumerationItems(employee,"座等",cabin));
+        }
+        if(rules.getNonAmountCtrlItem().equals("SHIP_CABIN")){
+            standardRulesItem.setCustomEnumerationItems(reimbStandard.getCustomEnumerationItems(employee,"座次",cabin));
+        }
         standardRulesItem.setRuleOID(ruleOID);
-        reimbStandard.addStandard(employee,true,rules,standardRulesItem,new String[]{},new String[]{});
+        reimbStandard.addStandard(employee,isEdit,rules,standardRulesItem,userGroup,new String[]{});
         return standardRulesItem;
     }
 }

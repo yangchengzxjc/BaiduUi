@@ -511,7 +511,7 @@ public class SingleControlTest extends BaseTest {
         Assert.assertEquals(invoice.checkInvoiceLabel(employee,invoiceOID1,"EXPENSE_STANDARD_EXCEEDED_WARN"),label);
     }
 
-//    @AfterMethod
+    @AfterMethod
     public void cleanEnv() throws HttpStatusException {
         ExpenseReportInvoice invoice =new ExpenseReportInvoice();
         for (String s : map.keySet()){

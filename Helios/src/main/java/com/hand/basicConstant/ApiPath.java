@@ -100,7 +100,7 @@ public class ApiPath {
 //        报销单删除
         public static final String EXPENSE_REPORT_DELETE ="/api/expense/reports/%s";
 //        账本中删除费用
-        public static final String INVOICEOID_DELETE ="/api/invoice/batch";
+        public static final String INVOICEOID_DELETE ="/api/v2/invoice/%s";
 
 //        申请单删除
         public static final String APPLICATION_DELETE ="/api/applications/all/%s";

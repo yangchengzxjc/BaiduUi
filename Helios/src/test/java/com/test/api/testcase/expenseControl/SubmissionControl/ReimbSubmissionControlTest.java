@@ -17,6 +17,7 @@ import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportInvoice;
 import com.test.api.method.ReimbSubmissionControl;
 import lombok.extern.slf4j.Slf4j;
+import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.HashMap;
@@ -152,7 +153,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
             repeatMoth3 = UTCTime.utcTOdate(UTCTime.getFormStartDate(2));
         }
         String expect = String.format("%s（ \"自动化测试-报销标准\"与\"自动化测试-报销标准\"在%s,%s,%s重复 ）。",rules.getMessage(),repeatMoth1,repeatMoth2,repeatMoth3);
-        assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN",expect);
+        Assert.assertEquals(expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN"),expect);
     }
 
     @Test(description = "报销提交管控-账套级-禁止-费用重复管控-包含")
@@ -190,7 +191,6 @@ public class ReimbSubmissionControlTest extends BaseTest {
             repeatMoth3 = UTCTime.utcTOdate(UTCTime.getFormStartDate(2));
         }
         assert expenseReport.checkSubmitLabel(employee, reportOID, "REPORT_SUBMIT_ERROR", rules.getMessage());
-        String costMoth = UTCTime.utcTOdate(UTCTime.getUtcTime(0,0));
         String expect = String.format("%s（ \"自动化测试-报销标准\"与\"自动化测试-报销标准\"在%s,%s,%s重复 ）。",rules.getMessage(),repeatMoth1,repeatMoth2,repeatMoth3);
         assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_ERROR",expect);
     }

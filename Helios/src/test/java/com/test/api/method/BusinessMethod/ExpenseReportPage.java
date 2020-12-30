@@ -107,14 +107,25 @@ public class ExpenseReportPage {
      * @return
      * @throws HttpStatusException
      */
-    public String setairPlanInvoice(Employee employee,String expenseName,String expenseReportOID,String cabin) throws HttpStatusException {
+    public String setAirTrainShipInvoice(Employee employee, String expenseName, String expenseReportOID, String participants[], String cabin) throws HttpStatusException {
         ExpenseReportComponent expenseReportComponent =new ExpenseReportComponent();
         String setOffcityCode = expenseReportComponent.getCityCode(employee,"上海");
         String arriveCityCode = expenseReportComponent.getCityCode(employee,"西安");
         InvoiceComponent invoiceComponent =new InvoiceComponent();
         ReimbStandard reimbStandard = new ReimbStandard();
-        JsonArray cabinArray = reimbStandard.getCustomEnumerationItems(employee,cabin);
-        invoiceComponent.setCabin(cabinArray.get(0).getAsJsonObject().get("value").getAsString());
+        JsonArray cabinArray =new JsonArray();
+        if(expenseName.equals("train-autotest")){
+            cabinArray = reimbStandard.getCustomEnumerationItems(employee,"座等",cabin);
+        }
+        if(expenseName.equals("airplan-autotest")){
+            cabinArray = reimbStandard.getCustomEnumerationItems(employee,"舱等",cabin);
+        }
+        if(expenseName.equals("ship-autotest")){
+            cabinArray = reimbStandard.getCustomEnumerationItems(employee,"",cabin);
+        }
+        if(cabinArray.size()!=0){
+            invoiceComponent.setCabin(cabinArray.get(0).getAsJsonObject().get("value").getAsString());
+        }
         invoiceComponent.setArriveCity(arriveCityCode);
         invoiceComponent.setSetoffCity(setOffcityCode);
         invoiceComponent.setCompanyPay(false);
@@ -123,6 +134,7 @@ public class ExpenseReportPage {
         startAndEndDate.addProperty("endDate",UTCTime.getFormDateEnd(3));
         startAndEndDate.addProperty("duration",3);
         invoiceComponent.setStartAndEndData(startAndEndDate.toString());
+        invoiceComponent.setParticipants(participants);
         return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,250.00,new JsonArray()).get("invoiceOID");
     }
 

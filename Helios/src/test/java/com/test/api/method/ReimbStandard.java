@@ -173,7 +173,7 @@ public class ReimbStandard {
             rules.setForms(form);
         }
         // period mode, participantsEnable must be false
-        if(rules.getControlModeType().equals("PERIOD")){
+        if(rules.getControlModeType().equals("PERIOD") && rules.getNonAmountCtrlItem()==null){
             rules.setParticipantsEnable(false);
         }
         if(rules.getControlModeType().equals("SINGLE")){
@@ -403,11 +403,21 @@ public class ReimbStandard {
     }
 
     /**
-     * 获取舱等的值列表信息
+     * 获取舱等,坐等的值列表信息
      * @return
      */
-    public JsonArray getCustomEnumerationItems(Employee employee,String ...cabin) throws HttpStatusException {
-        JsonArray cabinArray = reimbStandardRules.getEnumerations(employee);
+    public JsonArray getCustomEnumerationItems(Employee employee,String enumerationType,String ...cabin) throws HttpStatusException {
+        String emumerationTypeId = "";
+        if(enumerationType.equals("舱等")){
+            emumerationTypeId = "1016";
+        }
+        if(enumerationType.equals("座等")){
+            emumerationTypeId = "1015";
+        }
+        if(enumerationType.equals("座次")){
+            emumerationTypeId = "1019";
+        }
+        JsonArray cabinArray = reimbStandardRules.getEnumerations(employee,emumerationTypeId);
         JsonArray customEnumerationItems = new JsonArray();
         if(GsonUtil.isNotEmpt(cabinArray)){
             for(int i = 0;i<cabin.length;i++){

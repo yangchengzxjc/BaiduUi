@@ -317,14 +317,15 @@ public class ReimbStandardApi  extends BaseRequest {
     /**
      * 非金额管控获取值列表
      * @param employee
+     * @param enumerationTypeId 值列表的id  坐等1015   舱等1016
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray getEnumerations(Employee employee) throws HttpStatusException {
+    public JsonArray getEnumerations(Employee employee,String enumerationTypeId) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.GET_enumerations;
         HashMap<String,String> parm = new HashMap<>();
         parm.put("roleType","TENANT");
-        parm.put("systemCustomEnumerationType","1016");
+        parm.put("systemCustomEnumerationType",enumerationTypeId);
         parm.put("paged","false");
         String response = doGet(url, getHeader(employee.getAccessToken(),HeaderKey.REIMB_STANDARD,ResourceId.INFRA), parm, employee);
         return new JsonParser().parse(response).getAsJsonArray();

@@ -43,6 +43,14 @@ public class NoAmountControlTest extends BaseTest {
         invoice = new ExpenseReportInvoice();
     }
 
+    @BeforeMethod
+    public void cleanMap(){
+        if(map.size()!=0){
+            map.clear();
+        }
+    }
+
+
     @Test(description = "非金额管控-飞机舱等管控-不包含-经济舱")
     public void noAmountControlTest01() throws HttpStatusException {
         //新建非金额管控

@@ -101,16 +101,14 @@ public class ExpenseApi extends BaseRequest{
     /**
      * 我的账本中删除费用
      * @param employee
-     * @param invoiceOIDs
+     * @param invoiceOID
      * @return
      * @throws HttpStatusException
      */
-    public  void invoiceDelete(Employee employee, String  invoiceOIDs) throws HttpStatusException {
-        String url=employee.getEnvironment().getUrl()+ ApiPath.INVOICEOID_DELETE;
-        Map<String, String> formbody = new HashMap<>();
-        formbody.put("invoiceOIDs", invoiceOIDs);
+    public  void invoiceDelete(Employee employee, String  invoiceOID) throws HttpStatusException {
+        String url=employee.getEnvironment().getUrl()+ String.format(ApiPath.INVOICEOID_DELETE,invoiceOID);
         JsonObject body=new JsonObject();
-        doDlete(url,getHeader(employee.getAccessToken()),formbody,body, employee);
+        doDlete(url,getHeader(employee.getAccessToken()),null,body, employee);
     }
 
     /**

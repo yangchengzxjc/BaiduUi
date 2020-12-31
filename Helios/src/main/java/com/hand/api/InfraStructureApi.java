@@ -142,8 +142,8 @@ public class InfraStructureApi extends BaseRequest{
         }catch (NullPointerException e){
             log.info("员工的手机号为空");
         }
-        if(infraEmployee.getFullName() ==null){
-            employeeInfo.addProperty("fullName","11101");
+        if(infraEmployee.getFullName() == null){
+            employeeInfo.addProperty("fullName",userInfo.get("fullName").getAsString());
         }else{
             employeeInfo.addProperty("fullName",infraEmployee.getFullName());
         }
@@ -158,7 +158,7 @@ public class InfraStructureApi extends BaseRequest{
         }else{
             employeeInfo.addProperty("entryTime",infraEmployee.getEntryTime());
         }
-        employeeInfo.add("contactI18n",new JsonArray());
+        employeeInfo.add("contactI18n",userInfo.get("contactI18n").getAsJsonArray());
         employeeInfo.add("customFormValues",customFormValues);
         employeeInfo.add("userJobsDTOs",userJobsDTOs);
         String res= doPut(url,getHeader(employee.getAccessToken()),null,employeeInfo.toString(),null, employee);

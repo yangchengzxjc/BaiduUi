@@ -242,12 +242,16 @@ public class ExpenseReportInvoice {
         JsonObject result = getInvoice(employee,invoiceOID);
         JsonArray invoiceLabel = result.get("invoiceLabels").getAsJsonArray();
         if(GsonUtil.isNotEmpt(invoiceLabel)){
-            String toast = GsonUtil.getJsonValue(invoiceLabel,"type",type).get("toast").getAsString();
-            log.info("费用内的标签:{}",toast);
-            if(toast.equals(expectValue)){
-                return true;
-            }else{
-                return false;
+            try{
+                String toast = GsonUtil.getJsonValue(invoiceLabel,"type",type).get("toast").getAsString();
+                log.info("费用内的标签:{}",toast);
+                if(toast.equals(expectValue)){
+                    return true;
+                }else{
+                    return false;
+                }
+            }catch (NullPointerException e){
+                throw new RuntimeException(String.format("费用中无此%s类型的标签",type));
             }
         }else{
             return false;
@@ -270,7 +274,7 @@ public class ExpenseReportInvoice {
                 log.info("费用内的标签:{}", toast);
                 return toast;
             }catch (NullPointerException e){
-                return "";
+                throw new RuntimeException(String.format("费用中无此%s类型的标签",type));
             }
         }else{
             throw new RuntimeException("未存在标签");

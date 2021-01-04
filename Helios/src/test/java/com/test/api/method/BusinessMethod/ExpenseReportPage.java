@@ -121,7 +121,7 @@ public class ExpenseReportPage {
             cabinArray = reimbStandard.getCustomEnumerationItems(employee,"舱等",cabin);
         }
         if(expenseName.equals("ship-autotest")){
-            cabinArray = reimbStandard.getCustomEnumerationItems(employee,"",cabin);
+            cabinArray = reimbStandard.getCustomEnumerationItems(employee,"座次",cabin);
         }
         if(cabinArray.size()!=0){
             invoiceComponent.setCabin(cabinArray.get(0).getAsJsonObject().get("value").getAsString());
@@ -137,9 +137,6 @@ public class ExpenseReportPage {
         invoiceComponent.setParticipants(participants);
         return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,250.00,new JsonArray()).get("invoiceOID");
     }
-
-
-
     /**
      * 新建费用  不参与分摊   开始结束日期控件不为空
      * @param employee

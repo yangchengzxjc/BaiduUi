@@ -217,7 +217,7 @@ public class NoAmountControlTest extends BaseTest {
         Assert.assertEquals(expenseReport.checkSubmitLabel(employee, reportOID1, "5001"), label);
     }
 
-    @Test(description = "非金额管控-费用类型-轮船管控-不包含-基本标准(一等舱)")
+    @Test(description = "非金额管控-费用类型-轮船管控-不包含-基本标准")
     public void noAmountControlTest10() throws HttpStatusException{
         //新建非金额管控
         StandardRules rules = standardControl.setNoAmountRule("轮船", "费用类型");
@@ -235,7 +235,7 @@ public class NoAmountControlTest extends BaseTest {
         Assert.assertEquals(expenseReport.checkSubmitLabel(employee, reportOID1, "5001"), label);
     }
 
-    @Test(description = "非金额管控-费用大类-轮船管控-不包含-基本标准(一等舱)")
+    @Test(description = "非金额管控-费用大类-轮船管控-不包含-基本标准")
     public void noAmountControlTest11() throws HttpStatusException{
         //新建非金额管控
         StandardRules rules = standardControl.setNoAmountRule("轮船", "费用大类");

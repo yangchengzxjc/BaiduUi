@@ -364,6 +364,12 @@ public class ExpenseApi extends BaseRequest{
                 case "飞机舱等":
                     data.addProperty("value",component.getCabin());
                     break;
+                case "火车座等":
+                    data.addProperty("value",component.getCabin());
+                    break;
+                case "轮船座次":
+                    data.addProperty("value",component.getCabin());
+                    break;
                 case "出发城市":
                     data.addProperty("value",component.getSetoffCity());
                     break;

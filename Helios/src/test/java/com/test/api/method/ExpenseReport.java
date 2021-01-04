@@ -435,11 +435,15 @@ public class ExpenseReport {
         log.info("校验的结果:{}",result);
         JsonArray checkResultList = result.get("checkResultList").getAsJsonArray();
         if(GsonUtil.isNotEmpt(checkResultList)){
-            String message = GsonUtil.getJsonValue(checkResultList,"externalPropertyName",externalPropertyName).get("message").getAsString();
-            if(message.contains(expectValue)){
-                return true;
-            }else{
-                return false;
+            try{
+                String message = GsonUtil.getJsonValue(checkResultList,"externalPropertyName",externalPropertyName).get("message").getAsString();
+                if(message.contains(expectValue)){
+                    return true;
+                }else{
+                    return false;
+                }
+            }catch (NullPointerException e){
+                throw new RuntimeException(String.format("报销单中无此%s类型的标签",externalPropertyName));
             }
         }else {
             return false;

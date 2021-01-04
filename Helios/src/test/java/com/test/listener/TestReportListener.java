@@ -47,7 +47,7 @@ public class TestReportListener implements IReporter {
         List<ITestResult> list = new ArrayList<ITestResult>();
         for (ISuite suite : suites) {
             Map<String, ISuiteResult> suiteResults = suite.getResults();
-            if(suite.getParameter("module")!= null){
+            if (suite.getParameter("module") != null) {
                 module = suite.getParameter("module");
             }
             suitName = suite.getName();
@@ -90,25 +90,25 @@ public class TestReportListener implements IReporter {
             String pass = DingDingUtil.folatToPer((float) testsPass / testAll);
             StringBuilder context = new StringBuilder();
             JsonElement moduleelement = new JsonParser().parse(module);
-            if(testsFail==0){
-                String contxtString = String.format("\"### **%s**\\n> - <font color=\\\"#34A853\\\">环境：%s</font><br/>\\n> - <font color=\\\"#34A853\\\">总用例数：%s</font><br/>\\n> - <font color=\\\"#34A853\\\">通过：%s</font><br/>\\n> - <font color=\\\"#34A853\\\">失败：%s</font><br/>\\n> - <font color=\\\"#34A853\\\">跳过：%s</font><br/>\\n> - <font color=\\\"#34A853\\\">通过率为：%s</font><br/>\"",suitName,environment,testAll,testsPass,testsFail,testsSkip,pass);
+            if (testsFail == 0) {
+                String contxtString = String.format("\"### **%s**\\n> - <font color=\\\"#34A853\\\">环境：%s</font><br/>\\n> - <font color=\\\"#34A853\\\">总用例数：%s</font><br/>\\n> - <font color=\\\"#34A853\\\">通过：%s</font><br/>\\n> - <font color=\\\"#34A853\\\">失败：%s</font><br/>\\n> - <font color=\\\"#34A853\\\">跳过：%s</font><br/>\\n> - <font color=\\\"#34A853\\\">通过率为：%s</font><br/>\"", suitName, environment, testAll, testsPass, testsFail, testsSkip, pass);
                 context.append(contxtString);
             }
-            if(testsFail>0){
+            if (testsFail > 0) {
                 StringBuilder at = new StringBuilder();
-                if(moduleelement.getAsJsonArray().isJsonArray()){
-                    for(int i=0;i<moduleelement.getAsJsonArray().size();i++){
-                        at.append(String.format("@%s",Long.valueOf(moduleelement.getAsJsonArray().get(i).getAsString())));
+                if (moduleelement.getAsJsonArray().isJsonArray()) {
+                    for (int i = 0; i < moduleelement.getAsJsonArray().size(); i++) {
+                        at.append(String.format("@%s", Long.valueOf(moduleelement.getAsJsonArray().get(i).getAsString())));
                     }
                 }
-                context.append(String.format("\"### **%s**\\n> - <font color=\\\"#EA4335\\\">环境：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">总用例数：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">通过：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">失败：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">跳过：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">通过率为：%s</font><br/>%s\"",suitName,environment,testAll,testsPass,testsFail,testsSkip,pass,at));
+                context.append(String.format("\"### **%s**\\n> - <font color=\\\"#EA4335\\\">环境：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">总用例数：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">通过：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">失败：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">跳过：%s</font><br/>\\n> - <font color=\\\"#EA4335\\\">通过率为：%s</font><br/>%s\"", suitName, environment, testAll, testsPass, testsFail, testsSkip, pass, at));
             }
-            if(testsFail==0){
-                module="[]";
+            if (testsFail == 0) {
+                module = "[]";
             }
             try {
-                log.info("发送的消息为：{}",context.toString());
-                DingDingUtil.sendVal(url,context.toString(),module);
+                log.debug("发送的消息为：{}", context.toString());
+                DingDingUtil.sendVal(url, context.toString(), module);
             } catch (Exception e) {
                 e.printStackTrace();
             }

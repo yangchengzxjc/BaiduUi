@@ -281,23 +281,24 @@ public class EmployeeManagePage {
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject addUserCard(Employee employee,String userOID, CardType cardType,String firstName,String lastName,Boolean enable) throws HttpStatusException {
+    public JsonObject addUserCard(Employee employee,String userOID, CardType cardType,String firstName,String lastName,
+                                  Boolean enable,String gender,String birthday,String nationalityCode,Boolean defaultCard,
+                                  String cardNo,String cardExpiredTime) throws HttpStatusException {
         UserCardInfoEntity userCardInfoEntity = new UserCardInfoEntity();
         userCardInfoEntity.setCardType(cardType);
         userCardInfoEntity.setContactCardOID(null);
         userCardInfoEntity.setFirstName(firstName);
         userCardInfoEntity.setLastName(lastName);
-        userCardInfoEntity.setGender("0");
-        userCardInfoEntity.setBirthday("2020-07-29T10:25:11+08:00");
-        userCardInfoEntity.setNationalityCode("CN");
-        userCardInfoEntity.setCardDefault(false);
+        userCardInfoEntity.setGender(gender);
+        userCardInfoEntity.setBirthday(birthday);  //"2020-07-29T10:25:11+08:00"
+        userCardInfoEntity.setNationalityCode(nationalityCode); //"CN"
+        userCardInfoEntity.setCardDefault(defaultCard);
         userCardInfoEntity.setEnable(enable);
-        userCardInfoEntity.setCardNo("11223344");
+        userCardInfoEntity.setCardNo(cardNo);
         userCardInfoEntity.setOriginalCardNo("");
-        userCardInfoEntity.setCardExpiredTime("2022-07-29T10:25:11+08:00");
+        userCardInfoEntity.setCardExpiredTime(cardExpiredTime);  //"2022-07-29T10:25:11+08:00"
         userCardInfoEntity.setUserOID(userOID);
-        JsonObject jsonObject = infraStructure.addUserCardInfo(employee,userCardInfoEntity);
-        return jsonObject;
+        return infraStructure.addUserCardInfo(employee,userCardInfoEntity);
     }
 
 }

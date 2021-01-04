@@ -36,9 +36,9 @@ import static java.lang.Thread.sleep;
 public class OkHttpUtils {
 
     private static OkHttpClient mOkHttpClient;
-    private static final int CONNECT_TIMEOUT = 20;
-    private static final int READ_TIMEOUT = 20;
-    private static final int WRITE_TIMEOUT = 20;
+    private static final int CONNECT_TIMEOUT = 10;
+    private static final int READ_TIMEOUT = 10;
+    private static final int WRITE_TIMEOUT = 10;
     private static final String GET = "GET";
     private static final String POST = "POST";
     private static final String DELETE = "DELETE";
@@ -74,14 +74,12 @@ public class OkHttpUtils {
 //        log.info("---------------------------request end--------------------------------------------------");
     }
 
-
     private static void addResponseLog(String method, String callMethod, String url, String jsonbody, String formParam, Response response, int httpCode, String result, String SpanID, long startTime) {
 
         log.info("Status: {}", httpCode);
         log.info("SpanID: {}", SpanID);
 
         long endTime = System.currentTimeMillis();
-
         try {
             log.info("APIResponse: {}", new JsonParser().parse(result).getAsJsonObject().toString());
         } catch (Exception e) {
@@ -119,6 +117,7 @@ public class OkHttpUtils {
         APIResponse APIResponse = new APIResponse();
         APIResponse.setBody(result);
         APIResponse.setStatusCode(httpCode);
+        APIResponse.setTime(response.receivedResponseAtMillis()-response.sentRequestAtMillis());
         return APIResponse;
     }
 
@@ -132,7 +131,6 @@ public class OkHttpUtils {
         }
         throw new RuntimeException(ex);
     }
-
 
     /**
      * get方法连接拼加参数
@@ -278,8 +276,6 @@ public class OkHttpUtils {
             response = client.newCall(req).execute();
             res = response.body().string();
             httpCode = response.code();
-
-
         } catch (SocketTimeoutException e) {
             log.error("SocketTimeoutException,try again:" + e.getMessage());
             req = new Request.Builder()
@@ -312,7 +308,7 @@ public class OkHttpUtils {
      * @return
      * @throws IOException
      */
-    public static APIResponse put(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, String requestBody, Map<String, String> formBody) throws HttpStatusException {
+    public static APIResponse put(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, String requestBody, Map<String, String> formBody){
         Headers headers = null;
         RequestBody body = null;
         String strParams = "";
@@ -395,7 +391,7 @@ public class OkHttpUtils {
      * @return
      * @throws IOException
      */
-    public static APIResponse post(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, String requestBody, Map<String, String> formData) throws HttpStatusException {
+    public static APIResponse post(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, String requestBody, Map<String, String> formData){
         Headers headers = null;
         RequestBody body = null;
         String strParams = "";
@@ -452,7 +448,6 @@ public class OkHttpUtils {
             Call call = client.newCall(req);
             try {
                 response = call.execute();
-                log.info("执行了吗");
                 res = response.body().string();
             } catch (Exception ex) {
                 log.error("Retry still fails:" + ex.getMessage());
@@ -481,7 +476,7 @@ public class OkHttpUtils {
      * @throws IOException
      */
     public static APIResponse upLoadFile(String Url, Map<String, String> headersParams, Map<String, String> formBody, String name, String filePath, String
-            fileMediaType) throws HttpStatusException {
+            fileMediaType){
         Headers headers = null;
         long startTime = System.currentTimeMillis();
         String res = "";
@@ -556,7 +551,7 @@ public class OkHttpUtils {
      * @return
      * @throws IOException
      */
-    public static APIResponse delete(String Url, Map<String, String> headersParams, Map<String, String> UrlMapParams, JsonObject Jsonbody) throws HttpStatusException {
+    public static APIResponse delete(String Url, Map<String, String> headersParams, Map<String, String> UrlMapParams, JsonObject Jsonbody){
         Headers headers = null;
         String strParams = "";
         String res = "";
@@ -594,4 +589,5 @@ public class OkHttpUtils {
         }
         return handleHttpResponse(httpCode, res, response);
     }
+
 }

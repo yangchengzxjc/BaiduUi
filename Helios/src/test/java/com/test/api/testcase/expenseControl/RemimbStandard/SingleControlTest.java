@@ -337,7 +337,7 @@ public class SingleControlTest extends BaseTest {
         String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
         map.put("ruleOID",ruleOID);
         //设置管控项为备注包括
-        StandardControlItem controlItem = standardControl.setStandControlItem("INVOICE_LABEL", ControlValueType.UNINCLUDE.getValueType(),"32","INVOICE_LABEL");
+        StandardControlItem controlItem = standardControl.setStandControlItem("INVOICE_LABEL", ControlValueType.INCLUDE.getValueType(),"32","INVOICE_LABEL");
         reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
         //新建报销单
         String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
@@ -459,7 +459,7 @@ public class SingleControlTest extends BaseTest {
         map.put("invoiceOID1",invoiceOID1);
         //管控项为基本标准   则标准取就高350*1
         String itDate = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
-        String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 450.00，超标：CNY 250.00。",rules.getMessage(),itDate,standardRulesItem2.getAmount().add(standardRulesItem1.getAmount()).multiply(new BigDecimal(1)));
+        String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 400.00，超标：CNY 50.00。",rules.getMessage(),itDate,standardRulesItem2.getAmount().add(standardRulesItem1.getAmount()).multiply(new BigDecimal(1)));
         log.info("标签:{}",label);
         Assert.assertEquals(expenseReport.checkSubmitLabel(employee, reportOID1, "5001"),label);
         Assert.assertEquals(invoice.checkInvoiceLabel(employee,invoiceOID1,"EXPENSE_STANDARD_EXCEEDED_WARN"),label);

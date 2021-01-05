@@ -249,4 +249,31 @@ public class ExpenseReportPage {
         loanBillComponent.setPlanedRepaymentDate(UTCTime.getBeijingDate(1));
         expenseReport.createLoanLine(employee,formName,loanBillComponent,isOneself);
     }
+
+    /**
+     * 创建费用 陪同人数 招待人数 开始结束日期控件
+     * @param employee
+     * @param expenseName
+     * @param expenseReportOID
+     * @param accompanying 陪同人数
+     * @param hospitalized 招待人数
+     * @param participants
+     * @param amount
+     * @return
+     * @throws HttpStatusException
+     */
+    public String setInvoice(Employee employee,String expenseName,String expenseReportOID,int accompanying,int hospitalized,Object participants,int amount) throws HttpStatusException {
+        ExpenseReportComponent expenseReportComponent =new ExpenseReportComponent();
+        InvoiceComponent invoiceComponent =new InvoiceComponent();
+        invoiceComponent.setParticipants(participants);
+        invoiceComponent.setAccompanying(accompanying);
+        invoiceComponent.setHospitalized(hospitalized);
+        JsonObject startAndEndDate = new JsonObject();
+        startAndEndDate.addProperty("startDate",UTCTime.getFormStartDate(0));
+        startAndEndDate.addProperty("endDate",UTCTime.getFormDateEnd(2));
+        startAndEndDate.addProperty("duration",2);
+        invoiceComponent.setStartAndEndData(startAndEndDate.toString());
+        return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,amount,new JsonArray()).get("invoiceOID");
+    }
+
 }

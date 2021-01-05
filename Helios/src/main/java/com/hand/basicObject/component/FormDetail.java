@@ -17,5 +17,7 @@ public class FormDetail {
     private String businessCode;
     //表单id
     private String id;
+    //费用的oid
+    private String invoiceOID;
 
 }

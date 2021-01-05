@@ -354,6 +354,13 @@ public class ApiPath {
         public static final String GET_SUPPLIER = "/supplier/api/ven/info/by/company";
         //非金额管控 查询值列表
         public static final String GET_enumerations = "/api/custom/enumerations/items/by/type";
+        //发票设置 免贴票管控
+        public static final String NO_PASTE_RECEIPT = "/config/api/config/rule";
+        //查询发票配置
+        public static final String GET_RECEIPT_CONFIG = "/config/api/config/item";
+        //删除发票配置
+        public static final String DELETE_CONFIG = "/config/api/config/rule/%s";
+
 }
 
 

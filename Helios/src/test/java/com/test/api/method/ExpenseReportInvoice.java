@@ -63,15 +63,15 @@ public class ExpenseReportInvoice {
     /**
      * 创建一笔费用，
      * @param employee
-     * @param expenseTypenName  费用类型的名称
+     * @param expenseTypeName  费用类型的名称
      * @param expenseReportOID   报销单的OID
      * @param amount   金额
      * @return
      */
-    public HashMap<String,String> createExpenseInvoice(Employee employee,String expenseTypenName,String expenseReportOID,double amount){
+    public HashMap<String,String> createExpenseInvoice(Employee employee,String expenseTypeName,String expenseReportOID,double amount){
         JsonObject jsonObject=null;
         try {
-           jsonObject= expenseApi.expenseReportCreateinvoice(employee,"",getExpenseTypeInfo(employee,expenseTypenName,expenseReportOID),
+           jsonObject= expenseApi.expenseReportCreateinvoice(employee,"",getExpenseTypeInfo(employee,expenseTypeName,expenseReportOID),
                     expenseReportOID,"","",amount,new JsonArray(),new JsonObject(),new JsonObject(),new JsonArray(),
                     false,new JsonArray(),expenseReportComponent.getExpenseLocation(employee,"西安环普科技产业园E座"),new JsonObject());
         } catch (HttpStatusException e) {

@@ -375,6 +375,13 @@ public class ExpenseApi extends BaseRequest{
                     break;
                 case "到达城市":
                     data.addProperty("value",component.getArriveCity());
+                    break;
+                case "陪同人员":
+                    data.addProperty("value",component.getAccompanying());
+                    break;
+                case "招待人员":
+                    data.addProperty("value",component.getHospitalized());
+                    break;
             }
         }
 //        结束给控件塞值  附件

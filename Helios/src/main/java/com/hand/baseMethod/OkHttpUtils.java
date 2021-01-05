@@ -238,10 +238,8 @@ public class OkHttpUtils {
                 MultipartBodyBuilder.addFormDataPart(key, i + ".png", fileBody);
             }
         }
-
         body = MultipartBodyBuilder.build();
         return body;
-
     }
 
     /**
@@ -273,6 +271,7 @@ public class OkHttpUtils {
                     .url(url)
                     .headers(headers)
                     .build();
+            sleep(500);
             response = client.newCall(req).execute();
             res = response.body().string();
             httpCode = response.code();
@@ -324,21 +323,17 @@ public class OkHttpUtils {
         if (urlMapParams != null) {
             strParams = setGetUrlParams(urlMapParams);
             url += strParams;
-
         }
 //        form请求
         if (formBody != null) {
             body = SetRequestFormBody(formBody);
             FormLog = formBody.toString();
         }
-
 //        json 请求
         if (requestBody != null) {
             MediaType JSON = MediaType.parse(String.valueOf(ContentType.APPLICATION_JSON));
             body = RequestBody.create(JSON, requestBody);
         }
-
-
         if (formBody != null) {
             req = new Request.Builder()
                     .url(url)
@@ -497,7 +492,6 @@ public class OkHttpUtils {
                 MultipartBodyBuilder.addFormDataPart(key, formBody.get(key));
             }
         }
-
         File file = new File(filePath);
         MultipartBodyBuilder.addFormDataPart(name, file.getName(), RequestBody.create(MediaType.parse(fileMediaType), file));
         body = MultipartBodyBuilder.build();
@@ -537,8 +531,6 @@ public class OkHttpUtils {
         }
         addResponseLog(POST, Url, Url, null, null, response, httpCode, res, response.header("SpanID"), startTime);
         return handleHttpResponse(httpCode, res, response);
-
-
     }
 
     /**
@@ -562,9 +554,7 @@ public class OkHttpUtils {
         if (UrlMapParams != null) {
             strParams = setGetUrlParams(UrlMapParams);
             Url += strParams;
-
         }
-
         MediaType JSON = MediaType.parse(String.valueOf(ContentType.APPLICATION_JSON));
         RequestBody body = RequestBody.create(JSON, Jsonbody.toString());
         addRequestLog(DELETE, Url, Url, null, null);
@@ -574,12 +564,14 @@ public class OkHttpUtils {
                 .headers(headers)
                 .delete(body)
                 .build();
-
         Response response = null;
         try {
+            sleep(500);
             response = client.newCall(req).execute();
             res = response.body().string();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         int httpCode = response.code();

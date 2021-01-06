@@ -7,6 +7,7 @@ import com.hand.basicObject.Employee;
 import com.hand.basicObject.Rule.StandardControlItem;
 import com.hand.basicObject.Rule.StandardRules;
 import com.hand.basicObject.Rule.StandardRulesItem;
+import com.hand.basicObject.component.FormDetail;
 import com.hand.basicObject.component.InvoiceComponent;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
@@ -64,16 +65,16 @@ public class PeriodControlTest extends BaseTest {
         //配置基本标准：200
         StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,true,rules,ruleOID);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,false);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),false);
         map.put("ruleOID",ruleOID);
-        map.put("reportOID1",reportOID1);
+        map.put("reportOID1",formDetail.getReportOID());
         map.put("invoiceOID1",invoiceOID1);
         String date = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 250.00，超标：CNY 50.00。",rules.getMessage(),date,standardRulesItem.getAmount());
         log.info("标签:{}",label);
-        assert expenseReport.checkSubmitLabel(employee, reportOID1, "5001",label);
+        assert expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001",label);
     }
 
     @Test(description = "规则配置:账套级-周期管控/每月-费用金额>基本标准")
@@ -84,16 +85,16 @@ public class PeriodControlTest extends BaseTest {
         //配置基本标准:200
         StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,true,rules,ruleOID);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee,UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee,UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,false);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),false);
         map.put("ruleOID",ruleOID);
-        map.put("reportOID1",reportOID1);
+        map.put("reportOID1",formDetail.getReportOID());
         map.put("invoiceOID1",invoiceOID1);
         String data = UTCTime.utcTObjmonth(UTCTime.getUtcTime(0,0),0);
         String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 250.00，超标：CNY 50.00。",rules.getMessage(),data,standardRulesItem.getAmount());
         log.info("标签：{}",label);
-        assert expenseReport.checkSubmitLabel(employee,reportOID1,"5001",label);
+        assert expenseReport.checkSubmitLabel(employee,formDetail.getReportOID(),"5001",label);
         assert invoice.checkInvoiceLabel(employee,invoiceOID1,"EXPENSE_STANDARD_EXCEEDED_WARN",label);
     }
 
@@ -105,19 +106,19 @@ public class PeriodControlTest extends BaseTest {
         //配置基本标准：200
         StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,true,rules,ruleOID);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee,UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee,UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName()},250.00);
-        String invoiceOID2 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName()},250.00);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),new String[]{employee.getFullName()},250.00);
+        String invoiceOID2 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),new String[]{employee.getFullName()},250.00);
         map.put("ruleOID",ruleOID);
         map.put("invoiceOID1",invoiceOID1);
         map.put("invoiceOID2",invoiceOID2);
-        map.put("reportOID1",reportOID1);
+        map.put("reportOID1",formDetail.getReportOID());
         String year = UTCTime.utcTObjyear(UTCTime.getUtcTime(0,0),0);
         String quarter = UTCTime.isQuarter(UTCTime.getUtcTime(0,0));
         String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 500.00，超标：CNY 300.00。",rules.getMessage(),year+quarter,standardRulesItem.getAmount());
         log.info("标签：{}",label);
-        assert expenseReport.checkSubmitLabel(employee,reportOID1,"5001",label);
+        assert expenseReport.checkSubmitLabel(employee,formDetail.getReportOID(),"5001",label);
         assert invoice.checkInvoiceLabel(employee,invoiceOID1,"EXPENSE_STANDARD_EXCEEDED_WARN",label);
         assert invoice.checkInvoiceLabel(employee,invoiceOID2,"EXPENSE_STANDARD_EXCEEDED_WARN",label);
     }
@@ -130,18 +131,18 @@ public class PeriodControlTest extends BaseTest {
         //配置基本标准：200
         StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,true,rules,ruleOID);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee,UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail= expenseReportPage.setDailyReport(employee,UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName()},250.00);
-        String invoiceOID2 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName()},250.00);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),new String[]{employee.getFullName()},250.00);
+        String invoiceOID2 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),new String[]{employee.getFullName()},250.00);
         map.put("ruleOID",ruleOID);
         map.put("invoiceOID1",invoiceOID1);
         map.put("invoiceOID2",invoiceOID2);
-        map.put("reportOID1",reportOID1);
+        map.put("reportOID1",formDetail.getReportOID());
         String date = UTCTime.utcTObjyear(UTCTime.getUtcTime(0,0),0);
         String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 500.00，超标：CNY 300.00。",rules.getMessage(),date+"年",standardRulesItem.getAmount());
         log.info("标签：{}",label);
-        assert expenseReport.checkSubmitLabel(employee,reportOID1,"5001",label);
+        assert expenseReport.checkSubmitLabel(employee,formDetail.getReportOID(),"5001",label);
         assert invoice.checkInvoiceLabel(employee,invoiceOID1,"EXPENSE_STANDARD_EXCEEDED_WARN",label);
         assert invoice.checkInvoiceLabel(employee,invoiceOID2,"EXPENSE_STANDARD_EXCEEDED_WARN",label);
     }
@@ -155,16 +156,16 @@ public class PeriodControlTest extends BaseTest {
         //配置基本标准：200
         StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,true,rules,ruleOID);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,false);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),false);
         map.put("ruleOID",ruleOID);
-        map.put("reportOID1",reportOID1);
+        map.put("reportOID1",formDetail.getReportOID());
         map.put("invoiceOID1",invoiceOID1);
         String date = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 250.00，超标：CNY 50.00。",rules.getMessage(),date,standardRulesItem.getAmount());
         log.info("标签:{}",label);
-        assert expenseReport.checkSubmitLabel(employee, reportOID1, "5001",label);
+        assert expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001",label);
     }
 
     @Test(description = "规则配置：账套级-周期管控/每天-平均金额>基本标准")
@@ -179,11 +180,11 @@ public class PeriodControlTest extends BaseTest {
         //配置基本标准
         StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,100,true,rules,ruleOID,new String[]{},new String[]{});
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail= expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,1,2,new String[]{employee.getFullName(),"员工0006"},2000);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),1,2,new String[]{employee.getFullName(),"员工0006"},2000);
         map.put("ruleOID",ruleOID);
-        map.put("reportOID1",reportOID1);
+        map.put("reportOID1",formDetail.getReportOID());
         map.put("invoiceOID1",invoiceOID1);
         String date1 = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String date2 = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),1);
@@ -191,7 +192,7 @@ public class PeriodControlTest extends BaseTest {
                 rules.getMessage(),date1,standardRulesItem.getAmount(),rules.getMessage(),date2,standardRulesItem.getAmount(),
                 rules.getMessage(),date1,standardRulesItem.getAmount(),rules.getMessage(),date2,standardRulesItem.getAmount());
         log.info("标签:{}",label);
-        assert expenseReport.checkSubmitLabel(employee, reportOID1, "5001",label);
+        assert expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001",label);
     }
 
     @AfterMethod

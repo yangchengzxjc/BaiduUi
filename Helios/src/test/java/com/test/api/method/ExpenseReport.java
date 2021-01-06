@@ -114,15 +114,15 @@ public class ExpenseReport {
      * @param city   如果存在城市控件则传一个城市名称，没有城市控件的话就传一个空的字符串。
      * @throws HttpStatusException
      */
-    public HashMap<String,String> createExpenseReport(Employee employee, String formName, String departmentOID,String city) throws HttpStatusException {
+    public FormDetail createExpenseReport(Employee employee, String formName, String departmentOID,String city) throws HttpStatusException {
         JsonObject jsonObject =reimbursementApi.createExpenseReport(employee,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName,"102")),departmentOID,
                 0, UTCTime.getNowUtcTime(),UTCTime.getUtcTime(2,0),employee.getCompanyOID(),expenseReportComponent.getCityCode(employee,city),participant(employee),new JsonArray(),new JsonArray(),
                 employee.getJobId(),employee.getUserOID());
-        HashMap<String,String> info =new HashMap<>();
-        info.put("expenseReportOID",jsonObject.get("expenseReportOID").getAsString());
-        info.put("businessCode",jsonObject.get("businessCode").getAsString());
-        log.info("businessCode:{}",info.get("businessCode"));
-        return info;
+        FormDetail reportFormDetail = new FormDetail();
+        reportFormDetail.setBusinessCode(jsonObject.get("businessCode").getAsString());
+        reportFormDetail.setReportOID(jsonObject.get("expenseReportOID").getAsString());
+        log.info("businessCode:{}",jsonObject.get("businessCode").getAsString());
+        return reportFormDetail;
     }
 
     /**
@@ -133,14 +133,14 @@ public class ExpenseReport {
      * @return
      * @throws HttpStatusException
      */
-    public HashMap<String,String> createExpenseReport (Employee employee, String formName, FormComponent component) throws HttpStatusException {
+    public FormDetail createExpenseReport (Employee employee, String formName, FormComponent component) throws HttpStatusException {
         JsonObject formDetail = reimbursementApi.getFormDetail(employee,getFormOID(employee,formName,"102"));
         JsonObject jsonObject =reimbursementApi.createExpenseReport(employee,formDetail,component,employee.getJobId(),employee.getUserOID());
-        HashMap<String,String> info =new HashMap<>();
-        info.put("expenseReportOID",jsonObject.get("expenseReportOID").getAsString());
-        info.put("businessCode",jsonObject.get("businessCode").getAsString());
-        log.info("businessCode:{}",info.get("businessCode"));
-        return info;
+        FormDetail reportFormDetail = new FormDetail();
+        reportFormDetail.setBusinessCode(jsonObject.get("businessCode").getAsString());
+        reportFormDetail.setReportOID(jsonObject.get("expenseReportOID").getAsString());
+        log.info("businessCode:{}",jsonObject.get("businessCode").getAsString());
+        return reportFormDetail;
     }
 
     /**

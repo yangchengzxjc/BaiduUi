@@ -22,4 +22,6 @@ public class Receript {
     //财务ocr  查验发票
     public static final String scanOcrReceipt = "src/main/resources/receiptInfo/scanReceipt.pdf";
 
+    //发票四
+    public static final String receipt4 = "src/main/resources/receiptInfo/receipt4.pdf";
 }

@@ -35,6 +35,9 @@ public class ReceiptControlApi extends BaseRequest{
         if(expenseLabel.equals("无票")){
             body = new JsonParser().parse(String.format(ReceiptConfig.noReceiptNoReceipt,employee.getTenantId())).getAsJsonObject();
         }
+        if(expenseLabel.equals("电子票")){
+            body = new JsonParser().parse(String.format(ReceiptConfig.eletronictNoPasteReceipt,employee.getTenantId())).getAsJsonObject();
+        }
         doPost(url,getHeader(employee.getAccessToken()),parm,body.toString(),null,employee);
     }
 

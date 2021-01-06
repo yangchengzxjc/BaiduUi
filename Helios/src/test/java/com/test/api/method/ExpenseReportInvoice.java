@@ -6,6 +6,7 @@ import com.hand.api.ExpenseApi;
 import com.hand.api.FinanceApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.component.FormDetail;
 import com.hand.basicObject.component.InvoiceComponent;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -101,6 +102,29 @@ public class ExpenseReportInvoice {
         HashMap<String,String> info =new HashMap<>();
         info.put("invoiceOID",jsonObject.get("rows").getAsJsonObject().get("invoiceOID").getAsString());
         return info;
+    }
+
+    /**
+     * 创建一笔费用，费用中添加发票的费用
+     * @param employee
+     * @param expenseTypenName  费用类型的名称
+     * @param expenseReportOID   报销单的OID
+     * @param amount   金额
+     * @return
+     */
+    public FormDetail createExpenseInvoice(Employee employee, InvoiceComponent component, String expenseTypenName, String expenseReportOID, double amount,JsonObject receipt){
+        JsonObject jsonObject=null;
+        JsonArray receiptList = new JsonArray();
+        receiptList.add(receipt);
+        try {
+            jsonObject= expenseApi.expenseReportCreateinvoice(employee,getExpenseTypeInfo(employee,expenseTypenName,expenseReportOID),component,
+                    expenseReportOID,amount,new JsonArray(),receiptList,new JsonArray());
+        } catch (HttpStatusException e) {
+            e.printStackTrace();
+        }
+        FormDetail formDetail = new FormDetail();
+        formDetail.setInvoiceOID(jsonObject.get("rows").getAsJsonObject().get("invoiceOID").getAsString());
+        return formDetail;
     }
 
     /**
@@ -282,6 +306,30 @@ public class ExpenseReportInvoice {
     }
 
     /**
+     * 费用内的标签信息
+     * @param employee
+     * @param invoiceOID
+     * @param type 标签类型 超费用标准：EXPENSE_STANDARD_EXCEEDED_WARN；校验警告：REPORT_SUBMIT_WARN
+     * @return
+     */
+    public String checkInvoiceLabelName(Employee employee,String invoiceOID,String type) throws HttpStatusException {
+        JsonObject result = getInvoice(employee,invoiceOID);
+        log.info("费用信息：{}",result);
+        JsonArray invoiceLabel = result.get("invoiceLabels").getAsJsonArray();
+        if(GsonUtil.isNotEmpt(invoiceLabel)) {
+            try {
+                String toast = GsonUtil.getJsonValue(invoiceLabel, "type", type).get("name").getAsString();
+                log.info("费用内的标签:{}", toast);
+                return toast;
+            }catch (NullPointerException e){
+                throw new RuntimeException(String.format("费用中无此%s类型的标签",type));
+            }
+        }else{
+            throw new RuntimeException("未存在标签");
+        }
+    }
+
+    /**
      * 发票查验
      * @param employee
      * @param receptInfo
@@ -307,6 +355,22 @@ public class ExpenseReportInvoice {
         JsonObject receiptInfo = expenseApi.ocr(employee,ocrArray).getAsJsonObject("rows").getAsJsonArray("receiptList").get(0).getAsJsonObject();
         //发票查验
         return expenseApi.batchVerify(employee,receiptInfo).get(0).getAsJsonObject().get("msg").getAsString();
+    }
+
+    /**
+     * ocr识别发票-上传pdf 方式 并查验
+     * @param employee
+     * @param filePath
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getReceiptVerifyInfo(Employee employee,String filePath) throws HttpStatusException {
+        JsonObject attachment = expenseApi.uploadAttachment(employee,filePath);
+        JsonArray ocrArray = new JsonArray();
+        ocrArray.add(attachment);
+        JsonObject receiptInfo = expenseApi.ocr(employee,ocrArray).getAsJsonObject("rows").getAsJsonArray("receiptList").get(0).getAsJsonObject();
+        //发票查验
+        return expenseApi.batchVerify(employee,receiptInfo).get(0).getAsJsonObject().get("invoiceInfo").getAsJsonObject();
     }
 
     /**

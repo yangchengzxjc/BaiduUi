@@ -3,6 +3,7 @@ package com.test.api.method.BusinessMethod;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
+import com.hand.basicConstant.Receript;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.component.FormComponent;
 import com.hand.basicObject.component.FormDetail;
@@ -41,7 +42,7 @@ public class ExpenseReportPage {
      * @return
      * @throws HttpStatusException
      */
-    public HashMap<String,String> setDailyReport(Employee employee, String endData, String formName, String []participant) throws HttpStatusException {
+    public FormDetail setDailyReport(Employee employee, String endData, String formName, String []participant) throws HttpStatusException {
         //新建报销单
         FormComponent component=new FormComponent();
         component.setCompany(employee.getCompanyOID());
@@ -59,7 +60,7 @@ public class ExpenseReportPage {
      * @return
      * @throws HttpStatusException
      */
-    public HashMap<String,String> setDailyReport(Employee employee,String formName, String []participant) throws HttpStatusException {
+    public String setDailyReport(Employee employee,String formName, String []participant) throws HttpStatusException {
         //新建报销单
         FormComponent component=new FormComponent();
         component.setCompany(employee.getCompanyOID());
@@ -73,7 +74,7 @@ public class ExpenseReportPage {
         }
         component.setParticipant(participant);
         component.setCause("invoice control");
-        return expenseReport.createExpenseReport(employee,formName,component);
+        return expenseReport.createExpenseReport(employee,formName,component).getReportOID();
     }
 
     /**
@@ -137,6 +138,7 @@ public class ExpenseReportPage {
         invoiceComponent.setParticipants(participants);
         return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,250.00,new JsonArray()).get("invoiceOID");
     }
+
     /**
      * 新建费用  不参与分摊   开始结束日期控件不为空
      * @param employee
@@ -179,6 +181,26 @@ public class ExpenseReportPage {
         invoiceComponent.setCity(cityCode);
         invoiceComponent.setCreatedDate(createDate);
         return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,200.00,new JsonArray()).get("invoiceOID");
+    }
+
+
+    /**
+     * 新建费用 费用中包含发票识别
+     * @param employee
+     * @param expenseName
+     * @param expenseReportOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public FormDetail setReceiptInvoice(Employee employee,String expenseName,String expenseReportOID,String receiptPath) throws HttpStatusException {
+        ExpenseReportComponent expenseReportComponent =new ExpenseReportComponent();
+        ExpenseReportInvoice expenseReportInvoice = new ExpenseReportInvoice();
+        String cityCode =expenseReportComponent.getCityCode(employee,"西安");
+        InvoiceComponent invoiceComponent =new InvoiceComponent();
+        invoiceComponent.setCity(cityCode);
+        //发票查验
+        JsonObject receiptInfo = expenseReportInvoice.getReceiptVerifyInfo(employee, receiptPath);
+        return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,10.00,receiptInfo);
     }
 
     /**

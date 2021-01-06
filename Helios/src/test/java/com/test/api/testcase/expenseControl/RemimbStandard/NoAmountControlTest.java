@@ -3,6 +3,7 @@ package com.test.api.testcase.expenseControl.RemimbStandard;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.Rule.StandardRules;
+import com.hand.basicObject.component.FormDetail;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
 import com.test.api.method.BusinessMethod.ExpenseReportPage;
@@ -59,14 +60,14 @@ public class NoAmountControlTest extends BaseTest {
         //设置飞机舱等
         standardControl.setNoAmountStandard(employee, rules, true,ruleOID, new String[]{},"经济舱");
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "airplan-autotest", reportOID1, new String[]{""},"商务舱");
+        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "airplan-autotest", formDetail.getReportOID(), new String[]{""},"商务舱");
         map.put("ruleOID", ruleOID);
-        map.put("reportOID1", reportOID1);
+        map.put("reportOID1", formDetail.getReportOID());
         map.put("invoiceOID1", invoiceOID1);
         String label = String.format("%s{飞机舱等标准为经济舱}", rules.getMessage());
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, reportOID1, "5001"), label);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"), label);
     }
 
     @Test(description = "非金额管控-飞机舱等管控-不包含-商务舱")
@@ -77,14 +78,14 @@ public class NoAmountControlTest extends BaseTest {
         //设置飞机舱等
         standardControl.setNoAmountStandard(employee, rules, true,ruleOID, new String[]{},"商务舱");
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "airplan-autotest", reportOID1, new String[]{employee.getFullName()},"经济舱");
+        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "airplan-autotest", formDetail.getReportOID(), new String[]{employee.getFullName()},"经济舱");
         map.put("ruleOID", ruleOID);
-        map.put("reportOID1", reportOID1);
+        map.put("reportOID1", formDetail.getReportOID());
         map.put("invoiceOID1", invoiceOID1);
         String label = String.format("%s{飞机舱等标准为商务舱}", rules.getMessage());
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, reportOID1, "5001"), label);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"), label);
     }
 
     @Test(description = "非金额管控-费用大类-飞机舱等管控-不包含-商务舱")
@@ -95,14 +96,14 @@ public class NoAmountControlTest extends BaseTest {
         //设置飞机舱等
         standardControl.setNoAmountStandard(employee, rules,true,ruleOID,new String[]{},"商务舱");
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "airplan-autotest", reportOID1, new String[]{employee.getFullName()},"经济舱");
+        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "airplan-autotest", formDetail.getReportOID(), new String[]{employee.getFullName()},"经济舱");
         map.put("ruleOID", ruleOID);
-        map.put("reportOID1", reportOID1);
+        map.put("reportOID1", formDetail.getReportOID());
         map.put("invoiceOID1", invoiceOID1);
         String label = String.format("%s{飞机舱等标准为商务舱}", rules.getMessage());
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, reportOID1, "5001"), label);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"), label);
     }
 
     @Test(description = "非金额管控-飞机舱等管控-费用参与人管控开启-就高-不包含-基本标准")
@@ -114,14 +115,14 @@ public class NoAmountControlTest extends BaseTest {
         standardControl.setNoAmountStandard(employee, rules, true,ruleOID, new String[]{"auto_test_employee006"},"经济舱");
         standardControl.setNoAmountStandard(employee, rules, false,ruleOID, new String[]{"auto_test_oneself"},"商务舱");
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "airplan-autotest", reportOID1, new String[]{employee.getFullName(),"员工0006"},"头等舱");
+        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "airplan-autotest", formDetail.getReportOID(), new String[]{employee.getFullName(),"员工0006"},"头等舱");
         map.put("ruleOID", ruleOID);
-        map.put("reportOID1", reportOID1);
+        map.put("reportOID1", formDetail.getReportOID());
         map.put("invoiceOID1", invoiceOID1);
         String label = String.format("%s{飞机舱等标准为商务舱}", rules.getMessage());
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, reportOID1, "5001"), label);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"), label);
     }
 
     @Test(description = "非金额管控-飞机舱等管控-费用参与人管控开启-就低-不包含-基本标准")
@@ -133,14 +134,14 @@ public class NoAmountControlTest extends BaseTest {
         standardControl.setNoAmountStandard(employee, rules, true,ruleOID, new String[]{"auto_test_employee006"},"经济舱");
         standardControl.setNoAmountStandard(employee, rules, false,ruleOID, new String[]{"auto_test_oneself"},"商务舱");
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "airplan-autotest", reportOID1, new String[]{employee.getFullName(),"员工0006"},"头等舱");
+        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "airplan-autotest", formDetail.getReportOID(), new String[]{employee.getFullName(),"员工0006"},"头等舱");
         map.put("ruleOID", ruleOID);
-        map.put("reportOID1", reportOID1);
+        map.put("reportOID1", formDetail.getReportOID());
         map.put("invoiceOID1", invoiceOID1);
         String label = String.format("%s{飞机舱等标准为经济舱}", rules.getMessage());
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, reportOID1, "5001"), label);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"), label);
     }
 
     @Test(description = "非金额管控-费用类型-火车管控-不包含-基本标准()二等座")
@@ -151,14 +152,14 @@ public class NoAmountControlTest extends BaseTest {
         //设置火车座等
         standardControl.setNoAmountStandard(employee, rules, true,ruleOID,new String[]{},"二等座");
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "train-autotest", reportOID1, new String[]{employee.getFullName()},"一等座");
+        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "train-autotest", formDetail.getReportOID(), new String[]{employee.getFullName()},"一等座");
         map.put("ruleOID", ruleOID);
-        map.put("reportOID1", reportOID1);
+        map.put("reportOID1", formDetail.getReportOID());
         map.put("invoiceOID1", invoiceOID1);
         String label = String.format("%s{火车座等标准为二等座}", rules.getMessage());
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, reportOID1, "5001"), label);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"), label);
     }
 
     @Test(description = "非金额管控-费用大类-火车管控-不包含-二等座")
@@ -169,14 +170,14 @@ public class NoAmountControlTest extends BaseTest {
         //设置火车座等
         standardControl.setNoAmountStandard(employee, rules, true,ruleOID,new String[]{},"二等座");
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "train-autotest", reportOID1, new String[]{employee.getFullName()},"一等座");
+        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "train-autotest", formDetail.getReportOID(), new String[]{employee.getFullName()},"一等座");
         map.put("ruleOID", ruleOID);
-        map.put("reportOID1", reportOID1);
+        map.put("reportOID1", formDetail.getReportOID());
         map.put("invoiceOID1", invoiceOID1);
         String label = String.format("%s{火车座等标准为二等座}", rules.getMessage());
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, reportOID1, "5001"), label);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"), label);
     }
 
     @Test(description = "非金额管控-费用类型-火车管控-费用参与人管控开启：就高-不包含-基本标准(二等座)")
@@ -188,14 +189,14 @@ public class NoAmountControlTest extends BaseTest {
         standardControl.setNoAmountStandard(employee, rules, true,ruleOID,new String[]{"auto_test_employee006"},"二等座");
         standardControl.setNoAmountStandard(employee, rules, false,ruleOID,new String[]{"auto_test_oneself"},"一等座");
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "train-autotest", reportOID1, new String[]{employee.getFullName(),"员工0006"},"二等座");
+        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "train-autotest", formDetail.getReportOID(), new String[]{employee.getFullName(),"员工0006"},"二等座");
         map.put("ruleOID", ruleOID);
-        map.put("reportOID1", reportOID1);
+        map.put("reportOID1", formDetail.getReportOID());
         map.put("invoiceOID1", invoiceOID1);
         String label = String.format("%s{火车座等标准为一等座}", rules.getMessage());
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, reportOID1, "5001"), label);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"), label);
     }
 
     @Test(description = "非金额管控-费用类型-火车管控-费用参与人管控开启：就低-不包含-基本标准(二等座)")
@@ -207,14 +208,14 @@ public class NoAmountControlTest extends BaseTest {
         standardControl.setNoAmountStandard(employee, rules, true,ruleOID,new String[]{"auto_test_employee006"},"二等座");
         standardControl.setNoAmountStandard(employee, rules, false,ruleOID,new String[]{"auto_test_oneself"},"一等座");
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "train-autotest", reportOID1, new String[]{employee.getFullName(),"员工0006"},"一等座");
+        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "train-autotest", formDetail.getReportOID(), new String[]{employee.getFullName(),"员工0006"},"一等座");
         map.put("ruleOID", ruleOID);
-        map.put("reportOID1", reportOID1);
+        map.put("reportOID1", formDetail.getReportOID());
         map.put("invoiceOID1", invoiceOID1);
         String label = String.format("%s{火车座等标准为二等座}", rules.getMessage());
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, reportOID1, "5001"), label);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"), label);
     }
 
     @Test(description = "非金额管控-费用类型-轮船管控-不包含-基本标准")
@@ -225,14 +226,14 @@ public class NoAmountControlTest extends BaseTest {
         //设置轮船座次
         standardControl.setNoAmountStandard(employee, rules, true,ruleOID,new String[]{},"二等B");
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "ship-autotest", reportOID1, new String[]{employee.getFullName()},"一等舱");
+        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "ship-autotest", formDetail.getReportOID(), new String[]{employee.getFullName()},"一等舱");
         map.put("ruleOID", ruleOID);
-        map.put("reportOID1", reportOID1);
+        map.put("reportOID1", formDetail.getReportOID());
         map.put("invoiceOID1", invoiceOID1);
         String label = String.format("%s{轮船座次标准为二等B}", rules.getMessage());
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, reportOID1, "5001"), label);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"), label);
     }
 
     @Test(description = "非金额管控-费用大类-轮船管控-不包含-基本标准")
@@ -243,14 +244,14 @@ public class NoAmountControlTest extends BaseTest {
         //设置轮船座次
         standardControl.setNoAmountStandard(employee, rules, true,ruleOID,new String[]{},"二等B");
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "ship-autotest", reportOID1, new String[]{employee.getFullName()},"一等舱");
+        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "ship-autotest", formDetail.getReportOID(), new String[]{employee.getFullName()},"一等舱");
         map.put("ruleOID", ruleOID);
-        map.put("reportOID1", reportOID1);
+        map.put("reportOID1", formDetail.getReportOID());
         map.put("invoiceOID1", invoiceOID1);
         String label = String.format("%s{轮船座次标准为二等B}", rules.getMessage());
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, reportOID1, "5001"), label);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"), label);
     }
 
     @Test(description = "非金额管控-费用类型-轮船管控费用参与人管控开启:就高-不包含-基本标准")
@@ -262,14 +263,14 @@ public class NoAmountControlTest extends BaseTest {
         standardControl.setNoAmountStandard(employee, rules, true,ruleOID,new String[]{"auto_test_employee006"},"二等B");
         standardControl.setNoAmountStandard(employee, rules, false,ruleOID,new String[]{"auto_test_oneself"},"一等舱");
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "ship-autotest", reportOID1, new String[]{employee.getFullName(),"员工0006"},"二等B");
+        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "ship-autotest", formDetail.getReportOID(), new String[]{employee.getFullName(),"员工0006"},"二等B");
         map.put("ruleOID", ruleOID);
-        map.put("reportOID1", reportOID1);
+        map.put("reportOID1", formDetail.getReportOID());
         map.put("invoiceOID1", invoiceOID1);
         String label = String.format("%s{轮船座次标准为一等舱}", rules.getMessage());
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, reportOID1, "5001"), label);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"), label);
     }
 
     @Test(description = "非金额管控-费用类型-轮船管控费用参与人管控开启:就低-不包含-基本标准")
@@ -281,14 +282,14 @@ public class NoAmountControlTest extends BaseTest {
         standardControl.setNoAmountStandard(employee, rules, true,ruleOID,new String[]{"auto_test_employee006"},"二等B");
         standardControl.setNoAmountStandard(employee, rules, false,ruleOID,new String[]{"auto_test_oneself"},"一等舱");
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3), "自动化测试-日常报销单", new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "ship-autotest", reportOID1, new String[]{employee.getFullName(),"员工0006"},"一等舱");
+        String invoiceOID1 = expenseReportPage.setAirTrainShipInvoice(employee, "ship-autotest", formDetail.getReportOID(), new String[]{employee.getFullName(),"员工0006"},"一等舱");
         map.put("ruleOID", ruleOID);
-        map.put("reportOID1", reportOID1);
+        map.put("reportOID1", formDetail.getReportOID());
         map.put("invoiceOID1", invoiceOID1);
         String label = String.format("%s{轮船座次标准为二等B}", rules.getMessage());
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, reportOID1, "5001"), label);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"), label);
     }
 
     @AfterMethod

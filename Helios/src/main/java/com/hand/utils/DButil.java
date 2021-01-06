@@ -25,6 +25,7 @@ public class DButil {
         PreparedStatement preparedStatement= null;
         ResultSet resultSet =null;
         try {
+            log.info("dev数据库连接");
             connection = DriverManager.getConnection(devMysqlUrl, userName, password);
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,businessCode);
@@ -52,6 +53,7 @@ public class DButil {
                 if(resultSet!= null){
                     resultSet.close();
                 }
+                log.info("关闭连接");
             } catch (SQLException e) {
                 e.printStackTrace();
             }

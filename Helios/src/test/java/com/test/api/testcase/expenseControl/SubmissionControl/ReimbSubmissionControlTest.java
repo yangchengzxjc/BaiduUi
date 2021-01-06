@@ -362,9 +362,9 @@ public class ReimbSubmissionControlTest extends BaseTest {
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
         //新建差旅申请单
         TravelApplicationPage travelApplicationPage =new TravelApplicationPage();
-        String applicatioOID = travelApplicationPage.setTravelApplication(employee,"差旅申请单-自动化测试",UTCTime.getUTCDateEnd(-2));
+        FormDetail traveFormDetail = travelApplicationPage.setTravelApplication(employee,"差旅申请单-自动化测试",UTCTime.getUTCDateEnd(-2));
         //报销单
-        FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
+        FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",traveFormDetail.getReportOID());
         // 新建费用
         String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", formDetail.getReportOID(),false);
         //检验标签
@@ -417,9 +417,9 @@ public class ReimbSubmissionControlTest extends BaseTest {
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
         //新建差旅申请单
         TravelApplicationPage travelApplicationPage =new TravelApplicationPage();
-        String applicatioOID = travelApplicationPage.setTravelApplication(employee,"差旅申请单-自动化测试",UTCTime.getUTCDateEnd(-2));
+        FormDetail traveFormDetail = travelApplicationPage.setTravelApplication(employee,"差旅申请单-自动化测试",UTCTime.getUTCDateEnd(-2));
         //报销单
-        FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
+        FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",traveFormDetail.getReportOID());
         //新建费用
         String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", formDetail.getReportOID(),false);
         //检验标签
@@ -447,9 +447,9 @@ public class ReimbSubmissionControlTest extends BaseTest {
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
         //新建差旅申请单
         TravelApplicationPage travelApplicationPage =new TravelApplicationPage();
-        String applicatioOID = travelApplicationPage.setTravelApplication(employee,"差旅申请单-自动化测试",UTCTime.getUTCDateEnd(-2));
+        FormDetail travelFormDetail = travelApplicationPage.setTravelApplication(employee,"差旅申请单-自动化测试",UTCTime.getUTCDateEnd(-2));
         //报销单
-        FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
+        FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",travelFormDetail.getReportOID());
         //新建费用
         String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", formDetail.getReportOID(),UTCTime.getUtcTime(0,0));
         //检验标签
@@ -478,9 +478,9 @@ public class ReimbSubmissionControlTest extends BaseTest {
         reimbSubmissionControl.addRulesItem(employee, ruleOID, item, "自动化测试-报销标准");
         //新建差旅申请单
         TravelApplicationPage travelApplicationPage =new TravelApplicationPage();
-        String applicatioOID = travelApplicationPage.setTravelApplication(employee,"差旅申请单-自动化测试",UTCTime.getUTCDateEnd(-2));
+        FormDetail travelFoemDetail = travelApplicationPage.setTravelApplication(employee,"差旅申请单-自动化测试",UTCTime.getUTCDateEnd(-2));
         //报销单
-        FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
+        FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",travelFoemDetail.getReportOID());
         //新建费用
         String invoiceOid1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", formDetail.getReportOID(),UTCTime.getUtcTime(0,0));
         //检验标签

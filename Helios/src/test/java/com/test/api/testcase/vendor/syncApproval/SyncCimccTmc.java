@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.component.FormComponent;
+import com.hand.basicObject.component.FormDetail;
 import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.basicObject.itinerary.HotelItinerary;
 import com.hand.basicObject.itinerary.TrainItinerary;
@@ -79,24 +80,24 @@ public class SyncCimccTmc extends BaseTest {
         //添加参与人员  参与人员的value 是一段json数组。
         component.setParticipant(new String []{employee.getFullName()});
         //创建申请单
-        String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
+        FormDetail formDetail = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component);
         //添加飞机行程 供应商中集
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
         //单程机票无返回时间
         FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, supplierOID,"西安市","北京",null,component.getStartDate());
         flightItineraries.add(flightItinerary);
-        travelApplication.addItinerary(employee,applicationOID,flightItineraries);
-        travelApplication.submitApplication(employee,applicationOID,"");
+        travelApplication.addItinerary(employee,formDetail.getReportOID(),flightItineraries);
+        travelApplication.submitApplication(employee,formDetail.getReportOID(),"");
         //审批单审批
-        if(approve.approveal(employee,applicationOID,1001)!=1){
+        if(approve.approveal(employee,formDetail.getReportOID(),1001)!=1){
             throw new RuntimeException("审批单审批失败");
         }else{
             sleep(3000);
             //获取机票行程详情
-            JsonObject filght = travelApplication.getItinerary(employee,applicationOID,"FLIGHT").get(0).getAsJsonObject();
+            JsonObject filght = travelApplication.getItinerary(employee,formDetail.getReportOID(),"FLIGHT").get(0).getAsJsonObject();
             log.info("机票行程:{}",filght);
             //获取审批单中的travelApplication
-            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
+            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,formDetail.getReportOID());
             BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
             //只有一个参与人
             Participant participant = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
@@ -132,23 +133,23 @@ public class SyncCimccTmc extends BaseTest {
         //添加参与人员  参与人员的value 是一段json数组。
         component.setParticipant(new String []{employee.getFullName()});
         //创建申请单
-        String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
+        FormDetail formDetail = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component);
         //初始化火车行程
         ArrayList<TrainItinerary> trainItineraries =new ArrayList<>();
         TrainItinerary trainItinerary = travelApplicationPage.setTrainItinerary(employee,"深圳","上海",component.getStartDate(),supplierOID,"二等座");
         trainItineraries.add(trainItinerary);
         // 添加行程
-        travelApplication.addItinerary(employee,applicationOID,trainItineraries);
+        travelApplication.addItinerary(employee,formDetail.getReportOID(),trainItineraries);
         //申请单提交
-        travelApplication.submitApplication(employee,applicationOID,"");
-        int successNum = approve.approveal(employee,applicationOID,1001);
+        travelApplication.submitApplication(employee,formDetail.getReportOID(),"");
+        int successNum = approve.approveal(employee,formDetail.getReportOID(),1001);
         if(successNum!=1){
             throw new RuntimeException("审批单审批失败");
         }else{
             sleep(3000);
-            JsonObject train = travelApplication.getItinerary(employee,applicationOID,"TRAIN").get(0).getAsJsonObject();
+            JsonObject train = travelApplication.getItinerary(employee,formDetail.getReportOID(),"TRAIN").get(0).getAsJsonObject();
             //获取审批单中的travelApplication
-            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
+            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,formDetail.getReportOID());
             BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
             //只有一个参与人
             Participant participant = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
@@ -183,24 +184,24 @@ public class SyncCimccTmc extends BaseTest {
         //添加参与人员  参与人员的value 是一段json数组。
         component.setParticipant(new String []{employee.getFullName()});
 //        创建申请单
-        String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
+        FormDetail formDetail = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component);
         //初始化酒店行程  中集
         ArrayList<HotelItinerary> hotelItineraries =new ArrayList<>();
         //酒店行程  开始日期要跟申请单的表头一样
         HotelItinerary hotelItinerary =new HotelItinerary("北京",1,component.getStartDate(),UTCTime.utcToBJDate(component.getEndDate(),-1)+"T16:00:00Z",supplierOID,expenseReportComponent.getCityCode(employee,"北京"),new BigDecimal(400).setScale(1));
         hotelItineraries.add(hotelItinerary);
         // 添加行程
-        travelApplication.addItinerary(employee,applicationOID,hotelItineraries);
+        travelApplication.addItinerary(employee,formDetail.getReportOID(),hotelItineraries);
         //申请单提交
-        travelApplication.submitApplication(employee,applicationOID,"");
-        int successNum = approve.approveal(employee,applicationOID,1001);
+        travelApplication.submitApplication(employee,formDetail.getReportOID(),"");
+        int successNum = approve.approveal(employee,formDetail.getReportOID(),1001);
         if(successNum !=1){
             throw new RuntimeException("审批单审批失败");
         }else{
             sleep(4000);
-            JsonObject hotel = travelApplication.getItinerary(employee,applicationOID,"HOTEL").get(0).getAsJsonObject();
+            JsonObject hotel = travelApplication.getItinerary(employee,formDetail.getReportOID(),"HOTEL").get(0).getAsJsonObject();
             //获取审批单中的travelApplication
-            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
+            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,formDetail.getReportOID());
             BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
             //只有一个参与人
             Participant participant = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
@@ -235,15 +236,15 @@ public class SyncCimccTmc extends BaseTest {
         //添加参与人员  参与人员的value 是一段json数组。
         component.setParticipant(new String []{employee.getFullName()});
         //创建申请单
-        String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
+        FormDetail formDetail = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component);
         //添加飞机行程 供应商中集
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
         //单程机票无返回时间
         FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1002, supplierOID,"西安市","北京",UTCTime.utcToBJDate(component.getEndDate(),-1)+"T16:00:00Z",component.getStartDate());
         flightItineraries.add(flightItinerary);
-        travelApplication.addItinerary(employee,applicationOID,flightItineraries);
-        travelApplication.submitApplication(employee,applicationOID,"");
-        int successNum = approve.approveal(employee,applicationOID,1001);
+        travelApplication.addItinerary(employee,formDetail.getReportOID(),flightItineraries);
+        travelApplication.submitApplication(employee,formDetail.getReportOID(),"");
+        int successNum = approve.approveal(employee,formDetail.getReportOID(),1001);
         if(successNum != 1){
             throw new RuntimeException("审批单未审批通过");
         }else{
@@ -252,9 +253,9 @@ public class SyncCimccTmc extends BaseTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            JsonObject filght = travelApplication.getItinerary(employee,applicationOID,"FLIGHT").get(0).getAsJsonObject();
+            JsonObject filght = travelApplication.getItinerary(employee,formDetail.getReportOID(),"FLIGHT").get(0).getAsJsonObject();
             //获取审批单中的travelApplication
-            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
+            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,formDetail.getReportOID());
             BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
             //只有一个参与人
             Participant participant = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
@@ -290,7 +291,7 @@ public class SyncCimccTmc extends BaseTest {
         //添加参与人员  参与人员的value 是一段json数组。
         component.setParticipant(new String []{employee.getFullName()});
         //创建申请单
-        String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
+        FormDetail formDetail = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component);
         //添加飞机行程 供应商中集
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
         FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001,supplierOID,"西安市","北京",null,component.getStartDate());
@@ -304,11 +305,11 @@ public class SyncCimccTmc extends BaseTest {
         ArrayList<TrainItinerary> trainItineraries =new ArrayList<>();
         TrainItinerary trainItinerary = travelApplicationPage.setTrainItinerary(employee,"南京市","上海",component.getStartDate(),supplierOID,"二等座");
         trainItineraries.add(trainItinerary);
-        travelApplication.addItinerary(employee,applicationOID,flightItineraries);
-        travelApplication.addItinerary(employee,applicationOID,hotelItineraries);
-        travelApplication.addItinerary(employee,applicationOID,trainItineraries);
-        travelApplication.submitApplication(employee,applicationOID,"");
-        int successNum = approve.approveal(employee,applicationOID,1001);
+        travelApplication.addItinerary(employee,formDetail.getReportOID(),flightItineraries);
+        travelApplication.addItinerary(employee,formDetail.getReportOID(),hotelItineraries);
+        travelApplication.addItinerary(employee,formDetail.getReportOID(),trainItineraries);
+        travelApplication.submitApplication(employee,formDetail.getReportOID(),"");
+        int successNum = approve.approveal(employee,formDetail.getReportOID(),1001);
         if(successNum != 1){
             throw new RuntimeException("审批单未通过");
         }else{
@@ -318,11 +319,11 @@ public class SyncCimccTmc extends BaseTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            JsonObject filght = travelApplication.getItinerary(employee,applicationOID,"FLIGHT").get(0).getAsJsonObject();
-            JsonObject hotel = travelApplication.getItinerary(employee,applicationOID,"HOTEL").get(0).getAsJsonObject();
-            JsonObject train = travelApplication.getItinerary(employee,applicationOID,"TRAIN").get(0).getAsJsonObject();
+            JsonObject filght = travelApplication.getItinerary(employee,formDetail.getReportOID(),"FLIGHT").get(0).getAsJsonObject();
+            JsonObject hotel = travelApplication.getItinerary(employee,formDetail.getReportOID(),"HOTEL").get(0).getAsJsonObject();
+            JsonObject train = travelApplication.getItinerary(employee,formDetail.getReportOID(),"TRAIN").get(0).getAsJsonObject();
             //获取审批单中的travelApplication
-            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
+            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,formDetail.getReportOID());
             BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
             //只有一个参与人
             Participant participant = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(0).getAsJsonObject());
@@ -376,15 +377,15 @@ public class SyncCimccTmc extends BaseTest {
         //添加参与人员  参与人员的value 是一段json数组。
         component.setParticipant(new String []{employee.getFullName(),"曾任康"});
         //创建申请单
-        String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
+        FormDetail formDetail = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component);
         //添加飞机行程 供应商中集
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
         //单程机票无返回时间
         FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001,supplierOID,"西安市","北京",null,component.getStartDate());
         flightItineraries.add(flightItinerary);
-        travelApplication.addItinerary(employee,applicationOID,flightItineraries);
-        travelApplication.submitApplication(employee,applicationOID,"");
-        int successNum = approve.approveal(employee,applicationOID,1001);
+        travelApplication.addItinerary(employee,formDetail.getReportOID(),flightItineraries);
+        travelApplication.submitApplication(employee,formDetail.getReportOID(),"");
+        int successNum = approve.approveal(employee,formDetail.getReportOID(),1001);
         if(successNum !=1){
             throw new RuntimeException("审批单未通过");
         }else{
@@ -394,9 +395,9 @@ public class SyncCimccTmc extends BaseTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            JsonObject filght = travelApplication.getItinerary(employee,applicationOID,"FLIGHT").get(0).getAsJsonObject();
+            JsonObject filght = travelApplication.getItinerary(employee,formDetail.getReportOID(),"FLIGHT").get(0).getAsJsonObject();
             //获取审批单中的travelApplication
-            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
+            JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,formDetail.getReportOID());
             BookClerk bookClerk = syncService.setBookClerk(employee,traveApplicationDetail.get("travelApplication").getAsJsonObject());
             //只有一个参与人
             Participant participant2 = syncService.setParticipant(employee,traveApplicationDetail.get("applicationParticipants").getAsJsonArray().get(1).getAsJsonObject());

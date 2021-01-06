@@ -9,10 +9,7 @@ import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportInvoice;
 import com.test.api.method.ReceiptControlConfig;
 import com.test.api.method.ReimbStandard;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.util.HashMap;
 
@@ -28,6 +25,7 @@ public class ReceiptControlTest extends BaseTest {
     private ExpenseReport expenseReport;
     private ExpenseReportInvoice invoice;
     private ReceiptControlConfig receiptControlConfig;
+    private HashMap<String,String> items;
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
@@ -37,11 +35,24 @@ public class ReceiptControlTest extends BaseTest {
         expenseReportPage = new ExpenseReportPage();
         invoice = new ExpenseReportInvoice();
         receiptControlConfig = new ReceiptControlConfig();
+        items = new HashMap<>();
     }
 
-    @Test(description = "免贴票管控-公司已付")
+    @BeforeMethod
+    public void cleanMap(){
+        if(items.size()!=0){
+            items.clear();
+        }
+    }
+
+    @Test(description = "免贴票管控-费用公司已付标签-免贴票")
     public void noPasteReceiptTest01() throws HttpStatusException {
         //新建发票管控规则公司已付-免贴票
         receiptControlConfig.noPasteReceipt(employee,"公司已付");
+    }
+
+    @AfterMethod
+    public void cleanConfig() throws HttpStatusException {
+        receiptControlConfig.deleteConfigItem(employee,items.get(""));
     }
 }

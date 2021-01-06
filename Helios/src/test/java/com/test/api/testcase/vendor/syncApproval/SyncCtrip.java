@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.component.FormComponent;
+import com.hand.basicObject.component.FormDetail;
 import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.basicObject.supplierObject.syncApproval.syncCtrip.CtripApprovalEntity;
 import com.hand.basicObject.supplierObject.syncApproval.syncCtrip.ExtendFieldList;
@@ -74,22 +75,22 @@ public class SyncCtrip extends BaseTest {
         array.add(expenseReportComponent.getParticipant(employee,expenseReport.getFormOID(employee,"差旅申请单-消费平台","101"),"懿消费商(xiao/feishang)"));
         component.setParticipant(array.toString());
         //创建申请单
-        String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
+        FormDetail formDetail = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component);
         //添加飞机行程 供应商携程机票
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
         //单程机票无返回时间
         FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, Supplier.CTRIP_AIR.getSupplierOID(),"西安市","北京",null,UTCTime.getNowStartUtcDate());
         flightItineraries.add(flightItinerary);
-        travelApplication.addItinerary(employee,applicationOID,flightItineraries);
-        travelApplication.submitApplication(employee,applicationOID,"");
+        travelApplication.addItinerary(employee,formDetail.getReportOID(),flightItineraries);
+        travelApplication.submitApplication(employee,formDetail.getReportOID(),"");
         try {
             sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        JsonObject flight = travelApplication.getItinerary(employee,applicationOID,"FLIGHT").get(0).getAsJsonObject();
+        JsonObject flight = travelApplication.getItinerary(employee,formDetail.getReportOID(),"FLIGHT").get(0).getAsJsonObject();
         //获取审批单中的travelApplication
-        JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
+        JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,formDetail.getReportOID());
         String CostCenter = travelApplication.getCostCenterCustom(employee,"差旅申请单-消费平台").get("costCenterCustom");
         String CostCenter1 = new JsonParser().parse(CostCenter).getAsJsonObject().getAsJsonObject("costCenter1").get("value").getAsString();
         //初始化扩展字段
@@ -127,22 +128,22 @@ public class SyncCtrip extends BaseTest {
         //添加参与人员  参与人员的value 是一段json数组。
         component.setParticipant(new String []{employee.getFullName(),"曾任康"});
         //创建申请单
-        String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component).get("applicationOID");
+        FormDetail formDetail = travelApplication.createTravelApplication(employee,"差旅申请单-消费平台",component);
         //添加飞机行程 供应商携程机票
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
         //单程机票无返回时间
         FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, Supplier.CTRIP_AIR.getSupplierOID(),"西安市","北京",null,UTCTime.getNowStartUtcDate());
         flightItineraries.add(flightItinerary);
-        travelApplication.addItinerary(employee,applicationOID,flightItineraries);
-        travelApplication.submitApplication(employee,applicationOID,"");
+        travelApplication.addItinerary(employee,formDetail.getReportOID(),flightItineraries);
+        travelApplication.submitApplication(employee,formDetail.getReportOID(),"");
         try {
             sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        JsonObject flight = travelApplication.getItinerary(employee,applicationOID,"FLIGHT").get(0).getAsJsonObject();
+        JsonObject flight = travelApplication.getItinerary(employee,formDetail.getReportOID(),"FLIGHT").get(0).getAsJsonObject();
         //获取审批单中的travelApplication
-        JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,applicationOID);
+        JsonObject traveApplicationDetail = travelApplication.getApplicationDetail(employee,formDetail.getReportOID());
         String CostCenter = travelApplication.getCostCenterCustom(employee,"差旅申请单-消费平台").get("costCenterCustom");
         String CostCenter1 = new JsonParser().parse(CostCenter).getAsJsonObject().getAsJsonObject("costCenter1").get("value").getAsString();
         //初始化扩展字段

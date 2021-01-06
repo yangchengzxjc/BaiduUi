@@ -8,6 +8,7 @@ import com.hand.api.ExpenseApi;
 import com.hand.api.ReimbursementApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.component.FormDetail;
 import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.basicObject.component.FormComponent;
 import com.hand.basicObject.itinerary.HotelItinerary;
@@ -57,14 +58,14 @@ public class TravelApplication {
      * @param component    component 为空对象的话就会进入默认的造数据表单控件
      * @throws HttpStatusException
      */
-    public HashMap<String,String> createTravelApplication(Employee employee, String formName, FormComponent component) throws HttpStatusException {
+    public FormDetail createTravelApplication(Employee employee, String formName, FormComponent component) throws HttpStatusException {
         JsonObject formDetail = reimbursementApi.getFormDetail(employee,applicationFormOID(employee,formName));
         JsonObject jsonObject = applicationApi.createApplication(employee,formDetail,component);
-        HashMap<String,String> info = new HashMap<>();
-        info.put("applicationOID",jsonObject.get("applicationOID").getAsString());
-        info.put("businessCode",jsonObject.get("businessCode").getAsString());
-        log.info("businessCode:{}",info.get("businessCode"));
-        return info;
+        FormDetail form = new FormDetail();
+        form.setReportOID(jsonObject.get("applicationOID").getAsString());
+        form.setBusinessCode(jsonObject.get("businessCode").getAsString());
+        log.info("businessCode:{}",jsonObject.get("businessCode").getAsString());
+        return form;
     }
 
 

@@ -3,6 +3,7 @@ package com.test.api.method.ApplicationMethod;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.component.FormComponent;
+import com.hand.basicObject.component.FormDetail;
 import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.basicObject.itinerary.TrainItinerary;
 import com.hand.basicConstant.Supplier;
@@ -92,7 +93,7 @@ public class TravelApplicationPage {
      * @return
      * @throws HttpStatusException
      */
-    public String setTravelApplication(Employee employee,String formName,String endDate) throws HttpStatusException {
+    public FormDetail setTravelApplication(Employee employee,String formName,String endDate) throws HttpStatusException {
         FormComponent component = new FormComponent("自动化测试差旅申请单");
         component.setDepartment(employee.getDepartmentOID());
         component.setStartDate(UTCTime.getUtcStartDate(-5));
@@ -100,13 +101,13 @@ public class TravelApplicationPage {
         //添加参与人员  参与人员的value 是一段json数组。
         component.setParticipant(new String[]{employee.getFullName()});
         //创建申请单
-        String applicationOID = travelApplication.createTravelApplication(employee,formName,component).get("applicationOID");
+        FormDetail formDetail = travelApplication.createTravelApplication(employee,formName,component);
         //添加差旅行程(目前支持飞机行程和酒店行程)
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
         FlightItinerary flightItinerary = addFlightItinerary(employee,1001, Supplier.CTRIP_AIR.getSupplierOID(),"西安","北京",null,UTCTime.getUtcStartDate(-4));
         flightItineraries.add(flightItinerary);
-        travelApplication.addItinerary(employee,applicationOID,flightItineraries);
-        travelApplication.submitApplication(employee,applicationOID,"");
-        return applicationOID;
+        travelApplication.addItinerary(employee,formDetail.getReportOID(),flightItineraries);
+        travelApplication.submitApplication(employee,formDetail.getReportOID(),"");
+        return formDetail;
     }
 }

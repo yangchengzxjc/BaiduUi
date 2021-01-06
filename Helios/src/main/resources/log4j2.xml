@@ -41,7 +41,7 @@
     </Appenders>
     <Loggers>
         <!-- 级别顺序（低到高）：TRACE < DEBUG < INFO < WARN < ERROR < FATAL -->
-        <AsyncRoot level="DEBUG" includeLocation="true">
+        <AsyncRoot level="INFO" includeLocation="true">
             <AppenderRef ref="ConsolePrint"/>
             <AppenderRef ref="thread"/>
 <!--            <AppenderRef ref="STDOUT"/>-->

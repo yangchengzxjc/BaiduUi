@@ -47,7 +47,8 @@ public class SyncElemePlanRequest {
      * 			"applicantUser": {
      * 				"staffCode": "S0001",
      * 				"mobile": "14082978000",
-     * 				"email": "17791432320@163.com"* 			},
+     * 				"email": "17791432320@163.com"
+     * 				 			},
      * 			"bookUser": [{
      * 					"staffCode": "S0001",
      * 					"mobile": "14082978000",

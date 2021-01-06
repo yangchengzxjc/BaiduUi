@@ -358,6 +358,13 @@ public class ApiPath {
         public static final String GET_SUPPLIER = "/supplier/api/ven/info/by/company";
         //非金额管控 查询值列表
         public static final String GET_enumerations = "/api/custom/enumerations/items/by/type";
+
+        // ============================== 消费平台 甄选 ===================================
+        // 酒店搜索
+        public static final String HOTEL_SEARCH = "/open/search/api/hotel/search";
+        // 酒店城市地图
+        public static final String HOTEL_MAP_PLACE = "/open/search/hotel/api/map/v2/place";
+        // =============================================================================
 }
 
 

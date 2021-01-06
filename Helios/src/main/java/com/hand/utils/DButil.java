@@ -18,9 +18,9 @@ public class DButil {
     private final static String userName = "artemis";
     private final static String password = "123456Ms3";
 
-    public static Business dbConnection(String businessCode) throws ClassNotFoundException {
+    public static Business dbConnection(String businessCode,String apiCode) throws ClassNotFoundException {
         Class.forName(mysqlDriver);
-        String sql = "SELECT * FROM `mid_business_document` d  WHERE d.business_code = ?";
+        String sql = "SELECT * FROM `mid_business_document` d  WHERE d.business_code = ? AND d.api_code= ?";
         Connection connection=null;
         PreparedStatement preparedStatement= null;
         ResultSet resultSet =null;
@@ -29,6 +29,7 @@ public class DButil {
             connection = DriverManager.getConnection(devMysqlUrl, userName, password);
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,businessCode);
+            preparedStatement.setString(2,apiCode);
             resultSet = preparedStatement.executeQuery();
             Business business = new Business();
             if(resultSet != null){

@@ -10,6 +10,7 @@ import com.test.BaseTest;
 import com.test.api.method.*;
 import com.test.api.method.ApplicationMethod.TravelApplicationPage;
 import com.test.api.method.BusinessMethod.ExpenseReportPage;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
@@ -25,6 +26,7 @@ import static java.lang.Thread.sleep;
  * @Date 2020/12/15
  * @Version 1.0
  **/
+@Slf4j
 public class SmokeTest extends BaseTest {
 
     private Employee employee;
@@ -44,9 +46,19 @@ public class SmokeTest extends BaseTest {
         //新建差旅申请单
         TravelApplicationPage travelApplicationPage =new TravelApplicationPage();
         ExpenseReportPage expenseReportPage = new ExpenseReportPage();
-        String applicatioOID = travelApplicationPage.setTravelApplication(employee,"差旅申请单-自动化测试",UTCTime.getUTCDateEnd(-2));
+        FormDetail traveformDetail = travelApplicationPage.setTravelApplication(employee,"差旅申请单-自动化测试",UTCTime.getUTCDateEnd(-2));
+        if(environment.equals("console")){
+            DButil.Business business = new DButil.Business();
+            try {
+                business = DButil.dbConnection(traveformDetail.getBusinessCode(),"TRAVEL_APPLICATION_SUBMIT");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            Assert.assertEquals(traveformDetail.getBusinessCode(),business.getBusinessCode());
+            Assert.assertEquals("TRAVEL_APPLICATION_SUBMIT",business.getApiCode());
+        }
         //关联报销单
-        FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",applicatioOID);
+        FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",traveformDetail.getReportOID());
         // 新建费用
         String invoiceOID1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", formDetail.getReportOID(),UTCTime.getUtcTime(-2,0));
         //新建费用账本导入
@@ -61,7 +73,7 @@ public class SmokeTest extends BaseTest {
         if(environment.equals("console")){
             DButil.Business business = new DButil.Business();
             try {
-                business = DButil.dbConnection(formDetail.getBusinessCode());
+                business = DButil.dbConnection(formDetail.getBusinessCode(),"EXPENSE_REPORT_SUBMIT");
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -72,12 +84,35 @@ public class SmokeTest extends BaseTest {
         Approve approve = new Approve();
         try {
             sleep(1000);
+            approve.approveal(employee,formDetail.getReportOID(),1002);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        approve.approveal(employee,formDetail.getReportOID(),1002);
+        //审批通过回调
+        if(environment.equals("console")){
+            DButil.Business business = new DButil.Business();
+            try {
+                business = DButil.dbConnection(formDetail.getBusinessCode(),"EXPENSE_REPORT_APPROVAL_PASS");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            log.info("报销单审批通过后色回调查询：{}",business.getApiCode());
+            Assert.assertEquals(formDetail.getBusinessCode(),business.getBusinessCode());
+            Assert.assertEquals("EXPENSE_REPORT_APPROVAL_PASS",business.getApiCode());
+        }
         //审核成功
         assert approve.auditPass(employee,formDetail.getReportOID(),1002) == 0;
+        //审核回调
+        if(environment.equals("console")){
+            DButil.Business business = new DButil.Business();
+            try {
+                business = DButil.dbConnection(formDetail.getBusinessCode(),"EXPENSE_REPORT_AUDIT_PASS");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            Assert.assertEquals(formDetail.getBusinessCode(),business.getBusinessCode());
+            Assert.assertEquals("EXPENSE_REPORT_AUDIT_PASS",business.getApiCode());
+        }
     }
 
     @Test(description = "发票查验")
@@ -117,7 +152,7 @@ public class SmokeTest extends BaseTest {
         Assert.assertTrue(msg);
     }
 
-    @Test(description = "单行个人借款单提交-撤回-删除")
+    @Test(description = "单行个人借款单提交-撤回-删除+借款单提交回调")
     public void smokeTest06() throws HttpStatusException {
         ExpenseReportPage expenseReportPage = new ExpenseReportPage();
         ExpenseReport expenseReport = new ExpenseReport();
@@ -127,12 +162,45 @@ public class SmokeTest extends BaseTest {
         //提交借款单
         expenseReport.submitLoanBill(employee,formDetail.getReportOID());
         //审批借款单
+        if(environment.equals("console")){
+            DButil.Business business = new DButil.Business();
+            try {
+                business = DButil.dbConnection(formDetail.getBusinessCode(),"LOAN_APPLICATION_SUBMIT");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            Assert.assertEquals(formDetail.getBusinessCode(),business.getBusinessCode());
+            Assert.assertEquals("LOAN_APPLICATION_SUBMIT",business.getApiCode());
+        }
         Approve approve = new Approve();
         int successNumber = approve.approveal(employee,formDetail.getReportOID(),3001);
         Assert.assertEquals(successNumber,1);
+        //审批成功回调
+        if(environment.equals("console")){
+            DButil.Business business = new DButil.Business();
+            try {
+                business = DButil.dbConnection(formDetail.getBusinessCode(),"LOAN_APPLICATION_APPROVAL_PASS");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            Assert.assertEquals(formDetail.getBusinessCode(),business.getBusinessCode());
+            Assert.assertEquals("LOAN_APPLICATION_APPROVAL_PASS",business.getApiCode());
+        }
         //审核拒绝
         int fail = approve.auditReject(employee,formDetail.getReportOID(),3001);
         Assert.assertEquals(fail,0);
+        //借款单审核拒绝回调
+        if(environment.equals("console")){
+            DButil.Business business = new DButil.Business();
+            try {
+                business = DButil.dbConnection(formDetail.getBusinessCode(),"LOAN_APPLICATION_AUDIT_REJECT");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            log.info("借款单审核驳回回调单号:{}",business.getBusinessCode());
+            Assert.assertEquals(formDetail.getBusinessCode(),business.getBusinessCode());
+            Assert.assertEquals("LOAN_APPLICATION_AUDIT_REJECT",business.getApiCode());
+        }
         expenseReport.deleteLoanBill(employee,formDetail.getReportOID());
     }
 

@@ -314,12 +314,11 @@ public class ExpenseReportInvoice {
      */
     public String checkInvoiceLabelName(Employee employee,String invoiceOID,String type) throws HttpStatusException {
         JsonObject result = getInvoice(employee,invoiceOID);
-        log.info("费用信息：{}",result);
         JsonArray invoiceLabel = result.get("invoiceLabels").getAsJsonArray();
         if(GsonUtil.isNotEmpt(invoiceLabel)) {
             try {
                 String toast = GsonUtil.getJsonValue(invoiceLabel, "type", type).get("name").getAsString();
-                log.info("费用内的标签:{}", toast);
+                log.info("费用内的标签名称:{}", toast);
                 return toast;
             }catch (NullPointerException e){
                 throw new RuntimeException(String.format("费用中无此%s类型的标签",type));

@@ -100,6 +100,18 @@ public class ExpenseReportPage {
     }
 
     /**
+     * 新建费用-控件无值的费用
+     * @param employee
+     * @param expenseName
+     * @param expenseReportOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public String setInvoice(Employee employee,String expenseName,String expenseReportOID,double amount) throws HttpStatusException {
+        return expenseReportInvoice.createExpenseInvoice(employee,new InvoiceComponent(),expenseName,expenseReportOID,amount,new JsonArray()).get("invoiceOID");
+    }
+
+    /**
      * 新建机票费用包含舱等信息
      * @param employee
      * @param expenseName

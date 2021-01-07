@@ -23,4 +23,6 @@ public class HeaderKey {
     public static final String REIMB_STANDARD = "reimbursement-standard";
     //财务审核
     public static final String FINANCE_AUDIT = "finance-audit";
+    //发票管控
+    public static final String INVOICE_CONTROL = "invoice-control";
 }

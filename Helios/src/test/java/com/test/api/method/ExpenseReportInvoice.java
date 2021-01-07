@@ -315,6 +315,7 @@ public class ExpenseReportInvoice {
     public String checkInvoiceLabelName(Employee employee,String invoiceOID,String type) throws HttpStatusException {
         JsonObject result = getInvoice(employee,invoiceOID);
         JsonArray invoiceLabel = result.get("invoiceLabels").getAsJsonArray();
+        log.info("标签内容为:{}",invoiceLabel);
         if(GsonUtil.isNotEmpt(invoiceLabel)) {
             try {
                 String toast = GsonUtil.getJsonValue(invoiceLabel, "type", type).get("name").getAsString();
@@ -329,7 +330,7 @@ public class ExpenseReportInvoice {
     }
 
     /**
-     * 发票查验
+     * 检查发票发票查验是否成功
      * @param employee
      * @param receptInfo
      * @return
@@ -337,6 +338,17 @@ public class ExpenseReportInvoice {
      */
     public String receptVerify(Employee employee,String receptInfo) throws HttpStatusException {
         return expenseApi.receiptVerify(employee,receptInfo).get("msg").getAsString();
+    }
+
+    /**
+     * 获取发票查验
+     * @param employee
+     * @param receptInfo
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getReceptVerify(Employee employee,String receptInfo) throws HttpStatusException {
+        return expenseApi.receiptVerify(employee,receptInfo).getAsJsonObject("invoiceInfo");
     }
 
 

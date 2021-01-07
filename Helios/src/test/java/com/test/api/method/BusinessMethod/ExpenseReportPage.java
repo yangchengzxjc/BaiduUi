@@ -216,6 +216,21 @@ public class ExpenseReportPage {
     }
 
     /**
+     * 新建费用 费用中包含发票识别
+     * @param employee
+     * @param expenseName
+     * @param expenseReportOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public FormDetail setHandReceiptInvoice(Employee employee,String expenseName,String expenseReportOID,String receiptPath) throws HttpStatusException {
+        ExpenseReportInvoice expenseReportInvoice = new ExpenseReportInvoice();
+        //发票查验
+        JsonObject receiptInfo = expenseReportInvoice.getReceptVerify(employee, receiptPath);
+        return expenseReportInvoice.createExpenseInvoice(employee,new InvoiceComponent(),expenseName,expenseReportOID,10.00,receiptInfo);
+    }
+
+    /**
      * 新建费用  不参与分摊  替票开关开启
      * @param employee
      * @param expenseName

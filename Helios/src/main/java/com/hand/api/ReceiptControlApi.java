@@ -5,7 +5,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicConstant.ApiPath;
+import com.hand.basicConstant.HeaderKey;
 import com.hand.basicConstant.ReceiptConfig;
+import com.hand.basicConstant.ResourceId;
 import com.hand.basicObject.Employee;
 
 import java.util.HashMap;
@@ -38,6 +40,21 @@ public class ReceiptControlApi extends BaseRequest{
         if(expenseLabel.equals("电子票")){
             body = new JsonParser().parse(String.format(ReceiptConfig.eletronictNoPasteReceipt,employee.getTenantId())).getAsJsonObject();
         }
+        doPost(url,getHeader(employee.getAccessToken()),parm,body.toString(),null,employee);
+    }
+
+
+    /**
+     * 发票管控配置
+     * @param employee
+     * @param
+     * @throws HttpStatusException
+     */
+    public void receiptConfig(Employee employee,String configRule) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.NO_PASTE_RECEIPT;
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("roleType","TENANT");
+        JsonObject body = new JsonParser().parse(String.format(configRule,employee.getTenantId())).getAsJsonObject();
         doPost(url,getHeader(employee.getAccessToken()),parm,body.toString(),null,employee);
     }
 
@@ -77,4 +94,22 @@ public class ReceiptControlApi extends BaseRequest{
         doDlete(url,getHeader(employee.getAccessToken()),parm,new JsonObject(),employee);
     }
 
+    /**
+     * 发票连号配置规则
+     * @param employee
+     * @param receiptConfig 配置规则
+     * @param isOpen 是否开启
+     */
+    public void receiptConsecutiveConfig(Employee employee,String receiptConfig,boolean isOpen) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.NEW_RECEIPT_CONFIG;
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("roleType","TENANT");
+        JsonObject body = new JsonParser().parse(String.format(receiptConfig,isOpen)).getAsJsonObject();
+        doPost(url,getHeader(employee.getAccessToken(), HeaderKey.INVOICE_CONTROL, ResourceId.INVOICE_CONTROL),parm,body.toString(),null,employee);
+    }
+
+
+    public void checkOtherReceiptConfig(Employee employee){
+        String url = employee.getEnvironment().getUrl() + ApiPath.NEW_RECEIPT_CONFIG;
+    }
 }

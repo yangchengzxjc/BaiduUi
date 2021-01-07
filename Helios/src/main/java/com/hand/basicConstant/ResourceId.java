@@ -36,4 +36,6 @@ public class ResourceId {
     public static final String SUBMIT_CONTROL = "660013000600";
     //财务审核
     public static final String FINANCE_AUDIT = "68000200";
+    //发票管控
+    public static final String INVOICE_CONTROL = "660011000200";
 }

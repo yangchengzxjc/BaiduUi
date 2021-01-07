@@ -21,7 +21,9 @@ public class Receript {
 
     //财务ocr  查验发票
     public static final String scanOcrReceipt = "src/main/resources/receiptInfo/scanReceipt.pdf";
-
     //发票四
     public static final String receipt4 = "src/main/resources/receiptInfo/receipt4.pdf";
+    //手录假发票信息,测试发票连号
+    public static final String HANDRECEIPT1 = "{\"invoiceTypeNo\":\"10\",\"isHandNew\":true,\"tmpFee\":0,\"cardsignType\":\"HAND\",\"billingNo\":\"21092020\",\"billingCode\":\"061002001111\",\"checkCode\":\"413706\",\"invoiceCode\":\"061002001111\",\"invoiceNumber\":\"21092020\",\"invoiceDate\":\"2020-12-07T08:45:06.515Z\",\"priceTaxAmount\":10,\"billingTime\":\"1607330707\",\"receiptTypeNo\":\"10\",\"fee\":1000,\"moreInfo\":\"{}\",\"showUserInfo\":\"\",\"internalStaff\":\"\",\"agentTag\":\"\",\"domesticPassengers\":\"\"}";
+    public static final String HANDRECEIPT2 = "{\"invoiceTypeNo\":\"10\",\"isHandNew\":true,\"tmpFee\":0,\"cardsignType\":\"HAND\",\"billingNo\":\"21092021\",\"billingCode\":\"061002001111\",\"checkCode\":\"413704\",\"invoiceCode\":\"061002001111\",\"invoiceNumber\":\"21092021\",\"invoiceDate\":\"2020-12-07T08:45:06.515Z\",\"priceTaxAmount\":10,\"billingTime\":\"1607330707\",\"receiptTypeNo\":\"10\",\"fee\":1000,\"moreInfo\":\"{}\",\"showUserInfo\":\"\",\"internalStaff\":\"\",\"agentTag\":\"\",\"domesticPassengers\":\"\"}";
 }

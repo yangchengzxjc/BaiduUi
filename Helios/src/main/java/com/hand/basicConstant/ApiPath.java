@@ -360,7 +360,10 @@ public class ApiPath {
         public static final String GET_RECEIPT_CONFIG = "/config/api/config/item";
         //删除发票配置
         public static final String DELETE_CONFIG = "/config/api/config/rule/%s";
-
+        // 发票连号配置规则
+        public static final String NEW_RECEIPT_CONFIG = "/api/receipt/check/consecutive";
+        // 他人发票归属人 配置规则
+        public static final String OTHER_RECEIPT_CONFIG = "/api/receipt/check/config";
 }
 
 

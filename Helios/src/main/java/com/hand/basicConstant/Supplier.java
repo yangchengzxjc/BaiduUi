@@ -136,13 +136,6 @@ public enum Supplier {
 
     xrtmc("金翔达商旅", "xrtmc", "supplyXRTMCService", "1e9e137a-d5ce-4925-a882-43dde36269cd", "2001", "");
 
-    // 没用的
-//    zhenxuanHotel("甄选机票", "zhenxuanHotel", "cloudheliosHotelService", "67f89eae-13ad-4485-a71a-d8a37137fe3c", "2003", ""),
-//    ctripAir("携程商旅", "ctrip", "supplyCtripService", "067fe549-b075-43a6-8dc4-b2a8851cb7a3", "2001", ""),
-//    ctripTrain("携程商旅", "ctrip", "supplyCtripService", "067fe549-b075-43a6-8dc4-b2a8851cb7a3", "2003", ""),
-//    ctripHotel("携程商旅", "ctrip", "supplyCtripService", "067fe549-b075-43a6-8dc4-b2a8851cb7a3", "2002", ""),
-//    zhenxuanAirlines("甄选机票", "zhenxuanAirlines", "cloudheliosFlightService", "9dbb6bed-e3c7-4353-bee2-f0dfc69d6317", "2001", "");
-
 
     private String name;
     private String vendorsName;

@@ -64,7 +64,7 @@ public class OkHttpUtils {
 
     private static void addRequestLog(String method, String url, String urlParam, String body, String formParam) {
         log.info("===========================request begin================================================");
-        log.info("URI: {}", url);
+        log.info("URI: {},{}", method, url);
         if (StringUtils.isNotBlank(body)) {
             log.info("Request body : {}", body);
         }
@@ -423,7 +423,7 @@ public class OkHttpUtils {
             MediaType JSON = MediaType.parse(String.valueOf(ContentType.APPLICATION_JSON));
             body = RequestBody.create(JSON, requestBody);
         }
-        if (formData!= null) {
+        if (formData != null) {
             req = new Request.Builder()
                     .url(url)
                     .headers(headers)

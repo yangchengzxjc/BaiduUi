@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite" parallel="tests" thread-count="2">
+<suite name="Debug Test Suite" parallel="tests" thread-count="2">
 
-<!--    本地调试使用该脚本   -->
-    <parameter name="environment" value="stage"></parameter>
+    <!--    本地调试使用该脚本   -->
+    <parameter name="environment" value="uat"></parameter>
 
     <test verbose="10" preserve-order="true" name="debug">
         <parameter name="phoneNumber" value="14082978666"/>
         <parameter name="passWord" value="hly123456"></parameter>
 
         <classes>
-            <!--            <class name="com.test.api.testcase.vendor.sso.InfoSsoTest">-->
-            <!--                <methods>-->
-            <!--                    <include name="ssoTest"></include>-->
-            <!--                </methods>-->
-            <!--            </class>-->
+            <class name="com.test.api.testcase.vendor.middleware.ElemeTest">
+                <methods>
+                    <include name="testElemeOrderReportUpdate"/>
+                </methods>
+            </class>
 
-            <class name="com.test.api.testcase.vendor.sso.InfoSsoCommonTest"/>
-            <class name="com.test.api.testcase.vendor.sso.InfoSsoTest"/>
+            <!--            <class name="com.test.api.testcase.vendor.sso.InfoSsoCommonTest"/>-->
+            <!--            <class name="com.test.api.testcase.vendor.sso.InfoSsoTest"/>-->
 
         </classes>
 

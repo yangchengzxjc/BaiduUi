@@ -77,9 +77,16 @@ public class ZhenxuanApi extends BaseRequest {
         return doGet(url, getHeader(employee.getAccessToken()), param, employee);
     }
 
+    /**
+     *
+     * @param employee
+     * @param hotelSearchDTO
+     * @return
+     * @throws HttpStatusException
+     */
     public String searchHotel(Employee employee, HotelSearchDTO hotelSearchDTO) throws HttpStatusException{
         String url = employee.getEnvironment().getZhenxuanOpenURL() + ApiPath.HOTEL_SEARCH;
-        HashMap<String, String> data = new HashMap<>();
-        return doPost(url, getHeader(employee.getAccessToken()), null, null, data, employee);
+        String jsonBodyString = hotelSearchDTO.toString();
+        return doPost(url, getHeader(employee.getAccessToken()), null, jsonBodyString,null, employee);
     }
 }

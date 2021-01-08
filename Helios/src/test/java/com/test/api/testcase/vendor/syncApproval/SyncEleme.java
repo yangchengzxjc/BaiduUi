@@ -65,14 +65,6 @@ public class SyncEleme extends BaseTest {
                            String expenseName,
                            String sceneName) throws HttpStatusException, InterruptedException {
 
-//        // 测试数据抽取到 dataProvider
-//        String userName = "懿消费商(xiao/feishang)";
-//        String formName = "饿了么餐补申请单";
-//        String cause = "测试饿了么";
-//        Double amount = 50.0;
-//        String expenseName = "餐补";
-//        String cityName = "上海";
-//        String sceneName = "餐补"; // 用餐场景
         String startDate = UTCTime.getNowStartUtcDate();
         String endDate = UTCTime.getUTCDateEnd(5);
         String formOID = expenseReport.getFormOID(employee, formName, "101");

@@ -365,6 +365,9 @@ public class ApiPath {
         // 酒店城市地图
         public static final String HOTEL_MAP_PLACE = "/open/search/hotel/api/map/v2/place";
         // =============================================================================
+        // ============================== 消费平台 饿了么 =================================
+        public static final String ELEME_ORDER_REPORT = "/eleme/api/order/orderReport";
+        // =============================================================================
 }
 
 

@@ -120,18 +120,27 @@ public class ReceiptControlTest extends BaseTest {
     @Test(description = "他人发票归属人检查")
     public void receiptOthersCheck06() throws HttpStatusException {
         //开启报销单抬头一致性检查
-        receiptControlConfig.receiptConsecutiveConfig(employee, ReceiptConfig.receiptConsecutive,true);
+        receiptControlConfig.checkOtherReceiptConfig(employee,false,true);
         FormDetail formDetail= expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID",formDetail.getReportOID());
-        FormDetail invoice1 = expenseReportPage.setHandReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.HANDRECEIPT1);
+        FormDetail invoice1 = expenseReportPage.setReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.trainReceipt);
         map.put("invoiceOID1",invoice1.getInvoiceOID());
-        Assert.assertEquals("他人费用",expenseReportInvoice.checkInvoiceLabelName(employee,invoice1.getInvoiceOID(),"LINK_NO"));
-        //关闭连号配置
-        receiptControlConfig.receiptConsecutiveConfig(employee, ReceiptConfig.receiptConsecutive,false);
+        Assert.assertEquals("他人发票",expenseReportInvoice.checkInvoiceLabelName(employee,invoice1.getInvoiceOID(),"OTHERS_RECEIPT"));
+        //关闭他人发票验证
+        receiptControlConfig.checkOtherReceiptConfig(employee,false,false);
+    }
+
+    @Test(description = "发票重复检查")
+    public void receiptRepeatCheck07() throws HttpStatusException {
+        FormDetail formDetail= expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID",formDetail.getReportOID());
+        FormDetail invoice1 = expenseReportPage.setReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.receipt5);
+        map.put("invoiceOID1",invoice1.getInvoiceOID());
+        Assert.assertEquals("发票重复",expenseReportInvoice.checkVerifyReceipt(employee,Receript.receipt5,"DUPLICATE_INVOICE",false));
     }
 
 
-    @AfterMethod
+//    @AfterMethod
     public void cleanEnv() throws HttpStatusException {
         for (String s : map.keySet()){
             switch (s){

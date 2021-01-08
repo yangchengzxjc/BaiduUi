@@ -329,6 +329,36 @@ public class ExpenseReportInvoice {
         }
     }
 
+
+    /**
+     * 发票查验发票标签断言  可以选择断言标题还是断言descrition
+     * @param employee
+     * @param filePath
+     * @param code
+     * @return
+     * @throws HttpStatusException
+     */
+    public String checkVerifyReceipt(Employee employee,String filePath, String code,boolean isDescription) throws HttpStatusException {
+        JsonObject verifyInfo = getOCRReceiptVerifyInfo(employee,filePath);
+        String label ="";
+        try{
+            JsonArray errorList = verifyInfo.get("errorList").getAsJsonArray();
+            if(isDescription){
+                if(GsonUtil.isNotEmpt(errorList)){
+                    label = GsonUtil.getJsonValue(errorList,"code",code,"message");
+                }
+            }else {
+                if (GsonUtil.isNotEmpt(errorList)) {
+                    label =  GsonUtil.getJsonValue(errorList, "code", code, "title");
+                }
+            }
+        }catch (NullPointerException e){
+            throw new RuntimeException("发票查验没有错误的标签errorList不存在");
+        }
+        return label;
+    }
+
+
     /**
      * 检查发票发票查验是否成功
      * @param employee
@@ -375,7 +405,7 @@ public class ExpenseReportInvoice {
      * @return
      * @throws HttpStatusException
      */
-    public JsonObject getReceiptVerifyInfo(Employee employee,String filePath) throws HttpStatusException {
+    public JsonObject getOCRReceiptVerifyInfo(Employee employee, String filePath) throws HttpStatusException {
         JsonObject attachment = expenseApi.uploadAttachment(employee,filePath);
         JsonArray ocrArray = new JsonArray();
         ocrArray.add(attachment);

@@ -9,6 +9,7 @@ import com.hand.basicConstant.HeaderKey;
 import com.hand.basicConstant.ReceiptConfig;
 import com.hand.basicConstant.ResourceId;
 import com.hand.basicObject.Employee;
+import com.hand.utils.UTCTime;
 
 import java.util.HashMap;
 
@@ -98,18 +99,44 @@ public class ReceiptControlApi extends BaseRequest{
      * 发票连号配置规则
      * @param employee
      * @param receiptConfig 配置规则
-     * @param isOpen 是否开启
      */
-    public void receiptConsecutiveConfig(Employee employee,String receiptConfig,boolean isOpen) throws HttpStatusException {
+    public void receiptConsecutiveConfig(Employee employee,String receiptConfig) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.NEW_RECEIPT_CONFIG;
         HashMap<String,String> parm = new HashMap<>();
         parm.put("roleType","TENANT");
-        JsonObject body = new JsonParser().parse(String.format(receiptConfig,isOpen)).getAsJsonObject();
+        JsonObject body = new JsonParser().parse(receiptConfig).getAsJsonObject();
         doPost(url,getHeader(employee.getAccessToken(), HeaderKey.INVOICE_CONTROL, ResourceId.INVOICE_CONTROL),parm,body.toString(),null,employee);
     }
 
 
-    public void checkOtherReceiptConfig(Employee employee){
-        String url = employee.getEnvironment().getUrl() + ApiPath.NEW_RECEIPT_CONFIG;
+    /**
+     * 他人发票校验
+     * @param employee
+     * @param checkNonEmployee
+     * @param receiptOwnerCheck
+     */
+    public void checkOtherReceiptConfig(Employee employee,JsonObject config) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.OTHER_RECEIPT_CONFIG;
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("roleType","TENANT");
+//        JsonObject body = new JsonParser().parse(String.format(ReceiptConfig.checkOtherReceipt,employee.getUserOID(),employee.getUserOID(),employee.getTenantId(),employee.getTenantId(),checkNonEmployee,receiptOwnerCheck,employee.getTenantName(),employee.getCompanyName(),employee.getCompanyId())).getAsJsonObject();
+        doPost(url,getHeader(employee.getAccessToken(), HeaderKey.INVOICE_CONTROL, ResourceId.INVOICE_CONTROL),parm,config.toString(),null,employee);
     }
+
+    /**
+     * 获取发票场景配置规则
+     * @param employee
+     * @return
+     */
+    public JsonArray getReceiptConfig(Employee employee) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.OTHER_RECEIPT_CONFIG;
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("roleType","TENANT");
+        parm.put("page","0");
+        parm.put("size","20");
+        parm.put("companyIds","");
+        String response = doGet(url,getHeader(employee.getAccessToken(), HeaderKey.INVOICE_CONTROL, ResourceId.INVOICE_CONTROL),parm,employee);
+        return new JsonParser().parse(response).getAsJsonArray();
+    }
+
 }

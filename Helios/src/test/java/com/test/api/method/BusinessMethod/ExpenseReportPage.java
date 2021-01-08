@@ -3,7 +3,6 @@ package com.test.api.method.BusinessMethod;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
-import com.hand.basicConstant.Receript;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.component.FormComponent;
 import com.hand.basicObject.component.FormDetail;
@@ -17,7 +16,6 @@ import com.test.api.method.ReimbStandard;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 /**
@@ -211,8 +209,8 @@ public class ExpenseReportPage {
         InvoiceComponent invoiceComponent =new InvoiceComponent();
         invoiceComponent.setCity(cityCode);
         //发票查验
-        JsonObject receiptInfo = expenseReportInvoice.getReceiptVerifyInfo(employee, receiptPath);
-        return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,10.00,receiptInfo);
+        JsonObject receiptInfo = expenseReportInvoice.getOCRReceiptVerifyInfo(employee, receiptPath);
+        return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,5.00,receiptInfo);
     }
 
     /**

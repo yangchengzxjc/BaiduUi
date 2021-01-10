@@ -144,5 +144,38 @@ public class ElemeOrderReportRequest {
             this.mealDistance = mealDistance;
         }
 
+        public ReportInfo() {
+        }
+
+        public ReportInfo(int mealNumber, String mealReason, String mealReceipt, Long mealDistance, String invoice, String photograph) {
+            this.mealNumber = mealNumber;
+            this.mealReason = mealReason;
+            this.mealReceipt = mealReceipt;
+            this.mealDistance = mealDistance;
+            this.invoice = invoice;
+            this.photograph = photograph;
+        }
+    }
+
+    public ElemeOrderReportRequest() {
+    }
+
+    // 全参数构造方法
+    public ElemeOrderReportRequest(String orderNo, String orderNo98, ReportInfo reportInfo, String bno, String uno, Integer orderType) {
+        this.orderNo = orderNo;
+        this.orderNo98 = orderNo98;
+        this.reportInfo = reportInfo;
+        this.bno = bno;
+        this.uno = uno;
+        this.orderType = orderType;
+    }
+
+    // 必传参数构造方法
+    public ElemeOrderReportRequest(String orderNo, String orderNo98, String bno, String uno, Integer orderType) {
+        this.orderNo = orderNo;
+        this.orderNo98 = orderNo98;
+        this.bno = bno;
+        this.uno = uno;
+        this.orderType = orderType;
     }
 }

@@ -42,23 +42,19 @@ public class ElemeTest extends BaseTest {
         };
     }
 
+    // 测试报备接口全参数
     @Test(dataProvider = "eleme")
     public void testElemeOrderReport(String orderNo, String orderNo98, String bno,
                                      String uno, String mealNumber, String mealReason,
-                                     String mealReceipt, String mealDistance, String orderType) throws HttpStatusException {
+                                     String mealReceipt, String mealDistance, String orderType,
+                                     String invoice, String photograph) throws HttpStatusException {
         // 测试数据 转 DTO
-        ElemeOrderReportRequest elemeOrderReportRequest = new ElemeOrderReportRequest();
-        elemeOrderReportRequest.setOrderNo(orderNo);
-        elemeOrderReportRequest.setOrderNo98(orderNo98);
-        elemeOrderReportRequest.setUno(uno);
-        elemeOrderReportRequest.setBno(bno);
-        elemeOrderReportRequest.setOrderType(Integer.valueOf(orderType));
-        ElemeOrderReportRequest.ReportInfo reportInfo = new ElemeOrderReportRequest.ReportInfo();
-        reportInfo.setMealDistance(Long.valueOf(mealDistance));
-        reportInfo.setMealNumber(Integer.parseInt(mealNumber));
-        reportInfo.setMealReason(mealReason);
-        reportInfo.setMealReceipt(mealReceipt);
-        elemeOrderReportRequest.setReportInfo(reportInfo);
+        ElemeOrderReportRequest elemeOrderReportRequest = new ElemeOrderReportRequest(
+                orderNo, orderNo98,
+                new ElemeOrderReportRequest.ReportInfo(Integer.parseInt(mealNumber),
+                mealReason, mealReceipt, Long.parseLong(mealDistance), invoice, photograph),
+                bno, uno, Integer.parseInt(orderType)
+        );
 
         // 发送请求
         String res = vendorApi.elemeOrderReport(employee, elemeOrderReportRequest);
@@ -73,17 +69,28 @@ public class ElemeTest extends BaseTest {
     @DataProvider(name = "eleme_invoice_update")
     public Object[][] dataProvider2() {
         return new Object[][]{
-//                {invoice, photograph}
-                {"http://uat.huilianyi.com/heliosimg1/a/a9da99b9526eca9f4581d8393034bc86BG.jpg",
-                        "https://appmail.mail.10086.cn/m6/images/temp/139mail_weixin.png"}
+//                {String caseDesc, String invoice, String photograph}
+                {"单张图片",
+                        "http://uat.huilianyi.com/heliosimg1/a/a9da99b9526eca9f4581d8393034bc86BG.jpg",
+                        "https://appmail.mail.10086.cn/m6/images/temp/139mail_weixin.png"},
+                {"多张图片",
+                        "https://inv-veri.chinatax.gov.cn/fpcs/zw-img/image001.png," +
+                                "https://inv-veri.chinatax.gov.cn/fpcs/zw-img/image022.png," +
+                                "https://inv-veri.chinatax.gov.cn/fpcs/zw-img/image002.png," +
+                                "https://inv-veri.chinatax.gov.cn/fpcs/zw-img/image20.jpg",
+                        "https://inv-veri.chinatax.gov.cn/fpcs/zw-img/image004.png," +
+                                "https://inv-veri.chinatax.gov.cn/fpcs/zw-img/image005.png," +
+                                "https://inv-veri.chinatax.gov.cn/fpcs/zw-img/image19.jpg," +
+                                "https://inv-veri.chinatax.gov.cn/fpcs/zw-img/image21.png"}
         };
     }
 
+    // 多线程并发测试-仅更新图片
     // threadPoolSize 线程数量
-    // invocationCount 执行总次数
+    // invocationCount 执行次数(每条测试数据执行次数)
     // timeOut 超时时间
-    @Test(dataProvider = "eleme_invoice_update", threadPoolSize = 70, invocationCount = 700)
-    public void testElemeOrderReportUpdate(String invoice, String photograph) throws HttpStatusException {
+    @Test(dataProvider = "eleme_invoice_update", threadPoolSize = 2, invocationCount =4 )
+    public void testElemeOrderReportUpdate(String caseDesc, String invoice, String photograph) throws HttpStatusException {
 
         String orderNo = "1202034339765235799";
         String orderNo98 = "88888888";
@@ -95,21 +102,13 @@ public class ElemeTest extends BaseTest {
         String mealDistance = "88888888";
         String orderType = "1";
 
-        // 测试数据 转 DTO
-        ElemeOrderReportRequest elemeOrderReportRequest = new ElemeOrderReportRequest();
-        elemeOrderReportRequest.setOrderNo(orderNo);
-        elemeOrderReportRequest.setOrderNo98(orderNo98);
-        elemeOrderReportRequest.setUno(uno);
-        elemeOrderReportRequest.setBno(bno);
-        elemeOrderReportRequest.setOrderType(Integer.valueOf(orderType));
-        ElemeOrderReportRequest.ReportInfo reportInfo = new ElemeOrderReportRequest.ReportInfo();
-        reportInfo.setMealDistance(Long.valueOf(mealDistance));
-        reportInfo.setMealNumber(Integer.parseInt(mealNumber));
-        reportInfo.setMealReason(mealReason);
-        reportInfo.setMealReceipt(mealReceipt);
-        reportInfo.setInvoice(invoice);
-        reportInfo.setPhotograph(photograph);
-        elemeOrderReportRequest.setReportInfo(reportInfo);
+        // 请求DTO
+        ElemeOrderReportRequest elemeOrderReportRequest = new ElemeOrderReportRequest(
+                orderNo, orderNo98,
+                new ElemeOrderReportRequest.ReportInfo(Integer.parseInt(mealNumber),
+                        mealReason, mealReceipt, Long.parseLong(mealDistance), invoice, photograph),
+                bno, uno, Integer.parseInt(orderType)
+        );
 
         // 发送请求
         String res = vendorApi.elemeOrderReport(employee, elemeOrderReportRequest);

@@ -9,6 +9,7 @@
 
 package com.hand.api;
 
+import com.google.gson.Gson;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicConstant.ApiPath;
 import com.hand.basicObject.Employee;
@@ -86,7 +87,6 @@ public class ZhenxuanApi extends BaseRequest {
      */
     public String searchHotel(Employee employee, HotelSearchDTO hotelSearchDTO) throws HttpStatusException{
         String url = employee.getEnvironment().getZhenxuanOpenURL() + ApiPath.HOTEL_SEARCH;
-        String jsonBodyString = hotelSearchDTO.toString();
-        return doPost(url, getHeader(employee.getAccessToken()), null, jsonBodyString,null, employee);
+        return doPost(url, getHeader(employee.getAccessToken()), null, new Gson().toJson(hotelSearchDTO),null, employee);
     }
 }

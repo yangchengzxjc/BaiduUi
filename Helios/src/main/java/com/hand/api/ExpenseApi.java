@@ -679,7 +679,15 @@ public class ExpenseApi extends BaseRequest{
         return new JsonParser().parse(res).getAsJsonArray();
     }
 
-
-
-
+    /**
+     * ofd 发票识别
+     * @param employee
+     * @param attachment
+     * @return
+     */
+    public JsonObject ofdReceiptOCR(Employee employee, JsonArray attachment) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.OFD_RECEIPT_OCR;
+        String res = doPost(url,getHeader(employee.getAccessToken()),null,attachment.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
 }

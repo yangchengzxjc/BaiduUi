@@ -353,7 +353,7 @@ public class ApiPath {
         //借款单查询供应商
         public static final String GET_SUPPLIER = "/supplier/api/ven/info/by/company";
         //非金额管控 查询值列表
-        public static final String GET_enumerations = "/api/custom/enumerations/items/by/type";
+        public static final String GET_ENUMATIONS = "/api/custom/enumerations/items/by/type";
         //发票设置 免贴票管控
         public static final String NO_PASTE_RECEIPT = "/config/api/config/rule";
         //查询发票配置
@@ -364,6 +364,14 @@ public class ApiPath {
         public static final String NEW_RECEIPT_CONFIG = "/api/receipt/check/consecutive";
         // 他人发票归属人 配置规则
         public static final String OTHER_RECEIPT_CONFIG = "/api/receipt/check/config";
+        // 场景化 发票抬头检验
+        public static final String RECEIPT_HEADER_CHECK = "/api/receipt/check/title";
+        // 新建发票逾期规则
+        public static final String RECEIPT_OVERTIME = "/api/receipt/check/overtime/%s";
+        // 删除发票逾期规则
+        public static final String DELETE_RECEIPT_OVERTIME = "/api/invoice/overtime";
+        //ofd 发票识别
+        public static final String OFD_RECEIPT_OCR = "/receipt/api/receipt/ofd";
 }
 
 

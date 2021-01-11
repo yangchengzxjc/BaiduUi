@@ -115,7 +115,7 @@ public class SmokeTest extends BaseTest {
         }
     }
 
-    @Test(description = "发票查验")
+    @Test(description = "发票查验-收录")
     public void smokeTest02() throws HttpStatusException {
         ExpenseReportInvoice invoice = new ExpenseReportInvoice();
         String msg = invoice.receptVerify(employee, Receript.handRecept);
@@ -126,7 +126,7 @@ public class SmokeTest extends BaseTest {
         Assert.assertEquals(msg,"查验成功，发票一致");
     }
 
-    @Test(description = "员工ocr发票识别并查验")
+    @Test(description = "员工ocr发票识别并查验-pdf")
     public void smokeTest03() throws HttpStatusException {
         ExpenseReportInvoice invoice = new ExpenseReportInvoice();
         String msg = invoice.ocrReceptVerify(employee,Receript.ocrReceipt);
@@ -136,7 +136,7 @@ public class SmokeTest extends BaseTest {
         Assert.assertEquals(msg,"查验成功，发票一致");
     }
 
-    @Test(description = "票小蜜：财务scan ocr 识别")
+    @Test(description = "票小蜜：财务scan ocr 识别- 手录")
     public void smokeTest04() throws HttpStatusException {
         ExpenseReportInvoice invoice = new ExpenseReportInvoice();
         String message = invoice.scanOcr(employee,Receript.scanOcrReceipt,"6285295");
@@ -145,15 +145,26 @@ public class SmokeTest extends BaseTest {
         approve.deleteReceipt(employee,"05614dba-7ab8-44b4-96c7-5da069b4572f");
     }
 
-    @Test(description = "员工ocr识别发票")
+    @Test(description = "识别发票-ofd并查验")
     public void smokeTest05() throws HttpStatusException {
+        ExpenseReportInvoice invoice = new ExpenseReportInvoice();
+        String msg = invoice.ofd(employee,Receript.ofdReceipt);
+        if(msg.equals("超过该票当天查验次数")){
+            Assert.assertTrue(true);
+        }else{
+            Assert.assertEquals(msg,"查验成功，发票一致");
+        }
+    }
+
+    @Test(description = "员工ocr识别发票-pdf")
+    public void smokeTest06() throws HttpStatusException {
         ExpenseReportInvoice invoice = new ExpenseReportInvoice();
         boolean msg = invoice.ocr(employee,Receript.ocrReceipt);
         Assert.assertTrue(msg);
     }
 
     @Test(description = "单行个人借款单提交-撤回-删除+借款单提交回调")
-    public void smokeTest06() throws HttpStatusException {
+    public void smokeTest07() throws HttpStatusException {
         ExpenseReportPage expenseReportPage = new ExpenseReportPage();
         ExpenseReport expenseReport = new ExpenseReport();
         FormDetail formDetail = expenseReportPage.setDefaultLoanBill(employee,"个人借款单",UTCTime.getFormStartDate(1));
@@ -205,7 +216,7 @@ public class SmokeTest extends BaseTest {
     }
 
     @Test(description = "单行个人借款单-对公预付提交-撤回-删除")
-    public void smokeTest07() throws HttpStatusException {
+    public void smokeTest08() throws HttpStatusException {
         ExpenseReportPage expenseReportPage = new ExpenseReportPage();
         ExpenseReport expenseReport = new ExpenseReport();
         FormDetail formDetail = expenseReportPage.setDefaultLoanBill(employee,"个人借款单",UTCTime.getFormStartDate(1));

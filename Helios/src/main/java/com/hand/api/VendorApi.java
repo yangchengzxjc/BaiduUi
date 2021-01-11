@@ -275,6 +275,13 @@ public class VendorApi extends BaseRequest {
         return doGetStatusCode(url, headerParam, datas, employee);
     }
 
+    /**
+     * 饿了么 报备接口（对外提供）
+     * @param employee
+     * @param elemeOrderReportRequest
+     * @return
+     * @throws HttpStatusException
+     */
     public String elemeOrderReport(Employee employee, ElemeOrderReportRequest elemeOrderReportRequest) throws HttpStatusException {
 
         // url

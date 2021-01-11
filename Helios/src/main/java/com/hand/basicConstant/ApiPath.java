@@ -330,14 +330,6 @@ public class ApiPath {
         public static final String DepartmentDetail = "/api/departments/%s";
         //公司定义   公司详情
         public static final String COMPANYDetail = "/api/company/%s";
-        //平台sso登录
-        public static final String SSOLOGIN = "/sso";
-        //消费平台H5 SSO单点
-        public static final String SUPPLIER_SSO="/vendor-info-service/api/sso/common";
-        // 消费平台 web sso H5
-        public static final String SSO = "/vendor-info-service/api/sso";
-        // 消费平台 web sso 统一单点登录 web
-        public static final String SSO_COMMON = "/vendor-info-service/api/sso/common";
         //发票查验
         public static final String  RECEIPT_VERIFY = "/receipt/api/receipt/verify";
         //批量查验发票
@@ -359,11 +351,20 @@ public class ApiPath {
         //非金额管控 查询值列表
         public static final String GET_enumerations = "/api/custom/enumerations/items/by/type";
 
+        // ============================== 消费平台 =======================================
+        // 平台sso登录
+        public static final String SSOLOGIN = "/sso";
+        // 消费平台H5 SSO单点
+        public static final String SUPPLIER_SSO="/vendor-info-service/api/sso/common";
+        // 消费平台 web sso H5
+        public static final String SSO = "/vendor-info-service/api/sso";
+        // 消费平台 web sso 统一单点登录 web
+        public static final String SSO_COMMON = "/vendor-info-service/api/sso/common";
         // ============================== 消费平台 甄选 ===================================
         // 酒店搜索
-        public static final String HOTEL_SEARCH = "/open/search/api/hotel/search";
+        public static final String HOTEL_SEARCH = "/search/api/hotel/search";
         // 酒店城市地图
-        public static final String HOTEL_MAP_PLACE = "/open/search/hotel/api/map/v2/place";
+        public static final String HOTEL_MAP_PLACE = "/search/hotel/api/map/v2/place";
         // =============================================================================
         // ============================== 消费平台 饿了么 =================================
         public static final String ELEME_ORDER_REPORT = "/eleme/api/order/orderReport";

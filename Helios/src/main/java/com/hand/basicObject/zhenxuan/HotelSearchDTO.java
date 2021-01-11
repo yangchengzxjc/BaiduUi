@@ -9,13 +9,17 @@
 
 package com.hand.basicObject.zhenxuan;
 
+import java.util.List;
+
 public class HotelSearchDTO {
 
-    /** example👇
+    /**
+     * 甄选酒店搜索 RequestDTO
+     * <p>
      * cityCode : 310000
      * cityName : 上海
-     * checkInDate : 2021-01-05
-     * checkOutDate : 2021-01-06
+     * checkInDate : 2021-01-08
+     * checkOutDate : 2021-01-09
      * pageNo : 1
      * pageSize : 20
      * keywords :
@@ -25,7 +29,10 @@ public class HotelSearchDTO {
      * breakfast : false
      * sortCriteria : 0
      * realTime : false
-     * location : null
+     * agreement : false
+     * hotelStar : ["5"]
+     * chainBrandId : ["751","14"]
+     * locationV2 : {"type":"business","name":"吉买盛购物中心(8壹广场店)","location":"121.396736,31.620806","address":"八一路206号8壹广场F2层37","adcode":"310151"}
      */
 
     private String cityCode;
@@ -41,7 +48,10 @@ public class HotelSearchDTO {
     private boolean breakfast;
     private int sortCriteria;
     private boolean realTime;
-    private Object location;
+    private boolean agreement;
+    private LocationV2Bean locationV2;
+    private List<String> hotelStar;
+    private List<String> chainBrandId;
 
     public String getCityCode() {
         return cityCode;
@@ -147,11 +157,138 @@ public class HotelSearchDTO {
         this.realTime = realTime;
     }
 
-    public Object getLocation() {
-        return location;
+    public boolean isAgreement() {
+        return agreement;
     }
 
-    public void setLocation(Object location) {
-        this.location = location;
+    public void setAgreement(boolean agreement) {
+        this.agreement = agreement;
+    }
+
+    public LocationV2Bean getLocationV2() {
+        return locationV2;
+    }
+
+    public void setLocationV2(LocationV2Bean locationV2) {
+        this.locationV2 = locationV2;
+    }
+
+    public List<String> getHotelStar() {
+        return hotelStar;
+    }
+
+    public void setHotelStar(List<String> hotelStar) {
+        this.hotelStar = hotelStar;
+    }
+
+    public List<String> getChainBrandId() {
+        return chainBrandId;
+    }
+
+    public void setChainBrandId(List<String> chainBrandId) {
+        this.chainBrandId = chainBrandId;
+    }
+
+    public static class LocationV2Bean {
+        /**
+         * type : business
+         * name : 吉买盛购物中心(8壹广场店)
+         * location : 121.396736,31.620806
+         * address : 八一路206号8壹广场F2层37
+         * adcode : 310151
+         */
+
+        private String type;
+        private String name;
+        private String location;
+        private String address;
+        private String adcode;
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getLocation() {
+            return location;
+        }
+
+        public void setLocation(String location) {
+            this.location = location;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getAdcode() {
+            return adcode;
+        }
+
+        public void setAdcode(String adcode) {
+            this.adcode = adcode;
+        }
+
+        public LocationV2Bean() {
+        }
+
+        public LocationV2Bean(String type, String name, String location, String address, String adcode) {
+            this.type = type;
+            this.name = name;
+            this.location = location;
+            this.address = address;
+            this.adcode = adcode;
+        }
+    }
+
+    public HotelSearchDTO() {}
+
+    // 默认请求参数的构造方法
+    public HotelSearchDTO(String cityCode, String cityName, String checkInDate, String checkOutDate, int pageNo, int pageSize) {
+        this.cityCode = cityCode;
+        this.cityName = cityName;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+        this.pageNo = pageNo;
+        this.pageSize = pageSize;
+    }
+
+    // 全参数构造方法
+    public HotelSearchDTO(String cityCode, String cityName, String checkInDate, String checkOutDate,
+                          int pageNo, int pageSize, String keywords, int distance, boolean direct,
+                          boolean expensesFilter, boolean breakfast, int sortCriteria, boolean realTime,
+                          boolean agreement, LocationV2Bean locationV2, List<String> hotelStar, List<String> chainBrandId) {
+        this.cityCode = cityCode;
+        this.cityName = cityName;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+        this.pageNo = pageNo;
+        this.pageSize = pageSize;
+        this.keywords = keywords;
+        this.distance = distance;
+        this.direct = direct;
+        this.expensesFilter = expensesFilter;
+        this.breakfast = breakfast;
+        this.sortCriteria = sortCriteria;
+        this.realTime = realTime;
+        this.agreement = agreement;
+        this.locationV2 = locationV2;
+        this.hotelStar = hotelStar;
+        this.chainBrandId = chainBrandId;
     }
 }

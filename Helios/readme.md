@@ -263,4 +263,5 @@ public class TestDataProviderITestContext {
 - 请求方法封装，log增加请求request header、请求参数、response header、code、返回结果 DONE
 - 测试报告增加请求路径 参数 返回结果输出 → 新增监听类`ExtentTestNGIReporterListener` DONE
 - 多个账号运行场景（如员工提交单据，领导审批，财务审核涉及三个用户）
+- 封装请求和响应的结构对象 
 

@@ -9,6 +9,8 @@ import com.hand.basicConstant.HeaderKey;
 import com.hand.basicConstant.ReceiptConfig;
 import com.hand.basicConstant.ResourceId;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.Rule.receiptConfig.ReceiptOverTime;
+import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
 
 import java.util.HashMap;
@@ -112,8 +114,7 @@ public class ReceiptControlApi extends BaseRequest{
     /**
      * 他人发票校验
      * @param employee
-     * @param checkNonEmployee
-     * @param receiptOwnerCheck
+     * @param config
      */
     public void checkOtherReceiptConfig(Employee employee,JsonObject config) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.OTHER_RECEIPT_CONFIG;
@@ -137,6 +138,53 @@ public class ReceiptControlApi extends BaseRequest{
         parm.put("companyIds","");
         String response = doGet(url,getHeader(employee.getAccessToken(), HeaderKey.INVOICE_CONTROL, ResourceId.INVOICE_CONTROL),parm,employee);
         return new JsonParser().parse(response).getAsJsonArray();
+    }
+
+    /**
+     * 场景化的 发票抬头检验
+     * @param employee
+     * @param configBody
+     * @throws HttpStatusException
+     */
+    public void configExpenseTitle(Employee employee,JsonObject configBody) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.RECEIPT_HEADER_CHECK;
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("roleType","TENANT");
+        doPost(url,getHeader(employee.getAccessToken(), HeaderKey.INVOICE_CONTROL, ResourceId.INVOICE_CONTROL),parm,configBody.toString(),null,employee);
+    }
+
+    /**
+     * 发票管控 - 逾期规则设置
+     * @param employee
+     * @param receiptCheckOptId
+     * @param receiptOverTime
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject receiptOverTime(Employee employee, String receiptCheckOptId, ReceiptOverTime receiptOverTime) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + String.format(ApiPath.RECEIPT_OVERTIME,receiptCheckOptId);
+        JsonObject body = new JsonParser().parse(GsonUtil.objectToString(receiptOverTime)).getAsJsonObject();
+        //设置多语言字段
+        JsonObject i18n = new JsonObject();
+        i18n.add("description",GsonUtil.setLanguage(receiptOverTime.getDescription()));
+        body.add("i18n",i18n);
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("roleType","TENANT");
+        String res = doPost(url,getHeader(employee.getAccessToken(), HeaderKey.INVOICE_CONTROL, ResourceId.INVOICE_CONTROL),parm,body.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 删除配置规则
+     * @param employee
+     * @param configId
+     */
+    public void deleteReceiptConfig(Employee employee,String configId) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.DELETE_RECEIPT_OVERTIME;
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("roleType","TENANT");
+        parm.put("id",configId);
+        doDlete(url,getHeader(employee.getAccessToken(), HeaderKey.INVOICE_CONTROL, ResourceId.INVOICE_CONTROL),parm,new JsonObject(),employee);
     }
 
 }

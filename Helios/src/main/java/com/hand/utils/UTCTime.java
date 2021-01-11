@@ -24,6 +24,9 @@ public class UTCTime {
     private static final String UTC_FORMATTER_PATTERN118 = "yyyy-MM-dd'T'23:59:59'Z'";
     private static final String BEIJING_YEAR = "yyyy";
 
+    private static final String BEIJING_DAY = "MM-dd";
+
+
     /**
      * 返回北京时间的任意日期
      * @param day
@@ -238,6 +241,20 @@ public class UTCTime {
         DateTime date = DateTime.parse(utc).plusDays(day);
         return fmt.print(date);
     }
+
+    /**
+     * 获取北京日期   mm-dd
+     * @param day
+     * @return
+     */
+    public static String beijingDay(int day){
+        //格式化为北京时间
+        DateTimeFormatter fmt = DateTimeFormat.forPattern(BEIJING_DAY);
+        DateTime date = DateTime.now().plusDays(day);
+        return fmt.print(date);
+    }
+
+
 
     public static String isQuarter(String utc){
         String beijing=utcToBJDate(utc,0);

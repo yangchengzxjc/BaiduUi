@@ -2,9 +2,12 @@ package com.test.api.method;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.hand.api.ReceiptControlApi;
 import com.hand.baseMethod.HttpStatusException;
+import com.hand.basicConstant.ReceiptConfig;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.Rule.receiptConfig.ReceiptOverTime;
 import com.hand.utils.GsonUtil;
 
 /**
@@ -104,4 +107,44 @@ public class ReceiptControlConfig {
         JsonArray configlist = receiptControlApi.getReceiptConfig(employee);
         return configlist.get(0).getAsJsonObject().get("receiptCheckOptId").getAsInt();
     }
+
+    /**
+     * 场景化的发票抬头校验
+     * @param employee
+     * @param invoiceTitleValidate
+     * @param expenseReportTitleValidate
+     * @return
+     */
+    public void receiptTitleConfig (Employee employee,boolean invoiceTitleValidate,boolean expenseReportTitleValidate) throws HttpStatusException {
+        String receiptCheckOptId = String.valueOf(getReceiptCheckOptId(employee));
+        JsonObject configBody = new JsonParser().parse(String.format(ReceiptConfig.expenseTitleConfig,receiptCheckOptId,invoiceTitleValidate,expenseReportTitleValidate)).getAsJsonObject();
+        receiptControlApi.configExpenseTitle(employee,configBody);
+    }
+
+    /**
+     * 发票逾期设置
+     * @param employee
+     * @param receiptOverTime
+     * @throws HttpStatusException
+     */
+    public String receiptOverTime(Employee employee, ReceiptOverTime receiptOverTime) throws HttpStatusException {
+        receiptOverTime.setCompanyOid(employee.getCompanyOID());
+        if(!receiptOverTime.isStaticCalibrationFlag()){
+            receiptOverTime.setDynamicRuleFailureMonth(receiptOverTime.getDynamicRuleFailureTime().split("-")[0]);
+            receiptOverTime.setDynamicRuleFailureDay(receiptOverTime.getDynamicRuleFailureTime().split("-")[1]);
+        }
+        String configId = receiptControlApi.receiptOverTime(employee,String.valueOf(getReceiptCheckOptId(employee)),receiptOverTime).get("id").getAsString();
+        return configId;
+    }
+
+    /**
+     * 删除逾期校验规则
+     * @param employee
+     * @param configId
+     * @throws HttpStatusException
+     */
+    public void deleteReceiptConfig(Employee employee,String configId) throws HttpStatusException {
+        receiptControlApi.deleteReceiptConfig(employee,configId);
+    }
+
 }

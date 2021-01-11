@@ -209,7 +209,7 @@ public class ExpenseReportPage {
         InvoiceComponent invoiceComponent =new InvoiceComponent();
         invoiceComponent.setCity(cityCode);
         //发票查验
-        JsonObject receiptInfo = expenseReportInvoice.getOCRReceiptVerifyInfo(employee, receiptPath);
+        JsonObject receiptInfo = expenseReportInvoice.getOCRReceiptVerifyInfo(employee, receiptPath).getAsJsonObject("invoiceInfo");
         return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,5.00,receiptInfo);
     }
 

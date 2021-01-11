@@ -329,7 +329,6 @@ public class ExpenseReportInvoice {
         }
     }
 
-
     /**
      * 发票查验发票标签断言  可以选择断言标题还是断言descrition
      * @param employee
@@ -339,7 +338,7 @@ public class ExpenseReportInvoice {
      * @throws HttpStatusException
      */
     public String checkVerifyReceipt(Employee employee,String filePath, String code,boolean isDescription) throws HttpStatusException {
-        JsonObject verifyInfo = getOCRReceiptVerifyInfo(employee,filePath);
+        JsonObject verifyInfo = getOCRReceiptVerifyInfo(employee,filePath).getAsJsonObject("errorList");
         String label ="";
         try{
             JsonArray errorList = verifyInfo.get("errorList").getAsJsonArray();
@@ -348,16 +347,15 @@ public class ExpenseReportInvoice {
                     label = GsonUtil.getJsonValue(errorList,"code",code,"message");
                 }
             }else {
-                if (GsonUtil.isNotEmpt(errorList)) {
+                if (GsonUtil.isNotEmpt(errorList)){
                     label =  GsonUtil.getJsonValue(errorList, "code", code, "title");
                 }
             }
         }catch (NullPointerException e){
-            throw new RuntimeException("发票查验没有错误的标签errorList不存在");
+            throw new RuntimeException("发票查验错误,标签errorList不存在");
         }
         return label;
     }
-
 
     /**
      * 检查发票发票查验是否成功
@@ -379,6 +377,17 @@ public class ExpenseReportInvoice {
      */
     public JsonObject getReceptVerify(Employee employee,String receptInfo) throws HttpStatusException {
         return expenseApi.receiptVerify(employee,receptInfo).getAsJsonObject("invoiceInfo");
+    }
+
+    /**
+     * 获取发票查验 所有
+     * @param employee
+     * @param receptInfo
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getReceptVerifyInfo(Employee employee,String receptInfo) throws HttpStatusException {
+        return expenseApi.receiptVerify(employee,receptInfo);
     }
 
 
@@ -411,7 +420,7 @@ public class ExpenseReportInvoice {
         ocrArray.add(attachment);
         JsonObject receiptInfo = expenseApi.ocr(employee,ocrArray).getAsJsonObject("rows").getAsJsonArray("receiptList").get(0).getAsJsonObject();
         //发票查验
-        return expenseApi.batchVerify(employee,receiptInfo).get(0).getAsJsonObject().get("invoiceInfo").getAsJsonObject();
+        return expenseApi.batchVerify(employee,receiptInfo).get(0).getAsJsonObject();
     }
 
     /**
@@ -441,7 +450,19 @@ public class ExpenseReportInvoice {
         JsonObject attachment = expenseApi.uploadAttachment(employee,filePath);
         JsonObject ocr = financeApi.scanOcr(employee,reportId,attachment);
         return ocr.get("message").getAsString();
+    }
 
+    /**
+     * ofd 格式的发票识别并查验
+     * @param employee
+     * @return
+     */
+    public String ofd(Employee employee,String filePath) throws HttpStatusException {
+        JsonObject attachment = expenseApi.uploadAttachment(employee,filePath);
+        JsonArray ocrArray = new JsonArray();
+        ocrArray.add(attachment);
+        JsonObject ofdInfo = expenseApi.ofdReceiptOCR(employee,ocrArray).getAsJsonObject("rows").getAsJsonArray("receiptList").get(0).getAsJsonObject();
+        return expenseApi.batchVerify(employee,ofdInfo).get(0).getAsJsonObject().get("msg").getAsString();
     }
 
 }

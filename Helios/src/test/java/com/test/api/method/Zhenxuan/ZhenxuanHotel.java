@@ -9,6 +9,8 @@
 
 package com.test.api.method.Zhenxuan;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.hand.api.ZhenxuanApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
@@ -23,7 +25,7 @@ public class ZhenxuanHotel {
         zhenxuanApi = new ZhenxuanApi();
     }
 
-    public String searchHotelDefault(Employee employee, String cityCode, String cityName) throws HttpStatusException {
+    public JsonObject searchHotelDefault(Employee employee, String cityCode, String cityName) throws HttpStatusException {
         HotelSearchDTO hotelSearchDTO = new HotelSearchDTO();
         // 获取当前日期 yyyy-mm-dd
         hotelSearchDTO.setCheckInDate(UTCTime.getBeijingDate(0));
@@ -32,12 +34,16 @@ public class ZhenxuanHotel {
         hotelSearchDTO.setCityName(cityName);
         hotelSearchDTO.setPageNo(1);
         hotelSearchDTO.setPageSize(20);
-        return zhenxuanApi.searchHotel(employee, hotelSearchDTO);
+
+        String res = zhenxuanApi.searchHotel(employee, hotelSearchDTO);
+        JsonObject resJsonObj = new JsonParser().parse(res).getAsJsonObject();
+        return resJsonObj;
     }
 
     public String searchHotelByLocation(Employee employee, String adcode, HotelSearchDTO hotelSearchDTO) throws  HttpStatusException{
         String hotelMapString = zhenxuanApi.getHotelMap(employee, adcode);
         // todo 组装 locationBean
+
         HotelSearchDTO.LocationV2Bean locationV2Bean = new HotelSearchDTO.LocationV2Bean();
         locationV2Bean.setAdcode(adcode);
         hotelSearchDTO.setLocationV2(locationV2Bean);

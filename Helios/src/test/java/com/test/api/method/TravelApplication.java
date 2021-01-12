@@ -74,13 +74,22 @@ public class TravelApplication {
         return info;
     }
 
+    /**
+     * 获取用餐场景 ID
+     * @param employee
+     * @param formOID
+     * @param sceneName
+     * @return
+     * @throws HttpStatusException
+     */
     public Long getDiningSceneId(Employee employee, String formOID, String sceneName) throws HttpStatusException {
+        // 查询表单用餐场景
         JsonArray diningSceneDTOs = applicationApi.getFormDiningScene(employee, formOID);
 
         // JsonArray to ArrayList
         log.debug("diningSceneDTOs: {}", diningSceneDTOs);
-        List<JsonObject> diningSceneDTOList = new Gson().fromJson(diningSceneDTOs, new TypeToken<List<JsonObject>>() {
-        }.getType());
+        List<JsonObject> diningSceneDTOList = new Gson().fromJson(diningSceneDTOs,
+                new TypeToken<List<JsonObject>>(){}.getType());
 
         // filer 过滤 包含 sceneName的 diningSceneDTO
         log.debug("diningSceneDTOList: {}", diningSceneDTOList);
@@ -88,6 +97,7 @@ public class TravelApplication {
                 .filter(diningSceneDTO -> diningSceneDTO.get("name").getAsString().contains(sceneName))
                 .collect(Collectors.toList());
         log.debug("diningSceneResult: {}", diningSceneResult);
+
         // 初始值 Long
         Long diningSceneId;
         if (diningSceneResult != null && !diningSceneResult.isEmpty()) {

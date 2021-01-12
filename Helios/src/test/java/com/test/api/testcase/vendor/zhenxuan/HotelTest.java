@@ -65,7 +65,7 @@ public class HotelTest extends BaseTest {
         return resultList.iterator();
     }
 
-    @Test(dataProvider = "cityV2")
+    @Test(description = "甄选酒店默认搜索", dataProvider = "cityV2")
     public void testHotelSearchDefault(String caseDesc, String cityCode, String cityName) throws HttpStatusException {
         JsonObject resJsonObj = zhenxuanHotel.searchHotelDefault(employee, cityCode, cityName);
         log.info("search hotel default: {}-->{}", cityName, resJsonObj);

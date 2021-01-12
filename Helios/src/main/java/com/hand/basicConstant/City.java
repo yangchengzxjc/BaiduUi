@@ -253,8 +253,7 @@ public enum City {
     }
 
     public static City getCity(String cityName) {
-        City[] cities = values();
-        for (City city : cities) {
+        for (City city : City.values()) {
             if (city.getCityName().equals(cityName)) {
                 return city;
             }

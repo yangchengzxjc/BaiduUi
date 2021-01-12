@@ -237,7 +237,12 @@ public enum City {
      */
     Beijing("110000", "北京"),
     Shanghai("310000", "上海"),
-    Guangzhou("440100", "广州");
+    Guangzhou("440100", "广州"),
+    Hangzhou("330100", "杭州"),
+    Xiamen("350200", "厦门"),
+    Nanjing("320100", "南京"),
+    Chengdu("510100", "成都"),
+    Qingdao("370200", "青岛");
 
     private String cityCode;
     private String cityName;

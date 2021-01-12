@@ -54,7 +54,7 @@ public class HotelTest extends BaseTest {
     public Iterator<Object[]> iteratorDataProvider(){
         List<Object[]> resultList = new ArrayList<>();
         // 定义城市 查询数据
-        String[] cityList = new String[] {"上海","北京","广州"};
+        String[] cityList = new String[] {"上海","北京","广州","杭州","厦门","南京","成都","青岛"};
         for (int i = 0; i < cityList.length; i++) {
             resultList.add(
                     new Object[]{cityList[i],

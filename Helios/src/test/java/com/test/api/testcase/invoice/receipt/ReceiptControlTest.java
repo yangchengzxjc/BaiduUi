@@ -5,10 +5,12 @@ import com.hand.basicConstant.ReceiptConfig;
 import com.hand.basicConstant.Receript;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.Rule.receiptConfig.ReceiptOverTime;
+import com.hand.basicObject.Rule.receiptConfig.ReceiptWords;
 import com.hand.basicObject.component.FormDetail;
 import com.hand.utils.UTCTime;
 import com.test.BaseTest;
 import com.test.api.method.BusinessMethod.ExpenseReportPage;
+import com.test.api.method.ExpenseMethod.ReceiptMethodPage;
 import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportInvoice;
 import com.test.api.method.ReceiptControlConfig;
@@ -211,10 +213,29 @@ public class ReceiptControlTest extends BaseTest {
         Assert.assertEquals("1笔发票逾期",expenseReport.checkSubmitLabel(employee,formDetail.getReportOID(),"1006"));
     }
 
+    @Test(description = "发票字段带入检查（归属人，身份证，人员信息完整性内部员工发票，国内旅客运输）")
+    public void receiptControl13() throws HttpStatusException {
+        FormDetail formDetail= expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID",formDetail.getReportOID());
+        FormDetail invoice1 = expenseReportPage.setReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.trainReceipt);
+        map.put("invoiceOID1",invoice1.getInvoiceOID());
+        ReceiptMethodPage receiptMethodPage = new ReceiptMethodPage();
+        ReceiptWords receiptWords = receiptMethodPage.getInvoiceReceipt(employee,invoice1.getInvoiceOID());
+        //检查归属人
+        Assert.assertEquals("张鹏",receiptWords.getReceiptOwner());
+        //检查身份信息
+        assert receiptWords.getIdCardNo().contains("3634");
+        //检查 信息完整性
+        Assert.assertEquals("Y",receiptWords.getShowUserInfo());
+        //国内旅客运输
+        Assert.assertEquals("Y",receiptWords.getDomesticPassengers());
+    }
+
+
     @AfterMethod
     public void cleanEnv() throws HttpStatusException {
         for (String s : map.keySet()) {
-            switch (s) {
+            switch (s){
                 case "reportOID":
                     if (expenseReport.getReportStatus(employee, map.get("reportOID")) == 1002) {
                         expenseReport.withdraw(employee, map.get("reportOID"));

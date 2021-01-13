@@ -9,6 +9,7 @@ import com.hand.basicConstant.HeaderKey;
 import com.hand.basicConstant.ReceiptConfig;
 import com.hand.basicConstant.ResourceId;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.Rule.receiptConfig.ReceiptCreateExpense;
 import com.hand.basicObject.Rule.receiptConfig.ReceiptOverTime;
 import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
@@ -187,4 +188,53 @@ public class ReceiptControlApi extends BaseRequest{
         doDlete(url,getHeader(employee.getAccessToken(), HeaderKey.INVOICE_CONTROL, ResourceId.INVOICE_CONTROL),parm,new JsonObject(),employee);
     }
 
+    /**
+     * 发票生成费用管控配置规则
+     * @param employee
+     * @param receiptCreateExpense
+     * @throws HttpStatusException
+     */
+    public JsonObject receiptCreateExpense(Employee employee, ReceiptCreateExpense receiptCreateExpense) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.RECEIPT_CREATER_EXPENSE;
+        JsonObject body = new JsonParser().parse(GsonUtil.objectToString(receiptCreateExpense)).getAsJsonObject();
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("roleType","TENANT");
+        String res = doPost(url,getHeader(employee.getAccessToken(),HeaderKey.INVOICE_TO_COST),parm,body.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 删除发票生成费用的配置规则
+     * @param employee
+     * @param receiptToInvoiceOptId
+     * @throws HttpStatusException
+     */
+    public void  deleteReceiptCreateExpenseConfig(Employee employee,String receiptToInvoiceOptId) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + String.format(ApiPath.DELETE_RECEIPT_CREATER_EXPENSE,receiptToInvoiceOptId);
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("roleType","TENANT");
+        doDlete(url,getHeader(employee.getAccessToken(),HeaderKey.INVOICE_CONTROL, ResourceId.INVOICE_CONTROL),parm,new JsonObject(),employee);
+    }
+
+    /**
+     * 是否生成费用的启用选项
+     * @param employee
+     * @param listCode
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getDataList(Employee employee,String listCode) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.GET_DATALIST;
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("roleType","TENANT");
+        parm.put("listCode",listCode);
+        parm.put("listType","SYSTEM");
+        String res = doGet(url,getHeader(employee.getAccessToken(),HeaderKey.INVOICE_CONTROL, ResourceId.INVOICE_CONTROL),parm,employee);
+        return new JsonParser().parse(res).getAsJsonObject().getAsJsonArray("rows");
+    }
+
 }
+
+
+
+

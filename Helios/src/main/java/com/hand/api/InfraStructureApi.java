@@ -546,4 +546,20 @@ public class InfraStructureApi extends BaseRequest{
         return new JsonParser().parse(response).getAsJsonArray();
     }
 
+    /**
+     * 外部接口回调设置
+     * @param employee
+     * @param enable
+     * @throws HttpStatusException
+     */
+    public void rollbackConfig (Employee employee,boolean enable) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ApiPath.REBACK_CONFIG;
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("roleType","TENANT");
+        parm.put("companyOID",employee.getUserOID());
+        JsonObject body = new JsonObject();
+        body.addProperty("customizedApi.enable",enable);
+        doPost(url,getHeader(employee.getAccessToken(),HeaderKey.CALLBACK_SETTING,ResourceId.CALLBACK_SETTING),parm,body.toString(),null,employee);
+    }
+
 }

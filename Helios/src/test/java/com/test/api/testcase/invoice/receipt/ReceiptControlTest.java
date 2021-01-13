@@ -125,6 +125,7 @@ public class ReceiptControlTest extends BaseTest {
     public void receiptControl06() throws HttpStatusException{
         //开启报销单抬头一致性检查
         receiptControlConfig.receiptTitleConfig(employee,true,true);
+        //开启重复可生成费用
         map.put("receiptTitle","true");
         FormDetail formDetail= expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID",formDetail.getReportOID());

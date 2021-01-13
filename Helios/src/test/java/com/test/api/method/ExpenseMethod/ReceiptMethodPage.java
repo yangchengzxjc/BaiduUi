@@ -36,6 +36,38 @@ public class ReceiptMethodPage {
                 .showUserInfo(receiptInfo.get("showUserInfo").getAsString())
                 .build();
         return receiptWords;
+    }
+
+    /**
+     * 发票生成费用管控项字段设置  目前支持 重复 多发票行 连号 抬头有误
+     */
+    public JsonObject receiptCreateExpenseControl(String istrue){
+        JsonObject controlConfig = new JsonObject();
+        if(istrue.equals("Y")){
+            controlConfig.addProperty("id","Y");
+            controlConfig.addProperty("code","Y");
+            controlConfig.addProperty("name","是");
+            controlConfig.addProperty("description","是");
+        }
+        if(istrue.equals("N")){
+            controlConfig.addProperty("id","N");
+            controlConfig.addProperty("code","N");
+            controlConfig.addProperty("name","否");
+            controlConfig.addProperty("description","否");
+        }
+        if(istrue.equals("-")){
+            controlConfig.addProperty("id","-");
+            controlConfig.addProperty("code","-");
+            controlConfig.addProperty("name","未知");
+            controlConfig.addProperty("description","未知");
+        }
+        return controlConfig;
+    }
+
+    /**
+     * 发票场景化配置
+     */
+    public void DuplicatedReceipt(Employee employee,String iscan){
 
     }
 }

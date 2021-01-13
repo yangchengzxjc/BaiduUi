@@ -5,6 +5,10 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @Author peng.zhang
  * @Date 2020/6/5
@@ -252,6 +256,12 @@ public class UTCTime {
         DateTimeFormatter fmt = DateTimeFormat.forPattern(BEIJING_DAY);
         DateTime date = DateTime.now().plusDays(day);
         return fmt.print(date);
+    }
+
+    public static String getTimeStamp(String time) throws ParseException {
+        DateTimeFormatter fmt = DateTimeFormat.forPattern(BEIJING_FORMATTER_TIME);
+        Date date = new SimpleDateFormat(BEIJING_FORMATTER_TIME).parse(fmt.print(DateTime.parse(time)));
+        return String.valueOf(date.getTime()/1000);
     }
 
 

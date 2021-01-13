@@ -12,10 +12,7 @@ import com.test.api.method.ApplicationMethod.TravelApplicationPage;
 import com.test.api.method.BusinessMethod.ExpenseReportPage;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.util.ArrayList;
 
@@ -35,10 +32,13 @@ public class SmokeTest extends BaseTest {
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void beforeClass(@Optional("14082971221") String phoneNumber, @Optional("zp123456") String pwd, @Optional("console") String env){
+    public void beforeClass(@Optional("14082971221") String phoneNumber, @Optional("zp123456") String pwd, @Optional("console") String env) throws HttpStatusException {
         employee=getEmployee(phoneNumber,pwd,env);
         expenseReport = new ExpenseReport();
         environment = env;
+        InfraStructure infraStructure = new InfraStructure();
+        //开启回调设置
+        infraStructure.callBackSetting(employee,true);
     }
 
     @Test(description = "核心功能+外部接口回调")
@@ -234,6 +234,10 @@ public class SmokeTest extends BaseTest {
         expenseReport.deleteLoanBill(employee,formDetail.getReportOID());
     }
 
-
+    @AfterClass
+    public void afterClass() throws HttpStatusException {
+        InfraStructure infraStructure =new InfraStructure();
+        infraStructure.callBackSetting(employee,false);
+    }
 
 }

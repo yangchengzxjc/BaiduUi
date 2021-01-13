@@ -123,6 +123,7 @@ public class ExpenseReportInvoice {
             e.printStackTrace();
         }
         FormDetail formDetail = new FormDetail();
+        log.info("费用的响应为：");
         formDetail.setInvoiceOID(jsonObject.get("rows").getAsJsonObject().get("invoiceOID").getAsString());
         return formDetail;
     }

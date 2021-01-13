@@ -6,15 +6,23 @@ import com.google.gson.JsonParser;
 import com.hand.api.ReceiptControlApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicConstant.ReceiptConfig;
+import com.hand.basicConstant.Receript;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.Rule.receiptConfig.ReceiptCreateExpense;
 import com.hand.basicObject.Rule.receiptConfig.ReceiptOverTime;
 import com.hand.utils.GsonUtil;
+import com.hand.utils.UTCTime;
+import lombok.extern.slf4j.Slf4j;
+
+import java.net.CacheRequest;
+import java.text.ParseException;
 
 /**
  * @Author peng.zhang
  * @Date 2021/1/5
  * @Version 1.0
  **/
+@Slf4j
 public class ReceiptControlConfig {
 
     private ReceiptControlApi receiptControlApi;
@@ -147,4 +155,73 @@ public class ReceiptControlConfig {
         receiptControlApi.deleteReceiptConfig(employee,configId);
     }
 
+    /**
+     * 发票生成费用配置
+     * @param employee
+     * @param receiptCreateExpense
+     * @param createInvoice 是否生成费用 仅可选"Y","N"
+     * @return
+     * @throws HttpStatusException
+     */
+    public String receiptCreateExpense(Employee employee, ReceiptCreateExpense receiptCreateExpense,String createInvoice) throws HttpStatusException {
+        receiptCreateExpense.setLevelOrgName(employee.getTenantName());
+        receiptCreateExpense.setLevelCode("TENANT");
+        receiptCreateExpense.setLevelOrgId(employee.getTenantId());
+        receiptCreateExpense.setPriority(1);
+//        if(receiptCreateExpense.getDuplicatedReceipt()!=null){
+//            receiptCreateExpense.setCanGenerateInvoice(canGenerateInvoice(employee,receiptCreateExpense.getDuplicatedReceipt().get("code").getAsString(),"3006"));
+//        }
+//        if(receiptCreateExpense.getConsecutiveReceipt()!=null){
+//            receiptCreateExpense.setCanGenerateInvoice(canGenerateInvoice(employee,receiptCreateExpense.getConsecutiveReceipt().get("code").getAsString(),"3006"));
+//        }
+//        if(receiptCreateExpense.getInvalidTitleReceipt()!=null){
+//            receiptCreateExpense.setCanGenerateInvoice(canGenerateInvoice(employee,receiptCreateExpense.getInvalidTitleReceipt().get("code").getAsString(),"3006"));
+//        }
+//        if(receiptCreateExpense.getMultipleInvoiceLines()!=null){
+//            receiptCreateExpense.setCanGenerateInvoice(canGenerateInvoice(employee,receiptCreateExpense.getMultipleInvoiceLines().get("code").getAsString(),"3006"));
+//        }
+//        if(receiptCreateExpense.getCancelledReceipt()!=null){
+//            //默认发票任何状态都可以生成费用
+//            receiptCreateExpense.setCanGenerateInvoice(canGenerateInvoice(employee,"Y","3006"));
+//        }
+        if(createInvoice.equals("Y") || createInvoice.equals("N")){
+            receiptCreateExpense.setCanGenerateInvoice(canGenerateInvoice(employee,createInvoice,"3006"));
+        }else{
+            throw new RuntimeException("createInvoice参数错误请检查");
+        }
+        String receiptToInvoiceOptId = receiptControlApi.receiptCreateExpense(employee,receiptCreateExpense).get("receiptToInvoiceOptId").getAsString();
+        return receiptToInvoiceOptId;
+    }
+
+    /**
+     * 删除发票生成费用规则
+     */
+    public void deleteReceiptCreateExpense(Employee employee,String receiptToInvoiceOptId) throws HttpStatusException {
+        receiptControlApi.deleteReceiptCreateExpenseConfig(employee,receiptToInvoiceOptId);
+    }
+
+    /**
+     * 返回对应的
+     * @param employee
+     * @param isCan
+     * @param listCode
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject canGenerateInvoice(Employee employee,String isCan,String listCode) throws HttpStatusException {
+        JsonArray dataList = receiptControlApi.getDataList(employee,listCode);
+        return GsonUtil.getJsonValue(dataList,"code",isCan);
+    }
+
+    /**
+     * 构造一个假的发票
+     * @param invoiceNumber
+     * @param checkCode
+     * @param invoiceDate
+     * @return
+     * @throws ParseException
+     */
+    public String getHandReceipt(String invoiceNumber,String checkCode,String invoiceDate) throws ParseException {
+        return String.format(Receript.HANDRECEIPT4,invoiceNumber,checkCode,invoiceNumber,invoiceDate,UTCTime.getTimeStamp(invoiceDate));
+    }
 }

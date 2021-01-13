@@ -372,6 +372,14 @@ public class ApiPath {
         public static final String DELETE_RECEIPT_OVERTIME = "/api/invoice/overtime";
         //ofd 发票识别
         public static final String OFD_RECEIPT_OCR = "/receipt/api/receipt/ofd";
+        //删除发票生成费用的配置规则
+        public static final String DELETE_RECEIPT_CREATER_EXPENSE = "/api/receipt/to/invoice/config/%s";
+        //发票生成费用配置规则
+        public static final String RECEIPT_CREATER_EXPENSE = "/api/receipt/to/invoice/config";
+        //发票是否可以生成费用的配置
+        public static final String GET_DATALIST = "/config/api/config/dataList";
+        // 开启回调设置
+        public static final String REBACK_CONFIG = "/api/customizedApiCallback/config";
 }
 
 

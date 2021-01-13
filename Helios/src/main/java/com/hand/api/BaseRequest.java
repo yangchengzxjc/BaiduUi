@@ -393,7 +393,7 @@ public class BaseRequest {
      */
     public void isTimeOUT(APIResponse apiResponse){
         long time = apiResponse.getTime();
-        if(time>5000) {
+        if(time>6000) {
             log.info("响应时间为:{}ms",time);
             throw new RuntimeException("接口响应慢");
         }

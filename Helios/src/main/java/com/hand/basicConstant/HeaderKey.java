@@ -25,4 +25,8 @@ public class HeaderKey {
     public static final String FINANCE_AUDIT = "finance-audit";
     //发票管控
     public static final String INVOICE_CONTROL = "invoice-control";
+    //发票生成费用
+    public static final String INVOICE_TO_COST = "invoice-to-cost";
+    //回调设置
+    public static final String CALLBACK_SETTING = "callback-setting";
 }

@@ -470,4 +470,14 @@ public class InfraStructure {
         return infraStructureApi.companyDetail(employee,companyId).get("companyCode").getAsString();
     }
 
+    /**
+     * 外部接口接口回调设置
+     * @param employee
+     * @param enable
+     * @throws HttpStatusException
+     */
+    public void callBackSetting(Employee employee,boolean enable) throws HttpStatusException {
+        infraStructureApi.rollbackConfig(employee,enable);
+    }
+
 }

@@ -80,7 +80,7 @@ public class CreateExpenseControlTest extends BaseTest {
         Assert.assertEquals("Y",expenseReportInvoice.getReceptVerifyInfo(employee,receipt).get("canCreateExpense").getAsString());
         FormDetail invoice2 = expenseReportPage.setHandReceiptInvoice(employee,"autotest",formDetail.getReportOID(), receipt);
         map.put("invoiceOID2",invoice2.getInvoiceOID());
-//        // 检查报销单内的费用是否是俩个
+        // 检查报销单内的费用是否是俩个
         Assert.assertEquals(2,expenseReportInvoice.getInvoiceDetail(employee,formDetail.getReportOID()).size());
     }
 
@@ -106,6 +106,56 @@ public class CreateExpenseControlTest extends BaseTest {
         Assert.assertEquals("N",expenseReportInvoice.getReceptVerifyInfo(employee,receipt).get("canCreateExpense").getAsString());
     }
 
+    @Test(description = "发票连号可生成费用-弱管控")
+    public void createExpenseControlTest03() throws HttpStatusException{
+        //配置规则 初始化
+        ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
+        ReceiptCreateExpense receiptCreateExpense2 = new ReceiptCreateExpense();
+        // 开启连号校验
+        receiptControlConfig.receiptConsecutiveConfig(employee, ReceiptConfig.receiptConsecutive,true);
+        map.put("receiptConsecutive","true");
+        // 配置发票查验失败可生成费用
+        receiptCreateExpense2.setCancelledReceipt(receiptMethodPage.receiptCreateExpenseControl("-"));
+        // 配置 发票连号可生成费用
+        receiptCreateExpense1.setConsecutiveReceipt(receiptMethodPage.receiptCreateExpenseControl("Y"));
+        String receiptToInvoiceOptId1 = receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,"Y");
+        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
+        String receiptToInvoiceOptId2 = receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense2,"Y");
+        map.put("receiptToInvoiceOptId2",receiptToInvoiceOptId2);
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID",formDetail.getReportOID());
+        //发票连号的费用
+        FormDetail invoice1 = expenseReportPage.setHandReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.HANDRECEIPT1);
+        map.put("invoiceOID1",invoice1.getInvoiceOID());
+        FormDetail invoice2 = expenseReportPage.setHandReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.HANDRECEIPT2);
+        map.put("invoiceOID2",invoice2.getInvoiceOID());
+        Assert.assertEquals(2,expenseReportInvoice.getInvoiceDetail(employee,formDetail.getReportOID()).size());
+    }
+
+    @Test(description = "发票连号可生成费用-强管控")
+    public void createExpenseControlTest04() throws HttpStatusException{
+        //配置规则 初始化
+        ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
+        ReceiptCreateExpense receiptCreateExpense2 = new ReceiptCreateExpense();
+        // 开启连号校验
+        receiptControlConfig.receiptConsecutiveConfig(employee, ReceiptConfig.receiptConsecutive,true);
+        map.put("receiptConsecutive","true");
+        // 配置发票查验失败可生成费用
+        receiptCreateExpense2.setCancelledReceipt(receiptMethodPage.receiptCreateExpenseControl("-"));
+        // 配置 发票连号可生成费用
+        receiptCreateExpense1.setConsecutiveReceipt(receiptMethodPage.receiptCreateExpenseControl("Y"));
+        String receiptToInvoiceOptId1 = receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,"N");
+        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
+        String receiptToInvoiceOptId2 = receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense2,"Y");
+        map.put("receiptToInvoiceOptId2",receiptToInvoiceOptId2);
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID",formDetail.getReportOID());
+        //发票连号的费用
+        FormDetail invoice1 = expenseReportPage.setHandReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.HANDRECEIPT1);
+        map.put("invoiceOID1",invoice1.getInvoiceOID());
+        Assert.assertEquals("N",expenseReportInvoice.getReceptVerifyInfo(employee,Receript.HANDRECEIPT2).get("canCreateExpense").getAsString());
+    }
+
     @AfterMethod
     public void cleanEnv() throws HttpStatusException {
         for (String s : map.keySet()) {
@@ -127,6 +177,10 @@ public class CreateExpenseControlTest extends BaseTest {
                     break;
                 case "receiptToInvoiceOptId2" :
                     receiptControlConfig.deleteReceiptCreateExpense(employee,map.get("receiptToInvoiceOptId2"));
+                    break;
+                case "receiptConsecutive":
+                    //关闭连号配置
+                    receiptControlConfig.receiptConsecutiveConfig(employee, ReceiptConfig.receiptConsecutive,false);
                     break;
             }
         }

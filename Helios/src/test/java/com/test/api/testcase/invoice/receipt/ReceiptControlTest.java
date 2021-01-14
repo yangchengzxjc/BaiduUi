@@ -193,6 +193,9 @@ public class ReceiptControlTest extends BaseTest {
 
     @Test(description = "发票逾期管控-静态校验管控-强管控不允许生成费用")
     public void receiptControl11() throws HttpStatusException{
+        //开启查验失败的发票可以生成费用
+        String receiptToInvoiceOptId1 = receiptMethodPage.duplicatedReceipt(employee,"Y");
+        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
         ReceiptOverTime receiptOverTime = new ReceiptOverTime();
         receiptOverTime.setForceEnabled("true");
         String overTimeConfigId = receiptControlConfig.receiptOverTime(employee,receiptOverTime);
@@ -204,6 +207,10 @@ public class ReceiptControlTest extends BaseTest {
 
     @Test(description = "发票逾期管控-动态校验管控-弱管控")
     public void receiptControl12() throws HttpStatusException {
+        //开启查验失败的发票可以生成费用
+        String receiptToInvoiceOptId1 = receiptMethodPage.duplicatedReceipt(employee,"Y");
+        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
+        //配置逾期规则
         ReceiptOverTime receiptOverTime = new ReceiptOverTime();
         receiptOverTime.setStaticCalibrationFlag(false);
         receiptOverTime.setDynamicRuleFailureTime("12-31");

@@ -32,6 +32,7 @@ public class ReceiptControlTest extends BaseTest {
     private ReceiptControlConfig receiptControlConfig;
     private ExpenseReportInvoice expenseReportInvoice;
     private HashMap<String,String> map;
+    private ReceiptMethodPage receiptMethodPage;
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
@@ -42,6 +43,7 @@ public class ReceiptControlTest extends BaseTest {
         map = new HashMap<>();
         expenseReport = new ExpenseReport();
         expenseReportInvoice = new ExpenseReportInvoice();
+        receiptMethodPage = new ReceiptMethodPage();
     }
 
     @BeforeMethod
@@ -123,9 +125,11 @@ public class ReceiptControlTest extends BaseTest {
 
     @Test(description = "场景化的发票启用抬头管控，抬头一致性管控-区块链普通发票(电子)")
     public void receiptControl06() throws HttpStatusException{
+        //开启发票重复可生成费用
+        String receiptToInvoiceOptId1 = receiptMethodPage.duplicatedReceipt(employee,"Y");
+        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
         //开启报销单抬头一致性检查
         receiptControlConfig.receiptTitleConfig(employee,true,true);
-        //开启重复可生成费用
         map.put("receiptTitle","true");
         FormDetail formDetail= expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID",formDetail.getReportOID());
@@ -262,6 +266,10 @@ public class ReceiptControlTest extends BaseTest {
                     break;
                 case "overTimeConfigId":
                     receiptControlConfig.deleteReceiptConfig(employee,map.get("overTimeConfigId"));
+                    break;
+                case "receiptToInvoiceOptId1" :
+                    receiptControlConfig.deleteReceiptCreateExpense(employee,map.get("receiptToInvoiceOptId1"));
+                    break;
             }
         }
     }

@@ -3,8 +3,10 @@ package com.test.api.method.ExpenseMethod;
 import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.Rule.receiptConfig.ReceiptCreateExpense;
 import com.hand.basicObject.Rule.receiptConfig.ReceiptWords;
 import com.test.api.method.ExpenseReportInvoice;
+import com.test.api.method.ReceiptControlConfig;
 
 /**
  * @Author peng.zhang
@@ -65,9 +67,48 @@ public class ReceiptMethodPage {
     }
 
     /**
-     * 发票场景化配置
+     * 发票场景化配置 发票重复是否生成费用
+     * @param iscan 可选"Y","N"
      */
-    public void DuplicatedReceipt(Employee employee,String iscan){
-
+    public String duplicatedReceipt(Employee employee,String iscan) throws HttpStatusException {
+        ReceiptControlConfig receiptControlConfig = new ReceiptControlConfig();
+        ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
+        receiptCreateExpense1.setDuplicatedReceipt(receiptCreateExpenseControl("Y"));
+        return receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,iscan);
     }
+
+    /**
+     * 发票场景化配置 发票状态 未知 可生成费用
+     * @return
+     */
+    public String cancelledReceipt(Employee employee) throws HttpStatusException {
+        ReceiptControlConfig receiptControlConfig = new ReceiptControlConfig();
+        ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
+        receiptCreateExpense1.setCancelledReceipt(receiptCreateExpenseControl("Y"));
+        return receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,"Y");
+    }
+
+    /**
+     * 发票场景化配置 发票连号是否生成费用
+     * @param iscan 可选"Y","N"
+     */
+    public String consecutiveReceipt(Employee employee,String iscan) throws HttpStatusException {
+        ReceiptControlConfig receiptControlConfig = new ReceiptControlConfig();
+        ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
+        receiptCreateExpense1.setConsecutiveReceipt(receiptCreateExpenseControl("Y"));
+        return receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,iscan);
+    }
+
+    /**
+     * 发票场景化配置 发票抬头有误是否生成费用
+     * @param iscan 可选"Y","N"
+     */
+    public String invalidTitleReceipt(Employee employee,String iscan) throws HttpStatusException {
+        ReceiptControlConfig receiptControlConfig = new ReceiptControlConfig();
+        ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
+        receiptCreateExpense1.setInvalidTitleReceipt(receiptCreateExpenseControl("Y"));
+        return receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,iscan);
+    }
+
+
 }

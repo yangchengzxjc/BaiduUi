@@ -96,7 +96,7 @@ public class SmokeTest extends BaseTest {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            log.info("报销单审批通过后色回调查询：{}",business.getApiCode());
+            log.info("报销单审批通过后回调查询：{}",business.getApiCode());
             Assert.assertEquals(formDetail.getBusinessCode(),business.getBusinessCode());
             Assert.assertEquals("EXPENSE_REPORT_APPROVAL_PASS",business.getApiCode());
         }

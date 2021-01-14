@@ -42,6 +42,16 @@
             <stringProp name="Argument.value">${__P(formOID,1086202183313776641)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="loginThread" elementType="Argument">
+            <stringProp name="Argument.name">loginThread</stringProp>
+            <stringProp name="Argument.value">${__P(loginThread,1)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="loginNum" elementType="Argument">
+            <stringProp name="Argument.name">loginNum</stringProp>
+            <stringProp name="Argument.value">${__P(loginNum,1)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </elementProp>
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
@@ -195,9 +205,9 @@ if(file.exists()&amp;&amp;file.isFile())
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
+          <stringProp name="LoopController.loops">${loginNum}</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${loginThread}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <longProp name="ThreadGroup.start_time">1546505677000</longProp>
         <longProp name="ThreadGroup.end_time">1546505677000</longProp>

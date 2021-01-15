@@ -153,8 +153,88 @@ public class CreateExpenseControlTest extends BaseTest {
         //发票连号的费用
         FormDetail invoice1 = expenseReportPage.setHandReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.HANDRECEIPT1);
         map.put("invoiceOID1",invoice1.getInvoiceOID());
-        Assert.assertEquals("N",expenseReportInvoice.getReceptVerifyInfo(employee,Receript.HANDRECEIPT2).get("canCreateExpense").getAsString());
+        FormDetail invoice2 = expenseReportPage.setHandReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.HANDRECEIPT2);
+        Assert.assertEquals("该费用类型不可报销连号的发票",invoice2.getResponse().get("message").getAsString());
     }
+
+    @Test(description = "发票抬头不一致生成费用-弱管控")
+    public void createExpenseControlTest05() throws HttpStatusException{
+        //配置规则 初始化
+        ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
+        // 开启发票抬头管控
+        receiptControlConfig.receiptTitleConfig(employee,true,true);
+        map.put("receiptTitle","true");
+        // 配置 配置发票抬头不一致可生成费用
+        receiptCreateExpense1.setInvalidTitleReceipt(receiptMethodPage.receiptCreateExpenseControl("Y"));
+        String receiptToInvoiceOptId1 = receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,"Y");
+        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID",formDetail.getReportOID());
+        //发票抬头校验 发票抬头标签
+        FormDetail invoice1 = expenseReportPage.setReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.receipt6);
+        map.put("invoiceOID1",invoice1.getInvoiceOID());
+        Assert.assertEquals(1,expenseReportInvoice.getInvoiceDetail(employee,formDetail.getReportOID()).size());
+    }
+
+    @Test(description = "发票抬头不一致不可以生成费用-强管控")
+    public void createExpenseControlTest06() throws HttpStatusException{
+        //配置规则 初始化
+        ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
+        // 开启发票抬头管控
+        receiptControlConfig.receiptTitleConfig(employee,true,true);
+        map.put("receiptTitle","true");
+        // 配置 配置发票抬头不一致可生成费用
+        receiptCreateExpense1.setInvalidTitleReceipt(receiptMethodPage.receiptCreateExpenseControl("Y"));
+        String receiptToInvoiceOptId1 = receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,"N");
+        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID",formDetail.getReportOID());
+        //发票抬头校验 发票抬头标签
+        String message = expenseReportPage.setReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.receipt6).getResponse().get("message").getAsString();
+        Assert.assertEquals("该费用类型不可报销抬头有误的发票",message);
+    }
+
+    @Test(description = "存在多个发票行-弱管控可生成费用")
+    public void createExpenseControlTest07() throws HttpStatusException{
+        //配置规则 初始化
+        ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
+        ReceiptCreateExpense receiptCreateExpense2 = new ReceiptCreateExpense();
+        //初始化发票重复的规则
+        receiptCreateExpense1.setDuplicatedReceipt(receiptMethodPage.receiptCreateExpenseControl("Y"));
+        //开启多发票行可生成费用
+        receiptCreateExpense2.setMultipleInvoiceLines(receiptMethodPage.receiptCreateExpenseControl("Y"));
+        String receiptToInvoiceOptId1 = receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,"Y");
+        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
+        String receiptToInvoiceOptId2 = receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense2,"Y");
+        map.put("receiptToInvoiceOptId2",receiptToInvoiceOptId2);
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID",formDetail.getReportOID());
+        FormDetail invoice1 = expenseReportPage.setReceiptInvoice(employee,"autotest",formDetail.getReportOID(),Receript.moreTaxRateReceipt);
+        map.put("invoiceOID1",invoice1.getInvoiceOID());
+        Assert.assertEquals(1,expenseReportInvoice.getInvoiceDetail(employee,formDetail.getReportOID()).size());
+    }
+
+//    @Test(description = "存在多个发票行-强管控不可生成费用")
+//    public void createExpenseControlTest08() throws HttpStatusException{
+        //配置规则 初始化
+//        ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
+//        ReceiptCreateExpense receiptCreateExpense2 = new ReceiptCreateExpense();
+//        //初始化发票重复的规则
+//        receiptCreateExpense1.setDuplicatedReceipt(receiptMethodPage.receiptCreateExpenseControl("Y"));
+//        //开启多发票行不可生成费用
+//        receiptCreateExpense2.setMultipleInvoiceLines(receiptMethodPage.receiptCreateExpenseControl("Y"));
+//        String receiptToInvoiceOptId1 = receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,"Y");
+//        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
+//        //开启多发票行不可生成费用
+//        String receiptToInvoiceOptId2 = receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense2,"N");
+//        map.put("receiptToInvoiceOptId2",receiptToInvoiceOptId2);
+//        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+//        map.put("reportOID",formDetail.getReportOID());
+//        FormDetail invoice1 = expenseReportPage.setReceiptInvoice(employee,"autotest",formDetail.getReportOID(),Receript.moreTaxRateReceipt);
+//        Assert.assertEquals("该费用类型不可报销抬头有误的发票",invoice1.getResponse().get("message").getAsString());
+//    }
+
+
 
     @AfterMethod
     public void cleanEnv() throws HttpStatusException {
@@ -181,6 +261,9 @@ public class CreateExpenseControlTest extends BaseTest {
                 case "receiptConsecutive":
                     //关闭连号配置
                     receiptControlConfig.receiptConsecutiveConfig(employee, ReceiptConfig.receiptConsecutive,false);
+                    break;
+                case "receiptTitle":
+                    receiptControlConfig.receiptTitleConfig(employee, false, false);
                     break;
             }
         }

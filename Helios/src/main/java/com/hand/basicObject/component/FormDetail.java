@@ -1,5 +1,6 @@
 package com.hand.basicObject.component;
 
+import com.google.gson.JsonObject;
 import lombok.Data;
 
 /**
@@ -19,5 +20,6 @@ public class FormDetail {
     private String id;
     //费用的oid
     private String invoiceOID;
-
+    // 接口的响应
+    private JsonObject response;
 }

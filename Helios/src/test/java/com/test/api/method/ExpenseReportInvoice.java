@@ -124,7 +124,11 @@ public class ExpenseReportInvoice {
         }
         FormDetail formDetail = new FormDetail();
         log.info("费用的响应为：");
-        formDetail.setInvoiceOID(jsonObject.get("rows").getAsJsonObject().get("invoiceOID").getAsString());
+        try{
+            formDetail.setInvoiceOID(jsonObject.get("rows").getAsJsonObject().get("invoiceOID").getAsString());
+        }catch (NullPointerException e){
+            formDetail.setResponse(jsonObject);
+        }
         return formDetail;
     }
 

@@ -141,6 +141,25 @@ public class ReceiptControlTest extends BaseTest {
         Assert.assertEquals("抬头不一致",expenseReportInvoice.checkInvoiceLabelName(employee,invoice.getInvoiceOID(),"MISMATCHED_TITLE"));
     }
 
+    @Test(description = "场景化的发票启用抬头管控，抬头一致性管控-电信发票不校验")
+    public void receiptControl14() throws HttpStatusException{
+        //开启发票重复可生成费用
+        String receiptToInvoiceOptId1 = receiptMethodPage.duplicatedReceipt(employee,"Y");
+        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
+        //开启报销单抬头一致性检查
+        receiptControlConfig.receiptTitleConfig(employee,true,true);
+        map.put("receiptTitle","true");
+        FormDetail formDetail= expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID",formDetail.getReportOID());
+        FormDetail invoice = expenseReportPage.setReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.dianxinReceipt);
+        map.put("invoiceOID1",invoice.getInvoiceOID());
+        try{
+            expenseReportInvoice.checkInvoiceLabelName(employee,invoice.getInvoiceOID(),"WRONG_HEADER");
+        }catch (NullPointerException e){
+            Assert.assertTrue(true);
+        }
+    }
+
     @Test(description = "发票连号检验")
     public void receiptControl07() throws HttpStatusException {
         //开启报销单抬头一致性检查

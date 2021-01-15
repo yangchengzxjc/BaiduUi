@@ -201,7 +201,7 @@
             <url>true</url>
           </value>
         </objProp>
-        <stringProp name="filename">${path}Error.txt</stringProp>
+        <stringProp name="filename">./result/Error.txt</stringProp>
       </ResultCollector>
       <hashTree/>
       <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="删除已有文件" enabled="true">
@@ -1189,7 +1189,7 @@ log.info(&quot;;;;;;;;;;;;;;;;;;;;;;;;;&quot;+props.get(&quot;apply_customFormFi
         </JSR223PreProcessor>
         <hashTree/>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV 数据文件设置" enabled="true">
-          <stringProp name="filename">./accountInfo.txt</stringProp>
+          <stringProp name="filename">${path}accountInfo.txt</stringProp>
           <stringProp name="fileEncoding">UTF-8</stringProp>
           <stringProp name="variableNames">accessToken,userOID,jobId,fullName,tenantId</stringProp>
           <boolProp name="ignoreFirstLine">false</boolProp>

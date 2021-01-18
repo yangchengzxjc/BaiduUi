@@ -23,6 +23,10 @@ public class ReceiptCreateExpense {
     private JsonObject invalidTitleReceipt;
     // 发票状态
     private JsonObject cancelledReceipt;
+    // 商品 服务名称
+    private String goodsServiceName;
+    //销售方
+    private String salesParty;
     //是否生成费用
     private JsonObject canGenerateInvoice;
     // 配置租户的code

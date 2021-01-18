@@ -22,6 +22,7 @@ public class Receript {
     public static final String receipt4 = "src/main/resources/receiptInfo/receipt4.pdf";
     public static final String receipt5 = "src/main/resources/receiptInfo/receipt5.pdf";
     public static final String receipt6 = "src/main/resources/receiptInfo/receipt6.jpg";
+    public static final String receipt7 = "src/main/resources/receiptInfo/receipt7.pdf";
     //电信发票
     public static final String dianxinReceipt = "src/main/resources/receiptInfo/dianxin.pdf";
     //手录假发票信息,测试发票连号

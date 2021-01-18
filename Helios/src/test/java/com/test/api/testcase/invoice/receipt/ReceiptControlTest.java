@@ -143,9 +143,6 @@ public class ReceiptControlTest extends BaseTest {
 
     @Test(description = "场景化的发票启用抬头管控，抬头一致性管控-电信发票不校验")
     public void receiptControl14() throws HttpStatusException{
-        //开启发票重复可生成费用
-        String receiptToInvoiceOptId1 = receiptMethodPage.duplicatedReceipt(employee,"Y");
-        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
         //开启报销单抬头一致性检查
         receiptControlConfig.receiptTitleConfig(employee,true,true);
         map.put("receiptTitle","true");
@@ -155,8 +152,8 @@ public class ReceiptControlTest extends BaseTest {
         map.put("invoiceOID1",invoice.getInvoiceOID());
         try{
             expenseReportInvoice.checkInvoiceLabelName(employee,invoice.getInvoiceOID(),"WRONG_HEADER");
-        }catch (NullPointerException e){
-            Assert.assertTrue(true);
+        }catch (RuntimeException e){
+            Assert.assertEquals("费用中无此WRONG_HEADER类型的标签",e.toString().split(":")[1].trim());
         }
     }
 

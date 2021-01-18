@@ -376,10 +376,10 @@ public class ExpenseApi extends BaseRequest{
                 case "到达城市":
                     data.addProperty("value",component.getArriveCity());
                     break;
-                case "陪同人员":
+                case "陪同人数":
                     data.addProperty("value",component.getAccompanying());
                     break;
-                case "招待人员":
+                case "招待人数":
                     data.addProperty("value",component.getHospitalized());
                     break;
             }

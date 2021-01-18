@@ -214,26 +214,57 @@ public class CreateExpenseControlTest extends BaseTest {
         Assert.assertEquals(1,expenseReportInvoice.getInvoiceDetail(employee,formDetail.getReportOID()).size());
     }
 
-//    @Test(description = "存在多个发票行-强管控不可生成费用")
-//    public void createExpenseControlTest08() throws HttpStatusException{
-        //配置规则 初始化
-//        ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
-//        ReceiptCreateExpense receiptCreateExpense2 = new ReceiptCreateExpense();
-//        //初始化发票重复的规则
-//        receiptCreateExpense1.setDuplicatedReceipt(receiptMethodPage.receiptCreateExpenseControl("Y"));
-//        //开启多发票行不可生成费用
-//        receiptCreateExpense2.setMultipleInvoiceLines(receiptMethodPage.receiptCreateExpenseControl("Y"));
-//        String receiptToInvoiceOptId1 = receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,"Y");
-//        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
-//        //开启多发票行不可生成费用
-//        String receiptToInvoiceOptId2 = receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense2,"N");
-//        map.put("receiptToInvoiceOptId2",receiptToInvoiceOptId2);
-//        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
-//        map.put("reportOID",formDetail.getReportOID());
-//        FormDetail invoice1 = expenseReportPage.setReceiptInvoice(employee,"autotest",formDetail.getReportOID(),Receript.moreTaxRateReceipt);
-//        Assert.assertEquals("该费用类型不可报销抬头有误的发票",invoice1.getResponse().get("message").getAsString());
-//    }
+    @Test(description = "存在多个发票行-强管控不可生成费用(待定测试)")
+    public void createExpenseControlTest08() throws HttpStatusException{
+        ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
+        //开启多发票行不可生成费用
+        receiptCreateExpense1.setMultipleInvoiceLines(receiptMethodPage.receiptCreateExpenseControl("Y"));
+        String receiptToInvoiceOptId1 = receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,"N");
+        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID",formDetail.getReportOID());
+        Assert.assertEquals("N",expenseReportInvoice.getReceptVerifyInfo(employee,Receript.moreTaxRateReceipt).get("canCreateExpense").getAsString());
+    }
 
+    @Test(description = "商品名称服务包含某些特殊名称的发票-可生成费用")
+    public void createExpenseControlTest09() throws HttpStatusException{
+        ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
+        //开启多发票行不可生成费用
+        receiptCreateExpense1.setGoodsServiceName("牙膏");
+        String receiptToInvoiceOptId1 = receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,"Y");
+        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID",formDetail.getReportOID());
+        FormDetail invoice1 = expenseReportPage.setReceiptInvoice(employee,"autotest",formDetail.getReportOID(),Receript.receipt7);
+        map.put("invoiceOID1",invoice1.getInvoiceOID());
+        Assert.assertEquals(1,expenseReportInvoice.getInvoiceDetail(employee,formDetail.getReportOID()).size());
+    }
+
+    @Test(description = "商品名称服务包含某些特殊名称的发票-不可生成费用")
+    public void createExpenseControlTest10() throws HttpStatusException{
+        ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
+        //开启多发票行不可生成费用
+        receiptCreateExpense1.setGoodsServiceName("牙膏");
+        String receiptToInvoiceOptId1 = receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,"N");
+        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID",formDetail.getReportOID());
+        FormDetail invoice1 = expenseReportPage.setReceiptInvoice(employee,"autotest",formDetail.getReportOID(),Receript.receipt7);
+        Assert.assertEquals("该费用类型不可报销商品/服务名称包含“牙膏”的发票",invoice1.getResponse().get("message").getAsString());
+    }
+
+    @Test(description = "销售方名称包含某字段-不可生成费用")
+    public void createExpenseControlTest11() throws HttpStatusException{
+        ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
+        //开启多发票行不可生成费用
+        receiptCreateExpense1.setSalesParty("西安华讯得");
+        String receiptToInvoiceOptId1 = receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,"N");
+        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID",formDetail.getReportOID());
+        FormDetail invoice1 = expenseReportPage.setReceiptInvoice(employee,"autotest",formDetail.getReportOID(),Receript.receipt7);
+        Assert.assertEquals("该费用类型不可报销销售方名称包含“西安华讯得”的发票",invoice1.getResponse().get("message").getAsString());
+    }
 
 
     @AfterMethod

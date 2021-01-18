@@ -116,6 +116,7 @@ public class OkHttpUtils {
     private static APIResponse handleHttpResponse(int httpCode, String result, Response response) {
         APIResponse APIResponse = new APIResponse();
         APIResponse.setBody(result);
+        APIResponse.setSpanId(response.header("SpanID"));
         APIResponse.setStatusCode(httpCode);
         APIResponse.setTime(response.receivedResponseAtMillis()-response.sentRequestAtMillis());
         return APIResponse;

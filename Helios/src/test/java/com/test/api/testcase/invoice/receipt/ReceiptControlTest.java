@@ -218,7 +218,7 @@ public class ReceiptControlTest extends BaseTest {
         map.put("overTimeConfigId",overTimeConfigId);
         FormDetail formDetail= expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID",formDetail.getReportOID());
-        Assert.assertEquals("N",expenseReportInvoice.getReceptVerifyInfo(employee,Receript.HANDRECEIPT3).get("canCreateExpense").getAsString());
+        Assert.assertEquals("N",expenseReportInvoice.getReceptVerifyInfo(employee,Receript.HANDRECEIPT3).get("isOk").getAsString());
     }
 
     @Test(description = "发票逾期管控-动态校验管控-弱管控")

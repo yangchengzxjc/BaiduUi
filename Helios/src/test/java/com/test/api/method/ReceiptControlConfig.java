@@ -8,6 +8,7 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicConstant.ReceiptConfig;
 import com.hand.basicConstant.Receript;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.Rule.receiptConfig.PriceSeperationTax;
 import com.hand.basicObject.Rule.receiptConfig.ReceiptCreateExpense;
 import com.hand.basicObject.Rule.receiptConfig.ReceiptOverTime;
 import com.hand.utils.GsonUtil;
@@ -224,4 +225,21 @@ public class ReceiptControlConfig {
     public String getHandReceipt(String invoiceNumber,String checkCode,String invoiceDate) throws ParseException {
         return String.format(Receript.HANDRECEIPT4,invoiceNumber,checkCode,invoiceNumber,invoiceDate,UTCTime.getTimeStamp(invoiceDate));
     }
+
+    /**
+     * 价税分离配置
+     * @param employee
+     * @param priceSeperationTax
+     * @param isOpen
+     * @throws HttpStatusException
+     */
+    public String separationConfig(Employee employee, PriceSeperationTax priceSeperationTax,String isOpen) throws HttpStatusException {
+        priceSeperationTax.setLevelOrgId(employee.getTenantId());
+        priceSeperationTax.setLevelOrgName(employee.getTenantName());
+        JsonObject enableTax = GsonUtil.getJsonValue(receiptControlApi.getDataList(employee,"3014"),"code",isOpen);
+        priceSeperationTax.setEnableTax(enableTax);
+        return receiptControlApi.separationConfig(employee,priceSeperationTax).get("separationInvoiceOptId").getAsString();
+    }
+
+
 }

@@ -9,6 +9,7 @@ import com.hand.basicConstant.HeaderKey;
 import com.hand.basicConstant.ReceiptConfig;
 import com.hand.basicConstant.ResourceId;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.Rule.receiptConfig.PriceSeperationTax;
 import com.hand.basicObject.Rule.receiptConfig.ReceiptCreateExpense;
 import com.hand.basicObject.Rule.receiptConfig.ReceiptOverTime;
 import com.hand.utils.GsonUtil;
@@ -231,6 +232,56 @@ public class ReceiptControlApi extends BaseRequest{
         parm.put("listType","SYSTEM");
         String res = doGet(url,getHeader(employee.getAccessToken(),HeaderKey.INVOICE_CONTROL, ResourceId.INVOICE_CONTROL),parm,employee);
         return new JsonParser().parse(res).getAsJsonObject().getAsJsonArray("rows");
+    }
+
+    /**
+     * 价税分离
+     * @param employee
+     * @param listCode
+     * @param words
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getListCode(Employee employee,String listCode,String words) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.GET_DATALIST;
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("roleType","TENANT");
+        parm.put("listType","OTHER");
+        parm.put("listCode",listCode);
+        parm.put("page","0");
+        parm.put("size","10");
+        parm.put("parm",words);
+        parm.put("paramLable",words);
+        String res = doGet(url,getHeader(employee.getAccessToken(),HeaderKey.PRICE_TAX_SPERATION_RULE),parm,employee);
+        return new JsonParser().parse(res).getAsJsonArray();
+    }
+
+    /**
+     * 价税分离配置
+     * @param employee
+     * @param priceSeperationTax 价税分离
+     * @return
+     */
+    public JsonObject separationConfig(Employee employee, PriceSeperationTax priceSeperationTax) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.SEPARATION_CONFIG;
+        JsonObject body = new JsonParser().parse(GsonUtil.objectToString(priceSeperationTax)).getAsJsonObject();
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("roleType","TENANT");
+        String res = doPost(url,getHeader(employee.getAccessToken(),HeaderKey.INVOICE_TO_COST),parm,body.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 删除配置价税分离的配置规则
+     * @param employee
+     * @param separationInvoiceOptId
+     * @throws HttpStatusException
+     */
+    public void deleteSeparationConfig(Employee employee,String separationInvoiceOptId) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ String.format(ApiPath.DELETE_SEPARATION_CONFIG,separationInvoiceOptId);
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("roleType","TENANT");
+        doDlete(url,getHeader(employee.getAccessToken(), HeaderKey.INVOICE_TO_COST),parm,new JsonObject(),employee);
     }
 
 }

@@ -8,7 +8,9 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.component.FormDetail;
 import com.hand.basicObject.component.InvoiceComponent;
+import com.hand.basicObject.supplierObject.DiDi;
 import com.hand.utils.GsonUtil;
+import com.hand.utils.RandomNumber;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -123,7 +125,7 @@ public class ExpenseReportInvoice {
             e.printStackTrace();
         }
         FormDetail formDetail = new FormDetail();
-        log.info("费用的响应为：");
+        log.info("费用的响应为：{}",jsonObject);
         try{
             formDetail.setInvoiceOID(jsonObject.get("rows").getAsJsonObject().get("invoiceOID").getAsString());
         }catch (NullPointerException e){
@@ -469,6 +471,31 @@ public class ExpenseReportInvoice {
         ocrArray.add(attachment);
         JsonObject ofdInfo = expenseApi.ofdReceiptOCR(employee,ocrArray).getAsJsonObject("rows").getAsJsonArray("receiptList").get(0).getAsJsonObject();
         return expenseApi.batchVerify(employee,ofdInfo).get(0).getAsJsonObject().get("msg").getAsString();
+    }
+
+    /**
+     * 推送滴滴费用
+     * @param employee
+     * @param isCompanyPay 是否公司支付
+     * @throws HttpStatusException
+     */
+    public void pushDiDi(Employee employee,Boolean isCompanyPay) throws HttpStatusException {
+        DiDi didi = new DiDi();
+        if(isCompanyPay){
+            didi.setCompanyPay(didi.getActualPrice());
+            didi.setCompanyRealPay(didi.getActualPrice());
+            didi.setTotalPrice(didi.getActualPrice());
+            didi.setPayType("0");
+        }else{
+            didi.setPersonalPay(didi.getActualPrice());
+            didi.setPersonalRealPay(didi.getActualPrice());
+            didi.setTotalPrice(didi.getActualPrice());
+            didi.setPayType("1");
+        }
+        didi.setPassengerPhone(employee.getMobile());
+        didi.setCallPhone(employee.getMobile());
+        didi.setCompanyId(employee.getCompanyId());
+        expenseApi.pushDiDi(employee,didi);
     }
 
 }

@@ -103,7 +103,7 @@ public class CreateExpenseControlTest extends BaseTest {
         map.put("reportOID",formDetail.getReportOID());
         FormDetail invoice1 = expenseReportPage.setHandReceiptInvoice(employee,"autotest",formDetail.getReportOID(), receipt);
         map.put("invoiceOID1",invoice1.getInvoiceOID());
-        Assert.assertEquals("N",expenseReportInvoice.getReceptVerifyInfo(employee,receipt).get("canCreateExpense").getAsString());
+        Assert.assertEquals("N",expenseReportInvoice.getReceptVerifyInfo(employee,receipt).get("isOk").getAsString());
     }
 
     @Test(description = "发票连号可生成费用-弱管控")
@@ -223,7 +223,9 @@ public class CreateExpenseControlTest extends BaseTest {
         map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
         FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID",formDetail.getReportOID());
-        Assert.assertEquals("N",expenseReportInvoice.getReceptVerifyInfo(employee,Receript.moreTaxRateReceipt).get("canCreateExpense").getAsString());
+//        Assert.assertEquals("N",expenseReportInvoice.getOCRReceiptVerifyInfo(employee,Receript.moreTaxRateReceipt).get("isOk").getAsString());
+        FormDetail invoice1 = expenseReportPage.setReceiptInvoice(employee,"autotest",formDetail.getReportOID(),Receript.moreTaxRateReceipt);
+        log.info("能否生成费用:{}",invoice1.getResponse());
     }
 
     @Test(description = "商品名称服务包含某些特殊名称的发票-可生成费用")

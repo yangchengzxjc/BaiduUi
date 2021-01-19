@@ -29,4 +29,6 @@ public class HeaderKey {
     public static final String INVOICE_TO_COST = "invoice-to-cost";
     //回调设置
     public static final String CALLBACK_SETTING = "callback-setting";
+    //价税分离
+    public static final String PRICE_TAX_SPERATION_RULE = "price-tax-seperation-rule";
 }

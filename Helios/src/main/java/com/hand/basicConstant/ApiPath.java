@@ -380,6 +380,14 @@ public class ApiPath {
         public static final String GET_DATALIST = "/config/api/config/dataList";
         // 开启回调设置
         public static final String REBACK_CONFIG = "/api/customizedApiCallback/config";
+        //价税分离规则
+        public static final String SEPARATION_CONFIG = "/api/receipt/separation/invoice/config";
+        //推送滴滴费用
+        public static final String PUSH_DIDI = "/api/v2/didi/orders/invoice/create/v2";
+        //删除价税分离规则
+        public static final String DELETE_SEPARATION_CONFIG = "/api/receipt/separation/invoice/config/%s";
+        //价税分离需要搜索的费用类型
+        public static final String GET_LISTCODE = "/api/listCode";
 }
 
 

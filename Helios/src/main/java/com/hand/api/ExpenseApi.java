@@ -7,6 +7,8 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.component.InvoiceComponent;
 import com.hand.basicConstant.ApiPath;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.supplierObject.DiDi;
+import com.hand.utils.GsonUtil;
 import com.hand.utils.UTCTime;
 import lombok.extern.slf4j.Slf4j;
 
@@ -689,5 +691,18 @@ public class ExpenseApi extends BaseRequest{
         String url = employee.getEnvironment().getUrl()+ ApiPath.OFD_RECEIPT_OCR;
         String res = doPost(url,getHeader(employee.getAccessToken()),null,attachment.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
+    }
+
+    /**
+     * 推送滴滴费用
+     * @param employee
+     * @param didi
+     * @throws HttpStatusException
+     */
+    public void pushDiDi(Employee employee, DiDi didi) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.PUSH_DIDI;
+        JsonArray array = new JsonArray();
+        array.add(new JsonParser().parse(GsonUtil.objectToString(didi)).getAsJsonObject());
+        doPost(url,getHeader(employee.getAccessToken()),null,array.toString(),null,employee);
     }
 }

@@ -26,6 +26,12 @@
         </classes>
     </test>
 
+    <test verbose="10" preserve-order="true" name="非金额报销标准">
+        <classes>
+            <class name="com.test.api.testcase.expenseControl.RemimbStandard.NoAmountControlTest"/>
+        </classes>
+    </test>
+
     <listeners>
         <listener class-name="com.test.listener.TestLogListener"/>
         <listener class-name="com.test.listener.TestReportListener"/>

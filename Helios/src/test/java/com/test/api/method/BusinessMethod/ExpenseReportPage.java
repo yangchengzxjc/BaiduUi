@@ -262,7 +262,7 @@ public class ExpenseReportPage {
         ArrayList<String> applicationOIDs =new ArrayList<>();
         applicationOIDs.add(applicationOID);
         //  参与人
-        component.setParticipant(expenseReport.getValueFromApplication(employee,applicationOIDs,"参与人员"));
+        component.setParticipant(expenseReport.getValueFromApplication(employee,applicationOIDs,"参与人员",formName));
         return expenseReport.createTravelExpenseReport(employee,false,formName,component);
     }
 

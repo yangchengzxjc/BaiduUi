@@ -403,9 +403,11 @@ public class ExpenseReport {
      * @return
      * @throws HttpStatusException
      */
-    public String getValueFromApplication(Employee employee, ArrayList applicationOID,String fieldName) throws HttpStatusException {
+    public String getValueFromApplication(Employee employee, ArrayList applicationOID,String fieldName,String formName) throws HttpStatusException {
         JsonArray array =reimbursementApi.getValueFromApplication(employee,applicationOID);
-        return GsonUtil.getJsonValue(array,"fieldName",fieldName,"value");
+        JsonObject formDetail = reimbursementApi.getFormDetail(employee,getFormOID(employee,formName,"102"));
+        String fieldOID = GsonUtil.getJsonValue(formDetail.getAsJsonArray("customFormFields"),"fieldName",fieldName,"fieldOID");
+        return GsonUtil.getJsonValue(array,"fieldOID",fieldOID,"value");
     }
 
     /**
@@ -420,7 +422,6 @@ public class ExpenseReport {
         list.add(applicationOID);
         return reimbursementApi.getValueFromApplication(employee,list);
     }
-
 
     /**
      * 报销单费控标签检查

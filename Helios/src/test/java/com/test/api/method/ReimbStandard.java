@@ -141,24 +141,31 @@ public class ReimbStandard {
             JsonObject expenseTypeCategory = new JsonObject();
             if(expenseTypeNameCategory[0].equals("机票")){
                 expenseTypeCategory.addProperty("code","PLANE");
+                rules.setExpenseCategories("PLANE");
             }
             if(expenseTypeNameCategory[0].equals("火车")){
                 expenseTypeCategory.addProperty("code","TRAIN");
+                rules.setExpenseCategories("TRAIN");
             }
             if(expenseTypeNameCategory[0].equals("通讯")){
                 expenseTypeCategory.addProperty("code","COMMUNITACTION");
+                rules.setExpenseCategories("COMMUNITACTION");
             }
             if(expenseTypeNameCategory[0].equals("住宿")){
                 expenseTypeCategory.addProperty("code","ACCOMMODATION");
+                rules.setExpenseCategories("ACCOMMODATION");
             }
             if(expenseTypeNameCategory[0].equals("餐饮")){
                 expenseTypeCategory.addProperty("code","MEAL");
+                rules.setExpenseCategories("MEAL");
             }
             if(expenseTypeNameCategory[0].equals("用车")){
                 expenseTypeCategory.addProperty("code","CAR");
+                rules.setExpenseCategories("CAR");
             }
             if(expenseTypeNameCategory[0].equals("轮船")){
-                expenseTypeCategory.addProperty("code","MEAL");
+                expenseTypeCategory.addProperty("code","SHIP");
+                rules.setExpenseCategories("SHIP");
             }
             expenseType.add(expenseTypeCategory);
         }

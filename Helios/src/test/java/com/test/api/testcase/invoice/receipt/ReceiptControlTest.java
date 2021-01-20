@@ -4,6 +4,7 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicConstant.ReceiptConfig;
 import com.hand.basicConstant.Receript;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.Rule.receiptConfig.ReceiptCreateExpense;
 import com.hand.basicObject.Rule.receiptConfig.ReceiptOverTime;
 import com.hand.basicObject.Rule.receiptConfig.ReceiptWords;
 import com.hand.basicObject.component.FormDetail;
@@ -159,7 +160,12 @@ public class ReceiptControlTest extends BaseTest {
 
     @Test(description = "发票连号检验")
     public void receiptControl07() throws HttpStatusException {
-        //开启报销单抬头一致性检查
+        //开启查验失败生成费用的管控
+        ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
+        receiptCreateExpense1.setCancelledReceipt(receiptMethodPage.receiptCreateExpenseControl("-"));
+        String receiptToInvoiceOptId1 = receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,"Y");
+        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
+        //开启报连号检查
         receiptControlConfig.receiptConsecutiveConfig(employee, ReceiptConfig.receiptConsecutive,true);
         map.put("receiptConsecutive","true");
         FormDetail formDetail= expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
@@ -195,6 +201,10 @@ public class ReceiptControlTest extends BaseTest {
 
     @Test(description = "发票逾期管控-静态管控-弱管控")
     public void receiptControl10() throws HttpStatusException {
+        //开启查验失败可以生成费用的配置
+        String receiptToInvoiceOptId1 = receiptMethodPage.cancelledReceipt(employee);
+        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
+        //逾期配置
         ReceiptOverTime receiptOverTime = new ReceiptOverTime();
         String overTimeConfigId = receiptControlConfig.receiptOverTime(employee,receiptOverTime);
         map.put("overTimeConfigId",overTimeConfigId);
@@ -204,13 +214,13 @@ public class ReceiptControlTest extends BaseTest {
         map.put("invoiceOID1",invoice1.getInvoiceOID());
         Assert.assertEquals("发票逾期",expenseReportInvoice.checkInvoiceLabelName(employee,invoice1.getInvoiceOID(),"INVOICE_OVERDUE"));
         //检查报销单的标签
-        Assert.assertEquals("发票逾期",expenseReport.checkSubmitLabel(employee,formDetail.getReportOID(),"1006"));
+        Assert.assertEquals("1笔发票逾期",expenseReport.checkSubmitLabel(employee,formDetail.getReportOID(),"1006"));
     }
 
     @Test(description = "发票逾期管控-静态校验管控-强管控不允许生成费用")
     public void receiptControl11() throws HttpStatusException{
         //开启查验失败的发票可以生成费用
-        String receiptToInvoiceOptId1 = receiptMethodPage.duplicatedReceipt(employee,"Y");
+        String receiptToInvoiceOptId1 = receiptMethodPage.cancelledReceipt(employee);
         map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
         ReceiptOverTime receiptOverTime = new ReceiptOverTime();
         receiptOverTime.setForceEnabled("true");
@@ -224,7 +234,7 @@ public class ReceiptControlTest extends BaseTest {
     @Test(description = "发票逾期管控-动态校验管控-弱管控")
     public void receiptControl12() throws HttpStatusException {
         //开启查验失败的发票可以生成费用
-        String receiptToInvoiceOptId1 = receiptMethodPage.duplicatedReceipt(employee,"Y");
+        String receiptToInvoiceOptId1 = receiptMethodPage.cancelledReceipt(employee);
         map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
         //配置逾期规则
         ReceiptOverTime receiptOverTime = new ReceiptOverTime();

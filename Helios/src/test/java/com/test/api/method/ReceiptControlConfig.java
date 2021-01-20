@@ -241,5 +241,14 @@ public class ReceiptControlConfig {
         return receiptControlApi.separationConfig(employee,priceSeperationTax).get("separationInvoiceOptId").getAsString();
     }
 
+    /**
+     * 删除价税分离
+     * @param employee
+     * @param separationInvoiceOptId
+     * @throws HttpStatusException
+     */
+    public void deleteSeparationConfig(Employee employee,String separationInvoiceOptId) throws HttpStatusException {
+        receiptControlApi.deleteSeparationConfig(employee,separationInvoiceOptId);
+    }
 
 }

@@ -84,7 +84,7 @@ public class ReceiptMethodPage {
     public String cancelledReceipt(Employee employee) throws HttpStatusException {
         ReceiptControlConfig receiptControlConfig = new ReceiptControlConfig();
         ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
-        receiptCreateExpense1.setCancelledReceipt(receiptCreateExpenseControl("Y"));
+        receiptCreateExpense1.setCancelledReceipt(receiptCreateExpenseControl("-"));
         return receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,"Y");
     }
 
@@ -109,6 +109,4 @@ public class ReceiptMethodPage {
         receiptCreateExpense1.setInvalidTitleReceipt(receiptCreateExpenseControl("Y"));
         return receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,iscan);
     }
-
-
 }

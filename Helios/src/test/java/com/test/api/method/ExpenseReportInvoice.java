@@ -346,7 +346,7 @@ public class ExpenseReportInvoice {
      * @throws HttpStatusException
      */
     public String checkVerifyReceipt(Employee employee,String filePath, String code,boolean isDescription) throws HttpStatusException {
-        JsonObject verifyInfo = getOCRReceiptVerifyInfo(employee,filePath).getAsJsonObject("errorList");
+        JsonObject verifyInfo = getOCRReceiptVerifyInfo(employee,filePath);
         String label ="";
         try{
             JsonArray errorList = verifyInfo.get("errorList").getAsJsonArray();
@@ -428,6 +428,7 @@ public class ExpenseReportInvoice {
         ocrArray.add(attachment);
         JsonObject receiptInfo = expenseApi.ocr(employee,ocrArray).getAsJsonObject("rows").getAsJsonArray("receiptList").get(0).getAsJsonObject();
         //发票查验
+
         return expenseApi.batchVerify(employee,receiptInfo).get(0).getAsJsonObject();
     }
 

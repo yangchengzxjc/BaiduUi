@@ -40,4 +40,6 @@ public class ResourceId {
     public static final String INVOICE_CONTROL = "660011000200";
     //回调接口设置
     public static final String CALLBACK_SETTING = "72000200";
+    //价税分离
+    public static final String PRICE_TAX_SPERATION_RULE = "660011000300";
 }

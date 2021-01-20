@@ -83,19 +83,17 @@ public class OkHttpUtils {
         try {
             log.info("APIResponse: {}", new JsonParser().parse(result).getAsJsonObject().toString());
         } catch (Exception e) {
-
             try {
                 log.info("APIResponse: {}", new JsonParser().parse(result).getAsJsonArray().toString());
-
             } catch (Exception ignored) {
             }
         }
         log.info("Time: {} ms", endTime - startTime);
-        if ((endTime - startTime) >= 5000 && (endTime - startTime) < 7000) {
-            log.info("请求大于5秒，有待观察:");
-        } else if ((endTime - startTime) >= 7000) {
-            log.info("请求大于7秒，有待观察:");
-        }
+//        if ((endTime - startTime) >= 5000 && (endTime - startTime) < 7000) {
+//            log.info("请求大于5秒，有待观察:");
+//        } else if ((endTime - startTime) >= 7000) {
+//            log.info("请求大于7秒，有待观察:");
+//        }
 //        // 报告打印日志 debug
 //        Reporter.log("httpCode: " + httpCode);
 //        Reporter.log("spanID: " + response.header("SpanID"));

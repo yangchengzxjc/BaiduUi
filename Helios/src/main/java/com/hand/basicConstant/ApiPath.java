@@ -387,7 +387,10 @@ public class ApiPath {
         //删除价税分离规则
         public static final String DELETE_SEPARATION_CONFIG = "/api/receipt/separation/invoice/config/%s";
         //价税分离需要搜索的费用类型
-        public static final String GET_LISTCODE = "/api/listCode";
+        public static final String GET_EXPENSE_LISTCODE = "/api/listCode";
+        //价税分离管控项查询
+        public static final String CONFIG_FACTER = "/config/api/config/factor/%s/dataList";
+        // 价税分离的
 }
 
 

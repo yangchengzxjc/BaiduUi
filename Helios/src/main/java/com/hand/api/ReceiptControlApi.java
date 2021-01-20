@@ -70,7 +70,7 @@ public class ReceiptControlApi extends BaseRequest{
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray getConfigItem(Employee employee,String itemId) throws HttpStatusException {
+    public JsonObject getConfigItem(Employee employee,String itemId) throws HttpStatusException {
         String url = employee.getEnvironment().getUrl() + ApiPath.GET_RECEIPT_CONFIG;
         JsonObject body = new JsonObject();
         JsonArray itemIds = new JsonArray();
@@ -83,7 +83,7 @@ public class ReceiptControlApi extends BaseRequest{
         HashMap<String,String> parm = new HashMap<>();
         parm.put("roleType","TENANT");
         String res = doPost(url,getHeader(employee.getAccessToken()),parm,body.toString(),null,employee);
-        return new JsonParser().parse(res).getAsJsonObject().getAsJsonArray("rows").get(0).getAsJsonObject().getAsJsonArray("configRules");
+        return new JsonParser().parse(res).getAsJsonObject().getAsJsonArray("rows").get(0).getAsJsonObject();
     }
 
     /**
@@ -235,24 +235,24 @@ public class ReceiptControlApi extends BaseRequest{
     }
 
     /**
-     * 价税分离
+     * 价税分离校验项-查询费用类型
      * @param employee
      * @param listCode
      * @param words
      * @return
      * @throws HttpStatusException
      */
-    public JsonArray getListCode(Employee employee,String listCode,String words) throws HttpStatusException {
-        String url = employee.getEnvironment().getUrl()+ ApiPath.GET_DATALIST;
+    public JsonArray getExpenseListCode(Employee employee,String listCode,String words) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.GET_EXPENSE_LISTCODE;
         HashMap<String,String> parm = new HashMap<>();
         parm.put("roleType","TENANT");
         parm.put("listType","OTHER");
         parm.put("listCode",listCode);
         parm.put("page","0");
         parm.put("size","10");
-        parm.put("parm",words);
+        parm.put("param",words);
         parm.put("paramLable",words);
-        String res = doGet(url,getHeader(employee.getAccessToken(),HeaderKey.PRICE_TAX_SPERATION_RULE),parm,employee);
+        String res = doGet(url,getHeader(employee.getAccessToken(),HeaderKey.PRICE_TAX_SPERATION_RULE,ResourceId.PRICE_TAX_SPERATION_RULE),parm,employee);
         return new JsonParser().parse(res).getAsJsonArray();
     }
 
@@ -267,7 +267,7 @@ public class ReceiptControlApi extends BaseRequest{
         JsonObject body = new JsonParser().parse(GsonUtil.objectToString(priceSeperationTax)).getAsJsonObject();
         HashMap<String,String> parm = new HashMap<>();
         parm.put("roleType","TENANT");
-        String res = doPost(url,getHeader(employee.getAccessToken(),HeaderKey.INVOICE_TO_COST),parm,body.toString(),null,employee);
+        String res = doPost(url,getHeader(employee.getAccessToken(),HeaderKey.INVOICE_TO_COST,ResourceId.PRICE_TAX_SPERATION_RULE),parm,body.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
@@ -282,6 +282,24 @@ public class ReceiptControlApi extends BaseRequest{
         HashMap<String,String> parm = new HashMap<>();
         parm.put("roleType","TENANT");
         doDlete(url,getHeader(employee.getAccessToken(), HeaderKey.INVOICE_TO_COST),parm,new JsonObject(),employee);
+    }
+
+    /**
+     *
+     * @param employee
+     * @param itemId
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getConfigFactorDataList(Employee employee,String itemId) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ String.format(ApiPath.CONFIG_FACTER,itemId);
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("page","0");
+        parm.put("size","10");
+        parm.put("sence","INVOICE_BASED_TAX_RULE");
+        parm.put("roleType","TENANT");
+        String res = doGet(url,getHeader(employee.getAccessToken(),HeaderKey.PRICE_TAX_SPERATION_RULE),parm,employee);
+        return new JsonParser().parse(res).getAsJsonObject().getAsJsonArray("rows");
     }
 
 }

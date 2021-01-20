@@ -1,18 +1,22 @@
 package com.test.api.method.ExpenseMethod;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.Rule.receiptConfig.PriceSeperationTax;
 import com.hand.basicObject.Rule.receiptConfig.ReceiptCreateExpense;
 import com.hand.basicObject.Rule.receiptConfig.ReceiptWords;
 import com.test.api.method.ExpenseReportInvoice;
 import com.test.api.method.ReceiptControlConfig;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @Author peng.zhang
  * @Date 2021/1/12
  * @Version 1.0
  **/
+@Slf4j
 public class ReceiptMethodPage {
 
 
@@ -105,8 +109,40 @@ public class ReceiptMethodPage {
      */
     public String invalidTitleReceipt(Employee employee,String iscan) throws HttpStatusException {
         ReceiptControlConfig receiptControlConfig = new ReceiptControlConfig();
-        ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
-        receiptCreateExpense1.setInvalidTitleReceipt(receiptCreateExpenseControl("Y"));
-        return receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense1,iscan);
+        ReceiptCreateExpense receiptCreateExpense = new ReceiptCreateExpense();
+        receiptCreateExpense.setInvalidTitleReceipt(receiptCreateExpenseControl("Y"));
+        return receiptControlConfig.receiptCreateExpense(employee,receiptCreateExpense,iscan);
+    }
+
+    /**
+     * 场景化配置-价税分离（校验费用类型）
+     * @return
+     */
+    public String expenseTypePriceTax(Employee employee,String expenseName) throws HttpStatusException {
+        ReceiptControlConfig receiptControlConfig = new ReceiptControlConfig();
+        PriceSeperationTax priceSeperationTax = new PriceSeperationTax();
+        JsonObject expenseTypeLimit = receiptControlConfig.getExpenseDataList(employee,expenseName);
+        expenseTypeLimit.addProperty("key",expenseTypeLimit.get("id").getAsString());
+        JsonArray expenseTypes = new JsonArray();
+        expenseTypes.add(expenseTypeLimit);
+        priceSeperationTax.setExpenseTypeLimit(expenseTypes);
+        return receiptControlConfig.separationConfig(employee,priceSeperationTax,"Y");
+    }
+
+    /**
+     * 场景化配置-价税分离（校验费用标签）
+     * @param employee
+     * @param invoiceLabel
+     * @return
+     * @throws HttpStatusException
+     */
+    public String involiceLabelPriceTax(Employee employee,String invoiceLabel) throws HttpStatusException {
+        ReceiptControlConfig receiptControlConfig = new ReceiptControlConfig();
+        PriceSeperationTax priceSeperationTax = new PriceSeperationTax();
+        // 查询费用标签的管控项
+        JsonObject label = receiptControlConfig.getConfigFactorData(employee,"费用标签包含",invoiceLabel);
+        label.addProperty("key",label.get("id").getAsString());
+        priceSeperationTax.setInvoiceLabel(label);
+        return receiptControlConfig.separationConfig(employee,priceSeperationTax,"Y");
     }
 }

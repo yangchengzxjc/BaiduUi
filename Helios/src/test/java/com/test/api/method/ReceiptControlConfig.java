@@ -59,7 +59,7 @@ public class ReceiptControlConfig {
      */
     public void deleteConfigItem(Employee employee,String itemId) throws HttpStatusException {
         //查询所有的规则
-        JsonArray configRules = receiptControlApi.getConfigItem(employee,itemId);
+        JsonArray configRules = receiptControlApi.getConfigItem(employee,itemId).getAsJsonArray("configRules");
         if(GsonUtil.isNotEmpt(configRules)){
             for(int i= 0; i<configRules.size();i++){
                 String configItemId = configRules.get(i).getAsJsonObject().getAsJsonObject("configRule").get("id").getAsString();
@@ -77,7 +77,7 @@ public class ReceiptControlConfig {
      * @throws HttpStatusException
      */
     public void getReceiptConfigItem(Employee employee,String itemId) throws HttpStatusException {
-        JsonArray configRules = receiptControlApi.getConfigItem(employee,itemId);
+        JsonArray configRules = receiptControlApi.getConfigItem(employee,itemId).getAsJsonArray("configRules");
     }
 
     /**
@@ -250,5 +250,46 @@ public class ReceiptControlConfig {
     public void deleteSeparationConfig(Employee employee,String separationInvoiceOptId) throws HttpStatusException {
         receiptControlApi.deleteSeparationConfig(employee,separationInvoiceOptId);
     }
+
+    /**
+     * 价税分离管控项id查询
+     * @param employee
+     * @return
+     */
+    public String separationConfigItemId(Employee employee,String factorName) throws HttpStatusException {
+        JsonArray configFactors = receiptControlApi.getConfigItem(employee,"1118154566255673346").getAsJsonArray("configFactors");
+        String itemId = GsonUtil.getJsonValue(configFactors,"factorName",factorName,"id");
+        return itemId;
+    }
+
+    /**
+     * 价税分离管控项查询
+     * @param employee
+     * @param factorItem 管控项  可选：费用标签包含 业务用途 是否关联可抵扣发票
+     * @param factorName 管控名称
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getConfigFactorData(Employee employee, String factorItem ,String factorName) throws HttpStatusException {
+        JsonArray factorData = receiptControlApi.getConfigFactorDataList(employee,separationConfigItemId(employee,factorItem));
+        if(GsonUtil.isNotEmpt(factorData)){
+            return GsonUtil.getJsonValue(factorData,"name",factorName);
+        }else{
+            throw new RuntimeException("价税分离管控项为空");
+        }
+    }
+
+    /**
+     * 获取默认账套的费用类型的dataList
+     * @param employee
+     * @param words
+     * @return
+     */
+    public JsonObject getExpenseDataList(Employee employee,String words) throws HttpStatusException {
+        JsonArray listCode = receiptControlApi.getExpenseListCode(employee,"expenseType",words);
+        log.info("搜索的费用类型:{}",listCode);
+        return GsonUtil.getJsonValue(listCode,"description","默认账套");
+    }
+
 
 }

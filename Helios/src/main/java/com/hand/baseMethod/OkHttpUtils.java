@@ -36,9 +36,9 @@ import static java.lang.Thread.sleep;
 public class OkHttpUtils {
 
     private static OkHttpClient mOkHttpClient;
-    private static final int CONNECT_TIMEOUT = 10;
-    private static final int READ_TIMEOUT = 10;
-    private static final int WRITE_TIMEOUT = 10;
+    private static final int CONNECT_TIMEOUT = 20;
+    private static final int READ_TIMEOUT = 20;
+    private static final int WRITE_TIMEOUT = 20;
     private static final String GET = "GET";
     private static final String POST = "POST";
     private static final String DELETE = "DELETE";

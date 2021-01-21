@@ -39,6 +39,7 @@ public class SmokeTest extends BaseTest {
         InfraStructure infraStructure = new InfraStructure();
         //开启回调设置
         infraStructure.callBackSetting(employee,true);
+        infraStructure.callBackConfig(employee,true);
     }
 
     @Test(description = "核心功能+外部接口回调")
@@ -238,6 +239,7 @@ public class SmokeTest extends BaseTest {
     public void afterClass() throws HttpStatusException {
         InfraStructure infraStructure =new InfraStructure();
         infraStructure.callBackSetting(employee,false);
+        infraStructure.callBackConfig(employee,false);
     }
 
 }

@@ -378,8 +378,10 @@ public class ApiPath {
         public static final String RECEIPT_CREATER_EXPENSE = "/api/receipt/to/invoice/config";
         //发票是否可以生成费用的配置
         public static final String GET_DATALIST = "/config/api/config/dataList";
-        // 开启回调设置
+        // 开启回调全局设置
         public static final String REBACK_CONFIG = "/api/customizedApiCallback/config";
+        //获取回调详情
+        public static final String GET_REBACE_CONFIG = "/push/api/customizedApiCallback";
         //价税分离规则
         public static final String SEPARATION_CONFIG = "/api/receipt/separation/invoice/config";
         //推送滴滴费用

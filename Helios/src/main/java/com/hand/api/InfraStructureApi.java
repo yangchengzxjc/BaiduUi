@@ -562,4 +562,34 @@ public class InfraStructureApi extends BaseRequest{
         doPost(url,getHeader(employee.getAccessToken(),HeaderKey.CALLBACK_SETTING,ResourceId.CALLBACK_SETTING),parm,body.toString(),null,employee);
     }
 
+    /**
+     * 获取callBack 详情
+     * @param employee
+     */
+    public JsonArray getCallBackConfig (Employee employee) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ApiPath.GET_REBACE_CONFIG;
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("roleType","TENANT");
+        parm.put("page","0");
+        parm.put("size","20");
+        parm.put("companyOid",employee.getUserOID());
+        String response = doGet(url,getHeader(employee.getAccessToken(),HeaderKey.CALLBACK_SETTING,ResourceId.CALLBACK_SETTING),parm,employee);
+        return new JsonParser().parse(response).getAsJsonArray();
+    }
+
+    /**
+     * 修改回调设置
+     * @param employee
+     * @param body
+     * @throws HttpStatusException
+     */
+    public void pushCallBack(Employee employee,JsonObject body) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ApiPath.GET_REBACE_CONFIG;
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("roleType","TENANT");
+        doPut(url,getHeader(employee.getAccessToken(),HeaderKey.CALLBACK_SETTING,ResourceId.CALLBACK_SETTING),parm,body.toString(),null,employee);
+    }
+
+
+
 }

@@ -286,10 +286,20 @@ public class ReceiptControlConfig {
      * @return
      */
     public JsonObject getExpenseDataList(Employee employee,String words) throws HttpStatusException {
-        JsonArray listCode = receiptControlApi.getExpenseListCode(employee,"expenseType",words);
-        log.info("搜索的费用类型:{}",listCode);
-        return GsonUtil.getJsonValue(listCode,"description","默认账套");
+        return receiptControlApi.getExpenseListCode(employee,"expenseType",words).get(0).getAsJsonObject();
     }
 
-
+    /**
+     * 价税分离获取税率
+     * @param employee
+     * @param tax 税率 格式为：00, 01等
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getTaxRate(Employee employee,String tax) throws HttpStatusException {
+        JsonArray taxList = receiptControlApi.getDataList(employee,"1009");
+        JsonObject taxObject = GsonUtil.getJsonValue(taxList,"code",tax);
+        taxObject.addProperty("key",taxObject.get("code").getAsString());
+        return taxObject;
+    }
 }

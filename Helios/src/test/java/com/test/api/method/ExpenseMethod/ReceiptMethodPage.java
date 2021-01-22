@@ -118,7 +118,7 @@ public class ReceiptMethodPage {
      * 场景化配置-价税分离（校验费用类型）
      * @return
      */
-    public String expenseTypePriceTax(Employee employee,String expenseName) throws HttpStatusException {
+    public String expenseTypePriceTax(Employee employee,String expenseName,String tax) throws HttpStatusException {
         ReceiptControlConfig receiptControlConfig = new ReceiptControlConfig();
         PriceSeperationTax priceSeperationTax = new PriceSeperationTax();
         JsonObject expenseTypeLimit = receiptControlConfig.getExpenseDataList(employee,expenseName);
@@ -126,6 +126,8 @@ public class ReceiptMethodPage {
         JsonArray expenseTypes = new JsonArray();
         expenseTypes.add(expenseTypeLimit);
         priceSeperationTax.setExpenseTypeLimit(expenseTypes);
+        //获取税率
+        priceSeperationTax.setDefaultTaxRate(receiptControlConfig.getTaxRate(employee,tax));
         return receiptControlConfig.separationConfig(employee,priceSeperationTax,"Y");
     }
 

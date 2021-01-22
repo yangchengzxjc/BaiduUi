@@ -29,4 +29,6 @@ public class PriceSeperationTax {
     private String levelOrgId;
 
     private String levelOrgName;
+
+    private JsonObject defaultTaxRate;
 }

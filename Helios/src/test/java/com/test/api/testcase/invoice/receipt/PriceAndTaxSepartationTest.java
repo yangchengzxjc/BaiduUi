@@ -29,7 +29,7 @@ public class PriceAndTaxSepartationTest extends BaseTest {
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void beforeClass(@Optional("14082978625") String phoneNumber, @Optional("rr123456") String pwd, @Optional("stage") String env) {
+    public void beforeClass(@Optional("14082971222") String phoneNumber, @Optional("zp123456") String pwd, @Optional("stage") String env) {
         employee = getEmployee(phoneNumber, pwd, env);
         expenseReportPage = new ExpenseReportPage();
         receiptControlConfig = new ReceiptControlConfig();
@@ -46,11 +46,9 @@ public class PriceAndTaxSepartationTest extends BaseTest {
         }
     }
 
-    @Test()
+    @Test(description = "价税分离-")
     public void priceAndTaxSepartationTest01() throws HttpStatusException {
         //测试新建规则
-        receiptMethodPage.expenseTypePriceTax(employee,"滴滴出行");
+        receiptMethodPage.expenseTypePriceTax(employee,"autotest","03");
     }
-
-
 }

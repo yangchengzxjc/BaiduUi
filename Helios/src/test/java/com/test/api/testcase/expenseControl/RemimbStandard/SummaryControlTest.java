@@ -40,7 +40,7 @@ public class SummaryControlTest extends BaseTest {
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void beforeClass(@Optional("14082978625") String phoneNumber, @Optional("rr123456") String pwd, @Optional("stage") String env){
+    public void beforeClass(@Optional("14082971222") String phoneNumber, @Optional("zp123456") String pwd, @Optional("stage") String env){
         employee = getEmployee(phoneNumber,pwd,env);
         reimbStandard =new ReimbStandard();
         map = new HashMap<>();

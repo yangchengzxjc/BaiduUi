@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="artemis invoice control" parallel="tests" thread-count="1">
+
+    <parameter name="environment" value="${environment}"/>
+    <parameter name="phoneNumber" value="${phoneNumber}"/>
+    <parameter name="module" value="${module}"/>
+    <parameter name="passWord" value="${passWord}"/>
+
+    <test verbose="10" preserve-order="true" name="发票管控">
+        <classes>
+            <class name="com.test.api.testcase.invoice.receipt.ReceiptControlTest"/>
+        </classes>
+    </test>
+
+    <test verbose="10" preserve-order= "true" name="生成费用管控">
+        <classes>
+            <class name="com.test.api.testcase.invoice.receipt.CreateExpenseControlTest"/>
+        </classes>
+    </test>
+
+    <listeners>
+        <listener class-name="com.test.listener.TestLogListener"/>
+        <listener class-name="com.test.listener.TestReportListener"/>
+    </listeners>
+</suite>
+

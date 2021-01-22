@@ -225,6 +225,7 @@ public class ExpenseReportPage {
         ExpenseReportInvoice expenseReportInvoice = new ExpenseReportInvoice();
         //发票查验
         JsonObject receiptInfo = expenseReportInvoice.getReceptVerify(employee, receiptPath);
+        log.info("发票查验信息:{}",receiptInfo);
         return expenseReportInvoice.createExpenseInvoice(employee,new InvoiceComponent(),expenseName,expenseReportOID,10.00,receiptInfo);
     }
 

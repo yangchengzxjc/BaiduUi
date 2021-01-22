@@ -101,7 +101,7 @@ public class ReceiptControlTest extends BaseTest {
         receiptControlConfig.receiptConfig(employee, ReceiptConfig.expenseHeaderConfig);
         FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID",formDetail.getReportOID());
-        FormDetail invoice = expenseReportPage.setReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.receipt4);
+        FormDetail invoice = expenseReportPage.setReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.receipt8);
         map.put("invoiceOID1",invoice.getInvoiceOID());
         Assert.assertEquals("抬头有误",expenseReportInvoice.checkInvoiceLabelName(employee,invoice.getInvoiceOID(),"WRONG_HEADER"));
         //提交报销单
@@ -116,7 +116,7 @@ public class ReceiptControlTest extends BaseTest {
         map.put("receiptTitle","true");
         FormDetail formDetail= expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID",formDetail.getReportOID());
-        FormDetail invoice = expenseReportPage.setReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.receipt4);
+        FormDetail invoice = expenseReportPage.setReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.receipt8);
         map.put("invoiceOID1",invoice.getInvoiceOID());
         Assert.assertEquals("抬头有误",expenseReportInvoice.checkInvoiceLabelName(employee,invoice.getInvoiceOID(),"WRONG_HEADER"));
         //提交报销单
@@ -268,7 +268,6 @@ public class ReceiptControlTest extends BaseTest {
         //国内旅客运输
         Assert.assertEquals("Y",receiptWords.getDomesticPassengers());
     }
-
 
     @AfterMethod
     public void cleanEnv() throws HttpStatusException {

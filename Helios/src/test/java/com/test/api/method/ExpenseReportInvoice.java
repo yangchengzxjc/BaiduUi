@@ -395,7 +395,9 @@ public class ExpenseReportInvoice {
      * @throws HttpStatusException
      */
     public JsonObject getReceptVerifyInfo(Employee employee,String receptInfo) throws HttpStatusException {
-        return expenseApi.receiptVerify(employee,receptInfo);
+        JsonObject verifyInfo = expenseApi.receiptVerify(employee,receptInfo);
+        log.info("发票查验信息:{}",verifyInfo);
+        return verifyInfo;
     }
 
 

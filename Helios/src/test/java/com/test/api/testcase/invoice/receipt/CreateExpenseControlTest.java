@@ -72,7 +72,7 @@ public class CreateExpenseControlTest extends BaseTest {
         map.put("reportOID",formDetail.getReportOID());
         FormDetail invoice1 = expenseReportPage.setHandReceiptInvoice(employee,"autotest",formDetail.getReportOID(), receipt);
         map.put("invoiceOID1",invoice1.getInvoiceOID());
-        Assert.assertEquals("Y",expenseReportInvoice.getReceptVerifyInfo(employee,receipt).get("canCreateExpense").getAsString());
+        Assert.assertEquals("Y",expenseReportInvoice.getReceptVerifyInfo(employee,receipt).get("isOk").getAsString());
         FormDetail invoice2 = expenseReportPage.setHandReceiptInvoice(employee,"autotest",formDetail.getReportOID(), receipt);
         map.put("invoiceOID2",invoice2.getInvoiceOID());
         // 检查报销单内的费用是否是俩个
@@ -102,20 +102,18 @@ public class CreateExpenseControlTest extends BaseTest {
         // 开启连号校验
         receiptControlConfig.receiptConsecutiveConfig(employee, ReceiptConfig.receiptConsecutive,true);
         map.put("receiptConsecutive","true");
-        // 配置发票查验失败可生成费用
-        String receiptToInvoiceOptId1 = receiptMethodPage.cancelledReceipt(employee);
-        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
         // 配置 发票连号可生成费用
         String receiptToInvoiceOptId2 = receiptMethodPage.duplicatedReceipt(employee,"Y");
         map.put("receiptToInvoiceOptId2",receiptToInvoiceOptId2);
+        // 配置发票查验失败可生成费用
+        String receiptToInvoiceOptId1 = receiptMethodPage.cancelledReceipt(employee);
+        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
         FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID",formDetail.getReportOID());
         //发票连号的费用
         FormDetail invoice1 = expenseReportPage.setHandReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.HANDRECEIPT1);
         map.put("invoiceOID1",invoice1.getInvoiceOID());
-        FormDetail invoice2 = expenseReportPage.setHandReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.HANDRECEIPT2);
-        map.put("invoiceOID2",invoice2.getInvoiceOID());
-        Assert.assertEquals(2,expenseReportInvoice.getInvoiceDetail(employee,formDetail.getReportOID()).size());
+        Assert.assertEquals("Y",expenseReportInvoice.getReceptVerifyInfo(employee,Receript.HANDRECEIPT2).get("isOk").getAsString());
     }
 
     @Test(description = "发票连号可生成费用-强管控")
@@ -123,12 +121,12 @@ public class CreateExpenseControlTest extends BaseTest {
         // 开启连号校验
         receiptControlConfig.receiptConsecutiveConfig(employee, ReceiptConfig.receiptConsecutive,true);
         map.put("receiptConsecutive","true");
-        // 配置发票查验失败可生成费用
-        String receiptToInvoiceOptId1 = receiptMethodPage.cancelledReceipt(employee);
-        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
         // 配置 发票连号可生成费用
         String receiptToInvoiceOptId2 = receiptMethodPage.consecutiveReceipt(employee,"N");
         map.put("receiptToInvoiceOptId2",receiptToInvoiceOptId2);
+        // 配置发票查验失败可生成费用
+        String receiptToInvoiceOptId1 = receiptMethodPage.cancelledReceipt(employee);
+        map.put("receiptToInvoiceOptId1",receiptToInvoiceOptId1);
         FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID",formDetail.getReportOID());
         //发票连号的费用
@@ -169,7 +167,7 @@ public class CreateExpenseControlTest extends BaseTest {
         Assert.assertEquals("该费用类型不可报销抬头有误的发票",message);
     }
 
-    @Test(description = "存在多个发票行-弱管控可生成费用")
+    @Test(description = "存在多个发票行-弱管控可生成费用(异税率待定测试)",enabled = false)
     public void createExpenseControlTest07() throws HttpStatusException{
         //配置规则 初始化
         ReceiptCreateExpense receiptCreateExpense2 = new ReceiptCreateExpense();
@@ -184,7 +182,7 @@ public class CreateExpenseControlTest extends BaseTest {
         Assert.assertEquals(1,expenseReportInvoice.getInvoiceDetail(employee,formDetail.getReportOID()).size());
     }
 
-    @Test(description = "存在多个发票行-强管控不可生成费用")
+    @Test(description = "存在多个发票行-强管控不可生成费用(异税率待定测试)",enabled = false)
     public void createExpenseControlTest08() throws HttpStatusException{
         ReceiptCreateExpense receiptCreateExpense1 = new ReceiptCreateExpense();
         //开启多发票行不可生成费用

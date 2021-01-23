@@ -35,7 +35,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void beforeClass(@Optional("14082978625") String phoneNumber, @Optional("rr123456") String pwd, @Optional("stage") String env) {
+    public void beforeClass(@Optional("14082971222") String phoneNumber, @Optional("zp123456") String pwd, @Optional("stage") String env) {
         expenseReport = new ExpenseReport();
         expenseReportInvoice = new ExpenseReportInvoice();
         employee = getEmployee(phoneNumber, pwd, env);
@@ -428,7 +428,7 @@ public class ReimbSubmissionControlTest extends BaseTest {
         map.put("ruleOID", ruleOID);
         assert expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "REPORT_SUBMIT_WARN", rules.getMessage());
         String expect = String.format("%s（自动化测试-报销标准 城市\"上海\" 不在%s 范围内）",rules.getMessage(),ControlCond.ASSOCIATED_APPLICATION_TRAVEl_CITY.getTypeName());
-        assert expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN",expect);
+        Assert.assertEquals(expenseReportInvoice.checkInvoiceLabel(employee,invoiceOid1,"REPORT_SUBMIT_WARN"),expect);
     }
 
     @Test(description = "报销提交管控-账套级-警告-报销单费用的消费日期-'不归属'关联申请单的行程日期")

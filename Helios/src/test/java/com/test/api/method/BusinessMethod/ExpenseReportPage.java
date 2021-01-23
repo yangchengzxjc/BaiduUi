@@ -264,6 +264,10 @@ public class ExpenseReportPage {
         applicationOIDs.add(applicationOID);
         //  参与人
         component.setParticipant(expenseReport.getValueFromApplication(employee,applicationOIDs,"参与人员",formName));
+        //开始结束日期
+        component.setStartDate(expenseReport.getValueFromApplication(employee,applicationOIDs,"开始日期",formName));
+        //结束日期
+        component.setEndDate(expenseReport.getValueFromApplication(employee,applicationOIDs,"结束日期",formName));
         return expenseReport.createTravelExpenseReport(employee,false,formName,component);
     }
 

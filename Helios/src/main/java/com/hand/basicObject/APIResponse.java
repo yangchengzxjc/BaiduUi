@@ -11,8 +11,12 @@ import okhttp3.Response;
 
 @Data
 public class APIResponse {
-	private  int statusCode;
-	private  String body;
+	private int statusCode;
+	//spanId
+	private String spanId;
+	private String body;
+	//单位为毫秒
+	private Long time;
 	public APIResponse() {
 
 	}

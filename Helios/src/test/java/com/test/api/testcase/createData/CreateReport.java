@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.component.FormComponent;
+import com.hand.basicObject.component.FormDetail;
 import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.basicConstant.Supplier;
 import com.hand.utils.DocumentUtil;
@@ -70,20 +71,20 @@ public class CreateReport extends BaseTest {
         //创建申请单
         TravelApplication travelApplication =new TravelApplication();
 
-        String applicationOID = travelApplication.createTravelApplication(employee,"差旅申请单-节假日",component).get("applicationOID");
+        FormDetail formDetail = travelApplication.createTravelApplication(employee,"差旅申请单-节假日",component);
         //添加差旅行程(飞机 酒店 火车等行车均已经支持)
         ArrayList<FlightItinerary> flightItineraries =new ArrayList<>();
         TravelApplicationPage travelApplicationPage = new TravelApplicationPage();
         FlightItinerary flightItinerary=travelApplicationPage.addFlightItinerary(employee,1001, Supplier.CTRIP_AIR.getSupplierOID(),"西安市","北京",null,UTCTime.getNowStartUtcDate());
         flightItineraries.add(flightItinerary);
-        travelApplication.addItinerary(employee,applicationOID,flightItineraries);
+        travelApplication.addItinerary(employee,formDetail.getReportOID(),flightItineraries);
         //行程会自动带出预算费用。
-        travelApplication.submitApplication(employee,applicationOID,"");
+        travelApplication.submitApplication(employee,formDetail.getReportOID(),"");
         //差旅报销单新建
         ExpenseReport expenseReport =new ExpenseReport();
         //获取申请单默认的控件信息
-        JsonArray dafaultCustomFormValue = expenseReport.getValueFromApplication(employee,applicationOID);
-        expenseReport.createTravelExpenseReport(employee,"差旅报销单-节假日",applicationOID,dafaultCustomFormValue);
+        JsonArray dafaultCustomFormValue = expenseReport.getValueFromApplication(employee,formDetail.getReportOID());
+        expenseReport.createTravelExpenseReport(employee,"差旅报销单-节假日",formDetail.getReportOID(),dafaultCustomFormValue);
     }
 
 

@@ -349,6 +349,46 @@ public class ApiPath {
         //借款单查询供应商
         public static final String GET_SUPPLIER = "/supplier/api/ven/info/by/company";
         //非金额管控 查询值列表
+        public static final String GET_ENUMATIONS = "/api/custom/enumerations/items/by/type";
+        //发票设置 免贴票管控
+        public static final String NO_PASTE_RECEIPT = "/config/api/config/rule";
+        //查询发票配置
+        public static final String GET_RECEIPT_CONFIG = "/config/api/config/item";
+        //删除发票配置
+        public static final String DELETE_CONFIG = "/config/api/config/rule/%s";
+        // 发票连号配置规则
+        public static final String NEW_RECEIPT_CONFIG = "/api/receipt/check/consecutive";
+        // 他人发票归属人 配置规则
+        public static final String OTHER_RECEIPT_CONFIG = "/api/receipt/check/config";
+        // 场景化 发票抬头检验
+        public static final String RECEIPT_HEADER_CHECK = "/api/receipt/check/title";
+        // 新建发票逾期规则
+        public static final String RECEIPT_OVERTIME = "/api/receipt/check/overtime/%s";
+        // 删除发票逾期规则
+        public static final String DELETE_RECEIPT_OVERTIME = "/api/invoice/overtime";
+        //ofd 发票识别
+        public static final String OFD_RECEIPT_OCR = "/receipt/api/receipt/ofd";
+        //删除发票生成费用的配置规则
+        public static final String DELETE_RECEIPT_CREATER_EXPENSE = "/api/receipt/to/invoice/config/%s";
+        //发票生成费用配置规则
+        public static final String RECEIPT_CREATER_EXPENSE = "/api/receipt/to/invoice/config";
+        //发票是否可以生成费用的配置
+        public static final String GET_DATALIST = "/config/api/config/dataList";
+        // 开启回调全局设置
+        public static final String REBACK_CONFIG = "/api/customizedApiCallback/config";
+        //获取回调详情
+        public static final String GET_REBACE_CONFIG = "/push/api/customizedApiCallback";
+        //价税分离规则
+        public static final String SEPARATION_CONFIG = "/api/receipt/separation/invoice/config";
+        //推送滴滴费用
+        public static final String PUSH_DIDI = "/api/v2/didi/orders/invoice/create/v2";
+        //删除价税分离规则
+        public static final String DELETE_SEPARATION_CONFIG = "/api/receipt/separation/invoice/config/%s";
+        //价税分离需要搜索的费用类型
+        public static final String GET_EXPENSE_LISTCODE = "/api/listCode";
+        //价税分离管控项查询
+        public static final String CONFIG_FACTER = "/config/api/config/factor/%s/dataList";
+        // 价税分离的
         public static final String GET_enumerations = "/api/custom/enumerations/items/by/type";
 
         // ============================== 消费平台 =======================================

@@ -12,10 +12,11 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum Environment {
-    UAT("uat", "https://uat.huilianyi.com", "https://apiuat.huilianyi.com","https://zhenxuanuat.huilianyi.com/open"),
+    UAT("uat", "https://uat.huilianyi.com","https://apiuat.huilianyi.com","https://zhenxuanuat.huilianyi.com/open"),
     STAGE("stage", "http://stage.huilianyi.com","https://apistage.huilianyi.com","https://zhenxuanstage.huilianyi.com/open"),
+    STAGE9084("stage9084", "http://stage9084.huilianyi.com","","https://zhenxuanstage.huilianyi.com/open"),
     CONSOLE("console", "https://console.huilianyi.com","https://api.huilianyi.com","https://zhenxuan.huilianyi.com/open"),
-    CONSOLE_TC("console-tc", "https://console-tc.huilianyi.com","", "");
+    CONSOLE_TC("console-tc", "https://console-tc.huilianyi.com","","");
 
 
 

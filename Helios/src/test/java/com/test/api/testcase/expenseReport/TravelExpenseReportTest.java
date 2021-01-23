@@ -54,7 +54,7 @@ public class TravelExpenseReportTest extends BaseTest {
         //  参与人
         ArrayList<String> applicationOIDs =new ArrayList<>();
         applicationOIDs.add(applicationOID);
-        component.setParticipant(expenseReport.getValueFromApplication(employee,applicationOIDs,"参与人员"));
+        component.setParticipant(expenseReport.getValueFromApplication(employee,applicationOIDs,"参与人员","差旅报销单-节假日"));
         FormDetail formDetail = expenseReport.createTravelExpenseReport(employee,false,"差旅报销单-节假日",component);
         //报销单新建费用
         expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,formDetail.getReportOID(),"交通",23.43,new JsonArray());
@@ -83,7 +83,7 @@ public class TravelExpenseReportTest extends BaseTest {
         ArrayList<String> applicationOIDs =new ArrayList<>();
         applicationOIDs.add(applicationOID1);
         applicationOIDs.add(applicationOID2);
-        component.setParticipant(expenseReport.getValueFromApplication(employee,applicationOIDs,"参与人员"));
+        component.setParticipant(expenseReport.getValueFromApplication(employee,applicationOIDs,"参与人员","差旅报销单-节假日"));
         FormDetail formDetail = expenseReport.createTravelExpenseReport(employee,true,"差旅报销单-节假日",component);
         //报销单新建费用
         expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,"交通",formDetail.getReportOID(),23.43,new JsonArray());

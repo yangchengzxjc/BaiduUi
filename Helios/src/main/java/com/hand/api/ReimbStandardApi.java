@@ -322,7 +322,7 @@ public class ReimbStandardApi  extends BaseRequest {
      * @throws HttpStatusException
      */
     public JsonArray getEnumerations(Employee employee,String enumerationTypeId) throws HttpStatusException {
-        String url = employee.getEnvironment().getUrl() + ApiPath.GET_enumerations;
+        String url = employee.getEnvironment().getUrl() + ApiPath.GET_ENUMATIONS;
         HashMap<String,String> parm = new HashMap<>();
         parm.put("roleType","TENANT");
         parm.put("systemCustomEnumerationType",enumerationTypeId);

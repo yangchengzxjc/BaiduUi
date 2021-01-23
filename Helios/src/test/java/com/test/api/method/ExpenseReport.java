@@ -114,15 +114,15 @@ public class ExpenseReport {
      * @param city   如果存在城市控件则传一个城市名称，没有城市控件的话就传一个空的字符串。
      * @throws HttpStatusException
      */
-    public HashMap<String,String> createExpenseReport(Employee employee, String formName, String departmentOID,String city) throws HttpStatusException {
+    public FormDetail createExpenseReport(Employee employee, String formName, String departmentOID,String city) throws HttpStatusException {
         JsonObject jsonObject =reimbursementApi.createExpenseReport(employee,reimbursementApi.getFormDetail(employee,getFormOID(employee,formName,"102")),departmentOID,
                 0, UTCTime.getNowUtcTime(),UTCTime.getUtcTime(2,0),employee.getCompanyOID(),expenseReportComponent.getCityCode(employee,city),participant(employee),new JsonArray(),new JsonArray(),
                 employee.getJobId(),employee.getUserOID());
-        HashMap<String,String> info =new HashMap<>();
-        info.put("expenseReportOID",jsonObject.get("expenseReportOID").getAsString());
-        info.put("businessCode",jsonObject.get("businessCode").getAsString());
-        log.info("businessCode:{}",info.get("businessCode"));
-        return info;
+        FormDetail reportFormDetail = new FormDetail();
+        reportFormDetail.setBusinessCode(jsonObject.get("businessCode").getAsString());
+        reportFormDetail.setReportOID(jsonObject.get("expenseReportOID").getAsString());
+        log.info("businessCode:{}",jsonObject.get("businessCode").getAsString());
+        return reportFormDetail;
     }
 
     /**
@@ -133,14 +133,14 @@ public class ExpenseReport {
      * @return
      * @throws HttpStatusException
      */
-    public HashMap<String,String> createExpenseReport (Employee employee, String formName, FormComponent component) throws HttpStatusException {
+    public FormDetail createExpenseReport (Employee employee, String formName, FormComponent component) throws HttpStatusException {
         JsonObject formDetail = reimbursementApi.getFormDetail(employee,getFormOID(employee,formName,"102"));
         JsonObject jsonObject =reimbursementApi.createExpenseReport(employee,formDetail,component,employee.getJobId(),employee.getUserOID());
-        HashMap<String,String> info =new HashMap<>();
-        info.put("expenseReportOID",jsonObject.get("expenseReportOID").getAsString());
-        info.put("businessCode",jsonObject.get("businessCode").getAsString());
-        log.info("businessCode:{}",info.get("businessCode"));
-        return info;
+        FormDetail reportFormDetail = new FormDetail();
+        reportFormDetail.setBusinessCode(jsonObject.get("businessCode").getAsString());
+        reportFormDetail.setReportOID(jsonObject.get("expenseReportOID").getAsString());
+        log.info("businessCode:{}",jsonObject.get("businessCode").getAsString());
+        return reportFormDetail;
     }
 
     /**
@@ -403,9 +403,11 @@ public class ExpenseReport {
      * @return
      * @throws HttpStatusException
      */
-    public String getValueFromApplication(Employee employee, ArrayList applicationOID,String fieldName) throws HttpStatusException {
+    public String getValueFromApplication(Employee employee, ArrayList applicationOID,String fieldName,String formName) throws HttpStatusException {
         JsonArray array =reimbursementApi.getValueFromApplication(employee,applicationOID);
-        return GsonUtil.getJsonValue(array,"fieldName",fieldName,"value");
+        JsonObject formDetail = reimbursementApi.getFormDetail(employee,getFormOID(employee,formName,"102"));
+        String fieldOID = GsonUtil.getJsonValue(formDetail.getAsJsonArray("customFormFields"),"fieldName",fieldName,"fieldOID");
+        return GsonUtil.getJsonValue(array,"fieldOID",fieldOID,"value");
     }
 
     /**
@@ -421,7 +423,6 @@ public class ExpenseReport {
         return reimbursementApi.getValueFromApplication(employee,list);
     }
 
-
     /**
      * 报销单费控标签检查
      * @param employee
@@ -435,11 +436,15 @@ public class ExpenseReport {
         log.info("校验的结果:{}",result);
         JsonArray checkResultList = result.get("checkResultList").getAsJsonArray();
         if(GsonUtil.isNotEmpt(checkResultList)){
-            String message = GsonUtil.getJsonValue(checkResultList,"externalPropertyName",externalPropertyName).get("message").getAsString();
-            if(message.contains(expectValue)){
-                return true;
-            }else{
-                return false;
+            try{
+                String message = GsonUtil.getJsonValue(checkResultList,"externalPropertyName",externalPropertyName).get("message").getAsString();
+                if(message.contains(expectValue)){
+                    return true;
+                }else{
+                    return false;
+                }
+            }catch (NullPointerException e){
+                throw new RuntimeException(String.format("报销单中无此%s类型的标签",externalPropertyName));
             }
         }else {
             return false;
@@ -465,7 +470,7 @@ public class ExpenseReport {
                 return "";
             }
         }else{
-            throw new RuntimeException("报销单不存在标签");
+            return "";
         }
     }
 

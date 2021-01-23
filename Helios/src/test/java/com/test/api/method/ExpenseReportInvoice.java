@@ -6,8 +6,11 @@ import com.hand.api.ExpenseApi;
 import com.hand.api.FinanceApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
+import com.hand.basicObject.component.FormDetail;
 import com.hand.basicObject.component.InvoiceComponent;
+import com.hand.basicObject.supplierObject.DiDi;
 import com.hand.utils.GsonUtil;
+import com.hand.utils.RandomNumber;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -63,15 +66,15 @@ public class ExpenseReportInvoice {
     /**
      * 创建一笔费用，
      * @param employee
-     * @param expenseTypenName  费用类型的名称
+     * @param expenseTypeName  费用类型的名称
      * @param expenseReportOID   报销单的OID
      * @param amount   金额
      * @return
      */
-    public HashMap<String,String> createExpenseInvoice(Employee employee,String expenseTypenName,String expenseReportOID,double amount){
+    public HashMap<String,String> createExpenseInvoice(Employee employee,String expenseTypeName,String expenseReportOID,double amount){
         JsonObject jsonObject=null;
         try {
-           jsonObject= expenseApi.expenseReportCreateinvoice(employee,"",getExpenseTypeInfo(employee,expenseTypenName,expenseReportOID),
+           jsonObject= expenseApi.expenseReportCreateinvoice(employee,"",getExpenseTypeInfo(employee,expenseTypeName,expenseReportOID),
                     expenseReportOID,"","",amount,new JsonArray(),new JsonObject(),new JsonObject(),new JsonArray(),
                     false,new JsonArray(),expenseReportComponent.getExpenseLocation(employee,"西安环普科技产业园E座"),new JsonObject());
         } catch (HttpStatusException e) {
@@ -101,6 +104,34 @@ public class ExpenseReportInvoice {
         HashMap<String,String> info =new HashMap<>();
         info.put("invoiceOID",jsonObject.get("rows").getAsJsonObject().get("invoiceOID").getAsString());
         return info;
+    }
+
+    /**
+     * 创建一笔费用，费用中添加发票的费用
+     * @param employee
+     * @param expenseTypenName  费用类型的名称
+     * @param expenseReportOID   报销单的OID
+     * @param amount   金额
+     * @return
+     */
+    public FormDetail createExpenseInvoice(Employee employee, InvoiceComponent component, String expenseTypenName, String expenseReportOID, double amount,JsonObject receipt){
+        JsonObject jsonObject=null;
+        JsonArray receiptList = new JsonArray();
+        receiptList.add(receipt);
+        try {
+            jsonObject= expenseApi.expenseReportCreateinvoice(employee,getExpenseTypeInfo(employee,expenseTypenName,expenseReportOID),component,
+                    expenseReportOID,amount,new JsonArray(),receiptList,new JsonArray());
+        } catch (HttpStatusException e) {
+            e.printStackTrace();
+        }
+        FormDetail formDetail = new FormDetail();
+        log.info("费用的响应为：{}",jsonObject);
+        try{
+            formDetail.setInvoiceOID(jsonObject.get("rows").getAsJsonObject().get("invoiceOID").getAsString());
+        }catch (NullPointerException e){
+            formDetail.setResponse(jsonObject);
+        }
+        return formDetail;
     }
 
     /**
@@ -143,6 +174,7 @@ public class ExpenseReportInvoice {
     public JsonObject getInvoice(Employee employee,String invoiceOID) throws HttpStatusException {
         return expenseApi.getInvocieDetail(employee,invoiceOID);
     }
+
 
     /**
      * 删除费用
@@ -242,12 +274,16 @@ public class ExpenseReportInvoice {
         JsonObject result = getInvoice(employee,invoiceOID);
         JsonArray invoiceLabel = result.get("invoiceLabels").getAsJsonArray();
         if(GsonUtil.isNotEmpt(invoiceLabel)){
-            String toast = GsonUtil.getJsonValue(invoiceLabel,"type",type).get("toast").getAsString();
-            log.info("费用内的标签:{}",toast);
-            if(toast.equals(expectValue)){
-                return true;
-            }else{
-                return false;
+            try{
+                String toast = GsonUtil.getJsonValue(invoiceLabel,"type",type).get("toast").getAsString();
+                log.info("费用内的标签:{}",toast);
+                if(toast.equals(expectValue)){
+                    return true;
+                }else{
+                    return false;
+                }
+            }catch (NullPointerException e){
+                throw new RuntimeException(String.format("费用中无此%s类型的标签",type));
             }
         }else{
             return false;
@@ -270,7 +306,7 @@ public class ExpenseReportInvoice {
                 log.info("费用内的标签:{}", toast);
                 return toast;
             }catch (NullPointerException e){
-                return "";
+                throw new RuntimeException(String.format("费用中无此%s类型的标签",type));
             }
         }else{
             throw new RuntimeException("未存在标签");
@@ -278,7 +314,59 @@ public class ExpenseReportInvoice {
     }
 
     /**
-     * 发票查验
+     * 费用内的标签信息
+     * @param employee
+     * @param invoiceOID
+     * @param type 标签类型 超费用标准：EXPENSE_STANDARD_EXCEEDED_WARN；校验警告：REPORT_SUBMIT_WARN
+     * @return
+     */
+    public String checkInvoiceLabelName(Employee employee,String invoiceOID,String type) throws HttpStatusException {
+        JsonObject result = getInvoice(employee,invoiceOID);
+        JsonArray invoiceLabel = result.get("invoiceLabels").getAsJsonArray();
+        log.info("标签内容为:{}",invoiceLabel);
+        if(GsonUtil.isNotEmpt(invoiceLabel)) {
+            try {
+                String toast = GsonUtil.getJsonValue(invoiceLabel, "type", type).get("name").getAsString();
+                log.info("费用内的标签名称:{}", toast);
+                return toast;
+            }catch (NullPointerException e){
+                throw new RuntimeException(String.format("费用中无此%s类型的标签",type));
+            }
+        }else{
+            throw new RuntimeException("未存在标签");
+        }
+    }
+
+    /**
+     * 发票查验发票标签断言  可以选择断言标题还是断言descrition
+     * @param employee
+     * @param filePath
+     * @param code
+     * @return
+     * @throws HttpStatusException
+     */
+    public String checkVerifyReceipt(Employee employee,String filePath, String code,boolean isDescription) throws HttpStatusException {
+        JsonObject verifyInfo = getOCRReceiptVerifyInfo(employee,filePath);
+        String label ="";
+        try{
+            JsonArray errorList = verifyInfo.get("errorList").getAsJsonArray();
+            if(isDescription){
+                if(GsonUtil.isNotEmpt(errorList)){
+                    label = GsonUtil.getJsonValue(errorList,"code",code,"message");
+                }
+            }else {
+                if (GsonUtil.isNotEmpt(errorList)){
+                    label =  GsonUtil.getJsonValue(errorList, "code", code, "title");
+                }
+            }
+        }catch (NullPointerException e){
+            throw new RuntimeException("发票查验错误,标签errorList不存在");
+        }
+        return label;
+    }
+
+    /**
+     * 检查发票发票查验是否成功
      * @param employee
      * @param receptInfo
      * @return
@@ -286,6 +374,30 @@ public class ExpenseReportInvoice {
      */
     public String receptVerify(Employee employee,String receptInfo) throws HttpStatusException {
         return expenseApi.receiptVerify(employee,receptInfo).get("msg").getAsString();
+    }
+
+    /**
+     * 获取发票查验
+     * @param employee
+     * @param receptInfo
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getReceptVerify(Employee employee,String receptInfo) throws HttpStatusException {
+        return expenseApi.receiptVerify(employee,receptInfo).getAsJsonObject("invoiceInfo");
+    }
+
+    /**
+     * 获取发票查验 所有
+     * @param employee
+     * @param receptInfo
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getReceptVerifyInfo(Employee employee,String receptInfo) throws HttpStatusException {
+        JsonObject verifyInfo = expenseApi.receiptVerify(employee,receptInfo);
+        log.info("发票查验信息:{}",verifyInfo);
+        return verifyInfo;
     }
 
 
@@ -303,6 +415,23 @@ public class ExpenseReportInvoice {
         JsonObject receiptInfo = expenseApi.ocr(employee,ocrArray).getAsJsonObject("rows").getAsJsonArray("receiptList").get(0).getAsJsonObject();
         //发票查验
         return expenseApi.batchVerify(employee,receiptInfo).get(0).getAsJsonObject().get("msg").getAsString();
+    }
+
+    /**
+     * ocr识别发票-上传pdf 方式 并查验
+     * @param employee
+     * @param filePath
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject getOCRReceiptVerifyInfo(Employee employee, String filePath) throws HttpStatusException {
+        JsonObject attachment = expenseApi.uploadAttachment(employee,filePath);
+        JsonArray ocrArray = new JsonArray();
+        ocrArray.add(attachment);
+        JsonObject receiptInfo = expenseApi.ocr(employee,ocrArray).getAsJsonObject("rows").getAsJsonArray("receiptList").get(0).getAsJsonObject();
+        //发票查验
+
+        return expenseApi.batchVerify(employee,receiptInfo).get(0).getAsJsonObject();
     }
 
     /**
@@ -332,7 +461,44 @@ public class ExpenseReportInvoice {
         JsonObject attachment = expenseApi.uploadAttachment(employee,filePath);
         JsonObject ocr = financeApi.scanOcr(employee,reportId,attachment);
         return ocr.get("message").getAsString();
+    }
 
+    /**
+     * ofd 格式的发票识别并查验
+     * @param employee
+     * @return
+     */
+    public String ofd(Employee employee,String filePath) throws HttpStatusException {
+        JsonObject attachment = expenseApi.uploadAttachment(employee,filePath);
+        JsonArray ocrArray = new JsonArray();
+        ocrArray.add(attachment);
+        JsonObject ofdInfo = expenseApi.ofdReceiptOCR(employee,ocrArray).getAsJsonObject("rows").getAsJsonArray("receiptList").get(0).getAsJsonObject();
+        return expenseApi.batchVerify(employee,ofdInfo).get(0).getAsJsonObject().get("msg").getAsString();
+    }
+
+    /**
+     * 推送滴滴费用
+     * @param employee
+     * @param isCompanyPay 是否公司支付
+     * @throws HttpStatusException
+     */
+    public void pushDiDi(Employee employee,Boolean isCompanyPay) throws HttpStatusException {
+        DiDi didi = new DiDi();
+        if(isCompanyPay){
+            didi.setCompanyPay(didi.getActualPrice());
+            didi.setCompanyRealPay(didi.getActualPrice());
+            didi.setTotalPrice(didi.getActualPrice());
+            didi.setPayType("0");
+        }else{
+            didi.setPersonalPay(didi.getActualPrice());
+            didi.setPersonalRealPay(didi.getActualPrice());
+            didi.setTotalPrice(didi.getActualPrice());
+            didi.setPayType("1");
+        }
+        didi.setPassengerPhone(employee.getMobile());
+        didi.setCallPhone(employee.getMobile());
+        didi.setCompanyId(employee.getCompanyId());
+        expenseApi.pushDiDi(employee,didi);
     }
 
 }

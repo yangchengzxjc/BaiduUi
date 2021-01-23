@@ -36,9 +36,9 @@ import static java.lang.Thread.sleep;
 public class OkHttpUtils {
 
     private static OkHttpClient mOkHttpClient;
-    private static final int CONNECT_TIMEOUT = 20;
-    private static final int READ_TIMEOUT = 20;
-    private static final int WRITE_TIMEOUT = 20;
+    private static final int CONNECT_TIMEOUT = 15;
+    private static final int READ_TIMEOUT = 15;
+    private static final int WRITE_TIMEOUT = 15;
     private static final String GET = "GET";
     private static final String POST = "POST";
     private static final String DELETE = "DELETE";
@@ -74,30 +74,26 @@ public class OkHttpUtils {
 //        log.info("---------------------------request end--------------------------------------------------");
     }
 
-
     private static void addResponseLog(String method, String callMethod, String url, String jsonbody, String formParam, Response response, int httpCode, String result, String SpanID, long startTime) {
 
         log.info("Status: {}", httpCode);
         log.info("SpanID: {}", SpanID);
 
         long endTime = System.currentTimeMillis();
-
         try {
             log.info("APIResponse: {}", new JsonParser().parse(result).getAsJsonObject().toString());
         } catch (Exception e) {
-
             try {
                 log.info("APIResponse: {}", new JsonParser().parse(result).getAsJsonArray().toString());
-
             } catch (Exception ignored) {
             }
         }
         log.info("Time: {} ms", endTime - startTime);
-        if ((endTime - startTime) >= 5000 && (endTime - startTime) < 7000) {
-            log.info("请求大于5秒，有待观察:");
-        } else if ((endTime - startTime) >= 7000) {
-            log.info("请求大于7秒，有待观察:");
-        }
+//        if ((endTime - startTime) >= 5000 && (endTime - startTime) < 7000) {
+//            log.info("请求大于5秒，有待观察:");
+//        } else if ((endTime - startTime) >= 7000) {
+//            log.info("请求大于7秒，有待观察:");
+//        }
 //        // 报告打印日志 debug
 //        Reporter.log("httpCode: " + httpCode);
 //        Reporter.log("spanID: " + response.header("SpanID"));
@@ -118,7 +114,9 @@ public class OkHttpUtils {
     private static APIResponse handleHttpResponse(int httpCode, String result, Response response) {
         APIResponse APIResponse = new APIResponse();
         APIResponse.setBody(result);
+        APIResponse.setSpanId(response.header("SpanID"));
         APIResponse.setStatusCode(httpCode);
+        APIResponse.setTime(response.receivedResponseAtMillis()-response.sentRequestAtMillis());
         return APIResponse;
     }
 
@@ -132,7 +130,6 @@ public class OkHttpUtils {
         }
         throw new RuntimeException(ex);
     }
-
 
     /**
      * get方法连接拼加参数
@@ -240,10 +237,8 @@ public class OkHttpUtils {
                 MultipartBodyBuilder.addFormDataPart(key, i + ".png", fileBody);
             }
         }
-
         body = MultipartBodyBuilder.build();
         return body;
-
     }
 
     /**
@@ -275,11 +270,10 @@ public class OkHttpUtils {
                     .url(url)
                     .headers(headers)
                     .build();
+            sleep(500);
             response = client.newCall(req).execute();
             res = response.body().string();
             httpCode = response.code();
-
-
         } catch (SocketTimeoutException e) {
             log.error("SocketTimeoutException,try again:" + e.getMessage());
             req = new Request.Builder()
@@ -312,7 +306,7 @@ public class OkHttpUtils {
      * @return
      * @throws IOException
      */
-    public static APIResponse put(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, String requestBody, Map<String, String> formBody) throws HttpStatusException {
+    public static APIResponse put(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, String requestBody, Map<String, String> formBody){
         Headers headers = null;
         RequestBody body = null;
         String strParams = "";
@@ -328,21 +322,17 @@ public class OkHttpUtils {
         if (urlMapParams != null) {
             strParams = setGetUrlParams(urlMapParams);
             url += strParams;
-
         }
 //        form请求
         if (formBody != null) {
             body = SetRequestFormBody(formBody);
             FormLog = formBody.toString();
         }
-
 //        json 请求
         if (requestBody != null) {
             MediaType JSON = MediaType.parse(String.valueOf(ContentType.APPLICATION_JSON));
             body = RequestBody.create(JSON, requestBody);
         }
-
-
         if (formBody != null) {
             req = new Request.Builder()
                     .url(url)
@@ -395,7 +385,7 @@ public class OkHttpUtils {
      * @return
      * @throws IOException
      */
-    public static APIResponse post(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, String requestBody, Map<String, String> formData) throws HttpStatusException {
+    public static APIResponse post(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, String requestBody, Map<String, String> formData){
         Headers headers = null;
         RequestBody body = null;
         String strParams = "";
@@ -452,7 +442,6 @@ public class OkHttpUtils {
             Call call = client.newCall(req);
             try {
                 response = call.execute();
-                log.info("执行了吗");
                 res = response.body().string();
             } catch (Exception ex) {
                 log.error("Retry still fails:" + ex.getMessage());
@@ -481,7 +470,7 @@ public class OkHttpUtils {
      * @throws IOException
      */
     public static APIResponse upLoadFile(String Url, Map<String, String> headersParams, Map<String, String> formBody, String name, String filePath, String
-            fileMediaType) throws HttpStatusException {
+            fileMediaType){
         Headers headers = null;
         long startTime = System.currentTimeMillis();
         String res = "";
@@ -502,7 +491,6 @@ public class OkHttpUtils {
                 MultipartBodyBuilder.addFormDataPart(key, formBody.get(key));
             }
         }
-
         File file = new File(filePath);
         MultipartBodyBuilder.addFormDataPart(name, file.getName(), RequestBody.create(MediaType.parse(fileMediaType), file));
         body = MultipartBodyBuilder.build();
@@ -542,8 +530,6 @@ public class OkHttpUtils {
         }
         addResponseLog(POST, Url, Url, null, null, response, httpCode, res, response.header("SpanID"), startTime);
         return handleHttpResponse(httpCode, res, response);
-
-
     }
 
     /**
@@ -556,7 +542,7 @@ public class OkHttpUtils {
      * @return
      * @throws IOException
      */
-    public static APIResponse delete(String Url, Map<String, String> headersParams, Map<String, String> UrlMapParams, JsonObject Jsonbody) throws HttpStatusException {
+    public static APIResponse delete(String Url, Map<String, String> headersParams, Map<String, String> UrlMapParams, JsonObject Jsonbody){
         Headers headers = null;
         String strParams = "";
         String res = "";
@@ -567,9 +553,7 @@ public class OkHttpUtils {
         if (UrlMapParams != null) {
             strParams = setGetUrlParams(UrlMapParams);
             Url += strParams;
-
         }
-
         MediaType JSON = MediaType.parse(String.valueOf(ContentType.APPLICATION_JSON));
         RequestBody body = RequestBody.create(JSON, Jsonbody.toString());
         addRequestLog(DELETE, Url, Url, null, null);
@@ -579,12 +563,14 @@ public class OkHttpUtils {
                 .headers(headers)
                 .delete(body)
                 .build();
-
         Response response = null;
         try {
+            sleep(500);
             response = client.newCall(req).execute();
             res = response.body().string();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         int httpCode = response.code();
@@ -594,4 +580,5 @@ public class OkHttpUtils {
         }
         return handleHttpResponse(httpCode, res, response);
     }
+
 }

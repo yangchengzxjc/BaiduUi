@@ -4,6 +4,7 @@ import com.hand.basicConstant.submitControl.ControlValueType;
 import com.hand.basicObject.Rule.StandardControlItem;
 import com.hand.basicObject.Rule.StandardRules;
 import com.hand.basicObject.Rule.StandardRulesItem;
+import com.hand.basicObject.component.FormDetail;
 import com.hand.utils.UTCTime;
 import com.test.api.method.BusinessMethod.ExpenseReportPage;
 import com.test.api.method.ExpenseControlMethod.StandardControl;
@@ -35,7 +36,7 @@ public class SingleControlTest extends BaseTest {
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void beforeClass(@Optional("14082978625") String phoneNumber, @Optional("rr123456") String pwd, @Optional("stage") String env){
+    public void beforeClass(@Optional("14082971222") String phoneNumber, @Optional("zp123456") String pwd, @Optional("stage") String env){
         employee = getEmployee(phoneNumber,pwd,env);
         reimbStandard =new ReimbStandard();
         expenseReport = new ExpenseReport();
@@ -60,16 +61,16 @@ public class SingleControlTest extends BaseTest {
         //config base standard, exist default control item
         StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,true,rules,ruleOID);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,false);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),false);
         map.put("ruleOID",ruleOID);
-        map.put("reportOID1",reportOID1);
+        map.put("reportOID1",formDetail.getReportOID());
         map.put("invoiceOID1",invoiceOID1);
         String data = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 250.00，超标：CNY 50.00。",rules.getMessage(),data,standardRulesItem.getAmount());
         log.info("标签:{}",label);
-        assert expenseReport.checkSubmitLabel(employee, reportOID1, "5001",label);
+        assert expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001",label);
     }
 
     @Test(description = "标准:账套级-单条管控-费用参与人标准开启取就高-管控信息为：费用金额>基本标准")
@@ -81,16 +82,16 @@ public class SingleControlTest extends BaseTest {
         StandardRulesItem standardRulesItem1 = standardControl.setStandardRulesItem(employee,150,true,rules,ruleOID,new String[]{"auto_test_employee006"},new String[]{});
         StandardRulesItem standardRulesItem2 = standardControl.setStandardRulesItem(employee,200,false,rules,ruleOID,new String[]{"auto_test_oneself"},new String[]{});
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,false);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),false);
         map.put("ruleOID",ruleOID);
-        map.put("reportOID1",reportOID1);
+        map.put("reportOID1",formDetail.getReportOID());
         map.put("invoiceOID1",invoiceOID1);
         String data = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 250.00，超标：CNY 50.00。",rules.getMessage(),data,standardRulesItem2.getAmount());
         log.info("标签:{}",label);
-        Assert.assertEquals(label,expenseReport.checkSubmitLabel(employee, reportOID1, "5001"));
+        Assert.assertEquals(label,expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"));
         Assert.assertEquals(label,invoice.checkInvoiceLabel(employee,invoiceOID1,"EXPENSE_STANDARD_EXCEEDED_WARN"));
     }
 
@@ -107,7 +108,7 @@ public class SingleControlTest extends BaseTest {
         StandardControlItem controlItem = standardControl.setStandardCondition("DAYS");
         reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID1",reportOID1);
         //新建费用
         String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName(),"员工0006"},650.00);
@@ -133,7 +134,7 @@ public class SingleControlTest extends BaseTest {
         StandardControlItem controlItem = standardControl.setStandardCondition("PEOPLES");
         reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID1",reportOID1);
         //新建费用
         String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName(),"员工0006"},450.00);
@@ -159,7 +160,7 @@ public class SingleControlTest extends BaseTest {
         StandardControlItem controlItem = standardControl.setStandardCondition("ROOMS");
         reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID1",reportOID1);
         //新建费用
         String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName(),"员工0006"},450.00);
@@ -186,16 +187,16 @@ public class SingleControlTest extends BaseTest {
         StandardControlItem controlItem = standardControl.setStandardCondition("MONTH_NUM");
         reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
-        map.put("reportOID1",reportOID1);
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID1",formDetail.getReportOID());
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName(),"员工0006"},450.00);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),new String[]{employee.getFullName(),"员工0006"},450.00);
         map.put("invoiceOID1",invoiceOID1);
         //管控项为基本标准   则标准取就高200*1
         String itDate = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 450.00，超标：CNY 250.00。",rules.getMessage(),itDate,standardRulesItem2.getAmount().multiply(new BigDecimal(1)));
         log.info("标签:{}",label);
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, reportOID1, "5001"),label);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"),label);
         Assert.assertEquals(invoice.checkInvoiceLabel(employee,invoiceOID1,"EXPENSE_STANDARD_EXCEEDED_WARN"),label);
     }
 
@@ -209,12 +210,12 @@ public class SingleControlTest extends BaseTest {
         StandardControlItem controlItem = standardControl.setStandControlItem("INVOICE_COMMENT", ControlValueType.INCLUDE.getValueType(),"事由","STRING");
         reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
-        map.put("reportOID1",reportOID1);
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID1",formDetail.getReportOID());
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName(),"员工0006"},450.00);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),new String[]{employee.getFullName(),"员工0006"},450.00);
         map.put("invoiceOID1",invoiceOID1);
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,reportOID1,"5001"),rules.getMessage());
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,formDetail.getReportOID(),"5001"),rules.getMessage());
     }
 
     @Test(description = "标准:账套级-单条管控-费用参与人标准开启取就高-管控信息为：申请人组-包括(人员组)")
@@ -227,12 +228,12 @@ public class SingleControlTest extends BaseTest {
         StandardControlItem controlItem = standardControl.setStandControlItem("APPLY_USER", ControlValueType.INCLUDE.getValueType(),"auto_test_oneself","USER_GROUP");
         reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
-        map.put("reportOID1",reportOID1);
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID1",formDetail.getReportOID());
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName(),"员工0006"},450.00);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),new String[]{employee.getFullName(),"员工0006"},450.00);
         map.put("invoiceOID1",invoiceOID1);
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,reportOID1,"5001"),rules.getMessage());
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,formDetail.getReportOID(),"5001"),rules.getMessage());
     }
 
     @Test(description = "标准:账套级-单条管控-费用参与人标准开启取就高-管控信息为：参与人组-包括(人员组)")
@@ -245,12 +246,12 @@ public class SingleControlTest extends BaseTest {
         StandardControlItem controlItem = standardControl.setStandControlItem("PARTICIPANT_USER", ControlValueType.INCLUDE.getValueType(),"auto_test_employee006","USER_GROUP");
         reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName(),"员工0006"}).get("expenseReportOID");
-        map.put("reportOID1",reportOID1);
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName(),"员工0006"});
+        map.put("reportOID1",formDetail.getReportOID());
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName(),"员工0006"},450.00);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),new String[]{employee.getFullName(),"员工0006"},450.00);
         map.put("invoiceOID1",invoiceOID1);
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,reportOID1,"5001"),rules.getMessage());
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,formDetail.getReportOID(),"5001"),rules.getMessage());
     }
 
     @Test(description = "标准:账套级-单条管控-费用参与人标准开启取就高-管控信息为：费用附件为空")
@@ -263,12 +264,12 @@ public class SingleControlTest extends BaseTest {
         StandardControlItem controlItem = standardControl.setStandControlItem("INVOICE_ATTACHMENT", ControlValueType.IS_NULL.getValueType(),null,"STRING");
         reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
-        map.put("reportOID1",reportOID1);
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID1",formDetail.getReportOID());
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName(),"员工0006"},450.00);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),new String[]{employee.getFullName(),"员工0006"},450.00);
         map.put("invoiceOID1",invoiceOID1);
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,reportOID1,"5001"),rules.getMessage());
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,formDetail.getReportOID(),"5001"),rules.getMessage());
     }
 
     @Test(description = "标准:账套级-单条管控-费用参与人标准开启取就高-管控信息为：费用附件为空&& 费用金额>基本标准必须满足")
@@ -286,12 +287,12 @@ public class SingleControlTest extends BaseTest {
         StandardControlItem controlItem2 = new StandardControlItem();
         reimbStandard.editORaddControlItem(employee,false,rules,ruleOID,controlItem2);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
-        map.put("reportOID1",reportOID1);
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID1",formDetail.getReportOID());
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName()},100.00);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),new String[]{employee.getFullName()},100.00);
         map.put("invoiceOID1",invoiceOID1);
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,reportOID1,"5001"),"");
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,formDetail.getReportOID(),"5001"),"");
     }
 
     @Test(description = "标准:账套级-单条管控-费用参与人标准开启取就高-管控信息为：费用标签-包含-公司已付")
@@ -304,12 +305,12 @@ public class SingleControlTest extends BaseTest {
         StandardControlItem controlItem = standardControl.setStandControlItem("INVOICE_LABEL", ControlValueType.INCLUDE.getValueType(),"20","INVOICE_LABEL");
         reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
-        map.put("reportOID1",reportOID1);
-        //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,true);
+         FormDetail formDetail= expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID1",formDetail.getReportOID());
+         //新建费用
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),true);
         map.put("invoiceOID1",invoiceOID1);
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,reportOID1,"5001"),rules.getMessage());
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,formDetail.getReportOID(),"5001"),rules.getMessage());
     }
 
     @Test(description = "标准:账套级-单条管控-费用参与人标准开启取就高-管控信息为：费用标签-不包含-电子票")
@@ -322,12 +323,12 @@ public class SingleControlTest extends BaseTest {
         StandardControlItem controlItem = standardControl.setStandControlItem("INVOICE_LABEL", ControlValueType.UNINCLUDE.getValueType(),"9","INVOICE_LABEL");
         reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
-        map.put("reportOID1",reportOID1);
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID1",formDetail.getReportOID());
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,true);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),true);
         map.put("invoiceOID1",invoiceOID1);
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,reportOID1,"5001"),rules.getMessage());
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee,formDetail.getReportOID(),"5001"),rules.getMessage());
     }
 
     @Test(description = "标准:账套级-单条管控-费用参与人标准开启取就高-管控信息为：费用标签-包含-替票")
@@ -337,10 +338,10 @@ public class SingleControlTest extends BaseTest {
         String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
         map.put("ruleOID",ruleOID);
         //设置管控项为备注包括
-        StandardControlItem controlItem = standardControl.setStandControlItem("INVOICE_LABEL", ControlValueType.UNINCLUDE.getValueType(),"32","INVOICE_LABEL");
+        StandardControlItem controlItem = standardControl.setStandControlItem("INVOICE_LABEL", ControlValueType.INCLUDE.getValueType(),"32","INVOICE_LABEL");
         reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID1",reportOID1);
         //新建费用
         String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1);
@@ -359,7 +360,7 @@ public class SingleControlTest extends BaseTest {
         StandardControlItem controlItem = standardControl.setStandControlItem("DURATION_DAYS", ControlValueType.GT.getValueType(),2,"LONG");
         reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID1",reportOID1);
         //新建费用
         String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName()},200.00);
@@ -400,7 +401,7 @@ public class SingleControlTest extends BaseTest {
         StandardControlItem controlItem = standardControl.setStandardCondition("DAYS");
         reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID1",reportOID1);
         //新建费用
         String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName(),"员工0006"},1100.00);
@@ -426,7 +427,7 @@ public class SingleControlTest extends BaseTest {
         StandardControlItem controlItem = standardControl.setStandardCondition("ROOMS");
         reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID1",reportOID1);
         //新建费用
         String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName(),"员工0006"},400.00);
@@ -452,16 +453,16 @@ public class SingleControlTest extends BaseTest {
         StandardControlItem controlItem = standardControl.setStandardCondition("MONTH_NUM");
         reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
-        map.put("reportOID1",reportOID1);
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        map.put("reportOID1",formDetail.getReportOID());
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName(),"员工0006"},400.00);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),new String[]{employee.getFullName(),"员工0006"},400.00);
         map.put("invoiceOID1",invoiceOID1);
         //管控项为基本标准   则标准取就高350*1
         String itDate = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
-        String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 450.00，超标：CNY 250.00。",rules.getMessage(),itDate,standardRulesItem2.getAmount().add(standardRulesItem1.getAmount()).multiply(new BigDecimal(1)));
+        String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 400.00，超标：CNY 50.00。",rules.getMessage(),itDate,standardRulesItem2.getAmount().add(standardRulesItem1.getAmount()).multiply(new BigDecimal(1)));
         log.info("标签:{}",label);
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, reportOID1, "5001"),label);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"),label);
         Assert.assertEquals(invoice.checkInvoiceLabel(employee,invoiceOID1,"EXPENSE_STANDARD_EXCEEDED_WARN"),label);
     }
 
@@ -473,16 +474,16 @@ public class SingleControlTest extends BaseTest {
         //config base standard, exist default control item
         StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,true,rules,ruleOID);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         //新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,false);
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),false);
         map.put("ruleOID",ruleOID);
-        map.put("reportOID1",reportOID1);
+        map.put("reportOID1",formDetail.getReportOID());
         map.put("invoiceOID1",invoiceOID1);
         String data = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 250.00，超标：CNY 50.00。",rules.getMessage(),data,standardRulesItem.getAmount());
         log.info("标签:{}",label);
-        assert expenseReport.checkSubmitLabel(employee, reportOID1, "5001",label);
+        assert expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001",label);
     }
 
     @Test(description = "标准:账套级-单条管控-费用大类-管控信息为：费用金额>基本标准*天数")
@@ -498,7 +499,7 @@ public class SingleControlTest extends BaseTest {
         StandardControlItem controlItem = standardControl.setStandardCondition("DAYS");
         reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,controlItem);
         //新建报销单
-        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()}).get("expenseReportOID");
+        String reportOID1 = expenseReportPage.setDailyReport(employee,"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID1",reportOID1);
         //新建费用
         String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",reportOID1,new String[]{employee.getFullName(),"员工0006"},1100.00);

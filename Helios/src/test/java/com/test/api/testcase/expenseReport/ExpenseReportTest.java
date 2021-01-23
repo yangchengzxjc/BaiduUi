@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.component.FormComponent;
+import com.hand.basicObject.component.FormDetail;
 import com.hand.basicObject.component.InvoiceComponent;
 import com.test.BaseTest;
 import com.test.api.method.ExpenseReport;
@@ -47,27 +48,27 @@ public class ExpenseReportTest extends BaseTest{
     @Test(priority = 1,description = "创建报销单并添加费用-删除费用-在账本中能够查找到费用")
     public void test1() throws HttpStatusException {
         //新建报销单
-        String expenseReportOID = expenseReport.createExpenseReport(employee,"yuuki的测试表单",component).get("expenseReportOID");
+        FormDetail formDetail = expenseReport.createExpenseReport(employee,"yuuki的测试表单",component);
         //新建费用
-        String invoiceOID = expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,"火车",expenseReportOID,100.00,new JsonArray()).get("invoiceOID");
+        String invoiceOID = expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,"火车",formDetail.getReportOID(),100.00,new JsonArray()).get("invoiceOID");
         //报销单提交
-        assert expenseReport.expenseReportSubmit(employee,expenseReportOID).equalsIgnoreCase("true");
+        assert expenseReport.expenseReportSubmit(employee,formDetail.getReportOID()).equalsIgnoreCase("true");
         //报销单撤回
-        expenseReport.withdraw(employee,expenseReportOID);
+        expenseReport.withdraw(employee,formDetail.getReportOID());
         //删除费用
-        expenseReport.removeInvoice(employee,expenseReportOID,invoiceOID);
+        expenseReport.removeInvoice(employee,formDetail.getReportOID(),invoiceOID);
         //在账本中查找退回
         assert expenseReportInvoice.getExpenseItem(employee).toString().contains(invoiceOID);
-        expenseReport.deleteExpenseReport(employee,expenseReportOID);
+        expenseReport.deleteExpenseReport(employee,formDetail.getReportOID());
     }
 
     @Test(description = "报销单成功导入结算费用以及账本中的费用")
     public void importPublicBook() throws HttpStatusException {
         //新建报销单
-        String expenseReportOID = expenseReport.createExpenseReport(employee, "yuuki的测试表单",component).get("expenseReportOID");
+        FormDetail formDetail = expenseReport.createExpenseReport(employee, "yuuki的测试表单",component);
         //导入结算费用
-        assert expenseReport.importInvoice(employee, expenseReportOID, 1, false).equals("true");
+        assert expenseReport.importInvoice(employee, formDetail.getReportOID(), 1, false).equals("true");
         //导入账本中的费用
-        assert expenseReport.importInvoice(employee, expenseReportOID, 1, true).equals("true");
+        assert expenseReport.importInvoice(employee, formDetail.getReportOID(), 1, true).equals("true");
     }
 }

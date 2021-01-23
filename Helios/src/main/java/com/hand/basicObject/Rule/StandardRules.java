@@ -42,6 +42,10 @@ public class StandardRules {
     //非金额管控 "PLANE_CABIN" ->飞机管控
     private String nonAmountCtrlItem = null;
     /**
+     * 费用大类
+     */
+    private String expenseCategories;
+    /**
      * 费用参与人标准,就高(HIGH)、和值(SUM)、就低(LOW)
      */
     private String participantsMode;

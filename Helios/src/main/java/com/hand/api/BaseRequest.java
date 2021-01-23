@@ -40,7 +40,6 @@ public class BaseRequest {
         data.put("scope", "read write");
         String res = doPost(url, headersdatas, null, null, data, employee);
         responseEntity = new JsonParser().parse(res).getAsJsonObject();
-
         return responseEntity;
     }
 
@@ -55,12 +54,13 @@ public class BaseRequest {
      * @return
      */
     public String doPut(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, String jsonbody, Map<String, String> bodyParams, Employee employee) throws HttpStatusException {
-        APIResponse APIResponse = null;
-        APIResponse = OkHttpUtils.put(url, headersParams, urlMapParams, jsonbody, bodyParams);
-        int code = APIResponse.getStatusCode();
-        String res = APIResponse.getBody();
+        APIResponse apiResponse = null;
+        apiResponse = OkHttpUtils.put(url, headersParams, urlMapParams, jsonbody, bodyParams);
+        int code = apiResponse.getStatusCode();
+        String res = apiResponse.getBody();
         switch (code) {
             case HttpStatus.OK_200:
+                break;
             case HttpStatus.CREATED_201:
                 return res;
             case HttpStatus.UNAUTHORIZED_401:
@@ -68,20 +68,20 @@ public class BaseRequest {
                 log.info("使用新Token：" + newToken);
                 employee.setAccessToken(newToken);
                 headersParams.put("Authorization", "Bearer " + employee.getAccessToken() + "");
-                APIResponse = OkHttpUtils.put(url, headersParams, urlMapParams, jsonbody, bodyParams);
-                return APIResponse.getBody();
+                apiResponse = OkHttpUtils.put(url, headersParams, urlMapParams, jsonbody, bodyParams);
+                return apiResponse.getBody();
             case HttpStatus.GATEWAY_TIMEOUT_504:
             case HttpStatus.BAD_GATEWAY_502:
-                APIResponse = OkHttpUtils.put(url, headersParams, urlMapParams, jsonbody, bodyParams);
-                return APIResponse.getBody();
+                apiResponse = OkHttpUtils.put(url, headersParams, urlMapParams, jsonbody, bodyParams);
+                return apiResponse.getBody();
             default:
                 log.info("未知错误，还需定位");
         }
-
         if (HttpStatus.BAD_REQUEST_400 == code && res.contains("baseRequest speed is too fast")) {
-            APIResponse = OkHttpUtils.put(url, headersParams, urlMapParams, jsonbody, bodyParams);
-            res = APIResponse.getBody();
+            apiResponse = OkHttpUtils.put(url, headersParams, urlMapParams, jsonbody, bodyParams);
+            res = apiResponse.getBody();
         }
+        isTimeOUT(apiResponse);
         return res;
 
     }
@@ -98,12 +98,13 @@ public class BaseRequest {
      * @return
      */
     public String doPost(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, String jsonBody, Map<String, String> bodyParams, Employee employee) throws HttpStatusException {
-        APIResponse APIResponse = null;
-        APIResponse = OkHttpUtils.post(url, headersParams, urlMapParams, jsonBody, bodyParams);
-        int code = APIResponse.getStatusCode();
-        String res = APIResponse.getBody();
+        APIResponse apiResponse = null;
+        apiResponse = OkHttpUtils.post(url, headersParams, urlMapParams, jsonBody, bodyParams);
+        int code = apiResponse.getStatusCode();
+        String res = apiResponse.getBody();
         switch (code) {
             case HttpStatus.OK_200:
+                break;
             case HttpStatus.CREATED_201:
                 return res;
             case HttpStatus.UNAUTHORIZED_401:
@@ -111,24 +112,24 @@ public class BaseRequest {
                 log.info("使用新Token：" + newToken);
                 employee.setAccessToken(newToken);
                 headersParams.put("Authorization", "Bearer " + employee.getAccessToken() + "");
-                APIResponse = OkHttpUtils.post(url, headersParams, urlMapParams, jsonBody, bodyParams);
-                return APIResponse.getBody();
+                apiResponse = OkHttpUtils.post(url, headersParams, urlMapParams, jsonBody, bodyParams);
+                return apiResponse.getBody();
             case HttpStatus.GATEWAY_TIMEOUT_504:
+                throw new HttpStatusException(code,apiResponse.getBody());
             case HttpStatus.BAD_GATEWAY_502:
-                APIResponse = OkHttpUtils.post(url, headersParams, urlMapParams, jsonBody, bodyParams);
-                return APIResponse.getBody();
+                apiResponse = OkHttpUtils.post(url, headersParams, urlMapParams, jsonBody, bodyParams);
+                throw new HttpStatusException(code,apiResponse.getBody());
             default:
                 log.info("未知错误，还需定位");
+                break;
         }
-
         if (HttpStatus.BAD_REQUEST_400 == code && res.contains("baseRequest speed is too fast")) {
-            APIResponse = OkHttpUtils.post(url, headersParams, urlMapParams, jsonBody, bodyParams);
-            res = APIResponse.getBody();
+            apiResponse = OkHttpUtils.post(url, headersParams, urlMapParams, jsonBody, bodyParams);
+            res = apiResponse.getBody();
         }
+        isTimeOUT(apiResponse);
         return res;
-
     }
-
 
     /**
      * 删除操作
@@ -142,12 +143,13 @@ public class BaseRequest {
      * @throws HttpStatusException
      */
     public String doDlete(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, JsonObject jsonbody, Employee employee) throws HttpStatusException {
-        APIResponse APIResponse = null;
-        APIResponse = OkHttpUtils.delete(url, headersParams, urlMapParams, jsonbody);
-        int code = APIResponse.getStatusCode();
-        String res = APIResponse.getBody();
+        APIResponse apiResponse = null;
+        apiResponse = OkHttpUtils.delete(url, headersParams, urlMapParams, jsonbody);
+        int code = apiResponse.getStatusCode();
+        String res = apiResponse.getBody();
         switch (code) {
             case HttpStatus.OK_200:
+                break;
             case HttpStatus.CREATED_201:
                 return res;
             case HttpStatus.UNAUTHORIZED_401:
@@ -155,20 +157,21 @@ public class BaseRequest {
                 log.info("使用新Token：" + newToken);
                 employee.setAccessToken(newToken);
                 headersParams.put("Authorization", "Bearer " + employee.getAccessToken() + "");
-                APIResponse = APIResponse = OkHttpUtils.delete(url, headersParams, urlMapParams, jsonbody);
-                return APIResponse.getBody();
+                apiResponse = OkHttpUtils.delete(url, headersParams, urlMapParams, jsonbody);
+                return apiResponse.getBody();
             case HttpStatus.GATEWAY_TIMEOUT_504:
+                throw new HttpStatusException(code,apiResponse.getBody());
             case HttpStatus.BAD_GATEWAY_502:
-                APIResponse = APIResponse = OkHttpUtils.delete(url, headersParams, urlMapParams, jsonbody);
-                return APIResponse.getBody();
+                apiResponse = OkHttpUtils.delete(url, headersParams, urlMapParams, jsonbody);
+                throw new HttpStatusException(code,apiResponse.getBody());
             default:
                 log.info("未知错误，还需定位");
         }
-
         if (HttpStatus.BAD_REQUEST_400 == code && res.contains("baseRequest speed is too fast")) {
-            APIResponse = OkHttpUtils.delete(url, headersParams, urlMapParams, jsonbody);
-            res = APIResponse.getBody();
+            apiResponse = OkHttpUtils.delete(url, headersParams, urlMapParams, jsonbody);
+            res = apiResponse.getBody();
         }
+        isTimeOUT(apiResponse);
         return res;
     }
 
@@ -181,33 +184,36 @@ public class BaseRequest {
      * @return
      */
     public String doGet(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, Employee employee) throws HttpStatusException {
-        APIResponse APIResponse = null;
-        APIResponse = OkHttpUtils.get(url, headersParams, urlMapParams);
-        int code = APIResponse.getStatusCode();
-        String res = APIResponse.getBody();
+        APIResponse apiResponse = null;
+        apiResponse = OkHttpUtils.get(url, headersParams, urlMapParams);
+        int code = apiResponse.getStatusCode();
+        String res = apiResponse.getBody();
         switch (code) {
             case HttpStatus.OK_200:
+                break;
             case HttpStatus.CREATED_201:
                 return res;
             case HttpStatus.BAD_REQUEST_400:
                 if (res.contains("baseRequest speed is too fast")) {
-                    APIResponse = OkHttpUtils.get(url, headersParams, urlMapParams);
-                    return APIResponse.getBody();
+                    apiResponse = OkHttpUtils.get(url, headersParams, urlMapParams);
+                    return apiResponse.getBody();
                 }
             case HttpStatus.UNAUTHORIZED_401:
                 String newToken = getToken(employee).get("access_token").getAsString();
                 log.info("使用新Token：" + newToken);
                 employee.setAccessToken(newToken);
                 headersParams.put("Authorization", "Bearer " + employee.getAccessToken() + "");
-                APIResponse = OkHttpUtils.get(url, headersParams, urlMapParams);
-                return APIResponse.getBody();
+                apiResponse = OkHttpUtils.get(url, headersParams, urlMapParams);
+                return apiResponse.getBody();
             case HttpStatus.GATEWAY_TIMEOUT_504:
+                throw new HttpStatusException(code,apiResponse.getBody());
             case HttpStatus.BAD_GATEWAY_502:
-                APIResponse = OkHttpUtils.get(url, headersParams, urlMapParams);
-                return APIResponse.getBody();
+                apiResponse = OkHttpUtils.get(url, headersParams, urlMapParams);
+                throw new HttpStatusException(code,apiResponse.getBody());
             default:
                 log.info("未知错误，还需定位");
         }
+        isTimeOUT(apiResponse);
         return res;
     }
 
@@ -225,13 +231,13 @@ public class BaseRequest {
      * @throws HttpStatusException
      */
     public String doupload(String url, Map<String, String> headersParams, Map<String, String> bodyParams, String name, String filePath, String fileMediaType, Employee employee) throws HttpStatusException {
-        APIResponse APIResponse = null;
-        APIResponse = OkHttpUtils.upLoadFile(url, headersParams, bodyParams, name, filePath, fileMediaType);
-        int code = APIResponse.getStatusCode();
-        String res = APIResponse.getBody();
+        APIResponse apiResponse = null;
+        apiResponse = OkHttpUtils.upLoadFile(url, headersParams, bodyParams, name, filePath, fileMediaType);
+        int code = apiResponse.getStatusCode();
+        String res = apiResponse.getBody();
         switch (code) {
-            case HttpStatus
-                    .OK_200:
+            case HttpStatus.OK_200:
+                break;
             case HttpStatus.CREATED_201:
                 return res;
             case HttpStatus.UNAUTHORIZED_401:
@@ -239,20 +245,21 @@ public class BaseRequest {
                 log.info("使用新Token：" + newToken);
                 employee.setAccessToken(newToken);
                 headersParams.put("Authorization", "Bearer " + employee.getAccessToken() + "");
-                APIResponse = OkHttpUtils.upLoadFile(url, headersParams, bodyParams, name, filePath, fileMediaType);
-                return APIResponse.getBody();
+                apiResponse = OkHttpUtils.upLoadFile(url, headersParams, bodyParams, name, filePath, fileMediaType);
+                return apiResponse.getBody();
             case HttpStatus.GATEWAY_TIMEOUT_504:
+                throw new HttpStatusException(code,apiResponse.getBody());
             case HttpStatus.BAD_GATEWAY_502:
-                APIResponse = APIResponse = OkHttpUtils.upLoadFile(url, headersParams, bodyParams, name, filePath, fileMediaType);
-                return APIResponse.getBody();
+                apiResponse = OkHttpUtils.upLoadFile(url, headersParams, bodyParams, name, filePath, fileMediaType);
+                throw new HttpStatusException(code,apiResponse.getBody());
             default:
                 log.info("未知错误，还需定位");
         }
-
         if (HttpStatus.BAD_REQUEST_400 == code && res.contains("baseRequest speed is too fast")) {
-            APIResponse = OkHttpUtils.upLoadFile(url, headersParams, bodyParams, name, filePath, fileMediaType);
-            res = APIResponse.getBody();
+            apiResponse = OkHttpUtils.upLoadFile(url, headersParams, bodyParams, name, filePath, fileMediaType);
+            res = apiResponse.getBody();
         }
+        isTimeOUT(apiResponse);
         return res;
 
     }
@@ -322,9 +329,9 @@ public class BaseRequest {
      * @throws HttpStatusException
      */
     public int doGetStatusCode(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, Employee employee) throws HttpStatusException {
-        APIResponse APIResponse = null;
-        APIResponse = OkHttpUtils.get(url, headersParams, urlMapParams);
-        return APIResponse.getStatusCode();
+        APIResponse apiResponse = null;
+        apiResponse = OkHttpUtils.get(url, headersParams, urlMapParams);
+        return apiResponse.getStatusCode();
     }
 
     /**
@@ -340,9 +347,9 @@ public class BaseRequest {
      * @throws HttpStatusException
      */
     public int getPostStatusCode(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, String jsonBody, Map<String, String> bodyParams, Employee employee) throws HttpStatusException {
-        APIResponse APIResponse = null;
-        APIResponse = OkHttpUtils.post(url, headersParams, urlMapParams, jsonBody, bodyParams);
-        return APIResponse.getStatusCode();
+        APIResponse apiResponse = null;
+        apiResponse = OkHttpUtils.post(url, headersParams, urlMapParams, jsonBody, bodyParams);
+        return apiResponse.getStatusCode();
     }
 
     /**
@@ -357,9 +364,9 @@ public class BaseRequest {
      * @throws HttpStatusException
      */
     public int getDeleteStatusCode(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, JsonObject jsonbody, Employee employee) throws HttpStatusException {
-        APIResponse APIResponse = null;
-        APIResponse = OkHttpUtils.delete(url, headersParams, urlMapParams, jsonbody);
-        return APIResponse.getStatusCode();
+        APIResponse apiResponse = null;
+        apiResponse = OkHttpUtils.delete(url, headersParams, urlMapParams, jsonbody);
+        return apiResponse.getStatusCode();
     }
 
     /**
@@ -375,9 +382,21 @@ public class BaseRequest {
      * @throws HttpStatusException
      */
     public int getPutStatusCode(String url, Map<String, String> headersParams, Map<String, String> urlMapParams, String jsonbody, Map<String, String> bodyParams, Employee employee) throws HttpStatusException {
-        APIResponse APIResponse = null;
-        APIResponse = OkHttpUtils.put(url, headersParams, urlMapParams, jsonbody, bodyParams);
-        return APIResponse.getStatusCode();
+        APIResponse apiResponse = null;
+        apiResponse = OkHttpUtils.put(url, headersParams, urlMapParams, jsonbody, bodyParams);
+        return apiResponse.getStatusCode();
+    }
+
+    /**
+     * 检查请求的时间
+     * @param apiResponse
+     */
+    public void isTimeOUT(APIResponse apiResponse){
+        long time = apiResponse.getTime();
+        if(time>6000) {
+            log.info("响应时间为:{}ms,spanId为:{}",time,apiResponse.getSpanId());
+            throw new RuntimeException("接口响应慢");
+        }
     }
 
 }

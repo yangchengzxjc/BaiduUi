@@ -211,53 +211,171 @@ public class EmployeeManage extends BaseTest {
         assert employeeManagePage.editEmployee(employee,editEmployeeID,infraEmployee).toString().contains("fullName");
     }
 
-    @DataProvider(name = "CardError01")
-    public static Object[][] addCardError() {
+    @DataProvider(name = "CardError01") //姓名校验
+    public static Object[][] addCardError01() {
         return new Object[][] {
-                {CardType.PASSPORT,"护照","huzhao",true},
-                {CardType.MAINLAND,"台胞证","taibaozheng",true},
-                {CardType.HOME_RETURN_PERMIT,"回乡证","huixiangzheng",true},
-                {CardType.HONG_KONG,"港澳通行证","gangaotongxingzheng",true},
-                {CardType.PERMANENT_RESIDENCE,"外国人永久居留身份证","waiguorenyongjiujuliuzheng",true},
-                {CardType.TRAVEL,"旅行证","lvxingzheng",true},
-                {CardType.TAIWAN,"台湾通行证","taiwantongxingzheng",true},
+                {CardType.PASSPORT,"护照","huzhao",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.MAINLAND,"台胞证","taibaozheng",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.HOME_RETURN_PERMIT,"回乡证","huixiangzheng",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.HONG_KONG,"港澳通行证","gangaotongxingzheng",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.PERMANENT_RESIDENCE,"外国人永久居留身份证","waiguorenyongjiujuliuzheng",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.TRAVEL,"旅行证","lvxingzheng",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.TAIWAN,"台湾通行证","taiwantongxingzheng",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.PASSPORT,"","huzhao",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.MAINLAND,"","taibaozheng",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.HOME_RETURN_PERMIT,"","huixiangzheng",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.HONG_KONG,"","gangaotongxingzheng",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.PERMANENT_RESIDENCE,"","waiguorenyongjiujuliuzheng",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.TRAVEL,"","lvxingzheng",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.TAIWAN,"","taiwantongxingzheng",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"}
+        };
+    }
+
+
+    @DataProvider(name = "CardError02")  //国籍校验
+    public static Object[][] addCardError02() {
+        return new Object[][] {
+                {CardType.CHINA_ID,"身份证","shenfenzheng",true,"0","2020-07-29T10:25:11+08:00","TW",false,"431225189080001","2022-07-29T10:25:11+08:00"},
+                {CardType.HONG_KONG,"gangaotongxingzheng","gangao",true,"0","2020-07-29T10:25:11+08:00","HK",false,"431225189080005","2022-07-29T10:25:11+08:00"},
+                {CardType.MILITARY,"军人证","junrenzheng",true,"0","2020-07-29T10:25:11+08:00","MO",false,"431225189080007","2022-07-29T10:25:11+08:00"},
+                {CardType.TRAVEL,"lvxingzheng","lvxingzheng",true,"0","2020-07-29T10:25:11+08:00","MO",false,"431225189080008","2022-07-29T10:25:11+08:00"},
+                {CardType.TAIWAN,"taiwantongxingzheng","taiwan",true,"0","2020-07-29T10:25:11+08:00","MO",false,"431225189080009","2022-07-29T10:25:11+08:00"}
+        };
+    }
+
+    @DataProvider(name = "CardError03")  //姓名必填校验
+    public static Object[][] addCardError03() {
+        return new Object[][] {
+                {CardType.PASSPORT,"huzhao","",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.MAINLAND,"taibaozheng","",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.HOME_RETURN_PERMIT,"huixiangzheng","",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.HONG_KONG,"gangaotongxingzheng","",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.PERMANENT_RESIDENCE,"waiguorenyongjiujuliuzheng","",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.TRAVEL,"lvxingzheng","",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.TAIWAN,"taiwantongxingzheng","",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189087654","2022-07-29T10:25:11+08:00"},
+                {CardType.CHINA_ID,"身份证","",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189080001","2022-07-29T10:25:11+08:00"},
+                {CardType.MILITARY,"军人证","",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189080007","2022-07-29T10:25:11+08:00"}
         };
     }
 
     @DataProvider(name = "Card")
     public static Object[][] addCard() {
         return new Object[][] {
-                {CardType.CHINA_ID,"身份证","shenfenzheng",true},
-                {CardType.PASSPORT,"huzhao","huzhao",true},
-                {CardType.MAINLAND,"taibaozheng","taibaozheng",true},
-                {CardType.HOME_RETURN_PERMIT,"huixiangzheng","huixiangzheng",true},
-                {CardType.HONG_KONG,"gangaotongxingzheng","gangao",true},
-                {CardType.PERMANENT_RESIDENCE,"yongjiujuliuzheng","waiguoren",true},
-                {CardType.MILITARY,"军人证","junrenzheng",true},
-                {CardType.TRAVEL,"旅行证","lvxingzheng",true},
-                {CardType.TAIWAN,"taiwantongxingzheng","taiwan",true},
+                {CardType.CHINA_ID,"身份证","shenfenzheng",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189080001","2022-07-29T10:25:11+08:00"},
+                {CardType.PASSPORT,"huzhao","huzhao",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189080002","2022-07-29T10:25:11+08:00"},
+                {CardType.MAINLAND,"taibaozheng","taibaozheng",true,"0","2020-07-29T10:25:11+08:00","TW",false,"431225189080003","2022-07-29T10:25:11+08:00"},
+                //回乡证 MO HK
+                {CardType.HOME_RETURN_PERMIT,"huixiangzheng","huixiangzheng",true,"0","2020-07-29T10:25:11+08:00","HK",false,"431225189080004","2022-07-29T10:25:11+08:00"},
+                {CardType.HONG_KONG,"gangaotongxingzheng","gangao",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189080005","2022-07-29T10:25:11+08:00"},
+                {CardType.PERMANENT_RESIDENCE,"yongjiujuliuzheng","waiguoren",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189080006","2022-07-29T10:25:11+08:00"},
+                {CardType.MILITARY,"军人证","junrenzheng",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189080007","2022-07-29T10:25:11+08:00"},
+                {CardType.TRAVEL,"lvxingzheng","lvxingzheng",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189080008","2022-07-29T10:25:11+08:00"},
+                {CardType.TAIWAN,"taiwantongxingzheng","taiwan",true,"0","2020-07-29T10:25:11+08:00","CN",false,"431225189080009","2022-07-29T10:25:11+08:00"}
         };
     }
 
-    @Test(description = "异常新增证件，包含中文",dataProvider = "CardError01")
-    public void addEmployeeCard01(CardType cardType,String firstName,String lastName,boolean enabled) throws HttpStatusException {
+    @Test(description = "异常新增证件，包含中文或名为空",dataProvider = "CardError01")
+    public void addEmployeeCard01(CardType cardType,String firstName,String lastName,boolean enabled,String gender,
+                                  String birthday,String nationalityCode,Boolean defaultCard, String cardNo,
+                                  String cardExpiredTime) throws HttpStatusException {
         //员工扩展字段
         EmployeeExtendComponent component =new EmployeeExtendComponent();
         component.setCustList("hong888");
         component.setText("1");
-        JsonObject object = employeeManagePage.addUserCard(employee,editEmployeeUserOid,cardType,firstName,lastName,enabled);
+        JsonObject object = employeeManagePage.addUserCard(employee,editEmployeeUserOid,cardType,firstName,lastName,enabled,
+                gender,birthday,nationalityCode,defaultCard,cardNo,cardExpiredTime);
         String message = object.get("message").getAsString();
         String errorCode = object.get("errorCode").getAsString();
         Assert.assertEquals(message,"护照、台胞证、回乡证、港澳通行证、台湾通行证、旅行证、外国人永久居留身份证的姓和名只能为英文字母（包括大小写）、“.”  、 “_”");
         Assert.assertEquals(errorCode,"13842@CONTACT_CARD_ERROR_005");
     }
 
-    @Test(description = "正常新增证件",dataProvider = "Card")
-    public void addEmployeeCard02(CardType cardType,String firstName,String lastName,boolean enabled) throws HttpStatusException {
+    @Test(description = "异常新增证件，国籍匹配不正确",dataProvider = "CardError02")
+    public void addEmployeeCard02(CardType cardType,String firstName,String lastName,boolean enabled,String gender,
+                                  String birthday,String nationalityCode,Boolean defaultCard, String cardNo,
+                                  String cardExpiredTime) throws HttpStatusException {
         //员工扩展字段
         EmployeeExtendComponent component =new EmployeeExtendComponent();
         component.setCustList("hong888");
         component.setText("1");
-        employeeManagePage.addUserCard(employee,editEmployeeUserOid,cardType,firstName,lastName,enabled);
+        JsonObject object = employeeManagePage.addUserCard(employee,editEmployeeUserOid,cardType,firstName,lastName,enabled,
+                gender,birthday,nationalityCode,defaultCard,cardNo,cardExpiredTime);
+        String message = object.get("message").getAsString();
+        String errorCode = object.get("errorCode").getAsString();
+        Assert.assertEquals(message,"身份证,军人证,台湾通行证,港澳通行证,旅行证国籍只能为中国大陆");
+        Assert.assertEquals(errorCode,"CONTACT_CARD_ERROR_001");
+    }
+
+    @Test(description = "异常新增证件，国籍不存在")
+    public void addEmployeeCard03() throws HttpStatusException {
+        //员工扩展字段
+        EmployeeExtendComponent component =new EmployeeExtendComponent();
+        component.setCustList("hong888");
+        component.setText("1");
+        JsonObject object = employeeManagePage.addUserCard(employee,editEmployeeUserOid,CardType.PASSPORT,"huzhao",
+                "huzhao",true,"0","2020-07-29T10:25:11+08:00",
+                "Q1",false,"431225189080002","2022-07-29T10:25:11+08:00");
+        String message = object.get("message").getAsString();
+        String errorCode = object.get("errorCode").getAsString();
+        Assert.assertEquals(message,"国籍编码不存在");
+        Assert.assertEquals(errorCode,"250009");
+    }
+
+    @Test(description = "异常新增证件，台胞证国籍只能为中国台湾")
+    public void addEmployeeCard04() throws HttpStatusException {
+        //员工扩展字段
+        EmployeeExtendComponent component =new EmployeeExtendComponent();
+        component.setCustList("hong888");
+        component.setText("1");
+        JsonObject object = employeeManagePage.addUserCard(employee,editEmployeeUserOid,CardType.MAINLAND,"taibaozheng",
+                "taibaozheng",true,"0","2020-07-29T10:25:11+08:00","CN",
+                false,"431225189080003","2022-07-29T10:25:11+08:00");
+        String message = object.get("message").getAsString();
+        String errorCode = object.get("errorCode").getAsString();
+        Assert.assertEquals(message,"台胞证国籍只能为中国台湾");
+        Assert.assertEquals(errorCode,"CONTACT_CARD_ERROR_002");
+    }
+
+    @Test(description = "异常新增证件，回乡证国籍只能为中国香港和中国澳门")
+    public void addEmployeeCard05() throws HttpStatusException {
+        //员工扩展字段
+        EmployeeExtendComponent component =new EmployeeExtendComponent();
+        component.setCustList("hong888");
+        component.setText("1");
+        JsonObject object = employeeManagePage.addUserCard(employee,editEmployeeUserOid,CardType.HOME_RETURN_PERMIT,"huixiangzheng",
+                "huixiangzheng",true,"0","2020-07-29T10:25:11+08:00","CN",
+                false,"431225189080004","2022-07-29T10:25:11+08:00");
+        String message = object.get("message").getAsString();
+        String errorCode = object.get("errorCode").getAsString();
+        Assert.assertEquals(message,"回乡证国籍只能为中国香港和中国澳门");
+        Assert.assertEquals(errorCode,"CONTACT_CARD_ERROR_003");
+    }
+
+    @Test(description = "异常新增证件，国籍匹配不正确",dataProvider = "CardError03")
+    public void addEmployeeCard06(CardType cardType,String firstName,String lastName,boolean enabled,String gender,
+                                  String birthday,String nationalityCode,Boolean defaultCard, String cardNo,
+                                  String cardExpiredTime) throws HttpStatusException {
+        //员工扩展字段
+        EmployeeExtendComponent component =new EmployeeExtendComponent();
+        component.setCustList("hong888");
+        component.setText("1");
+        JsonObject object = employeeManagePage.addUserCard(employee,editEmployeeUserOid,cardType,firstName,lastName,enabled,
+                gender,birthday,nationalityCode,defaultCard,cardNo,cardExpiredTime);
+        String message = object.get("message").getAsString();
+        String errorCode = object.get("errorCode").getAsString();
+        Assert.assertEquals(message,"身份证,军人证姓名不能为空,其它证件姓不能为空");
+        Assert.assertEquals(errorCode,"250004");
+    }
+
+    @Test(description = "正常新增证件",dataProvider = "Card")
+    public void addEmployeeCard07(CardType cardType,String firstName,String lastName,boolean enabled,String gender,
+                                  String birthday,String nationalityCode,Boolean defaultCard, String cardNo,
+                                  String cardExpiredTime) throws HttpStatusException {
+        //员工扩展字段
+        EmployeeExtendComponent component =new EmployeeExtendComponent();
+        component.setCustList("hong888");
+        component.setText("1");
+        assert employeeManagePage.addUserCard(employee,editEmployeeUserOid,cardType,firstName,lastName,enabled,
+                gender,birthday,nationalityCode,defaultCard,cardNo,cardExpiredTime).toString().contains(editEmployeeUserOid);
     }
 }

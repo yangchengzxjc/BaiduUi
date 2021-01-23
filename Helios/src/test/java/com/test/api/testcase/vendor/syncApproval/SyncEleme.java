@@ -82,7 +82,7 @@ public class SyncEleme extends BaseTest {
         component.setParticipant(array.toString());
 
         // 保存申请单 拿到申请单oid
-        String applicationOID = travelApplication.createTravelApplication(employee, formName, component).get("applicationOID");
+        String applicationOID = travelApplication.createTravelApplication(employee, formName, component).getReportOID();
 
         //添加用餐行程
         ArrayList<DiningItinerary> diningItineraries = new ArrayList<>();

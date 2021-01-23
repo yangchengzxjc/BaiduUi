@@ -15,6 +15,7 @@ import com.hand.basicObject.supplierObject.employeeInfoDto.UserCardInfoEntity;
 import com.hand.basicConstant.TmcChannel;
 import com.hand.utils.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.matcher.ElementMatcher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -468,6 +469,29 @@ public class InfraStructure {
      */
     public String getCompanyCode(Employee employee,String companyId) throws HttpStatusException {
         return infraStructureApi.companyDetail(employee,companyId).get("companyCode").getAsString();
+    }
+
+    /**
+     * 外部接口接口回调设置全局设置
+     * @param employee
+     * @param enable
+     * @throws HttpStatusException
+     */
+    public void callBackSetting(Employee employee,boolean enable) throws HttpStatusException {
+        infraStructureApi.rollbackConfig(employee,enable);
+    }
+
+    /**
+     * 修改回调设置
+     * @param employee
+     * @throws HttpStatusException
+     */
+    public void callBackConfig(Employee employee,boolean isEnabled) throws HttpStatusException {
+        JsonArray callBack = infraStructureApi.getCallBackConfig(employee);
+        for(int i =0; i<callBack.size();i++){
+            callBack.get(i).getAsJsonObject().addProperty("isEnabled",isEnabled);
+            infraStructureApi.pushCallBack(employee,callBack.get(i).getAsJsonObject());
+        }
     }
 
 }

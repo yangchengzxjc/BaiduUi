@@ -23,4 +23,12 @@ public class HeaderKey {
     public static final String REIMB_STANDARD = "reimbursement-standard";
     //财务审核
     public static final String FINANCE_AUDIT = "finance-audit";
+    //发票管控
+    public static final String INVOICE_CONTROL = "invoice-control";
+    //发票生成费用
+    public static final String INVOICE_TO_COST = "invoice-to-cost";
+    //回调设置
+    public static final String CALLBACK_SETTING = "callback-setting";
+    //价税分离
+    public static final String PRICE_TAX_SPERATION_RULE = "price-tax-seperation-rule";
 }

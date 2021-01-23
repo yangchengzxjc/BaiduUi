@@ -16,7 +16,6 @@ import com.test.api.method.ReimbStandard;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 /**
@@ -41,7 +40,7 @@ public class ExpenseReportPage {
      * @return
      * @throws HttpStatusException
      */
-    public HashMap<String,String> setDailyReport(Employee employee, String endData, String formName, String []participant) throws HttpStatusException {
+    public FormDetail setDailyReport(Employee employee, String endData, String formName, String []participant) throws HttpStatusException {
         //新建报销单
         FormComponent component=new FormComponent();
         component.setCompany(employee.getCompanyOID());
@@ -59,7 +58,7 @@ public class ExpenseReportPage {
      * @return
      * @throws HttpStatusException
      */
-    public HashMap<String,String> setDailyReport(Employee employee,String formName, String []participant) throws HttpStatusException {
+    public String setDailyReport(Employee employee,String formName, String []participant) throws HttpStatusException {
         //新建报销单
         FormComponent component=new FormComponent();
         component.setCompany(employee.getCompanyOID());
@@ -73,7 +72,7 @@ public class ExpenseReportPage {
         }
         component.setParticipant(participant);
         component.setCause("invoice control");
-        return expenseReport.createExpenseReport(employee,formName,component);
+        return expenseReport.createExpenseReport(employee,formName,component).getReportOID();
     }
 
     /**
@@ -99,6 +98,18 @@ public class ExpenseReportPage {
     }
 
     /**
+     * 新建费用-控件无值的费用
+     * @param employee
+     * @param expenseName
+     * @param expenseReportOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public String setInvoice(Employee employee,String expenseName,String expenseReportOID,double amount) throws HttpStatusException {
+        return expenseReportInvoice.createExpenseInvoice(employee,new InvoiceComponent(),expenseName,expenseReportOID,amount,new JsonArray()).get("invoiceOID");
+    }
+
+    /**
      * 新建机票费用包含舱等信息
      * @param employee
      * @param expenseName
@@ -121,7 +132,7 @@ public class ExpenseReportPage {
             cabinArray = reimbStandard.getCustomEnumerationItems(employee,"舱等",cabin);
         }
         if(expenseName.equals("ship-autotest")){
-            cabinArray = reimbStandard.getCustomEnumerationItems(employee,"",cabin);
+            cabinArray = reimbStandard.getCustomEnumerationItems(employee,"座次",cabin);
         }
         if(cabinArray.size()!=0){
             invoiceComponent.setCabin(cabinArray.get(0).getAsJsonObject().get("value").getAsString());
@@ -137,8 +148,6 @@ public class ExpenseReportPage {
         invoiceComponent.setParticipants(participants);
         return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,250.00,new JsonArray()).get("invoiceOID");
     }
-
-
 
     /**
      * 新建费用  不参与分摊   开始结束日期控件不为空
@@ -184,6 +193,42 @@ public class ExpenseReportPage {
         return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,200.00,new JsonArray()).get("invoiceOID");
     }
 
+
+    /**
+     * 新建费用 费用中包含发票识别
+     * @param employee
+     * @param expenseName
+     * @param expenseReportOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public FormDetail setReceiptInvoice(Employee employee,String expenseName,String expenseReportOID,String receiptPath) throws HttpStatusException {
+        ExpenseReportComponent expenseReportComponent =new ExpenseReportComponent();
+        ExpenseReportInvoice expenseReportInvoice = new ExpenseReportInvoice();
+        String cityCode =expenseReportComponent.getCityCode(employee,"西安");
+        InvoiceComponent invoiceComponent =new InvoiceComponent();
+        invoiceComponent.setCity(cityCode);
+        //发票查验
+        JsonObject receiptInfo = expenseReportInvoice.getOCRReceiptVerifyInfo(employee, receiptPath).getAsJsonObject("invoiceInfo");
+        return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,5.00,receiptInfo);
+    }
+
+    /**
+     * 新建费用 费用中包含发票识别
+     * @param employee
+     * @param expenseName
+     * @param expenseReportOID
+     * @return
+     * @throws HttpStatusException
+     */
+    public FormDetail setHandReceiptInvoice(Employee employee,String expenseName,String expenseReportOID,String receiptPath) throws HttpStatusException {
+        ExpenseReportInvoice expenseReportInvoice = new ExpenseReportInvoice();
+        //发票查验
+        JsonObject receiptInfo = expenseReportInvoice.getReceptVerify(employee, receiptPath);
+        log.info("发票查验信息:{}",receiptInfo);
+        return expenseReportInvoice.createExpenseInvoice(employee,new InvoiceComponent(),expenseName,expenseReportOID,10.00,receiptInfo);
+    }
+
     /**
      * 新建费用  不参与分摊  替票开关开启
      * @param employee
@@ -218,7 +263,11 @@ public class ExpenseReportPage {
         ArrayList<String> applicationOIDs =new ArrayList<>();
         applicationOIDs.add(applicationOID);
         //  参与人
-        component.setParticipant(expenseReport.getValueFromApplication(employee,applicationOIDs,"参与人员"));
+        component.setParticipant(expenseReport.getValueFromApplication(employee,applicationOIDs,"参与人员",formName));
+        //开始结束日期
+        component.setStartDate(expenseReport.getValueFromApplication(employee,applicationOIDs,"开始日期",formName));
+        //结束日期
+        component.setEndDate(expenseReport.getValueFromApplication(employee,applicationOIDs,"结束日期",formName));
         return expenseReport.createTravelExpenseReport(employee,false,formName,component);
     }
 
@@ -252,4 +301,31 @@ public class ExpenseReportPage {
         loanBillComponent.setPlanedRepaymentDate(UTCTime.getBeijingDate(1));
         expenseReport.createLoanLine(employee,formName,loanBillComponent,isOneself);
     }
+
+    /**
+     * 创建费用 陪同人数 招待人数 开始结束日期控件
+     * @param employee
+     * @param expenseName
+     * @param expenseReportOID
+     * @param accompanying 陪同人数
+     * @param hospitalized 招待人数
+     * @param participants
+     * @param amount
+     * @return
+     * @throws HttpStatusException
+     */
+    public String setInvoice(Employee employee,String expenseName,String expenseReportOID,int accompanying,int hospitalized,Object participants,int amount) throws HttpStatusException {
+        ExpenseReportComponent expenseReportComponent =new ExpenseReportComponent();
+        InvoiceComponent invoiceComponent =new InvoiceComponent();
+        invoiceComponent.setParticipants(participants);
+        invoiceComponent.setAccompanying(accompanying);
+        invoiceComponent.setHospitalized(hospitalized);
+        JsonObject startAndEndDate = new JsonObject();
+        startAndEndDate.addProperty("startDate",UTCTime.getFormStartDate(0));
+        startAndEndDate.addProperty("endDate",UTCTime.getFormDateEnd(2));
+        startAndEndDate.addProperty("duration",2);
+        invoiceComponent.setStartAndEndData(startAndEndDate.toString());
+        return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,amount,new JsonArray()).get("invoiceOID");
+    }
+
 }

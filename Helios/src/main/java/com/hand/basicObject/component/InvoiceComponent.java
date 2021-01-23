@@ -64,5 +64,8 @@ public class InvoiceComponent {
     public InvoiceComponent(){
 
     }
-
+    //陪同人数
+    int accompanying;
+    //招待人数
+    int hospitalized;
 }

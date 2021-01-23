@@ -1,5 +1,6 @@
 package com.hand.api;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -7,9 +8,12 @@ import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.supplierObject.SettlementBody;
 import com.hand.basicConstant.ApiPath;
+import com.hand.basicObject.supplierObject.eleme.ElemeOrderReportRequest;
 import com.hand.utils.Md5Util;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Hex;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -231,25 +235,27 @@ public class VendorApi extends BaseRequest {
 
     /**
      * 消费平台SSO 单点登录
+     *
      * @param employee
      * @param supplierOID
      * @return
      */
-    public String vndSSO(Employee employee,String supplierOID,String direction,String pageType) throws HttpStatusException {
-        String url =employee.getEnvironment().getUrl()+ApiPath.SUPPLIER_SSO;
-        Map<String,String> headerParam =new HashMap<>();
-        headerParam.put("Authorization", "Bearer "+employee.getAccessToken()+"");
+    public String vndSSO(Employee employee, String supplierOID, String direction, String pageType) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.SUPPLIER_SSO;
+        Map<String, String> headerParam = new HashMap<>();
+        headerParam.put("Authorization", "Bearer " + employee.getAccessToken() + "");
         Map<String, String> datas = new HashMap<String, String>();
-        datas.put("supplierOID",supplierOID);
-        datas.put("direction",direction);
-        datas.put("pageType",pageType);
-        datas.put("access_token",employee.getAccessToken());
-        String res = doGet(url,headerParam,datas,employee);
+        datas.put("supplierOID", supplierOID);
+        datas.put("direction", direction);
+        datas.put("pageType", pageType);
+        datas.put("access_token", employee.getAccessToken());
+        String res = doGet(url, headerParam, datas, employee);
         return res;
     }
 
     /**
      * 消费平台SSO 单点登录  状态码
+     *
      * @param employee
      * @param supplierOID
      * @param direction
@@ -257,15 +263,45 @@ public class VendorApi extends BaseRequest {
      * @return
      * @throws HttpStatusException
      */
-    public int ssoCode(Employee employee,String supplierOID,String direction,String pageType) throws HttpStatusException {
-        String url =employee.getEnvironment().getUrl()+ApiPath.SUPPLIER_SSO;
-        Map<String,String> headerParam =new HashMap<>();
-        headerParam.put("Authorization", "Bearer "+employee.getAccessToken()+"");
+    public int ssoCode(Employee employee, String supplierOID, String direction, String pageType) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl() + ApiPath.SUPPLIER_SSO;
+        Map<String, String> headerParam = new HashMap<>();
+        headerParam.put("Authorization", "Bearer " + employee.getAccessToken() + "");
         Map<String, String> datas = new HashMap<String, String>();
-        datas.put("supplierOID",supplierOID);
-        datas.put("direction",direction);
-        datas.put("pageType",pageType);
-        datas.put("access_token",employee.getAccessToken());
-        return doGetStatusCode(url,headerParam,datas,employee);
+        datas.put("supplierOID", supplierOID);
+        datas.put("direction", direction);
+        datas.put("pageType", pageType);
+        datas.put("access_token", employee.getAccessToken());
+        return doGetStatusCode(url, headerParam, datas, employee);
+    }
+
+    /**
+     * 饿了么 报备接口（对外提供）
+     * @param employee
+     * @param elemeOrderReportRequest
+     * @return
+     * @throws HttpStatusException
+     */
+    public String elemeOrderReport(Employee employee, ElemeOrderReportRequest elemeOrderReportRequest) throws HttpStatusException {
+
+        // url
+        String url = employee.getEnvironment().getApiUrl() + ApiPath.ELEME_ORDER_REPORT;
+        log.info("url: {}", url);
+
+        // header
+        Map<String, String> headerParam = new HashMap<>();
+        headerParam.put("consumerNo", elemeOrderReportRequest.getBno());
+        long timeStamp = new Date().getTime();
+        headerParam.put("timeStamp", Long.toString(timeStamp));
+        String consumerSecret = "";
+        String sign = Md5Util.getMd5(Hex.encodeHexString(new Gson().toJson(elemeOrderReportRequest).getBytes()) + consumerSecret + timeStamp);
+        headerParam.put("sign", sign);
+        log.info("header: {}", headerParam);
+
+        // body
+        String bodyString = Hex.encodeHexString(new Gson().toJson(elemeOrderReportRequest).getBytes());
+        log.info("body: {}", bodyString);
+
+        return doPost(url, headerParam, null, bodyString,null, employee);
     }
 }

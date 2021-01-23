@@ -12,6 +12,8 @@ import java.math.BigDecimal;
  * @Author peng.zhang
  * @Date 2020/6/23
  * @Version 1.0
+ *
+ * 表单控件
  **/
 @Data
 @AllArgsConstructor

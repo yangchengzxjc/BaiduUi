@@ -181,8 +181,6 @@ assertArrayEquals([String message], expectedArray, resultArray)
 - @DataProvider 注解
 > 被注解的方法可以接收 无参(直接返回数据)、对象、方法 Method 、上下文 ITestContext 
 ```java
-package roger.testng;
-
 import java.util.Random;
 
 import org.testng.ITestContext;
@@ -239,12 +237,32 @@ public class TestDataProviderITestContext {
     - api testcase 测试用例
 
 ### 用例编写步骤
-- 定义接口路径：Helios/src/main/java/com/hand/basicconstant/ApiPath.java
+- 定义接口路径(可选-定义Object) Helios/src/main/java/com/hand/basicconstant/ApiPath.java
 - 实现接口请求：Helios/src/main/java/com/hand/api/VendorApi.java
-- 公共测试方法类：Helios/src/test/java/com/test/api/method/Vendor.java
+- 业务层-测试方法类：Helios/src/test/java/com/test/api/method/Vendor.java
 - 编写测试case：Helios/src/test/java/com/test/api/testcase/vendor/VendorSSOTest.java
 - 用例集组织case：Helios/vendor_testng.xml
+
+## Gson
+```
+//String、JsonObject、JavaBean 互相转换
+    User user = new Gson().fromJson(jsonObject, User.class);
+    User user = new Gson().fromJson(string, User.class);
+    String string = new Gson().toJson(user);
+    JsonObject jsonObject = new Gson().toJsonTree(user).getAsJsonObject(); 
+    JsonObject jsonObject = new JsonParser().parse(string).getAsJsonObject();
+//String、JsonArray、List互相转换
+    List<User> userList = new Gson.fromJson(string, new TypeToken<List<User>>() {}.getType()); 
+    List<User> userList = new Gson.fromJson(jsonArray, new TypeToken<List<User>>() {}.getType()); 
+    String string = new Gson().toJson(userList); 
+    JsonArray jsonArray = new Gson().toJsonTree(userList, new TypeToken<List<User>>() {}.getType()).getAsJsonArray();
+    JsonArray jsonArray = new JsonParser().parse(string).getAsJsonArray();
+```
 
 ## toDo
 - 请求方法封装，log增加请求request header、请求参数、response header、code、返回结果 DONE
 - 测试报告增加请求路径 参数 返回结果输出 → 新增监听类`ExtentTestNGIReporterListener` DONE
+- 多个账号运行场景（如员工提交单据，领导审批，财务审核涉及三个用户）
+- 封装请求和响应的结构对象 
+- 用例执行不通过时，报告中增加日志
+

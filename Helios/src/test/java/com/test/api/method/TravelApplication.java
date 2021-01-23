@@ -1,14 +1,17 @@
 package com.test.api.method;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.hand.api.ApplicationApi;
 import com.hand.api.ExpenseApi;
 import com.hand.api.ReimbursementApi;
 import com.hand.baseMethod.HttpStatusException;
 import com.hand.basicObject.Employee;
 import com.hand.basicObject.component.FormDetail;
+import com.hand.basicObject.itinerary.DiningItinerary;
 import com.hand.basicObject.itinerary.FlightItinerary;
 import com.hand.basicObject.component.FormComponent;
 import com.hand.basicObject.itinerary.HotelItinerary;
@@ -20,6 +23,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author peng.zhang
@@ -41,14 +46,15 @@ public class TravelApplication {
 
     /**
      * 返回差旅申请单的表单的formOID
+     *
      * @param employee
      * @param formName
      * @return
      * @throws HttpStatusException
      */
-    public String applicationFormOID(Employee employee,String formName) throws HttpStatusException {
-        JsonArray array = applicationApi.getAvailableform(employee,employee.getJobId());
-        return GsonUtil.getJsonValue(array,"formName",formName,"formOID");
+    public String applicationFormOID(Employee employee, String formName) throws HttpStatusException {
+        JsonArray array = applicationApi.getAvailableform(employee, employee.getJobId());
+        return GsonUtil.getJsonValue(array, "formName", formName, "formOID");
     }
 
     /**
@@ -66,6 +72,40 @@ public class TravelApplication {
         form.setBusinessCode(jsonObject.get("businessCode").getAsString());
         log.info("businessCode:{}",jsonObject.get("businessCode").getAsString());
         return form;
+    }
+
+    /**
+     * 获取用餐场景 ID
+     * @param employee
+     * @param formOID
+     * @param sceneName
+     * @return
+     * @throws HttpStatusException
+     */
+    public Long getDiningSceneId(Employee employee, String formOID, String sceneName) throws HttpStatusException {
+        // 查询表单用餐场景
+        JsonArray diningSceneDTOs = applicationApi.getFormDiningScene(employee, formOID);
+
+        // JsonArray to ArrayList
+        log.debug("diningSceneDTOs: {}", diningSceneDTOs);
+        List<JsonObject> diningSceneDTOList = new Gson().fromJson(diningSceneDTOs,
+                new TypeToken<List<JsonObject>>(){}.getType());
+
+        // filer 过滤 包含 sceneName的 diningSceneDTO
+        log.debug("diningSceneDTOList: {}", diningSceneDTOList);
+        List<JsonObject> diningSceneResult = diningSceneDTOList.stream()
+                .filter(diningSceneDTO -> diningSceneDTO.get("name").getAsString().contains(sceneName))
+                .collect(Collectors.toList());
+        log.debug("diningSceneResult: {}", diningSceneResult);
+
+        // 初始值 Long
+        Long diningSceneId;
+        if (diningSceneResult != null && !diningSceneResult.isEmpty()) {
+            diningSceneId = diningSceneResult.get(0).get("id").getAsLong();
+        } else {
+            throw new RuntimeException("用餐场景不存在，请检查！");
+        }
+        return diningSceneId;
     }
 
 
@@ -206,7 +246,11 @@ public class TravelApplication {
         if(itineraryInfo.get("HOTEL")!=null){
             applicationDetail.getAsJsonObject("travelApplication").addProperty("hotelBookingClerkOID",employee.getUserOID());
         }
-        return applicationApi.submitApplication(employee,applicationDetail);
+        // 用餐订票人
+        if (itineraryInfo.get("DINING") != null) {
+            applicationDetail.getAsJsonObject("travelApplication").addProperty("diningBookingClerkOID", employee.getUserOID());
+        }
+        return applicationApi.submitApplication(employee, applicationDetail);
     }
 
     /**
@@ -257,18 +301,20 @@ public class TravelApplication {
      * 申请单添加行程
      * @param employee
      * @param applicationOID
-     * @param t  使用泛型  根据实际类型来判断
+     * @param t              使用泛型  根据实际类型来判断
      * @throws HttpStatusException
      */
     public <E> void addItinerary(Employee employee, String applicationOID, ArrayList<E> t) throws HttpStatusException {
         if(t.size()==0){
             throw new RuntimeException("请添加至少一个行程");
-        }else if(t.get(0).getClass().equals(FlightItinerary.class)){
-            applicationApi.addFlightItinerary(employee,applicationOID,t);
-        }else if(t.get(0).getClass().equals(HotelItinerary.class)){
-            applicationApi.addHotelItinerary(employee,applicationOID,t);
-        }else if(t.get(0).getClass().equals(TrainItinerary.class)){
-            applicationApi.addTrainItinerary(employee,applicationOID,t);
+        } else if (t.get(0).getClass().equals(FlightItinerary.class)) {
+            applicationApi.addFlightItinerary(employee, applicationOID, t);
+        } else if (t.get(0).getClass().equals(HotelItinerary.class)) {
+            applicationApi.addHotelItinerary(employee, applicationOID, t);
+        } else if (t.get(0).getClass().equals(TrainItinerary.class)) {
+            applicationApi.addTrainItinerary(employee, applicationOID, t);
+        } else if (t.get(0).getClass().equals(DiningItinerary.class)) {
+            applicationApi.addDiningItineraay(employee, applicationOID, t);
         }
     }
 

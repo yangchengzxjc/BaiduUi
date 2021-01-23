@@ -7,13 +7,14 @@ import lombok.Getter;
 @Getter
 public enum TmcChannel {
 
-    DT("DT","supplyDTTripTmcService","9c7207b5-7807-42b0-86f9-3db6ccb723f6","","","","",""),
-    CIMCC("CIMCC","supplyCimccTMCService","8afc4c9e-a7ea-4de6-ab60-70669a5b91e8","cimccTMC","中集商旅","cimccTMC","200428140254184788","0ab0ca2870a369b96132ebf0b11c290b"),
-    FY("FY","supplyFyAirTMCService","","","","","",""),
-    CTRIP("Ctrip","supplyCtripService","","","","","",""),
-    ZLS("ZLS","supplyOnTheWayTMCService","","","","","",""),
-    EHI("ehi","","","ehi","一嗨","ehi","200428140254184790","69c8658b898b6468d38a9cc68205afd6"),
-    AMEX("amex","","","amex","","amex","200428140254184795","3055d656f9feed61f69b368787762d05");
+    DT("DT", "supplyDTTripTmcService", "9c7207b5-7807-42b0-86f9-3db6ccb723f6", "", "", "", "", ""),
+    CIMCC("CIMCC", "supplyCimccTMCService", "8afc4c9e-a7ea-4de6-ab60-70669a5b91e8", "cimccTMC", "中集商旅", "cimccTMC", "200428140254184788", "0ab0ca2870a369b96132ebf0b11c290b"),
+    FY("FY", "supplyFyAirTMCService", "", "", "", "", "", ""),
+    CTRIP("Ctrip", "supplyCtripService", "", "", "", "", "", ""),
+    ZLS("ZLS", "supplyOnTheWayTMCService", "", "", "", "", "", ""),
+    EHI("ehi", "", "", "ehi", "一嗨", "ehi", "200428140254184790", "69c8658b898b6468d38a9cc68205afd6"),
+    AMEX("amex", "", "", "amex", "", "amex", "200428140254184795", "3055d656f9feed61f69b368787762d05"),
+    ELEME("eleme", "supplyElemeService", "", "", "饿了么", "", "", "");
 
     private String name;
     private String tmcChannel;

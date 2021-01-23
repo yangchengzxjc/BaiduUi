@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="消费商单点登录" parallel="tests" thread-count="1">
+<suite name="消费商平台监控" parallel="tests" thread-count="1">
 
 <!--    Jenkins定时构建用例 请勿随意修改！！！！     -->
 
@@ -12,6 +12,16 @@
     <test verbose="10" preserve-order="true" name="testSSO">
         <classes>
             <class name="com.test.api.testcase.vendor.VendorSSOTest"/>
+        </classes>
+    </test>
+
+    <test verbose="10" preserve-order="true" name="testZhenxuanHotel">
+        <classes>
+            <class name="com.test.api.testcase.vendor.zhenxuan.HotelTest">
+                <methods>
+                    <include name="testHotelSearchDefault"/>
+                </methods>
+            </class>
         </classes>
     </test>
 

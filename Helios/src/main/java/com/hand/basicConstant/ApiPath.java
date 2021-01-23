@@ -236,6 +236,8 @@ public class ApiPath {
         public static final String ADD_HOTEL_ITINERARY = "/api/travel/hotel/itinerary";
         //添加火车
         public static final String ADD_TRAIN_ININERARY = "/api/travel/train/itinerary";
+        // 添加用餐行程
+        public static final String ADD_DINING_ITINERARY = "/api/travel/dining/itinerary";
         //差旅申请单提交
         public static final String SUBMIT_APPLICATION = "/api/travel/applications/submit/v2";
         //费用申请单提交
@@ -273,6 +275,8 @@ public class ApiPath {
         public static final String SUBSIDY_RULE_DETAIL = "/api/travel/subsidies/rule";
         //差补表单详情
         public static final String FORM_DETAIL = "/api/custom/forms/%s/detail";
+        // @api {GET} /api/dining/scene/form/enable  查询表单可用的用餐场景
+        public static final String FORM_DINING_SCRNE = "/api/dining/scene/form/enable";
         //新建报销标准规则
         public static final String ADD_REIMB_STANDARD = "/api/expense/standard/rule";
         //获取费用类型
@@ -326,14 +330,6 @@ public class ApiPath {
         public static final String DepartmentDetail = "/api/departments/%s";
         //公司定义   公司详情
         public static final String COMPANYDetail = "/api/company/%s";
-        //平台sso登录
-        public static final String SSOLOGIN = "/sso";
-        //消费平台H5 SSO单点
-        public static final String SUPPLIER_SSO="/vendor-info-service/api/sso/common";
-        // 消费平台 web sso H5
-        public static final String SSO = "/vendor-info-service/api/sso";
-        // 消费平台 web sso 统一单点登录 web
-        public static final String SSO_COMMON = "/vendor-info-service/api/sso/common";
         //发票查验
         public static final String  RECEIPT_VERIFY = "/receipt/api/receipt/verify";
         //批量查验发票
@@ -393,6 +389,26 @@ public class ApiPath {
         //价税分离管控项查询
         public static final String CONFIG_FACTER = "/config/api/config/factor/%s/dataList";
         // 价税分离的
+        public static final String GET_enumerations = "/api/custom/enumerations/items/by/type";
+
+        // ============================== 消费平台 =======================================
+        // 平台sso登录
+        public static final String SSOLOGIN = "/sso";
+        // 消费平台H5 SSO单点
+        public static final String SUPPLIER_SSO="/vendor-info-service/api/sso/common";
+        // 消费平台 web sso H5
+        public static final String SSO = "/vendor-info-service/api/sso";
+        // 消费平台 web sso 统一单点登录 web
+        public static final String SSO_COMMON = "/vendor-info-service/api/sso/common";
+        // ============================== 消费平台 甄选 ===================================
+        // 酒店搜索
+        public static final String HOTEL_SEARCH = "/search/api/hotel/search";
+        // 酒店城市地图
+        public static final String HOTEL_MAP_PLACE = "/search/hotel/api/map/v2/place";
+        // =============================================================================
+        // ============================== 消费平台 饿了么 =================================
+        public static final String ELEME_ORDER_REPORT = "/eleme/api/order/orderReport";
+        // =============================================================================
 }
 
 

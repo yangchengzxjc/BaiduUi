@@ -3,7 +3,7 @@
 <suite name="Debug Test Suite" parallel="tests" thread-count="2">
 
     <!--    本地调试使用该脚本   -->
-    <parameter name="environment" value="uat"></parameter>
+    <parameter name="environment" value="stage"></parameter>
 
     <test verbose="10" preserve-order="true" name="debug">
         <parameter name="phoneNumber" value="14082978666"/>

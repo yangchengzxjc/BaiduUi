@@ -17,6 +17,7 @@ import com.test.api.method.ExpenseReport;
 import com.test.api.method.ExpenseReportInvoice;
 import com.test.api.method.ReimbStandard;
 import lombok.extern.slf4j.Slf4j;
+import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.lang.reflect.Array;
@@ -40,7 +41,7 @@ public class PeriodControlTest extends BaseTest {
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void beforeClass(@Optional("14082971222") String phoneNumber, @Optional("zp123456") String pwd, @Optional("stage") String env){
+    public void beforeClass(@Optional("14082971221") String phoneNumber, @Optional("zp123456") String pwd, @Optional("console") String env){
         employee = getEmployee(phoneNumber,pwd,env);
         reimbStandard =new ReimbStandard();
         map = new HashMap<>();
@@ -165,7 +166,7 @@ public class PeriodControlTest extends BaseTest {
         String date = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String label = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 250.00，超标：CNY 50.00。",rules.getMessage(),date,standardRulesItem.getAmount());
         log.info("标签:{}",label);
-        assert expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001",label);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"),label);
     }
 
     @Test(description = "规则配置：账套级-周期管控/每天-平均金额>基本标准")
@@ -192,7 +193,7 @@ public class PeriodControlTest extends BaseTest {
                 rules.getMessage(),date1,standardRulesItem.getAmount(),rules.getMessage(),date2,standardRulesItem.getAmount(),
                 rules.getMessage(),date1,standardRulesItem.getAmount(),rules.getMessage(),date2,standardRulesItem.getAmount());
         log.info("标签:{}",label);
-        assert expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001",label);
+        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"),label);
     }
 
     @AfterMethod

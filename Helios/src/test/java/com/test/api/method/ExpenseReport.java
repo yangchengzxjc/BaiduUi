@@ -470,7 +470,7 @@ public class ExpenseReport {
                 return "";
             }
         }else{
-            throw new RuntimeException("报销单不存在标签");
+            return "";
         }
     }
 

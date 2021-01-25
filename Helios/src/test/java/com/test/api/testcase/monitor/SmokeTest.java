@@ -47,7 +47,7 @@ public class SmokeTest extends BaseTest {
         //新建差旅申请单
         TravelApplicationPage travelApplicationPage =new TravelApplicationPage();
         ExpenseReportPage expenseReportPage = new ExpenseReportPage();
-        FormDetail traveformDetail = travelApplicationPage.setTravelApplication(employee,"差旅申请单-自动化测试",UTCTime.getUTCDateEnd(-2));
+        FormDetail traveformDetail = travelApplicationPage.setTravelApplication(employee,"差旅申请单",UTCTime.getUTCDateEnd(-2));
         if(environment.equals("console")){
             DButil.Business business = new DButil.Business();
             try {
@@ -59,11 +59,11 @@ public class SmokeTest extends BaseTest {
             Assert.assertEquals("TRAVEL_APPLICATION_SUBMIT",business.getApiCode());
         }
         //关联报销单
-        FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单-自动化测试",traveformDetail.getReportOID());
+        FormDetail formDetail = expenseReportPage.setTravelReport(employee,"差旅报销单",traveformDetail.getReportOID());
         // 新建费用
-        String invoiceOID1 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", formDetail.getReportOID(),UTCTime.getUtcTime(-2,0));
+        String invoiceOID1 = expenseReportPage.setInvoice(employee, "交通", formDetail.getReportOID(),UTCTime.getUtcTime(-2,0));
         //新建费用账本导入
-        String invoiceOID2 = expenseReportPage.setInvoice(employee, "自动化测试-报销标准", "",UTCTime.getUtcTime(-2,0));
+        String invoiceOID2 = expenseReportPage.setInvoice(employee, "交通", "",UTCTime.getUtcTime(-2,0));
         //导入费用
         ArrayList<String> invoices = new ArrayList<>();
         invoices.add(invoiceOID2);

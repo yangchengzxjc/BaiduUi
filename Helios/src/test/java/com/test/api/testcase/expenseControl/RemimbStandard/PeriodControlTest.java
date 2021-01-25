@@ -41,7 +41,7 @@ public class PeriodControlTest extends BaseTest {
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void beforeClass(@Optional("14082971221") String phoneNumber, @Optional("zp123456") String pwd, @Optional("console") String env){
+    public void beforeClass(@Optional("14082971222") String phoneNumber, @Optional("zp123456") String pwd, @Optional("stage") String env){
         employee = getEmployee(phoneNumber,pwd,env);
         reimbStandard =new ReimbStandard();
         map = new HashMap<>();
@@ -189,11 +189,17 @@ public class PeriodControlTest extends BaseTest {
         map.put("invoiceOID1",invoiceOID1);
         String date1 = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),0);
         String date2 = UTCTime.utcTOday(UTCTime.getUtcTime(0,0),1);
-        String label = String.format("员工0006 %s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 200.00，超标：CNY 100.00。1024bugfix员工0006 %s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 200.00，超标：CNY 100.00。1024bugfix%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 200.00，超标：CNY 100.00。1024bugfix%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 200.00，超标：CNY 100.00。",
+        String label1 = String.format("员工0006 %s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 200.00，超标：CNY 100.00。1024bugfix员工0006 %s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 200.00，超标：CNY 100.00。1024bugfix%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 200.00，超标：CNY 100.00。1024bugfix%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 200.00，超标：CNY 100.00。",
                 rules.getMessage(),date1,standardRulesItem.getAmount(),rules.getMessage(),date2,standardRulesItem.getAmount(),
                 rules.getMessage(),date1,standardRulesItem.getAmount(),rules.getMessage(),date2,standardRulesItem.getAmount());
-        log.info("标签:{}",label);
-        Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"),label);
+        String label2 = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 200.00，超标：CNY 100.00。1024bugfix%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 200.00，超标：CNY 100.00。1024bugfix员工0006 %s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 200.00，超标：CNY 100.00。1024bugfix员工0006 %s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 200.00，超标：CNY 100.00。",
+                rules.getMessage(),date1,standardRulesItem.getAmount(),rules.getMessage(),date2,standardRulesItem.getAmount(),
+                rules.getMessage(),date1,standardRulesItem.getAmount(),rules.getMessage(),date2,standardRulesItem.getAmount());
+        if(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001",label1)){
+            assert true;
+        }else{
+            Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"),label2);
+        }
     }
 
     @AfterMethod

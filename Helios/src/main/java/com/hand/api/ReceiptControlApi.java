@@ -267,7 +267,7 @@ public class ReceiptControlApi extends BaseRequest{
         JsonObject body = new JsonParser().parse(GsonUtil.objectToString(priceSeperationTax)).getAsJsonObject();
         HashMap<String,String> parm = new HashMap<>();
         parm.put("roleType","TENANT");
-        String res = doPost(url,getHeader(employee.getAccessToken(),HeaderKey.INVOICE_TO_COST,ResourceId.PRICE_TAX_SPERATION_RULE),parm,body.toString(),null,employee);
+        String res = doPost(url,getHeader(employee.getAccessToken(),HeaderKey.PRICE_TAX_SPERATION_RULE,ResourceId.PRICE_TAX_SPERATION_RULE),parm,body.toString(),null,employee);
         return new JsonParser().parse(res).getAsJsonObject();
     }
 
@@ -281,7 +281,7 @@ public class ReceiptControlApi extends BaseRequest{
         String url = employee.getEnvironment().getUrl()+ String.format(ApiPath.DELETE_SEPARATION_CONFIG,separationInvoiceOptId);
         HashMap<String,String> parm = new HashMap<>();
         parm.put("roleType","TENANT");
-        doDlete(url,getHeader(employee.getAccessToken(), HeaderKey.INVOICE_TO_COST),parm,new JsonObject(),employee);
+        doDlete(url,getHeader(employee.getAccessToken(), HeaderKey.PRICE_TAX_SPERATION_RULE,ResourceId.PRICE_TAX_SPERATION_RULE),parm,new JsonObject(),employee);
     }
 
     /**

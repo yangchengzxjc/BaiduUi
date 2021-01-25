@@ -338,6 +338,21 @@ public class ExpenseReportInvoice {
     }
 
     /**
+     * 获取费用详情中的某个字段
+     * @param employee
+     * @param invoiceOID
+     * @param words
+     * @return
+     * @throws HttpStatusException
+     */
+    public String getExpenseKeyWords(Employee employee,String invoiceOID,String words) throws HttpStatusException {
+        JsonObject result = getInvoice(employee,invoiceOID);
+        log.info("费用详情：{}",result);
+        return result.get(words).getAsString();
+    }
+
+
+    /**
      * 发票查验发票标签断言  可以选择断言标题还是断言descrition
      * @param employee
      * @param filePath

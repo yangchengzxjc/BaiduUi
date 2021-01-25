@@ -147,4 +147,5 @@ public class ReceiptMethodPage {
         priceSeperationTax.setInvoiceLabel(label);
         return receiptControlConfig.separationConfig(employee,priceSeperationTax,"Y");
     }
+
 }

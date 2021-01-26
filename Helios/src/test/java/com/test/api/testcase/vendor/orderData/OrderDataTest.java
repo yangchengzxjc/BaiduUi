@@ -30,7 +30,7 @@ public class OrderDataTest extends FlightOrderDataTest {
 
     @BeforeClass
     @Parameters({"phoneNumber", "passWord", "environment"})
-    public void init(@Optional("15023489123") String phoneNumber, @Optional("a11111") String pwd, @Optional("stage") String env){
+    public void init(@Optional("18123924944") String phoneNumber, @Optional("hly123") String pwd, @Optional("stage") String env){
         employee =getEmployee(phoneNumber,pwd,env);
         vendor =new Vendor();
         mVendorData =new VendorData();
@@ -39,7 +39,7 @@ public class OrderDataTest extends FlightOrderDataTest {
     @DataProvider(name = "TMC")
     public Object[][] tmcData() {
         return new Object[][]{
-                {TmcChannel.AMEX.getSupplierName(),TmcChannel.AMEX.getSupplierCode(),TmcChannel.AMEX.getCorpId(),TmcChannel.AMEX.getAppName(),TmcChannel.AMEX.getSigniture(), OrderSettlementDataPath.settlementUseData},
+                {TmcChannel.TIANTAI.getSupplierName(),TmcChannel.TIANTAI.getSupplierCode(),TmcChannel.TIANTAI.getCorpId(),TmcChannel.TIANTAI.getAppName(),TmcChannel.TIANTAI.getSigniture(), OrderSettlementDataPath.orderAirData},
         };
     }
 

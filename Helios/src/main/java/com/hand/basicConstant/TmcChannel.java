@@ -14,7 +14,8 @@ public enum TmcChannel {
     ZLS("ZLS", "supplyOnTheWayTMCService", "", "", "", "", "", ""),
     EHI("ehi", "", "", "ehi", "一嗨", "ehi", "200428140254184790", "69c8658b898b6468d38a9cc68205afd6"),
     AMEX("amex", "", "", "amex", "", "amex", "200428140254184795", "3055d656f9feed61f69b368787762d05"),
-    ELEME("eleme", "supplyElemeService", "", "", "饿了么", "", "", "");
+    ELEME("eleme", "supplyElemeService", "", "", "饿了么", "", "", ""),
+    TIANTAI("TT","supplyTitanTaiAirService","eeba7c87-222c-4e65-893c-4687d15430c2","tiantaiAir","","tiantaiAir","300428140254184797","817833482af8911de4c67d95cad2141e");
 
     private String name;
     private String tmcChannel;

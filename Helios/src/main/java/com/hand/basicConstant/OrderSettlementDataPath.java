@@ -10,4 +10,5 @@ public class OrderSettlementDataPath {
     public static String settlementUseData = "src/test/resources/data/amexVendorData.json";
     public static String settlementChangeData = "src/test/resources/data/VendorChangeData.json";
     public static String settlementRefundData = "src/test/resources/data/VendorRefundData.json";
+    public static String orderAirData = "src/test/resources/data/ttVendorOrderData.json";
 }

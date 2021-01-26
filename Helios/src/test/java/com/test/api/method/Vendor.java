@@ -367,7 +367,7 @@ public class Vendor {
         }
         //检查是否有保险 更换employeeName
         if (GsonUtil.isExistProperty(vendorObject, "airInsurance")) {
-            vendorObject.getAsJsonArray("airRefundInfo").get(0).getAsJsonObject().addProperty("employeeName", employee.getFullName());
+            vendorObject.getAsJsonArray("airInsurance").get(0).getAsJsonObject().addProperty("employeeName", employee.getFullName());
         }
         return vendorObject;
     }

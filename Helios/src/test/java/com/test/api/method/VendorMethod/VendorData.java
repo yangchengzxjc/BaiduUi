@@ -215,13 +215,13 @@ public class VendorData {
         //获取该员工所在的租户信息
         JsonObject tentantInfo = infraStructure.getTenantInfo(employee,tenantId);
         String tenantName = tentantInfo.get("tenantName").getAsString();
-        String tenantCode = tentantInfo.get("tenantCode").getAsString();
+//        String tenantCode = tentantInfo.get("tenantCode").getAsString();
         String passengerEmployeeOid = passagerInfos.get("userOID").getAsString();
         String passagerDepartmentName = passagerInfos.get("departmentName").getAsString();
         String passagerDepartmentOID = passagerInfos.get("departmentOID").getAsString();
         String passagerDepartmentCode = infraStructure.getDeptCode(employee,passagerDepartmentOID);
         //组装数据
-        baseOrder.addProperty("tenantCode",tenantCode);
+        baseOrder.addProperty("tenantCode",tenantId);
         baseOrder.addProperty("tenantName",tenantName);
         baseOrder.addProperty("companyName",companyName);
         baseOrder.addProperty("companyCode",companyCode);

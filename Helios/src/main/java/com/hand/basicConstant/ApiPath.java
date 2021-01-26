@@ -409,6 +409,13 @@ public class ApiPath {
         // ============================== 消费平台 饿了么 =================================
         public static final String ELEME_ORDER_REPORT = "/eleme/api/order/orderReport";
         // =============================================================================
+
+        //创建老报销单提交管控规则
+        public static final String ADD_SUBMISSION_RULES = "/config/api/config/rule";
+        //查询各类标签
+        public static final String GET_CONFIG_FACTOR = "/config/api/config/factor";
+        //查询各类校验结果
+        public static final String GET_CONFIG_ITEM = "/config/api/config/item";
 }
 
 

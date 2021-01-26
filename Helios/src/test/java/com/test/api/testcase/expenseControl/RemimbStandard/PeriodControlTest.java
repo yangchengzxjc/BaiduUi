@@ -202,6 +202,87 @@ public class PeriodControlTest extends BaseTest {
         }
     }
 
+    @Test(description = "规则配置：账套级-周期管控/每月-平均金额>基本标准")
+    public void periodControlTest07() throws HttpStatusException{
+        //新建账套级规则
+        StandardRules rules = standardControl.setPeriod("MONTH","费用类型");
+        String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
+        //配置管控项：平均金额
+        StandardControlItem standardControlItem = new StandardControlItem();
+        standardControlItem.setControlItem("AVERAGE_AMOUNT");
+        reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,standardControlItem);
+        //配置基本标准
+        StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,100,true,rules,ruleOID,new String[]{},new String[]{});
+        //新建报销单
+        FormDetail formDetail= expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),1,2,new String[]{employee.getFullName(),"员工0006"},2000);
+        map.put("ruleOID",ruleOID);
+        map.put("reportOID1",formDetail.getReportOID());
+        map.put("invoiceOID1",invoiceOID1);
+        String data = UTCTime.utcTObjmonth(UTCTime.getUtcTime(0,0),0);
+        String label1 = String.format("员工0006 %s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 400.00，超标：CNY 300.00。1024bugfix%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 400.00，超标：CNY 300.00。",rules.getMessage(),data,standardRulesItem.getAmount(),rules.getMessage(),data,standardRulesItem.getAmount());
+        String label2 = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 400.00，超标：CNY 300.00。1024bugfix员工0006 %s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 400.00，超标：CNY 300.00。",rules.getMessage(),data,standardRulesItem.getAmount(),rules.getMessage(),data,standardRulesItem.getAmount());
+        if(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001",label1)){
+            assert true;
+        }else{
+            Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"),label2);
+        }
+    }
+
+    @Test(description = "规则配置：账套级-周期管控/每季度-平均金额>基本标准")
+    public void periodControlTest08() throws HttpStatusException{
+        //新建账套级规则
+        StandardRules rules = standardControl.setPeriod("QUARTER","费用类型");
+        String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
+        //配置管控项：平均金额
+        StandardControlItem standardControlItem = new StandardControlItem();
+        standardControlItem.setControlItem("AVERAGE_AMOUNT");
+        reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,standardControlItem);
+        //配置基本标准
+        StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,100,true,rules,ruleOID,new String[]{},new String[]{});
+        //新建报销单
+        FormDetail formDetail= expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),1,2,new String[]{employee.getFullName(),"员工0006"},2000);
+        map.put("ruleOID",ruleOID);
+        map.put("reportOID1",formDetail.getReportOID());
+        map.put("invoiceOID1",invoiceOID1);
+        String year = UTCTime.utcTObjyear(UTCTime.getUtcTime(0,0),0);
+        String quarter = UTCTime.isQuarter(UTCTime.getUtcTime(0,0));
+        String label1 = String.format("员工0006 %s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 400.00，超标：CNY 300.00。1024bugfix%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 400.00，超标：CNY 300.00。",rules.getMessage(),year+quarter,standardRulesItem.getAmount(),rules.getMessage(),year+quarter,standardRulesItem.getAmount());
+        String label2 = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 400.00，超标：CNY 300.00。1024bugfix员工0006 %s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 400.00，超标：CNY 300.00。",rules.getMessage(),year+quarter,standardRulesItem.getAmount(),rules.getMessage(),year+quarter,standardRulesItem.getAmount());
+        if(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001",label1)){
+            assert true;
+        }else{
+            Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"),label2);
+        }
+    }
+
+    @Test(description = "规则配置：账套级-周期管控/每年-平均金额>基本标准")
+    public void periodControlTest09() throws HttpStatusException{
+        //新建账套级规则
+        StandardRules rules = standardControl.setPeriod("YEAR","费用类型");
+        String ruleOID = reimbStandard.addReimbstandard(employee,rules,new String[]{},new String []{"自动化测试-日常报销单"},"自动化测试-报销标准");
+        //配置管控项：平均金额
+        StandardControlItem standardControlItem = new StandardControlItem();
+        standardControlItem.setControlItem("AVERAGE_AMOUNT");
+        reimbStandard.editORaddControlItem(employee,true,rules,ruleOID,standardControlItem);
+        //配置基本标准
+        StandardRulesItem standardRulesItem = standardControl.setStandardRulesItem(employee,100,true,rules,ruleOID,new String[]{},new String[]{});
+        //新建报销单
+        FormDetail formDetail= expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
+        String invoiceOID1 = expenseReportPage.setInvoice(employee,"自动化测试-报销标准",formDetail.getReportOID(),1,2,new String[]{employee.getFullName(),"员工0006"},2000);
+        map.put("ruleOID",ruleOID);
+        map.put("reportOID1",formDetail.getReportOID());
+        map.put("invoiceOID1",invoiceOID1);
+        String year = UTCTime.utcTObjyear(UTCTime.getUtcTime(0,0),0);
+        String label1 = String.format("员工0006 %s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 400.00，超标：CNY 300.00。1024bugfix%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 400.00，超标：CNY 300.00。",rules.getMessage(),year+"年",standardRulesItem.getAmount(),rules.getMessage(),year+"年",standardRulesItem.getAmount());
+        String label2 = String.format("%s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 400.00，超标：CNY 300.00。1024bugfix员工0006 %s %s 自动化测试-报销标准 标准为：CNY %s.00，已使用：CNY 400.00，超标：CNY 300.00。",rules.getMessage(),year+"年",standardRulesItem.getAmount(),rules.getMessage(),year+"年",standardRulesItem.getAmount());
+        if(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001",label1)){
+            assert true;
+        }else{
+            Assert.assertEquals(expenseReport.checkSubmitLabel(employee, formDetail.getReportOID(), "5001"),label2);
+        }
+    }
     @AfterMethod
     public void cleanEnv() throws HttpStatusException {
         for (String s : map.keySet()){

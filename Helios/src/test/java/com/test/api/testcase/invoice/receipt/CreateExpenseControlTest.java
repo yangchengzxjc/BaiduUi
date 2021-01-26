@@ -111,9 +111,9 @@ public class CreateExpenseControlTest extends BaseTest {
         FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID",formDetail.getReportOID());
         //发票连号的费用
-        FormDetail invoice1 = expenseReportPage.setHandReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.HANDRECEIPT1);
+        FormDetail invoice1 = expenseReportPage.setHandReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.HANDRECEIPT5);
         map.put("invoiceOID1",invoice1.getInvoiceOID());
-        Assert.assertEquals("Y",expenseReportInvoice.getReceptVerifyInfo(employee,Receript.HANDRECEIPT2).get("isOk").getAsString());
+        Assert.assertEquals("Y",expenseReportInvoice.getReceptVerifyInfo(employee,Receript.HANDRECEIPT6).get("isOk").getAsString());
     }
 
     @Test(description = "发票连号可生成费用-强管控")
@@ -130,9 +130,9 @@ public class CreateExpenseControlTest extends BaseTest {
         FormDetail formDetail = expenseReportPage.setDailyReport(employee, UTCTime.getFormDateEnd(3),"自动化测试-日常报销单",new String[]{employee.getFullName()});
         map.put("reportOID",formDetail.getReportOID());
         //发票连号的费用
-        FormDetail invoice1 = expenseReportPage.setHandReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.HANDRECEIPT1);
+        FormDetail invoice1 = expenseReportPage.setHandReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.HANDRECEIPT5);
         map.put("invoiceOID1",invoice1.getInvoiceOID());
-        FormDetail invoice2 = expenseReportPage.setHandReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.HANDRECEIPT2);
+        FormDetail invoice2 = expenseReportPage.setHandReceiptInvoice(employee,"autotest",formDetail.getReportOID(), Receript.HANDRECEIPT6);
         Assert.assertEquals("该费用类型不可报销连号的发票",invoice2.getResponse().get("message").getAsString());
     }
 

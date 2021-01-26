@@ -221,7 +221,7 @@ public class VendorData {
         String passagerDepartmentOID = passagerInfos.get("departmentOID").getAsString();
         String passagerDepartmentCode = infraStructure.getDeptCode(employee,passagerDepartmentOID);
         //组装数据
-        baseOrder.addProperty("tenantCode",tenantCode);
+        baseOrder.addProperty("tenantCode",tenantId);
         baseOrder.addProperty("tenantName",tenantName);
         baseOrder.addProperty("companyName",companyName);
         baseOrder.addProperty("companyCode",companyCode);

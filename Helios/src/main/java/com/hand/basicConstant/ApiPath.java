@@ -163,6 +163,12 @@ public class ApiPath {
         public  static  final  String  EXPENSE_WIDGETS_LIST="/invoice/api/expense/widgets";
 //       账本费用列表
         public  static  final  String  INVOICES_LIST="/api/invoices/my";
+        //发票数据代入费用控件
+        public static final String INVOICE_DEFAULT = "/invoice/api/invoice/defaults";
+        //发票金额更新到费用金额
+        public static final String RECEIPT_AMOUNT = "/invoice/api/receipt/cal/total_amount";
+        //账本中搜索费用类型
+        public static final  String INVOCIE_FILTER = "/api/invoice/factor/filter/invoices";
         //费用详情
         public static  final String INVOICE_DETAIL = "/api/invoices/%s";
 //        搜索城市

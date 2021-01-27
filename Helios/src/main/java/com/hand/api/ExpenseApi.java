@@ -32,8 +32,6 @@ public class ExpenseApi extends BaseRequest{
         componentQueryApi =new ComponentQueryApi();
     }
 
-
-
     /**
      * 报销单新建费用获取费用类型
      * @param
@@ -446,14 +444,44 @@ public class ExpenseApi extends BaseRequest{
      * @return
      * @throws HttpStatusException
      */
-    public  JsonArray getInvoiceLlist(Employee employee) throws  HttpStatusException {
+    public  JsonArray getInvoiceList(Employee employee,String expenseTypeId) throws  HttpStatusException {
+        String url=employee.getEnvironment().getUrl()+ ApiPath.INVOICES_LIST;
+        JsonArray array =new JsonArray();
+        array.add(expenseTypeId);
+        JsonObject object=new JsonObject();
+        object.addProperty("page",0);
+        object.addProperty("size",20);
+        object.add("expenseTypeIds",array);
+        String Res= doPost(url,getHeader(employee.getAccessToken()),null,object.toString(),null,employee);
+        return new JsonParser().parse(Res).getAsJsonObject().get("rows").getAsJsonArray();
+    }
+
+    /**
+     * 获得我的账本列表基础
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public  JsonArray getInvoiceList(Employee employee) throws  HttpStatusException {
         String url=employee.getEnvironment().getUrl()+ ApiPath.INVOICES_LIST;
         JsonObject object=new JsonObject();
         object.addProperty("page",0);
         object.addProperty("size",20);
-        object.addProperty("expenseTypeIds", (String) null);
+        object.addProperty("expenseTypeIds",(String) null);
         String Res= doPost(url,getHeader(employee.getAccessToken()),null,object.toString(),null,employee);
         return new JsonParser().parse(Res).getAsJsonObject().get("rows").getAsJsonArray();
+    }
+
+    /**
+     * 账本中查询费用类型
+     * @return
+     */
+    public JsonObject getExpenseTypeInBook(Employee employee) throws HttpStatusException {
+        String url=employee.getEnvironment().getUrl()+ ApiPath.INVOCIE_FILTER;
+        HashMap<String,String> parm = new HashMap<>();
+        parm.put("createManually","true");
+        String Res= doGet(url,getHeader(employee.getAccessToken()),parm,employee);
+        return new JsonParser().parse(Res).getAsJsonObject();
     }
 
     /**
@@ -704,5 +732,45 @@ public class ExpenseApi extends BaseRequest{
         JsonArray array = new JsonArray();
         array.add(new JsonParser().parse(GsonUtil.objectToString(didi)).getAsJsonObject());
         doPost(url,getHeader(employee.getAccessToken()),null,array.toString(),null,employee);
+    }
+
+    /**
+     * 发票字段默认代入到费用控件的字段
+     * @param employee
+     * @param expenseTypeId
+     * @param receipt
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray invoiceDafault(Employee employee,String expenseTypeId,JsonObject receipt) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.INVOICE_DEFAULT;
+        JsonObject body =new JsonObject();
+        JsonArray receipts = new JsonArray();
+        body.addProperty("expenseTypeId",expenseTypeId);
+        receipts.add(receipt);
+        body.add("receipts",receipts);
+        String res = doPost(url,getHeader(employee.getAccessToken()),null,body.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonArray();
+    }
+
+    /**
+     * 发票金额  更新费用金额
+     * @param employee
+     * @param receipt
+     * @param currencyRate
+     * @param currencyCode
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonObject receiptTotalAmount(Employee employee,JsonObject receipt,int currencyRate,String currencyCode) throws HttpStatusException {
+        String url = employee.getEnvironment().getUrl()+ ApiPath.RECEIPT_AMOUNT;
+        JsonObject body =new JsonObject();
+        JsonArray receiptViewDTOList = new JsonArray();
+        body.addProperty("currencyRate",currencyRate);
+        body.addProperty("currencyCode",currencyCode);
+        receiptViewDTOList.add(receipt);
+        body.add("receiptViewDTOList",receiptViewDTOList);
+        String res = doPost(url,getHeader(employee.getAccessToken()),null,body.toString(),null,employee);
+        return new JsonParser().parse(res).getAsJsonObject();
     }
 }

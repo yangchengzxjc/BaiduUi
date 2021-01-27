@@ -84,9 +84,9 @@ public class ExpenseReportPage {
      * @throws HttpStatusException
      */
     public String setInvoice(Employee employee,String expenseName,String expenseReportOID,boolean isCompanyPay) throws HttpStatusException {
-        ExpenseReportComponent expenseReportComponent =new ExpenseReportComponent();
+        ExpenseReportComponent expenseReportComponent = new ExpenseReportComponent();
         String cityCode =expenseReportComponent.getCityCode(employee,"上海");
-        InvoiceComponent invoiceComponent =new InvoiceComponent();
+        InvoiceComponent invoiceComponent = new InvoiceComponent();
         invoiceComponent.setCity(cityCode);
         invoiceComponent.setCompanyPay(isCompanyPay);
         JsonObject startAndEndDate = new JsonObject();
@@ -213,6 +213,7 @@ public class ExpenseReportPage {
         return expenseReportInvoice.createExpenseInvoice(employee,invoiceComponent,expenseName,expenseReportOID,5.00,receiptInfo);
     }
 
+
     /**
      * 新建费用 费用中包含发票识别
      * @param employee
@@ -315,7 +316,6 @@ public class ExpenseReportPage {
      * @throws HttpStatusException
      */
     public String setInvoice(Employee employee,String expenseName,String expenseReportOID,int accompanying,int hospitalized,Object participants,int amount) throws HttpStatusException {
-        ExpenseReportComponent expenseReportComponent =new ExpenseReportComponent();
         InvoiceComponent invoiceComponent =new InvoiceComponent();
         invoiceComponent.setParticipants(participants);
         invoiceComponent.setAccompanying(accompanying);

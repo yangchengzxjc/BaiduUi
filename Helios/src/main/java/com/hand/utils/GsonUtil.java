@@ -230,7 +230,7 @@ public class GsonUtil {
                     continue;
                 }
                 if(object1.get(name).isJsonArray() && !object2.get(name).isJsonArray()){
-                    log.info("不一样的字段为:{}",name);
+                    log.info("类型为不一样的字段为:{}",name);
                     arrayList.add(false);
                     continue;
                 }

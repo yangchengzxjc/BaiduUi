@@ -179,6 +179,7 @@ public class VendorData {
                 //查找预定人的信息
                 employeeInfo = infraStructure.getUserDetail(employee, baseOrder.get("employeeId").getAsString());
                 //根据工号查询乘客的信息
+                log.info("乘客信息为：{}",passengerInfo.get(0).getAsJsonObject().get("passengeNum").getAsString());
                 passagerInfos = infraStructure.getUserDetail(employee, passengerInfo.get(0).getAsJsonObject().get("passengeNum").getAsString());
                 break;
             case "train":

@@ -10,9 +10,11 @@ import com.hand.basicObject.component.FormDetail;
 import com.hand.basicObject.component.InvoiceComponent;
 import com.hand.basicObject.supplierObject.DiDi;
 import com.hand.utils.GsonUtil;
-import com.hand.utils.RandomNumber;
 import lombok.extern.slf4j.Slf4j;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.*;
 
 /**
@@ -125,7 +127,6 @@ public class ExpenseReportInvoice {
             e.printStackTrace();
         }
         FormDetail formDetail = new FormDetail();
-        log.info("费用的响应为：{}",jsonObject);
         try{
             formDetail.setInvoiceOID(jsonObject.get("rows").getAsJsonObject().get("invoiceOID").getAsString());
         }catch (NullPointerException e){
@@ -152,7 +153,7 @@ public class ExpenseReportInvoice {
      */
     public ArrayList getExpenseItem(Employee employee) throws HttpStatusException {
         ArrayList<String> expenseItem =new ArrayList<>();
-        JsonArray expenseList=expenseApi.getInvoiceLlist(employee);
+        JsonArray expenseList=expenseApi.getInvoiceList(employee);
         //检查账本是否为空
         if(GsonUtil.isNotEmpt(expenseList)){
             for (int i=0;i<expenseList.size();i++){
@@ -162,6 +163,49 @@ public class ExpenseReportInvoice {
             log.info("账本暂无费用");
         }
         return expenseItem;
+    }
+
+    /**
+     * 获取账本中所有费用的invoiceOID
+     * @param employee
+     * @return
+     * @throws HttpStatusException
+     */
+    public ArrayList<String> getInvoiceOIDInBook(Employee employee,String expenseTypeName) throws HttpStatusException {
+        ArrayList<String> expenseItem =new ArrayList<>();
+        String expenseTypeId = getExpenseTypeInBook(employee,expenseTypeName);
+        JsonArray expenseList=expenseApi.getInvoiceList(employee,expenseTypeId);
+        //检查账本是否为空
+        if(GsonUtil.isNotEmpt(expenseList)){
+            for (int i=0;i<expenseList.size();i++){
+                expenseItem.add(expenseList.get(i).getAsJsonObject().get("invoiceOID").getAsString());
+            }
+        }else{
+            log.info("账本暂无该{}费用",expenseTypeName);
+        }
+        return expenseItem;
+    }
+
+    /**
+     *
+     * @param employee
+     * @param expenseTypeName
+     * @return
+     * @throws HttpStatusException
+     */
+    public String getExpenseTypeInBook(Employee employee,String expenseTypeName) throws HttpStatusException {
+       String expenseTypeId = "";
+        try{
+           JsonArray expenseCategorys = expenseApi.getExpenseTypeInBook(employee).getAsJsonArray("expenseCategorys");
+           for(int i=0;i<expenseCategorys.size();i++){
+               JsonArray expenseTypeDTOS = expenseCategorys.get(i).getAsJsonObject().getAsJsonArray("expenseTypeDTOS");
+               expenseTypeId = GsonUtil.getJsonValue(expenseTypeDTOS,"expenseTypeName",expenseTypeName,"expenseTypeId");
+           }
+       }catch (NullPointerException e){
+           log.info("未查找到费用类型");
+           e.printStackTrace();
+       }
+       return expenseTypeId;
     }
 
     /**
@@ -196,7 +240,6 @@ public class ExpenseReportInvoice {
      */
     public String searchTransferUser(Employee employee,String fullName, String setOfBooksId) throws HttpStatusException {
        JsonArray jsonArray= expenseApi.searchTransferUser(employee,setOfBooksId);
-
        String userId =GsonUtil.getJsonValue(jsonArray,"fullName",fullName,"id");
        return userId;
     }
@@ -350,7 +393,6 @@ public class ExpenseReportInvoice {
         log.info("费用详情：{}",result);
         return result.get(words).getAsString();
     }
-
 
     /**
      * 发票查验发票标签断言  可以选择断言标题还是断言descrition
@@ -516,4 +558,62 @@ public class ExpenseReportInvoice {
         expenseApi.pushDiDi(employee,didi);
     }
 
+    /**
+     * 获取发票中字段默认代入到报销单的字段
+     * @param employee
+     * @param expenseTypeName
+     * @param reportOID
+     * @param receipt
+     * @return
+     * @throws HttpStatusException
+     */
+    public JsonArray getInvoiceDafault(Employee employee,String expenseTypeName,String reportOID,JsonObject receipt) throws HttpStatusException {
+        String expenseTypeId = getExpenseReportExpenseTypes(employee,expenseTypeName,reportOID).get("expenseTypeId");
+        return expenseApi.invoiceDafault(employee,expenseTypeId,receipt);
+    }
+
+    /**
+     * 发票金额代入费用
+     * @param employee
+     * @param receipt
+     * @return
+     * @throws HttpStatusException
+     */
+    public String getReceiptAmount(Employee employee,JsonObject receipt) throws HttpStatusException {
+        return expenseApi.receiptTotalAmount(employee,receipt,1,"CNY").getAsJsonObject("rows").get("totalAmount").getAsString();
+    }
+
+    /**
+     * 计算发票税额
+     * @param fee
+     * @param taxRate
+     * @return
+     */
+    public BigDecimal getReceiptTax(BigDecimal fee,BigDecimal taxRate){
+        BigDecimal divide = new BigDecimal(1.00).add(taxRate.setScale(2,RoundingMode.HALF_UP));
+        return fee.divide(divide,9,RoundingMode.HALF_UP).multiply(taxRate).setScale(2,RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal getFeeWithoutTax(BigDecimal fee,BigDecimal tax){
+        return fee.subtract(tax).setScale(2,RoundingMode.HALF_UP);
+    }
+
+    /**
+     * 计算费用的税额（不是足额报销的情况） 公式为：费用税额= 费用报销金额/发票的价税合计*发票税额
+     * @param fee
+     * @param tax
+     * @return
+     */
+    public BigDecimal getInvoiceTax(BigDecimal fee,BigDecimal receiptFee,BigDecimal tax){
+        return fee.divide(receiptFee,9,RoundingMode.HALF_UP).multiply(tax).setScale(2,RoundingMode.HALF_UP);
+    }
+
+    /**
+     * 针对于发票字段金额处理  发票金额字段显示的金额需要把小数点往左移动两位
+     * @param amount
+     * @return
+     */
+    public BigDecimal getAmount(BigDecimal amount){
+        return amount.divide(new BigDecimal(100),RoundingMode.HALF_UP).setScale(2,RoundingMode.HALF_UP);
+    }
 }

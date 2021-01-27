@@ -135,16 +135,21 @@ public class ReceiptMethodPage {
      * 场景化配置-价税分离（校验费用标签）
      * @param employee
      * @param invoiceLabel
+     * @param tax 税率  例如：00   01   03
      * @return
      * @throws HttpStatusException
      */
-    public String involiceLabelPriceTax(Employee employee,String invoiceLabel) throws HttpStatusException {
+    public String involiceLabelPriceTax(Employee employee,String invoiceLabel,String tax) throws HttpStatusException {
         ReceiptControlConfig receiptControlConfig = new ReceiptControlConfig();
         PriceSeperationTax priceSeperationTax = new PriceSeperationTax();
         // 查询费用标签的管控项
         JsonObject label = receiptControlConfig.getConfigFactorData(employee,"费用标签包含",invoiceLabel);
         label.addProperty("key",label.get("id").getAsString());
         priceSeperationTax.setInvoiceLabel(label);
+        //获取税率
+        if(!tax.equals("")){
+            priceSeperationTax.setDefaultTaxRate(receiptControlConfig.getTaxRate(employee,tax));
+        }
         return receiptControlConfig.separationConfig(employee,priceSeperationTax,"Y");
     }
 

@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -162,7 +161,7 @@ public class PriceAndTaxSepartationTest extends BaseTest {
         // 发票的价税合计
         BigDecimal fee = invoiceDetail.getAsJsonArray("receiptList").get(0).getAsJsonObject().get("fee").getAsBigDecimal();
         //费用的税额
-        BigDecimal invoiceTax = expenseReportInvoice.getInvoiceTax(new BigDecimal(5),expenseReportInvoice.getAmount(fee),expenseReportInvoice.getAmount(receiptTax));
+        BigDecimal invoiceTax = expenseReportInvoice.getInvoiceTax(new BigDecimal(5),expenseReportInvoice.getAmountOffset(fee),expenseReportInvoice.getAmountOffset(receiptTax));
         //校验税额
         Assert.assertEquals(invoiceTax,invoiceDetail.get("taxAmount").getAsBigDecimal().setScale(2,RoundingMode.HALF_UP));
         //校验不含税金额
@@ -183,7 +182,7 @@ public class PriceAndTaxSepartationTest extends BaseTest {
         // 发票的价税合计
         BigDecimal fee = invoiceDetail.getAsJsonArray("receiptList").get(0).getAsJsonObject().get("fee").getAsBigDecimal();
         //费用的税额
-        BigDecimal invoiceTax = expenseReportInvoice.getInvoiceTax(new BigDecimal(5),expenseReportInvoice.getAmount(fee),expenseReportInvoice.getAmount(receiptTax));
+        BigDecimal invoiceTax = expenseReportInvoice.getInvoiceTax(new BigDecimal(5),expenseReportInvoice.getAmountOffset(fee),expenseReportInvoice.getAmountOffset(receiptTax));
         //校验税额
         Assert.assertEquals(invoiceTax,invoiceDetail.get("taxAmount").getAsBigDecimal().setScale(2,RoundingMode.HALF_UP));
         //校验不含税金额
@@ -201,21 +200,17 @@ public class PriceAndTaxSepartationTest extends BaseTest {
         JsonObject invoiceDetail = expenseReportInvoice.getInvoice(employee,invoice1.getInvoiceOID());
         //此时获取的税额是没有进行小数点左移两位的
         BigDecimal receiptTax = invoiceDetail.getAsJsonArray("receiptList").get(0).getAsJsonObject().get("tax").getAsBigDecimal();
-        log.info("发票的税额{}",receiptTax);
         // 发票的价税合计
         BigDecimal fee = invoiceDetail.getAsJsonArray("receiptList").get(0).getAsJsonObject().get("fee").getAsBigDecimal();
-        log.info("发票的价税合计{}",fee);
         //费用的税额
-        BigDecimal invoiceTax = expenseReportInvoice.getInvoiceTax(new BigDecimal(5),expenseReportInvoice.getAmount(fee),expenseReportInvoice.getAmount(receiptTax));
+        BigDecimal invoiceTax = expenseReportInvoice.getInvoiceTax(new BigDecimal(5),expenseReportInvoice.getAmountOffset(fee),expenseReportInvoice.getAmountOffset(receiptTax));
         //校验税额
-        log.info("费用的税额为：{}",invoiceTax);
         Assert.assertEquals(invoiceTax,invoiceDetail.get("taxAmount").getAsBigDecimal().setScale(2,RoundingMode.HALF_UP));
         //校验不含税金额
         Assert.assertEquals(expenseReportInvoice.getFeeWithoutTax(new BigDecimal(5),invoiceTax),invoiceDetail.get("nonVatBaseAmount").getAsBigDecimal().setScale(2,RoundingMode.HALF_UP));
     }
 
-
-//    @AfterMethod
+    @AfterMethod
     public void cleanEnv() throws HttpStatusException {
         for (String s : map.keySet()) {
             switch (s){

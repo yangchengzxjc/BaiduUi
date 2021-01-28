@@ -605,6 +605,7 @@ public class ExpenseReportInvoice {
      * @return
      */
     public BigDecimal getInvoiceTax(BigDecimal fee,BigDecimal receiptFee,BigDecimal tax){
+        log.info("费用报销金额为：{},发票价税合计：{},发票税额：{}",fee,receiptFee,tax);
         return fee.divide(receiptFee,9,RoundingMode.HALF_UP).multiply(tax).setScale(2,RoundingMode.HALF_UP);
     }
 
@@ -613,7 +614,7 @@ public class ExpenseReportInvoice {
      * @param amount
      * @return
      */
-    public BigDecimal getAmount(BigDecimal amount){
-        return amount.divide(new BigDecimal(100),RoundingMode.HALF_UP).setScale(2,RoundingMode.HALF_UP);
+    public BigDecimal getAmountOffset(BigDecimal amount){
+        return amount.divide(new BigDecimal(100)).setScale(2,RoundingMode.HALF_UP);
     }
 }
